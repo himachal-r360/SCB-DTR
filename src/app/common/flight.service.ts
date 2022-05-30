@@ -6,7 +6,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FlightService {
-  flight = environment.url+"rewards-ws/api/flights/list";
+  // flight = environment.url+"rewards-ws/api/flights/list";
+  flight = "https://smartbuydev.reward360.in/api/flightSearch";
   
   constructor(private http:HttpClient) { }
 

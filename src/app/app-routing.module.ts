@@ -8,7 +8,10 @@ const routes: Routes = [
     path:"" , component:HomeComponent
   },
   {
-    path:"flight-list" , component:FlightListComponent 
+    path:"home" , component:HomeComponent 
+  },
+  {
+    path:"flight-list" ,component:FlightListComponent
   }
 ];
 
