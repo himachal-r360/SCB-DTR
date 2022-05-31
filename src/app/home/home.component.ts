@@ -10,22 +10,22 @@ import { FlightService } from '../common/flight.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  cityList = { name:"banglore"}
-
+  sub?: Subscription
+  flightList:any;
 
   flightData: any = this._fb.group({
     flightfrom: ["DEL"],
-    flightto:["BLR"],
-    flightclass:["E"],
-    flightdefault:["O"],
-    departure:["2022-05-31"],
-    arrival:[""],
-    adults:["1"],
-    child:["0"],
-    infants:["0"],
-    travel:["DOM"]
+    flightto: ["BLR"],
+    flightclass: ["E"],
+    flightdefault: ["O"],
+    departure: ["2022-05-31"],
+    arrival: [""],
+    adults: ["1"],
+    child: ["0"],
+    infants: ["0"],
+    travel: ["DOM"]
   })
-  sub?: Subscription
+
 
   // flightData: any = this._fb.group({
   //   depart: ["2022-06-15"],
@@ -60,18 +60,18 @@ export class HomeComponent implements OnInit {
   constructor(public router: Router, private _fb: FormBuilder, private _flightService: FlightService) { }
 
   ngOnInit(): void {
+ 
+    
   }
 
 
   flightSearch() {
-    this._flightService.flightList(this.flightData.value).subscribe((res:any) => {
-      console.log(res)
-    },(error)=>{console.log(error)});
-    debugger
-    this.router.navigate(['flight-list']);
     this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
-      console.log(res);
-    });
+      this.flightList = res.response.onwardFlights;
+      console.log(this.flightList , "flightList responce");
+      // this.router.navigate(['flight-list']);
+    }, (error) => { console.log(error) });
+
   }
 
 

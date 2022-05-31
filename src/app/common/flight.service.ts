@@ -7,14 +7,14 @@ import { environment } from 'src/environments/environment';
 })
 export class FlightService {
   // flight = environment.url+"rewards-ws/api/flights/list";
-  flight = environment.url+"api/flightSearch";
-  header = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'})
-  constructor(private http:HttpClient) { }
+  flight = environment.url + "api/flightSearch";
+  header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+  constructor(private http: HttpClient) { }
 
-  flightList(para:any) {
-
-    console.log(JSON.stringify(para))
-   return this.http.post(this.flight , para,{headers:this.header})
+  flightList(para: any) {
+    let body = JSON.stringify(para)
+    return this.http.post(this.flight, body, { headers: this.header })
   }
 
+  
 }
