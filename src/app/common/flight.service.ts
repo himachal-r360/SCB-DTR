@@ -7,14 +7,19 @@ import { environment } from 'src/environments/environment';
 })
 export class FlightService {
   // flight = environment.url+"rewards-ws/api/flights/list";
-  flight = environment.url+"api/flightSearch";
-  header = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'})
-  constructor(private http:HttpClient) { }
+  flight = environment.url + "api/flightSearch";
+  city = environment.url + "elastic/esearch?searchDisplayForm=flights&queryText=banga";
 
-  flightList(para:any) {
+  header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+  constructor(private http: HttpClient) { }
 
-    console.log(JSON.stringify(para))
-   return this.http.post(this.flight , para,{headers:this.header})
+  flightList(para: any) {
+    let body = JSON.stringify(para)
+    return this.http.post(this.flight, body, { headers: this.header })
+  }
+
+  getCityList() {
+    return this.http.post(this.flight, { headers: this.header })
   }
 
 }
