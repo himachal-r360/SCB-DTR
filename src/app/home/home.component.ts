@@ -12,13 +12,17 @@ import { FlightService } from '../common/flight.service';
 export class HomeComponent implements OnInit {
   sub?: Subscription
   flightList:any;
+  selectId:any;
+  loader = false;
+  show = false;
+  newDate = new Date('2022-06-01');
 
   flightData: any = this._fb.group({
     flightfrom: ["DEL"],
     flightto: ["BLR"],
     flightclass: ["E"],
     flightdefault: ["O"],
-    departure: ["2022-05-31"],
+    departure: [this.newDate],
     arrival: [""],
     adults: ["1"],
     child: ["0"],
@@ -60,20 +64,31 @@ export class HomeComponent implements OnInit {
   constructor(public router: Router, private _fb: FormBuilder, private _flightService: FlightService) { }
 
   ngOnInit(): void {
- 
+    this.getCityList()
     
   }
 
 
   flightSearch() {
+    this.loader = true;
     this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
+      this.loader = false;
+      this.show = true;
       this.flightList = res.response.onwardFlights;
+      this.selectId = res.response.onwardFlights[0].flightKey;
+      console.log(this.selectId , "ID");
       console.log(this.flightList , "flightList responce");
       // this.router.navigate(['flight-list']);
     }, (error) => { console.log(error) });
 
   }
 
+  getCityList() {
+    this.sub = this._flightService.getCityList().subscribe((res: any) => {
+      console.log(res);
+      
+    })
+  }
 
   // search() {
   //     this.router.navigate(['flight-list']);
