@@ -15,7 +15,8 @@ export class HomeComponent implements OnInit {
   selectId:any;
   loader = false;
   show = false;
-  newDate = new Date('2022-06-01');
+  newDate = new Date();
+  cityList:any;
 
   flightData: any = this._fb.group({
     flightfrom: ["DEL"],
@@ -84,12 +85,20 @@ export class HomeComponent implements OnInit {
   }
 
   getCityList() {
-    this.sub = this._flightService.getCityList().subscribe((res: any) => {
-      console.log(res);
-      
+    this.sub = this._flightService.getCityList(this.cityList).subscribe((res: any) => {
+      this.cityList = res.hits.hits;
+      console.log(this.cityList);
     })
   }
 
+
+  dataFilter(evt: any) {
+    let fromData = document.getElementById('fromVal')
+    this.cityList = evt.target.value.trim().toLowerCase();
+    this.getCityList()
+  }
+
+ 
   // search() {
   //     this.router.navigate(['flight-list']);
   // }
