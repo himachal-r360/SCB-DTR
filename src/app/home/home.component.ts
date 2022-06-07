@@ -76,7 +76,34 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getCityList();
     this.selectDate("DepartureDate");
 
+  $(document).click(function(e:any){
+    var containerLeft = $(".select-root-left");
+    if (!$(e.target).closest(containerLeft).length) {
+      $(".flight-from-data").addClass("flight-from-hide");
+    }
+    else{
+      $("#fromCitySearch").val('');
+      $(".flight-from-data").removeClass("flight-from-hide");
+    }
 
+    var containerRight = $(".select-root-right");
+    if (!$(e.target).closest(containerRight).length) {
+      $(".flight-to-data").addClass("flight-from-hide");
+    }
+    else{
+      $("#toCitySearch").val('');
+      $(".flight-to-data").removeClass("flight-from-hide");
+    }
+
+    var TravellersDropdown = $(".Travellers-dropdown");
+    if (!$(e.target).closest(TravellersDropdown).length) {
+      $(".Travellers-dropdown-data").addClass("Travellershide");
+    }
+    else{
+      $(".Travellers-dropdown-data").removeClass("Travellershide");
+    }
+
+});
 
   }
 
