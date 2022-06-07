@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
+import { FlightService } from 'src/app/common/flight.service';
 
 @Component({
   selector: 'app-flight-list',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./flight-list.component.css']
 })
 export class FlightListComponent implements OnInit {
+  flightList = this._flightService.flightListData; 
+  newDate = Date();
+  loader = false;
 
-  constructor() { }
+  constructor(private _flightService: FlightService) { }
 
   ngOnInit(): void {
+    
   }
 
 }
