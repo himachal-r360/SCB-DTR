@@ -518,40 +518,42 @@
                                                 <div class="flight-radio-image">
                                                     <img src="assets/images/flights/flight-1.png" alt="">
                                                 </div>
-                                                <div class="flight-radio-time">
-                                                    <h6>IndiGo</h6>
-                                                    <p>6E 5334, 6E 7137</p>
+                                                <div class="flight-radio-time" *ngIf="list.flights.length > 0">
+                                                    <h6>{{list.flights[0].airlineName}}</h6>
+                                                    <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="flight-city-box">
+                                            <div class="flight-city-box" *ngIf="list.flights.length > 0">
                                                 <div class="flight-listing-time">
-                                                    <h6>08:05</h6>
-                                                    <p>Mumbai</p>
+                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} </h6>
+                                                    <p>{{list.flights[0].departureAirport}}</p>
                                                     <img src="./assets/images/icons/flight-right.png" alt="">
                                                 </div>
                                                 <div class="flight-listing-time">
-                                                    <h6>17:15</h6>
-                                                    <p>Hyderabad</p>
+                                                    <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                    <p>{{list.flights[0].arrivalAirport}}</p>
                                                 </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>1hr 10 min</h6>
-                                                    <p>1 stop</p>
+                                                <div class="flight-listing-time" *ngIf="list.flights.length > 0">
+                                                    <h6>{{ list.flights[0].duration }}</h6>
+                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
+                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="flight-listing-pri">
-                                                <div class="flight-listing-image">
-                                                    <img src="assets/images/flights/1.png" alt="">
+                                                <div class="flight-listing-image" *ngIf="list.flights.length > 0">
+                                                    <!-- <img src="assets/images/flights/1.png" alt=""> -->
+                                                    <p>{{list.flights[0].airlineName}}</p>
                                                 </div> 
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="flight-listing-pri"> 
-                                                <div class="flight-listing-price">
-                                                    <h6>&#8377; 4,892 <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
+                                                    <h6>&#8377;  {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
                                                     <a href="" class="moreview">+1 more </a>
                                                 </div>
                                                 <div class="flight-listing-viewfares">
@@ -566,6 +568,9 @@
                                     <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                 </div>
                             </div> 
+                           
+                      
+<!--                           
                             <div class="flight-listing">
                                 <div class="flight-listing-content">
                                     <div class="row">
@@ -621,231 +626,7 @@
                                     <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>                                                 
                                     <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                 </div>
-                            </div> 
-                            <div class="flight-listing">
-                                <div class="flight-listing-content">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="flight-radio">                                                            
-                                                <div class="flight-radio-image">
-                                                    <img src="assets/images/flights/flight-1.png" alt="">
-                                                </div>
-                                                <div class="flight-radio-time">
-                                                    <h6>IndiGo</h6>
-                                                    <p>6E 5334, 6E 7137</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-city-box">
-                                                <div class="flight-listing-time">
-                                                    <h6>08:05</h6>
-                                                    <p>Mumbai</p>
-                                                    <img src="./assets/images/icons/flight-right.png" alt="">
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>17:15</h6>
-                                                    <p>Hyderabad</p>
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>1hr 10 min</h6>
-                                                    <p>1 stop</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="flight-listing-pri">
-                                                <div class="flight-listing-image">
-                                                    <img src="assets/images/flights/1.png" alt="">
-                                                </div> 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-listing-pri"> 
-                                                <div class="flight-listing-price">
-                                                    <h6>&#8377; 4,892 <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
-                                                    <a href="" class="moreview">+1 more </a>
-                                                </div>
-                                                <div class="flight-listing-viewfares">
-                                                    <a href="" class="button-style">Selected</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="flight-info-box">
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>                                                 
-                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                </div>
-                            </div> 
-                            <div class="flight-listing">
-                                <div class="flight-listing-content">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="flight-radio">                                                            
-                                                <div class="flight-radio-image">
-                                                    <img src="assets/images/flights/flight-1.png" alt="">
-                                                </div>
-                                                <div class="flight-radio-time">
-                                                    <h6>IndiGo</h6>
-                                                    <p>6E 5334, 6E 7137</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-city-box">
-                                                <div class="flight-listing-time">
-                                                    <h6>08:05</h6>
-                                                    <p>Mumbai</p>
-                                                    <img src="./assets/images/icons/flight-right.png" alt="">
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>17:15</h6>
-                                                    <p>Hyderabad</p>
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>1hr 10 min</h6>
-                                                    <p>1 stop</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="flight-listing-pri">
-                                                <div class="flight-listing-image">
-                                                    <img src="assets/images/flights/1.png" alt="">
-                                                </div> 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-listing-pri"> 
-                                                <div class="flight-listing-price">
-                                                    <h6>&#8377; 4,892 <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
-                                                    <a href="" class="moreview">+1 more </a>
-                                                </div>
-                                                <div class="flight-listing-viewfares">
-                                                    <a href="" class="button-style">Selected</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="flight-info-box">
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>                                                 
-                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                </div>
-                            </div> 
-                            <div class="flight-listing">
-                                <div class="flight-listing-content">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="flight-radio">                                                            
-                                                <div class="flight-radio-image">
-                                                    <img src="assets/images/flights/flight-1.png" alt="">
-                                                </div>
-                                                <div class="flight-radio-time">
-                                                    <h6>IndiGo</h6>
-                                                    <p>6E 5334, 6E 7137</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-city-box">
-                                                <div class="flight-listing-time">
-                                                    <h6>08:05</h6>
-                                                    <p>Mumbai</p>
-                                                    <img src="./assets/images/icons/flight-right.png" alt="">
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>17:15</h6>
-                                                    <p>Hyderabad</p>
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>1hr 10 min</h6>
-                                                    <p>1 stop</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="flight-listing-pri">
-                                                <div class="flight-listing-image">
-                                                    <img src="assets/images/flights/1.png" alt="">
-                                                </div> 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-listing-pri"> 
-                                                <div class="flight-listing-price">
-                                                    <h6>&#8377; 4,892 <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
-                                                    <a href="" class="moreview">+1 more </a>
-                                                </div>
-                                                <div class="flight-listing-viewfares">
-                                                    <a href="" class="button-style">Selected</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="flight-info-box">
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>                                                 
-                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                </div>
-                            </div> 
-                            <div class="flight-listing">
-                                <div class="flight-listing-content">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="flight-radio">                                                            
-                                                <div class="flight-radio-image">
-                                                    <img src="assets/images/flights/flight-1.png" alt="">
-                                                </div>
-                                                <div class="flight-radio-time">
-                                                    <h6>IndiGo</h6>
-                                                    <p>6E 5334, 6E 7137</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-city-box">
-                                                <div class="flight-listing-time">
-                                                    <h6>08:05</h6>
-                                                    <p>Mumbai</p>
-                                                    <img src="./assets/images/icons/flight-right.png" alt="">
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>17:15</h6>
-                                                    <p>Hyderabad</p>
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>1hr 10 min</h6>
-                                                    <p>1 stop</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="flight-listing-pri">
-                                                <div class="flight-listing-image">
-                                                    <img src="assets/images/flights/1.png" alt="">
-                                                </div> 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-listing-pri"> 
-                                                <div class="flight-listing-price">
-                                                    <h6>&#8377; 4,892 <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
-                                                    <a href="" class="moreview">+1 more </a>
-                                                </div>
-                                                <div class="flight-listing-viewfares">
-                                                    <a href="" class="button-style">Selected</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="flight-info-box">
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>                                                 
-                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                </div>
-                            </div> 
+                            </div>  -->
                         </div>
 
                     </div>
