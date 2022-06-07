@@ -25,14 +25,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   flightList: any;
   fromFlightList = false;
   toFlightList = false;
-  selectedDate?: any;
-  cityName: any;
-  fromAirpotName: any = 'from airport';
-  fromCityName: any = 'From';
-  toCityName: any = 'To';
-  toAirpotName: any = 'to airport';
-  departureDate: any = new Date();
-  returnDate: any;
+  selectedDate?:any;
+  cityName:any;
+  fromAirpotName:any ='from airport';
+  fromCityName :any ='From';
+  toCityName:any ='To';
+  toAirpotName:any = 'to airport';
+  departureDate:any = new Date();
+  returnDate:any;
+  oneWayDate :any;
+
 
   // for passenger dropdown
   totalPassenger: number = 1;
@@ -183,6 +185,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toFlightList = false;
     this.fromFlightList = true;
     this.cityList = evt.target.value.trim().toLowerCase();
+    
     this.getCityList();
   }
 
@@ -198,6 +201,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.flightData.value.flightfrom = para1.id;
     this.fromAirpotName = para1.airport_name;
     this.fromCityName = para1.city;
+    localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
     console.log(para1.id);
   }
@@ -207,6 +211,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cityName = para2.city;
     this.toAirpotName = para2.airport_name;
     this.toCityName = para2.city;
+    localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
     console.log(para2);
     console.log(this.flightData.value.flightto);
@@ -218,20 +223,33 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loader = true;
     this.selectedDate = this.flightData.value.departure;
     console.log(this.selectDate);
+
+    this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
+      this.loader = false;
+      this.show = true;
+      this.flightList = res.response.onwardFlights;
+      this.oneWayDate = res.responseDateTime;
+      console.log(this.oneWayDate , "res");
+      this._flightService.flightListData = this.flightList;
+      this._flightService.flightListDate = this.oneWayDate;
+      console.log(this.flightList , "flight Search");
+      this.router.navigate(['flight-list']);
+    }, (error) => { console.log(error) });
+
 this.flightData.get('departure').setValue(this.departureDate)
-    this.sub = this._flightService.flightList(this.flightData.value).subscribe(
-      (res: any) => {
-        this.loader = false;
-        this.show = true;
-        this.flightList = res.response.onwardFlights;
-        this._flightService.flightListData = this.flightList;
-        console.log(this.flightList, 'flight Search');
-        this.router.navigate(['flight-list']);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // this.sub = this._flightService.flightList(this.flightData.value).subscribe(
+    //   (res: any) => {
+    //     this.loader = false;
+    //     this.show = true;
+    //     this.flightList = res.response.onwardFlights;
+    //     this._flightService.flightListData = this.flightList;
+    //     console.log(this.flightList, 'flight Search');
+    //     this.router.navigate(['flight-list']);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
   ngOnDestroy(): void {

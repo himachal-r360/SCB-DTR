@@ -1,4 +1,4 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component,  OnDestroy,  OnInit } from '@angular/core';
 import { FlightService } from 'src/app/common/flight.service';
 declare var $: any;
 
@@ -8,10 +8,14 @@ declare var $: any;
   templateUrl: './flight-list.component.html',
   styleUrls: ['./flight-list.component.css']
 })
-export class FlightListComponent implements OnInit {
+export class FlightListComponent implements OnInit ,OnDestroy {
   flightList = this._flightService.flightListData; 
   newDate = Date();
   loader = false;
+  fromCityName:any;
+  toCityName:any;
+ flightListDate = this._flightService.flightListDate;
+  
 
   constructor(private _flightService: FlightService) { }
 
@@ -26,6 +30,15 @@ export class FlightListComponent implements OnInit {
       grid: true
   });
 
+  this.fromCityName = localStorage.getItem('fromCity');
+  this.toCityName = localStorage.getItem('toCity');
+        
+        
+  }
+
+
+  ngOnDestroy(): void {
+    localStorage.clear()
   }
 
 }
