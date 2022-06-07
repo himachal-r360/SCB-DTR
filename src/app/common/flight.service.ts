@@ -21,8 +21,8 @@ export class FlightService {
   }
 
   getCityList(queryText: any) {
-    return this.http.post(`${this.city}&queryText=${queryText}&`, null)
+    return this.http.post(`${this.city}&queryText=${queryText}`, null)
   }
 
-  // 
+  //
 }

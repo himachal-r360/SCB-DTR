@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   cityName:any;
   fromAirpotName:any;
   toAirpotName:any;
-  departureDate:any;
+  departureDate:any = new Date();
   returnDate:any;
 
   flightData: any = this._fb.group({
@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     //   // this.newDate = e.format()
     //   // console.log(this.newDate ,"new date");
     //   // dep = e.format()
-   
+
     //    console.log(this.selectDate);
     // });
 console.log('hi');
@@ -108,7 +108,7 @@ console.log('hi');
       startDate: new Date(),
       //  todayBtn: 1,
       autoclose: true,
-      
+
     }, function(start:any, end:any, label:string) {
       console.log(start._d);
       a.departureDate=start._d;
