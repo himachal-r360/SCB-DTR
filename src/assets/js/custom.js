@@ -28,14 +28,15 @@ $(document).ready(function($) {
         e.stopPropagation();
     }); 
 
-    // $('.single-datepicker').datepicker({
-    //     format: 'mm/dd/yyyy',
-    //     startDate: '02/20/2018',
-    // });
-
-    $('.daterange-right').daterangepicker({
-        opens: 'left'
+    $('.single-datepicker').daterangepicker({
+        singleDatePicker: true,
+        opens: 'center'
     });
+    
+    $('.daterange-right').daterangepicker({
+        opens: 'center'
+    });
+
 
     // quantity
     function wcqib_refresh_quantity_increments() {
@@ -74,6 +75,55 @@ $(document).ready(function($) {
     $(".select-root-right h5").click(function(){
         $(".flight-to-data").toggleClass("flight-from-hide");
     });
+
+    var owlslider = jQuery(".carousel-search-date");
+    if (owlslider.length > 0) {
+        owlslider.each(function () {
+            var $this = $(this),
+                $items = $this.data("items") ? $this.data("items") : 1,
+                $loop = $this.attr("data-loop") ? $this.data("loop") : true,
+                $navdots = $this.data("nav-dots") ? $this.data("nav-dots") : false,
+                $navarrow = $this.data("nav-arrow") ? $this.data("nav-arrow") : true,
+                $autoplay = $this.attr("data-autoplay") ? $this.data("autoplay") : false,
+                $autospeed = $this.attr("data-autospeed") ? $this.data("autospeed") : 5000,
+                $smartspeed = $this.attr("data-smartspeed") ? $this.data("smartspeed") : 1000,
+                $autohgt = $this.data("autoheight") ? $this.data("autoheight") : false,
+                $space = $this.attr("data-space") ? $this.data("space") : 30,
+                $animateOut = $this.attr("data-animateOut") ? $this.data("animateOut") : false;
+
+            $(this).owlCarousel({
+                loop: $loop,
+                items: $items,
+                responsive: {
+                    0: {
+                        items: $this.data("xx-items") ? $this.data("xx-items") : 1,
+                    },
+                    480: {
+                        items: $this.data("xs-items") ? $this.data("xs-items") : 1,
+                    },
+                    768: {
+                        items: $this.data("sm-items") ? $this.data("sm-items") : 2,
+                    },
+                    980: {
+                        items: $this.data("md-items") ? $this.data("md-items") : 3,
+                    },
+                    1200: {
+                        items: $items,
+                    },
+                },
+                dots: $navdots,
+                space: $space,
+                autoplayTimeout: $autospeed,
+                smartSpeed: $smartspeed,
+                autoHeight: $autohgt,
+                margin: $space,
+                nav: $navarrow,
+                navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+                autoplay: $autoplay,
+                autoplayHoverPause: true,
+            });
+        });
+    }
     
 
     /*-------------------------------------------------------------
@@ -107,4 +157,8 @@ $(document).ready(function($) {
         }
         // :: back to top JS End
     }); 
+
+    $(window).on("load",function(){
+        $(".content").mCustomScrollbar();
+    });
 });
