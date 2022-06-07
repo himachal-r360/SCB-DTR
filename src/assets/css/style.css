@@ -13,7 +13,8 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
 ==================================================*/
 
 /* :: google font */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 
 /*==========================================
     :: Margin
@@ -1907,9 +1908,13 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     list-style: none;
     word-wrap: break-word;
 }
+html, body{
+    background-color: #f6faff;
+    height: 100%;
+}
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: #f6faff;
     color: #202020;
 }
@@ -1981,6 +1986,9 @@ button:focus {
 iframe {
     width: 100%;
     border: 0px;
+}
+.after-none:after, .before-none:before{
+    display: none;
 }
 
 /* :: Form */
@@ -2149,21 +2157,23 @@ h6 {
 .button-style {
     display: inline-block;
     vertical-align: top;
-    padding: 8px 30px;
-    border-radius: 30px;
-    border: 1px solid #0088ff;
-    background: #0088ff;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 500;
     text-transform: capitalize;
     position: relative;
     z-index: 5;
     overflow: hidden;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #1D86FF;
+    padding: 8px 15px;
+    border: 1px solid #1D86FF;
+    border-radius: 6px;
 }
 
 .button-style:hover {
-    background: #db5e3b;
+    background: #1D86FF;
     color: #ffffff;
     border-color: transparent;
 }
@@ -2191,6 +2201,9 @@ h6 {
 
 .text-color {
     color: #0088ff !important;
+}
+.text-secondory{
+    color: #888888 !important;
 }
 
 .bg-white {
@@ -2504,10 +2517,9 @@ textarea.error {
     position: relative;
     padding: 30px;
     background: #ffffff;
-    border-radius: 6px;
-    -webkit-box-shadow: 0 0 40px rgb(82 85 90 / 10%);
-    box-shadow: 0 0 40px rgb(82 85 90 / 10%);
     margin-bottom: 30px;
+    box-shadow: 0px 6px 52px rgb(0 0 0 / 6%);
+    border-radius: 8px;
 }
 .travel-select-area {
     position: relative;
@@ -2521,26 +2533,30 @@ textarea.error {
     display: inline-flex;
     gap: 30px;
     justify-content: center;
-    background: #e4eef6;
     align-items: center;
     padding: 20px;
     border-radius: 6px;
+    background: #FFFFFF;
+    box-shadow: 0px 5px 18px rgb(213 232 255 / 50%);
+    border-radius: 8px;
 }
-.travel-list-ul li .travel-list-a {
-    font-size: 17px;
+.travel-list-ul li .travel-list-a { 
     font-weight: 400;
-    color: #202020;
-    padding: 6px 15px;
+    color: #000000;
+    padding: 15px 25px;
     display: inline-block;
     border-radius: 5px;
+    font-size: 16px;
 }
 .travel-list-ul li .travel-list-a.active {
-    background: #cde4f7;
     font-weight: 500;
+    background: rgb(29 134 255 / 10%);
+    border-radius: 8px;
+    font-weight: 600;
+    line-height: 20px;
 }
 
-.travel-list-ul li .travel-list-a img {
-    width: 18px;
+.travel-list-ul li .travel-list-a img { 
     margin-right: 8px;
 }
 .travel-list-ul li .travel-list-a i {
@@ -2567,13 +2583,14 @@ ul.travel-select-trip-ul {
 }
 
 .travel-select-trip-ul span.selectway {
-    padding: 5px 15px;
+    padding: 3px 22px;
     display: block;
     border: 1px solid #d3d3d3;
     border-radius: 50px;
     color: #7f7f7f;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
+    font-size: 15px;
 }
 
 .travel-select-trip-ul .selectway.active {
@@ -2585,6 +2602,9 @@ ul.travel-select-trip-ul {
 .liothers{
     color: #000000; 
     font-weight: 500;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 
@@ -2598,28 +2618,30 @@ ul.travel-select-trip-ul {
     position: relative;
     width: 100%;
     border: 1px solid #d3d3d3;
+    background: #fff;
     border-radius: 10px;
     padding: 0px 15px;
     gap: 15px;
 }
 
-.select-root-area span{
+.select-root-area .select-roottitle{
     font-size:11px ;
     color: #7f7f7f;
+    text-transform: uppercase;
 }
 .select-root-left {
     width: 52%;
     border-right: 1px solid #d3d3d3;
-    /* padding: 5px 0; */
-padding:0 30px;
+    padding: 5px 0;
 }
 .select-root-right {
     width: 48%; 
-    /* padding: 5px 0px 5px 30px; */
-    padding:0 15px;
-
+    padding: 5px 0px 5px 30px;
 }
 
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
 
 .select-root-icons {
     width: 40px;
@@ -2648,26 +2670,41 @@ padding:0 30px;
     gap: 15px;
 }
 
-a.searchbn {
+.searchbn {
     background: #0088ff;
     color: #fff;
-    padding: 32px 50px;
+    padding: 28px 40px;
     border-radius: 5px;
+    font-size: 20px;
+    line-height: 27px;
 }
-a.searchbn:hover {
+.searchbn:hover {
     background: #005cac;
+    color: #ffffff;
 }
  
 .select-dep-ret {
-    width: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+} 
+.area-root-departure, .area-root-reutrn {
+    width: 50%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 5px 0px 5px 0px;
 }
-.select-root-date {
-    width: 20%;
-    text-align: end;
+ 
+
+.area-root-departure {
+    padding-right: 10px;
+    border-right: 1px solid #d3d3d3;
 }
+.area-root-reutrn {
+    padding-left: 20px;
+}
+
 .select-root-date a{
     font-size: 26px;
 }
@@ -2676,3 +2713,1009 @@ a.searchbn:hover {
     font-size: 47px;
     color: #202020;
 }
+.travel-select-trip-ul button.btn.dropdown-toggle.btn-light {
+    background: transparent;
+    border: none;
+}
+.travel-select-trip-ul .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 160px;
+}
+
+.select-root-area button.btn.dropdown-toggle.btn-light {
+    padding: 0;
+    font-size: 22px;
+    font-weight: 600;
+    background: transparent;
+    border: none;
+}
+.select-root-area .bootstrap-select>.dropdown-toggle:after{
+    display: none;
+}
+.select-root-area .bootstrap-select .dropdown-toggle:focus, .select-root-area  .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
+    outline: thin dotted #333!important;
+    outline: 0px auto -webkit-focus-ring-color!important;
+    outline-offset: -2px;
+}
+.select-root-area  .btn-check:focus+.btn-light, .btn-light:focus {
+    box-shadow: none;
+}
+
+
+
+.bootstrap-timepicker-widget.dropdown-menu:before,
+.bootstrap-timepicker-widget.dropdown-menu:after {
+    display: none;
+}
+
+.bootstrap-timepicker-widget table td input {
+    border: 1px solid #d3d3d3;
+}
+
+ 
+
+
+.datepicker td,
+.datepicker th, 
+.daterangepicker td,
+.daterangepicker th  { 
+    text-align: center;
+    vertical-align: middle;
+    min-width: 34px;
+    width: 34px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+    border-radius: 0px;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #d3d3d3 !important;
+}
+
+.datepicker { 
+    border-left: none ;
+    border-right: none ; 
+    border: none;
+    box-shadow: 0px 0px 9px rgb(0 0 0 / 17%);
+    border-radius: 8px;
+    padding: 5px 5px !important;
+}
+
+.daterangepicker {
+    border: none;
+    box-shadow: 0px 0px 9px rgb(0 0 0 / 17%);
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+.datepicker table tr td.active.active,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled.active,
+.datepicker table tr td.active.disabled.disabled,
+.datepicker table tr td.active.disabled:active,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active.disabled:hover.active,
+.datepicker table tr td.active.disabled:hover.disabled,
+.datepicker table tr td.active.disabled:hover:active,
+.datepicker table tr td.active.disabled:hover:hover,
+.datepicker table tr td.active.disabled:hover[disabled],
+.datepicker table tr td.active.disabled[disabled],
+.datepicker table tr td.active:active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active:hover.active,
+.datepicker table tr td.active:hover.disabled,
+.datepicker table tr td.active:hover:active,
+.datepicker table tr td.active:hover:hover,
+.datepicker table tr td.active:hover[disabled],
+.datepicker table tr td.active[disabled] {
+    background-color: #0088ff !important;
+    color: #ffffff;
+    background-image: none;
+}
+
+.daterangepicker td.active, 
+.daterangepicker td.active:hover, .daterangepicker td.in-range { 
+    background-color: #0088ff !important;
+    color: #ffffff !important;
+    background-image: none; 
+}
+
+.datepicker table.table-condensed thead tr th {
+    color: #000000;
+    opacity: 0.5;
+}
+.calendar-table thead tr:nth-child(2) th {
+    opacity: 0.5;
+}
+
+
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td, .datepicker th, .datepicker td {
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    border: none !important;
+    color: #202020;
+    font-weight: 500;
+}
+.daterangepicker th.month, .datepicker-switch {
+    width: auto;
+    font-size: 16px !important;
+    font-weight: 600;
+}
+.daterangepicker.show-calendar .drp-buttons {
+    display: none;
+}
+.select-root-date i {
+    cursor: pointer;
+}
+
+ 
+
+
+.bradcome-list a {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #0088ff;
+}
+.bradcome-list span{
+    color: #202020;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+
+
+
+.ModifySearch-area .root-search {
+    display: inline-flex;
+    width: calc(100% - 76%);
+}
+
+.ModifySearch-view{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    gap: 15px;
+    border-right: 1px solid #f0f0f0;
+}
+.ModifySearch-Travellers{
+    width: 150px;
+}
+.ModifySearch-Travellers .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
+
+
+.ModifySearch-view .select-root-left, 
+.ModifySearch-view .select-root-right {
+    width: 20%;
+    position: relative;
+}
+.Via-text p{
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.ModifySearch-view .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
+
+.ModifySearch-root-icons {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: -20px;
+    border: 1px solid #d3d3d3;
+    border-radius: 50px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    top: 30px;
+}
+.ModifySearch-root-icons img {
+    width: 20px;
+}
+.Modifybtn{
+    border: 1px solid #0088ff; 
+    padding: 34px 33px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #1D86FF;
+
+}
+.Modifybtn:hover{
+    background: #1D86FF;
+    color: #ffffffff;
+}
+
+
+
+/* custom-check-box */
+.custom-check-box {
+    position: relative;
+    display: block;
+}
+
+.default-sidebar .custom-check-box .custom-controls-stacked {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0px;
+}
+ 
+
+.custom-check-box:last-child {
+    margin-bottom: 0px;
+}
+
+.custom-check-box .custom-control {
+    position: relative;
+    display: inline-block;
+    margin: 0px;
+    padding-left: 22px;
+}
+
+.custom-check-box .custom-control.material-checkbox .material-control-input {
+    display: none;
+}
+
+.custom-check-box .custom-control.material-checkbox .material-control-indicator {
+    display: inline-block;
+    position: absolute;
+    top: 9px;
+    left: 0px;
+    width: 11px;
+    height: 11px;
+    border: 1px solid #ededed;
+    cursor: pointer;
+    border-radius: 1px;
+}
+
+.custom-check-box .custom-control.material-checkbox .material-control-indicator::before {
+    position: absolute;
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-size: 7px;
+    color: #ffffff;
+    width: 9px;
+    height: 10px;
+    font-weight: 800;
+    line-height: 10px;
+    text-align: center;
+    opacity: 0;
+}
+
+.custom-check-box .custom-control.material-checkbox .material-control-input:checked~.material-control-indicator::before {
+    opacity: 1;
+}
+
+.custom-check-box .custom-control.material-checkbox .material-control-input:checked~.material-control-indicator {
+    background: #0088ff !important;
+    border-color: #0088ff !important;
+}
+
+.custom-check-box .custom-controls-stacked .description {
+    position: relative;
+    display: inline-block;
+    padding: 0px;
+    cursor: pointer;
+    color: #555555;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.Flightcheaper{
+    margin-top: 15px;
+}
+.Flightcheaper ul{
+    display: flex;
+    align-items: center;
+}
+.Flightcheaper ul li{
+    margin-right: 10px;
+}
+.Flightcheaper span{
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #555555;
+}
+.Flightcheaper p {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 15px;
+    color: #000000;
+    border: 1px solid #d3d3d3;
+    border-radius: 50px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background: #fff;
+}
+
+.layout-box {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 82px;
+}
+.layout-left{
+    height: 100%;
+    max-width: 270px;
+    width: 100%;
+    position: relative;
+    border: 1px solid #e8eaf2;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+}
+.layout-right{
+    position: relative;
+    width: calc(100% - 250px); 
+}
+
+hr:not([size]) {
+    height: 1px;
+    background-color: #888888;
+}
+
+.Filterslayout{
+    margin-bottom: 20px;
+}
+
+.widget-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.widget-title h6 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.flighttiming-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    -ms-grid-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+}
+.flighttimings-text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #555555;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.flighttiming-list {
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    background-color: #fff;
+    padding: 4px;
+    cursor: pointer;
+}
+.flighttiming-list.active{
+    border: 1px solid #1D86FF;
+    background-color: rgba(29, 135, 255, 0.151);
+    color: #1D86FF;
+}
+.flighttiming-list p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #555555;
+    margin-top: 6px;
+}
+.flighttiming-list.active p{
+    color: #000000;
+    font-weight: 600;
+}
+
+
+.Stops-content{
+    margin-top: 10px;
+}
+
+.stops-widget .Stops-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    -ms-grid-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+.stops-widget .Stops-list {
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    background-color: #fff;
+    padding: 4px;
+    cursor: pointer;
+}
+.stops-widget .Stops-list.active{
+    border: 1px solid #1D86FF;
+    background-color: rgba(29, 135, 255, 0.151);
+    color: #1D86FF;
+}
+.stops-widget .Stops-list p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #555555;
+    margin-top: 6px;
+}
+.stops-widget .Stops-list.active p{
+    color: #000000;
+    font-weight: 600;
+}
+
+.sec-area {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    -ms-grid-columns: repeat(4, 1fr);
+    grid-gap: 0;
+    text-align: center;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 10%);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.sec-area > .sec-list {
+    padding: 5px 0; 
+    position: relative;
+}
+.sec-area > .sec-list:after {
+    border-right: 1px solid #C6C8CC;
+    content: "";
+    position: absolute;
+    height: 60%;
+    width: 2px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.sec-list.active{
+    border: 1px solid #1D86FF;
+    background-color: rgba(29, 135, 255, 0.151);
+    color: #1D86FF;
+}
+.sec-list.active::after{
+    display: none;
+}
+
+.sec-list.sec1 {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.sec-list.sec5 {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.sec-area span{
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+    opacity: 0.3;
+}
+.sec-area h6{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+}
+
+
+.flight-tosearch {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.flight-tosearch h6 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #000000;
+    ;
+}
+
+.flight-tosearch h6 small {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #555555;
+    margin-left: 10px;
+}
+
+.flight-search-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.flight-search-filters-left p{
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+
+.flight-search-filters-right, .flight-search-filters-right select{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px; 
+    color: #555555;
+    border: none;
+}
+.flight-search-filters-right select{
+    text-decoration: underline;
+    font-weight: 500;
+    background: transparent;
+}
+
+
+.flight-listing {
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 10%);
+    border-radius: 8px;
+    overflow: hidden; 
+    margin-bottom: 20px;
+}
+.flight-listing-content {
+    padding: 25px 15px;
+}
+
+
+.flight-radio {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.flight-radio-time h6 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+.flight-radio-time img{
+    margin:  0 5px;
+}
+
+.flight-radio-time p {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px;
+    color: #888888;
+}
+
+
+.flight-listing-time h6 {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #000000;
+}
+
+.flight-listing-time p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+
+.flight-listing-price {
+    margin: 0 12px;
+}
+.flight-listing-pri{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+.flight-listing-price h6 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+}
+.flight-listing-more .moreview {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px;
+    color: #1D86FF;
+}
+
+
+.flight-more-box{
+    border-top: 1px solid rgb(0 0 0 / 10%);
+}
+.flight-more-listing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 12px 15px 40px;
+    border-bottom: 1px dashed rgb(0 0 0 / 10%);
+}
+.flight-more-listing:hover{
+    background: rgba(29, 134, 255, 0.05); 
+}
+.flight-more-box .flight-more-listing:nth-last-child(1){
+    border-bottom: none;
+}
+
+.other-trip-price{
+    display: flex;
+    align-items: center;
+}
+
+.other-trip-price h6 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.flight-info-box{
+    background-color: rgba(29, 135, 255, 0.151);
+    padding: 2px 10px;
+}
+.flight-info-box p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px;
+    color: #1D86FF;
+}
+
+.flight-listing-adds{
+border: none;
+}
+
+
+.flight-fixed-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #ffffff;
+    -webkit-box-shadow: 2px 0 70px hsl(0deg 0% 13% / 15%);
+    box-shadow: 2px 0 70px hsl(0deg 0% 13% / 15%);
+    padding: 10px 0;
+    z-index: 8;
+}
+
+.flight-fixed{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.flight-fixed-left {
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    -ms-grid-columns: repeat(4, 1fr);
+    grid-gap: 0;
+}
+.flight-fixed-right{ 
+    width: calc(100% - 60%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.flight-fixed-list {
+    display: flex;
+    gap: 8px;
+    position: relative;
+}
+.flight-fixed-list:after {
+    content: "";
+    position: absolute;
+    background: url(../../assets/images/icons/right.png);
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    background-repeat: no-repeat;
+    right: 10px;
+    top: 10px;
+}
+.flight-fixed-list-content h6{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    color: #000000;
+}
+.flight-fixed-list-content p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+}
+
+.fixedright-price h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+}
+.fixedright-price span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #888888;
+}
+
+.fixedright-otherinfo .mainprice {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    text-decoration-line: line-through;
+    color: #888888;
+}
+.fixedright-otherinfo .price-off {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px;
+    color: #009817;
+    margin: 0 10px;
+}
+.fixedright-otherinfo  a{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #1D86FF;
+}
+.fixedright-otherinfo {
+    display: flex;
+}
+
+.flight-fixed-left:after {
+    border-right: 1px solid #C6C8CC;
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 2px;
+    top: 0;
+    right: 20px;
+    bottom: 0;
+    margin: auto;
+}
+
+.bootstrap-select button.btn.dropdown-toggle.btn-light { 
+    width: auto;
+}
+
+button.btn.dropdown-toggle.btn-light {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+}
+.dropdown-menu {
+    margin: 0;
+    padding: 0;
+}
+.dropdown-item.active, .dropdown-item:active {
+    color: #000000;
+    text-decoration: none;
+    background-color: #0d6efd;
+    background: rgba(29, 134, 255, 0.1);    
+}
+.dropdown-item {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 25px;
+}
+
+
+.Travellers-dropdown {
+    position: relative;
+}
+.Travellers-dropdown .Travellers-dropdown-data {
+    padding: 8px 10px;
+    z-index: 1;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0px 0px 8.02011px rgb(0 0 0 / 13%);
+    border-radius: 9.16584px;
+    width: 100%;
+    min-width: 14rem;
+    top: 35px; 
+}
+.Travellershide{
+    display: none;
+}
+
+.Travellers-dropdown-title h5 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+}
+.Travellers-dropdown-data li:not(:nth-last-child(1)) {
+    margin-bottom: 15px;
+}
+
+.Travellers-name h6 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13.7488px;
+    line-height: 19px;
+    color: #000000;
+}
+.Travellers-name p{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10.3116px;
+    line-height: 14px;  
+    color: rgba(0, 0, 0, 0.5);
+}
+.t-title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13.7488px;
+    line-height: 19px; 
+    color: rgba(0, 0, 0, 0.5); 
+}
+
+.Travellers-passengers-data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantity.buttons_added {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.qty-buttons {
+    width: 23px;
+    height: 23px;
+    line-height: 18px;
+    border-radius: 50px;
+    border: 2px solid rgb(175 175 175 / 30%);
+    background: transparent;
+    padding: 0;
+}
+.qty-buttons:hover {
+    border-color: #1D86FF;
+}
+
+.quantity input.qty { 
+    border: none;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.Travellers-dropdown-title {
+    cursor: pointer;
+}
+
+
+.select-root-left h5, .select-root-right h5, 
+.select-root-departure h5, .select-root-reutrn h5{
+    cursor: pointer;
+    font-weight: 700 !important;
+}
+.flight-from-data, .flight-to-data { 
+    z-index: 1;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0px 0px 8.02011px rgb(0 0 0 / 13%);
+    border-radius: 9.16584px;
+    width: 100%;
+    max-width: 20rem;
+    top: 85px;
+    overflow: hidden;
+}
+.flight-from-data-search {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.flight-from-data-search input {
+    border: none;
+    padding: 8px 10px;
+    font-weight: 500;
+    font-size: 14px; 
+    color: rgba(0, 0, 0, 0.5);
+}
+.flight-from-data-ul {
+    padding: 8px 10px;
+    max-height: 160px;
+    overflow: auto;
+}
+.flight-Results-text{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px; 
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.flight-from-ul-li-a {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.flight-from-name {
+    padding-left: 20px;
+    background: url(../images/icons/flight-search.png);
+    background-repeat: no-repeat;
+    background-position: 0 4px;
+}
+
+
+.flight-from-name h6 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+.flight-from-name p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 11px; 
+    color: rgba(0, 0, 0, 0.5);
+}
+.flight-from-shortname h6 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: right;
+    color: rgba(0, 0, 0, 0.5);
+} 
+
+.flight-from-data-ul li:not(:nth-last-child(1)) {
+    margin-bottom: 15px;
+}
+
+.flight-from-hide{
+    display: none;
+}
+
+
+
