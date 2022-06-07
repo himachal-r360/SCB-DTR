@@ -1,117 +1,637 @@
-<div class="container">
+<section class="flight-area mt-10">
+    <div class="container">
         <div class="row">
-            <div class="mt-3"></div>
-            <!-- <div class="d-flex align-items-center">
-                <div >
-                    <h4>Delhi to Bangalore </h4>
-                </div>
-                <div class="ms-3" >
-                    <p>{{newDate | date:'yyyy-MM-dd' }}</p>
-                </div>
-            </div> -->
-            <h3  class="text-center" *ngIf="loader">Loading...</h3>
-            <div class="mt-3"></div>
-            <div *ngFor="let list of flightList">
-                <div class="accordion-item">
-                    <div class="accordion-header" id="panelsStayOpen-headingTwo">
-                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
-                            aria-controls="panelsStayOpen-collapseTwo">
-                            <div class="col-md-8">
-                                <div class="d-flex align-items-center justify-content-evenly">
-                                    <div>
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <rect width="30" height="30" fill="url(#pattern0)" />
-                                            <defs>
-                                                <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1"
-                                                    height="1">
-                                                    <use xlink:href="#image0_2_420" transform="scale(0.00444444)" />
-                                                </pattern>
-                                                <image id="image0_2_420" width="225" height="225"
-                                                    xlink:href="data:image/png;base64,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" />
-                                            </defs>
-                                        </svg>
-    
+            <div class="col-lg-12">
+                <div class="travel-box mb-20"> 
+                    <div class="travel-select-data-area">
+                        <div class="travel-select-trip mt-0">
+                            <ul class="travel-select-trip-ul">
+                                <li>
+                                    <span class="selectway ">Round Way</span>
+                                </li>
+                                <li>
+                                    <span class="selectway active">One Way</span>
+                                </li>
+                                <li>
+                                    <span class="selectway">Multicity</span>
+                                </li>
+                                <li> 
+                                    <div class="Travellers-dropdown ms-3">
+                                        <div class="Travellers-dropdown-title">
+                                            <h5>03 Passengers <i class="fas fa-caret-down"></i></h5>
+                                        </div>
+                                        <ul class="Travellers-dropdown-data Travellershide">
+                                            <li>
+                                                <p class="t-title">Travellers</p>
+                                            </li>
+                                            <li>
+                                                <div class="Travellers-passengers-data">
+                                                    <div class="Travellers-name">
+                                                        <h6>Adult</h6>
+                                                        <p>12 years & above</p>
+                                                    </div>
+                                                    <div class="Travellers-qty">
+                                                        <div class="quantity buttons_added">
+                                                            <input type="button" value="-" class="qty-buttons minus">
+                                                            <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                            <input type="button" value="+" class="qty-buttons plus">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="Travellers-passengers-data">
+                                                    <div class="Travellers-name">
+                                                        <h6>Child</h6>
+                                                        <p>2 - 11 years</p>
+                                                    </div>
+                                                    <div class="Travellers-qty">
+                                                        <div class="quantity buttons_added">
+                                                            <input type="button" value="-" class="qty-buttons minus">
+                                                            <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                            <input type="button" value="+" class="qty-buttons plus">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="Travellers-passengers-data">
+                                                    <div class="Travellers-name">
+                                                        <h6>Infant</h6>
+                                                        <p>Under 2 years</p>
+                                                    </div>
+                                                    <div class="Travellers-qty">
+                                                        <div class="quantity buttons_added">
+                                                            <input type="button" value="-" class="qty-buttons minus">
+                                                            <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                            <input type="button" value="+" class="qty-buttons plus">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div *ngIf="list.flights.length > 0">
-                                        <span> {{list.flights[0].departureDateTime | date:'HH:mm'}} ->
-                                            {{list.flights[0].arrivalDateTime | date:'HH:mm'}} </span>
+
+                                </li>
+                                <li>                                                
+                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
+                                        <option selected="selected">Business Class</option>
+                                        <option>Economy Class</option>
+                                        <option>First Class</option>
+                                        <option>Premium Economy</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="travel-data">
+                            <div class="row g-2">
+                                <div class="col-lg-6">
+                                    <div class="select-root-area">
+                                        <div class="select-root-left">
+                                            <span class="select-roottitle">FROM</span>
+                                            <h5 class="">Gujarat</h5>
+                                            <span class="select-roottitle">Bangalore Internationl Airport</span>
+                                            <div class="flight-from-data flight-from-hide">
+                                                <div class="flight-from-data-search">
+                                                    <input type="text" name="" class="w-100" id="" placeholder="Search City">
+                                                </div>
+                                                <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                                                    <li class="flight-from-ul-li">
+                                                        <p class="flight-Results-text">Results</p>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Mumbai, India</h6>
+                                                                <p>Chhatrapati Shivaji International Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>BOM</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Pune, India</h6>
+                                                                <p>Pune Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>PNQ</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Bengaluru, India</h6>
+                                                                <p>Bengaluru International Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>BLR</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>New Delhi, India</h6>
+                                                                <p>Indira Gandhi International Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>DLE</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Chennai, India</h6>
+                                                                <p>Chennai International Airport  </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>MAA</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="select-root-icons">
+                                            <img src="./assets/images/icons/twoway.png" alt="">
+                                        </div>
+                                        <div class="select-root-right">
+                                            <span class="select-roottitle">TO</span>
+                                            <h5 class="">Pune</h5>
+                                            <span class="select-roottitle">Pune Internationl Airport</span>
+
+                                            <div class="flight-to-data flight-from-hide">
+                                                <div class="flight-from-data-search">
+                                                    <input type="text" name="" class="w-100" id="" placeholder="Search City">
+                                                </div>
+                                                <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                                                    <li class="flight-from-ul-li">
+                                                        <p class="flight-Results-text">Results</p>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Mumbai, India</h6>
+                                                                <p>Chhatrapati Shivaji International Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>BOM</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Pune, India</h6>
+                                                                <p>Pune Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>PNQ</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Bengaluru, India</h6>
+                                                                <p>Bengaluru International Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>BLR</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>New Delhi, India</h6>
+                                                                <p>Indira Gandhi International Airport </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>DLE</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="flight-from-ul-li">
+                                                        <a href="#" class="flight-from-ul-li-a">
+                                                            <div class="flight-from-name">
+                                                                <h6>Chennai, India</h6>
+                                                                <p>Chennai International Airport  </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname">
+                                                                <h6>MAA</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-    
-                                    <div *ngIf="list.flights.length > 0">
-                                        {{ list.flights[0].duration }} <br>
-                                        <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
-                                        <span
-                                            *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}}
-                                            stops</span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="root-date">
+                                        <div class="select-root-area">
+                                            <div class="select-dep-ret">
+                                                <div class="area-root-departure">
+                                                    <div class="select-root-departure">
+                                                        <span class="select-roottitle">DEPARTURE</span>
+                                                        <h5 class=" ">23 May</h5>
+                                                        <span class="select-roottitle">Friday</span>
+                                                    </div> 
+                                                    <div class="select-root-date">
+                                                        <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                    </div>
+                                                </div> 
+                                                <div class="area-root-reutrn">
+                                                    <div class="select-root-reutrn">
+                                                        <span class="select-roottitle">RETURN</span>
+                                                        <!-- <h5 class="">29 May</h5> -->
+                                                        <span class="select-roottitle d-block w-100">Select Return</span>
+                                                    </div>
+                                                    <div class="select-root-date">
+                                                        <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
+                                                    </div>
+
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="root-search">
+                                            <a href="flight_listing.html" class="searchbn">Search</a>
+                                        </div>
                                     </div>
-    
-                                    <div *ngIf="list.flights.length > 0">
-                                        <!-- <img src="assets/images/Cleartrip-N.png" alt="cleartrip" width="100px"> -->
-                                        {{list.flights[0].airlineName}}
-    
-    
-                                    </div>
-    
-                                    <div *ngIf="list.priceSummary.length > 0">
-                                        <h3>&#8377; {{list.priceSummary[0].totalFare}}</h3>
-                                    </div>
-    
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
-                        aria-labelledby="panelsStayOpen-headingTwo">
-                        <div class="accordion-body">
-                            <div *ngFor="let priceSummaryItem of list.priceSummary">
-                                <div class="d-flex align-items-center justify-content-evenly">
-                                    <div>
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <rect width="30" height="30" fill="url(#pattern0)" />
-                                            <defs>
-                                                <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1"
-                                                    height="1">
-                                                    <use xlink:href="#image0_2_420" transform="scale(0.00444444)" />
-                                                </pattern>
-                                                <image id="image0_2_420" width="225" height="225"
-                                                    xlink:href="data:image/png;base64,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" />
-                                            </defs>
-                                        </svg>
-    
-                                    </div>
-                                    <div>
-                                        <span>{{priceSummaryItem.partnerName}}</span>
-                                    </div>
-    
-                                    <!-- <div>
-                                        1hr 10 min <br>
-                                        <span>non stop</span>
-                                    </div> -->
-    
-                                    <!-- <div>
-                                        <img src="assets/images/Cleartrip-N.png" alt="cleartrip" width="100px">
-    
-    
-                                    </div> -->
-    
-                                    <div>
-                                        <h3>&#8377; {{priceSummaryItem.totalFare}}</h3>
-                                    </div>
-    
-                                </div>
-    
-                            </div>
-                        </div>
-    
                     </div>
                 </div>
             </div>
-    
-    
-    
-    
+             
+
+            <div class="col-lg-12">
+                <div class="layout-box">
+                    <div class="layout-left">
+                        <div class="Filterslayout d-flex justify-content-between align-items-center">
+                            <h6 class="fs_16">Filters</h6>
+                            <a href="" class="fs_13 text-color">Clear all</a>
+                        </div>  
+                        <hr>
+                        <div class="default-sidebar flight-sidebar">
+                            <div class="sidebar-widget search-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Populat Filters</h6>
+                                    <img src="assets/images/icons/up.png" alt="">
+                                </div> 
+                                <div class="widget-content">
+                                    <ul class="category-list clearfix mt-2">
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" />
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Refundable Fares (84)</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" checked="checked" />
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Non-stop (23)</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" />
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Morning Departures (66)</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" />
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Meals Included</span>
+                                                </label>
+                                            </div>
+                                        </li> 
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="sidebar-widget flighttimings-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Flight Timings</h6>
+                                    <img src="assets/images/icons/up.png" alt="">
+                                </div>
+                                <div class="widget-content">
+                                    <p class="flighttimings-text">Departing flight (BOM-HYD)</p>
+                                    <div class="flighttiming-content flight-departing">
+                                        <div class="flighttiming-list">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>00-06</p>
+                                        </div>
+                                        <div class="flighttiming-list active">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>06-12</p>
+                                        </div>
+                                        <div class="flighttiming-list">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>12-18</p>
+                                        </div>
+                                        <div class="flighttiming-list">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>18-00</p>
+                                        </div>
+                                    </div>
+                                    <p class="flighttimings-text">Returning flight (HYD-BOM)</p>
+                                    <div class="flighttiming-content flight-Returning">
+                                        <div class="flighttiming-list">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>00-06</p>
+                                        </div>
+                                        <div class="flighttiming-list active">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>06-12</p>
+                                        </div>
+                                        <div class="flighttiming-list">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>12-18</p>
+                                        </div>
+                                        <div class="flighttiming-list">
+                                            <img src="https://dummyimage.com/20x20" alt="">
+                                            <p>18-00</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="sidebar-widget stops-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Price</h6>
+                                    <img src="assets/images/icons/up.png" alt="">
+                                </div>
+                                <div class="widget-content mt-20 mb-10"> 
+                                    <input type="text" class="js-range-slider" name="my_range" value="" />
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="sidebar-widget stops-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Stops</h6>
+                                    <img src="assets/images/icons/up.png" alt="">
+                                </div>
+                                <div class="widget-content"> 
+                                    <div class="Stops-content">
+                                        <div class="Stops-list">                                                        
+                                            <p>No <br> stops</p>
+                                        </div>
+                                        <div class="Stops-list active">                                                         
+                                            <p>1 <br> stops</p>
+                                        </div>
+                                        <div class="Stops-list">
+                                            <p>2+ <br> stops</p>
+                                        </div> 
+                                    </div> 
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="layout-right">
+                         
+
+                        <div class="flightsfound">
+                            <div class="flight-tosearch">
+                                <h6>
+                                    <img src="assets/images/icons/flight-listing.png" alt="">
+                                    Mumbai to Hyderabad
+                                    <small>Thu, 12 Mar</small>
+                                </h6>
+                                
+                                <div class="flight-search-filters-right"> 
+                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
+                                        <option selected="selected">Price Low to High</option>
+                                        <option>Price High to Low</option>
+                                        <option>Depart Ealry</option>
+                                        <option>Depart Late</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flight-search-filters">
+                                <div class="flight-search-filters-left">
+                                    <p>124 flights found</p>
+                                </div>
+                            </div>
+                            <div class="search-date-slider">
+                                <div class="owl-carousel carousel-search-date" data-nav-arrow="false" data-items="7" data-md-items="6" data-sm-items="5" data-xs-items="3" data-xx-items="2" data-space="0" data-autoheight="true">                                             
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items active">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="search-date-items">
+                                            <p>Fri, Jul 08</p>
+                                            <h6>&#8377; 6,474</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Listing -->
+                        <div class="flight-listing-area">
+                            
+                            <div class="flight-listing" *ngFor="let list of flightList">
+                                <div class="flight-listing-content">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="flight-radio">                                                            
+                                                <div class="flight-radio-image">
+                                                    <img src="assets/images/flights/flight-1.png" alt="">
+                                                </div>
+                                                <div class="flight-radio-time" *ngIf="list.flights.length > 0">
+                                                    <h6>{{list.flights[0].airlineName}}</h6>
+                                                    <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="flight-city-box" *ngIf="list.flights.length > 0">
+                                                <div class="flight-listing-time">
+                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} </h6>
+                                                    <p>{{list.flights[0].departureAirport}}</p>
+                                                    <img src="./assets/images/icons/flight-right.png" alt="">
+                                                </div>
+                                                <div class="flight-listing-time">
+                                                    <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                    <p>{{list.flights[0].arrivalAirport}}</p>
+                                                </div>
+                                                <div class="flight-listing-time" *ngIf="list.flights.length > 0">
+                                                    <h6>{{ list.flights[0].duration }}</h6>
+                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
+                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="flight-listing-pri">
+                                                <div class="flight-listing-image" *ngIf="list.flights.length > 0">
+                                                    <!-- <img src="assets/images/flights/1.png" alt=""> -->
+                                                    <p>{{list.flights[0].airlineName}}</p>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="flight-listing-pri"> 
+                                                <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
+                                                    <h6>&#8377;  {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                    <a href="" class="moreview">+1 more </a>
+                                                </div>
+                                                <div class="flight-listing-viewfares">
+                                                    <a href="" class="button-style">Selected</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="flight-info-box">
+                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>                                                 
+                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
+                                </div>
+                            </div> 
+                           
+                      
+<!--                           
+                            <div class="flight-listing">
+                                <div class="flight-listing-content">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="flight-radio">                                                            
+                                                <div class="flight-radio-image">
+                                                    <img src="assets/images/flights/flight-1.png" alt="">
+                                                </div>
+                                                <div class="flight-radio-time">
+                                                    <h6>IndiGo</h6>
+                                                    <p>6E 5334, 6E 7137</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="flight-city-box">
+                                                <div class="flight-listing-time">
+                                                    <h6>08:05</h6>
+                                                    <p>Mumbai</p>
+                                                    <img src="./assets/images/icons/flight-right.png" alt="">
+                                                </div>
+                                                <div class="flight-listing-time">
+                                                    <h6>17:15</h6>
+                                                    <p>Hyderabad</p>
+                                                </div>
+                                                <div class="flight-listing-time">
+                                                    <h6>1hr 10 min</h6>
+                                                    <p>1 stop</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="flight-listing-pri">
+                                                <div class="flight-listing-image">
+                                                    <img src="assets/images/flights/1.png" alt="">
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="flight-listing-pri"> 
+                                                <div class="flight-listing-price">
+                                                    <h6>&#8377; 4,892 <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                    <a href="" class="moreview">+1 more </a>
+                                                </div>
+                                                <div class="flight-listing-viewfares">
+                                                    <a href="" class="button-style">Selected</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="flight-info-box">
+                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>                                                 
+                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
+                                </div>
+                            </div>  -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</section>

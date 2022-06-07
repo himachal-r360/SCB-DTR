@@ -1,5 +1,7 @@
 import { Component,  OnInit } from '@angular/core';
 import { FlightService } from 'src/app/common/flight.service';
+declare var $: any;
+
 
 @Component({
   selector: 'app-flight-list',
@@ -14,7 +16,16 @@ export class FlightListComponent implements OnInit {
   constructor(private _flightService: FlightService) { }
 
   ngOnInit(): void {
-    
+    $(".js-range-slider").ionRangeSlider({
+      type: "double",
+      min: 0,
+      max: 1000,
+      from: 200,
+      to: 500,
+      prefix: "$",
+      grid: true
+  });
+
   }
 
 }
