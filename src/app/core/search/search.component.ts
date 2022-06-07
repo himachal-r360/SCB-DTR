@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FlightService } from '../common/flight.service';
+import { FlightService } from 'src/app/common/flight.service';
 declare var $: any;
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnInit ,OnDestroy {
   sub?: Subscription
   loader = false;
   show = false;
@@ -42,37 +42,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     travel: ["DOM"]
   })
 
-
-  // flightData: any = this._fb.group({
-  //   depart: ["2022-06-15"],
-  //   channel: ["web"],
-  //   arrive: [""],
-  //   leavingFrom: ["DEL"],
-  //   infants: ["0"],
-  //   child: ["0"],
-  //   goingTo: ["BLR"],
-  //   travel: ["DOM"],
-  //   classType: ["E"],
-  //   defaultType: ["O"],
-  //   sortBy: ["asc"],
-  //   count_t: ["1"],
-  //   adultsq: ["1"]
-  // })
-
-
-  // flightData: any = this._fb.group({
-  //   flightfrom: ["DEL"],
-  //   flightto: ["BLR"],
-  //   flightclass: ["E"],
-  //   flightdefault: ["O"],
-  //   departure: ["2022-05-31"],
-  //   arrival: [":"],
-  //   adults: ["1"],
-  //   child: ["0"],
-  //   infants: ["0"],
-  //   travel: ["DOM"],
-
-  // })
   constructor(public router: Router, private _fb: FormBuilder, private _flightService: FlightService) { }
 
   ngOnInit(): void {
@@ -152,19 +121,12 @@ console.log('hi');
     // });
   }
 
-  // convertDate(str:any) {
-  //   var date = new Date(str),
-  //     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-  //     day = ("0" + date.getDate()).slice(-2);
-  //   return [date.getFullYear(), mnth, day].join("-");
-  // }
   getCityList() {
     this.sub = this._flightService.getCityList(this.cityList).subscribe((res: any) => {
       this.cityList = res.hits.hits;
       console.log(this.cityList);
     })
   }
-
 
   fromList(evt: any) {
     this.toFlightList = false;
@@ -203,7 +165,6 @@ console.log('hi');
 
   }
 
-
   flightSearch() {
     debugger;
     console.log(this.departureDate);
@@ -228,4 +189,5 @@ console.log('hi');
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
+
 }

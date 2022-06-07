@@ -5,12 +5,20 @@ import { FlightListComponent } from './flight-list/flight-list.component';
 
 
 
+
+
+
 @NgModule({
   declarations: [
-    FlightListComponent
+    FlightListComponent,
+    
+    
   ],
   imports: [
     CommonModule,
+    
+    
+
     
   ]
 })

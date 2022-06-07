@@ -10,6 +10,7 @@ export class FlightService {
   flight = environment.url + "api/flightSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
   flightListData: any;
+  flightListDate:any;
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) { }
