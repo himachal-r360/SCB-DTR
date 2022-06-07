@@ -50,7 +50,7 @@
                                     <li>
                                         <div class="Travellers-dropdown ms-3">
                                             <div class="Travellers-dropdown-title">
-                                                <h5>03 Passengers <i class="fas fa-caret-down"></i></h5>
+                                                <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i></h5>
                                             </div>
                                             <ul class="Travellers-dropdown-data Travellershide">
                                                 <li>
@@ -64,9 +64,9 @@
                                                         </div>
                                                         <div class="Travellers-qty">
                                                             <div class="quantity buttons_added">
-                                                                <input type="button" value="-" class="qty-buttons minus" >
-                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" formControlName="adults" size="4" pattern="" inputmode="">
-                                                                <input type="button" value="+" class="qty-buttons plus">
+                                                                <input type="button" (click)="decreaseAdult()"  value="-" class="qty-buttons minus" >
+                                                                <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" formControlName="adults" size="4" pattern="" inputmode="">
+                                                                <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent"  class="qty-buttons plus">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -79,9 +79,9 @@
                                                         </div>
                                                         <div class="Travellers-qty">
                                                             <div class="quantity buttons_added">
-                                                                <input type="button" value="-" class="qty-buttons minus" >
-                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child">
-                                                                <input type="button" value="+" class="qty-buttons plus">
+                                                                <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus" >
+                                                                <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child">
+                                                                <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -96,9 +96,9 @@
                                                         </div>
                                                         <div class="Travellers-qty">
                                                             <div class="quantity buttons_added">
-                                                                <input type="button" value="-" class="qty-buttons minus" >
-                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" inputmode="">
-                                                                <input type="button" value="+" class="qty-buttons plus">
+                                                                <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus" >
+                                                                <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" inputmode="">
+                                                                <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -108,7 +108,7 @@
 
                                     </li>
                                     <li>
-                                        <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" formControlName="flightclass">
+                                        <select name="" class="liothers class-select ms-4" value="B" aria-label="Default select example" formControlName="flightclass">
                                             <option selected="selected" value="B">Business Class</option>
                                             <option value="E">Economy Class</option>
                                             <option value="F">First Class</option>
@@ -122,12 +122,12 @@
                                     <div class="col-lg-6">
                                         <div class="select-root-area">
                                             <div class="select-root-left">
-                                                <span class="select-roottitle">&nbsp;</span>
+                                                <span class="select-roottitle">FROM</span>
                                                 <h5 class="fw_6 ">{{fromCityName}}</h5>
                                                 <span class="select-roottitle">{{fromAirpotName}}</span>
                                                 <div class="flight-from-data flight-from-hide" >
                                                     <div class="flight-from-data-search">
-                                                        <input type="text" name="" class="w-100" id="fromCitySearch" placeholder="Search City" (keyup)="fromList($event)">
+                                                        <input type="text" autocomplete="off" name="" class="w-100" id="fromCitySearch" placeholder="Search City" (keyup)="fromList($event)">
                                                     </div>
                                                     <ul class="flight-from-data-ul" *ngIf="fromFlightList">
                                                         <li class="flight-from-ul-li">
@@ -153,13 +153,13 @@
                                                 <img src="./assets/images/icons/twoway.png" alt="">
                                             </div>
                                             <div class="select-root-right">
-                                                <span class="select-roottitle">&nbsp;</span>
+                                                <span class="select-roottitle">TO</span>
                                                 <h5 class="fw_6 ">{{toCityName}}</h5>
                                                 <span class="select-roottitle">{{toAirpotName}}</span>
 
                                                 <div class="flight-to-data flight-from-hide" >
                                                     <div class="flight-from-data-search">
-                                                        <input type="text" name="" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
+                                                        <input type="text" name="" autocomplete="off" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
                                                     </div>
                                                     <ul class="flight-from-data-ul" *ngIf="toFlightList">
                                                         <li class="flight-from-ul-li">
