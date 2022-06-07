@@ -21,8 +21,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   toFlightList = false;
   selectedDate?:any;
   cityName:any;
-  fromAirpotName:any;
-  toAirpotName:any;
+  fromAirpotName:any ='from airport';
+  fromCityName :any ='From';
+  toCityName:any ='To';
+  toAirpotName:any = 'to airport';
   departureDate:any = new Date();
   returnDate:any;
 
@@ -178,8 +180,10 @@ console.log('hi');
   }
 
   selectFromFlightList(para1: any) {
+    console.log(para1)
     this.flightData.value.flightfrom = para1.id;
     this.fromAirpotName = para1.airport_name;
+    this.fromCityName = para1.city;
     this.fromFlightList = false;
     console.log(para1.id);
   }
@@ -188,6 +192,7 @@ console.log('hi');
     this.flightData.value.flightto = para2.id;
     this.cityName = para2.city
     this.toAirpotName = para2.airport_name;
+    this.toCityName = para2.city;
     this.toFlightList = false;
     console.log(para2);
     console.log(this.flightData.value.flightto);
