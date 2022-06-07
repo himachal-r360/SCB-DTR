@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   cityName:any;
   fromAirpotName:any;
   toAirpotName:any;
-  departureDate:any;
+  departureDate:any = new Date();
   returnDate:any;
 
   flightData: any = this._fb.group({
@@ -76,7 +76,34 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getCityList();
     this.selectDate("DepartureDate");
 
+  $(document).click(function(e:any){
+    var containerLeft = $(".select-root-left");
+    if (!$(e.target).closest(containerLeft).length) {
+      $(".flight-from-data").addClass("flight-from-hide");
+    }
+    else{
+      $("#fromCitySearch").val('');
+      $(".flight-from-data").removeClass("flight-from-hide");
+    }
 
+    var containerRight = $(".select-root-right");
+    if (!$(e.target).closest(containerRight).length) {
+      $(".flight-to-data").addClass("flight-from-hide");
+    }
+    else{
+      $("#toCitySearch").val('');
+      $(".flight-to-data").removeClass("flight-from-hide");
+    }
+
+    var TravellersDropdown = $(".Travellers-dropdown");
+    if (!$(e.target).closest(TravellersDropdown).length) {
+      $(".Travellers-dropdown-data").addClass("Travellershide");
+    }
+    else{
+      $(".Travellers-dropdown-data").removeClass("Travellershide");
+    }
+
+});
 
   }
 
@@ -96,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     //   // this.newDate = e.format()
     //   // console.log(this.newDate ,"new date");
     //   // dep = e.format()
-   
+
     //    console.log(this.selectDate);
     // });
 console.log('hi');
@@ -108,7 +135,7 @@ console.log('hi');
       startDate: new Date(),
       //  todayBtn: 1,
       autoclose: true,
-      
+
     }, function(start:any, end:any, label:string) {
       console.log(start._d);
       a.departureDate=start._d;
