@@ -25,7 +25,8 @@ export class FlightListComponent implements OnInit {
       prefix: "$",
       grid: true
   });
-
+      
+      
   }
 
 }
