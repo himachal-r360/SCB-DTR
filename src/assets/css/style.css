@@ -2019,6 +2019,39 @@ input[type="number"] {
     text-shadow: none;
 }
 
+/*radio button stype*/ 
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {position: absolute; left: -9999px; }
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label {position: relative; padding-left: 24px; cursor: pointer; display: inline-block;}
+[type="radio"]:checked + label:before,
+[type="radio"]:checked + label:before, [type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:before {border-color: #1d86ff;}
+[type="radio"]:checked + label:after, [type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #1D86FF;
+    position: absolute;
+    top: 7px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+[type="radio"]:not(:checked) + label:after {opacity: 0; -webkit-transform: scale(0); transform: scale(0); }
+[type="radio"]:checked + label:after {opacity: 1; -webkit-transform: scale(1); transform: scale(1); }
+
 /* :: headings */
 
 /* :: Font h1 */
@@ -2204,6 +2237,13 @@ h6 {
 }
 .text-secondory{
     color: #888888 !important;
+}
+
+.text-red{
+    color: #E31E24 !important;
+}
+.text-green{
+    color: #008000 !important;
 }
 
 .bg-white {
@@ -3278,8 +3318,7 @@ hr:not([size]) {
 .flight-listing {
     background: #fff;
     border: 1px solid rgb(0 0 0 / 10%);
-    border-radius: 8px;
-    overflow: hidden; 
+    border-radius: 8px; 
     margin-bottom: 12px;
 }
 .flight-listing-content {
@@ -3873,4 +3912,190 @@ button:focus, button:active {
 
 .flight-info-box a img {
     margin-left: 3px;
+}
+
+
+
+.flight-details-box-hide{
+    display: none;
+}
+.flight-details-box{
+    padding: 12px 15px;
+    border-top: 1px solid #E2DDDD; 
+}
+.flight-details-options ul{
+    display: flex;
+
+}
+.flight-details-options ul li {
+    position: relative;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000000;
+    margin-right: 20px;
+}
+
+.flight-options-box {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.flight-options-list {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid rgb(226 221 221 / 43%);
+}
+.flight-options-box .flight-options-list:nth-last-child(1){
+    border-bottom: none;
+}
+
+.flight-options-list-left {
+    display: flex;
+    align-items: center;
+}
+.flight-options-list-left .flight-options-logo{
+    width: 100px;
+}
+.flight-options-list-left .flight-options-text{
+    width: 220px; 
+}
+.flight-options-list-left .flight-options-text p{ 
+    font-style: normal;
+    font-weight: 400;
+    font-size: 9px;
+    line-height: 12px;
+}
+
+.flight-options-list-right {
+    display: flex;
+    align-items: center;
+}
+.flight-options-list-right .emi-options p{ 
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #5F5E5E;
+}
+.flight-options-list-right .flight-options-price {
+    width: 130px;
+    margin-left: 30px;
+    position: relative;
+}
+.flight-options-list-right .flight-options-price > p {
+    font-weight: 600;
+}
+.flight-options-book a {
+    background: #1D86FF;
+    border: 1px solid #1D86FF;
+    border-radius: 6px;
+    color: #fff;
+    min-width: 110px;
+    padding: 10px 10px;
+}
+
+
+.information-icon:hover .hover-popover{
+    display: block !important;
+}
+
+.flight-listing-price .information-icon{
+    position: relative;
+
+}
+
+.flight-listing-price  .hover-popover{
+    transform: translate(-29px, 10px);
+    bottom: 48px;
+}
+.flight-details-options .hover-popover {
+    transform: translate(-43px, 20px);
+    bottom: 48px;
+}
+
+.flight-details-options ul li.FlexiPlus .hover-popover {
+    transform: translate(-17px, 20px);
+}
+
+.flight-options-price .hover-popover {
+    transform: translate(-38px, 20px);
+    bottom: 48px;
+    left: -64px;
+}
+
+.information-icon {
+    position: relative;
+}
+
+.hover-popover {
+    position: absolute;
+    background: #fff;
+    box-shadow: 0px 4px 14px rgb(0 0 0 / 18%);
+    border-radius: 15px;
+    padding: 10px;
+    z-index: 9;
+    margin: 0 auto;
+    min-width: 15rem;
+    display: none;
+}
+.hover-popover:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -13px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+.hover-popover-title h6 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px; 
+    color: #000000;
+}
+.hover-popover-title span{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px; 
+    color: #939393;
+}
+.hover-popover-content {
+    position: relative;
+}
+.hover-popover-content-list {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 10px 0;
+}
+.hover-popover-content-list p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 157.7%;
+    color: #000000;
+}
+.hover-popover-content-list.popover-total p {
+    font-weight: 700; 
+}
+.hover-popover-footer p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 157.7%;
+    color: #000000;
+    opacity: 0.5;
+}
+
+
+
+
+.flight-details-options .information-icon .hover-popover .hover-popover-content .hover-popover-content-list p{
+    padding-left: 23px;
+    background: url("../../assets/images/icons/ok.png") no-repeat;
+    background-position: 0 2px;
 }

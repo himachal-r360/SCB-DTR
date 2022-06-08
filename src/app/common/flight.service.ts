@@ -17,6 +17,7 @@ export class FlightService {
 
   flightList(para: any) {
     debugger
+     //para.departure.setDate(para.departure.getDate() + 1);
     let body = JSON.stringify(para)
     return this.http.post(this.flight, body, { headers: this.header })
   }
