@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlightListComponent } from './flight-list/flight-list.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -16,8 +17,9 @@ import { FlightListComponent } from './flight-list/flight-list.component';
   ],
   imports: [
     CommonModule,
-    
-    
+    FormsModule,
+    ReactiveFormsModule
+
 
     
   ]
