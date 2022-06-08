@@ -10,12 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './core/search/search.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    
     
   ],
   imports: [
@@ -24,7 +27,8 @@ import { SearchComponent } from './core/search/search.component';
     FlightModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    
     
   ],
   exports:[SearchComponent],

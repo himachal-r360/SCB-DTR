@@ -29,6 +29,9 @@ export class SearchComponent implements OnInit ,OnDestroy {
   returnDate:any;
   oneWayDate :any;
 
+  
+
+
   flightData: any = this._fb.group({
     flightfrom: ["DEL"],
     flightto: ["BLR"],

@@ -153,8 +153,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         autoclose: true,
       },
       function (start: any, end: any, label: string) {
+        debugger
         console.log(start._d);
         a.departureDate = start._d;
+        a.flightData.value.departure = start._d
         console.log(end);
         console.log(label);
       }
@@ -223,6 +225,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loader = true;
     this.selectedDate = this.flightData.value.departure;
     console.log(this.selectDate);
+    let searchValue = JSON.stringify(this.flightData.value);
+    localStorage.setItem('searchVal', searchValue);
 
     this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
       this.loader = false;
@@ -236,7 +240,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigate(['flight-list']);
     }, (error) => { console.log(error) });
 
-this.flightData.get('departure').setValue(this.departureDate)
+    //this.flightData.get('departure').setValue(this.departureDate)
     // this.sub = this._flightService.flightList(this.flightData.value).subscribe(
     //   (res: any) => {
     //     this.loader = false;
