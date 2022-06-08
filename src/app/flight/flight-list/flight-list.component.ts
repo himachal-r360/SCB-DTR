@@ -9,13 +9,13 @@ declare var $: any;
   styleUrls: ['./flight-list.component.css']
 })
 export class FlightListComponent implements OnInit ,OnDestroy {
-  flightList = this._flightService.flightListData; 
+  flightList = this._flightService.flightListData;
   newDate = Date();
   loader = false;
   fromCityName:any;
   toCityName:any;
  flightListDate = this._flightService.flightListDate;
-  
+
 
   constructor(private _flightService: FlightService) { }
 
@@ -32,8 +32,8 @@ export class FlightListComponent implements OnInit ,OnDestroy {
 
   this.fromCityName = localStorage.getItem('fromCity');
   this.toCityName = localStorage.getItem('toCity');
-        
-        
+
+
   }
 
 
@@ -41,4 +41,15 @@ export class FlightListComponent implements OnInit ,OnDestroy {
     localStorage.clear()
   }
 
+  HideShowCompareToFly(i:number)
+  {
+   var element = document.getElementById("CompareToFly_"+i);
+   if(element?.classList.contains("flight-details-box-hide"))
+   {
+    element.classList.remove("flight-details-box-hide");
+   }
+   else{
+    element?.classList.add("flight-details-box-hide");
+   }
+  }
 }

@@ -511,7 +511,7 @@
                         <!-- Listing -->
                         <div class="flight-listing-area">
 
-                            <div class="flight-listing" *ngFor="let list of flightList">
+                            <div class="flight-listing" *ngFor="let list of flightList; let i = index">
                                 <div class="flight-listing-content">
                                     <div class="row">
                                         <div class="col-md-2">
@@ -566,9 +566,9 @@
                                 </div>
                                 <div class="flight-info-box">
                                     <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
-                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
+                                    <a href="javascript:void(0)" (click)="HideShowCompareToFly(i)" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                 </div>
-                                <div class="flight-details-box flight-details-box-hide">
+                                <div class="flight-details-box flight-details-box-hide" id="CompareToFly_{{i}}">
                                   <div class="flight-details-options">
                                       <ul>
                                           <li>
@@ -607,7 +607,7 @@
                                           </li>
                                           <li class="FlexiPlus">
                                               <input name="radiog_lite" id="radio3" class="" type="radio">
-                                        <label for="radio3" class="css-label radGroup1">Flexi Plus</label>
+                                          <label for="radio3" class="css-label radGroup1">Flexi Plus</label>
                                               <span class="information-icon">
                                                   <img src="assets/images/icons/info.png" class=" " alt="">
                                                   <div class="hover-popover">
@@ -641,13 +641,15 @@
                                       </ul>
                                   </div>
                                   <div class="flight-options-box">
-                                      <div class="flight-options-list">
+                                      <div class="flight-options-list" *ngFor="let item of list.priceSummary">
                                           <div class="flight-options-list-left">
                                               <div class="flight-options-logo">
-                                                  <img src="./assets/images/flights/1.png" alt="" />
+                                                {{item.partnerName}}
+                                                  <!-- <img src="./assets/images/flights/1.png" alt="" /> -->
                                               </div>
                                               <div class="flight-options-text">
-                                                  <p class="text-red">Non-Refundable</p>
+                                                <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
+                                                  <p class="text-red" *ngIf="item.refundStatus != 1">Non-Refundable</p>
                                               </div>
                                           </div>
                                           <div class="flight-options-list-right">
@@ -655,7 +657,7 @@
                                                   <p>EMI starts at &#8377;460 per month</p>
                                               </div>
                                               <div class="flight-options-price d-flex align-items-center">
-                                                  <p>&#8377;4,892</p>
+                                                  <p>&#8377;{{item.totalFare}}</p>
                                                   <span class="information-icon">
                                                       <img src="assets/images/icons/info.png" class="ms-2" alt="">
                                                       <div class="hover-popover">
@@ -665,16 +667,16 @@
                                                           <div class="hover-popover-content">
                                                               <div class="hover-popover-content-list">
                                                                   <p>Base Fare</p>
-                                                                  <p>&#8377;4,892</p>
+                                                                  <p>&#8377;{{item.baseFare}}</p>
                                                               </div>
                                                               <div class="hover-popover-content-list">
                                                                   <p>Base Fare</p>
-                                                                  <p>&#8377;4,892</p>
+                                                                  <p>&#8377;{{item.baseFare}}</p>
                                                               </div>
                                                               <hr class="m-0" />
                                                               <div class="hover-popover-content-list popover-total">
                                                                   <p>Total</p>
-                                                                  <p>&#8377;4,892</p>
+                                                                  <p>&#8377;{{item.totalFare}}</p>
                                                               </div>
                                                           </div>
                                                           <div class="hover-popover-footer">
@@ -688,53 +690,7 @@
                                               </div>
                                           </div>
                                       </div>
-                                      <div class="flight-options-list">
-                                          <div class="flight-options-list-left">
-                                              <div class="flight-options-logo">
-                                                  <img src="./assets/images/flights/1.png" alt="" />
-                                              </div>
-                                              <div class="flight-options-text">
-                                                  <p class="text-green">Refundable</p>
-                                              </div>
-                                          </div>
-                                          <div class="flight-options-list-right">
-                                              <div class="emi-options">
-                                                  <p>EMI starts at &#8377;460 per month</p>
-                                              </div>
-                                              <div class="flight-options-price d-flex align-items-center">
-                                                  <p>&#8377;4,892</p>
-                                                  <span class="information-icon">
-                                                      <img src="assets/images/icons/info.png" class="ms-2" alt="">
-                                                      <div class="hover-popover">
-                                                          <div class="hover-popover-title">
-                                                              <h6>Price Breakdown</h6>
-                                                          </div>
-                                                          <div class="hover-popover-content">
-                                                              <div class="hover-popover-content-list">
-                                                                  <p>Base Fare</p>
-                                                                  <p>&#8377;4,892</p>
-                                                              </div>
-                                                              <div class="hover-popover-content-list">
-                                                                  <p>Base Fare</p>
-                                                                  <p>&#8377;4,892</p>
-                                                              </div>
-                                                              <hr class="m-0" />
-                                                              <div class="hover-popover-content-list popover-total">
-                                                                  <p>Total</p>
-                                                                  <p>&#8377;4,892</p>
-                                                              </div>
-                                                          </div>
-                                                          <div class="hover-popover-footer">
-                                                              <p>*Partner Convenience Fee is applicable</p>
-                                                          </div>
-                                                      </div>
-                                                  </span>
-                                              </div>
-                                              <div class="flight-options-book">
-                                                  <a href="" class="button-style">Book</a>
-                                              </div>
-                                          </div>
-                                      </div>
+
                                   </div>
 
                               </div>
