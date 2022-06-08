@@ -361,4 +361,17 @@ export class FlightListComponent implements OnInit, OnDestroy {
     localStorage.clear();
     this.sub?.unsubscribe();
   }
+
+  
+  HideShowCompareToFly(i:number)
+  {
+   var element = document.getElementById("CompareToFly_"+i);
+   if(element?.classList.contains("flight-details-box-hide"))
+   {
+    element.classList.remove("flight-details-box-hide");
+   }
+   else{
+    element?.classList.add("flight-details-box-hide");
+   }
+  }
 }
