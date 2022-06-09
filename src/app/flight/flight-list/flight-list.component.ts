@@ -37,7 +37,8 @@ export class FlightListComponent implements OnInit, OnDestroy {
   departureDate: any = new Date();
   returnDate: any;
   oneWayDate: any;
-  flightListDate = this._flightService.flightListDate;
+  // flightListDate = this._flightService.flightListDate;
+  flightListDate:any;
   totalPassenger: number = 1;
   disableParent: boolean = false;
   disablechildren: boolean = false;
@@ -46,15 +47,25 @@ export class FlightListComponent implements OnInit, OnDestroy {
   flightListMod:any;
 
   flightDataModify: any = this._fb.group({
-    flightfrom: ['DEL'],
-    flightto: ['BLR'],
-    flightclass: ['E'],
+    // flightfrom: ['DEL'],
+    // flightto: ['BLR'],
+    // flightclass: ['E'],
+    // flightdefault: ['O'],
+    // departure: [this.newDate],
+    // arrival: [''],
+    // adults: ['1'],
+    // child: ['0'],
+    // infants: ['0'],
+    // travel: ['DOM'],
+    flightfrom: [],
+    flightto: [],
+    flightclass: [],
     flightdefault: ['O'],
-    departure: [this.newDate],
+    departure: [],
     arrival: [''],
-    adults: ['1'],
-    child: ['0'],
-    infants: ['0'],
+    adults: [],
+    child: [],
+    infants: [],
     travel: ['DOM'],
   });
 
@@ -101,29 +112,46 @@ export class FlightListComponent implements OnInit, OnDestroy {
     });
 
     this.getCityList()
-    debugger
-    this.searchData = localStorage.getItem('searchVal')
-    let searchObj = JSON.parse(this.searchData);
+     
+    this.setSearchFilterData();
     
+
+    // console.log(this.searchData , "Search value");
+    // console.log(this.searchData.value.flightclass , "Search value 2");
+
+  }
+  setSearchFilterData()
+  {
+    debugger 
+    this.searchData = localStorage.getItem('searchVal');
+    let searchObj = JSON.parse(this.searchData);
     this.fromCityName = searchObj.flightfrom;
     this.toCityName = searchObj.flightto;
-    this.depart =  searchObj.departure;
+    this.departureDate =  searchObj.departure;
     this.flightClassVal = searchObj.flightclass;
     this.adultsVal = searchObj.adults;
     this.childVal = searchObj.child;
     this.infantsVal = searchObj.infants
+    // this.departureDate = this.depart;
+    
     this.flightDataModify.value.flightfrom = this.fromCityName;
     this.flightDataModify.value.flightto = this.toCityName;
-    this.departureDate = this.depart;
+    this.flightDataModify.value.departure = this.departureDate;
     this.flightDataModify.value.flightclass = this.flightClassVal;
-    this.flightDataModify.value.adults = this.adultsVal;
+    this.flightDataModify.value.adults = searchObj.adults;
     this.flightDataModify.value.child = this.childVal;
     this.flightDataModify.value.infants = this.infantsVal;
+    this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal)  + parseInt(this.infantsVal) ;
+    console.log(this.totalPassenger);
     
-
-    console.log(this.searchData , "Search value");
-    console.log(this.searchData.value.flightclass , "Search value 2");
-
+    // if(this.totalPassenger  == 2 ) {
+    //   this.totalPassenger = parseInt(this.adultsVal) +  this.childVal + this.infantsVal;
+    // }
+    // {
+    //   this.totalPassenger = 1;
+    // }
+    console.log( this.flightDataModify.value.adults , "adult val");
+    
   }
   selectDate(control: string) {
     
@@ -141,6 +169,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
       function (start: any, end: any, label: string) {
         console.log(start._d);
         a.departureDate = start._d;
+        a.flightDataModify.value.departure = start._d
         console.log(end);
         console.log(label);
       }
