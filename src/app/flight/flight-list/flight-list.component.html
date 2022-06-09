@@ -96,7 +96,9 @@
                                                 <span class="select-roottitle">{{fromAirpotName}}</span>
                                                 <div class="flight-from-data flight-from-hide" >
                                                     <div class="flight-from-data-search">
-                                                        <input type="text" autocomplete="off" name="" class="w-100" id="fromCitySearch" placeholder="Search City" (keyup)="fromList($event)">
+                                                        <input type="text" autocomplete="off" name=""   class="w-100" id="fromCitySearch"   placeholder="Search City" (keyup)="fromList($event)">
+                                                        <!-- <input type="hidden" name="" id="hdnFromCitySearch" formControlName="flightfrom" placeholder="Search City">
+                                                        {{flightDataModify.value.flightfrom}} -->
                                                     </div>
                                                     <ul class="flight-from-data-ul" *ngIf="fromFlightList">
                                                         <li class="flight-from-ul-li">
@@ -128,7 +130,7 @@
 
                                                 <div class="flight-to-data flight-from-hide" >
                                                     <div class="flight-from-data-search">
-                                                        <input type="text" name="" formControlName="flightfrom" autocomplete="off" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
+                                                        <input type="text" name="" autocomplete="off" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
                                                     </div>
                                                     <ul class="flight-from-data-ul" *ngIf="toFlightList">
                                                         <li class="flight-from-ul-li">

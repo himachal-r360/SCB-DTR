@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   fromFlightList = false;
   toFlightList = false;
   selectedDate?:any;
-  cityName:any;
+  // cityName:any;
   fromAirpotName:any ='from airport';
   fromCityName :any ='From';
   toCityName:any ='To';
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   departureDate:any = new Date();
   returnDate:any;
   oneWayDate :any;
-
+  SearchCityName:any;
 
   // for passenger dropdown
   totalPassenger: number = 1;
@@ -180,7 +180,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
   getCityList() {
     this.sub = this._flightService
-      .getCityList(this.cityList)
+      .getCityList(this.SearchCityName)
       .subscribe((res: any) => {
         this.cityList = res.hits.hits;
         console.log(this.cityList);
@@ -190,7 +190,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   fromList(evt: any) {
     this.toFlightList = false;
     this.fromFlightList = true;
-    this.cityList = evt.target.value.trim().toLowerCase();
+    this.SearchCityName = evt.target.value.trim().toLowerCase();
 
     this.getCityList();
   }
@@ -198,7 +198,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   toList(evt: any) {
     this.fromFlightList = false;
     this.toFlightList = true;
-    this.cityList = evt.target.value.trim().toLowerCase();
+    this.SearchCityName = evt.target.value.trim().toLowerCase();
     this.getCityList();
   }
 
@@ -216,7 +216,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   selectToFlightList(para2: any) {
     debugger;
     this.flightData.value.flightto = para2.id;
-    this.cityName = para2.city;
+    // this.cityName = para2.city;
     this.toAirpotName = para2.airport_name;
     this.toCityName = para2.city;
     localStorage.setItem('toCity' ,this.toCityName);
@@ -232,6 +232,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedDate = this.flightData.value.departure;
     console.log(this.selectDate);
     let searchValue = JSON.stringify(this.flightData.value);
+    
     localStorage.setItem('searchVal', searchValue);
     this.flightData.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
     //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
