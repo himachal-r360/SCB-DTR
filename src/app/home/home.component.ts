@@ -203,6 +203,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
+    debugger;
     console.log(para1);
     this.flightData.value.flightfrom = para1.id;
     this.fromAirpotName = para1.airport_name;
@@ -213,6 +214,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectToFlightList(para2: any) {
+    debugger;
     this.flightData.value.flightto = para2.id;
     this.cityName = para2.city;
     this.toAirpotName = para2.airport_name;
@@ -231,8 +233,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.selectDate);
     let searchValue = JSON.stringify(this.flightData.value);
     localStorage.setItem('searchVal', searchValue);
-
-    this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
+    this.flightData.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
+    //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
     this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
       this.loader = false;
       this.show = true;
