@@ -163,7 +163,7 @@
                                                         </div>
                                                         <div class="select-root-date">
                                                             <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
-                                                            <input type="hidden" name="hdnDepartureDate" value="{{departureDate}}" formControlName="departure">
+                                                            <input type="hidden" name="hdnDepartureDate" value={{departureDate}}  formControlName="departure">
                                                         </div>
                                                     </div>
                                                     <div class="area-root-reutrn">
@@ -249,7 +249,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- <hr>
+                            <hr>
                             <div class="sidebar-widget flighttimings-widget">
                                 <div class="widget-title">
                                     <h6 class="">Flight Timings</h6>
@@ -325,7 +325,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                         </div>
 
@@ -573,8 +573,8 @@
                                               </div>
                                           </div>
                                           <div class="flight-options-list-right">
-                                              <div class="emi-options">
-                                                  <p>EMI starts at &#8377;460 per month</p>
+                                              <div class="emi-options" *ngIf="item.totalFare > EMIAvailableLimit">
+                                                  <p>EMI starts at &#8377; {{item.totalFare}} per month</p>
                                               </div>
                                               <div class="flight-options-price d-flex align-items-center">
                                                   <p>&#8377;{{item.totalFare}}</p>
