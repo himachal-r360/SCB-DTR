@@ -227,6 +227,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightSearch() {
     debugger;
+   
     console.log(this.departureDate);
     this.loader = true;
     this.selectedDate = this.flightData.value.departure;
@@ -235,6 +236,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
     let searchValue = JSON.stringify(this.flightData.value);
     localStorage.setItem('searchVal', searchValue);
+    localStorage.setItem('fromAirportName', this.fromAirpotName);
+    localStorage.setItem('toAirportName', this.toAirpotName);
     this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
       this.loader = false;
       this.show = true;
