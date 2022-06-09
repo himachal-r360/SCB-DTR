@@ -231,11 +231,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loader = true;
     this.selectedDate = this.flightData.value.departure;
     console.log(this.selectDate);
-    let searchValue = JSON.stringify(this.flightData.value);
-    
-    localStorage.setItem('searchVal', searchValue);
     this.flightData.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
     //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
+    let searchValue = JSON.stringify(this.flightData.value);
+    localStorage.setItem('searchVal', searchValue);
     this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
       this.loader = false;
       this.show = true;

@@ -11,7 +11,7 @@ declare var $: any;
   styleUrls: ['./flight-list.component.css']
 })
 export class FlightListComponent implements OnInit, OnDestroy {
-  flightList:any =[]; 
+  flightList:any =[];
   newDate = Date();
   loader = false;
   fromCityName: any;
@@ -33,7 +33,8 @@ export class FlightListComponent implements OnInit, OnDestroy {
   fromAirpotName: any = 'from airport';
   toAirpotName: any = 'to airport';
   searchData:any;
-
+  EMIAvailableLimit:number = 3000;
+ EMI_interest:number = 16;
 
   departureDate: any = new Date();
   returnDate: any;
@@ -76,7 +77,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.flightList=this._flightService.flightListData;
-    this.selectDate('DepartureDate');
+
     $(".js-range-slider").ionRangeSlider({
       type: "double",
       min: 0,
@@ -132,8 +133,12 @@ export class FlightListComponent implements OnInit, OnDestroy {
     
     // this.departureDate = this.depart;
     
-    this.flightDataModify.value.flightfrom = searchObj.flightfrom;
-    this.flightDataModify.value.flightto = searchObj.flightto;
+    // this.flightDataModify.value.flightfrom = searchObj.flightfrom;
+    // this.flightDataModify.value.flightto = searchObj.flightto;
+    //$('#DepartureDate').val(new Date(searchObj.departure));
+    this.selectDate('DepartureDate',new Date(searchObj.departure));
+    this.flightDataModify.value.flightfrom = this.fromCityName;
+    this.flightDataModify.value.flightto = this.toCityName;
     this.flightDataModify.value.departure = this.departureDate;
     this.flightDataModify.value.flightclass = this.flightClassVal;
     this.flightDataModify.value.adults = searchObj.adults;
@@ -142,11 +147,10 @@ export class FlightListComponent implements OnInit, OnDestroy {
     this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal)  + parseInt(this.infantsVal) ;
     console.log(this.totalPassenger);
     console.log( this.flightDataModify.value.adults , "adult val");
-    
-  }
 
-  selectDate(control: string) {
-    
+  }
+  selectDate(control: string,date:Date) {
+
     let dep;
     const a = this;
     $('#' + control).daterangepicker(
@@ -154,7 +158,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
         singleDatePicker: true,
         showDropdowns: false,
         format: 'yyyy/mm/dd',
-        startDate: new Date(),
+        startDate: date,
         //  todayBtn: 1,
         autoclose: true,
       },
@@ -221,7 +225,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
 
     //  this.flightDataModify.value.adults = parseInt(this.flightDataModify.value.adults) - 1;
   }
-  
+
   increaseChild() {
     if (parseInt(this.flightDataModify.value.child) < 9) {
       this.flightDataModify
@@ -365,7 +369,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
       day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-");
   }
-  
+
   flightSearch() {
     debugger;
     // this.loader = true;
@@ -373,6 +377,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
     debugger;
     this.flightDataModify.value.departure = this.convertDate(this.selectedDate);
     //this.flightDataModify.get('departure').setValue(this.convertDate(this.selectedDate));
+    this.flightDataModify.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
       console.log(res, "flight res");
       this.flightList = res.response.onwardFlights;
@@ -391,7 +396,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  
+
   HideShowCompareToFly(i:number)
   {
    var element = document.getElementById("CompareToFly_"+i);
