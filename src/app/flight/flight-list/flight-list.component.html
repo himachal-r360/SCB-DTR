@@ -211,29 +211,29 @@
                                 <a href="">Reset</a>
                             </div>
                             <div class="widget-content">
-                                <ul class="category-list clearfix mt-2">
-                                    <li class="custom-check-box">
+                                <ul class="category-list clearfix mt-2" id="popular-filters">
+                                    <li class="custom-check-box" >
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
+                                                <input type="checkbox" class="material-control-input" value="Refundable-Fares" (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
-                                                <span class="description">Refundable Fares (84)</span>
+                                                <span class="description">Refundable Fares ({{RefundableFaresCount}})</span>
                                             </label>
                                         </div>
                                     </li>
                                     <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" checked="checked" />
+                                                <input type="checkbox" class="material-control-input" value="non-stop" (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
-                                                <span class="description">Non-stop (23)</span>
+                                                <span class="description">Non-stop ({{nonStopCount}})</span>
                                             </label>
                                         </div>
                                     </li>
                                     <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
+                                                <input type="checkbox" class="material-control-input" value="Morning-Departures"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
                                                 <span class="description">Morning Departures (66)</span>
                                             </label>
@@ -242,7 +242,7 @@
                                     <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
+                                                <input type="checkbox" class="material-control-input" value="Meals-Included"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
                                                 <span class="description">Meals Included</span>
                                             </label>
@@ -471,11 +471,11 @@
                                 </h6>
 
                                 <div class="flight-search-filters-right">
-                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
-                                        <option selected="selected">Price Low to High</option>
-                                        <option>Price High to Low</option>
-                                        <option>Depart Ealry</option>
-                                        <option>Depart Late</option>
+                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="popularFilterFlightData()">
+                                        <option selected="selected" value="P_L_H">Price Low to High</option>
+                                        <option value="P_H_L">Price High to Low</option>
+                                        <option value="P_D_E">Depart Ealry</option>
+                                        <option value="P_D_L">Depart Late</option>
                                     </select>
                                 </div>
                             </div>
@@ -810,6 +810,9 @@
         </div>
     </div>
 </section>
+
+
+
 
 
 
