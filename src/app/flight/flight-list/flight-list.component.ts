@@ -4,23 +4,22 @@ import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 declare var $: any;
 
-
 @Component({
   selector: 'app-flight-list',
   templateUrl: './flight-list.component.html',
-  styleUrls: ['./flight-list.component.css']
+  styleUrls: ['./flight-list.component.css'],
 })
-export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
-  flightList:any =[];
+export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
+  flightList: any = [];
   newDate = Date();
   loader = false;
   fromCityName: any;
   toCityName: any;
-  depart:any;
-  flightClassVal:any;
-  adultsVal:any;
-  childVal:any;
-  infantsVal:any
+  depart: any;
+  flightClassVal: any;
+  adultsVal: any;
+  childVal: any;
+  infantsVal: any;
 
   sub?: Subscription;
   show = false;
@@ -32,20 +31,20 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
   cityName: any;
   fromAirpotName: any = 'from airport';
   toAirpotName: any = 'to airport';
-  searchData:any;
-  EMIAvailableLimit:number = 3000;
- EMI_interest:number = 16;
+  searchData: any;
+  EMIAvailableLimit: number = 3000;
+  EMI_interest: number = 16;
   departureDate: any = new Date();
   returnDate: any;
   oneWayDate: any;
   // flightListDate = this._flightService.flightListDate;
-  flightListDate:any;
+  flightListDate: any;
   totalPassenger: number = 1;
   disableParent: boolean = false;
   disablechildren: boolean = false;
   disableinfants: boolean = false;
 
-  flightListMod:any;
+  flightListMod: any;
 
   flightDataModify: any = this._fb.group({
     // flightfrom: ['DEL'],
@@ -70,14 +69,13 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
     travel: ['DOM'],
   });
 
-
-
-  constructor(private _flightService: FlightService, private _fb: FormBuilder) { }
+  constructor(
+    private _flightService: FlightService,
+    private _fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    this.flightList=this._flightService.flightListData;
-
-
+    this.flightList = this._flightService.flightListData;
 
     $(document).click(function (e: any) {
       var containerLeft = $('.select-root-left');
@@ -103,30 +101,28 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
         $('.Travellers-dropdown-data').removeClass('Travellershide');
       }
     });
-    this.getCityList()
+    this.getCityList();
     this.setSearchFilterData();
     // console.log(this.searchData , "Search value");
     // console.log(this.searchData.value.flightclass , "Search value 2");
   }
   ngAfterViewInit(): void {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.Initslider();
-    },500)
-
+    }, 500);
   }
-  setSearchFilterData()
-  {
-    debugger
+  setSearchFilterData() {
+    debugger;
 
     this.searchData = localStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
-    this.fromCityName = localStorage.getItem('fromCity');//searchObj.flightfrom;
+    this.fromCityName = localStorage.getItem('fromCity'); //searchObj.flightfrom;
     this.toCityName = localStorage.getItem('toCity');
-    this.departureDate =  searchObj.departure;
+    this.departureDate = searchObj.departure;
     this.flightClassVal = searchObj.flightclass;
     this.adultsVal = searchObj.adults;
     this.childVal = searchObj.child;
-    this.infantsVal = searchObj.infants
+    this.infantsVal = searchObj.infants;
     this.fromAirpotName = localStorage.getItem('fromAirportName');
     this.toAirpotName = localStorage.getItem('toAirportName');
 
@@ -135,7 +131,7 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
     this.flightDataModify.value.flightfrom = searchObj.flightfrom;
     this.flightDataModify.value.flightto = searchObj.flightto;
     //$('#DepartureDate').val(new Date(searchObj.departure));
-    this.selectDate('DepartureDate',new Date(searchObj.departure));
+    this.selectDate('DepartureDate', new Date(searchObj.departure));
     // this.flightDataModify.value.flightfrom = this.fromCityName;
     // this.flightDataModify.value.flightto = this.toCityName;
     this.flightDataModify.value.departure = this.departureDate;
@@ -143,13 +139,14 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
     this.flightDataModify.value.adults = searchObj.adults;
     this.flightDataModify.value.child = this.childVal;
     this.flightDataModify.value.infants = this.infantsVal;
-    this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal)  + parseInt(this.infantsVal) ;
+    this.totalPassenger =
+      parseInt(this.adultsVal) +
+      parseInt(this.childVal) +
+      parseInt(this.infantsVal);
     console.log(this.totalPassenger);
-    console.log( this.flightDataModify.value.adults , "adult val");
-
+    console.log(this.flightDataModify.value.adults, 'adult val');
   }
-  selectDate(control: string,date:Date) {
-
+  selectDate(control: string, date: Date) {
     let dep;
     const a = this;
     $('#' + control).daterangepicker(
@@ -164,7 +161,7 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
       function (start: any, end: any, label: string) {
         console.log(start._d);
         a.departureDate = start._d;
-        a.flightDataModify.value.departure = start._d
+        a.flightDataModify.value.departure = start._d;
         console.log(end);
         console.log(label);
       }
@@ -179,7 +176,6 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
         console.log(this.cityList);
       });
   }
-
 
   increaseAdult() {
     if (parseInt(this.flightDataModify.value.adults) < 9) {
@@ -322,20 +318,17 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
     // this.cityList = evt.target.value.trim().toLowerCase();
     this.SearchCityName = evt.target.value.trim().toLowerCase();
     this.getCityList();
-
   }
 
   toList(evt: any) {
     debugger;
 
-     this.fromFlightList = false;
-     this.toFlightList = true;
+    this.fromFlightList = false;
+    this.toFlightList = true;
     //  this.cityList = evt.target.value.trim().toLowerCase();
     this.SearchCityName = evt.target.value.trim().toLowerCase();
-     this.getCityList();
-
+    this.getCityList();
   }
-
 
   selectFromFlightList(para1: any) {
     debugger;
@@ -360,13 +353,11 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
     console.log(this.flightDataModify.value.flightto);
   }
 
-
-
-  convertDate(str:any) {
+  convertDate(str: any) {
     var date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    return [date.getFullYear(), mnth, day].join("-");
+      mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+      day = ('0' + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join('-');
   }
 
   flightSearch() {
@@ -375,159 +366,176 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
     // this.selectedDate = this.flightDataModify.value.departure;
     this.searchData = localStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
-    if(this.flightDataModify.value.flightfrom==null || this.flightDataModify.value.flightfrom==undefined){
-      this.flightDataModify.value.flightfrom=searchObj.flightfrom;
+    if (
+      this.flightDataModify.value.flightfrom == null ||
+      this.flightDataModify.value.flightfrom == undefined
+    ) {
+      this.flightDataModify.value.flightfrom = searchObj.flightfrom;
     }
-    if(this.flightDataModify.value.flightto==null || this.flightDataModify.value.flightto==undefined){
-      this.flightDataModify.value.flightto=searchObj.flightto;
+    if (
+      this.flightDataModify.value.flightto == null ||
+      this.flightDataModify.value.flightto == undefined
+    ) {
+      this.flightDataModify.value.flightto = searchObj.flightto;
     }
-    if(this.flightDataModify.value.departure==null || this.flightDataModify.value.departure==undefined){
-      this.flightDataModify.value.departure=searchObj.departure;
+    if (
+      this.flightDataModify.value.departure == null ||
+      this.flightDataModify.value.departure == undefined
+    ) {
+      this.flightDataModify.value.departure = searchObj.departure;
     }
 
     debugger;
     // this.flightDataModify.value.departure = this.convertDate(this.selectedDate);
     //this.flightDataModify.get('departure').setValue(this.convertDate(this.selectedDate));
     // this.flightDataModify.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
-    this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
-      console.log(res, "flight res");
-      this.flightList = res.response.onwardFlights;
-      this.oneWayDate = res.responseDateTime;
-      console.log(this.oneWayDate, "res");
-      this._flightService.flightListData = this.flightList;
-      // this._flightService.flightListDate = this.oneWayDate;
-      console.log(this.flightList, "flight Search");
-    }, (error) => { console.log(error) });
+    this.sub = this._flightService
+      .flightList(this.flightDataModify.value)
+      .subscribe(
+        (res: any) => {
+          console.log(res, 'flight res');
+          this.flightList = res.response.onwardFlights;
+          this.oneWayDate = res.responseDateTime;
+          console.log(this.oneWayDate, 'res');
+          this._flightService.flightListData = this.flightList;
+          // this._flightService.flightListDate = this.oneWayDate;
+          console.log(this.flightList, 'flight Search');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
-
   ngOnDestroy(): void {
-
     localStorage.clear();
     this.sub?.unsubscribe();
   }
 
-
-  HideShowCompareToFly(i:number)
-  {
-   var element = document.getElementById("CompareToFly_"+i);
-   if(element?.classList.contains("flight-details-box-hide"))
-   {
-    element.classList.remove("flight-details-box-hide");
-   }
-   else{
-    element?.classList.add("flight-details-box-hide");
-   }
+  HideShowCompareToFly(i: number) {
+    var element = document.getElementById('CompareToFly_' + i);
+    if (element?.classList.contains('flight-details-box-hide')) {
+      element.classList.remove('flight-details-box-hide');
+    } else {
+      element?.classList.add('flight-details-box-hide');
+    }
   }
 
-  swap()
+  calculateEMI(amount:number)
   {
-    var FromData = {flightFrom: this.flightDataModify.value.flightfrom,fromAirpotName:this.fromAirpotName,fromCityName: this.fromCityName  }
-    this.flightDataModify.value.flightfrom = this.flightDataModify.value.flightto ;
+return Math.round((amount + (amount *(this.EMI_interest /100))) / 12);
+  }
+  swap() {
+    var FromData = {
+      flightFrom: this.flightDataModify.value.flightfrom,
+      fromAirpotName: this.fromAirpotName,
+      fromCityName: this.fromCityName,
+    };
+    this.flightDataModify.value.flightfrom =
+      this.flightDataModify.value.flightto;
     this.fromAirpotName = this.toAirpotName;
-    this.fromCityName  = this.toCityName;
+    this.fromCityName = this.toCityName;
     localStorage.setItem('fromCity', this.toCityName);
     this.flightDataModify.value.flightto = FromData.flightFrom;
     // this.cityName = para2.city;
     this.toAirpotName = FromData.fromAirpotName;
     this.toCityName = FromData.fromCityName;
-    localStorage.setItem('toCity' ,FromData.fromCityName);
-
+    localStorage.setItem('toCity', FromData.fromCityName);
   }
-  Initslider()
-  {
-    $(".js-range-slider").ionRangeSlider({
-      type: "double",
+  Initslider() {
+    $('.js-range-slider').ionRangeSlider({
+      type: 'double',
       min: 0,
       max: 1000,
       from: 200,
       to: 500,
-      prefix: "$",
-      grid: true
-  });
+      prefix: '$',
+      grid: true,
+    });
 
-  $('#price-range-submit').hide();
+    $('#price-range-submit').hide();
 
-                    $("#min_price,#max_price").on('change', function () {
+    $('#min_price,#max_price').on('change', function () {
+      $('#price-range-submit').show();
 
-                    $('#price-range-submit').show();
+      var min_price_range = parseInt($('#min_price').val());
 
-                    var min_price_range = parseInt($("#min_price").val());
+      var max_price_range = parseInt($('#max_price').val());
 
-                    var max_price_range = parseInt($("#max_price").val());
+      if (min_price_range > max_price_range) {
+        $('#max_price').val(min_price_range);
+      }
 
-                    if (min_price_range > max_price_range) {
-                        $('#max_price').val(min_price_range);
-                    }
+      $('#slider-range').slider({
+        values: [min_price_range, max_price_range],
+      });
+    });
 
-                    $("#slider-range").slider({
-                        values: [min_price_range, max_price_range]
-                    });
+    $('#min_price,#max_price').on('paste keyup', function () {
+      $('#price-range-submit').show();
 
-                    });
+      var min_price_range = parseInt($('#min_price').val());
 
+      var max_price_range = parseInt($('#max_price').val());
 
-                    $("#min_price,#max_price").on("paste keyup", function () {
+      if (min_price_range == max_price_range) {
+        max_price_range = min_price_range + 100;
 
-                    $('#price-range-submit').show();
+        $('#min_price').val(min_price_range);
+        $('#max_price').val(max_price_range);
+      }
 
-                    var min_price_range = parseInt($("#min_price").val());
+      $('#slider-range').slider({
+        values: [min_price_range, max_price_range],
+      });
+      $('#slider-range').slider({
+        range: true,
+        orientation: 'horizontal',
+        min: 0,
+        max: 10000,
+        values: [0, 10000],
+        step: 100,
+        slide: function (event: any, ui: any) {
+          if (ui.values[0] == ui.values[1]) {
+            return false;
+          }
 
-                    var max_price_range = parseInt($("#max_price").val());
+          $('#min_price').val(ui.values[0]);
+          $('#max_price').val(ui.values[1]);
+          return;
+        },
+      });
 
-                    if(min_price_range == max_price_range){
+      $('#min_price').val($('#slider-range').slider('values', 0));
+      $('#max_price').val($('#slider-range').slider('values', 1));
+    });
 
-                            max_price_range = min_price_range + 100;
+    $('#slider-range,#price-range-submit').click(function () {
+      var min_price = $('#min_price').val();
+      var max_price = $('#max_price').val();
 
-                            $("#min_price").val(min_price_range);
-                            $("#max_price").val(max_price_range);
-                    }
+      $('#searchResults').text(
+        'Here List of products will be shown which are cost between ' +
+          min_price +
+          ' ' +
+          'and' +
+          ' ' +
+          max_price +
+          '.'
+      );
+    });
 
-                    $("#slider-range").slider({
-                        values: [min_price_range, max_price_range]
-                    });
-                    $("#slider-range").slider({
-                      range: true,
-                      orientation: "horizontal",
-                      min: 0,
-                      max: 10000,
-                      values: [0, 10000],
-                      step: 100,
-                      slide: function (event:any, ui:any) {
-                      if (ui.values[0] == ui.values[1]) {
-                          return false;
-                      }
-
-                      $("#min_price").val(ui.values[0]);
-                      $("#max_price").val(ui.values[1]);
-                      return;
-                      }
-                  });
-
-                  $("#min_price").val($("#slider-range").slider("values", 0));
-                  $("#max_price").val($("#slider-range").slider("values", 1));
-
-                  });
-
-                  $("#slider-range,#price-range-submit").click(function () {
-
-                  var min_price = $('#min_price').val();
-                  var max_price = $('#max_price').val();
-
-                  $("#searchResults").text("Here List of products will be shown which are cost between " + min_price  +" "+ "and" + " "+ max_price + ".");
-                  });
-
-                //   $(".price-slider").slider({
-                //     range: true,
-                //     min: 0,
-                //     max: 24,
-                //     values: [ 0, 20 ],
-                //     slide: function( event:any, ui:any ) {
-                //         $(".price-value").text(ui.values[ 0 ] + " hrs");
-                //         $(".price-value2").text(ui.values[ 1 ] + " hrs");
-                //     }
-                // });
-                // $(".price-value").text( $(".price-slider").slider("values", 0) + " hrs" );
-                // $(".price-value2").text( $(".price-slider").slider( "values", 1 ) + " hrs"  );
+    $('.price-slider').slider({
+      range: true,
+      min: 0,
+      max: 24,
+      values: [0, 20],
+      slide: function (event: any, ui: any) {
+        $('.price-value').text(ui.values[0] + ' hrs');
+        $('.price-value2').text(ui.values[1] + ' hrs');
+      },
+    });
+    $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
+    $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
   }
 }
