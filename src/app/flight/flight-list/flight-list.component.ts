@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
@@ -10,7 +10,7 @@ declare var $: any;
   templateUrl: './flight-list.component.html',
   styleUrls: ['./flight-list.component.css']
 })
-export class FlightListComponent implements OnInit, OnDestroy {
+export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
   flightList:any =[];
   newDate = Date();
   loader = false;
@@ -79,16 +79,6 @@ export class FlightListComponent implements OnInit, OnDestroy {
     this.flightList=this._flightService.flightListData;
     console.log(this.flightList);
     
-    $(".js-range-slider").ionRangeSlider({
-      type: "double",
-      min: 0,
-      max: 1000,
-      from: 200,
-      to: 500,
-      prefix: "$",
-      grid: true
-    });
-
     $(document).click(function (e: any) {
       var containerLeft = $('.select-root-left');
       if (!$(e.target).closest(containerLeft).length) {
@@ -119,10 +109,16 @@ export class FlightListComponent implements OnInit, OnDestroy {
     // console.log(this.searchData , "Search value");
     // console.log(this.searchData.value.flightclass , "Search value 2");
   }
+  ngAfterViewInit(): void {
+    setTimeout(()=>{
+      this.Initslider();
+    },500)
+
+  }
   setSearchFilterData()
   {
-    debugger 
-    
+    debugger
+
     this.searchData = localStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
     this.fromCityName = localStorage.getItem('fromCity');//searchObj.flightfrom;
@@ -134,9 +130,9 @@ export class FlightListComponent implements OnInit, OnDestroy {
     this.infantsVal = searchObj.infants
     this.fromAirpotName = localStorage.getItem('fromAirportName');
     this.toAirpotName = localStorage.getItem('toAirportName');
-    
+
     // this.departureDate = this.depart;
-    
+
     this.flightDataModify.value.flightfrom = searchObj.flightfrom;
     this.flightDataModify.value.flightto = searchObj.flightto;
     //$('#DepartureDate').val(new Date(searchObj.departure));
@@ -329,18 +325,18 @@ export class FlightListComponent implements OnInit, OnDestroy {
     // this.cityList = evt.target.value.trim().toLowerCase();
     this.SearchCityName = evt.target.value.trim().toLowerCase();
     this.getCityList();
-  
+
   }
 
   toList(evt: any) {
     debugger;
-    
+
      this.fromFlightList = false;
      this.toFlightList = true;
     //  this.cityList = evt.target.value.trim().toLowerCase();
     this.SearchCityName = evt.target.value.trim().toLowerCase();
      this.getCityList();
-    
+
   }
 
 
@@ -426,5 +422,116 @@ export class FlightListComponent implements OnInit, OnDestroy {
    else{
     element?.classList.add("flight-details-box-hide");
    }
+  }
+
+  swap()
+  {
+    var FromData = {flightFrom: this.flightDataModify.value.flightfrom,fromAirpotName:this.fromAirpotName,fromCityName: this.fromCityName  }
+    this.flightDataModify.value.flightfrom = this.flightDataModify.value.flightto ;
+    this.fromAirpotName = this.toAirpotName;
+    this.fromCityName  = this.toCityName;
+    localStorage.setItem('fromCity', this.toCityName);
+    this.flightDataModify.value.flightto = FromData.flightFrom;
+    // this.cityName = para2.city;
+    this.toAirpotName = FromData.fromAirpotName;
+    this.toCityName = FromData.fromCityName;
+    localStorage.setItem('toCity' ,FromData.fromCityName);
+
+  }
+  Initslider()
+  {
+    $(".js-range-slider").ionRangeSlider({
+      type: "double",
+      min: 0,
+      max: 1000,
+      from: 200,
+      to: 500,
+      prefix: "$",
+      grid: true
+  });
+
+  $('#price-range-submit').hide();
+
+                    $("#min_price,#max_price").on('change', function () {
+
+                    $('#price-range-submit').show();
+
+                    var min_price_range = parseInt($("#min_price").val());
+
+                    var max_price_range = parseInt($("#max_price").val());
+
+                    if (min_price_range > max_price_range) {
+                        $('#max_price').val(min_price_range);
+                    }
+
+                    $("#slider-range").slider({
+                        values: [min_price_range, max_price_range]
+                    });
+
+                    });
+
+
+                    $("#min_price,#max_price").on("paste keyup", function () {
+
+                    $('#price-range-submit').show();
+
+                    var min_price_range = parseInt($("#min_price").val());
+
+                    var max_price_range = parseInt($("#max_price").val());
+
+                    if(min_price_range == max_price_range){
+
+                            max_price_range = min_price_range + 100;
+
+                            $("#min_price").val(min_price_range);
+                            $("#max_price").val(max_price_range);
+                    }
+
+                    $("#slider-range").slider({
+                        values: [min_price_range, max_price_range]
+                    });
+                    $("#slider-range").slider({
+                      range: true,
+                      orientation: "horizontal",
+                      min: 0,
+                      max: 10000,
+                      values: [0, 10000],
+                      step: 100,
+                      slide: function (event:any, ui:any) {
+                      if (ui.values[0] == ui.values[1]) {
+                          return false;
+                      }
+
+                      $("#min_price").val(ui.values[0]);
+                      $("#max_price").val(ui.values[1]);
+                      return;
+                      }
+                  });
+
+                  $("#min_price").val($("#slider-range").slider("values", 0));
+                  $("#max_price").val($("#slider-range").slider("values", 1));
+
+                  });
+
+                  $("#slider-range,#price-range-submit").click(function () {
+
+                  var min_price = $('#min_price').val();
+                  var max_price = $('#max_price').val();
+
+                  $("#searchResults").text("Here List of products will be shown which are cost between " + min_price  +" "+ "and" + " "+ max_price + ".");
+                  });
+
+                //   $(".price-slider").slider({
+                //     range: true,
+                //     min: 0,
+                //     max: 24,
+                //     values: [ 0, 20 ],
+                //     slide: function( event:any, ui:any ) {
+                //         $(".price-value").text(ui.values[ 0 ] + " hrs");
+                //         $(".price-value2").text(ui.values[ 1 ] + " hrs");
+                //     }
+                // });
+                // $(".price-value").text( $(".price-slider").slider("values", 0) + " hrs" );
+                // $(".price-value2").text( $(".price-slider").slider( "values", 1 ) + " hrs"  );
   }
 }
