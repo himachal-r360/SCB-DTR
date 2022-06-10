@@ -11,7 +11,8 @@ const routes: Routes = [
     path:"home" , component:HomeComponent 
   },
   {
-    path:"flight-list" ,component:FlightListComponent
+    path: 'flights',
+    loadChildren: () => import('./flight/flight.module').then(m => m.FlightModule)
   }
 ];
 

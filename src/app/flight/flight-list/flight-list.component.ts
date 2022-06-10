@@ -35,7 +35,6 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
   searchData:any;
   EMIAvailableLimit:number = 3000;
  EMI_interest:number = 16;
-
   departureDate: any = new Date();
   returnDate: any;
   oneWayDate: any;
@@ -117,7 +116,7 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
   }
   setSearchFilterData()
   {
-    // debugger
+    debugger
 
     this.searchData = localStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
@@ -128,15 +127,17 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
     this.adultsVal = searchObj.adults;
     this.childVal = searchObj.child;
     this.infantsVal = searchObj.infants
+    this.fromAirpotName = localStorage.getItem('fromAirportName');
+    this.toAirpotName = localStorage.getItem('toAirportName');
 
     // this.departureDate = this.depart;
 
-    // this.flightDataModify.value.flightfrom = searchObj.flightfrom;
-    // this.flightDataModify.value.flightto = searchObj.flightto;
+    this.flightDataModify.value.flightfrom = searchObj.flightfrom;
+    this.flightDataModify.value.flightto = searchObj.flightto;
     //$('#DepartureDate').val(new Date(searchObj.departure));
     this.selectDate('DepartureDate',new Date(searchObj.departure));
-    this.flightDataModify.value.flightfrom = this.fromCityName;
-    this.flightDataModify.value.flightto = this.toCityName;
+    // this.flightDataModify.value.flightfrom = this.fromCityName;
+    // this.flightDataModify.value.flightto = this.toCityName;
     this.flightDataModify.value.departure = this.departureDate;
     this.flightDataModify.value.flightclass = this.flightClassVal;
     this.flightDataModify.value.adults = searchObj.adults;
@@ -371,11 +372,23 @@ export class FlightListComponent implements OnInit,AfterViewInit, OnDestroy {
   flightSearch() {
     debugger;
     // this.loader = true;
-    this.selectedDate = this.flightDataModify.value.departure;
+    // this.selectedDate = this.flightDataModify.value.departure;
+    this.searchData = localStorage.getItem('searchVal');
+    let searchObj = JSON.parse(this.searchData);
+    if(this.flightDataModify.value.flightfrom==null || this.flightDataModify.value.flightfrom==undefined){
+      this.flightDataModify.value.flightfrom=searchObj.flightfrom;
+    }
+    if(this.flightDataModify.value.flightto==null || this.flightDataModify.value.flightto==undefined){
+      this.flightDataModify.value.flightto=searchObj.flightto;
+    }
+    if(this.flightDataModify.value.departure==null || this.flightDataModify.value.departure==undefined){
+      this.flightDataModify.value.departure=searchObj.departure;
+    }
+
     debugger;
-    this.flightDataModify.value.departure = this.convertDate(this.selectedDate);
+    // this.flightDataModify.value.departure = this.convertDate(this.selectedDate);
     //this.flightDataModify.get('departure').setValue(this.convertDate(this.selectedDate));
-    this.flightDataModify.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
+    // this.flightDataModify.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
       console.log(res, "flight res");
       this.flightList = res.response.onwardFlights;
