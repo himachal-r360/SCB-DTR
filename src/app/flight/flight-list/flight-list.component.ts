@@ -75,7 +75,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.flightList = this._flightService.flightListData;
+
+    this.flightList=this._flightService.flightListData;
+    console.log(this.flightList);
 
     $(document).click(function (e: any) {
       var containerLeft = $('.select-root-left');
@@ -103,6 +105,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.getCityList();
     this.setSearchFilterData();
+    this.flightSearch();
     // console.log(this.searchData , "Search value");
     // console.log(this.searchData.value.flightclass , "Search value 2");
   }
@@ -176,6 +179,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.cityList);
       });
   }
+
+
+
 
   increaseAdult() {
     if (parseInt(this.flightDataModify.value.adults) < 9) {
@@ -389,22 +395,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.flightDataModify.value.departure = this.convertDate(this.selectedDate);
     //this.flightDataModify.get('departure').setValue(this.convertDate(this.selectedDate));
     // this.flightDataModify.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
-    this.sub = this._flightService
-      .flightList(this.flightDataModify.value)
-      .subscribe(
-        (res: any) => {
-          console.log(res, 'flight res');
-          this.flightList = res.response.onwardFlights;
-          this.oneWayDate = res.responseDateTime;
-          console.log(this.oneWayDate, 'res');
-          this._flightService.flightListData = this.flightList;
-          // this._flightService.flightListDate = this.oneWayDate;
-          console.log(this.flightList, 'flight Search');
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
+      console.log(res, "flight res");
+      this.flightList = res.response.onwardFlights;
+      this.oneWayDate = res.responseDateTime;
+      console.log(this.oneWayDate, "res");
+      this._flightService.flightListData = this.flightList;
+      // this._flightService.flightListDate = this.oneWayDate;
+      console.log("flight Search -->",this.flightList);
+
+    }, (error) => { console.log(error) });
   }
 
   ngOnDestroy(): void {
