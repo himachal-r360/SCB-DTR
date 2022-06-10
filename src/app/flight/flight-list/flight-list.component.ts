@@ -75,8 +75,10 @@ export class FlightListComponent implements OnInit, OnDestroy {
   constructor(private _flightService: FlightService, private _fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.flightList=this._flightService.flightListData;
 
+    this.flightList=this._flightService.flightListData;
+    console.log(this.flightList);
+    
     $(".js-range-slider").ionRangeSlider({
       type: "double",
       min: 0,
@@ -113,6 +115,7 @@ export class FlightListComponent implements OnInit, OnDestroy {
     });
     this.getCityList()
     this.setSearchFilterData();
+    this.flightSearch();
     // console.log(this.searchData , "Search value");
     // console.log(this.searchData.value.flightclass , "Search value 2");
   }
@@ -181,6 +184,8 @@ export class FlightListComponent implements OnInit, OnDestroy {
         console.log(this.cityList);
       });
   }
+
+  
 
 
   increaseAdult() {
@@ -398,7 +403,8 @@ export class FlightListComponent implements OnInit, OnDestroy {
       console.log(this.oneWayDate, "res");
       this._flightService.flightListData = this.flightList;
       // this._flightService.flightListDate = this.oneWayDate;
-      console.log(this.flightList, "flight Search");
+      console.log("flight Search -->",this.flightList);
+      
     }, (error) => { console.log(error) });
   }
 
