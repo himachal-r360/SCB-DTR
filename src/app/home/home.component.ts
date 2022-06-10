@@ -117,6 +117,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         $('.Travellers-dropdown-data').removeClass('Travellershide');
       }
+      var Preferredtitle = $('.Preferred-title');
+      if (!$(e.target).closest(Preferredtitle).length) {
+        $('.Preferred-data').addClass('Preferred-hide');
+      } else {
+        $('.Preferred-data').removeClass('Preferred-hide');
+      }
+
     });
   }
   ngAfterViewInit(): void {
@@ -393,5 +400,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.disableinfants = false;
       }
     }
+  }
+
+  swap()
+  {
+    var FromData = {flightFrom: this.flightData.value.flightfrom,fromAirpotName:this.fromAirpotName,fromCityName: this.fromCityName  }
+    this.flightData.value.flightfrom = this.flightData.value.flightto ;
+    this.fromAirpotName = this.toAirpotName;
+    this.fromCityName  = this.toCityName;
+    localStorage.setItem('fromCity', this.toCityName);
+    this.flightData.value.flightto = FromData.flightFrom;
+    // this.cityName = para2.city;
+    this.toAirpotName = FromData.fromAirpotName;
+    this.toCityName = FromData.fromCityName;
+    localStorage.setItem('toCity' ,FromData.fromCityName);
+
   }
 }
