@@ -208,7 +208,7 @@
                         <div class="sidebar-widget search-widget">
                             <div class="widget-title">
                                 <h6 class="">Populat Filters</h6>
-                                <a href="">Reset</a>
+                                <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
                             </div>
                             <div class="widget-content">
                                 <ul class="category-list clearfix mt-2" id="popular-filters">
@@ -252,27 +252,27 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="sidebar-widget flighttimings-widget">
+                        <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
                             <div class="widget-title">
                                 <h6 class="">Flight Timings</h6>
-                                <a href="">Reset</a>
+                                <a href="javascript:void(0)" (click)="resetFlightTimings()">Reset</a>
                             </div>
                             <div class="widget-content">
-                                <p class="flighttimings-text">Departing flight (BOM-HYD)</p>
+                                <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
                                 <div class="flighttiming-content flight-departing">
-                                    <div class="flighttiming-list">
+                                    <div class="flighttiming-list" value="0_6" (click)="FlightTimingsFilterFlightData('0_6')">
                                         <img src="assets/images/icons/timings/1.png" alt="">
                                         <p>00-06</p>
                                     </div>
-                                    <div class="flighttiming-list active">
+                                    <div class="flighttiming-list active" value="6_12" (click)="FlightTimingsFilterFlightData('6_12')">
                                         <img src="assets/images/icons/timings/2.png" alt="">
                                         <p>06-12</p>
                                     </div>
-                                    <div class="flighttiming-list">
+                                    <div class="flighttiming-list" value="12_18" (click)="FlightTimingsFilterFlightData('12_18')">
                                         <img src="assets/images/icons/timings/3.png" alt="">
                                         <p>12-18</p>
                                     </div>
-                                    <div class="flighttiming-list">
+                                    <div class="flighttiming-list" value="18_0" (click)="FlightTimingsFilterFlightData('18_0')">
                                         <img src="assets/images/icons/timings/4.png" alt="">
                                         <p>18-00</p>
                                     </div>
@@ -283,7 +283,7 @@
                         <div class="sidebar-widget Price-widget">
                             <div class="widget-title">
                                 <h6 class="">Price</h6>
-                                <a href="">Reset</a>
+                                <a href="javascript:void(0)">Reset</a>
                             </div>
                             <div class="widget-content mt-10 mb-30 price-widget-content">
                                 <div style="margin:0 0 20px 0">
@@ -298,7 +298,7 @@
                         <div class="sidebar-widget stops-widget">
                             <div class="widget-title">
                                 <h6 class="">Stops</h6>
-                                <a href="">Reset</a>
+                                <a href="javascript:void(0)">Reset</a>
                             </div>
                             <div class="widget-content">
                                 <div class="Stops-content">
@@ -318,7 +318,7 @@
                         <div class="sidebar-widget Airlines-widget">
                             <div class="widget-title">
                                 <h6 class="">Airlines</h6>
-                                <a href="">Reset</a>
+                                <a href="javascript:void(0)">Reset</a>
                             </div>
                             <div class="widget-content">
                                 <ul class="category-list clearfix mt-2">
@@ -390,7 +390,7 @@
                         <div class="sidebar-widget stopover-widget">
                             <div class="widget-title">
                                 <h6 class="">Stopover</h6>
-                                <a href="">Reset</a>
+                                <a href="javascript:void(0)">Reset</a>
                             </div>
                             <div class="widget-content mt-20 mb-20">
                                 <!-- <input type="text" class="js-range-slider" name="my_range" value="" /> -->
@@ -406,7 +406,7 @@
                         <div class="sidebar-widget layover-airports-widget">
                             <div class="widget-title">
                                 <h6 class="">Layover Airports</h6>
-                                <a href="">Reset</a>
+                                <a href="javascript:void(0)">Reset</a>
                             </div>
                             <div class="widget-content">
                                 <ul class="category-list clearfix mt-2">
