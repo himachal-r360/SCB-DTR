@@ -45,7 +45,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   disableinfants: boolean = false;
   flightTimingfrom:any;
   flightTimingto:any;
-  
+
   flightListMod:any;
   RefundableFaresCount:number=0;
   nonStopCount:number=0;
@@ -470,16 +470,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
               isNonStop=true;
             }
           }
-          if(isfilterRefundableFares==true){ 
+          if(isfilterRefundableFares==true){
             if(this.flightList[i].priceSummary.filter(function(e:any){if(e.refundStatus==1){return e}}).length>0)
             {
               isRefundableFares=true;
             }
           }
-          if(isfilterMealsIncluded==true){ 
+          if(isfilterMealsIncluded==true){
             let singleFlightPriceSummaryMeal=[]
             singleFlightPriceSummaryMeal=this.flightList[i].priceSummary.filter(function(e:any){if(e.foodAllowance !="null"){return e}});
-            
+
             if(singleFlightPriceSummaryMeal.length>0)
             {
               this.flightList[i].priceSummary=[];
@@ -587,6 +587,28 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       else if(priceAscDesc=="P_H_L"){
         this.flightList.sort((a:any,b:any) => b.priceSummary[0].totalFare-a.priceSummary[0].totalFare);
       }
+    }
+    //StopOverFilter
+    if(this.flightList.length > 0)
+    {
+     var start = parseInt($('.price-value').text().replace(' hrs',''));
+     var end = parseInt($('.price-value2').text().replace(' hrs',''));
+     var filteredStopOver :any[] = [];
+    this.flightList.forEach((e:any)=>{
+      var flights =[];
+           e.flights.forEach((d:any)=>{
+            if((d.duration / 60)/60  >= start && (d.duration / 60 /60) <= end)
+            {
+              flights.push(d);
+            }
+          })
+          if(flights.length > 0)
+          {
+            filteredStopOver.push(e);
+          }
+
+      });
+      this.flightList = filteredStopOver;
     }
     debugger;
     console.log(this.flightList);
@@ -713,6 +735,7 @@ return Math.round((amount + (amount *(this.EMI_interest /100))) / 12);
     localStorage.setItem('toCity', FromData.fromCityName);
   }
   Initslider() {
+   var  $that = this;
     $('.js-range-slider').ionRangeSlider({
       type: 'double',
       min: 0,
@@ -803,9 +826,19 @@ return Math.round((amount + (amount *(this.EMI_interest /100))) / 12);
       slide: function (event: any, ui: any) {
         $('.price-value').text(ui.values[0] + ' hrs');
         $('.price-value2').text(ui.values[1] + ' hrs');
+        $that.popularFilterFlightData();
       },
     });
     $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
     $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
+  }
+
+  ResetStopOver()
+  {
+    $('.price-slider').slider('values', 0,0)
+    $('.price-slider').slider('values', 1,24)
+    $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
+    $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
+    this.popularFilterFlightData();
   }
 }
