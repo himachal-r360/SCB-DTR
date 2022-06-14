@@ -321,18 +321,18 @@
                                 <a href="javascript:void(0)">Reset</a>
                             </div>
                             <div class="widget-content">
-                                <ul class="category-list clearfix mt-2">
+                                <ul class="category-list clearfix mt-2" *ngFor="let airline of airlines; let i = index">
                                     <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
                                                 <input type="checkbox" class="material-control-input" />
                                                 <span class="material-control-indicator"></span>
-                                                <span class="description">Indigo (84)</span>
+                                                <span class="description">{{airline.airlineName}} (84)</span>
                                             </label>
-                                            <p>&#8377;5,252</p>
+                                            <p>&#8377;{{airline.price}}</p>
                                         </div>
                                     </li>
-                                    <li class="custom-check-box">
+                                    <!-- <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
                                                 <input type="checkbox" class="material-control-input" checked="checked" />
@@ -381,7 +381,7 @@
                                             </label>
                                             <p>&#8377;10,110</p>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <a href="#" class="widget-content-more ml-20">+2 more</a>
                             </div>
@@ -587,7 +587,7 @@
                                                 <div class="flight-listing-time" *ngIf="list.flights.length > 0">
                                                     <h6>{{ list.flights[0].duration }}</h6>
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
-                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}}</p>
+                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                                 </div>
                                             </div>
                                         </div>

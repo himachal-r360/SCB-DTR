@@ -614,9 +614,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.flightList);
   }
 
+ airlines:any 
+ flightListSingle:any;
   getAirlinelist() {
     let airlineNameArr =[];
-    this.flightList ;
+    
     for(let j=0;j<this.flightList.length;j++){
       let singleFlightList=[];
       singleFlightList=this.flightList[j].flights;
@@ -624,24 +626,26 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
       for(let h=0;h<singleFlightList.length;h++){
         let airlineName = singleFlightList[h].airlineName
-        // for(let p=0;p<priceSummaryList.length;p++) {
-        //   let priceSummary = priceSummaryList[p].totalFare
-        //   console.log(priceSummary, "price summary");
-        //   if(airlineNameArr.filter((d:any)=>{if(d.airlineName==airlineName){ return d;}}).length<1){
-         
-        //   }
-        //   if(airlineNameArr.filter((d:any)=>{if(d.priceSummary){ return d;}}).length<1) {
+        for(let p=0;p<priceSummaryList.length;p++) {
+          let priceSummary = priceSummaryList[p].totalFare
+          console.log(airlineName, "price summary");
+          if(airlineNameArr.filter((d:any)=>{if(d.airlineName==airlineName){ return d;}}).length<1){
+            if(airlineNameArr.filter((d:any)=>{if(d.priceSummary){ return d;}}).length<1) {
+              let airlineNameObj= {
+                "airlineName":airlineName,
+                "price":priceSummary,
+                
+              };
+              airlineNameArr.push(airlineNameObj);
+              
+          }
 
-        //   }
-        //   let airlineNameObj= {
-        //     "airlineName":airlineName,
-        //     "price":priceSummary
-        //   };
-        //   airlineNameArr.push(airlineNameObj);
-        // }
+          }
+        }
       }
-      airlineNameArr.push("");
+      // airlineNameArr.push("");
     }
+    this.airlines = airlineNameArr
     // let airlineNameObj= {
     //   "airlineName":"indigo3",
     //   "price":5000
