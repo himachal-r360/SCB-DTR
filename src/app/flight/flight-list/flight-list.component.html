@@ -320,14 +320,14 @@
                                 <h6 class="">Airlines</h6>
                                 <a href="javascript:void(0)">Reset</a>
                             </div>
-                            <div class="widget-content">
+                            <div class="widget-content" id="airline_list">
                                 <ul class="category-list clearfix mt-2" *ngFor="let airline of airlines; let i = index">
                                     <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
+                                                <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
-                                                <span class="description">{{airline.airlineName}} (84)</span>
+                                                <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
                                             </label>
                                             <p>&#8377;{{airline.price}}</p>
                                         </div>
