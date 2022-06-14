@@ -287,9 +287,9 @@
                             </div>
                             <div class="widget-content mt-10 mb-30 price-widget-content">
                                 <div style="margin:0 0 20px 0">
-                                    <input type="number" min="0" [value]="0" max="9900" oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
+                                    <input type="number" min="0" [value]="minPrice" [max]="maxPrice" oninput="validity.valid" id="min_price" class="price-range-field" />
                                     <span class="ms-3 me-3">-</span>
-                                    <input type="number" min="0"  [value]="10000" max="10000" oninput="validity.valid||(value='10000');" id="max_price" class="price-range-field" />
+                                    <input type="number" min="0"  [value]="maxPrice" [max]="maxPrice" oninput="validity.valid" id="max_price" class="price-range-field" />
                                 </div>
                                 <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
                             </div>

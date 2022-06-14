@@ -75,6 +75,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   refundFilterStatus:boolean= false;
   flightListWithOutFilter: any=[];
 
+  minPrice:number=0;
+  maxPrice:number = 0;
 
   constructor(private _flightService: FlightService, private _fb: FormBuilder) { }
 
@@ -109,8 +111,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.getCityList();
     this.setSearchFilterData();
-    this.flightSearch();
 
+    this.flightSearch();
+    this.GetMinAndMaxPriceForFilter();
     // console.log(this.searchData , "Search value");
     // console.log(this.searchData.value.flightclass , "Search value 2");
   }
@@ -694,9 +697,9 @@ return Math.round((amount + (amount *(this.EMI_interest /100))) / 12);
       $('#slider-range').slider({
         range: true,
         orientation: 'horizontal',
-        min: 0,
-        max: 10000,
-        values: [0, 10000],
+        min: $that.minPrice,
+        max: $that.maxPrice,
+        values: [ $that.minPrice, $that.maxPrice],
         step: 100,
         slide: function (event: any, ui: any) {
           if (ui.values[0] == ui.values[1]) {
@@ -750,5 +753,32 @@ return Math.round((amount + (amount *(this.EMI_interest /100))) / 12);
     $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
     $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
     this.popularFilterFlightData();
+  }
+
+  GetMinAndMaxPriceForFilter(){
+    if(this.flightList.length > 0)
+    {
+      this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+      this.maxPrice = this.flightList[0].priceSummary[0].totalFare;
+      this.flightList.forEach((z:any)=>{
+          var temp = z.priceSummary[0].totalFare;
+
+          if(temp < this.minPrice)
+          {
+            this.minPrice = temp;
+          }
+          if(temp > this.maxPrice)
+          {
+            this.maxPrice = temp;
+          }
+      });
+      this.Initslider();
+    }
+    else{
+      this.minPrice = 0;
+      this.maxPrice = 10000;
+    }
+
+    console.log( this.minPrice + '  ' + this.maxPrice)
   }
 }
