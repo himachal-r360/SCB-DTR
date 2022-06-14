@@ -75,6 +75,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
 
+  minPrice:number=0;
+  maxPrice:number = 10000;
 
   constructor(private _flightService: FlightService, private _fb: FormBuilder) { }
 
@@ -109,6 +111,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.getCityList();
     this.setSearchFilterData();
+
     this.flightSearch();
 
 
@@ -813,9 +816,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       $('#slider-range').slider({
         range: true,
         orientation: 'horizontal',
-        min: 0,
-        max: 10000,
-        values: [0, 10000],
+        min: $that.minPrice,
+        max: $that.maxPrice,
+        values: [ $that.minPrice, $that.maxPrice],
         step: 100,
         slide: function (event: any, ui: any) {
           if (ui.values[0] == ui.values[1]) {
@@ -831,7 +834,23 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       $('#min_price').val($('#slider-range').slider('values', 0));
       $('#max_price').val($('#slider-range').slider('values', 1));
     });
+    $('#slider-range').slider({
+      range: true,
+      orientation: 'horizontal',
+      min: $that.minPrice,
+      max: $that.maxPrice,
+      values: [ $that.minPrice, $that.maxPrice],
+      step: 100,
+      slide: function (event: any, ui: any) {
+        if (ui.values[0] == ui.values[1]) {
+          return false;
+        }
 
+        $('#min_price').val(ui.values[0]);
+        $('#max_price').val(ui.values[1]);
+        return;
+      },
+    });
     $('#slider-range,#price-range-submit').click(function () {
       var min_price = $('#min_price').val();
       var max_price = $('#max_price').val();
@@ -851,7 +870,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       range: true,
       min: 0,
       max: 24,
-      values: [0, 20],
+      values: [0, 24],
       slide: function (event: any, ui: any) {
         $('.price-value').text(ui.values[0] + ' hrs');
         $('.price-value2').text(ui.values[1] + ' hrs');
@@ -868,5 +887,32 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
     $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
     this.popularFilterFlightData();
+  }
+
+  GetMinAndMaxPriceForFilter(){
+    if(this.flightList.length > 0)
+    {
+      this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+      this.maxPrice = this.flightList[0].priceSummary[0].totalFare;
+      this.flightList.forEach((z:any)=>{
+          var temp = z.priceSummary[0].totalFare;
+
+          if(temp < this.minPrice)
+          {
+            this.minPrice = temp;
+          }
+          if(temp > this.maxPrice)
+          {
+            this.maxPrice = temp;
+          }
+      });
+      this.Initslider();
+    }
+    else{
+      this.minPrice = 0;
+      this.maxPrice = 10000;
+    }
+
+    console.log( this.minPrice + '  ' + this.maxPrice)
   }
 }
