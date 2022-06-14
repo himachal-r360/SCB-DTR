@@ -76,13 +76,14 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   flightListWithOutFilter: any=[];
 
   minPrice:number=0;
-  maxPrice:number = 0;
+  maxPrice:number = 10000;
 
   constructor(private _flightService: FlightService, private _fb: FormBuilder) { }
 
   ngOnInit(): void {
 
     this.flightList=this._flightService.flightListData;
+   // this.flightListWithOutFilter = this._flightService.flightListData;
     console.log(this.flightList);
 
     $(document).click(function (e: any) {
@@ -111,15 +112,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.getCityList();
     this.setSearchFilterData();
-<<<<<<< HEAD
 
     this.flightSearch();
-    this.GetMinAndMaxPriceForFilter();
-=======
-    this.flightSearch();
-    
-    
->>>>>>> 47f1d5bb015505ac2412cfe937e85819a61553a4
+     //this.GetMinAndMaxPriceForFilter();
     // console.log(this.searchData , "Search value");
     // console.log(this.searchData.value.flightclass , "Search value 2");
   }
@@ -393,7 +388,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     $("#Flight_Timings .flighttiming-list[value="+val+"]").addClass('active');
     this.popularFilterFlightData();
   }
-  
+
   resetFlightTimings()
   {
     $("#Flight_Timings .flighttiming-list").removeClass('active');
@@ -450,7 +445,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     let flightListWithOutFilter=this.flightListWithOutFilter;
     const flightListConst=flightListWithOutFilter.map((b:any)=>({...b}));
     this.flightList=flightListConst;
-    
+
     if($("#Flight_Timings .flighttiming-list").hasClass("active")){
       isfilterFlightTiming=true;
       filterFlightTimingval=$("#Flight_Timings .flighttiming-list.active").attr("value");
@@ -472,7 +467,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if(singleFlightList!=null && singleFlightList!=undefined){
         if(isfilterNonStop==true || isfilterRefundableFares==true || isfilterMealsIncluded==true || isfilterFlightTiming==true || isfilterFlightStops==true){
-          if(isfilterNonStop==true){ 
+          if(isfilterNonStop==true){
             if(singleFlightList.filter(function(e:any){if(e.stops==0){return e}}).length>0)
             {
               isNonStop=true;
@@ -586,7 +581,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           //return flights;
       })
-      
+
     //Ascending Descending Order
       let priceAscDesc=$("#priceAscDesc").val();
       if(priceAscDesc=="P_L_H"){
@@ -619,6 +614,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.flightList = filteredStopOver;
     }
     debugger;
+
     console.log(this.flightList);
   }
 
@@ -636,7 +632,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         //   let priceSummary = priceSummaryList[p].totalFare
         //   console.log(priceSummary, "price summary");
         //   if(airlineNameArr.filter((d:any)=>{if(d.airlineName==airlineName){ return d;}}).length<1){
-         
+
         //   }
         //   if(airlineNameArr.filter((d:any)=>{if(d.priceSummary){ return d;}}).length<1) {
 
@@ -656,11 +652,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     // };
     // airlineNameArr.push(airlineNameObj);
     console.log(airlineNameArr , "flightlistname");
-    
+
       //this.flightList
   }
- 
-  
+
+
 
   flightSearch() {
     debugger;
@@ -704,7 +700,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.popularFilterFlightData()
     }, (error) => { console.log(error) });
     console.log(this.flightListWithOutFilter);
-   
+
   }
 
   ngOnDestroy(): void {
@@ -810,7 +806,23 @@ return Math.round((amount + (amount *(this.EMI_interest /100))) / 12);
       $('#min_price').val($('#slider-range').slider('values', 0));
       $('#max_price').val($('#slider-range').slider('values', 1));
     });
+    $('#slider-range').slider({
+      range: true,
+      orientation: 'horizontal',
+      min: $that.minPrice,
+      max: $that.maxPrice,
+      values: [ $that.minPrice, $that.maxPrice],
+      step: 100,
+      slide: function (event: any, ui: any) {
+        if (ui.values[0] == ui.values[1]) {
+          return false;
+        }
 
+        $('#min_price').val(ui.values[0]);
+        $('#max_price').val(ui.values[1]);
+        return;
+      },
+    });
     $('#slider-range,#price-range-submit').click(function () {
       var min_price = $('#min_price').val();
       var max_price = $('#max_price').val();
@@ -830,7 +842,7 @@ return Math.round((amount + (amount *(this.EMI_interest /100))) / 12);
       range: true,
       min: 0,
       max: 24,
-      values: [0, 20],
+      values: [0, 24],
       slide: function (event: any, ui: any) {
         $('.price-value').text(ui.values[0] + ' hrs');
         $('.price-value2').text(ui.values[1] + ' hrs');
