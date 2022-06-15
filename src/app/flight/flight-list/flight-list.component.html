@@ -564,196 +564,468 @@
                                 </div>
                                 <div class="flight-info-box">
                                     <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
-                                    <a href="javascript:void(0)" (click)="HideShowCompareToFly(i)" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
+                                    <a href="javascript:void(0)" (click)="HideShowCompareToFly(i)" class="flight-details-click">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                 </div>
                                 <div class="flight-details-box flight-details-box-hide" id="CompareToFly_{{i}}">
-                                  <div class="flight-details-options">
-                                      <ul>
-                                          <li>
-                                              <input name="radiog_lite" id="radio1" class="" type="radio" checked="checked">
-                                        <label for="radio1" class="css-label radGroup1">Economy</label>
-                                          </li>
-                                          <li>
-                                              <input name="radiog_lite" id="radio2" class="" type="radio">
-                                        <label for="radio2" class="css-label radGroup1">Saver</label>
-                                              <span class="information-icon">
-                                                  <img src="assets/images/icons/info.png" class="" alt="">
-                                                  <div class="hover-popover">
-                                                      <div class="hover-popover-title">
-                                                          <h6>Economy SAVER</h6>
-                                                          <span>Fare by Airline</span>
-                                                      </div>
-                                                      <div class="hover-popover-content">
-                                                          <div class="hover-popover-content-list">
-                                                              <p>  Date change fee starting at ₹2,465</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Tickets will be issued instantly</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Cancellation fee starting at ₹3,000</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Free seats are available</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Cabin baggage 7Kgs</p>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </span>
-                                          </li>
-                                          <li class="FlexiPlus">
-                                              <input name="radiog_lite" id="radio3" class="" type="radio">
-                                          <label for="radio3" class="css-label radGroup1">Flexi Plus</label>
-                                              <span class="information-icon">
-                                                  <img src="assets/images/icons/info.png" class=" " alt="">
-                                                  <div class="hover-popover">
-                                                      <div class="hover-popover-title">
-                                                          <h6>Economy FLEXI PLUS</h6>
-                                                          <span>Fare by Airline</span>
-                                                      </div>
-                                                      <div class="hover-popover-content">
-                                                          <div class="hover-popover-content-list">
-                                                              <p>  Free seats available</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Free date change allowed</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Complimentary meals</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Ticket will be issues instantly</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Cancellation fee starting at ₹500</p>
-                                                          </div>
-                                                          <div class="hover-popover-content-list">
-                                                              <p> Cabin baggage 7kgs, Check-in baggage included</p>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </span>
-                                          </li>
-                                      </ul>
-                                  </div>
-                                  <div class="flight-options-box">
-                                      <div class="flight-options-list" *ngFor="let item of list.priceSummary">
-                                          <div class="flight-options-list-left">
-                                              <div class="flight-options-logo">
-                                                {{item.partnerName}}
-                                                  <!-- <img src="./assets/images/flights/1.png" alt="" /> -->
-                                              </div>
-                                              <div class="flight-options-text">
-                                                <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
-                                                  <p class="text-red" *ngIf="item.refundStatus != 1">Non-Refundable</p>
-                                              </div>
-                                          </div>
-                                          <div class="flight-options-list-right">
-                                              <div class="emi-options" *ngIf="item.totalFare > EMIAvailableLimit">
-                                                  <p>EMI starts at &#8377; {{calculateEMI(item.totalFare)}} per month</p>
-                                              </div>
-                                              <div class="flight-options-price d-flex align-items-center">
-                                                  <p>&#8377;{{item.totalFare}}</p>
-                                                  <span class="information-icon">
-                                                      <img src="assets/images/icons/info.png" class="ms-2" alt="">
-                                                      <div class="hover-popover">
-                                                          <div class="hover-popover-title">
-                                                              <h6>Price Breakdown</h6>
-                                                          </div>
-                                                          <div class="hover-popover-content">
-                                                              <div class="hover-popover-content-list">
-                                                                  <p>Base Fare</p>
-                                                                  <p>&#8377;{{item.baseFare}}</p>
-                                                              </div>
-                                                              <div class="hover-popover-content-list">
-                                                                  <p>Base Fare</p>
-                                                                  <p>&#8377;{{item.baseFare}}</p>
-                                                              </div>
-                                                              <hr class="m-0" />
-                                                              <div class="hover-popover-content-list popover-total">
-                                                                  <p>Total</p>
-                                                                  <p>&#8377;{{item.totalFare}}</p>
-                                                              </div>
-                                                          </div>
-                                                          <div class="hover-popover-footer">
-                                                              <p>*Partner Convenience Fee is applicable</p>
-                                                          </div>
-                                                      </div>
-                                                  </span>
-                                              </div>
-                                              <div class="flight-options-book">
-                                                  <a href="" class="button-style">Book</a>
-                                              </div>
-                                          </div>
-                                      </div>
-
-                                  </div>
-
-                              </div>
-                            </div>
-
-
-<!--
-                            <div class="flight-listing">
-                                <div class="flight-listing-content">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="flight-radio">
-                                                <div class="flight-radio-image">
-                                                    <img src="assets/images/flights/flight-1.png" alt="">
-                                                </div>
-                                                <div class="flight-radio-time">
-                                                    <h6>IndiGo</h6>
-                                                    <p>6E 5334, 6E 7137</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-city-box">
-                                                <div class="flight-listing-time">
-                                                    <h6>08:05</h6>
-                                                    <p>Mumbai</p>
-                                                    <img src="./assets/images/icons/flight-right.png" alt="">
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>17:15</h6>
-                                                    <p>Hyderabad</p>
-                                                </div>
-                                                <div class="flight-listing-time">
-                                                    <h6>1hr 10 min</h6>
-                                                    <p>1 stop</p>
+                                    <div class="flight-extra-details">
+                                        <ul class="list-unstyled flight-extra-tabs">
+                                            <li>
+                                                <a href="javascript:void(0); " class="flight-extra-tabs-active" data-bind="FareDetails" value="FareDetails" (click)="flightDetailsTab($event,'FareDetails',i)">Fare Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0); " data-bind="FlightDetails" value="FlightDetails"  (click)="flightDetailsTab($event,'FlightDetails',i)">Flight Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" data-bind="CancellationDetails"  value="CancellationDetails" (click)="flightDetailsTab($event,'CancellationDetails',i)"> Cancellation Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" data-bind="DateChange" value="DateChange"  (click)="flightDetailsTab($event,'DateChange',i)"> Date Change</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" data-bind="Fare"  (click)="flightDetailsTab($event,'Fare',i)"> Fare Rules </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" data-bind="Cancellation" value="Cancellation"  (click)="flightDetailsTab($event,'Cancellation',i)"> Cancellation Protection </a>
+                                            </li>
+                                        </ul>
+                                        <div class="extra-tabs-ara">
+                                            <div id="FareDetails_{{i}}" class="flight-extra-content extra-active">
+                                                <div class="extra-tabs-details FareDetails-box p-3">
+                                                    <div class="flight-details-options">
+                                                        <ul>
+                                                            <li>
+                                                                <input name="radiog_lite01" id="radio01" class="" type="radio" checked="checked">
+                                                                <label for="radio01" class="css-label radGroup1">Economy</label> 
+                                                            </li>
+                                                            <li>
+                                                                <input name="radiog_lite01" id="radio02" class="" type="radio">
+                                                                <label for="radio02" class="css-label radGroup1">Saver</label> 
+                                                                <span class="information-icon">
+                                                                    <img src="assets/images/icons/info.png" class="" alt="">                                                                        
+                                                                    <div class="hover-popover">
+                                                                        <div class="hover-popover-title">
+                                                                            <h6>Economy SAVER</h6>
+                                                                            <span>Fare by Airline</span>
+                                                                        </div>
+                                                                        <div class="hover-popover-content">
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p>  Date change fee starting at ₹2,465</p>
+                                                                            </div>
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Tickets will be issued instantly</p> 
+                                                                            </div> 
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Cancellation fee starting at ₹3,000</p> 
+                                                                            </div> 
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Free seats are available</p> 
+                                                                            </div> 
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Cabin baggage 7Kgs</p> 
+                                                                            </div>  
+                                                                        </div> 
+                                                                    </div>
+                                                                </span>
+                                                            </li>
+                                                            <li class="FlexiPlus">
+                                                                <input name="radiog_lite01" id="radio03" class="" type="radio">
+                                                                <label for="radio03" class="css-label radGroup1">Flexi Plus</label>
+                                                                <span class="information-icon">
+                                                                    <img src="assets/images/icons/info.png" class=" " alt="">                                                                        
+                                                                    <div class="hover-popover">
+                                                                        <div class="hover-popover-title">
+                                                                            <h6>Economy FLEXI PLUS</h6>
+                                                                            <span>Fare by Airline</span>
+                                                                        </div>
+                                                                        <div class="hover-popover-content">
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p>  Free seats available</p>
+                                                                            </div>
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Free date change allowed</p> 
+                                                                            </div> 
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Complimentary meals</p> 
+                                                                            </div> 
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Ticket will be issues instantly</p> 
+                                                                            </div> 
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Cancellation fee starting at ₹500</p> 
+                                                                            </div>  
+                                                                            <div class="hover-popover-content-list">
+                                                                                <p> Cabin baggage 7kgs, Check-in baggage included</p> 
+                                                                            </div>  
+                                                                        </div> 
+                                                                    </div>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="flight-options-box">
+                                                        <div class="flight-options-list" *ngFor="let item of list.priceSummary">
+                                                            <div class="flight-options-list-left">
+                                                                <div class="flight-options-logo">
+                                                                    {{item.partnerName}}
+                                                                    <!-- <img src="./assets/images/flights/1.png" alt="" /> -->
+                                                                </div>
+                                                                <div class="flight-options-text">
+                                                                    <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
+                                                                    <p class="text-red" *ngIf="item.refundStatus != 1">Non-Refundable</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flight-options-list-right">
+                                                                <div class="emi-options" *ngIf="item.totalFare > EMIAvailableLimit">
+                                                                    <p>EMI starts at &#8377; {{calculateEMI(item.totalFare)}} per month</p>
+                                                                </div>
+                                                                <div class="flight-options-price d-flex align-items-center">
+                                                                    <p>&#8377;{{item.totalFare}}</p>
+                                                                    <span class="information-icon">
+                                                                        <img src="assets/images/icons/info.png" class="ms-2" alt="">
+                                                                        <div class="hover-popover">
+                                                                            <div class="hover-popover-title">
+                                                                                <h6>Price Breakdown</h6>
+                                                                            </div>
+                                                                            <div class="hover-popover-content">
+                                                                                <div class="hover-popover-content-list">
+                                                                                    <p>Base Fare</p>
+                                                                                    <p>&#8377;{{item.baseFare}}</p>
+                                                                                </div>
+                                                                                <div class="hover-popover-content-list">
+                                                                                    <p>Base Fare</p>
+                                                                                    <p>&#8377;{{item.baseFare}}</p>
+                                                                                </div>
+                                                                                <hr class="m-0" />
+                                                                                <div class="hover-popover-content-list popover-total">
+                                                                                    <p>Total</p>
+                                                                                    <p>&#8377;{{item.totalFare}}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="hover-popover-footer">
+                                                                                <p>*Partner Convenience Fee is applicable</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flight-options-book">
+                                                                    <a href="" class="button-style">Book</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                
+                                                    </div>                                     
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="flight-listing-pri">
-                                                <div class="flight-listing-image">
-                                                    <img src="assets/images/flights/1.png" alt="">
+                                            <div id="FlightDetails_{{i}}" class="flight-extra-content ">
+                                                <div class="extra-tabs-details FlightDetails-box">
+                                                    <div class="extra-tabs-details-top">
+                                                        <div class="extra-tabs-left">
+                                                            <p>Depart <span class="ms-2 me-2">|</span>{{fromCityName}} to {{toCityName}}</p>
+                                                        </div>
+                                                        <div class="extra-tabs-right">
+                                                            <ul class="extra-tabs-right-ul">
+                                                                <li>
+                                                                    <p>
+                                                                        <img src="./assets/images/icons/details/1.png" alt="">
+                                                                    </p>
+                                                                    <div class="hover-popover"> 
+                                                                        <div class="hover-popover-content">
+                                                                            <p>Extra Baggage</p>
+                                                                        </div> 
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <p><img src="./assets/images/icons/details/2.png" alt=""></p>
+                                                                    <div class="hover-popover"> 
+                                                                        <div class="hover-popover-content">
+                                                                            <p>Food</p>
+                                                                        </div> 
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <p><img src="./assets/images/icons/details/3.png" alt=""></p>
+                                                                    <div class="hover-popover"> 
+                                                                        <div class="hover-popover-content">
+                                                                            <p>Sheet</p>
+                                                                        </div> 
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="extra-tabs-details-bottom">
+                                                        <div class="tabs-depart-box">
+                                                            <div class="tabs-depart-one" *ngFor="let details of list.flights">
+                                                                <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">{{details.airlineName}} {{details.airline}} {{details.flightNumber}}</p>
+                                                                <div class="tabs-depart-left">
+                                                                    <div class="tabs-depart-times">
+                                                                        <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}
+                                                                        </h5>
+                                                                        <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                        <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.departureAirport}})</p>
+                                                                    </div>
+                                                                    <div class="tabs-depart-total">
+                                                                        <p>{{details.duration}}</p>
+                                                                    </div>
+                                                                    <div class="tabs-depart-times">
+                                                                        <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                        <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                        <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.arrivalAirport}})</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tabs-depart-right">
+                                                                    <div class="Baggage">
+                                                                        <h5>Baggage</h5>
+                                                                        <p>Adult</p>
+                                                                    </div>
+                                                                    <div class="departCheck">
+                                                                        <h5>Check-in</h5>
+                                                                        <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                                    </div>
+                                                                    <div class="Cabin">
+                                                                        <h5>Cabin</h5>
+                                                                        <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tabs-depart-two">
+                                                                    <p>Change of planes・3h 0m Layover in Nagpur</p>
+                                                                </div> 
+                                                            </div>
+                                                            <!-- <div class="tabs-depart-three">
+                                                                <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                                                <div class="tabs-depart-left">
+                                                                    <div class="tabs-depart-times">
+                                                                        <h5 class="mb-1 fw_7">08:05</h5>
+                                                                        <p>Mon, Jul 11</p>
+                                                                        <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                                    </div>
+                                                                    <div class="tabs-depart-total">
+                                                                        <p>01h 30m</p>
+                                                                    </div>
+                                                                    <div class="tabs-depart-times">
+                                                                        <h5 class="mb-1 fw_7">08:05</h5>
+                                                                        <p>Mon, Jul 11</p>
+                                                                        <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tabs-depart-right">
+                                                                    <div class="Baggage">
+                                                                        <h5>Baggage</h5>
+                                                                        <p>Adult</p>
+                                                                    </div>
+                                                                    <div class="departCheck">
+                                                                        <h5>Check-in</h5>
+                                                                        <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                                    </div>
+                                                                    <div class="Cabin">
+                                                                        <h5>Cabin</h5>
+                                                                        <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                                                        </div>                                 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="flight-listing-pri">
-                                                <div class="flight-listing-price">
-                                                    <h6>&#8377; 4,892 <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
-                                                    <a href="" class="moreview">+1 more </a>
+                                            <div id="CancellationDetails_{{i}}" class="flight-extra-content">
+                                                <div class="extra-tabs-details CancellationDetails-box">
+                                                    <div class="extra-tabs-details-top">
+                                                        <div class="extra-tabs-left">
+                                                            <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                        </div>
+                                                        <div class="extra-tabs-right"></div>
+                                                    </div>
+                                                    <div class="extra-tabs-details-bottom">
+                                                        <table class="table-bordered table-content w-100"> 
+                                                            <tbody>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                                        <p class="opacity_05">(Per passenger)</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                                    </div>                                                    
                                                 </div>
-                                                <div class="flight-listing-viewfares">
-                                                    <a href="" class="button-style">Selected</a>
+                                            </div>
+                                            <div id="DateChange_{{i}}" class="flight-extra-content">
+                                                <div class="extra-tabs-details DateChange-box">
+                                                    <div class="extra-tabs-details-top">
+                                                        <div class="extra-tabs-left">
+                                                            <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                        </div>
+                                                        <div class="extra-tabs-right"></div>
+                                                    </div>
+                                                    <div class="extra-tabs-details-bottom">
+                                                        <table class="table-bordered table-content w-100"> 
+                                                            <tbody>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                                        <p class="opacity_05">(Per passenger)</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                                    </div>                                                              
+                                                </div>
+                                            </div>
+                                            <div id="Fare_{{i}}" class="flight-extra-content">
+                                                <div class="extra-tabs-details Fare-box">
+                                                    <div class="extra-tabs-details-top">
+                                                        <div class="extra-tabs-left">
+                                                            <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                        </div>
+                                                        <div class="extra-tabs-right"></div>
+                                                    </div>
+                                                    <div class="extra-tabs-details-bottom">
+                                                        <table class="table-bordered table-content w-100"> 
+                                                            <tbody>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                                        <p class="opacity_05">(Per passenger)</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td>
+                                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Adult : Non refundable</p>
+                                                                        <p>Child : Non refundable</p>
+                                                                        <p>Infant : Non refundable</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="Cancellation_{{i}}" class="flight-extra-content">
+                                                <div class="extra-tabs-details Cancellation-box">
+                                                    <div class="extra-tabs-details-top">
+                                                        <div class="extra-tabs-left">
+                                                            <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                        </div>
+                                                        <div class="extra-tabs-right"></div>
+                                                    </div>
+                                                    <div class="extra-tabs-details-bottom">
+                                                        <ul class="m-0 tabs-list-data"> 
+                                                            <li><p>While Booking your flight ticket, select 'Cancellation Protection' option and pay a nominal cancellation premium and enjoy ZERO penalty in case you wish to cancel the booking.</p></li>
+                                                            <li><p>Cancellation Protection is applicable on select one way domestic flights and starts at only Rs.149</p></li>
+                                                            <li><p>Cancellation Protection is applicable on select one way domestic flights</p></li>
+                                                            <li><p>Tickets should be cancelled 25 hrs prior to scheduled departure of the flight to avail this feature.</p></li>
+                                                            <li><p>Cancellation should be done ONLY on airlines for the cancellation charges to be void.</p></li>
+                                                            <li><p>Waiver is valid only for FULL cancellations (cancellations of all flights of a particular passenger, booked in an itinerary) for any or all passengers in a booking.</p></li>
+                                                            <li><p>In case of partial cancellation (cancelation of only some flights booked in an itinerary), waiver will not be given & normal cancelation penalties will be charged.</p></li>
+                                                            <li><p>ZERO Cancellation service is valid only on complete cancellation of itinerary and not on date change of itinerary.</p></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="flight-info-box">
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
-                                    <a href="#">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                </div>
-                            </div>  -->
-                        </div>
 
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

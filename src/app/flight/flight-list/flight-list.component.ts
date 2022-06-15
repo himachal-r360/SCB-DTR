@@ -109,12 +109,29 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('.Travellers-dropdown-data').removeClass('Travellershide');
       }
     });
+    
     this.getCityList();
     this.setSearchFilterData();
 
     this.flightSearch();
+    // $('.flight-extra-tabs li a').on('click', function(obj:any) {     
+    //     console.log(obj);
+    //     var dashboard_menu_type = $(this).attr('data-bind');
+    //     $('.flight-extra-content').hide();
+    //     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+    //     $('#' + dashboard_menu_type).show();
+    //     $(this).addClass('flight-extra-tabs-active');
+    // });
 
-
+  }
+  flightDetailsTab(obj:any,value:string,indx:number)
+  {
+    debugger;
+    var dashboard_menu_type = value;
+    $('.flight-extra-content').hide();
+    $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+    $('#' + dashboard_menu_type+"_"+indx).show();
+    $("#CompareToFly_"+indx+" a[value="+value+"]").addClass("flight-extra-tabs-active");
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -719,12 +736,18 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   HideShowCompareToFly(i: number) {
+    debugger;
+    $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
     var element = document.getElementById('CompareToFly_' + i);
     if (element?.classList.contains('flight-details-box-hide')) {
       element.classList.remove('flight-details-box-hide');
     } else {
       element?.classList.add('flight-details-box-hide');
     }
+    //$('#CompareToFly_' + i+" li:first a").click()
+
+    $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
+    $('#CompareToFly_' + i+" .extra-tabs-ara div:first").addClass("flight-extra-content extra-active").show();
   }
 
   calculateEMI(amount: number) {
