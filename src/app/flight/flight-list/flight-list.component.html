@@ -201,7 +201,7 @@
                   <div class="layout-left">
                     <div class="Filterslayout d-flex justify-content-between align-items-center">
                         <h6 class="fs_16">Filters</h6>
-                        <a href="" class="fs_13 text-color">Reset all</a>
+                        <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
                     </div>
                     <hr>
                     <div class="default-sidebar flight-sidebar">
@@ -283,7 +283,7 @@
                         <div class="sidebar-widget Price-widget" >
                             <div class="widget-title">
                                 <h6 class="">Price</h6>
-                                <a href="javascript:void(0)" >Reset</a>
+                                <a href="javascript:void(0)" (click)="resetPricefilter()">Reset</a>
                             </div>
                             <div class="widget-content mt-10 mb-30 price-widget-content">
                                 <div style="margin:0 0 20px 0">
@@ -318,13 +318,13 @@
                         <div class="sidebar-widget Airlines-widget">
                             <div class="widget-title">
                                 <h6 class="">Airlines</h6>
-                                <a href="javascript:void(0)">Reset</a>
+                                <a href="javascript:void(0)" (click)="resetFlightsFilter()">Reset</a>
                             </div>
                             <div class="widget-content" id="airline_list">
-                                <ul class="category-list clearfix mt-2" *ngFor="let airline of airlines; let i = index">
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
+                                <ul class="category-list clearfix mt-2" *ngFor="let airline of airlines ; let i = index ">
+                                    <li class="custom-check-box" >
+                                        <div class="custom-controls-stacked" >
+                                            <label class="custom-control material-checkbox" >
                                                 <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
                                                 <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
@@ -332,58 +332,8 @@
                                             <p>&#8377;{{airline.price}}</p>
                                         </div>
                                     </li>
-                                    <!-- <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" checked="checked" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">SpiceJet (23)</span>
-                                            </label>
-                                            <p>&#8377;6,356</p>
-                                        </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Air India (66)</span>
-                                            </label>
-                                            <p>&#8377;7,356</p>
-                                        </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Go First (12)</span>
-                                            </label>
-                                            <p>&#8377;9,356</p>
-                                        </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Vistara (34)</span>
-                                            </label>
-                                            <p>&#8377;9,525</p>
-                                        </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Air Asia (24)</span>
-                                            </label>
-                                            <p>&#8377;10,110</p>
-                                        </div>
-                                    </li> -->
                                 </ul>
-                                <a href="#" class="widget-content-more ml-20">+2 more</a>
+                                <a href="javascript:void(0)" class="widget-content-more ml-20" >+2 more</a>
                             </div>
                         </div>
                         <hr>
@@ -398,7 +348,7 @@
                                 <div class="price-slider"></div>
                                 <div class="Stopover-value">
                                     <p class="price-value" ></p>
-                                    <p class="price-value2"></p>
+                                    <p class="price-value2"></p>    
                                 </div>
                             </div>
                         </div>
