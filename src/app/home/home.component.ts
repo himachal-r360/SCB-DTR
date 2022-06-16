@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
@@ -41,19 +41,25 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   disableParent: boolean = false;
   disablechildren: boolean = false;
   disableinfants: boolean = false;
-
+  fromCityValidation = false;
+  toCityValidation = false;
+  departDateValidation = false;
   flightData: any = this._fb.group({
-    flightfrom: ['DEL'],
-    flightto: ['BLR'],
+    flightfrom: [''],
+    flightto: [''],
     flightclass: ['E'],
     flightdefault: ['O'],
-    departure: [this.newDate],
+    departure: [""],
     arrival: [''],
     adults: ['1'],
     child: ['0'],
     infants: ['0'],
     travel: ['DOM'],
   });
+
+  public error = (controlName: string, errorName: string) => {
+    return this.flightData.controls[controlName].hasError(errorName);
+  }
 
   // flightData: any = this._fb.group({
   //   depart: ["2022-06-15"],
@@ -233,30 +239,38 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   flightSearch() {
-    debugger;
+    
+    if(this.flightData.invalid){
+      debugger
+      return
+    }
+    else {
+      this.loader = true;
+      this.selectedDate = this.flightData.value.departure;
+      console.log(this.selectDate);
+      this.flightData.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
+      //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
+      let searchValue = JSON.stringify(this.flightData.value);
+      localStorage.setItem('searchVal', searchValue);
+      localStorage.setItem('fromAirportName', this.fromAirpotName);
+      localStorage.setItem('toAirportName', this.toAirpotName);
+      this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
+        this.loader = false;
+        this.show = true;
+        this.flightList = res.response.onwardFlights;
+        this.oneWayDate = res.responseDateTime;
+        console.log(this.oneWayDate , "res");
+        this._flightService.flightListData = this.flightList;
+        this._flightService.flightListDate = this.oneWayDate;
+        console.log(this.flightList , "flight Search");
+        let query:any = localStorage.getItem('searchVal');
+        this.router.navigate(['flight-list']);
+        // { queryParams: { flights : JSON.stringify(query) }}
+        
+      }, (error) => { console.log(error) });
+  
+    }
    
-    console.log(this.departureDate);
-    this.loader = true;
-    this.selectedDate = this.flightData.value.departure;
-    console.log(this.selectDate);
-    this.flightData.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
-    //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
-    let searchValue = JSON.stringify(this.flightData.value);
-    localStorage.setItem('searchVal', searchValue);
-    localStorage.setItem('fromAirportName', this.fromAirpotName);
-    localStorage.setItem('toAirportName', this.toAirpotName);
-    this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
-      this.loader = false;
-      this.show = true;
-      this.flightList = res.response.onwardFlights;
-      this.oneWayDate = res.responseDateTime;
-      console.log(this.oneWayDate , "res");
-      this._flightService.flightListData = this.flightList;
-      this._flightService.flightListDate = this.oneWayDate;
-      console.log(this.flightList , "flight Search");
-      this.router.navigate(['flight-list']);
-    }, (error) => { console.log(error) });
-
     //this.flightData.get('departure').setValue(this.departureDate)
     // this.sub = this._flightService.flightList(this.flightData.value).subscribe(
     //   (res: any) => {
