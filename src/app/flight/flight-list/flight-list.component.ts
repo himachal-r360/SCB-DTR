@@ -744,8 +744,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       element?.classList.add('flight-details-box-hide');
     }
-    //$('#CompareToFly_' + i+" li:first a").click()
-
+    // $('#CompareToFly_' + i+" li:first a").click()
     $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
     $('#CompareToFly_' + i+" .extra-tabs-ara div:first").addClass("flight-extra-content extra-active").show();
   }

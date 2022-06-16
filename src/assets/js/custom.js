@@ -28,10 +28,10 @@ $(document).ready(function($) {
         e.stopPropagation();
     }); 
 
-    $('.single-datepicker').daterangepicker({
-        singleDatePicker: true,
-        opens: 'center'
-    });
+    // $('.single-datepicker').daterangepicker({
+    //     singleDatePicker: true,
+    //     opens: 'center'
+    // });
     
     $('.daterange-right').daterangepicker({
         opens: 'center'
