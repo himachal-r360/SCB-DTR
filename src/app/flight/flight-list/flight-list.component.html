@@ -235,7 +235,7 @@
                                             <label class="custom-control material-checkbox">
                                                 <input type="checkbox" class="material-control-input" value="Morning-Departures"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
-                                                <span class="description">Morning Departures (66)</span>
+                                                <span class="description">Morning Departures ({{morningDearptureCount}})</span>
                                             </label>
                                         </div>
                                     </li>
@@ -552,7 +552,33 @@
                                         <div class="col-md-4">
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
+                                                    <span class="information-icon">
                                                     <h6>&#8377;  {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                        <!-- <img src="assets/images/icons/info.png" class="ms-2" alt=""> -->
+                                                        <div class="hover-popover">
+                                                            <div class="hover-popover-title">
+                                                                <h6>Price Breakdown</h6>
+                                                            </div>
+                                                            <div class="hover-popover-content">
+                                                                <div class="hover-popover-content-list">
+                                                                    <p>Base Fare</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].baseFare}}</p>
+                                                                </div>
+                                                                <div class="hover-popover-content-list">
+                                                                    <p>Base Fare</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].baseFare}}</p>
+                                                                </div>
+                                                                <hr class="m-0" />
+                                                                <div class="hover-popover-content-list popover-total">
+                                                                    <p>Total</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].totalFare}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hover-popover-footer">
+                                                                <p>*Partner Convenience Fee is applicable</p>
+                                                            </div>
+                                                        </div>
+                                                    </span>
                                                     <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                 </div>
                                                 <div class="flight-listing-viewfares">
