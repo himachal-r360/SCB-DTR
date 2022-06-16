@@ -434,7 +434,7 @@
                                     <p *ngIf="flightList">{{flightList.length}} flights found</p>
                                 </div>
                             </div>
-                            <div class="search-date-slider">
+                            <!-- <div class="search-date-slider">
                                 <div class="owl-carousel carousel-search-date" data-nav-arrow="false" data-items="7" data-md-items="6" data-sm-items="5" data-xs-items="3" data-xx-items="2" data-space="0" data-autoheight="true">
                                     <div class="item">
                                         <div class="search-date-items">
@@ -503,7 +503,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- Listing -->
@@ -553,10 +553,10 @@
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                     <h6>&#8377;  {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
-                                                    <a href="" class="moreview">+1 more </a>
+                                                    <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                 </div>
                                                 <div class="flight-listing-viewfares">
-                                                    <a href="" class="button-style">Selected</a>
+                                                    <a href="javascript:void(0)" class="button-style">Selected</a>
                                                 </div>
                                             </div>
                                         </div>
