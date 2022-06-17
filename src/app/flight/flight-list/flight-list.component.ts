@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 declare var $: any;
@@ -79,11 +80,20 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   minPrice:number=0;
   maxPrice:number = 10000;
   airlines: any;
+  
 
-  constructor(private _flightService: FlightService, private _fb: FormBuilder) { }
+  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, )  { }
 
   ngOnInit(): void {
-
+    this.route.queryParams
+    .subscribe((params:any) => {
+      debugger;
+      console.log(params ,"para"); // { orderby: "price" }
+      localStorage.setItem('searchVal', JSON.stringify(params));
+      // this.orderby = params.orderby;
+      // console.log(this.orderby); // price
+    }
+  );
     this.flightList = this._flightService.flightListData;
 
     $(document).click(function (e: any) {
@@ -127,7 +137,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   flightDetailsTab(obj:any,value:string,indx:number)
   {
-    debugger;
     var dashboard_menu_type = value;
     $('.flight-extra-content').hide();
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
@@ -142,15 +151,17 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   setSearchFilterData() {
     this.searchData = localStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
-    this.fromCityName = localStorage.getItem('fromCity'); //searchObj.flightfrom;
-    this.toCityName = localStorage.getItem('toCity');
+    // this.fromCityName = localStorage.getItem('fromCity'); //searchObj.flightfrom;
+    // this.toCityName = localStorage.getItem('toCity');
+    this.fromCityName = searchObj.fromCity; //searchObj.flightfrom;
+    this.toCityName = searchObj.toCity;//localStorage.getItem('toCity');
     this.departureDate = searchObj.departure;
     this.flightClassVal = searchObj.flightclass;
     this.adultsVal = searchObj.adults;
     this.childVal = searchObj.child;
     this.infantsVal = searchObj.infants;
-    this.fromAirpotName = localStorage.getItem('fromAirportName');
-    this.toAirpotName = localStorage.getItem('toAirportName');
+    this.fromAirpotName = searchObj.fromAirportName;//localStorage.getItem('fromAirportName');
+    this.toAirpotName = searchObj.toAirportName;//localStorage.getItem('toAirportName');
     this.flightTimingfrom = searchObj.flightfrom
     this.flightTimingto = searchObj.flightto
     // this.departureDate = this.depart;
@@ -420,7 +431,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
-    debugger;
     let updatedflightList = [];
     let isfilterRefundableFares = false;
     let isfilterNonStop = false;
@@ -515,7 +525,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
             // isMealsInclude=true;
           }
           if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
-            debugger;
             let singleFlightTiming = []
 
             if(isfilterMorningDepartures ==true ){
@@ -524,7 +533,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
             //Flight Timing Filter
             singleFlightTiming = singleFlightList.filter(function (e: any,indx :number) {
-              console.log(indx);
               //0_6
               // if (filterFlightTimingval == "0_6" && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
               //   return e;
@@ -564,7 +572,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }
           if (isfilterFlightStops == true) {
-            debugger;
             let singleFlightStops = [];
             //Flight Stops Filter
             singleFlightStops = singleFlightList.filter(function (e: any) {
@@ -603,10 +610,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.nonStopCount = 0;
     this.foodAllowanceCount = 0;
     this.morningDearptureCount = 0;
-    debugger
     if (this.flightList.length > 0) {
       this.flightList.filter((e: any) => {
-        debugger
         var flights = e.flights.filter((d: any) => { if (d.stops == 0) { return d; } }); // Non-Stop count
         if (flights.length > 0) {
           this.nonStopCount += 1;
@@ -777,7 +782,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       
       //It is used for getting min and max price.
       if(this.flightList.length>0){
-        debugger;
         this.minPrice=this.flightList[0].priceSummary[0].totalFare;
         this.maxPrice=this.flightList[this.flightList.length-1].priceSummary[0].totalFare;
         $('#min_price').val(this.minPrice);
@@ -796,7 +800,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   HideShowCompareToFly(i: number) {
-    debugger;
     $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
     var element = document.getElementById('CompareToFly_' + i);
     if (element?.classList.contains('flight-details-box-hide')) {
@@ -1015,5 +1018,19 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.maxPrice = 10000;
     }
 
+  }
+  getLayoverHour(obj1:any, obj2:any)
+  {
+    let dateHour:any;
+    console.log(obj1,"obj1")
+    console.log(obj2,"obj2")
+    if(obj2!=null || obj2!=undefined)
+    {
+      let obj2Date=new Date(obj2.departureDateTime);
+      let obj1Date=new Date(obj1.departureDateTime);
+      dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
+    }
+    console.log(dateHour);
+    return dateHour;
   }
 }

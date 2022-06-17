@@ -12,12 +12,14 @@ import { SearchComponent } from './core/search/search.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
     SearchComponent,
+
     
     
   ],
