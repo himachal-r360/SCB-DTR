@@ -333,7 +333,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <a href="javascript:void(0)" class="widget-content-more ml-20" >+2 more</a>
+                                <!-- <a href="javascript:void(0)" class="widget-content-more ml-20" >+2 more</a> -->
+                                <a href="javascript:void(0)" class="widget-content-more ml-20" ></a>
                             </div>
                         </div>
                         <hr>
@@ -353,7 +354,8 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="sidebar-widget layover-airports-widget">
+<!-- lay over airport list -->
+                        <!-- <div class="sidebar-widget layover-airports-widget">
                             <div class="widget-title">
                                 <h6 class="">Layover Airports</h6>
                                 <a href="javascript:void(0)">Reset</a>
@@ -402,7 +404,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -535,7 +537,7 @@
                                                     <p>{{list.flights[0].arrivalAirport}}</p>
                                                 </div>
                                                 <div class="flight-listing-time" *ngIf="list.flights.length > 0">
-                                                    <h6>{{ list.flights[0].duration }}</h6>
+                                                    <h6>{{ list.flights[0].duration | durationTime }}</h6>
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                                 </div>
@@ -589,7 +591,8 @@
                                     </div>
                                 </div>
                                 <div class="flight-info-box">
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
+                                    <!-- <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> -->
+                                    <p></p>
                                     <a href="javascript:void(0)" (click)="HideShowCompareToFly(i)" class="flight-details-click">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                 </div>
                                 <div class="flight-details-box flight-details-box-hide" id="CompareToFly_{{i}}">
@@ -601,18 +604,19 @@
                                             <li>
                                                 <a href="javascript:void(0); " data-bind="FlightDetails" value="FlightDetails"  (click)="flightDetailsTab($event,'FlightDetails',i)">Flight Details</a>
                                             </li>
-                                            <li>
+                                            <!-- cancelation detail temp remove -->
+                                            <!-- <li>
                                                 <a href="javascript:void(0);" data-bind="CancellationDetails"  value="CancellationDetails" (click)="flightDetailsTab($event,'CancellationDetails',i)"> Cancellation Details</a>
-                                            </li>
-                                            <li>
+                                            </li> -->
+                                            <!-- <li>
                                                 <a href="javascript:void(0);" data-bind="DateChange" value="DateChange"  (click)="flightDetailsTab($event,'DateChange',i)"> Date Change</a>
-                                            </li>
-                                            <li>
+                                            </li> -->
+                                            <!-- <li>
                                                 <a href="javascript:void(0);" data-bind="Fare"  (click)="flightDetailsTab($event,'Fare',i)"> Fare Rules </a>
-                                            </li>
-                                            <li>
+                                            </li> -->
+                                            <!-- <li>
                                                 <a href="javascript:void(0);" data-bind="Cancellation" value="Cancellation"  (click)="flightDetailsTab($event,'Cancellation',i)"> Cancellation Protection </a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                         <div class="extra-tabs-ara">
                                             <div id="FareDetails_{{i}}" class="flight-extra-content extra-active">
@@ -781,40 +785,46 @@
                                                     </div>
                                                     <div class="extra-tabs-details-bottom">
                                                         <div class="tabs-depart-box">
-                                                            <div class="tabs-depart-one" *ngFor="let details of list.flights">
+                                                            <div class="tabs-depart-one" *ngFor="let details of list.flights;let i=index;">
                                                                 <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">{{details.airlineName}} {{details.airline}} {{details.flightNumber}}</p>
                                                                 <div class="tabs-depart-left">
                                                                     <div class="tabs-depart-times">
                                                                         <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}
                                                                         </h5>
                                                                         <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                        <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.departureAirport}})</p>
+                                                                        <!-- <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.departureAirport}})</p> -->
+                                                                        <p class="mt-1 opacity_05"> ({{details.departureAirport}})</p>
                                                                     </div>
                                                                     <div class="tabs-depart-total">
-                                                                        <p>{{details.duration}}</p>
+                                                                        <p>{{details.duration | durationTime}}</p>
                                                                     </div>
                                                                     <div class="tabs-depart-times">
                                                                         <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
                                                                         <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                        <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.arrivalAirport}})</p>
+                                                                        <p class="mt-1 opacity_05"> ({{details.arrivalAirport}})</p>
+                                                                        <!-- <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.arrivalAirport}})</p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="tabs-depart-right">
                                                                     <div class="Baggage">
                                                                         <h5>Baggage</h5>
-                                                                        <p>Adult</p>
+                                                                        <!-- <p>Adult</p> -->
+                                                                        <p></p>
                                                                     </div>
                                                                     <div class="departCheck">
                                                                         <h5>Check-in</h5>
-                                                                        <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                                        <!-- <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p> -->
+                                                                        <p></p>
                                                                     </div>
                                                                     <div class="Cabin">
                                                                         <h5>Cabin</h5>
-                                                                        <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                                        <!-- <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p> -->
+                                                                        <p></p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="tabs-depart-two">
-                                                                    <p>Change of planes・3h 0m Layover in Nagpur</p>
+                                                                <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                    <!-- <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in Nagpur </p> -->
+                                                                    <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in</p>
                                                                 </div> 
                                                             </div>
                                                             <!-- <div class="tabs-depart-three">
