@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FlightListComponent } from './flight-list/flight-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { DurationTimePipe } from '../pipes/duration-time.pipe';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     FlightListComponent,
+    DurationTimePipe
     
     
   ],

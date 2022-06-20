@@ -24,6 +24,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
 
+
 @NgModule({
   declarations: [
     AppComponent,
