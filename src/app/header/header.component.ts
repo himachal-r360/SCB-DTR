@@ -1150,11 +1150,18 @@ this.customerLogin=true;*/
         this.redirectPopup=2;
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
      }else{
+     if(path !='foryou')
+      this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
+     else
      this.router.navigate([this.sg['domainPath']+path]);
      }
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
     }
+    
+    
+    
+    
     OpenDisclaimerMobile(): void {
     const config: MatBottomSheetConfig = {
       panelClass: 'mobileDiscalimer-container',
