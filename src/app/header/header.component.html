@@ -58,11 +58,11 @@
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> |
 
 
-                                <div *ngIf="voiceActiveSectionDisabled; else voicesection;">
-                                <a (click)="startVoiceRecognition()">
-                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                                </a>
-                                </div>
+                                <span *ngIf="voiceActiveSectionDisabled; else voicesection;">
+                                    <a (click)="startVoiceRecognition()">
+                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                    </a>
+                                </span>
 
 
 
@@ -465,7 +465,7 @@
                         <a class="nav_link_item" href="javascript:;">Instant Vouchers</a>
                         <div class="dropdown-content-list list-voucher">
                             <div class="container">
-                                <h5 class="mb-3">Categories <span class="pl-4"><a (click)="redirectUrlpopup('instavouchers',0,'instavouchers')" class="view_text">View All</a></span></h5>
+                                <h5 class="mb-3">Categories <span class="ps-4"><a (click)="redirectUrlpopup('instavouchers',0,'instavouchers')" class="view_text">View All</a></span></h5>
                                 <div class="row">
                                     <div class="col-sm-10 col-lg-10">
                                         <ul class="list_group">

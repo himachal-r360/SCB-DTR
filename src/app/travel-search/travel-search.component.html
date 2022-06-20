@@ -643,7 +643,7 @@
                                             </ul>
                                             <div class="error_msg mb-2">{{flightPassengerError}}</div>
                                             <div>
-                                                <button class="btn btn-primary" (click)="closeTavelPopup()">Apply</button>
+                                                <button class="btn btn-primary w-100" (click)="closeTavelPopup()">Apply</button>
                                             </div>
                                         </div>
                                     </div>
@@ -753,7 +753,7 @@
                             <div class="swap_icon"><img src="{{cdnUrl}}images/sb_img/icon-swap.svg" alt="icon" (click)="switchFlightRoutes()"></div>
                         </div>
                     </div>
-                    <div class="d-flex pt-16">
+                    <div class="d-flex pt-16 justify-content-between">
                         <div class="form-group flex_basis">
                             <p class="label_head"><span>Departure</span> </p>
 
@@ -977,8 +977,8 @@
                     <div class="opt_box my-3">
                         <p class="label_head"><span>Quota</span> </p>
                         <select class="categorie_select" formControlName="trainQuota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
-               <option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</option>
-             </select>
+                            <option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</option>
+                        </select>
       
                     </div>
                     <div class="d-flex pt-16">

@@ -7,7 +7,8 @@ import { TravelSearchModule } from '../travel-search/travel-search.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {ForyouTabRoutes } from './foryou-tab.routes';
 import { RedirectPopupModule } from '../redirect-popup/redirect-popup.module';
-import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MaterialModule} from '../material.module';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     CarouselModule,
     TravelSearchModule,RedirectPopupModule,
     NgbModule,
-    MatFormFieldModule,
+    MatFormFieldModule,MaterialModule,
     RouterModule.forChild(ForyouTabRoutes),
   ],
   declarations: [ForyouTabComponent, TravelSheetBottomComponent],

@@ -439,45 +439,45 @@
     <div class=" container_ftab" *ngIf="topDeals && topDeals.length > 0">
         <div class="mb-4">
             <h3 class="d-inline">Offer and Deals 
-                <span class="float-right"><a href="" class="view_all_link">View All Offers</a></span>
+                <span class="float-end pe-0 pe-sm-3"><a href="" class="view_all_link">View All Offers</a></span>
             </h3>
             <span class="d-block d-sm-inline mt-2 mt-sm-0">
-      <span class="pl-0 pl-sm-3" *ngIf="topDealCategory.length >0" >
-        <select (change)="selectDealCategory($event)" class="categorie_select">
+      <span class="pe-0 pe-sm-3" *ngIf="topDealCategory.length >0" >
+        <!-- <select (change)="selectDealCategory($event)" class="categorie_select">
             <option value="All" >All Categories</option>
             <option *ngFor="let cat of topDealCategory" value="{{cat.key}}"  >{{cat.key}}</option>
-        </select>
-        <!-- <mat-form-field class="w-25">
+        </select> -->
+        <mat-form-field class="">
             <mat-select  (change)="selectDealCategory($event)" class="categorie_select">
                 <mat-option value="All">All Categories</mat-option>
                 <mat-option *ngFor="let cat of topDealCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
             </mat-select>
-        </mat-form-field> -->
+        </mat-form-field>
      </span>
 
             <!-- Sub Catogery Dropdown-->
-            <span class="pl-3">
+            <span class="ps-3">
      
-       <select (change)="selectDealSubCategory($event)" class="categorie_select" *ngIf="topDealSubCategory.length>0">
+       <!-- <select (change)="selectDealSubCategory($event)" class="categorie_select" *ngIf="topDealSubCategory.length>0">
          <option value="All" >All Sub Categories</option>
          <option  *ngFor="let cat of topDealSubCategory" value="{{cat.key}}"  >{{cat.key}}</option>
-       </select>
-        <!-- <mat-form-field class="w-25" *ngIf="topDealSubCategory.length>0">
+       </select> -->
+        <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
             <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select" >
                 <mat-option value="All">All Sub Categoriess</mat-option>
                 <mat-option *ngFor="let cat of topDealSubCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
             </mat-select>
-        </mat-form-field> -->
+        </mat-form-field>
        
-        <select (change)="selectDealSubCategory($event)" class="categorie_select" *ngIf="topDealSubCategory.length==0">
+        <!-- <select (change)="selectDealSubCategory($event)" class="categorie_select" *ngIf="topDealSubCategory.length==0">
             <option value="All" >All Sub Categories</option>
-       </select>
+       </select> -->
 
-        <!-- <mat-form-field class="w-25" *ngIf="topDealSubCategory.length==0">
+        <mat-form-field class="" *ngIf="topDealSubCategory.length==0">
             <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select" >
                 <mat-option value="All">All Sub Categoriess</mat-option>
             </mat-select>
-        </mat-form-field> -->
+        </mat-form-field>
        
     </span>
             </span>
@@ -556,13 +556,20 @@
         <div class="">
             <h3 class="d-inline">Trending items</h3>
             <span class=" m-right">
-       <span class="pl-3 m-right" *ngIf="showShoppingItems && amazonCategories['category_filter']" >
-       <select (change)="selectAmazonCategory($event)" class="categorie_select trend_select">
-        <option value="All" >All Categories</option>
-       <option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}"  >{{cat.key}}</option>
-       </select>
 
-    </span>
+                <mat-form-field class="ps-3 m-right" *ngIf="showShoppingItems && amazonCategories['category_filter']">
+                    <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select trend_select" >
+                        <mat-option value="All">All Sub Categoriess</mat-option>
+                        <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+       <!-- <span class="pl-3 m-right" *ngIf="showShoppingItems && amazonCategories['category_filter']" >
+            <select (change)="selectAmazonCategory($event)" class="categorie_select trend_select">
+                <option value="All" >All Categories</option>
+            <option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}"  >{{cat.key}}</option>
+            </select>
+        </span> -->
 
             </span>
         </div>

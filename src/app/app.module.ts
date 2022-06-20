@@ -18,6 +18,7 @@ import { MatDialogModule} from '@angular/material/dialog';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { CommunicationService } from './shared/services/communication.service';
 import {MatBottomSheet, MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA,MatBottomSheetConfig} from '@angular/material/bottom-sheet';
+import {MaterialModule} from './material.module';
 
 
 export function appInitializerFn(appConfig: AppConfigService) {
@@ -45,7 +46,8 @@ export function appInitializerFn(appConfig: AppConfigService) {
       headerName: 'X-XSRF-TOKEN'
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   exports:[SearchComponent],
    providers: [

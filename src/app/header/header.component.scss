@@ -4611,7 +4611,7 @@ marquee {
             border: none;
             border-bottom: 1px solid #e6e6e6;
             position: relative;
-            width: 90%;
+            width: 100%;
             padding: 10px 10px 5px 2px;
             padding-right: 5em;
             outline: none;
@@ -4620,6 +4620,7 @@ marquee {
                 outline: none;
                 border-bottom: 1px solid #1d86ff;
                 transition: 0.4s;
+                box-shadow: none;
             }
         }
         input.sb_search::placeholder {
@@ -4628,8 +4629,8 @@ marquee {
         }
         .icn_tool {
             position: absolute;
-            top: 8px;
-            right: 85px;
+            top: 12px;
+            right: 1%;
             span {
                 cursor: pointer;
             }
@@ -4849,6 +4850,7 @@ marquee {
                 font-size: 16px;
                 color: #000000;
                 font-weight: 600;
+                margin-bottom: 10px;
             }
             p {
                 font-family: 'opensans-regular';
@@ -5257,4 +5259,58 @@ marquee {
 
 .hinherit {
     height: inherit;
+}
+
+
+/* search dropdown css */
+
+.sb_header-pop{
+    position: absolute;
+    padding: 0px;
+    top: 47px;
+    border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 16%);
+    background-color: #fff;
+    background-color: #fff;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    z-index:1;
+    ul{
+        background: #fff;
+        padding: 0;
+        float: left;
+        z-index: 2;
+        width: 100%;
+        li{
+            padding: 10px 20px;
+            box-shadow: none;
+            .searchResults_a{
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-pack: space-evenly;
+                justify-content: space-evenly;
+                -ms-flex-align: center;
+                align-items: center;
+
+                padding: 0;
+                transition: .4s ease-in-out;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 600;
+                box-shadow: none;
+            }
+            &:hover{
+                background-color: #f2f2f2;
+            }
+        }
+    }
+}
+
+.scroll_head-yy{
+    overflow-y: scroll;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    height: 62.5vh;
 }
