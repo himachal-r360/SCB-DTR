@@ -357,14 +357,14 @@ rd_site_url: any;shop_site_url;
     switch(val['type']){
               case 'TEXT':
                  html ='<div class="toast_push " id="toast_'+index+'"  >'+
-                                                 '<div class="toast-body" > <div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
+                                                 '<div class="toast-body" > <div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
                           '<span class="toast-close" aria-hidden="true" >&times;</span>'+
                         '</button><div class="toast-wrap" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <a href="'+val['redirect_url']+'">  <img src="'+this.cdnUrl+'images/push-icon.svg" class="img-fluid push-image-placeholder" alt="..."  ><div class="text-truncate"><h6 class="toast-font" style="-webkit-box-orient: vertical;">'+val['title']+'</h6><p class="toast-para" style="-webkit-box-orient: vertical;">'+val['text']+'</p></div></div></a></div>'+
                                                 '</div></div>';
               break;
               case 'TEXT_LOGO':
                  html ='<div class="toast_push " id="toast_'+index+'"  >'+
-                                                 '<div class="toast-body" > <div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
+                                                 '<div class="toast-body" > <div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
                           '<span class="toast-close" aria-hidden="true" >&times;</span>'+
                         '</button><div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <a href="'+val['redirect_url']+'">  <img src="'+this.cdnUrl+'images/push-icon-'+val['serviceToken'].toLowerCase()+'.svg" class="img-fluid push-image-placeholder col-md-2" alt="..."  ><div class="text-truncate col-md-10">'+
                         '<h4 style="-webkit-box-orient: vertical;">Congratulations! </h4>'+
@@ -374,7 +374,7 @@ rd_site_url: any;shop_site_url;
               break;
               case 'TEXT_IMAGE':
                  html ='<div class="toast_push " id="toast_'+index+'"  >'+
-                          '<div class="toast-body" > <div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
+                          '<div class="toast-body" > <div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
                           '<span class="toast-close" aria-hidden="true" >&times;</span>'+
                          '</button><div class="toast-wrap" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <a href="'+val['redirect_url']+'">  <div class="text-truncate ng-truncate"><h6 class="toast-font ng-font" style="-webkit-box-orient: vertical;">'+val['title']+'</h6><p class="toast-para ng-para" style="-webkit-box-orient: vertical;">'+val['text']+'</p><img src="'+val['image_url']+'" class="img-fluid push-image-placeholder ng-img-placeholder" alt="..."  ></div></div></a></div>'+
                           '</div></div>';
@@ -630,7 +630,6 @@ closeCookieConsent(value){
 
   ngAfterViewInit(){
       this.deviceInfo = this.deviceService.getDeviceInfo();
-    
         if(this.serviceSettings.DISCLAIMER_ENABLED){
         const cookieExistsDisclimer: boolean = this.cookieService.check(this.serviceSettings.cookieDisclaimerName);
          if(!cookieExistsDisclimer){

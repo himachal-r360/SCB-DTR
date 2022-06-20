@@ -37,6 +37,8 @@ export class RedirectPopupComponent implements OnChanges {
        $('.lgpopuptop').addClass('mdistop');
       
       }
+     
+      
       if(this.redirectPopupTrigger==1){
        if(this.redirectPopup==1){
         $('#redirectPopupTitle').html(this.redirectPopupHeader);
@@ -49,6 +51,7 @@ export class RedirectPopupComponent implements OnChanges {
         }
         $(".redirectPopupUrl").attr("href", this.redirectPopupUrl);
         $('.redirection_popup').trigger('click');
+         console.log("00000000");
        }else if(this.redirectPopup==3){
         $(".redirectPopupUrlR").attr("href", this.redirectPopupUrl);
         $(".redirectPopupUrlR").attr("target", '_blank')
