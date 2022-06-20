@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit,ChangeDetectionStrategy,HostListener,HostBinding,ElementRef,Input, ViewChild, TemplateRef, ViewEncapsulation,EventEmitter} from '@angular/core';
+import {Component, Inject, OnInit,ChangeDetectionStrategy,HostListener,HostBinding,ElementRef,Input, ViewChild, TemplateRef, ViewEncapsulation,EventEmitter,NgZone} from '@angular/core';
 import {APP_CONFIG, AppConfig} from '../configs/app.config';
 import { CookieService } from 'ngx-cookie-service';
 import {NavigationStart,NavigationEnd, Router,ActivatedRoute} from '@angular/router';
@@ -26,6 +26,7 @@ import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.serv
 
 declare var $: any;
 declare var jQuery: any;
+declare const annyang: any;
 
 @Component({
   selector: 'app-header',
@@ -47,104 +48,109 @@ declare var jQuery: any;
 
 export class HeaderComponent implements OnInit {
 rd_site_url: any;shop_site_url;
-  loginUrl:string='check-login?g=1';
+        loginUrl:string='check-login?g=1';
+        addtocart: boolean = false;
+        counter:number = 1;
+        public shoppingcart:boolean = false;
+        public buttonName:any = 'Shoppingcart';MatBottomSheetRef
+        cdnUrl: any;busUrl: any;trainUrl:any;freshMenuUrl:any;natgeoUrl:any;golfUrl:any;dreamfolksUrl:any;
+        showCart: any;
+        navbarOpen;
+        navbarOpenMenu;
+        headerSubscription: Subscription;
+        appConfig: any;
+        activeMenu:string;
+        searchBarValue:string;
+        domainPath:string;
+        domainName:string;
+        importantMessage:string;
+        assetPath:string;
+        enablePrivileges:any;
+        menuItems: any[];
+        progressBarMode: string;
+        currentLang: string;
+        public customerInfo: any[];
+        customer_full_name:string;
+        public customerLogin: any;
+        public guestLogin: boolean=false;
+        showSearchBoxTop: boolean=false;
+        domainRedirect: string;
+        menuParam:any = [];
+        showSearchBox = false;
+        showdcEMI= false;
+        dcemi_offer_image='';
+        dcemi_offer_url='';
+        topSearch= false;
+        private lastKeypressSearch = 0;
+        private queryTextSearch = '';
+        searchResults:any = [];
+        showmHeader = false;
+        showmNav:string;
+        DOMAIN_SETTINGS:any;
+        menuOfferDropdown:number = 0;
+        serviceSettings:any;
+        dcEMICashback;
+        fp_popup_control:number = 0;
+        serviceId:any;
+        displayCart:boolean = false;
+        scrollMenu:boolean=false;
+        @Input() set showMobileHeader(p: boolean){ this.showmHeader=p;  };
+        @Input() set mobileClassName(p: string){ this.showmNav=p;  };
+        @Input() set importantMessageText(p: string){ this.importantMessage=p;  };
+        deviceInfo = null;
+        cartresponse:any=[];
+        @Input() menuActiveClass;
+        @Input()  dealsoffers;
+        @Input()  getVouchersList;
+        cartDetails: any=[];
+        carttotal: number;
+        cartData: boolean = false;
+        cartitems:any=[];
+        itemQty:Number;Qty:any;
+        customeravailablepoints:any;customeravailableStatus:Boolean=false;
+        FM_BULKORDER_QTYLIMIT:any=15;
+        ShowCookiePopup:boolean=false;
+        Cookies:any = {'GA':false,'GTM':false,'AL':false};
+        AcceptAllBtn:boolean=false;
+        SaveCloseBtn:boolean=true;
+        showHeader:boolean=true;  showMenu:boolean=true;
+        enablePushBox:boolean=false;
+        enableQuesBox:boolean=true;
+        enableQuesBoxNew:boolean=true;
+        enablePushContentBox:boolean=false;
+        notifyOpacity:boolean=false;
+        pushNotification_disable:boolean=false;
+        enablePushTitle:boolean=false;
+        notificationContainer:boolean=false;
+        disableContainer:boolean=false;
+        prefere:any=[];
+        toastPush:boolean=false;
+        pushPopup:any;
+        pushcount:any=0;
+        pushid:any;
+        pushids:any=[];
+        read:any=[];
+        filterHtml:any;
+        contentHtml:any;
+        htmltoast:any;
+        html:any;
+        analytics:any;
+        state: string = 'default';
+        new_header_footer:any=0;
+        showName:string;
 
-  addtocart: boolean = false;
-  counter:number = 1;
-  public shoppingcart:boolean = false;
-  public buttonName:any = 'Shoppingcart';MatBottomSheetRef
-  cdnUrl: any;busUrl: any;trainUrl:any;freshMenuUrl:any;natgeoUrl:any;golfUrl:any;dreamfolksUrl:any;
-  showCart: any;
-  navbarOpen;
-  navbarOpenMenu;
-  headerSubscription: Subscription;
-  appConfig: any;
-  activeMenu:string;
-  searchBarValue:string;
-  domainPath:string;
-  domainName:string;
-  importantMessage:string;
-  assetPath:string;
-  enablePrivileges:any;
-  menuItems: any[];
-  progressBarMode: string;
-  currentLang: string;
- public customerInfo: any[];
-  customer_full_name:string;
- public customerLogin: any;
- public guestLogin: boolean=false;
- showSearchBoxTop: boolean=false;
- domainRedirect: string;
-  menuParam:any = [];
-  showSearchBox = false;
-  showdcEMI= false;
-  dcemi_offer_image='';
-  dcemi_offer_url='';
-  topSearch= false;
-  private lastKeypressSearch = 0;
-  private queryTextSearch = '';
-  searchResults:any = [];
-  showmHeader = false;
-  showmNav:string;
-  DOMAIN_SETTINGS:any;
-  menuOfferDropdown:number = 0;
-  serviceSettings:any;
-  dcEMICashback;
-  fp_popup_control:number = 0;
-  serviceId:any;
-  displayCart:boolean = false;
-  scrollMenu:boolean=false;
-  @Input() set showMobileHeader(p: boolean){ this.showmHeader=p;  };
-  @Input() set mobileClassName(p: string){ this.showmNav=p;  };
-  @Input() set importantMessageText(p: string){ this.importantMessage=p;  };
-  deviceInfo = null;
-  cartresponse:any=[];
-  @Input() menuActiveClass;
-  @Input()  dealsoffers;
-  @Input()  getVouchersList;
-  cartDetails: any=[];
-  carttotal: number;
-  cartData: boolean = false;
-  cartitems:any=[];
-  itemQty:Number;Qty:any;
-  customeravailablepoints:any;customeravailableStatus:Boolean=false;
-  FM_BULKORDER_QTYLIMIT:any=15;
-  ShowCookiePopup:boolean=false;
-  Cookies:any = {'GA':false,'GTM':false,'AL':false};
-  AcceptAllBtn:boolean=false;
-  SaveCloseBtn:boolean=true;
-  showHeader:boolean=true;  showMenu:boolean=true;
-  enablePushBox:boolean=false;
-  enableQuesBox:boolean=true;
-  enableQuesBoxNew:boolean=true;
-  enablePushContentBox:boolean=false;
-  notifyOpacity:boolean=false;
-  pushNotification_disable:boolean=false;
-  enablePushTitle:boolean=false;
-  notificationContainer:boolean=false;
-  disableContainer:boolean=false;
-  prefere:any=[];
-  toastPush:boolean=false;
-pushPopup:any;
-pushcount:any=0;
-pushid:any;
-pushids:any=[];
-read:any=[];
-filterHtml:any;
-contentHtml:any;
-htmltoast:any;
-html:any;
-analytics:any;
-  state: string = 'default';
-new_header_footer:any=0;
-showName:string;
-
-  ShowCookieTab:boolean=false;
-   cookieMessage;cookieAgree;cookieMessageType;cookieConsent:boolean=false;cookieExpiredDate: any = new Date();
-  disclimerConsent:boolean=false;
-  is_main:number=0;
+        ShowCookieTab:boolean=false;
+        cookieMessage;cookieAgree;cookieMessageType;cookieConsent:boolean=false;cookieExpiredDate: any = new Date();
+        disclimerConsent:boolean=false;
+        is_main:number=0;
+          voiceActiveSectionDisabled: boolean = true;
+	voiceActiveSectionError: boolean = false;
+	voiceActiveSectionSuccess: boolean = false;
+	voiceActiveSectionListening: boolean = false;
+	voiceText: any;
+        
  @ViewChild("content") modalContent: TemplateRef<any>;
-  constructor(private modalService: NgbModal,
+  constructor(private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
   
      setTimeout(() => {
@@ -664,33 +670,6 @@ closeCookieConsent(value){
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
     
-        if(this.scrollMenu){
-        $(document).ready(function() {
-        var owl = $("#owl-demo");
-        owl.on('changed.owl.carousel initialized.owl.carousel', function(event) {
-        $(event.target)
-        .find('.owl-item').removeClass('lastel')
-        .eq(event.item.index + event.page.size - 1).addClass('lastel');
-        }).owlCarousel({
-        items : 8,
-        loop:true,
-        lazyLoad:true,
-        rewind:true,
-        dots:false,
-        mouseDrag:false,
-        touchDrag:false,
-        pullDrag:false,
-        nav: true,
-        navText : ["<a id='carousel-menu-prev' class='button left carousel-menu-button'><span class='icon_headq'><i class='fa fa-angle-left'></i></span></a>","<a id='carousel-menu-next' class='button left carousel-menu-button'><span class='icon_headq'><i class='fa fa-angle-right'></i></span></a>"]
-        });
-        });
-
-    }
-    
-    
-
-  
-   
    
        
        this.router.events.subscribe((event: any) => {
@@ -735,7 +714,73 @@ this.customerLogin=true;*/
   
     }
     
-    
+    initializeVoiceRecognitionCallback(): void {
+        annyang.addCallback('error', (err) => {
+        if(err.error === 'network'){
+        this.voiceText = "Internet is require";
+        annyang.abort();
+        this.ngZone.run(() => this.voiceActiveSectionSuccess = true);
+        } else if (this.voiceText === undefined) {
+        this.ngZone.run(() => this.voiceActiveSectionError = true);
+        annyang.abort();
+        }
+        });
+
+        annyang.addCallback('soundstart', (res) => {
+        this.ngZone.run(() => this.voiceActiveSectionListening = true);
+        });
+
+        annyang.addCallback('end', () => {
+        if (this.voiceText === undefined) {
+        this.ngZone.run(() => this.voiceActiveSectionError = true);
+        annyang.abort();
+        }
+        });
+
+        annyang.addCallback('result', (userSaid) => {
+        this.ngZone.run(() => this.voiceActiveSectionError = false);
+
+        let queryText: any = userSaid[0];
+
+        annyang.abort();
+
+        this.voiceText = queryText;
+        this.receiveVoiceSearchResults(queryText);
+        this.ngZone.run(() => this.voiceActiveSectionListening = false);
+        this.ngZone.run(() => this.voiceActiveSectionSuccess = true);
+        });
+        }
+
+        startVoiceRecognition(): void {
+        this.voiceActiveSectionDisabled = false;
+        this.voiceActiveSectionError = false;
+        this.voiceActiveSectionSuccess = false;
+        this.voiceText = undefined;
+
+        if (annyang) {
+        let commands = {
+        'demo-annyang': () => { }
+        };
+
+        annyang.addCommands(commands);
+
+        this.initializeVoiceRecognitionCallback();
+
+        annyang.start({ autoRestart: false });
+        }
+        }
+
+        closeVoiceRecognition(): void {
+        this.voiceActiveSectionDisabled = true;
+        this.voiceActiveSectionError = false;
+        this.voiceActiveSectionSuccess = false;
+        this.voiceActiveSectionListening = false;
+        this.voiceText = undefined;
+
+        if(annyang){
+        annyang.abort();
+        }
+        }
     
     showcartIcon:Boolean=true;
     ngOnChanges() {  

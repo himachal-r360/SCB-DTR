@@ -54,9 +54,43 @@
                             <span class="focus-border"></span>
                             <span class="icn_tool"> 
                                 <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
-                            <ng-template #voiceSearch>
+                                <ng-template #voiceSearch>
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> |
-                            </ng-template>
+
+
+                                <div *ngIf="voiceActiveSectionDisabled; else voicesection;">
+                                <a (click)="startVoiceRecognition()">
+                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                </a>
+                                </div>
+
+
+
+                                <ng-template #voicesection>
+                                <ng-container *ngIf="!voiceActiveSectionError; else failure">
+                                <ng-container *ngIf="voiceText; else start">
+                                <a (click)="startVoiceRecognition()">
+                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                </a>
+                                </ng-container>
+                                <ng-template #start>
+                                <ng-container
+                                *ngIf="voiceActiveSectionListening; else beginning">
+                                <a (click)="startVoiceRecognition()">
+                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                </a>
+                                </ng-container>
+                                <ng-template #beginning>
+                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic-l.svg" alt="mic"  class="mic_lis" ></span>
+                                </ng-template>
+                                </ng-template>
+                                </ng-container>
+                                <ng-template #failure>
+                                </ng-template>
+                                </ng-template>
+                                </ng-template>
+                            
+                            
                             </span>
                         </div>
                     </div>
