@@ -1,3 +1,5 @@
+/* You can add global styles to this file, and also import other style files */
+
 /*
 --------------------------------------------------------------------------------------------------------
 * Project    :                                                                                         *
@@ -7,13 +9,10 @@
 NOTE: This is main stylesheet of template, This file contains the styling for the actual Template.
 */
 
-@charset "UTF-8";
 /*================================================
     :: general css Style
 ==================================================*/
 
-/* :: google font */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 
 /*==========================================
@@ -1899,25 +1898,19 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
 }
 
 /* :: basic style  */
-* {
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: none;
-    list-style: none;
-    word-wrap: break-word;
-}
-html, body{
-    background-color: #f6faff;
-    height: 100%;
-}
-
-body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #f6faff;
-    color: #202020;
-}
+    /* You can add global styles to this file, and also import other style files */
+    
+    body {
+        font-family: 'opensans-regular';
+        margin: 0;
+        box-sizing: border-box;
+        line-height: 1.2;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        background-color: #f7faff;
+    }
+    
 
 p {
     font-size: 16px;
@@ -4942,3 +4935,51 @@ button:focus, button:active {
 .fare-list-right {
     text-align: right;
 }
+
+ #sync2 .item {
+        background-color: transparent;
+        border: none;
+        display: inline-block;
+        margin-right: 0px;
+        padding: 0px 0px;
+        height: 60px;
+        width: 70px;
+    }
+    
+    #sync2 {
+        display: flex !important; 
+        flex-direction: row;
+        justify-content: center; 
+    }
+    
+    #sync2 .owl-item {
+        height: 60px;
+        width: 70px !important;
+        margin-top: -6px;
+    }
+    
+    #sync2 .owl-stage-outer {
+        overflow: visible;
+    }
+    
+    #sync2 .owl-stage {
+        width: 100% !important;
+    }
+    
+    #sync2 .owl-item.synced>.active_thumb .circle-box {
+        top: -60px;
+        z-index: 1;
+    }
+    
+    #sync2 .owl-item.synced>.active_thumb .circle-box .outer {
+        margin-left: -13px;
+        margin-top: -7px;
+    }
+    
+    #sync2 .synced.active {
+        .circle--3 {
+            stroke: whitesmoke;
+            animation: fill 6s forwards ease-out;
+            backdrop-filter: blur(5px);
+        }
+    }
