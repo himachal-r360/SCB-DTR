@@ -355,23 +355,23 @@
                         </div>
                         <hr>
 <!-- lay over airport list -->
-                        <!-- <div class="sidebar-widget layover-airports-widget">
+                        <div class="sidebar-widget layover-airports-widget">
                             <div class="widget-title">
                                 <h6 class="">Layover Airports</h6>
                                 <a href="javascript:void(0)">Reset</a>
                             </div>
-                            <div class="widget-content" *ngFor="let layover of layOverFilterArr ; let i = index "> -->
-                                <!-- <ul class="category-list clearfix mt-2">
+                            <div class="widget-content" id="layover_airport">
+                                <ul class="category-list clearfix mt-2"  *ngFor="let layover of layOverFilterArr ; let i = index ">
                                     <li class="custom-check-box">
                                         <div class="custom-controls-stacked" >
                                             <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
+                                                <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
                                                 <span class="description">{{layover.arrivalAirport}}</span>
                                             </label>
                                             <p>&#8377;{{layover.price}}</p>
                                         </div>
-                                    </li> -->
+                                    </li>
                                     <!-- <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
@@ -402,9 +402,9 @@
                                             <p>&#8377;9,356</p>
                                         </div>
                                     </li> -->
-                                <!-- </ul> -->
-                            <!-- </div>
-                        </div> -->
+                                </ul>
+                            </div>
+                        </div>
 
                     </div>
 

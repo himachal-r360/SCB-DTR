@@ -720,6 +720,33 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     
+    //layover airport filter 
+    if (this.flightList.length > 0) {
+      let layoverArr:any=[];
+      let layoverFilter = $("#layover_airport input[type=checkbox]:checked");
+      
+      
+      
+      for (let j = 0; j < layoverFilter.length; j++) {
+        layoverArr.push(layoverFilter[j].value);
+      }
+      var filteredAirlines: any[] = [];
+      if(layoverArr.length>0){
+        this.flightList.forEach((e: any) => {
+          var flights = [];
+          e.flights.filter((d: any) => {
+            if(layoverArr.indexOf(d.arrivalAirport)>-1){
+              flights.push(d);
+            }
+          })
+          if (flights.length > 0) {
+            filteredAirlines.push(e);
+          }
+        });
+        this.flightList = filteredAirlines;
+      }
+    }
+    
     
   }
 
@@ -732,26 +759,24 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       let singleFlightList = [];
       singleFlightList = this.flightList[j].flights;
       let priceSummaryList = this.flightList[j].priceSummary;
-
+      let priceSummary;
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
-        
-        if(h<singleFlightList.length){
-          if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode) { return d; } }).length < 1) {
-          
+        debugger;
+        if(h<singleFlightList.length-1){
+          if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             let layOverFilterObj={
               "arrivalAirportCode":arrivalAirportCode,
               "arrivalAirport":this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
-              
+              "price":priceSummaryList[0].totalFare  
             };
             layOverArr.push(layOverFilterObj);
           }
-        
         }
 
         for (let p = 0; p < priceSummaryList.length; p++) {
-          let priceSummary = priceSummaryList[p].totalFare
+          priceSummary = priceSummaryList[p].totalFare
           if (airlineNameArr.filter((d: any) => { if (d.airlineName == airlineName) { return d; } }).length < 1) {
             if (airlineNameArr.filter((d: any) => { if (d.priceSummary) { return d; } }).length < 1) {
               let airlineNameObj = {
@@ -765,7 +790,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
-    this.airlines = airlineNameArr
+    this.airlines = airlineNameArr;
     this.layOverFilterArr=layOverArr;
     
   }
