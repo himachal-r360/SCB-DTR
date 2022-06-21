@@ -1902,17 +1902,27 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
 
 /* :: basic style  */
     /* You can add global styles to this file, and also import other style files */
+
+    html{
+        height: 100%;
+    }
     
     body {
         font-family: 'opensans-regular';
         margin: 0;
         box-sizing: border-box;
         line-height: 1.2;
+        min-height: 100%;  
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
         background-color: #f7faff;
         margin-top: 4em;
+    }
+
+    body > app-root{
+        min-height: 100%;
+        position: relative;
     }
     
 

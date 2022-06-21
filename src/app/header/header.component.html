@@ -84,7 +84,7 @@
                                 </ul>
                             </div>
 
-    <button type="button" class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup">sss</button>
+    <button type="button" class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></button>
                             <span class="focus-border"></span>
                             <span class="icn_tool"> 
                                 <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
@@ -119,8 +119,9 @@
                                 </ng-template>
                                 </ng-template>
                                 </ng-container>
-                                <ng-template #failure>
-                                </ng-template>
+                                <ng-template #failure>  <a (click)="startVoiceRecognition()">
+                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                </a>                   </ng-template>
                                 </ng-template>
                                 </ng-template>
                             

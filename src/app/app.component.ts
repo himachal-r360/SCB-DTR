@@ -218,7 +218,7 @@ export class AppComponent implements OnInit {
   }
 
  checkOrientation() {
-
+/*
     var currMode;
     var width = window.orientation;
     switch(window.orientation){
@@ -244,6 +244,7 @@ export class AppComponent implements OnInit {
    }else{
    this.showOrientation=false;
    }
+   */
 }
 
   onEvents() {
