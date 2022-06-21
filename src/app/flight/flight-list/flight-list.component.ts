@@ -46,6 +46,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   disableinfants: boolean = false;
   flightTimingfrom: any;
   flightTimingto: any;
+  viewFare = false;
 
   flightListMod: any;
   RefundableFaresCount: number = 0;
@@ -80,18 +81,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   minPrice:number=0;
   maxPrice:number = 10000;
   airlines: any;
-  
+  flightIcons:any;
+  airportsNameJson:any;
+  layOverFilterArr:any;
 
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, )  { }
 
   ngOnInit(): void {
     this.route.queryParams
     .subscribe((params:any) => {
-      debugger;
-      console.log(params ,"para"); // { orderby: "price" }
       localStorage.setItem('searchVal', JSON.stringify(params));
-      // this.orderby = params.orderby;
-      // console.log(this.orderby); // price
     }
   );
     this.flightList = this._flightService.flightListData;
@@ -120,20 +119,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('.Travellers-dropdown-data').removeClass('Travellershide');
       }
     });
+
     
     this.getCityList();
+    this.getFlightIcon();
+    this.getAirpotsList();
     this.setSearchFilterData();
-
     this.flightSearch();
-    // $('.flight-extra-tabs li a').on('click', function(obj:any) {     
-    //     console.log(obj);
-    //     var dashboard_menu_type = $(this).attr('data-bind');
-    //     $('.flight-extra-content').hide();
-    //     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-    //     $('#' + dashboard_menu_type).show();
-    //     $(this).addClass('flight-extra-tabs-active');
-    // });
-
   }
   flightDetailsTab(obj:any,value:string,indx:number)
   {
@@ -209,7 +201,25 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+  // Get flight Icons
+  getFlightIcon(){
+    this._flightService.getFlightIcon().subscribe((res:any)=>{
+      this.flightIcons = res;
+    })
+  }
 
+  //view fares hide show
+  viewFaresHideShow(){
+    
+  }
+
+  // get airport list
+  getAirpotsList() {
+    this._flightService.getAirportName().subscribe((res:any)=>{
+      this.airportsNameJson = res;
+      
+    })
+  }
 
 
   increaseAdult() {
@@ -717,24 +727,63 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     
-    console.log(this.flightList, "flightList")
+    //layover airport filter 
+    if (this.flightList.length > 0) {
+      let layoverArr:any=[];
+      let layoverFilter = $("#layover_airport input[type=checkbox]:checked");
+      
+      
+      
+      for (let j = 0; j < layoverFilter.length; j++) {
+        layoverArr.push(layoverFilter[j].value);
+      }
+      var filteredAirlines: any[] = [];
+      if(layoverArr.length>0){
+        this.flightList.forEach((e: any) => {
+          var flights = [];
+          e.flights.filter((d: any) => {
+            if(layoverArr.indexOf(d.arrivalAirport)>-1){
+              flights.push(d);
+            }
+          })
+          if (flights.length > 0) {
+            filteredAirlines.push(e);
+          }
+        });
+        this.flightList = filteredAirlines;
+      }
+    }
+    
+    
   }
 
   // get airlines list and lowest price  
   
   getAirlinelist() {
     let airlineNameArr = [];
-
+    let layOverArr = [];
     for (let j = 0; j < this.flightList.length; j++) {
       let singleFlightList = [];
       singleFlightList = this.flightList[j].flights;
       let priceSummaryList = this.flightList[j].priceSummary;
-
+      let priceSummary;
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
-        
+        let arrivalAirportCode = singleFlightList[h].arrivalAirport
+        debugger;
+        if(h<singleFlightList.length-1){
+          if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
+            let layOverFilterObj={
+              "arrivalAirportCode":arrivalAirportCode,
+              "arrivalAirport":this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
+              "price":priceSummaryList[0].totalFare  
+            };
+            layOverArr.push(layOverFilterObj);
+          }
+        }
+
         for (let p = 0; p < priceSummaryList.length; p++) {
-          let priceSummary = priceSummaryList[p].totalFare
+          priceSummary = priceSummaryList[p].totalFare
           if (airlineNameArr.filter((d: any) => { if (d.airlineName == airlineName) { return d; } }).length < 1) {
             if (airlineNameArr.filter((d: any) => { if (d.priceSummary) { return d; } }).length < 1) {
               let airlineNameObj = {
@@ -742,16 +791,15 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
                 "price": priceSummary,
                 "flighCount"  :0
               };
-              
                 airlineNameArr.push(airlineNameObj);
-              
             }
-            
           }
         }
       }
     }
-    this.airlines = airlineNameArr
+    this.airlines = airlineNameArr;
+    this.layOverFilterArr=layOverArr;
+    
   }
   flightSearch() {
     this.searchData = localStorage.getItem('searchVal');
@@ -804,6 +852,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     var element = document.getElementById('CompareToFly_' + i);
     if (element?.classList.contains('flight-details-box-hide')) {
       element.classList.remove('flight-details-box-hide');
+      // this.viewFare = true
     } else {
       element?.classList.add('flight-details-box-hide');
     }
@@ -1022,15 +1071,15 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   getLayoverHour(obj1:any, obj2:any)
   {
     let dateHour:any;
-    console.log(obj1,"obj1")
-    console.log(obj2,"obj2")
     if(obj2!=null || obj2!=undefined)
     {
+
       let obj2Date=new Date(obj2.departureDateTime);
       let obj1Date=new Date(obj1.departureDateTime);
       dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
     }
-    console.log(dateHour);
     return dateHour;
   }
+
+
 }

@@ -10,6 +10,8 @@ export class FlightService {
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
   flightListData: any;
   flightListDate:any;
+  flightsIcon = "assets/Json/airlines.json";
+  airportsNameList ="assets/Json/airports.json";
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) { }
@@ -22,4 +24,13 @@ export class FlightService {
   getCityList(queryText: any) {
     return this.http.post(`${this.city}&queryText=${queryText}`, null)
   }
+
+  getFlightIcon(){
+    return this.http.get(this.flightsIcon);
+  }
+
+  getAirportName(){
+    return this.http.get(this.airportsNameList);
+  }
+
 }

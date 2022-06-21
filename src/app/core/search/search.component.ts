@@ -101,7 +101,6 @@ export class SearchComponent implements OnInit ,OnDestroy {
 
     //    console.log(this.selectDate);
     // });
-console.log('hi');
     const a=this;
     $('#'+control).daterangepicker({
       singleDatePicker: true,
@@ -112,10 +111,9 @@ console.log('hi');
       autoclose: true,
 
     }, function(start:any, end:any, label:string) {
-      console.log(start._d);
+      
       a.departureDate=start._d;
-      console.log(end)
-      console.log(label)
+      
     });
 
     // $('.single-datepicker').datepicker({
@@ -127,7 +125,7 @@ console.log('hi');
   getCityList() {
     this.sub = this._flightService.getCityList(this.cityList).subscribe((res: any) => {
       this.cityList = res.hits.hits;
-      console.log(this.cityList);
+      
     })
   }
 
@@ -147,13 +145,12 @@ console.log('hi');
   }
 
   selectFromFlightList(para1: any) {
-    console.log(para1)
     this.flightData.value.flightfrom = para1.id;
     this.fromAirpotName = para1.airport_name;
     this.fromCityName = para1.city;
     localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
-    console.log(para1.id);
+
   }
 
   selectToFlightList(para2: any) {
@@ -163,27 +160,26 @@ console.log('hi');
     this.toCityName = para2.city;
     localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
-    console.log(para2);
-    console.log(this.flightData.value.flightto);
+   
 
   }
 
   flightSearch() {
-    debugger;
-    console.log(this.departureDate);
+    
+
     this.loader = true;
     this.selectedDate = this.flightData.value.departure;
-    console.log(this.selectDate);
+    
 
     this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
       this.loader = false;
       this.show = true;
       this.flightList = res.response.onwardFlights;
       this.oneWayDate = res.responseDateTime;
-      console.log(this.oneWayDate , "res");
+      
       this._flightService.flightListData = this.flightList;
       this._flightService.flightListDate = this.oneWayDate;
-      console.log(this.flightList , "flight Search");
+      
       this.router.navigate(['flight-list']);
     }, (error) => { console.log(error) });
 
