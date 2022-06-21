@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   // url:"https://smartbuyadminuat.reward360.in/"
   url:"https://smartbuydev.reward360.in/"
+
 };
 
 /*

@@ -1,117 +1,386 @@
 <main class="site-main">
-  <section class="travel-area mtb-80">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="travel-box">
-                      <div class="travel-select-area">
-                          <div class="travel-select-box">
-                              <ul class="travel-list-ul">
-                                  <li class="travel-list-li">
-                                      <a href="" class="travel-list-a active">
-                                          <i class="fas fa-fighter-jet"></i>
-                                          Flights
-                                      </a>
-                                  </li>
-                                  <li class="travel-list-li">
-                                      <a href="" class="travel-list-a">
-                                          <i class="fas fa-subway"></i>
-                                          Trains
-                                      </a>
-                                  </li>
-                                  <li class="travel-list-li">
-                                      <a href="" class="travel-list-a">
-                                          <i class="fas fa-bus"></i>
-                                          Bus
-                                      </a>
-                                  </li>
-                                  <li class="travel-list-li">
-                                      <a href="" class="travel-list-a">
-                                          <i class="fas fa-hotel"></i>
-                                          Stays
-                                      </a>
-                                  </li>
-                              </ul>
-                          </div>
-                      </div>
-                      <div class="travel-select-data-area">
+    <section class="travel-area mtb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="travel-box">
+                        <div class="travel-select-area">
+                            <div class="travel-select-box">
+                                <ul class="travel-list-ul">
+                                    <li class="travel-list-li">
+                                        <a href="" class="travel-list-a active">
+                                            <img src="./assets/images/icons/flight.png" alt="">
+                                            Flights
+                                        </a>
+                                    </li>
+                                    <li class="travel-list-li">
+                                        <a href="" class="travel-list-a">
+                                            <img src="./assets/images/icons/trains.png" alt="">
+                                            Trains
+                                        </a>
+                                    </li>
+                                    <li class="travel-list-li">
+                                        <a href="" class="travel-list-a">
+                                            <img src="./assets/images/icons/bus.png" alt="">
+                                            Bus
+                                        </a>
+                                    </li>
+                                    <li class="travel-list-li">
+                                        <a href="" class="travel-list-a">
+                                            <img src="./assets/images/icons/stays.png" alt="">
+                                            Stays
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <form [formGroup]="flightData" (ngSubmit)="flightSearch()">
+                            <div class="travel-select-data-area">
+                                <div class="travel-select-trip">
+                                    <ul class="travel-select-trip-ul">
+                                        <li>
+                                            <span class="selectway ">Round Trip</span>
+                                        </li>
+                                        <li>
+                                            <span class="selectway active">One Way</span>
+                                        </li>
+                                        <li>
+                                            <span class="selectway">Multicity</span>
+                                        </li>
+                                        <li>
+                                            <div class="Travellers-dropdown ms-3">
+                                                <div class="Travellers-dropdown-title">
+                                                    <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i>
+                                                    </h5>
+                                                </div>
+                                                <ul class="Travellers-dropdown-data Travellershide">
+                                                    <li>
+                                                        <p class="t-title">Travellers</p>
+                                                    </li>
+                                                    <li>
+                                                        <div class="Travellers-passengers-data">
+                                                            <div class="Travellers-name">
+                                                                <h6>Adult</h6>
+                                                                <p>12 years & above</p>
+                                                            </div>
+                                                            <div class="Travellers-qty">
+                                                                <div class="quantity buttons_added">
+                                                                    <input type="button" (click)="decreaseAdult()"
+                                                                        value="-" class="qty-buttons minus">
+                                                                    <input type="number" step="1"
+                                                                        oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
+                                                                        min="1" max="9" name="quantity" value="0"
+                                                                        title="Qty"
+                                                                        class="input-text qty text quantity_adult1_events"
+                                                                        formControlName="adults" size="4" pattern=""
+                                                                        inputmode="">
+                                                                    <input type="button" (click)="increaseAdult()"
+                                                                        value="+" [disabled]="disableParent"
+                                                                        class="qty-buttons plus">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="Travellers-passengers-data">
+                                                            <div class="Travellers-name">
+                                                                <h6>Child</h6>
+                                                                <p>2 - 11 years</p>
+                                                            </div>
+                                                            <div class="Travellers-qty">
+                                                                <div class="quantity buttons_added">
+                                                                    <input type="button" (click)="decreaseChild()"
+                                                                        value="-" class="qty-buttons minus">
+                                                                    <input type="number" step="1" min="0" max="6"
+                                                                        name="quantity" value="0" title="Qty"
+                                                                        class="input-text qty text quantity_adult1_events"
+                                                                        size="4" pattern="" inputmode=""
+                                                                        formControlName="child">
+                                                                    <input type="button" (click)="increaseChild()"
+                                                                        [disabled]="disablechildren" value="+"
+                                                                        class="qty-buttons plus">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
 
-                          <form [formGroup]="flightData">
-                          <div class="travel-select-trip">
-                              <ul class="travel-select-trip-ul" >
-                                  <li>
-                                      <span class="selectway active">Round Way</span>
-                                  </li>
-                                  <li>
-                                      <span class="selectway">One Way</span>
-                                  </li>
-                                  <li>
-                                      <span class="selectway">Multicity</span>
-                                  </li>
-                                  <li>
-                                      <span class="liothers Passengers ms-4">02 Passengers <i class="fas fa-caret-down"></i></span>
-                                  </li>
-                                  <li>
-                                      <span class="liothers BusinessClass ms-4">Business Class <i class="fas fa-caret-down"></i></span>
-                                  </li>
-                              </ul>
-                          </div>
-                          <div class="travel-data">
-                              <div class="row g-2">
-                                  <div class="col-lg-6">
-                                      <div class="select-root-area">
-                                          <div class="select-root-left">
-                                              <span>FROM</span>
-                                              <h5 class="fw_6">Banglore</h5>
-                                              <span>Bangalore Internationl Airport</span>
-                                          </div>
-                                          <div class="select-root-icons">
-                                              <img src="./assets/images/icons/twoway.png" alt="">
-                                          </div>
-                                          <div class="select-root-right">
-                                              <span>TO</span>
-                                              <h5 class="fw_6">Pune</h5>
-                                              <span>Pune Internationl Airport</span>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-lg-6">
-                                      <div class="root-date">
-                                          <div class="select-root-area">
-                                              <div class="select-dep-ret">
-                                                  <div class="select-root-departure">
-                                                      <span>DEPARTURE</span>
-                                                      <h5 class="fw_6">23 May</h5>
-                                                      <span>Friday</span>
-                                                  </div>
-                                                  <div class="select-root-line">
-                                                      <span>-</span>
-                                                  </div>
 
-                                                  <div class="select-root-reutrn">
-                                                      <span>RETURN</span>
-                                                      <h5 class="fw_6">29 May</h5>
-                                                      <span>Wednesday</span>
-                                                  </div>
-                                              </div>
-                                              <div class="select-root-date">
-                                                  <a href="" class="me-3">
-                                                      <i class="far fa-calendar-alt"></i>
-                                                  </a>
-                                              </div>
-                                          </div>
-                                          <div class="root-search">
-                                              <a type="submit"  (click)="flightSearch()" class="searchbn">Search</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+                                                        <div class="Travellers-passengers-data">
+                                                            <div class="Travellers-name">
+                                                                <h6>Infant</h6>
+                                                                <p>Under 2 years</p>
+                                                            </div>
+                                                            <div class="Travellers-qty">
+                                                                <div class="quantity buttons_added">
+                                                                    <input type="button" (click)="decreaseInfant()"
+                                                                        value="-" class="qty-buttons minus">
+                                                                    <input type="number" step="1" min="0" max="6"
+                                                                        name="quantity" value="0" title="Qty"
+                                                                        class="input-text qty text quantity_adult1_events"
+                                                                        size="4" pattern="" formControlName="infants"
+                                                                        inputmode="">
+                                                                    <input type="button" (click)="increaseInfant()"
+                                                                        [disabled]="disableinfants" value="+"
+                                                                        class="qty-buttons plus">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </li>
+                                        <li>
+                                            <select name="" class="liothers class-select ms-4" value="B"
+                                                aria-label="Default select example" formControlName="flightclass">
+                                                <option selected="selected" value="B">Business Class</option>
+                                                <option value="E">Economy Class</option>
+                                                <option value="F">First Class</option>
+                                                <option value="P">Premium Economy</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="travel-data">
+                                    <div class="row g-2">
+                                        <div class="col-lg-6">
+                                            <div class="select-root-area">
+                                                <div class="select-root-left">
+                                                    <span class="select-roottitle">FROM</span>
+                                                    <h5 class="fw_6 ">{{fromCityName}}</h5>
+                                                    <span class="select-roottitle">{{fromAirpotName}}</span>
+                                                    <div class="flight-from-data flight-from-hide">
+                                                        <div class="flight-from-data-search">
+                                                            <!-- <input type="text" autocomplete="off" class="w-100"
+                                                                id="fromCitySearch" placeholder="Search City"
+                                                                (keyup)="fromList($event)">
+                                                            <input type="hidden" formControlName="flightfrom"
+                                                            id="hdnfromCitySearch" > -->
+                                                            <input type="text" autocomplete="off" class="w-100"
+                                                                id="fromCitySearch1" placeholder="Search City" formControlName="flightfrom" 
+                                                                (keyup)="fromList($event)">
+                                                            <input type="text" name="flightfrom" style="display:none"
+                                                            id="fromCitySearch" >
+                                                                
+                                                        </div>
+
+                                                        <ul class="flight-from-data-ul" *ngIf="fromFlightList">
+                                                            <li class="flight-from-ul-li">
+                                                                <p class="flight-Results-text">Results</p>
+                                                            </li>
+                                                            <li class="flight-from-ul-li"
+                                                                *ngFor="let fromCity of cityList">
+                                                                <a href="#" class="flight-from-ul-li-a"
+                                                                    (click)="selectFromFlightList(fromCity._source)">
+                                                                    <div class="flight-from-name">
+                                                                        <h6>{{fromCity._source.city}},
+                                                                            {{fromCity._source.country}}</h6>
+                                                                        <p>{{fromCity._source.airport_name}} </p>
+                                                                    </div>
+                                                                    <div class="flight-from-shortname">
+                                                                        <h6>{{fromCity._source.airport_code}}</h6>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+                                                    </div>
+                                             
+                                                </div>
+                                                
+                                                <div class="select-root-icons" (click)="swap()">
+                                                    <img src="./assets/images/icons/twoway.png" alt="">
+                                                </div>
+                                                <div class="select-root-right">
+                                                    <span class="select-roottitle">TO</span>
+                                                    <h5 class="fw_6 ">{{toCityName}}</h5>
+                                                    <span class="select-roottitle">{{toAirpotName}}</span>
+
+                                                    <div class="flight-to-data flight-from-hide">
+
+                                                        <div class="flight-from-data-search">
+                                                            <input type="text" autocomplete="off" class="w-100"
+                                                                id="toCitySearch1" placeholder="Search City" formControlName="flightto"
+                                                                (keyup)="toList($event)">
+                                                            <input type="text"  name="flightto" style="display:none"
+                                                            id="toCitySearch">
+                                                        </div>
+                                                        <ul class="flight-from-data-ul" *ngIf="toFlightList">
+                                                            <li class="flight-from-ul-li">
+                                                                <p class="flight-Results-text">Results</p>
+                                                            </li>
+                                                            <li class="flight-from-ul-li"
+                                                                *ngFor="let toCity of cityList">
+                                                                <a href="#" class="flight-from-ul-li-a"
+                                                                    (click)="selectToFlightList(toCity._source)">
+                                                                    <div class="flight-from-name">
+                                                                        <h6>{{toCity._source.city}},
+                                                                            {{toCity._source.country}}</h6>
+                                                                        <p>{{toCity._source.airport_name}} </p>
+                                                                    </div>
+                                                                    <div class="flight-from-shortname">
+                                                                        <h6>{{toCity._source.airport_code}}</h6>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                 
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="root-date">
+                                                <div class="select-root-area">
+                                                    <div class="select-dep-ret">
+                                                        <div class="area-root-departure" id="DepartureDate">
+                                                            <div class="select-root-departure departure-date">
+                                                                <span class="select-roottitle">DEPARTURE</span>
+                                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                                                <span class="select-roottitle d-block w-100"
+                                                                    *ngIf="departureDate=='' ||departureDate==undefined">Tap
+                                                                    to add a <br> departure date</span>
+                                                                <span class="select-roottitle"
+                                                                    *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate
+                                                                    | date:'EEEE' }}</span>
+                                                            </div>
+                                                            <div class="select-root-date">
+                                                                <i
+                                                                class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                                <input type="hidden" name="hdnDepartureDate" 
+                                                                value="{{departureDate}}" formControlName="departure">
+                                                           
+                                                               
+                                                            </div>
+                                                        </div>
+                                                        <div class="area-root-reutrn">
+                                                            <div class="select-root-reutrn">
+                                                                <span class="select-roottitle">RETURN</span>
+                                                                <!-- <h5 class="">29 May</h5> -->
+                                                                <span class="select-roottitle d-block w-100">Tap to add
+                                                                    a <br> return date</span>
+                                                            </div>
+                                                            <div class="select-root-date">
+                                                                <!-- <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i> -->
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="root-search">
+                                                    <button type="submit" class="searchbn">Search</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="add-search-area">
+                                    <div class="add-search-content">
+                                        <ul class="add-search-ul">
+                                            <li class="custom-check-box">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input"
+                                                            checked="checked" />
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">Regular Fare</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                            <li class="custom-check-box">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" />
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">Student Fare</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                            <li class="custom-check-box">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" />
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">Armed Forces</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                            <li class="custom-check-box">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" />
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">Senior Citizen</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="add-search-content ms-3">
+                                        <div class="Preferred-area">
+                                            <h5 class="Preferred-title">Preferred Airline <img
+                                                    src="./assets/images/icons/down.png" class="ms-1" alt=""></h5>
+                                            <div class="Preferred-data Preferred-hide">
+                                                <div class="Preferred-search">
+                                                    <input type="text" name="" class="w-100" id=""
+                                                        placeholder="Search Airline">
+                                                </div>
+                                                <ul class="Preferred-items mCustomScrollbar" data-mcs-theme="dark">
+                                                    <li class="Preferred-list">
+                                                        <p class="">Results</p>
+                                                    </li>
+                                                    <li class="Preferred-list">
+                                                        <a href="#" class="">
+                                                            IndiGo (6E)
+                                                        </a>
+                                                    </li>
+                                                    <li class="Preferred-list">
+                                                        <a href="#" class="">
+                                                            SpiceJet (SG)
+                                                        </a>
+                                                    </li>
+                                                    <li class="Preferred-list">
+                                                        <a href="#" class="">
+                                                            Vistara (UK)
+                                                        </a>
+                                                    </li>
+                                                    <li class="Preferred-list">
+                                                        <a href="#" class="">
+                                                            Go First (G8)
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
+                        <div class="text-center">
+                            <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger">
+                                <span> Select departure city from drop down</span>
+                            </div>
+                            
+                            <div *ngIf="submitted && Error('flightto', 'required')" class="text-danger">  
+                               <span> Select destination city from drop down</span>
+                            </div>
+                            
+                            <div *ngIf="submitted && Error('departure', 'required')" class="text-danger">
+                                <span> Select destination departure from drop down</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
+
+<h3 class="text-center" *ngIf="loader">Loading...</h3>
