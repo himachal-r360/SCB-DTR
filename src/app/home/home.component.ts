@@ -170,7 +170,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         autoclose: true,
       },
       function (start: any, end: any, label: string) {
-        debugger;
         a.departureDate = start._d;
         a.departureDate = start._d  ;
         a.flightData.value.departure = start._d
@@ -190,7 +189,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   return [date.getFullYear(), mnth, day].join("-");
   // }
   getCityList(SearchCityName:string) {
-    debugger;
     this.sub = this._flightService
       .getCityList(SearchCityName)
       .subscribe((res: any) => {
@@ -216,7 +214,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromFlightList = false;
     this.toFlightList = true;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
-    console.log(this.SearchCityName);
+    
     //this.flightData.flightto=this.SearchCityName;
     // if(evt.target.value.trim().toLowerCase().length>3){
     //   //this.flightData.flightfrom=evt.target.value.trim().toLowerCase();
@@ -226,7 +224,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
-    debugger
+    
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -237,7 +235,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectToFlightList(para2: any) {
-    debugger
+    
     this.flightData.value.flightfrom=localStorage.getItem('fromCityId');
     localStorage.setItem('toCityId' ,para2.id);
     this.flightData.value.flightto = para2.id;
@@ -275,7 +273,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   }
   // }
   flightSearch() {
-    debugger;
+    
     this.submitted = true;
     if(this.flightData.invalid){
       return
@@ -301,8 +299,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this._flightService.flightListData = this.flightList;
         this._flightService.flightListDate = this.oneWayDate;
         let query:any = localStorage.getItem('searchVal');
-        console.log(query);
-        console.log(this.ConvertObjToQueryString(JSON.parse(query)));
+        
+        
         let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
         this.router.navigateByUrl(url);
         //this.router.navigate(['flight-list'],  { queryParams: { flights : decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)))}});
@@ -329,7 +327,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ConvertObjToQueryString(obj:any)
   {
-    debugger;
+    
     var str = [];
     for (var p in obj)
       if (obj.hasOwnProperty(p)) {
