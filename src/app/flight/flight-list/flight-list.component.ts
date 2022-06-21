@@ -46,6 +46,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   disableinfants: boolean = false;
   flightTimingfrom: any;
   flightTimingto: any;
+  viewFare = false;
 
   flightListMod: any;
   RefundableFaresCount: number = 0;
@@ -118,6 +119,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('.Travellers-dropdown-data').removeClass('Travellershide');
       }
     });
+
     
     this.getCityList();
     this.getFlightIcon();
@@ -204,6 +206,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this._flightService.getFlightIcon().subscribe((res:any)=>{
       this.flightIcons = res;
     })
+  }
+
+  //view fares hide show
+  viewFaresHideShow(){
+    
   }
 
   // get airport list
@@ -845,6 +852,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     var element = document.getElementById('CompareToFly_' + i);
     if (element?.classList.contains('flight-details-box-hide')) {
       element.classList.remove('flight-details-box-hide');
+      // this.viewFare = true
     } else {
       element?.classList.add('flight-details-box-hide');
     }
