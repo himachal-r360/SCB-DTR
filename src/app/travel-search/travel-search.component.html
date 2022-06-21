@@ -976,9 +976,15 @@
                     </div>
                     <div class="opt_box my-3">
                         <p class="label_head"><span>Quota</span> </p>
-                        <select class="categorie_select" formControlName="trainQuota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
+                        <!-- <select class="categorie_select" formControlName="trainQuota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
                             <option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</option>
-                        </select>
+                        </select> -->
+
+                        <mat-form-field class="fligh-select-mat-field">
+                            <mat-select formControlName="trainQuota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
+                                <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
       
                     </div>
                     <div class="d-flex pt-16">

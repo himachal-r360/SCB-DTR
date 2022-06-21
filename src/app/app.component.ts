@@ -1,4 +1,4 @@
-import {Component, OnInit,Inject,HostListener} from '@angular/core';
+import {Component, OnInit,Inject,HostListener, AfterViewInit, Renderer2} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {NavigationStart,NavigationEnd, Router,ActivatedRoute} from '@angular/router';
 import {AppConfig} from './configs/app.config';
@@ -23,10 +23,24 @@ export interface DialogData {
  afterExpiry:boolean; 
 }
 
+/* @Component({
+  selector: 'app-loader',
+  templateUrl: './app.component.html'
+})
+export class AppComponentLoader implements AfterViewInit {
+  constructor(private renderer: Renderer2) {}
+
+  ngAfterViewInit() {
+    let loader = this.renderer.selectRootElement('#loader');
+    this.renderer.setStyle(loader, 'display', 'none');
+  }
+} */
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
+
 
 export class AppComponent implements OnInit {
 
@@ -48,8 +62,10 @@ export class AppComponent implements OnInit {
      
      
   constructor(private rest:RestapiService,private location:Location,private title: Title,
-              private router: Router,private cookieService: CookieService,private sg: SimpleGlobal,private bnIdle: BnNgIdleService,public dialog: MatDialog, private deviceService: DeviceDetectorService,private activatedRoute: ActivatedRoute,private appConfigService:AppConfigService,private EncrDecr: EncrDecrService, public commonHelper: CommonHelper,@Inject(DOCUMENT) private document: any) {
+              private router: Router,private cookieService: CookieService,private sg: SimpleGlobal,private bnIdle: BnNgIdleService,public dialog: MatDialog, private deviceService: DeviceDetectorService,private activatedRoute: ActivatedRoute,private appConfigService:AppConfigService,private EncrDecr: EncrDecrService, public commonHelper: CommonHelper,@Inject(DOCUMENT) private document: any,
+              private renderer: Renderer2) {
         
+                
 	//14 Minutes (60*14)
 	this.bnIdle.startWatching(60*14).subscribe((res) => {
 	if(res) {
@@ -130,6 +146,11 @@ export class AppComponent implements OnInit {
         this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.domainName];
         
   }
+
+  /* ngAfterViewInit() {
+    let loader = this.renderer.selectRootElement('#loader');
+    this.renderer.setStyle(loader, 'display', 'none');
+  } */
   
   private appendGaTrackingCode() {
     try {
@@ -542,3 +563,7 @@ export class AlertDialogComponent {
   }
 
 }
+function ngAfterViewInit() {
+  throw new Error('Function not implemented.');
+}
+
