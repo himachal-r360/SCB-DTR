@@ -44,6 +44,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   disableParent: boolean = false;
   disablechildren: boolean = false;
   disableinfants: boolean = false;
+
+  dateValidation: boolean = false;
   // fromCityValidation = false;
   // toCityValidation = false;
   // departDateValidation = false;
@@ -86,8 +88,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private _flightService: FlightService
   ) {}
   flightData: any = this._fb.group({
-    flightfrom: [null,[Validators.required]],
-    flightto: [null,[Validators.required]],
+    flightfrom: ['',[Validators.required]],
+    flightto: ['',[Validators.required]],
     flightclass: ['E'],
     flightdefault: ['O'],
     departure:[''],
@@ -139,7 +141,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   ngAfterViewInit(): void {
+   setTimeout(() => {
     $('.class-select').selectpicker();
+   }, 500);
   }
   selectDate(control: string) {
     let dep;
@@ -171,10 +175,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         autoclose: true,
       },
       function (start: any, end: any, label: string) {
-        debugger;
+        
         a.departureDate = start._d;
-        a.departureDate = start._d  ;
+        a.departureDate = start._d;
         a.flightData.value.departure = start._d
+        console.log(a.flightData.value.departure , "date");
+        a.dateValidation=false;
+        
       }
     );
 
@@ -191,7 +198,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   return [date.getFullYear(), mnth, day].join("-");
   // }
   getCityList(SearchCityName:string) {
-    debugger;
     this.sub = this._flightService
       .getCityList(SearchCityName)
       .subscribe((res: any) => {
@@ -217,7 +223,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromFlightList = false;
     this.toFlightList = true;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
-    console.log(this.SearchCityName);
+    
     //this.flightData.flightto=this.SearchCityName;
     // if(evt.target.value.trim().toLowerCase().length>3){
     //   //this.flightData.flightfrom=evt.target.value.trim().toLowerCase();
@@ -227,7 +233,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
-    debugger
+    
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -238,7 +244,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectToFlightList(para2: any) {
-    debugger
+    
     this.flightData.value.flightfrom=localStorage.getItem('fromCityId');
     localStorage.setItem('toCityId' ,para2.id);
     this.flightData.value.flightto = para2.id;
@@ -276,15 +282,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   }
   // }
   flightSearch() {
-    debugger;
+    debugger
     this.submitted = true;
-    if(this.flightData.invalid){
+    this.selectedDate = this.flightData.value.departure;
+    if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
+      this.dateValidation=false;
+      this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
+    }
+    else{
+      this.dateValidation=true;
+    }
+    if(this.flightData.invalid || this.dateValidation==true){
       return
     }
     else {
       this.loader = true;
-      this.selectedDate = this.flightData.value.departure;
-      this.flightData.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
+      
       //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
       let searchValue = this.flightData.value;
       
@@ -302,8 +315,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this._flightService.flightListData = this.flightList;
         this._flightService.flightListDate = this.oneWayDate;
         let query:any = localStorage.getItem('searchVal');
-        console.log(query);
-        console.log(this.ConvertObjToQueryString(JSON.parse(query)));
+        
+        
         let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
         this.router.navigateByUrl(url);
         //this.router.navigate(['flight-list'],  { queryParams: { flights : decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)))}});
@@ -330,7 +343,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ConvertObjToQueryString(obj:any)
   {
-    debugger;
+    
     var str = [];
     for (var p in obj)
       if (obj.hasOwnProperty(p)) {

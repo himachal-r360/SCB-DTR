@@ -355,24 +355,24 @@
                         </div>
                         <hr>
 <!-- lay over airport list -->
-                        <!-- <div class="sidebar-widget layover-airports-widget">
+                        <div class="sidebar-widget layover-airports-widget">
                             <div class="widget-title">
                                 <h6 class="">Layover Airports</h6>
                                 <a href="javascript:void(0)">Reset</a>
                             </div>
-                            <div class="widget-content">
-                                <ul class="category-list clearfix mt-2">
+                            <div class="widget-content" id="layover_airport">
+                                <ul class="category-list clearfix mt-2"  *ngFor="let layover of layOverFilterArr ; let i = index ">
                                     <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
+                                        <div class="custom-controls-stacked" >
                                             <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
+                                                <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
-                                                <span class="description">Chennai Airport</span>
+                                                <span class="description">{{layover.arrivalAirport}}</span>
                                             </label>
-                                            <p>&#8377;5,252</p>
+                                            <p>&#8377;{{layover.price}}</p>
                                         </div>
                                     </li>
-                                    <li class="custom-check-box">
+                                    <!-- <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
                                                 <input type="checkbox" class="material-control-input" checked="checked" />
@@ -380,8 +380,8 @@
                                                 <span class="description">Kempegowda Internat</span>
                                             </label>
                                             <p>&#8377;6,356</p>
-                                        </div>
-                                    </li>
+                                        </div> -->
+                                    <!-- </li>
                                     <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
@@ -401,10 +401,10 @@
                                             </label>
                                             <p>&#8377;9,356</p>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
-                        </div> -->
+                        </div>
 
                     </div>
 
@@ -429,6 +429,16 @@
                                         <option value="P_D_E">Depart Ealry</option>
                                         <option value="P_D_L">Depart Late</option>
                                     </select>
+                                    <div class="flight-search-filters-counts ms-3">
+                                        <ul class="flight-counts">
+                                            <li class="flight-counts-list active" id="All_Flights_Upper_filter" value="All_Flights" (click)="searchNonStop('All_Flights')">
+                                                <p>All Flights</p>
+                                            </li>
+                                            <li class="flight-counts-list " id="non_stop_Upper_filter" value="non-stop" (click)="searchNonStop('no_stops')">
+                                                <p class=""> <span>{{nonStopCount}}</span> Non-Stop</p>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="flight-search-filters">
@@ -507,17 +517,42 @@
                                 </div>
                             </div> -->
                         </div>
-
+                        <div class="tabletitle-area">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="tabletitle-content">
+                                        <p>Airlines</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="tabletitle-content tabletitle-departure">
+                                        <p>Departure</p>
+                                        <p>Arrival</p>
+                                        <p>Duration</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="tabletitle-content">
+                                        <p>Partner</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="tabletitle-content">
+                                        <p class="ml-10">Fare</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Listing -->
                         <div class="flight-listing-area">
 
-                            <div class="flight-listing" *ngFor="let list of flightList; let i = index">
+                            <div class="flight-listing" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
                                 <div class="flight-listing-content">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="flight-radio">
                                                 <div class="flight-radio-image">
-                                                    <img src="assets/images/flights/flight-1.png" alt="">
+                                                    <img src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
                                                 </div>
                                                 <div class="flight-radio-time" *ngIf="list.flights.length > 0">
                                                     <h6>{{list.flights[0].airlineName}}</h6>
@@ -545,9 +580,9 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="flight-listing-pri">
-                                                <div class="flight-listing-image" *ngIf="list.flights.length > 0">
+                                                <div class="flight-listing-image" *ngIf="list.priceSummary.length > 0">
                                                     <!-- <img src="assets/images/flights/1.png" alt=""> -->
-                                                    <p>{{list.flights[0].airlineName}}</p>
+                                                    <p>{{list.priceSummary[0].partnerName}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -555,7 +590,7 @@
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                     <span class="information-icon">
-                                                    <h6>&#8377;  {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                     <h6>&#8377;  {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
                                                         <!-- <img src="assets/images/icons/info.png" class="ms-2" alt=""> -->
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
@@ -584,7 +619,8 @@
                                                     <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                 </div>
                                                 <div class="flight-listing-viewfares">
-                                                    <a href="javascript:void(0)" class="button-style">Selected</a>
+                                                    <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{i}}" (click)="HideShowCompareToFly(i,'fare-details')"> VIEW FARES</a>
+                                                    <a href="javascript:void(0)" class="button-style hidefares d-none " id="hidefares_{{i}}" (click)="hideFarebutton(i,'fare-details')"> HIDE FARES</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -593,16 +629,17 @@
                                 <div class="flight-info-box">
                                     <!-- <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> -->
                                     <p></p>
-                                    <a href="javascript:void(0)" (click)="HideShowCompareToFly(i)" class="flight-details-click">Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
+                                    <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
+                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                 </div>
-                                <div class="flight-details-box flight-details-box-hide" id="CompareToFly_{{i}}">
+                                <div class="flight-details-box  flight-details-box-hide" id="CompareToFly_{{i}}" >
                                     <div class="flight-extra-details">
                                         <ul class="list-unstyled flight-extra-tabs">
-                                            <li>
+                                            <!-- <li >
                                                 <a href="javascript:void(0); " class="flight-extra-tabs-active" data-bind="FareDetails" value="FareDetails" (click)="flightDetailsTab($event,'FareDetails',i)">Fare Details</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0); " data-bind="FlightDetails" value="FlightDetails"  (click)="flightDetailsTab($event,'FlightDetails',i)">Flight Details</a>
+                                            </li> -->
+                                            <li class="flight-details">
+                                                <a href="javascript:void(0); " data-bind="FlightDetails" value="FlightDetails" #flightsDetails (click)="flightDetailsTab($event,'FlightDetails',i)">Flight Details</a>
                                             </li>
                                             <!-- cancelation detail temp remove -->
                                             <!-- <li>
@@ -619,7 +656,7 @@
                                             </li> -->
                                         </ul>
                                         <div class="extra-tabs-ara">
-                                            <div id="FareDetails_{{i}}" class="flight-extra-content extra-active">
+                                            <div id="FareDetails_{{i}}" class="flight-extra-content fare-details">
                                                 <div class="extra-tabs-details FareDetails-box p-3">
                                                     <div class="flight-details-options">
                                                         <ul>
@@ -746,7 +783,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="FlightDetails_{{i}}" class="flight-extra-content ">
+                                            <div id="FlightDetails_{{i}}" class="flight-extra-content flight-details">
                                                 <div class="extra-tabs-details FlightDetails-box">
                                                     <div class="extra-tabs-details-top">
                                                         <div class="extra-tabs-left">
@@ -786,14 +823,14 @@
                                                     <div class="extra-tabs-details-bottom">
                                                         <div class="tabs-depart-box">
                                                             <div class="tabs-depart-one" *ngFor="let details of list.flights;let i=index;">
-                                                                <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">{{details.airlineName}} {{details.airline}} {{details.flightNumber}}</p>
+                                                                <p class="depart-one-image"><img src="{{this.flightIcons[list.flights[0].airline].logo}}" width="22px" class="me-2" alt="">{{details.airlineName}} {{details.airline}} {{details.flightNumber}}</p>
                                                                 <div class="tabs-depart-left">
                                                                     <div class="tabs-depart-times">
                                                                         <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}
                                                                         </h5>
                                                                         <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                        <!-- <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.departureAirport}})</p> -->
-                                                                        <p class="mt-1 opacity_05"> ({{details.departureAirport}})</p>
+                                                                        <p class="mt-1 opacity_05">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                        <!-- <p class="mt-1 opacity_05"> ({{details.departureAirport}})</p> -->
                                                                     </div>
                                                                     <div class="tabs-depart-total">
                                                                         <p>{{details.duration | durationTime}}</p>
@@ -801,7 +838,7 @@
                                                                     <div class="tabs-depart-times">
                                                                         <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
                                                                         <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                        <p class="mt-1 opacity_05"> ({{details.arrivalAirport}})</p>
+                                                                        <p class="mt-1 opacity_05">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
                                                                         <!-- <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl ({{details.arrivalAirport}})</p> -->
                                                                     </div>
                                                                 </div>
@@ -824,8 +861,8 @@
                                                                 </div>
                                                                 <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                     <!-- <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in Nagpur </p> -->
-                                                                    <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in</p>
-                                                                </div>
+                                                                    <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                </div> 
                                                             </div>
                                                             <!-- <div class="tabs-depart-three">
                                                                 <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
@@ -863,7 +900,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="CancellationDetails_{{i}}" class="flight-extra-content">
+                                            <div id="CancellationDetails_{{i}}" class="flight-extra-content ">
                                                 <div class="extra-tabs-details CancellationDetails-box">
                                                     <div class="extra-tabs-details-top">
                                                         <div class="extra-tabs-left">
@@ -920,7 +957,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="DateChange_{{i}}" class="flight-extra-content">
+                                            <div id="DateChange_{{i}}" class="flight-extra-content ">
                                                 <div class="extra-tabs-details DateChange-box">
                                                     <div class="extra-tabs-details-top">
                                                         <div class="extra-tabs-left">
@@ -977,7 +1014,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="Fare_{{i}}" class="flight-extra-content">
+                                            <div id="Fare_{{i}}" class="flight-extra-content ">
                                                 <div class="extra-tabs-details Fare-box">
                                                     <div class="extra-tabs-details-top">
                                                         <div class="extra-tabs-left">
@@ -1034,7 +1071,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="Cancellation_{{i}}" class="flight-extra-content">
+                                            <div id="Cancellation_{{i}}" class="flight-extra-content ">
                                                 <div class="extra-tabs-details Cancellation-box">
                                                     <div class="extra-tabs-details-top">
                                                         <div class="extra-tabs-left">

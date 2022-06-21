@@ -158,11 +158,11 @@
                                                             <input type="hidden" formControlName="flightfrom"
                                                             id="hdnfromCitySearch" > -->
                                                             <input type="text" autocomplete="off" class="w-100"
-                                                                id="fromCitySearch1" placeholder="Search City" formControlName="flightfrom" 
+                                                                id="fromCitySearch1" placeholder="Search City" formControlName="flightfrom"
                                                                 (keyup)="fromList($event)">
                                                             <input type="text" name="flightfrom" style="display:none"
                                                             id="fromCitySearch" >
-                                                                
+
                                                         </div>
 
                                                         <ul class="flight-from-data-ul" *ngIf="fromFlightList">
@@ -187,9 +187,9 @@
 
                                                         </ul>
                                                     </div>
-                                             
+
                                                 </div>
-                                                
+
                                                 <div class="select-root-icons" (click)="swap()">
                                                     <img src="./assets/images/icons/twoway.png" alt="">
                                                 </div>
@@ -228,8 +228,16 @@
 
                                                         </ul>
                                                     </div>
-                                                 
+
                                                 </div>
+                                            </div>
+                                            <div class="home-error d-flex">
+                                              <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger w-50">
+                                                  <span class="fs_12"> Select departure</span>
+                                              </div>
+                                              <div *ngIf="submitted && Error('flightto', 'required')" class="text-danger w-50">
+                                                <span class="fs_12"> Select destination</span>
+                                              </div>
                                             </div>
                                         </div>
 
@@ -251,10 +259,10 @@
                                                             <div class="select-root-date">
                                                                 <i
                                                                 class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
-                                                                <input type="hidden" name="hdnDepartureDate" 
+                                                                <input type="hidden" name="hdnDepartureDate"
                                                                 value="{{departureDate}}" formControlName="departure">
-                                                           
-                                                               
+
+
                                                             </div>
                                                         </div>
                                                         <div class="area-root-reutrn">
@@ -276,6 +284,10 @@
                                                     <button type="submit" class="searchbn">Search</button>
                                                 </div>
                                             </div>
+
+                                           <div *ngIf="dateValidation" class="text-danger">
+                                            <span class="fs_12"> Select departure date</span>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -363,19 +375,19 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="text-center">
+                        <!-- <div class="text-center">
                             <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger">
                                 <span> Select departure city from drop down</span>
                             </div>
-                            
-                            <div *ngIf="submitted && Error('flightto', 'required')" class="text-danger">  
+
+                            <div *ngIf="submitted && Error('flightto', 'required')" class="text-danger">
                                <span> Select destination city from drop down</span>
                             </div>
-                            
-                            <div *ngIf="submitted && Error('departure', 'required')" class="text-danger">
+
+                            <div *ngIf="dateValidation" class="text-danger">
                                 <span> Select destination departure from drop down</span>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
