@@ -138,7 +138,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.Initslider();
-    }, 500);
+      $('.selectpicker').selectpicker();
+    }, 200);
   }
   setSearchFilterData() {
     this.searchData = localStorage.getItem('searchVal');
@@ -731,9 +732,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.flightList.length > 0) {
       let layoverArr:any=[];
       let layoverFilter = $("#layover_airport input[type=checkbox]:checked");
-      
-      
-      
       for (let j = 0; j < layoverFilter.length; j++) {
         layoverArr.push(layoverFilter[j].value);
       }
@@ -753,7 +751,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.flightList = filteredAirlines;
       }
     }
-    
     
   }
 
@@ -801,6 +798,27 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.layOverFilterArr=layOverArr;
     
   }
+
+  searchNonStop(val:any){
+    debugger
+    $(".flight-counts-list").removeClass("active");
+    if(val=="no_stops"){
+      $("#Flight_Stops .Stops-list[value=no_stops]").addClass("active")
+      //this.FlightStopsFilterFlightData(val)
+      this.popularFilterFlightData();
+      console.log(val);
+      //$("[id*=All_Flights]").addClass("active");
+      $('#non_stop_Upper_filter').addClass("active");
+    }
+    else if(val=="All_Flights"){  
+      $("#Flight_Stops .Stops-list[value=no_stops]").removeClass("active")
+      //this.FlightStopsFilterFlightData(val)
+      this.popularFilterFlightData()
+      $('#All_Flights_Upper_filter').addClass("active");
+    }
+  }
+
+
   flightSearch() {
     this.searchData = localStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);

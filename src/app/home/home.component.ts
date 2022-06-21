@@ -140,7 +140,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   ngAfterViewInit(): void {
+   setTimeout(() => {
     $('.class-select').selectpicker();
+   }, 500);
   }
   selectDate(control: string) {
     let dep;
