@@ -847,19 +847,77 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  HideShowCompareToFly(i: number) {
+  HideShowCompareToFly(i: number,fromCall:string) {
+    debugger;
     $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
     var element = document.getElementById('CompareToFly_' + i);
     if (element?.classList.contains('flight-details-box-hide')) {
       element.classList.remove('flight-details-box-hide');
-      // this.viewFare = true
     } else {
       element?.classList.add('flight-details-box-hide');
     }
-    // $('#CompareToFly_' + i+" li:first a").click()
-    $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
-    $('#CompareToFly_' + i+" .extra-tabs-ara div:first").addClass("flight-extra-content extra-active").show();
+    $('#CompareToFly_' + i+' .flight-details,#CompareToFly_' + i+' .fare-details').removeClass("extra-active").hide();
+    // $('#flight_list_'+i+' #hidefares_'+ i).addClass('d-none');
+    // $('#flight_list_'+i+' #viewfares_'+ i).removeClass('d-none');
+    $('.hidefares,.hideflight_details').addClass('d-none');
+    $('.viewfares,.viewflight_details').removeClass('d-none');
+    $('.flight-details-box').addClass('flight-details-box-hide');
+    if(fromCall=="fare-details"){
+      
+      // $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
+      // $('#CompareToFly_' + i+" .extra'tabs-ara div:first").addClass("flight-extra-content extra-active").show();
+      $('#CompareToFly_' + i).removeClass('flight-details-box-hide');
+      $('#CompareToFly_' + i+' .fare-details').addClass("extra-active").show();
+      $('#flight_list_'+i+' #viewfares_'+ i).addClass('d-none');
+      $('#flight_list_'+i+' #hidefares_'+ i).removeClass('d-none');
+      // this.viewFare = true;
+    }
+    else if(fromCall=="flight-details"){
+      // $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
+      // $('#CompareToFly_' + i+" .extra-tabs-ara div:first").addClass("flight-extra-content extra-active").show();
+      $('#CompareToFly_' + i).removeClass('flight-details-box-hide');
+      $('#CompareToFly_' + i+" .flight-details").addClass("extra-active").show();
+      $('#flight_list_'+i+' #viewflight_details_'+ i).addClass('d-none');
+      $('#flight_list_'+i+' #hideflight_details_'+ i).removeClass('d-none');
+      // this.flightdetailsHidden = true;
+    }
+    
   }
+  hideFarebutton(i: number,fromCall:string)
+  {
+    debugger;
+    $('.flight-details-box').addClass('flight-details-box-hide');
+    if(fromCall=="fare-details"){
+      $('#flight_list_'+i+' #hidefares_'+ i).addClass('d-none');
+      $('#flight_list_'+i+' #viewfares_'+ i).removeClass('d-none');
+      $('#CompareToFly_' + i).addClass('flight-details-box-hide');
+      $('#CompareToFly_' + i+' .fare-details').removeClass("extra-active").hide();
+    }
+    else if(fromCall=="flight-details"){
+      $('#flight_list_'+i+' #hideflight_details_'+ i).addClass('d-none');
+      $('#flight_list_'+i+' #viewflight_details_'+ i).removeClass('d-none');
+      $('#CompareToFly_' + i).addClass('flight-details-box-hide');
+      $('#CompareToFly_' + i+' .fare-details').removeClass("extra-active").hide();
+    }
+    
+  }
+  // hiddenCompareFly(i:number ,faredetail:string){
+  //   if(faredetail == "fare-details") {
+  //     $('#CompareToFly_' + i+' .fare-details').removeClass("extra-active").hide();
+  //     this.viewFare = false;
+
+  //   }
+  // }
+
+//  flightdetailsHidden = false 
+//   hiddenFlightDetails(i:number,flightdetail:string){
+//     if(flightdetail == "flight-details"){
+//       $('#CompareToFly_' + i+' .flight-details').removeClass("extra-active").hide();
+//       this.flightdetailsHidden = false;
+
+//     }
+//   }
+
 
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);

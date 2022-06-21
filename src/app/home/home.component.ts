@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   disableParent: boolean = false;
   disablechildren: boolean = false;
   disableinfants: boolean = false;
+
+  dateValidation: boolean = false;
   // fromCityValidation = false;
   // toCityValidation = false;
   // departDateValidation = false;
@@ -85,8 +87,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private _flightService: FlightService
   ) {}
   flightData: any = this._fb.group({
-    flightfrom: [null,[Validators.required]],
-    flightto: [null,[Validators.required]],
+    flightfrom: ['',[Validators.required]],
+    flightto: ['',[Validators.required]],
     flightclass: ['E'],
     flightdefault: ['O'],
     departure:[''],
@@ -170,9 +172,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         autoclose: true,
       },
       function (start: any, end: any, label: string) {
+        
         a.departureDate = start._d;
-        a.departureDate = start._d  ;
+        a.departureDate = start._d;
         a.flightData.value.departure = start._d
+        console.log(a.flightData.value.departure , "date");
+        a.dateValidation=false;
+        
       }
     );
 
@@ -273,15 +279,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   }
   // }
   flightSearch() {
-    
+    debugger
     this.submitted = true;
-    if(this.flightData.invalid){
+    this.selectedDate = this.flightData.value.departure;
+    if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
+      this.dateValidation=false;
+      this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
+    }
+    else{
+      this.dateValidation=true;
+    }
+    if(this.flightData.invalid || this.dateValidation==true){
       return
     }
     else {
       this.loader = true;
-      this.selectedDate = this.flightData.value.departure;
-      this.flightData.value.departure=this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate();
+      
       //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
       let searchValue = this.flightData.value;
       
