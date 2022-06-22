@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './core/search/search.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -19,6 +20,7 @@ import { SearchComponent } from './core/search/search.component';
     HeaderComponent,
     HomeComponent,
     SearchComponent,
+    FooterComponent,
 
     
     
