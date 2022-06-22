@@ -516,18 +516,18 @@
                                                                 <span class="child_count"><b>Child {{childIndex + 1}}</b></span>
                                                                 <div class="custom-dropdown pos-relative child-add-dd" id="childadd{{childIndex + 1}}">
                                                                     <select class="categorie_select sel-pr-0 f-12" formControlName="age">
-                                                 <option value="" selected="">Age</option>
-                                                 <option value="2">2 </option>
-                                                 <option value="3">3 </option>
-                                                 <option value="4">4 </option>
-                                                 <option value="5">5 </option>
-                                                 <option value="6">6 </option>
-                                                 <option value="7">7 </option>
-                                                 <option value="8">8 </option>
-                                                 <option value="9">9 </option>
-                                                 <option value="10">10 </option>
-                                                 <option value="11">11 </option>
-                                              </select>
+                                                                        <option value="" selected="">Age</option>
+                                                                        <option value="2">2 </option>
+                                                                        <option value="3">3 </option>
+                                                                        <option value="4">4 </option>
+                                                                        <option value="5">5 </option>
+                                                                        <option value="6">6 </option>
+                                                                        <option value="7">7 </option>
+                                                                        <option value="8">8 </option>
+                                                                        <option value="9">9 </option>
+                                                                        <option value="10">10 </option>
+                                                                        <option value="11">11 </option>
+                                                                    </select>
                                                                     <div *ngIf="submittedHotel && cage['controls'].age.errors" class="error_msg">
                                                                         <span *ngIf="cage['controls'].age.errors" class="error_msg1">Choose age</span>
                                                                     </div>
@@ -550,7 +550,7 @@
                         </div>
 
                     </div>
-                    <div class="d-flex pt-16">
+                    <div class="d-flex pt-16 justify-content-between">
                         <div class="form-group flex_basis">
                             <p class="label_head"><span>Check-In</span> </p>
                                     <input (click)="hotelFromPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelFromPicker"   [min]="minDateMlite"  [max]="flightpickermaxDateMlite"
@@ -573,7 +573,7 @@
                                 <small *ngIf="searchHotelForm['controls']['hotelCheckout']['errors']['required']" class="validate-msg">Check out date required</small>
                             </div>
                         </div>
-                        <div class="pl-2 search_icon">
+                        <div class="pl-2 search_icon mt-4">
                             <a href="javascript:;" (click)="onSubmit('hotels',1)"><span><img src="{{cdnUrl}}images/smartbuy/icons/arrow-right.svg" alt="Submit" class=""></span></a>
                         </div>
                     </div>
@@ -779,7 +779,7 @@
                                 <small *ngIf="searchFlightForm['controls']['flightReturn']['errors']['required']" class="validate-msg">Return date required</small>
                             </div>
                         </div>
-                        <div class="pl-2 search_icon">
+                        <div class="pl-2 search_icon mt-4">
                             <a href="javascript:;" (click)="onSubmit('flights',1)"><span><img src="{{cdnUrl}}images/smartbuy/icons/arrow-right.svg" alt="Submit" class=""></span></a>
                         </div>
                     </div>
@@ -883,7 +883,7 @@
                                 <small *ngIf="searchBusForm['controls']['busDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
                             </div>
                         </div>
-                        <div class="pl-2 search_icon">
+                        <div class="pl-2 search_icon mt-4">
                             <a href="javascript:;" (click)="onSubmit('bus',1)"><span><img src="{{cdnUrl}}images/smartbuy/icons/arrow-right.svg" alt="Submit" class=""></span></a>
                         </div>
                     </div>
@@ -1000,7 +1000,7 @@
                                 <small *ngIf="searchTrainForm['controls']['trainDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
                             </div>
                         </div>
-                        <div class="pl-2 search_icon">
+                        <div class="pl-2 search_icon mt-4">
                             <a href="javascript:;" (click)="onSubmitTrain('train',1)"><span><img src="{{cdnUrl}}images/smartbuy/icons/arrow-right.svg" alt="Submit" class=""></span></a>
                         </div>
                     </div>
@@ -1351,9 +1351,9 @@
                         </div>
                         <div class="travel_select_m">
                             <div class="opt_box">
-                                <label>
-                    <span>Select Class</span>
-                    </label>
+                                <label class="d-block">
+                                     <span>Select Class</span>
+                                </label>
                                 <!-- <select name="flightClass" class="categorie_select w-100" formControlName="flightClass" (ngModelChange)="selectClass($event)">
                        <option value="E" selected>Economy</option>
                        <option value="B">Business</option>
@@ -1361,7 +1361,7 @@
                        <option value="P">Premium Economy</option>
                     </select> -->
 
-                                <mat-form-field class="fligh-select-mat-field">
+                                <mat-form-field class="fligh-select-mat-field w-100">
                                     <mat-select name="flightClass" class="categorie_select w-100" formControlName="flightClass" (ngModelChange)="selectClass($event)">
                                         <mat-option value="E" selected>Economy</mat-option>
                                         <mat-option value="B">Business</mat-option>
@@ -1499,7 +1499,7 @@
                         <li *ngIf="flightToOptions.length==0"><a>No Results Found...</a></li>
                     </ul>
                 </div>
-                <button class="btn btn-primary mt-3" (click)="onSubmit('flights',1)">Search</button>
+                <button class="btn btn-primary mt-2 w-100" (click)="onSubmit('flights',1)">Search</button>
             </form>
 
         </div>
@@ -1634,7 +1634,7 @@
                             <li *ngIf="busToOptions.length==0"><a>No Results Found...</a></li>
                         </ul>
                     </div>
-                    <button class="btn btn-primary mt-3" (click)="onSubmit('bus',1)">Search</button>
+                    <button class="btn btn-primary mt-2 w-100" (click)="onSubmit('bus',1)">Search</button>
                 </div>
             </form>
         </div>

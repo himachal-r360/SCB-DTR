@@ -736,7 +736,7 @@ export class ForyouTabComponent implements OnInit {
   
   
     dealOptions: any = {
-    loop: true,
+    loop: false,
     navText: ['<span class="left_arrow" [style.opacity]="myCarousel.isLast ? 0:1"><img src="' + environment.cdnUrl + 'images/smartbuy/icons/left-arrow.svg"></span>', '<span class="right_arrow" ><img src="' + environment.cdnUrl + 'images/smartbuy/icons/right-arrow.svg"></span>'],
 
     responsiveClass: true,

@@ -59,6 +59,10 @@ $break-md-tab: 768px;
         cursor: pointer;
     }
 }
+.control_input::placeholder {
+    font-family: 'opensans-regular';
+    color: #000;
+}
 
 .sub_text {
     color: #555555;
@@ -181,6 +185,7 @@ $break-md-tab: 768px;
         border-radius: 0;
         padding: 0px;
         font-size: 18px;
+        background-color: transparent;
         // font-weight: bold;
         &:hover {
             cursor: pointer;
@@ -791,6 +796,10 @@ li {
     height: 30px;
     padding: 6px;
 }
+.buttonTrip  > label.btn-default:before, .buttonTrip  > label.btn-default:after
+{
+    display: none;
+}
 
 .header-date {
     font-size: $size-medium;
@@ -920,6 +929,9 @@ infinite-calendar {
         margin: 0 auto;
         margin-bottom: 10px;
     }
+    p{
+        margin-bottom: 1rem;
+    }
     .main_text {
         font-size: 22px;
     }
@@ -952,7 +964,8 @@ infinite-calendar {
         }
     }
     .swap_icon_m {
-        position: relative;
+        position: absolute;
+        left: 50%;
         font-size: 20px;
         img {
             position: absolute;
@@ -973,10 +986,7 @@ infinite-calendar {
         font-family: 'opensans-medium';
         border: none;
     }
-    .control_input::placeholder {
-        font-family: 'opensans-regular';
-        color: #000;
-    }
+    
     .date_input_box {
         .control_input {
             font-size: 15px;
@@ -1790,12 +1800,10 @@ infinite-calendar {
 
 // large screen 
 .select_city .swap_icon {
-    @media only screen and (max-width: 1366px) {
-        left: 255px;
-    }
-    @media only screen and (min-width: 1440px) {
+    @media only screen and (min-width: 1366px) {
         left: 235px;
     }
+    
     // @media only screen and (min-width: 1600px) {
     //     left: 250px;
     // }

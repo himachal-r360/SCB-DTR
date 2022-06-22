@@ -216,102 +216,159 @@
         </div>
     </div>
 
-    <!-- Smartbuy Exclusive Mlite Code -->
-    <div class="mlite_exclusive d-block d-sm-none" *ngIf="DOMAIN_SETTINGS">
+
+
+     <!-- Smartbuy Exclusive Mlite Code -->
+     <div class="mlite_exclusive d-block d-sm-none" *ngIf="DOMAIN_SETTINGS">
         <div class="container_ftab">
             <h3 class="">Smartbuy Exclusive
-                <span class="float-right"><!--<a href="" class="view_all_link">View All</a>--></span>
+                <span class="float-right"><a href="#" class="view_all_link">Explore</a></span>
             </h3>
-            <div class="sb_exc_xs">
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+            <div class="sb_exc_xs_latest">
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
                     <a (click)="redirectUrl('amazon',0,'amazon')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/amazon.svg" alt=""></div>
-                        <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.amazon.reward}}X</b> RP
-                            <b>{{serviceSettings.offer_construct.amazon.cashback}}%</b> CB
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/amazon.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                            <div class="points_text">
+                                <b>Upto {{serviceSettings.offer_construct.amazon.reward}}X</b> RP <br />
+                                <b>{{serviceSettings.offer_construct.amazon.cashback}}%</b> CB
+                            </div>
                         </div>
                     </a>
                 </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.IGP==1">
-                    <a (click)="redirectUrl('igp',0,'igp')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/igp.svg" alt=""></div>
-                        <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.igp.reward}}X</b> RP
-                            <b>{{serviceSettings.offer_construct.igp.cashback}}%</b> CB
-                        </div>
-                    </a>
-                </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
-                    <a (click)="redirectUrl('jockey',0,'jockey')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/jockey.svg" alt=""></div>
-                        <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.jockey.reward}}X</b> RP
-                            <b>{{serviceSettings.offer_construct.jockey.cashback}}%</b> CB
-                        </div>
-                    </a>
-                </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
                     <a (click)="redirectUrl('flipkart',0,'flipkart')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/flipkart.svg" alt=""></div>
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/flipkart.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
                         <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.flipkart.reward}}X</b> RP
+                            <b>Upto {{serviceSettings.offer_construct.flipkart.reward}}X</b> RP <br />
                             <b>{{serviceSettings.offer_construct.flipkart.cashback}}%</b> CB
                         </div>
-                    </a>
-                </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
-                    <a (click)="redirectUrl('imagine',0,'imagine')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/premium.svg" alt=""></div>
-                        <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.imagine.reward}}X</b> RP
-                            <b>{{serviceSettings.offer_construct.imagine.cashback}}%</b> CB
                         </div>
                     </a>
                 </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.MMT==1">
-                    <a (click)="redirectUrl('mmt',0,'mmt')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/mmt.svg" alt=""></div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+                    <a (click)="redirectUrl('flipkart',0,'flipkart')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/imagine.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
                         <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.mmt.reward}}X</b> RP
+                            <b>Upto {{serviceSettings.offer_construct.flipkart.reward}}X</b> RP <br />
+                            <b>{{serviceSettings.offer_construct.flipkart.cashback}}%</b> CB
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.MMT==1">
+                    <a (click)="redirectUrl('mmt',0,'mmt')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/mmt.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <b>{{serviceSettings.offer_construct.mmt.reward}}X</b> RP <br />
                             <b>{{serviceSettings.offer_construct.mmt.cashback}}%</b> CB
                         </div>
+                        </div>
                     </a>
                 </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.BUS==1">
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.BUS==1">
                     <a (click)="goTo('/bus')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/redbus2.svg" alt="" class=""></div>
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/redbus.svg" alt="" class="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
                         <div class="points_text">
                             <b>{{serviceSettings.offer_construct.bus.reward}}X</b> RP <br/>
                             <b>{{serviceSettings.offer_construct.bus.cashback}}%</b> CB
                         </div>
-                    </a>
-                </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
-                    <a (click)="goTo('/train')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/irctc2.svg" alt="" class=""></div>
-                        <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.train.reward}}X</b> RP
-                            <b>{{serviceSettings.offer_construct.train.cashback}}%</b> CB
                         </div>
                     </a>
                 </div>
-                <div class="item_b" *ngIf="DOMAIN_SETTINGS.INSTANT_VOUCHER==1">
-                    <a (click)="redirectUrl('instavouchers',0,'instavouchers')">
-                        <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/gyfter.svg" alt="" class="mb-2"></div>
+
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.IGP==1">
+                    <a (click)="redirectUrl('igp',0,'igp')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/igp.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
                         <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.instant_voucher.reward}}X</b> RP
+                            <b>{{serviceSettings.offer_construct.igp.reward}}X</b> RP <br/>
+                            <b>{{serviceSettings.offer_construct.igp.cashback}}%</b> CB
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
+                    <a (click)="redirectUrl('jockey',0,'jockey')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/flight.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_red_bg">
+                        <div class="points_text">
+                            <b>{{serviceSettings.offer_construct.jockey.reward}}X</b> RP <br/>
+                            <b>{{serviceSettings.offer_construct.jockey.cashback}}%</b> CB
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
+                    <a (click)="redirectUrl('jockey',0,'jockey')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/stay.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_red_bg">
+                        <div class="points_text">
+                            <b>{{serviceSettings.offer_construct.jockey.reward}}X</b> RP <br/>
+                            <b>{{serviceSettings.offer_construct.jockey.cashback}}%</b> CB
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
+                    <a (click)="goTo('/train')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/irctc.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg m-0">
+                        <div class="points_text">
+                            <b>{{serviceSettings.offer_construct.train.reward}}X</b> RP <br/>
+                            <b>{{serviceSettings.offer_construct.train.cashback}}%</b> CB
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
+                    <a (click)="redirectUrl('jockey',0,'jockey')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/jockey.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <b>Upto {{serviceSettings.offer_construct.jockey.reward}}X</b> RP <br/>
+                            <b>{{serviceSettings.offer_construct.jockey.cashback}}%</b> CB
+                        </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.INSTANT_VOUCHER==1">
+                    <a (click)="redirectUrl('instavouchers',0,'instavouchers')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/gyftr.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <b>Upto {{serviceSettings.offer_construct.instant_voucher.reward}}X</b> RP <br/>
                             <b>{{serviceSettings.offer_construct.instant_voucher.cashback}}%</b> CB
+                        </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
+                    <a (click)="redirectUrl('imagine',0,'imagine')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/premium.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <b>Upto {{serviceSettings.offer_construct.imagine.reward}}X</b> RP  <br/>
+                            <b>{{serviceSettings.offer_construct.imagine.cashback}}%</b> CB
+                        </div>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
+        <div class="text-center">
+            <a href="#" class="href_link">All Offers <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        </div>
         <div>
 
         </div>
     </div>
-
-
 
 
 
@@ -536,7 +593,7 @@
             <!-- <h3 class="d-inline">{{foryouPartners.length}}+ Partners</h3> <span class="pl-3"><a >View All</a></span> -->
         </div>
         <div>
-            <div class="trend_items_carousel">
+            <div class="trend_items_carousel ">
                 <owl-carousel-o [options]="brandOptions" class="partners_container">
                     <ng-template carouselSlide *ngFor="let partner of foryouPartners; let i = index">
                         <div>
@@ -553,25 +610,29 @@
 
     <!-- Trending Items section  -->
     <div class=" pt-3 pt-sm-0 container_ftab" *ngIf="showShoppingItems && amazonCategories">
-        <div class="">
+        <div class="d-none d-sm-block web_code" >
             <h3 class="d-inline">Trending items</h3>
-            <span class=" m-right">
-
-                <mat-form-field class="ps-3 m-right" *ngIf="showShoppingItems && amazonCategories['category_filter']">
+            <span class="">
+                <mat-form-field class="ps-3" *ngIf="showShoppingItems && amazonCategories['category_filter']">
                     <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select trend_select" >
                         <mat-option value="All">All Sub Categoriess</mat-option>
                         <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-
-       <!-- <span class="pl-3 m-right" *ngIf="showShoppingItems && amazonCategories['category_filter']" >
-            <select (change)="selectAmazonCategory($event)" class="categorie_select trend_select">
-                <option value="All" >All Categories</option>
-            <option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}"  >{{cat.key}}</option>
-            </select>
-        </span> -->
-
             </span>
+        </div>
+        <div class="d-block d-sm-none mlite_code" >
+            <div class="trendItems_mlite">
+                <h3 class="">Trending items</h3>
+                <span class="">
+                    <mat-form-field class="" *ngIf="showShoppingItems && amazonCategories['category_filter']">
+                        <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select" >
+                            <mat-option value="All">All Sub Categoriess</mat-option>
+                            <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+            </div>
         </div>
         <p class="points_note">Get <b>{{serviceSettings.offer_construct.amazon.reward}}X reward points</b> on every Smartbuy transaction</p>
         <div class="trend_items_carousel">
@@ -718,7 +779,7 @@
         <h3 class="d-inline">Brands in focus</h3> <span class="pl-3"><!--<a >View All</a>--></span>
     </div>
     <div>
-        <div class="trend_items_carousel">
+        <div class="trend_items_carousel mt-2 mt-sm-0">
             <owl-carousel-o [options]="brandOptions" class="partners_container">
                 <ng-template carouselSlide *ngFor="let brand of foryouBrands; let i = index">
                     <div>
