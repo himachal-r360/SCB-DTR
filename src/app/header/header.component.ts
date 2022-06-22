@@ -277,8 +277,6 @@ rd_site_url: any;shop_site_url;
     
     this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     
-    console.log(this.DOMAIN_SETTINGS);
-    
     this.menuOfferDropdown=this.serviceSettings.menuOfferDropdown;
     this.fp_popup_control = this.serviceSettings.home_page_banner;
     this.scrollMenu=this.serviceSettings.scrollMenu;

@@ -247,13 +247,13 @@
                         </div>
                     </a>
                 </div>
-                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
-                    <a (click)="redirectUrl('flipkart',0,'flipkart')">
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
+                    <a (click)="redirectUrl('imagine',0,'imagine')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/imagine.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
                         <div class="points_text">
-                            <b>Upto {{serviceSettings.offer_construct.flipkart.reward}}X</b> RP <br />
-                            <b>{{serviceSettings.offer_construct.flipkart.cashback}}%</b> CB
+                            <b>Upto {{serviceSettings.offer_construct.imagine.reward}}X</b> RP <br />
+                            <b>{{serviceSettings.offer_construct.imagine.cashback}}%</b> CB
                         </div>
                         </div>
                     </a>
@@ -292,24 +292,24 @@
                         </div>
                     </a>
                 </div>
-                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
-                    <a (click)="redirectUrl('jockey',0,'jockey')">
+                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+                      <a  (click)="clickUrl('compare-fly')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/flight.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_red_bg">
                         <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.jockey.reward}}X</b> RP <br/>
-                            <b>{{serviceSettings.offer_construct.jockey.cashback}}%</b> CB
+                            <b>{{serviceSettings.offer_construct.flight.reward}}X</b> RP <br/>
+                            <b>{{serviceSettings.offer_construct.flight.cashback}}%</b> CB
                         </div>
                         </div>
                     </a>
                 </div>
-                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
-                    <a (click)="redirectUrl('jockey',0,'jockey')">
+                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+                    <a  (click)="clickUrl('compare-stay')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/stay.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_red_bg">
                         <div class="points_text">
-                            <b>{{serviceSettings.offer_construct.jockey.reward}}X</b> RP <br/>
-                            <b>{{serviceSettings.offer_construct.jockey.cashback}}%</b> CB
+                            <b>{{serviceSettings.offer_construct.hotel.reward}}X</b> RP <br/>
+                            <b>{{serviceSettings.offer_construct.hotel.cashback}}%</b> CB
                         </div>
                         </div>
                     </a>
@@ -440,7 +440,7 @@
                 </div>
                 <ul class="nav nav-pills" id="pills-book" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="pills-flight-tab" data-toggle="pill" href="#pills-flight" role="tab" aria-controls="pills-flight" aria-selected="true">
+                        <a class="nav-link active" id="pills-flight-tab" data-bs-toggle="pill" href="#pills-flight" role="tab" aria-controls="pills-flight" aria-selected="true">
                             <div>
                                 <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/flight_icn.svg" alt=""></div>
                                 <p class="tab_name">Flights</p>
@@ -448,7 +448,7 @@
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-hotel-tab" data-toggle="pill" href="#pills-hotel" role="tab" aria-controls="pills-hotel" aria-selected="false">
+                        <a class="nav-link" id="pills-hotel-tab" data-bs-toggle="pill" href="#pills-hotel" role="tab" aria-controls="pills-hotel" aria-selected="false">
                             <div>
                                 <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/hotel_icn.svg" alt=""></div>
                                 <p class="tab_name">Stays</p>
@@ -456,7 +456,7 @@
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-bus-tab" data-toggle="pill" href="#pills-bus" role="tab" aria-controls="pills-bus" aria-selected="false">
+                        <a class="nav-link" id="pills-bus-tab" data-bs-toggle="pill" href="#pills-bus" role="tab" aria-controls="pills-bus" aria-selected="false">
                             <div>
                                 <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/bus_icn.svg" alt=""></div>
                                 <p class="tab_name">Bus</p>
@@ -464,7 +464,7 @@
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-train-tab" data-toggle="pill" href="#pills-train" role="tab" aria-controls="pills-train" aria-selected="false">
+                        <a class="nav-link" id="pills-train-tab" data-bs-toggle="pill" href="#pills-train" role="tab" aria-controls="pills-train" aria-selected="false">
                             <div>
                                 <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/train_icn.svg" alt=""></div>
                                 <p class="tab_name">Train</p>
@@ -500,12 +500,9 @@
             </h3>
             <span class="d-block d-sm-inline mt-2 mt-sm-0">
       <span class="pe-0 pe-sm-3" *ngIf="topDealCategory.length >0" >
-        <!-- <select (change)="selectDealCategory($event)" class="categorie_select">
-            <option value="All" >All Categories</option>
-            <option *ngFor="let cat of topDealCategory" value="{{cat.key}}"  >{{cat.key}}</option>
-        </select> -->
+    
         <mat-form-field class="">
-            <mat-select  (change)="selectDealCategory($event)" class="categorie_select">
+            <mat-select  (change)="selectDealCategory($event)" class="categorie_select"  [(value)]="modeselectDealCat" >
                 <mat-option value="All">All Categories</mat-option>
                 <mat-option *ngFor="let cat of topDealCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
             </mat-select>
@@ -514,24 +511,17 @@
 
             <!-- Sub Catogery Dropdown-->
             <span class="ps-3">
-     
-       <!-- <select (change)="selectDealSubCategory($event)" class="categorie_select" *ngIf="topDealSubCategory.length>0">
-         <option value="All" >All Sub Categories</option>
-         <option  *ngFor="let cat of topDealSubCategory" value="{{cat.key}}"  >{{cat.key}}</option>
-       </select> -->
+
         <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
-            <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select" >
+            <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
                 <mat-option value="All">All Sub Categoriess</mat-option>
                 <mat-option *ngFor="let cat of topDealSubCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
             </mat-select>
         </mat-form-field>
-       
-        <!-- <select (change)="selectDealSubCategory($event)" class="categorie_select" *ngIf="topDealSubCategory.length==0">
-            <option value="All" >All Sub Categories</option>
-       </select> -->
+
 
         <mat-form-field class="" *ngIf="topDealSubCategory.length==0">
-            <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select" >
+            <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select"  [(value)]="modeselectDealSubCat" >
                 <mat-option value="All">All Sub Categoriess</mat-option>
             </mat-select>
         </mat-form-field>
@@ -614,7 +604,7 @@
             <h3 class="d-inline">Trending items</h3>
             <span class="">
                 <mat-form-field class="ps-3" *ngIf="showShoppingItems && amazonCategories['category_filter']">
-                    <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select trend_select" >
+                    <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select trend_select"  [(value)]="modeselectTrending">
                         <mat-option value="All">All Sub Categoriess</mat-option>
                         <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
                     </mat-select>
@@ -626,7 +616,7 @@
                 <h3 class="">Trending items</h3>
                 <span class="">
                     <mat-form-field class="" *ngIf="showShoppingItems && amazonCategories['category_filter']">
-                        <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select" >
+                        <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select"  [(value)]="modeselectTrending">
                             <mat-option value="All">All Sub Categoriess</mat-option>
                             <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
                         </mat-select>
