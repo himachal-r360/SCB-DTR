@@ -321,9 +321,9 @@
                                 <a href="javascript:void(0)" (click)="resetFlightsFilter()">Reset</a>
                             </div>
                             <div class="widget-content" id="airline_list">
-                                <ul class="category-list clearfix mt-2" *ngFor="let airline of airlines ; let i = index ">
-                                    <li class="custom-check-box" >
-                                        <div class="custom-controls-stacked" >
+                                <ul class="category-list clearfix mt-2" >
+                                    <li class="custom-check-box" *ngFor="let airline of airlines ; let i = index ">
+                                        <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox" >
                                                 <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
@@ -332,8 +332,18 @@
                                             <p>&#8377;{{airline.price}}</p>
                                         </div>
                                     </li>
+                                    <!-- <li class="custom-check-box" >
+                                        <div class="custom-controls-stacked" >
+                                            <label class="custom-control material-checkbox" >
+                                                <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
+                                                <span class="material-control-indicator"></span>
+                                                <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
+                                            </label>
+                                            <p>&#8377;{{airline.price}}</p>
+                                        </div>
+                                    </li> -->
                                 </ul>
-                                <!-- <a href="javascript:void(0)" class="widget-content-more ml-20" >+2 more</a> -->
+                                <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()">+2 more</a>
                                 <a href="javascript:void(0)" class="widget-content-more ml-20" ></a>
                             </div>
                         </div>
@@ -361,9 +371,9 @@
                                 <a href="javascript:void(0)">Reset</a>
                             </div>
                             <div class="widget-content" id="layover_airport">
-                                <ul class="category-list clearfix mt-2"  *ngFor="let layover of layOverFilterArr ; let i = index ">
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked" >
+                                <ul class="category-list clearfix mt-2" >
+                                    <li class="custom-check-box"  *ngFor="let layover of layOverFilterArr ; let i = index ">
+                                        <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
                                                 <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
                                                 <span class="material-control-indicator"></span>
@@ -372,6 +382,16 @@
                                             <p>&#8377;{{layover.price}}</p>
                                         </div>
                                     </li>
+                                    <!-- <li class="custom-check-box" *ngIf="showMoreLayover">
+                                        <div class="custom-controls-stacked" >
+                                            <label class="custom-control material-checkbox">
+                                                <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
+                                                <span class="material-control-indicator"></span>
+                                                <span class="description">{{layover.arrivalAirport}}</span>
+                                            </label>
+                                            <p>&#8377;{{layover.price}}</p>
+                                        </div>
+                                    </li> -->
                                     <!-- <li class="custom-check-box">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
@@ -545,7 +565,6 @@
                         </div>
                         <!-- Listing -->
                         <div class="flight-listing-area">
-
                             <div class="flight-listing" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
                                 <div class="flight-listing-content">
                                     <div class="row">
@@ -577,6 +596,7 @@
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                                 </div>
                                             </div>
+                                            <div class="text-center" *ngIf="list.flights.length < 0">No flights found</div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="flight-listing-pri">
@@ -599,16 +619,16 @@
                                                             <div class="hover-popover-content">
                                                                 <div class="hover-popover-content-list">
                                                                     <p>Base Fare</p>
-                                                                    <p>&#8377;{{list.priceSummary[0].baseFare}}</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].baseFare|number: '.2'}}</p>
                                                                 </div>
                                                                 <div class="hover-popover-content-list">
-                                                                    <p>Base Fare</p>
-                                                                    <p>&#8377;{{list.priceSummary[0].baseFare}}</p>
+                                                                    <p>Charges</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].totalFare - list.priceSummary[0].baseFare |number: '.2'}}</p>
                                                                 </div>
                                                                 <hr class="m-0" />
                                                                 <div class="hover-popover-content-list popover-total">
                                                                     <p>Total</p>
-                                                                    <p>&#8377;{{list.priceSummary[0].totalFare}}</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].totalFare|number: '.2'}}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="hover-popover-footer">
@@ -743,10 +763,10 @@
                                                             </div>
                                                             <div class="flight-options-list-right">
                                                                 <div class="emi-options" *ngIf="item.totalFare > EMIAvailableLimit">
-                                                                    <p>EMI starts at &#8377; {{calculateEMI(item.totalFare)}} per month</p>
+                                                                    <p>EMI starts at &#8377; {{calculateEMI(item.totalFare)|number: '.2'}} per month</p>
                                                                 </div>
                                                                 <div class="flight-options-price d-flex align-items-center">
-                                                                    <p>&#8377;{{item.totalFare}}</p>
+                                                                    <p>&#8377;{{item.totalFare|number: '.2'}}</p>
                                                                     <span class="information-icon">
                                                                         <img src="assets/images/icons/info.png" class="ms-2" alt="">
                                                                         <div class="hover-popover">
@@ -756,16 +776,16 @@
                                                                             <div class="hover-popover-content">
                                                                                 <div class="hover-popover-content-list">
                                                                                     <p>Base Fare</p>
-                                                                                    <p>&#8377;{{item.baseFare}}</p>
+                                                                                    <p>&#8377;{{item.baseFare |number: '.2'}}</p>
                                                                                 </div>
                                                                                 <div class="hover-popover-content-list">
-                                                                                    <p>Base Fare</p>
-                                                                                    <p>&#8377;{{item.baseFare}}</p>
+                                                                                    <p>Charges</p>
+                                                                                    <p>&#8377;{{item.totalFare - item.baseFare |number: '.2'}}</p>
                                                                                 </div>
                                                                                 <hr class="m-0" />
                                                                                 <div class="hover-popover-content-list popover-total">
                                                                                     <p>Total</p>
-                                                                                    <p>&#8377;{{item.totalFare}}</p>
+                                                                                    <p>&#8377;{{item.totalFare|number: '.2'}}</p>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="hover-popover-footer">
@@ -775,7 +795,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="flight-options-book">
-                                                                    <a href="" class="button-style">Book</a>
+                                                                    <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1107,7 +1127,46 @@
 </section>
 
 
+        <!-- ------------------------------
+            >>> Modal bookingprocess 
+        ---------------------------------->
+        <div class="modal bookingprocess" id="bookingprocess">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">  
+                    <div class="modal-body ">
+                        <div class="bookingprocess-items">
+                            <div class="bookingprocess-title text-center">
+                                <h5>We are processing your booking. <br> Please wait...</h5>
+                            </div>
+                            <div class="bookingprocess-content">
+                                <div class="bookingprocess-flight">
+                                    <h6>{{queryFlightData.fromCity}}, India ({{queryFlightData.flightfrom}})</h6>
+                                    <p class="mt-10">{{queryFlightData.departure}} - {{queryFlightData.adults}} Adult, {{queryFlightData.flightclass}}</p>
+                                    <h6>{{queryFlightData.toCity}},India ({{queryFlightData.flightto}})</h6>
+                                </div>
+                                <div class="bookingprocess-processbar">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="max-width: 60%;">
+                                            <span class="title"> &nbsp; </span>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="refresh-text text-center">
+                                <p>Please don't click or refresh the page</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+
+<!-- loader -->
+
+<div class="loader-box" *ngIf="loader">
+    <div class="loader-round"></div>
+</div>
 
 
 

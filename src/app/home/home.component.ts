@@ -43,8 +43,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   disableParent: boolean = false;
   disablechildren: boolean = false;
   disableinfants: boolean = false;
-
   dateValidation: boolean = false;
+  continueSearchVal:any;
   // fromCityValidation = false;
   // toCityValidation = false;
   // departDateValidation = false;
@@ -104,6 +104,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     //this.getCityList();
     this.selectDate('DepartureDate');
+   
+    let continueSearchValLs:any= localStorage.getItem('continueSearch');
+    this.continueSearchVal =JSON.parse(continueSearchValLs)
+    
     
     $(document).click(function (e: any) {
       var containerLeft = $('.select-root-left');
@@ -252,6 +256,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
   }
+
+
   // isValidation:boolean=false;
   // flightSearchValidation() {
   //   debugger;
@@ -299,8 +305,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       let searchValue = this.flightData.value;
       
       let otherSearchValueObj={'fromAirportName':this.fromAirpotName,'toAirportName': this.toAirpotName,'toCity' :this.toCityName,'fromCity': this.fromCityName}
+      
       let searchValueAllobj=Object.assign(searchValue,otherSearchValueObj);
-      // this.continueSearchFlights.push(searchValueAllobj);
+      debugger;
+      let continueSearch:any=localStorage.getItem('continueSearch');
+      if(continueSearch==null){
+        this.continueSearchFlights=[];
+      }
+      //if(this.continueSearchFlights!=""){
+      this.continueSearchFlights=JSON.parse(continueSearch);
+      this.continueSearchFlights.push(searchValueAllobj);
+      //}
+      localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
       localStorage.setItem('toAirportName', this.toAirpotName);
@@ -322,6 +338,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }, (error) => { console.log(error) });
         
     }
+    console.log(localStorage.getItem('continueSearch'));
+    console.log(this.continueSearchFlights);
    
     //this.flightData.get('departure').setValue(this.departureDate)
     // this.sub = this._flightService.flightList(this.flightData.value).subscribe(
@@ -350,6 +368,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  continueSearch(param:any){
+    console.log(param,"param");
+    // let query:any = localStorage.getItem('searchVal');
+    let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+    this.router.navigateByUrl(url);
   }
 
   increaseAdult() {

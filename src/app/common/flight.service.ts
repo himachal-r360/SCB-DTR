@@ -12,6 +12,8 @@ export class FlightService {
   flightListDate:any;
   flightsIcon = "assets/Json/airlines.json";
   airportsNameList ="assets/Json/airports.json";
+ 
+  
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) { }
