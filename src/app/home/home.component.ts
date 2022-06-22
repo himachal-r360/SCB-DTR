@@ -178,7 +178,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         a.departureDate = start._d;
         a.departureDate = start._d;
         a.flightData.value.departure = start._d
-        console.log(a.flightData.value.departure , "date");
         a.dateValidation=false;
         
       }
@@ -281,7 +280,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   }
   // }
   flightSearch() {
-    debugger
     this.submitted = true;
     this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){

@@ -767,7 +767,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
-        debugger;
+        
         if(h<singleFlightList.length-1){
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             let layOverFilterObj={
@@ -800,13 +800,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   searchNonStop(val:any){
-    debugger
+    
     $(".flight-counts-list").removeClass("active");
     if(val=="no_stops"){
       $("#Flight_Stops .Stops-list[value=no_stops]").addClass("active")
       //this.FlightStopsFilterFlightData(val)
       this.popularFilterFlightData();
-      console.log(val);
       //$("[id*=All_Flights]").addClass("active");
       $('#non_stop_Upper_filter').addClass("active");
     }
@@ -866,7 +865,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   HideShowCompareToFly(i: number,fromCall:string) {
-    debugger;
+    
     $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
     var element = document.getElementById('CompareToFly_' + i);
     if (element?.classList.contains('flight-details-box-hide')) {
@@ -903,7 +902,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   hideFarebutton(i: number,fromCall:string)
   {
-    debugger;
+    
     $('.flight-details-box').addClass('flight-details-box-hide');
     if(fromCall=="fare-details"){
       $('#flight_list_'+i+' #hidefares_'+ i).addClass('d-none');
