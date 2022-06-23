@@ -795,7 +795,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="flight-options-book">
-                                                                    <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
+                                                                    <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary()">Book</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1140,9 +1140,9 @@
                             </div>
                             <div class="bookingprocess-content">
                                 <div class="bookingprocess-flight">
-                                    <h6>{{queryFlightData.fromCity}}, India ({{queryFlightData.flightfrom}})</h6>
-                                    <p class="mt-10">{{queryFlightData.departure}} - {{queryFlightData.adults}} Adult, {{queryFlightData.flightclass}}</p>
-                                    <h6>{{queryFlightData.toCity}},India ({{queryFlightData.flightto}})</h6>
+                                    <h6>{{queryFlightData.fromCity}},{{queryFlightData.fromContry}} ({{queryFlightData.flightfrom}})</h6>
+                                    <p class="mt-10">{{queryFlightData.departure | date:'dd.MM.yyyy'}} - <span>{{queryFlightData.adults}} Adult,</span> <span *ngIf="queryFlightData.child != '0'">{{queryFlightData.child}} Child,</span> <span *ngIf="queryFlightData.infants != '0'">{{queryFlightData.infants}} Infants,</span> {{queryFlightData.flightclass == "B" ? "Business":null || queryFlightData.flightclass == "E" ? "Economy":null || queryFlightData.flightclass == "F" ? "First":null  || queryFlightData.flightclass == "P" ? "Premium":null}}</p>
+                                    <h6>{{queryFlightData.toCity}},{{queryFlightData.toContry}} ({{queryFlightData.flightto}})</h6>
                                 </div>
                                 <div class="bookingprocess-processbar">
                                     <div class="progress">

@@ -45,6 +45,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   disableinfants: boolean = false;
   dateValidation: boolean = false;
   continueSearchVal:any;
+  fromContryName:any;
+  toContryName:any;
   // fromCityValidation = false;
   // toCityValidation = false;
   // departDateValidation = false;
@@ -104,7 +106,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     //this.getCityList();
     this.selectDate('DepartureDate');
-   
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     this.continueSearchVal =JSON.parse(continueSearchValLs)
     
@@ -204,6 +205,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       .getCityList(SearchCityName)
       .subscribe((res: any) => {
         this.cityList = res.hits.hits;
+        
       });
   }
 
@@ -241,6 +243,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.flightData.value.flightfrom = para1.id;
     this.fromAirpotName = para1.airport_name;
     this.fromCityName = para1.city;
+    this.fromContryName = para1.country;
+    
     localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
   }
@@ -253,6 +257,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.cityName = para2.city;
     this.toAirpotName = para2.airport_name;
     this.toCityName = para2.city;
+    this.toContryName = para2.country;
+    
     localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
   }
@@ -304,10 +310,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
       let searchValue = this.flightData.value;
       
-      let otherSearchValueObj={'fromAirportName':this.fromAirpotName,'toAirportName': this.toAirpotName,'toCity' :this.toCityName,'fromCity': this.fromCityName}
+      let otherSearchValueObj={'fromAirportName':this.fromAirpotName,'toAirportName': this.toAirpotName,'toCity' :this.toCityName,'fromCity': this.fromCityName ,'fromContry':this.fromContryName,'toContry':this.toContryName}
       
       let searchValueAllobj=Object.assign(searchValue,otherSearchValueObj);
-      debugger;
       let continueSearch:any=localStorage.getItem('continueSearch');
       if(continueSearch==null){
         this.continueSearchFlights=[];
@@ -338,8 +343,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }, (error) => { console.log(error) });
         
     }
-    console.log(localStorage.getItem('continueSearch'));
-    console.log(this.continueSearchFlights);
    
     //this.flightData.get('departure').setValue(this.departureDate)
     // this.sub = this._flightService.flightList(this.flightData.value).subscribe(
@@ -371,7 +374,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   continueSearch(param:any){
-    console.log(param,"param");
     // let query:any = localStorage.getItem('searchVal');
     let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
     this.router.navigateByUrl(url);
