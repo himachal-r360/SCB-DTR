@@ -753,7 +753,7 @@
                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
                     <a style="width:100%;" class="searchResults_a">
                         <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px"></div>
-                        <div style="width:60%;float:left">{{searchOption['name']}}</div>
+                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left">{{searchOption['name']}}</div>
                         <div class="compare-title" style="float: right;">Offers in {{searchOption.subcategory_1}}</div>
                     </a>
                 </li>
@@ -763,8 +763,8 @@
                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
                     <a style="width:100%;" class="searchResults_a">
                         <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px" class="mr-2"></div>
-                        <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
-                        <div style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['_source']['name']}}</div>
+                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
+                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['_source']['name']}}</div>
                         <div class="compare-title" style="float: right;" *ngIf="!searchOption['_source']['category']">Offers in {{searchOption['_source']['category']}}</div>
                     </a>
                 </li>
