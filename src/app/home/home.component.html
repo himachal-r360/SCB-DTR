@@ -394,7 +394,7 @@
         </div>
     </section>
        <!-- Continue Search -->
-       <!-- <section class="ContinueSearch-area mb-50">
+       <section class="ContinueSearch-area mb-50">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -404,7 +404,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <!-- <div class="col-md-3">
                     <a href="">
                         <div class="Continuesearch-items">
                             <div class="Continuesearch-items-text">
@@ -425,8 +425,8 @@
                             </div>
                         </div>
                     </a>
-                </div>
-                <div class="col-md-3">
+                </div> -->
+                <!-- <div class="col-md-3">
                     <a href="">
                         <div class="Continuesearch-items">
                             <div class="Continuesearch-items-text">
@@ -447,8 +447,8 @@
                             </div>
                         </div>
                     </a>
-                </div> 
-                <div class="col-md-3">
+                </div>  -->
+                <!-- <div class="col-md-3">
                     <a href="">
                         <div class="Continuesearch-items">
                             <div class="Continuesearch-items-text">
@@ -469,21 +469,21 @@
                             </div>
                         </div>
                     </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
+                </div> -->
+                <div class="col-md-3" *ngFor="let continue of continueSearchVal.slice().reverse(); let i = index">
+                    <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearch(continue)" >
+                        <div class="Continuesearch-items ">
                             <div class="Continuesearch-items-text">
                                 <div class="Continuesearch-name">
-                                    <h6>Chennai</h6>
-                                    <p>Wed, 10 Apr</p>
+                                    <h6>{{continue.fromCity}}</h6>
+                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
                                 </div>
                                 <div class="Continuesearch-image">
                                     <img src="./assets/images/icons/next-active.png" alt="">
                                 </div>
                                 <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
+                                    <h6>{{continue.toCity}}</h6>
+                                    <!-- <p>{{continue.arrival|date:"EEE ,dd MMM"}}</p> -->
                                 </div>
                             </div>
                             <div class="Continuesearch-items-actions">
@@ -494,9 +494,14 @@
                 </div> 
             </div>
         </div>
-    </section> -->
+    </section>
+    
 </main>
 
-<h3 class="text-center" *ngIf="loader">Loading...</h3>
+<!-- <h3 class="text-center" *ngIf="loader">Loading...</h3> -->
+
+<div class="loader-box" *ngIf="loader">
+    <div class="loader-round"></div>
+</div>
 
          
