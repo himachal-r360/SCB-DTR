@@ -41,7 +41,6 @@ export class AppConfigService {
         this.domainName='SMARTBUY';
 	break;
 	}
-  console.log(this.domainName);
   this.endpoint = environment.API_URL[this.domainName];
    }
 

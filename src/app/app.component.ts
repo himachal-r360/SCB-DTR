@@ -99,39 +99,37 @@ export class AppComponent implements OnInit {
 	this.assetPath="diners/";
          this.domainPath="diners/";
         this.domainName='DINERS';
-        require("style-loader!src/assets/css/style.css");
+        //require("style-loader!src/assets/css/style.css");
 	break;
 	case ('infinia'):
 	this.assetPath="infinia/";
         this.domainPath="infinia/";
         this.domainName='INFINIA';
-        require("style-loader!src/assets/css/style.css");
+       // require("style-loader!src/assets/css/style.css");
 	break;
 	case ('regalia'):
 	this.assetPath="regalia/";
         this.domainPath="regalia/";
         this.domainName='REGALIA';
-         require("style-loader!src/assets/css/style.css");
+        // require("style-loader!src/assets/css/style.css");
 	break;
 	case ('corporate'):
 	this.assetPath="corporate/";
         this.domainPath="corporate/";
         this.domainName='CORPORATE';
-         require("style-loader!src/assets/css/style.css");
+        // require("style-loader!src/assets/css/style.css");
 	break;
 	case ('business'):
 	this.assetPath="business/";
         this.domainPath="business/";
         this.domainName='BUSINESS';
-         require("style-loader!src/assets/css/style.css");
+        // require("style-loader!src/assets/css/style.css");
 	break;
 	default:
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
-	 require("style-loader!../assets/css/style.css");
-	
-	 console.log('ddd');    
+	// require("style-loader!../assets/css/style.css");
 	break;
 	}  
 

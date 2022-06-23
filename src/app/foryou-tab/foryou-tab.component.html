@@ -502,7 +502,7 @@
       <span class="pe-0 pe-sm-3" *ngIf="topDealCategory.length >0" >
     
         <mat-form-field class="">
-            <mat-select  (change)="selectDealCategory($event)" class="categorie_select"  [(value)]="modeselectDealCat" >
+            <mat-select  (selectionChange) ="selectDealCategory($event)" class="categorie_select"  [(value)]="modeselectDealCat" >
                 <mat-option value="All">All Categories</mat-option>
                 <mat-option *ngFor="let cat of topDealCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
             </mat-select>
@@ -513,7 +513,7 @@
             <span class="ps-3">
 
         <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
-            <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
+            <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
                 <mat-option value="All">All Sub Categoriess</mat-option>
                 <mat-option *ngFor="let cat of topDealSubCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
             </mat-select>
@@ -521,7 +521,7 @@
 
 
         <mat-form-field class="" *ngIf="topDealSubCategory.length==0">
-            <mat-select  (change)="selectDealSubCategory($event)" class="categorie_select"  [(value)]="modeselectDealSubCat" >
+            <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select"  [(value)]="modeselectDealSubCat" >
                 <mat-option value="All">All Sub Categoriess</mat-option>
             </mat-select>
         </mat-form-field>
@@ -604,7 +604,7 @@
             <h3 class="d-inline">Trending items</h3>
             <span class="">
                 <mat-form-field class="ps-3" *ngIf="showShoppingItems && amazonCategories['category_filter']">
-                    <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select trend_select"  [(value)]="modeselectTrending">
+                    <mat-select  (selectionChange) ="selectAmazonCategory($event)" class="categorie_select trend_select"  [(value)]="modeselectTrending">
                         <mat-option value="All">All Sub Categoriess</mat-option>
                         <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
                     </mat-select>
@@ -616,7 +616,7 @@
                 <h3 class="">Trending items</h3>
                 <span class="">
                     <mat-form-field class="" *ngIf="showShoppingItems && amazonCategories['category_filter']">
-                        <mat-select  (change)="selectAmazonCategory($event)" class="categorie_select"  [(value)]="modeselectTrending">
+                        <mat-select  (selectionChange) ="selectAmazonCategory($event)" class="categorie_select"  [(value)]="modeselectTrending">
                             <mat-option value="All">All Sub Categoriess</mat-option>
                             <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
                         </mat-select>
