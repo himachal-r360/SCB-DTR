@@ -40,7 +40,6 @@ export const PICK_FORMATS = {
   selector: 'app-travel-search',
   templateUrl: './travel-search.component.html',
   styleUrls: ['./travel-search.component.scss'],
- providers: []
 })
 export class TravelSearchComponent implements OnInit {
         @Input() searchDisplayForm;

@@ -14,7 +14,6 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
 ==================================================*/
 
 
-
 /*==========================================
     :: Margin
 ==========================================*/
@@ -1908,6 +1907,7 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     outline: none;
     list-style: none;
     word-wrap: break-word;
+    line-height: 20px;
 }
 html, body{
     background-color: #f6faff;
@@ -1917,8 +1917,14 @@ html, body{
 body {
     font-family: 'opensans-regular';
     background-color: #f7faff;
-      overflow-x: hidden;
-      margin-top: 5em;
+    overflow-x: hidden;
+    margin-top: 5em;
+}
+
+app-root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 p {
@@ -4028,10 +4034,11 @@ input::-webkit-inner-spin-button {
     top: 0;
     height: 100%;
     background: #F2F2F2 !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) ;
     border-radius: 4px;
     border-top: none;
     border-bottom: none;
+    border: none;
 }
 .owl-prev {
 	left: -1px;
@@ -5699,22 +5706,7 @@ button:focus, button:active {
 	 backdrop-filter: blur(5px);
 }
  
- /* width */
- ::-webkit-scrollbar {
-	 width: 5px;
-}
-/* Track */
- ::-webkit-scrollbar-track {
-	 background: #f1f1f1;
-}
-/* Handle */
- ::-webkit-scrollbar-thumb {
-	 background: #888;
-}
-/* Handle on hover */
- ::-webkit-scrollbar-thumb:hover {
-	 background: #555;
-}
+ 
  .imptop {
 	 margin-top: 35px;
 }
@@ -6338,7 +6330,7 @@ button:focus, button:active {
  .mobileDiscalimer-container .container .modal-footer .btn-primary {
 	 color: #fff !important;
 	 font-weight: 700;
-	 font-family: 'opensans-bold';
+	 font-family: 'opensans-medium';
 }
  .mobileDiscalimer-container .container .modal-footer .btn-primary:hover {
 	 color: #fff !important;
