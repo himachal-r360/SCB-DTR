@@ -24,7 +24,9 @@ declare var $: any;
   styleUrls: ['./foryou-tab.component.scss']
 })
 export class ForyouTabComponent implements OnInit {
-
+public modeselectDealCat = 'All';
+public modeselectDealSubCat= 'All';
+public modeselectTrending= 'All';
   date: { year: number, month: number };
   serviceSettings: any;
   navigation = 'arrows';
@@ -512,7 +514,7 @@ export class ForyouTabComponent implements OnInit {
       this.redirectPopup = 2;
       this.redirectPopupUrl = environment.ANGULAR_SITE_URL + path;
     } else {
-      this.router.navigate([this.sg['domainPath'] + path]);
+     this.document.location.href = environment.ANGULAR_SITE_URL + path;
     }
   }
   initiateCards() {
@@ -544,14 +546,14 @@ export class ForyouTabComponent implements OnInit {
   }
 
   selectedCard(e) {
-    this.selectedCardDetails = e.target.value;
+    this.selectedCardDetails = e.value;
     this.checkAvailablePointsforSavedCard();
   }
 
   selectAmazonCategory(e) {
     this.showProductList = false;
     this.showProductListLoader = true;
-    var getShoopingParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: e.target.value })) };
+    var getShoopingParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: e.value })) };
     this.rest.getShoopingProducts(JSON.stringify(getShoopingParam)).subscribe(result => {
       if (result.status == 'success') {
         this.showProductList = true;
@@ -569,8 +571,10 @@ export class ForyouTabComponent implements OnInit {
     this.showDealList = false;
     this.showDealListLoader = true;
     this.topDealSubCategory=[];
-     this.selectedDealCategory=e.target.value;
-    var getDealParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: e.target.value,sub_category:'All' })) };
+     this.selectedDealCategory=e.value;
+     this.modeselectDealCat = this.selectedDealCategory;
+     
+    var getDealParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: e.value,sub_category:'All' })) };
     this.rest.getDeals(JSON.stringify(getDealParam)).subscribe(result => {
     
     
@@ -597,7 +601,8 @@ export class ForyouTabComponent implements OnInit {
   selectDealSubCategory(e) {
     this.showDealList = false;
     this.showDealListLoader = true;
-    var getDealParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'],sub_category: e.target.value , category: this.selectedDealCategory })) };
+      this.modeselectDealSubCat = e.value;
+    var getDealParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'],sub_category: e.value , category: this.selectedDealCategory })) };
     this.rest.getDeals(JSON.stringify(getDealParam)).subscribe(result => {
       if (result.status == 'success') {
         this.showDealList = true;

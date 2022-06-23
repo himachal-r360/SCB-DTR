@@ -154,7 +154,7 @@ $(document).ready(function($) {
     ---------------------------------------------------------------*/ 
     $(window).ready(function(){
 		// loader JS Start
-		$('.loader-box').fadeOut();
+		// $('.loader-box').fadeOut();
 		// loader JS End 
 	});
 

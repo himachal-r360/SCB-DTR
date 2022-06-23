@@ -47,6 +47,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   flightTimingfrom: any;
   flightTimingto: any;
   viewFare = false;
+  showMoreAirline = false;
+  showLessAirline = true;
+  showLessLayover = true;
+  showMoreLayover = false;
 
   flightListMod: any;
   RefundableFaresCount: number = 0;
@@ -84,12 +88,17 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   flightIcons:any;
   airportsNameJson:any;
   layOverFilterArr:any;
+  queryFlightData:any;
 
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, )  { }
 
   ngOnInit(): void {
+    this.loader = true;
     this.route.queryParams
     .subscribe((params:any) => {
+      console.log(params);
+      this.queryFlightData = params;
+      
       localStorage.setItem('searchVal', JSON.stringify(params));
     }
   );
@@ -199,6 +208,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       .getCityList(this.SearchCityName)
       .subscribe((res: any) => {
         this.cityList = res.hits.hits;
+        
       });
   }
 
@@ -222,6 +232,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
+  showmoreAirline(){
+    this.showLessAirline = false
+    this.showMoreAirline = true;
+  }
 
   increaseAdult() {
     if (parseInt(this.flightDataModify.value.adults) < 9) {
@@ -442,6 +456,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
+  
     let updatedflightList = [];
     let isfilterRefundableFares = false;
     let isfilterNonStop = false;
@@ -544,6 +559,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
             //Flight Timing Filter
             singleFlightTiming = singleFlightList.filter(function (e: any,indx :number) {
+              
               //0_6
               // if (filterFlightTimingval == "0_6" && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
               //   return e;
@@ -586,6 +602,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
             let singleFlightStops = [];
             //Flight Stops Filter
             singleFlightStops = singleFlightList.filter(function (e: any) {
+              
               //0 - no_stops
               if (filterFlightStopsval == "no_stops" && e.stops == 0) {
                 return e;
@@ -767,7 +784,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
-        debugger;
+        
         if(h<singleFlightList.length-1){
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             let layOverFilterObj={
@@ -800,13 +817,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   searchNonStop(val:any){
-    debugger
+    
     $(".flight-counts-list").removeClass("active");
     if(val=="no_stops"){
       $("#Flight_Stops .Stops-list[value=no_stops]").addClass("active")
       //this.FlightStopsFilterFlightData(val)
       this.popularFilterFlightData();
-      console.log(val);
       //$("[id*=All_Flights]").addClass("active");
       $('#non_stop_Upper_filter').addClass("active");
     }
@@ -820,6 +836,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   flightSearch() {
+    this.loader = true; 
     this.searchData = localStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
     if (
@@ -841,6 +858,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.flightDataModify.value.departure = searchObj.departure;
     }
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
+     this.loader = false
       this.flightList = res.response.onwardFlights;
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
@@ -861,12 +879,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    localStorage.clear();
+    //localStorage.clear();
     this.sub?.unsubscribe();
   }
 
   HideShowCompareToFly(i: number,fromCall:string) {
-    debugger;
+    
     $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
     var element = document.getElementById('CompareToFly_' + i);
     if (element?.classList.contains('flight-details-box-hide')) {
@@ -903,7 +921,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   hideFarebutton(i: number,fromCall:string)
   {
-    debugger;
+    
     $('.flight-details-box').addClass('flight-details-box-hide');
     if(fromCall=="fare-details"){
       $('#flight_list_'+i+' #hidefares_'+ i).addClass('d-none');

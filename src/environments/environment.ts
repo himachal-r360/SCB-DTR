@@ -20,7 +20,7 @@ API_URL:{
  'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
   },
     MAIN_SITE_URL:'https://smartbuydev.reward360.in/',
- SUB_SITE_URL:'https://smartbuydev.reward360.in/',
+   SUB_SITE_URL:'https://smartbuydev.reward360.in/',
     ANGULAR_SITE_URL:'https://smartbuydev.reward360.in/lite/',
    enableEncryptionRequestResponse:false,
   'IS_MAIN':0,

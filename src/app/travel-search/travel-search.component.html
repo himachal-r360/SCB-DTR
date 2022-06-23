@@ -489,7 +489,7 @@
                                             </ul>
                                             <div class="roomsection" *ngFor="let room of hotelRooms['controls']; let i = index">
                                                 <div class="room_no"><small>Room  {{i + 1}}</small></div>
-                                                <div >
+                                                  <div [formGroup]="room">
                                                     <ul>
                                                         <li>
                                                             <a href="javascript:void(0);">
@@ -1144,7 +1144,7 @@
                                     </ul>
                                     <div class="roomsection" *ngFor="let room of hotelRooms['controls']; let i = index">
                                         <div class="room_no"><small>Room  {{i + 1}}</small></div>
-                                        <div>
+                                        <div [formGroup]="room">
                                             <ul>
                                                 <li>
                                                     <a href="javascript:void(0);">
@@ -1354,12 +1354,7 @@
                                 <label class="d-block">
                                      <span>Select Class</span>
                                 </label>
-                                <!-- <select name="flightClass" class="categorie_select w-100" formControlName="flightClass" (ngModelChange)="selectClass($event)">
-                       <option value="E" selected>Economy</option>
-                       <option value="B">Business</option>
-                       <option value="F">First Class</option>
-                       <option value="P">Premium Economy</option>
-                    </select> -->
+              
 
                                 <mat-form-field class="fligh-select-mat-field w-100">
                                     <mat-select name="flightClass" class="categorie_select w-100" formControlName="flightClass" (ngModelChange)="selectClass($event)">
@@ -1711,6 +1706,28 @@
                             </div>
                         </div>
                     </div>
+                    
+                    
+                                    <div class="travel_select_m">
+                            <div class="opt_box">
+                                <label class="d-block">
+                                     <span>Quota</span>
+                                </label>
+              
+
+                                <mat-form-field class="fligh-select-mat-field w-100">
+                                    <mat-select name="trainQuota" id="trainQuota" class="categorie_select w-100" formControlName="trainQuota"  [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
+                                        <mat-option value="E" selected>Economy</mat-option>
+                                        <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}} <span class="airPortName">{{quota.key}}</span></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+
+                               
+                            </div>
+                        </div>
+                    
+               
                     <div class="city-popup from-city-pop" *ngIf="showMliteTrainFromForm">
                         <i class="hide-w" (click)="closeSearchBox()"><img src="{{cdnUrl}}images/icons/arrow-back.svg"></i>
                         <span class="pl-3"><label>

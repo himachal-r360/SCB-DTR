@@ -281,7 +281,7 @@
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdown-user" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="" *ngIf="customerLogin==false">Hi, Guest</span>
                                         <span class="custName" *ngIf="customerLogin==true">Hi {{ (customer_full_name.length>20)? (customer_full_name | slice:0:20)+'..':(customer_full_name) }} </span>
-                                        <i class="fa fa-angle-down pl-2" aria-hidden="true"></i>
+                                        <i class="fa fa-angle-down pl-10" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu user-menu myaccount-drop" aria-labelledby="dropdown-user">
                                         <div class="">
@@ -631,7 +631,7 @@
 </button>
 </a>
 </div>
-<div class="logo pl-2">
+<div class="logo pl-10">
 
     <span *ngIf="is_main==1">
 <a  href="https://www.hdfcbank.com/" target="_blank"  >
@@ -1198,6 +1198,206 @@
 
 </div>
 <!--New Header ends-->
+
+
+<!-- Push Enable Notification Mlite Modal -->
+<div class="modal fade " [ngClass]="customerLogin==false ? 'push_noti_non' : 'push_noti_m'" id="pushNotiEnable" tabindex="-1" role="dialog" aria-labelledby="pushNotiEnableLabel" aria-hidden="true" *ngIf="enablePushBox && serviceSettings.notifications==1">
+    <div class="modal-dialog" role="document" *ngIf="enableQuesBox">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pushNotiEnableLabel">Push Notification Box </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p class="ques">Why you should enabled your push on notification?</p>
+                <p class="noti_text">This will give you all the notifications of Special Offers, Discount, Newly launch products, services, and daily updates of deals and offers, etc.</p>
+            </div>
+            <div class="border-0 d-block modal-footer pt-0">
+                <p class="text-center mb-0">
+                    <i class="fa fa-bell noti_icon" aria-hidden="true"></i>
+                    <span class="enb_text" data-bs-dismiss="modal" data-bs-toggle="modal" (click)="enablePushBtn()" id="enable-notification">Enable Notification</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Push Notification Mlite Modal  -->
+    <div class="modal-dialog web" role="document" *ngIf="enablePushContentBox">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pushNotifiModalLabel">Special offers for you</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body" *ngIf="deviceService.isMobile()">
+                <div class="tab-content" id="pills-tabContent" [innerHtml]="contentHtml"></div>
+                <div class="modal-footer d-block">
+                    <div class="row">
+                        <div class="">
+                        </div>
+                        <!-- <div class="col-12 text-center">
+                            <p class="mb-0" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#pushNotification_disable"><i class="fa fa-bell-slash noti_icon_pref icon_green" aria-hidden="true" (click)="disPushBtnmob()"></i><br><span class="noti_pre">Disable Notification</span></p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Push pushNotification_preference Mlite Modal  -->
+    <div class="modal fade push_noti_m" id="pushNotification_preference" tabindex="-1" role="dialog" aria-labelledby="pushNotification_preferenceLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pushNotification_preferenceLabel">Select your Preferences</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form id="preferences" name="preferences" autocomplete="off">
+                            <ul class="clearfix list_check_items">
+                                <li><input type="checkbox" class="magic-checkbox" id="flight" name="flight"><label for="flight">Flights</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="amazon" name="amazon"><label for="amazon">Amazon</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="hotels" name="hotels"><label for="hotels">Hotels</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="flipkart" name="flipkart"><label for="flipkart">Flipkart</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="red_bus" name="red_bus"><label for="red_bus">Redbus</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="train" name="train"><label for="train">Train</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="offers_deals" name="offers_deals"><label for="offers_deals">Offers &amp; Deals</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="insta_voucher" name="insta_voucher"><label for="insta_voucher">Insta voucher</label></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer d-block text-center">
+                    <button type="button" class="btn btn_pref_save " id="submit_preferences">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Push pushNotification_disable Mlite Modal  -->
+    <div class="modal-dialog" role="document" *ngIf="pushNotification_disable">
+        <div class="modal-content">
+            <div class="modal-header">
+                   </div>
+            <div class="modal-body">
+                <p class="ques">Are you sure you want to disable push on notifications?</p>
+                <p class="noti_text">You will be missing out on realtime updates. You will still have access to all notifications when you open the Notification Inbox.</p>
+            </div>
+            <div class="modal-footer d-block text-center clearfix" style="background-color: #084C8F;"><button class="btn btn_pref_save " id="disable-notify" data-bs-dismiss="modal" (click)="disPushBtn()">Yes, Disable Notification</button></div>
+        </div>
+    </div>
+</div>
+<!-- jay new ui  -->
+<div class="modal fade push_noti_m_new" id="pushNotiEnable" tabindex="-1" role="dialog" aria-labelledby="pushNotiEnableLabel" aria-hidden="true" *ngIf="enablePushBox && serviceSettings.notifications==1">
+    <div class="modal-dialog" role="document" *ngIf="enableQuesBoxNew">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pushNotiEnableLabel">Push Notification Box </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p class="ques">Why you should enabled your push on notification?</p>
+                <p class="noti_text">This will give you all the notifications of Special Offers, Discount, Newly launch products, services, and daily updates of deals and offers, etc.</p>
+            </div>
+            <div class="border-0 d-block modal-footer pt-0">
+                <p class="text-center mb-0">
+                    <i class="fa fa-bell noti_icon" aria-hidden="true"></i>
+                    <span class="enb_text" data-bs-dismiss="modal" data-bs-toggle="modal" (click)="enablePushBtn()" id="enable-notification">Enable Notification</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Push Notification Mlite Modal  -->
+    <div class="modal-dialog mob" role="document" *ngIf="enablePushContentBox">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pushNotifiModalLabel">Special offers for you</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="deviceService.isMobile()">
+                <div class="tab-content" id="pills-tabContent" [innerHtml]="contentHtml"></div>
+                <div class="modal-footer d-block">
+                    <div class="row">
+                        <div class="">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Push pushNotification_preference Mlite Modal  -->
+    <div class="modal fade push_noti_m_new" id="pushNotification_preference" tabindex="-1" role="dialog" aria-labelledby="pushNotification_preferenceLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pushNotification_preferenceLabel">Select your Preferences</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form id="preferences" name="preferences" autocomplete="off">
+                            <ul class="clearfix list_check_items">
+                                <li><input type="checkbox" class="magic-checkbox" id="flight" name="flight"><label for="flight">Flights</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="amazon" name="amazon"><label for="amazon">Amazon</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="hotels" name="hotels"><label for="hotels">Hotels</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="flipkart" name="flipkart"><label for="flipkart">Flipkart</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="red_bus" name="red_bus"><label for="red_bus">Redbus</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="train" name="train"><label for="train">Train</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="offers_deals" name="offers_deals"><label for="offers_deals">Offers &amp; Deals</label></li>
+                                <li><input type="checkbox" class="magic-checkbox" id="insta_voucher" name="insta_voucher"><label for="insta_voucher">Insta voucher</label></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer d-block text-center">
+                    <button type="button" class="btn btn_pref_save " id="submit_preferences">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Push pushNotification_disable Mlite Modal  -->
+    <div class="modal-dialog" role="document" *ngIf="pushNotification_disable">
+        <div class="modal-content">
+            <div class="modal-header">
+                    </div>
+            <div class="modal-body">
+                <p class="ques">Are you sure you want to disable push on notifications?</p>
+                <p class="noti_text">You will be missing out on realtime updates. You will still have access to all notifications when you open the Notification Inbox.</p>
+            </div>
+            <div class="modal-footer d-block text-center clearfix" style="background-color: #084C8F;"><button class="btn btn_pref_save " id="disable-notify" data-bs-dismiss="modal" (click)="disPushBtn()">Yes, Disable Notification</button></div>
+        </div>
+    </div>
+</div>
+
 
 <app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"
     [redirectPopupHeader]="redirectPopupHeader" [redirectPopupImpmessage]="redirectPopupImpmessage" [redirectPopupMessage]="redirectPopupMessage"></app-redirect-popup>

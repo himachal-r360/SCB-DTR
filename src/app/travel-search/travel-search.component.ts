@@ -465,11 +465,11 @@ export class TravelSearchComponent implements OnInit {
     }
    quotaSelect(event,mobile){
     $('.check-available').hide();
-    if(mobile){
-      this.quota =  event.tab.textLabel;
-    }else{
+    //if(mobile){
+     // this.quota =  event.tab.textLabel;
+    //}else{
       this.quota = this.selectedQuota;
-    }
+   // }
   }
 
     // convenience getters for easy access to form fields
@@ -1541,14 +1541,9 @@ check_traveller_count(type) {
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
         return;
         }
+         this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
         
         
-        
-          if(this.serviceSettings.busNew==1)
-        this.router.navigate([this.sg['domainPath']+'/bus/list/'], { queryParams: this.searchArray  });
-         else
-       this.router.navigate([this.sg['domainPath']+'/bus/search/'], { queryParams: this.searchArray  });
-        
         break; 
         } 
         case 'train': { 
@@ -1629,11 +1624,10 @@ check_traveller_count(type) {
         return;
         }
         
+         this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
         
-         if(this.serviceSettings.trainNew==1)
-         this.router.navigate([this.sg['domainPath']+'/trains/list/'], { queryParams: this.searchArray  });
-         else
-       this.router.navigate([this.sg['domainPath']+'/train-list/'], { queryParams: this.searchArray  });
+     
+       
         break; 
         } 
     } 
