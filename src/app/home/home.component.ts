@@ -107,8 +107,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     //this.getCityList();
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
-    this.continueSearchVal =JSON.parse(continueSearchValLs)
-    
+    debugger;
+    if(continueSearchValLs!=null){
+      this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
+    }
     
     $(document).click(function (e: any) {
       var containerLeft = $('.select-root-left');
@@ -317,10 +319,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
-      //if(this.continueSearchFlights!=""){
-      this.continueSearchFlights=JSON.parse(continueSearch);
+      debugger;
+      if(continueSearch!=null && continueSearch.length>0){
+        this.continueSearchFlights=JSON.parse(continueSearch);
+      }
       this.continueSearchFlights.push(searchValueAllobj);
-      //}
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
