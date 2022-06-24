@@ -4,6 +4,7 @@ import { FlightListComponent } from './flight-list/flight-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { DurationTimePipe } from '../pipes/duration-time.pipe';
+import { FlightDetailComponent } from './flight-detail/flight-detail.component';
 
 
 
@@ -12,13 +13,17 @@ import { DurationTimePipe } from '../pipes/duration-time.pipe';
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent
+  },
+  {
+    path:"flight-details" ,component:FlightDetailComponent
   }
 ];
 
 @NgModule({
   declarations: [
     FlightListComponent,
-    DurationTimePipe
+    DurationTimePipe,
+    FlightDetailComponent
     
     
   ],

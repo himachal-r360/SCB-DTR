@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ObjectUnsubscribedError, Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
+import {Location} from '@angular/common'; 
+
 declare var $: any;
 
 @Component({
@@ -89,19 +91,15 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   airportsNameJson:any;
   layOverFilterArr:any;
   queryFlightData:any;
+  fromContryName:any;
+  toContryName:any;
 
-  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, )  { }
+
+  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute,private router:Router , private location:Location)  { }
 
   ngOnInit(): void {
     this.loader = true;
-    this.route.queryParams
-    .subscribe((params:any) => {
-      console.log(params);
-      this.queryFlightData = params;
-      
-      localStorage.setItem('searchVal', JSON.stringify(params));
-    }
-  );
+    this.getQueryParamData(null);
     this.flightList = this._flightService.flightListData;
 
     $(document).click(function (e: any) {
@@ -136,6 +134,25 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setSearchFilterData();
     this.flightSearch();
   }
+
+  getQueryParamData(paramObj:any){
+    if(paramObj!=null && paramObj!=undefined){
+      this.queryFlightData = paramObj;
+      this.fromContryName = this.queryFlightData.fromContry;
+      this.toContryName = this.queryFlightData.toContry;
+      localStorage.setItem('searchVal', JSON.stringify(paramObj));
+    }
+    else{
+      this.route.queryParams
+      .subscribe((params:any) => {
+        this.queryFlightData = params;
+        this.fromContryName = this.queryFlightData.fromContry;
+        this.toContryName = this.queryFlightData.toContry;
+        localStorage.setItem('searchVal', JSON.stringify(params));
+      });
+    }
+  }
+
   flightDetailsTab(obj:any,value:string,indx:number)
   {
     var dashboard_menu_type = value;
@@ -166,6 +183,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toAirpotName = searchObj.toAirportName;//localStorage.getItem('toAirportName');
     this.flightTimingfrom = searchObj.flightfrom
     this.flightTimingto = searchObj.flightto
+    
     // this.departureDate = this.depart;
 
     this.flightDataModify.value.flightfrom = searchObj.flightfrom;
@@ -392,6 +410,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.flightDataModify.value.flightfrom = para1.id;
     this.fromAirpotName = para1.airport_name;
     this.fromCityName = para1.city;
+    this.fromContryName = para1.country;
+
     // localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
   }
@@ -401,6 +421,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cityName = para2.city;
     this.toAirpotName = para2.airport_name;
     this.toCityName = para2.city;
+    this.toContryName = para2.country;
     // localStorage.setItem('toCity', this.toCityName);
     this.toFlightList = false;
   }
@@ -857,6 +878,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {
       this.flightDataModify.value.departure = searchObj.departure;
     }
+
+    let searchValue = this.flightDataModify.value;
+      
+    let otherSearchValueObj={'fromAirportName':this.fromAirpotName,'toAirportName': this.toAirpotName,'toCity' :this.toCityName,'fromCity': this.fromCityName ,'fromContry':this.fromContryName,'toContry':this.toContryName}
+    
+    let searchValueAllobj=Object.assign(searchValue,otherSearchValueObj);
+    localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
      this.loader = false
       this.flightList = res.response.onwardFlights;
@@ -872,8 +900,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#max_price').val(this.maxPrice);
         this.sliderRange(this,this.minPrice,this.maxPrice);
       }
+      let query:any = localStorage.getItem('searchVal');
+      let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
       this.getAirlinelist();
       this.popularFilterFlightData()
+      
+      this.location.replaceState(url);
+      this.getQueryParamData(JSON.parse(query));
 
     }, (error) => { console.log(error) });
   }
@@ -954,6 +987,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 //     }
 //   }
 
+ConvertObjToQueryString(obj:any)
+{
+  
+  var str = [];
+  for (var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+}
 
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
@@ -1175,5 +1218,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     return dateHour;
   }
 
+  bookingSummary(){
+ 
+
+      // this.router.navigate(['flight-details']);
+      
+ 
+  }
 
 }
