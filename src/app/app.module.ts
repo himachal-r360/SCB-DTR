@@ -47,7 +47,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports:[SearchComponent],
    providers: [

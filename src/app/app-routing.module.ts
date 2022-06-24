@@ -3,12 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { FlightListComponent } from './flight/flight-list/flight-list.component';
 import { HomeComponent } from './home/home.component';
 import { ForyouTabComponent } from './foryou-tab/foryou-tab.component';
+import {PartnersComponent} from './partners/partners.component'
 const routes: Routes = [
   {
     path:"" , component:HomeComponent
   },
   {
     path:"home" , component:HomeComponent 
+  },
+  {
+    path:"partners" , component:PartnersComponent 
   },
   {
     path: 'flights',
