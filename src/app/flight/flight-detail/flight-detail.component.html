@@ -63,30 +63,31 @@
                                     </h6>
                                     <p> Monday, Jul 11  | 1 Stop | 6h 10m</p>
                                 </div>
-                                <div class="booking-inner-title-right">
-                                    <p class="non-refundable">NON-REFUNDABLE</p>
+                                <div class="booking-inner-title-right" >
+                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
+                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
                                 </div>
                             </div>
 
-
-                            <div class="Flight-One">
+                            <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
+                                
                                 <div class="Booking-Flight-name">
                                     <div class="Booking-Flight-name-left">
-                                        <img src="./assets/images/flights/flight-1.png" width="22px" alt="">
-                                        <span class="fw_7">IndiGo</span>
-                                        <span class="opacity_05">6E-956</span>
+                                        <img src="{{this.flightIcons[flights.airline].logo}}" width="22px" alt="">
+                                        <span class="fw_7">{{flights.airlineName}}</span>
+                                        <span class="opacity_05">{{flights.airline}}-{{flights.flightNumber}}</span>
                                     </div>
                                     <div class="Booking-Flight-name-right">
                                         <p>Economy > <span class="text-black me-1">SAVER</span> <img src="./assets/images/icons/info.png" width="10px" alt=""></p>
                                     </div>
                                 </div>
                                 <div class="Booking-Flight-time">
-                                    <h6>08:05</h6>
+                                    <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
                                     <span class="round round-line"></span>
                                     <div class="Flight-time-name">
-                                        <h6>Mumbai</h6>
-                                        <p>Chhatrapati Shivaji International Airport T1, Vile Parle, Mumbai</p>
-                                        <span class="round-time mt-20 d-inline-block">1h 40m </span>
+                                        <h6>{{this.airportsNameJson[flights.departureAirport].city}}</h6>
+                                        <p>{{this.airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                        <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
                                     </div>
                                 </div> 
 
@@ -94,8 +95,8 @@
                                     <h6>08:05</h6>
                                     <span class="round"></span>
                                     <div class="Flight-time-name">
-                                        <h6>Nagpur</h6>
-                                        <p>Dr. Babasaheb Ambedkar International Airport</p>
+                                        <h6>{{this.airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                        <p>{{this.airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                                     </div>
                                 </div> 
 
@@ -126,13 +127,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="change-planes">
-                                <h6>Change of planes・3h 0m Layover in Nagpur</h6>
+                                <h6>Change of planes・ Layover in </h6>
                             </div>
 
-                            <div class="Flight-One">
+                            <!-- <div class="Flight-One">
                                 <div class="Booking-Flight-name">
                                     <div class="Booking-Flight-name-left">
                                         <img src="./assets/images/flights/flight-1.png" width="22px" alt="">
@@ -190,7 +190,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> -->
 
                             <div class="luggage-box">
                                 <div class="luggage-text">
@@ -219,7 +219,8 @@
                         <div class="sidebar-widget fare-summary-widget">
                             <div class="widget-title">
                                 <h4>Fare Summary</h4>
-                                <img src="./assets/images/flights/1.png" alt="">
+                                <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                                <p>{{selectedVendor.partnerName}}</p>
                             </div>
                             <div class="widget-content">
                                 <ul class="widget-list clearfix">
@@ -232,7 +233,7 @@
                                                 </p>
                                             </div>
                                             <div class="fare-list-right">
-                                                <p>&#8377;16,650</p>
+                                                <p>&#8377;{{selectedVendor.baseFare|number: '.2'}}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -281,8 +282,8 @@
                                                 <h6 class="fw_7">Grand Total</h6>
                                             </div>
                                             <div class="fare-list-right">
-                                                <h6 class="fw_7">₹18,784</h6>
-                                                <p class="opacity_05">EMI @ 789/month</p>
+                                                <h6 class="fw_7">₹{{selectedVendor.totalFare}}</h6>
+                                                <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(selectedVendor.totalFare)|number: '.2'}}/month</p>
                                             </div>
                                         </div>
                                     </li>

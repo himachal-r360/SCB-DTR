@@ -1220,14 +1220,14 @@ ConvertObjToQueryString(obj:any)
     return dateHour;
   }
 
-  bookingSummary(id:any){
-     console.log(id);
+  bookingSummary(flights:any,selected:any){
+     console.log(flights ,"id");
+     console.log(selected,"selected");
+     let flightDetailsArr =[{"flights":flights},{"priceSummary":selected}]; 
+     this._flightService.setFlightsDetails(flightDetailsArr);
     //  let bookingProcess = document.getElementById('bookingprocess');
     //  console.log(bookingProcess);
-    // this.router.navigate(['flight-details ',id]);  
-      console.log(id);
-      
-      
+    this.router.navigate(['flight-details']);  
  
   }
 
