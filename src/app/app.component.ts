@@ -105,31 +105,31 @@ export class AppComponent implements OnInit {
 	this.assetPath="infinia/";
         this.domainPath="infinia/";
         this.domainName='INFINIA';
-       // require("style-loader!src/assets/css/style.css");
+        this.setDynamicStyle('../assets/css/styles.css');
 	break;
 	case ('regalia'):
 	this.assetPath="regalia/";
         this.domainPath="regalia/";
         this.domainName='REGALIA';
-        // require("style-loader!src/assets/css/style.css");
+       this.setDynamicStyle('../assets/css/styles.css');
 	break;
 	case ('corporate'):
 	this.assetPath="corporate/";
         this.domainPath="corporate/";
         this.domainName='CORPORATE';
-        // require("style-loader!src/assets/css/style.css");
+       this.setDynamicStyle('../assets/css/styles.css');
 	break;
 	case ('business'):
 	this.assetPath="business/";
         this.domainPath="business/";
         this.domainName='BUSINESS';
-        // require("style-loader!src/assets/css/style.css");
+       this.setDynamicStyle('../assets/css/styles.css');
 	break;
 	default:
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
-	// require("style-loader!../assets/css/style.css");
+	this.setDynamicStyle('../assets/css/styles.css');
 	break;
 	}  
 
@@ -144,6 +144,16 @@ export class AppComponent implements OnInit {
         this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.domainName];
         
   }
+  
+  setDynamicStyle(cssURL: string) {
+        const head = this.document.getElementsByTagName('head')[0];
+        const style = this.document.createElement('link');
+        style.id = 'css-styling';
+        style.rel = 'stylesheet';
+        style.href = `${cssURL}`;
+        head.appendChild(style);
+    }
+  
 
   /* ngAfterViewInit() {
     let loader = this.renderer.selectRootElement('#loader');
