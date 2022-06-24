@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component,  OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ObjectUnsubscribedError, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import {Location} from '@angular/common'; 
 
@@ -59,6 +59,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   nonStopCount: number = 0;
   morningDearptureCount:number = 0;
   foodAllowanceCount: number = 0;
+ 
+
   flightDataModify: any = this._fb.group({
     // flightfrom: ['DEL'],
     // flightto: ['BLR'],
@@ -1218,10 +1220,13 @@ ConvertObjToQueryString(obj:any)
     return dateHour;
   }
 
-  bookingSummary(){
- 
-
-      // this.router.navigate(['flight-details']);
+  bookingSummary(id:any){
+     console.log(id);
+    //  let bookingProcess = document.getElementById('bookingprocess');
+    //  console.log(bookingProcess);
+    // this.router.navigate(['flight-details ',id]);  
+      console.log(id);
+      
       
  
   }
