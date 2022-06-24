@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,6 +13,10 @@ export class FlightService {
   flightListDate:any;
   flightsIcon = "assets/Json/airlines.json";
   airportsNameList ="assets/Json/airports.json";
+  flightDetails:any;
+  // private flightDetailsSubject = new BehaviorSubject<any>();
+  private flightDetailsSubject = new BehaviorSubject(null);
+  flightDetailsObservable = this.flightDetailsSubject.asObservable();
  
   
 
@@ -33,6 +38,18 @@ export class FlightService {
 
   getAirportName(){
     return this.http.get(this.airportsNameList);
+  }
+
+  // setFlightsDetails
+  // call from flight list for setting the value
+  setFlightsDetails(param: any) {
+    console.log("getFlightsDetails", param);
+    this.flightDetailsSubject.next(param) ;
+  }
+    // call from flight details
+  getFlightDetailsVal(): Observable<any> {
+    console.log();
+    return this.flightDetailsSubject.asObservable();
   }
 
 }
