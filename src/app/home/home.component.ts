@@ -10,7 +10,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
-import * as moment from 'moment';
 declare var $: any;
 
 @Component({
