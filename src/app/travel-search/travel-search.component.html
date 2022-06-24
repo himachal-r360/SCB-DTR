@@ -434,7 +434,7 @@
                                     <input type="hidden" formControlName="hotelId" name="hotelId" id="hotelId" >
                                     <input type="hidden" formControlName="countryId" name="countryId" id="countryId" >
                                     <p class="truncate" title="{{hotelFromText}}">
-                                        <span  title="" class=" airPortName ">{{hotelFromText}}</span>
+                                        <!-- <span  title="" class=" airPortName ">{{hotelFromText}}</span> -->
                                     </p>
                                 </label>
                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelName']['errors']" class="error_msg">
@@ -588,7 +588,7 @@
                 <form [formGroup]="searchFlightForm" name="searchFlightForm">
                     <div class="row">
                         <div class="">
-                            <div class="select_options">
+                            <div class="select_options flight_options">
                                 <div class="opt_box">
                                     <mat-form-field class="flgt-mat-slct">
                                         <mat-select name="flightTripType" formControlName="flightTripType" (ngModelChange)="selectTripType($event)">
@@ -794,7 +794,7 @@
                                         <input type="text" [(ngModel)]="busFrom" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField busFrom busFrom-web busFromPop"  formControlName="busFrom" id="busFrom" placeholder="From" name="busFrom" (focus)="hideShowForms('web', 'busFrom','bus')" (keyup)="searchAutoComplete($event,'bus','busFrom' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
                                         <input type="hidden" formControlName="fromBusCode" name="fromBusCode" id="fromBusCode" >
                                         <p class="truncate" title="{{busFromText}}">
-                                            <span  title="" class=" airPortName ">{{busFromText}}</span>
+                                            <!-- <span  title="" class=" airPortName ">{{busFromText}}</span> -->
                                         </p>
                                     </label>
                                     <div *ngIf="submittedBus && searchBusForm['controls']['busFrom']['errors']" class="error_msg">
@@ -828,13 +828,13 @@
                             <div class="w-48">
                                 <div class="input_box">
                                     <label>
-                          <span>To</span>
-                          <input type="text" [(ngModel)]="busTo" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField busTo-web busTo busToPop" formControlName="busTo" id="busTo" placeholder="To" name="busTo" (focus)="hideShowForms('web', 'busTo','bus')" (keyup)="searchAutoComplete($event,'bus','busTo' ,'web')" (keypress)="charInput($event)" autocomplete="off">
-                          <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
-                          <p class="truncate" title="{{busToText}}">
-                             <span  title="" class=" airPortName ">{{busToText}}</span>
-                          </p>
-                       </label>
+                                        <span>To</span>
+                                        <input type="text" [(ngModel)]="busTo" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField busTo-web busTo busToPop" formControlName="busTo" id="busTo" placeholder="To" name="busTo" (focus)="hideShowForms('web', 'busTo','bus')" (keyup)="searchAutoComplete($event,'bus','busTo' ,'web')" (keypress)="charInput($event)" autocomplete="off">
+                                        <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
+                                        <p class="truncate" title="{{busToText}}">
+                                            <!-- <span  title="" class=" airPortName ">{{busToText}}</span> -->
+                                        </p>
+                                    </label>
                                     <div *ngIf="submittedBus && searchBusForm['controls']['busTo']['errors']" class="error_msg">
                                         <small *ngIf="searchBusForm['controls']['busTo']['errors']['required']" class="validate-msg">Please select a city name from the list</small>
                                     </div>
@@ -1045,7 +1045,7 @@
                                             <input type="hidden" formControlName="hotelId" name="hotelId" id="hotelId" >
                                             <input type="hidden" formControlName="countryId" name="countryId" id="countryId" >
                                             <p class="truncate" title="{{hotelFromText}}">
-                                                <span  title="" class=" airPortName ">{{hotelFromText}}</span>
+                                                <!-- <span  title="" class=" airPortName ">{{hotelFromText}}</span> -->
                                             </p>
                                         </label>
                                         <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelName']['errors']" class="error_msg">
@@ -1511,7 +1511,7 @@
                                     <input type="text" [(ngModel)]="busFrom" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField"  formControlName="busFrom" id="busFrom" placeholder="From" name="busFrom" (focus)="hideShowForms('mobile', 'busFrom','bus')" (keyup)="searchAutoComplete($event,'bus','busFrom' ,'mobile');" (keypress)="charInput($event)"  autocomplete="off" >
                                     <input type="hidden" formControlName="fromBusCode" name="fromBusCode" id="fromBusCode" >
                                     <p class="truncate" title="{{busFromText}}">
-                                        <span  title="" class=" airPortName ">{{busFromText}}</span>
+                                        <!-- <span  title="" class=" airPortName ">{{busFromText}}</span> -->
                                     </p>
                                 </label>
                                     <div *ngIf="submittedBus && searchBusForm['controls']['busFrom']['errors']" class="error_msg">
@@ -1526,13 +1526,13 @@
                             <div class="col-6 pl-0">
                                 <div class="input_box bor-left-0">
                                     <label>
-                          <span>To</span>
-                          <input type="text" [(ngModel)]="busTo" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField" formControlName="busTo" id="busTo" placeholder="To" name="busTo" (focus)="hideShowForms('mobile', 'busTo','bus')" (keyup)="searchAutoComplete($event,'bus','busTo' ,'mobile')" (keypress)="charInput($event)" autocomplete="off">
-                          <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
-                          <p class="truncate" title="{{busToText}}">
-                             <span  title="" class=" airPortName ">{{busToText}}</span>
-                          </p>
-                       </label>
+                                        <span>To</span>
+                                        <input type="text" [(ngModel)]="busTo" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField" formControlName="busTo" id="busTo" placeholder="To" name="busTo" (focus)="hideShowForms('mobile', 'busTo','bus')" (keyup)="searchAutoComplete($event,'bus','busTo' ,'mobile')" (keypress)="charInput($event)" autocomplete="off">
+                                        <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
+                                        <p class="truncate" title="{{busToText}}">
+                                            <!-- <span  title="" class=" airPortName ">{{busToText}}</span> -->
+                                        </p>
+                                    </label>
                                     <div *ngIf="submittedBus && searchBusForm['controls']['busTo']['errors']" class="error_msg">
                                         <small *ngIf="searchBusForm['controls']['busTo']['errors']['required']" class="validate-msg">Please select a city name from the list</small>
                                     </div>
@@ -1545,18 +1545,18 @@
                             <div class="col-12">
                                 <div class="input_box date_input_box">
                                     <label>
-                          <span>Departure</span>
-                          <div class="form-group flex_basis">
-                           <input (click)="busPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="busPicker"   [min]="minDateMlite"  [max]="buspickermaxDateMlite"
-                                [(ngModel)]="busDeparture"   autocomplete="off"  readonly formControlName="busDeparture"  id="busDeparture" placeholder="DD/MM/YYYY"  [value]="buspickerDefaultMlite" >
-                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="busPicker.open()" id="mliteBusPicker" ></span>
-                        <mat-datepicker touchUi #busPicker panelClass="bottomDatePicker"></mat-datepicker>
-                          
-                             <div *ngIf="submittedBus && searchBusForm['controls']['busDeparture']['errors']"class="error_msg">
-                                <small *ngIf="searchBusForm['controls']['busDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
-                             </div>
-                          </div>
-                       </label>
+                                        <span>Departure</span>
+                                        <div class="form-group flex_basis">
+                                        <input (click)="busPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="busPicker"   [min]="minDateMlite"  [max]="buspickermaxDateMlite"
+                                                [(ngModel)]="busDeparture"   autocomplete="off"  readonly formControlName="busDeparture"  id="busDeparture" placeholder="DD/MM/YYYY"  [value]="buspickerDefaultMlite" >
+                                                <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="busPicker.open()" id="mliteBusPicker" ></span>
+                                        <mat-datepicker touchUi #busPicker panelClass="bottomDatePicker"></mat-datepicker>
+                                        
+                                            <div *ngIf="submittedBus && searchBusForm['controls']['busDeparture']['errors']"class="error_msg">
+                                                <small *ngIf="searchBusForm['controls']['busDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -1592,8 +1592,9 @@
                     </div>
                     <div class="city-popup from-city-pop" *ngIf="showMliteBusToForm">
                         <i class="hide-w" (click)="closeSearchBox()"><img src="{{cdnUrl}}images/icons/arrow-back.svg"></i>
-                        <span class="pl-3"><label>
-                <span>Select To City </span>
+                        <span class="pl-3">
+                        <label>
+                            <span>Select To City </span>
                         </label>
                         </span>
                         <div class="form-search-list">

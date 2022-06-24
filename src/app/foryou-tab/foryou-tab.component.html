@@ -496,37 +496,37 @@
     <div class=" container_ftab" *ngIf="topDeals && topDeals.length > 0">
         <div class="mt-4">
             <h3 class="d-inline">Offer and Deals 
-                <span class="float-end pe-0 pe-sm-3"><a href="" class="view_all_link">View All Offers</a></span>
+                <span class="float-end mt-3"><a href="" class="view_all_link">View All Offers</a></span>
             </h3>
             <span class="d-block d-sm-inline mt-2 mt-sm-0">
-      <span class="pe-0 pe-sm-3" *ngIf="topDealCategory.length >0" >
-    
-        <mat-form-field class="">
-            <mat-select  (selectionChange) ="selectDealCategory($event)" class="categorie_select"  [(value)]="modeselectDealCat" >
-                <mat-option value="All">All Categories</mat-option>
-                <mat-option *ngFor="let cat of topDealCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-     </span>
+                <span class="pe-0 pe-sm-3" *ngIf="topDealCategory.length >0" >
+                
+                    <mat-form-field class="">
+                        <mat-select  (selectionChange) ="selectDealCategory($event)" class="categorie_select"  [(value)]="modeselectDealCat" >
+                            <mat-option value="All">All Categories</mat-option>
+                            <mat-option *ngFor="let cat of topDealCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
 
-            <!-- Sub Catogery Dropdown-->
-            <span class="ps-3">
+                <!-- Sub Catogery Dropdown-->
+                <span class="ps-3">
 
-        <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
-            <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
-                <mat-option value="All">All Sub Categoriess</mat-option>
-                <mat-option *ngFor="let cat of topDealSubCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+                    <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
+                        <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
+                            <mat-option value="All">All Sub Categoriess</mat-option>
+                            <mat-option *ngFor="let cat of topDealSubCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
 
-        <mat-form-field class="" *ngIf="topDealSubCategory.length==0">
-            <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select"  [(value)]="modeselectDealSubCat" >
-                <mat-option value="All">All Sub Categoriess</mat-option>
-            </mat-select>
-        </mat-form-field>
-       
-    </span>
+                    <mat-form-field class="" *ngIf="topDealSubCategory.length==0">
+                        <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select"  [(value)]="modeselectDealSubCat" >
+                            <mat-option value="All">All Sub Categoriess</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                
+                </span>
             </span>
             <!-- <span class="view-all-deals pull-right pr-sm-4"><a href="javascript:;">View All Offers</a></span> -->
         </div>
@@ -559,6 +559,31 @@
             </div>
         </ng-template>  
       </owl-carousel-o>
+
+            <!-- <owl-carousel-o [options]="dealOptions" class="partners_container_emi deal_item">
+                <ng-template carouselSlide  *ngFor="let hit of topDeals;  odd as isOdd; even as isEven;">
+                <div class="row row-cols-1">
+                    <div class="col">
+                    <div class="card h-100">
+                        <img src="{{cdnDealUrl+hit.image}}" class="card-img-top radius_8" alt="..." (error)="onImgErrorDeals($event)">
+                        <div class="card-body">
+                        <h5 class="card-title">{{hit.name}}</h5>
+                        <p class="card-text">{{hit.short_description}}</p>
+                        <div class="my-2" *ngIf="hit.end_date" >
+                            <p class="exp_date">Expires on {{hit.end_date}}</p>
+                             <p class="offerCard-expiry offerCard-title">{{hit.subcategory_1}}</p> 
+                        </div>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <button class="btn view_btn"  (click)="redirectDisUrl('offer_details/'+hit.slug_url)">View details</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </ng-template>  
+            </owl-carousel-o> -->
     
      
       </span>
