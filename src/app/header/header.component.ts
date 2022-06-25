@@ -300,7 +300,7 @@ rd_site_url: any;shop_site_url;
     */
      if(this.serviceSettings.notifications==1){   
     //FCM Analytics
-   const firebaseConfig = {
+   /*const firebaseConfig = {
             'messagingSenderId': '542467933836',
             'apiKey': 'AIzaSyAYOC_9NVfLasdyx1d4CBEqdlcECAOtlFg',
             'projectId': 'sbnotification-602a8',
@@ -310,6 +310,7 @@ rd_site_url: any;shop_site_url;
     const app = initializeApp(firebaseConfig);
     this.analytics = getAnalytics(app);
     //FCM Analytics
+    */
    }
    if (this.cookieService.get("push_enable")) { 
      this.enablePushTitle = true;

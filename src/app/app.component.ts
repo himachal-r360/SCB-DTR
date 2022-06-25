@@ -129,7 +129,8 @@ export class AppComponent implements OnInit {
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
-	this.setDynamicStyle('../assets/css/styles.css');
+	//require("style-loader!src/assets/css/styles.css");
+	this.loadStyle('client-a.css');
 	break;
 	}  
 
@@ -143,6 +144,24 @@ export class AppComponent implements OnInit {
         this.serviceSettings=this.appConfigService.getConfig();
         this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.domainName];
         
+  }
+  
+  loadStyle(styleName: string) {
+    const head = this.document.getElementsByTagName('head')[0];
+
+    let themeLink = this.document.getElementById(
+      'client-theme'
+    ) as HTMLLinkElement;
+    if (themeLink) {
+      themeLink.href = styleName;
+    } else {
+      const style = this.document.createElement('link');
+      style.id = 'client-theme';
+      style.rel = 'stylesheet';
+      style.href = `${styleName}`;
+
+      head.appendChild(style);
+    }
   }
   
   setDynamicStyle(cssURL: string) {

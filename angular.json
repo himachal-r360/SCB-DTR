@@ -8,11 +8,14 @@
   "projects": {
     "reward360": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:application": {
-          "strict": false
-        }
-      },
+
+      
+           "schematics": {
+                "@schematics/angular:component": {
+                    "style": "sass"
+                }
+            },
+
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -41,10 +44,19 @@
                 "src/assets/css/bootstrap-datepicker.min.css",
                 "src/assets/css/daterangepicker.css",
                 "src/assets/css/ion.rangeSlider.min.css",
-                "src/assets/css/main.css",
-                "src/assets/css/responsive_mobile.scss"
+                "src/assets/css/responsive_mobile.scss",
+              {
+                "input": "src/client-a-styles.scss",
+                "bundleName": "client-a",
+                "inject": false
+              },
+              {
+                "input": "src/assets/css/style.css",
+                "bundleName": "client-b",
+                "inject": false
+              }
                 
-                ],
+        ],
             
             "inlineStyleLanguage": "scss",
             "scripts": [
