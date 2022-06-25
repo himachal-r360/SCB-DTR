@@ -14,7 +14,7 @@ $(document).ready(function($) {
     // Whole Script Strict Mode Syntax
 	"use strict";   
 
-    $("#main-menu").slicknav({
+    /*$("#main-menu").slicknav({
         allowParentLinks: true,
         prependTo: '#mobile-menu-wrap',
         label: '', 
@@ -27,7 +27,7 @@ $(document).ready(function($) {
         $(".mobile-menu-container").removeClass("menu-open");
         e.stopPropagation();
     }); 
-
+  */
     // $('.single-datepicker').daterangepicker({
     //     singleDatePicker: true,
     //     opens: 'center'

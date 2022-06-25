@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
         this.loadStyle('daterangepicker.css','daterangepicker');
         this.loadStyle('mCustomScrollbar.css','mCustomScrollbar');
         
-	this.loadStyle('smartbuy.css','main');
+	//this.loadStyle('smartbuy.css','main');
 
 	
 	break;
@@ -158,7 +158,10 @@ export class AppComponent implements OnInit {
       head.appendChild(style);
     }
   }
-  
+   ngAfterViewInit() {
+    let loader = this.renderer.selectRootElement('#loader');
+    this.renderer.setStyle(loader, 'display', 'none');
+  }
 
   
   private appendGaTrackingCode() {
