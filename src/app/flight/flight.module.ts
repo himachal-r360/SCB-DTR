@@ -15,7 +15,7 @@ const routes: Routes = [
     path:"flight-list" ,component:FlightListComponent
   },
   {
-    path:"flight-details/:id" ,component:FlightDetailComponent
+    path:"flight-details" ,component:FlightDetailComponent
   }
 ];
 

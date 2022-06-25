@@ -15,7 +15,6 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatBottomSheet, MatBottomSheetRef, MatBottomSheetConfig } from '@angular/material/bottom-sheet';
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
-import 'node_modules/owl.carousel/dist/assets/owl.carousel.css';
 
 declare var $: any;
 @Component({

@@ -117,7 +117,15 @@ export class AppComponent implements OnInit {
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
+        	this.loadStyle('owl_carousel.css','owl_carousel');
+        this.loadStyle('jquery-ui.css','jquery-ui');
+        this.loadStyle('bootstrap-select.css','jbootstrap-select');
+        this.loadStyle('daterangepicker.css','daterangepicker');
+        this.loadStyle('mCustomScrollbar.css','mCustomScrollbar');
+        
 	this.loadStyle('smartbuy.css','main');
+
+	
 	break;
 	}  
 
@@ -318,6 +326,8 @@ export class AppComponent implements OnInit {
       const isDesktopDevice = this.deviceService.isDesktop();
 
         var pageUrl=event.urlAfterRedirects.split('?')[0];
+        console.log(pageUrl);
+        
         if(isDesktopDevice){
          this.mobileClassName='';
          
@@ -327,13 +337,27 @@ export class AppComponent implements OnInit {
 	        //this.loadStyle('owl_carousel.css','owl_carousel');
                 break;
                 
+               /*  case '/' :
+	        this.loadStyle('jquery-ui.css','jquery-ui');
+	        this.loadStyle('bootstrap-select.css','bootstrap-select');
+	        this.loadStyle('bootstrap-datepicker.css','bootstrap-datepicker');
+	        this.loadStyle('daterangepicker.css','daterangepicker');
+                break;
+                   
+                 case '/flight-list' :
+	        this.loadStyle('jquery-ui.css','jquery-ui');
+	        this.loadStyle('bootstrap-select.css','jbootstrap-select');
+	        this.loadStyle('bootstrap-datepicker.css','bootstrap-datepicker');
+	        this.loadStyle('daterangepicker.css','daterangepicker');
+                break;
+                */
                 }
         }else{
         this.mobileClassName='bg-mobile';
               switch (pageUrl) {
                 case '/foryou' :
                	//this.loadStyle('owl_default.css','owl_default');
-	        //this.loadStyle('owl_carousel.css','owl_carousel');
+	       // this.loadStyle('owl_carousel.css','owl_carousel');
                 break;
                 
                 }
