@@ -16,25 +16,13 @@ import { AppConfigService } from './app-config.service';
 import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { DOCUMENT } from '@angular/common';
-declare const require;
 declare var $: any;
 export interface DialogData {
  beforeExpiry:boolean; 
  afterExpiry:boolean; 
 }
 
-/* @Component({
-  selector: 'app-loader',
-  templateUrl: './app.component.html'
-})
-export class AppComponentLoader implements AfterViewInit {
-  constructor(private renderer: Renderer2) {}
 
-  ngAfterViewInit() {
-    let loader = this.renderer.selectRootElement('#loader');
-    this.renderer.setStyle(loader, 'display', 'none');
-  }
-} */
 
 @Component({
   selector: 'app-root',
@@ -99,38 +87,37 @@ export class AppComponent implements OnInit {
 	this.assetPath="diners/";
          this.domainPath="diners/";
         this.domainName='DINERS';
-        //require("style-loader!src/assets/css/style.css");
+        this.loadStyle('diners.css','main');
 	break;
 	case ('infinia'):
 	this.assetPath="infinia/";
         this.domainPath="infinia/";
         this.domainName='INFINIA';
-        this.setDynamicStyle('../assets/css/styles.css');
+        this.loadStyle('infinia.css','main');
 	break;
 	case ('regalia'):
 	this.assetPath="regalia/";
         this.domainPath="regalia/";
         this.domainName='REGALIA';
-       this.setDynamicStyle('../assets/css/styles.css');
+       this.loadStyle('regalia.css','main');
 	break;
 	case ('corporate'):
 	this.assetPath="corporate/";
         this.domainPath="corporate/";
         this.domainName='CORPORATE';
-       this.setDynamicStyle('../assets/css/styles.css');
+      this.loadStyle('corporate.css','main');
 	break;
 	case ('business'):
 	this.assetPath="business/";
         this.domainPath="business/";
         this.domainName='BUSINESS';
-       this.setDynamicStyle('../assets/css/styles.css');
+       this.loadStyle('business.css','main');
 	break;
 	default:
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
-	//require("style-loader!src/assets/css/styles.css");
-	this.loadStyle('client-a.css');
+	this.loadStyle('smartbuy.css','main');
 	break;
 	}  
 
@@ -146,7 +133,7 @@ export class AppComponent implements OnInit {
         
   }
   
-  loadStyle(styleName: string) {
+  loadStyle(styleName: string,styleId: string) {
     const head = this.document.getElementsByTagName('head')[0];
 
     let themeLink = this.document.getElementById(
@@ -156,7 +143,7 @@ export class AppComponent implements OnInit {
       themeLink.href = styleName;
     } else {
       const style = this.document.createElement('link');
-      style.id = 'client-theme';
+      style.id = `${styleId}`;
       style.rel = 'stylesheet';
       style.href = `${styleName}`;
 
@@ -164,20 +151,7 @@ export class AppComponent implements OnInit {
     }
   }
   
-  setDynamicStyle(cssURL: string) {
-        const head = this.document.getElementsByTagName('head')[0];
-        const style = this.document.createElement('link');
-        style.id = 'css-styling';
-        style.rel = 'stylesheet';
-        style.href = `${cssURL}`;
-        head.appendChild(style);
-    }
-  
 
-  /* ngAfterViewInit() {
-    let loader = this.renderer.selectRootElement('#loader');
-    this.renderer.setStyle(loader, 'display', 'none');
-  } */
   
   private appendGaTrackingCode() {
     try {
@@ -197,7 +171,6 @@ export class AppComponent implements OnInit {
     }
   }
   
-
 
 
   ngOnInit() {
@@ -221,7 +194,6 @@ export class AppComponent implements OnInit {
     }
     });
     
-    //if(this.serviceSettings['new_ui_ux']){    
         this.getVouchersList =this.serviceSettings.voucher_lists;
         if(this.DOMAIN_SETTINGS['OFFER']){
         this.rest.getDealsOffers().subscribe(response => {
@@ -230,7 +202,6 @@ export class AppComponent implements OnInit {
         }
         });
         } 
-   // }
     if (environment.IS_MAIN == 1) {
      
        this.rest.verifyDomain().subscribe(response => {
@@ -266,33 +237,7 @@ export class AppComponent implements OnInit {
   }
 
  checkOrientation() {
-/*
-    var currMode;
-    var width = window.orientation;
-    switch(window.orientation){
-           case 0:
-           currMode = "portrait";
-           break;
- 
-           case -90:
-           currMode = "landscape";
-           break;
- 
-           case 90:
-           currMode = "landscape";
-           break;
- 
-           case 180:
-           currMode = "landscape";
-           break;
-     }
 
-   if(currMode=='landscape'){
-   this.showOrientation=true;
-   }else{
-   this.showOrientation=false;
-   }
-   */
 }
 
   onEvents() {
@@ -356,7 +301,6 @@ export class AppComponent implements OnInit {
      
     this.router.events.subscribe((event: any) => {
     
-    
       if (event instanceof NavigationEnd) {
 
 	if(this.activatedRoute.snapshot.queryParamMap.get('channel')=='payzapp' || sessionStorage.getItem("channel")=="payzapp"){
@@ -376,164 +320,23 @@ export class AppComponent implements OnInit {
         var pageUrl=event.urlAfterRedirects.split('?')[0];
         if(isDesktopDevice){
          this.mobileClassName='';
-                switch (pageUrl) {
-                case '/trains/traveller' :
-                $('.header-sticky').css("visibility", "hidden");
-                $('#owl-demo').hide();
-                break;
-                case '/diners/trains/traveller' :
-                 $('.header-sticky').css("visibility", "hidden");
-                $('#owl-demo').hide();
-                break;
-                case '/infinia/trains/traveller' :
-                 $('.header-sticky').css("visibility", "hidden");
-                $('#owl-demo').hide();
-                break;
-                case '/regalia/trains/traveller' :
-                 $('.header-sticky').css("visibility", "hidden");
-                $('#owl-demo').hide();
-                break;
-                case '/business/trains/traveller' :
-                 $('.header-sticky').css("visibility", "hidden");
-                $('#owl-demo').hide();
-                break;
-                case '/corporate/trains/traveller' :
-                 $('.header-sticky').css("visibility", "hidden");
-                $('#owl-demo').hide();
-                break;
+         
+              switch (pageUrl) {
                 case '/foryou' :
-                this.menuActiveClass='foryou';
-                break;
-                case '/bus' :  case '/bus/search' : case '/bus/booking' :
-                this.menuActiveClass='bus';
-                break;
-                  case '/train' :  case '/train/pnr' : case '/trains' : case '/train-list' : case '/trains/list' :case '/train-traveller':case '/trains/traveller':
-                this.menuActiveClass='train';
+               //this.loadStyle('owl_default.css','owl_default');
+	        //this.loadStyle('owl_carousel.css','owl_carousel');
                 break;
                 
-                default:
-                 $('.header-sticky').css("visibility", "visible");
-                  $('#owl-demo').show();
-                break;
                 }
         }else{
-
         this.mobileClassName='bg-mobile';
-        switch (pageUrl) {
-		case '/bus/search':
-		this.showHeader=false;
-		break;
-		case '/diners/bus/search':
-		this.showHeader=false;
-		break;
-		case '/infinia/bus/search':
-		this.showHeader=false;
-		break;
-		case '/regalia/bus/search':
-		this.showHeader=false;
-		break;
-		case '/corporate/bus/search':
-		this.showHeader=false;
-		break;
-		case '/business/bus/search':
-		this.showHeader=false;
-		break;	
-		case '/train-list' :
-		this.showHeader=false;
-		break;
-		case '/diners/train-list' :
-		this.showHeader=false;
-		break;
-		case '/infinia/train-list' :
-		this.showHeader=false;
-		break;
-		case '/regalia/train-list' :
-		this.showHeader=false;
-		break;
-		case '/corporate/train-list' :
-		this.showHeader=false;
-		break;
-		case '/business/train-list' :
-		this.showHeader=false;
-		break;
-		
-		case '/train/tdrhistory' :
-		this.showHeader=false;
-		break;
-		case '/diners/train/tdrhistory' :
-		this.showHeader=false;
-		break;
-		case '/infinia/train/tdrhistory' :
-		this.showHeader=false;
-		break;
-		case '/regalia/train/tdrhistory' :
-		this.showHeader=false;
-		break;
-		case '/corporate/train/tdrhistory' :
-		this.showHeader=false;
-		break;
-		case '/business/train/tdrhistory' :
-		this.showHeader=false;
-		break;
-		case '/train/filetdr' :
-		this.showHeader=false;
-		break;
-		case '/diners/train/filetdr' :
-		this.showHeader=false;
-		break;
-		case '/infinia/train/filetdr' :
-		this.showHeader=false;
-		break;
-		case '/regalia/train/filetdr' :
-		this.showHeader=false;
-		break;
-		case '/corporate/train/filetdr' :
-		this.showHeader=false;
-		break;
-		case '/business/train/filetdr' :
-		this.showHeader=false;
-		break;
-	            case '/trains/traveller' :
-                this.showHeader=false;
-                break;
-                case '/diners/trains/traveller' :
-                this.showHeader=false;
-                break;
-                case '/infinia/trains/traveller' :
-                this.showHeader=false;
-                break;
-                case '/regalia/trains/traveller' :
-                this.showHeader=false;
-                break;
-                case '/business/trains/traveller' :
-                this.showHeader=false;
-                break;
-                case '/corporate/trains/traveller' :
-                this.showHeader=false;
-                break;
-		        case '/foryou' :
-                this.menuActiveClass='foryou';
+              switch (pageUrl) {
+                case '/foryou' :
+               	//this.loadStyle('owl_default.css','owl_default');
+	        //this.loadStyle('owl_carousel.css','owl_carousel');
                 break;
                 
-                case '/bus' :
-                this.menuActiveClass='bus';
-                this.showHeader=true;
-                break;
-                  case '/train' : 
-                this.menuActiveClass='train';
-                 this.showHeader=true;
-                break;
-                
-                case '/bus/search' : case '/bus/booking' :
-                this.menuActiveClass='bus';
-                break;
-               case '/train/pnr' : case '/trains' : case '/train-list' : case '/trains/list' :case '/train-traveller':case '/trains/traveller':
-                this.menuActiveClass='train';
-                break;
-          default:
-	   this.showHeader=true;
-          break;
-        }
+                }
        }
      
       }
