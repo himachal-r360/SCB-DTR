@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {  Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import {Location} from '@angular/common'; 
+import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 
 declare var $: any;
 
@@ -97,7 +98,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   toContryName:any;
 
 
-  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute,private router:Router , private location:Location)  { }
+  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute,private router:Router , private location:Location)  {
+  
+  
+     this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+        this._styleManager.setScript('ion', `assets/js/ion.rangeSlider.min.js`);
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+        
+   }
 
   ngOnInit(): void {
     this.loader = true;
@@ -916,6 +926,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     //localStorage.clear();
     this.sub?.unsubscribe();
+            
+        this._styleManager.removeStyle('bootstrap-select');
+        this._styleManager.removeStyle('daterangepicker');
+        this._styleManager.removeScript('bootstrap-select');
+          this._styleManager.removeScript('ion');
+        this._styleManager.removeScript('custom');
   }
 
   HideShowCompareToFly(i: number,fromCall:string) {

@@ -19,7 +19,7 @@ import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { CommunicationService } from './shared/services/communication.service';
 import {MatBottomSheet, MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA,MatBottomSheetConfig} from '@angular/material/bottom-sheet';
 import {MaterialModule} from './material.module';
-
+import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -51,6 +51,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   ],
   exports:[SearchComponent],
    providers: [
+   StyleManagerService,
    AppConfigService,
     {
       provide: APP_INITIALIZER,

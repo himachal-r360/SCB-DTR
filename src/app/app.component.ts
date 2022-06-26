@@ -117,14 +117,13 @@ export class AppComponent implements OnInit {
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
-        	this.loadStyle('owl_carousel.css','owl_carousel');
-        this.loadStyle('jquery-ui.css','jquery-ui');
-        this.loadStyle('bootstrap-select.css','jbootstrap-select');
-        this.loadStyle('daterangepicker.css','daterangepicker');
+       // this.loadStyle('owl_carousel.css','owl_carousel');
+       // this.loadStyle('bootstrap-select.css','jbootstrap-select');
+        //this.loadStyle('daterangepicker.css','daterangepicker');
        // this.loadStyle('mCustomScrollbar.css','mCustomScrollbar');
         
-	//this.loadStyle('smartbuy.css','main');
-
+	this.loadStyle('smartbuy.css','main');
+//        this.unloadCSS('owl_carousel');
 	
 	break;
 	}  
@@ -152,12 +151,18 @@ export class AppComponent implements OnInit {
     } else {
       const style = this.document.createElement('link');
       style.id = `${styleId}`;
+       style.class = 'dynacss';
       style.rel = 'stylesheet';
       style.href = `${styleName}`;
 
       head.appendChild(style);
     }
   }
+  unloadCSS(file: string) {
+  var cssNode = document.getElementById(file);
+  cssNode && cssNode.parentNode.removeChild(cssNode);
+}
+  
    ngAfterViewInit() {
     let loader = this.renderer.selectRootElement('#loader');
     this.renderer.setStyle(loader, 'display', 'none');

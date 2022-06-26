@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
+import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 declare var $: any;
 
 @Component({
@@ -84,10 +85,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // })
   constructor(
+  public _styleManager: StyleManagerService,
     public router: Router,
     private _fb: FormBuilder,
     private _flightService: FlightService
-  ) {}
+  ) {
+        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+
+  }
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
     flightto: ['',[Validators.required]],
@@ -374,6 +382,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+    
+        this._styleManager.removeStyle('bootstrap-select');
+        this._styleManager.removeStyle('daterangepicker');
+        this._styleManager.removeScript('bootstrap-select');
+        this._styleManager.removeScript('custom');
   }
 
   continueSearch(param:any){
