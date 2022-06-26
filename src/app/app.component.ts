@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
         this.loadStyle('jquery-ui.css','jquery-ui');
         this.loadStyle('bootstrap-select.css','jbootstrap-select');
         this.loadStyle('daterangepicker.css','daterangepicker');
-        this.loadStyle('mCustomScrollbar.css','mCustomScrollbar');
+       // this.loadStyle('mCustomScrollbar.css','mCustomScrollbar');
         
 	//this.loadStyle('smartbuy.css','main');
 
