@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,7 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './core/search/search.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 
@@ -22,8 +23,8 @@ import { FooterComponent } from './footer/footer.component';
     SearchComponent,
     FooterComponent,
 
-    
-    
+
+
   ],
   imports: [
     BrowserModule,
@@ -32,11 +33,13 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    
-    
+    BrowserAnimationsModule,
+    MatSliderModule
+
   ],
   exports:[SearchComponent],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
