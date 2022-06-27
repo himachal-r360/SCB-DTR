@@ -43,12 +43,10 @@ export class FlightService {
   // setFlightsDetails
   // call from flight list for setting the value
   setFlightsDetails(param: any) {
-    console.log("getFlightsDetails", param);
     this.flightDetailsSubject.next(param) ;
   }
     // call from flight details
   getFlightDetailsVal(): Observable<any> {
-    console.log();
     return this.flightDetailsSubject.asObservable();
   }
 
