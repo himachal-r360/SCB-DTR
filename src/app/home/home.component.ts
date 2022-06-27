@@ -90,11 +90,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private _fb: FormBuilder,
     private _flightService: FlightService
   ) {
+  
+    setTimeout(() => {
         this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
         this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
         this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
         this._styleManager.setScript('custom', `assets/js/custom.js`);
-
+     }, 10);
   }
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],

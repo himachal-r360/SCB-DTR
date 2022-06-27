@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Renderer2, ElementRef, ViewChild,OnDestroy} from '@angular/core';
+import { Component, OnInit, Inject, Renderer2, ElementRef, ViewChild,OnDestroy,ViewEncapsulation} from '@angular/core';
 import { environment } from '../../environments/environment';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
@@ -97,15 +97,15 @@ public modeselectTrending= 'All';
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
-     
-      this._styleManager.setStyle('owl', `assets/css/owl.carousel.min.css`);
-      this._styleManager.setScript('owl', `assets/js/owl.carousel.min.js`);
+    
+     this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
+     this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
 
   }
   
    ngOnDestroy() {
-    this._styleManager.removeStyle('owl');
-     this._styleManager.removeScript('owl');
+    this._styleManager.removeStyle('owl-default');
+    this._styleManager.removeScript('owl');
   }
   
  loadTopBanner(l) {
@@ -784,7 +784,7 @@ public modeselectTrending= 'All';
 
   brandOptions: any = {
     loop: true,
-    autoplay: true,
+    autoplay: false,
     autoplayTimeout: 8000,
     autoplayHoverPause: true,
     margin: 15,

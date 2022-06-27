@@ -69,6 +69,7 @@ function createLinkElementWithKey(key: string) {
   linkEl.setAttribute('rel', 'stylesheet');
   linkEl.classList.add(getClassNameForKey(key));
   document.head.appendChild(linkEl);
+  //document.head.insertBefore(linkEl, document.head.firstChild);
   return linkEl;
 }
 

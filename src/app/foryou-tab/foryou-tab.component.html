@@ -4,7 +4,7 @@
             <div class="col-lg-12 col-sm-12" *ngIf="isLogged==false">
                 <div id="sync1" class="topBannerSlider owl-carousel" *ngIf="topBanner">
                     <div *ngFor="let tbanner of topBanner; let i = index" id="{{i}}">
-                        <span class="d-block d-sm-none" *ngIf="tbanner.redriect_url!=''"> <a href="{{tbanner.redriect_url}}"><img data-src="{{tbanner.image}}" class="d-block w-100 lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}"   (error)="onImgError($event)"  /></a></span>
+                        <span class="d-block d-sm-none" *ngIf="tbanner.redriect_url!=''"> <a href="{{tbanner.redriect_url}}"><img data-src="{{tbanner.image}}" class="d-block w-100 owl-lazy" title="{{tbanner.title}}" alt="{{tbanner.title}}"   (error)="onImgError($event)"  /></a></span>
                         <span class="d-block d-sm-none" *ngIf="tbanner.redriect_url==''"><img data-src="{{tbanner.image}}" class="d-block w-100 lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}" (error)="onImgError($event)"  /></span>
 
                         <span class="d-none d-sm-none d-lg-block" *ngIf="tbanner.redriect_url!=''"> <a href="{{tbanner.redriect_url}}"><img data-src="{{tbanner.full_image}}" class="d-block  imgscale5  lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}"   (error)="onImgErrorFull($event)" height="387px"/></a></span>

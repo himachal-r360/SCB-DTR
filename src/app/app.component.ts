@@ -16,6 +16,7 @@ import { AppConfigService } from './app-config.service';
 import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { DOCUMENT } from '@angular/common';
+
 declare var $: any;
 export interface DialogData {
  beforeExpiry:boolean; 
@@ -87,7 +88,9 @@ export class AppComponent implements OnInit {
 	this.assetPath="diners/";
          this.domainPath="diners/";
         this.domainName='DINERS';
-        this.loadStyle('diners.css','main');
+        setTimeout(() => {
+        $('link[href="smartbuy.css"]'). attr("href","diners.css");
+        }, 1000);
 	break;
 	case ('infinia'):
 	this.assetPath="infinia/";
@@ -117,13 +120,12 @@ export class AppComponent implements OnInit {
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
-       // this.loadStyle('owl_carousel.css','owl_carousel');
-       // this.loadStyle('bootstrap-select.css','jbootstrap-select');
-        //this.loadStyle('daterangepicker.css','daterangepicker');
-       // this.loadStyle('mCustomScrollbar.css','mCustomScrollbar');
         
-	this.loadStyle('smartbuy.css','main');
-//        this.unloadCSS('owl_carousel');
+        setTimeout(() => {
+        $('link[href="smartbuy.css"]'). attr("href","smartbuy.css");
+        },1000);
+       
+       
 	
 	break;
 	}  
@@ -158,10 +160,7 @@ export class AppComponent implements OnInit {
       head.appendChild(style);
     }
   }
-  unloadCSS(file: string) {
-  var cssNode = document.getElementById(file);
-  cssNode && cssNode.parentNode.removeChild(cssNode);
-}
+
   
    ngAfterViewInit() {
     let loader = this.renderer.selectRootElement('#loader');
