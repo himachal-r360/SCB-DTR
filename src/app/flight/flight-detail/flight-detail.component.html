@@ -48,20 +48,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="booking-process-content">
+                    <div class="booking-process-content"  >
                         <div class="booking-title-box">
                             <h4>Flight Details</h4>
                         </div>
                         <div class="booking-inner-box from-to-box">
                             
                             <div class="booking-inner-title">
-                                <div class="booking-inner-title-left">
+                                <div class="booking-inner-title-left" *ngIf="parseSearchVal">
                                     <h6>
-                                        Mumbai
+                                        {{parseSearchVal.fromCity}}
                                         <img src="./assets/images/icons/flight-right.png" class="ms-2 me-2" alt="">    
-                                        Hyderabad
+                                        {{parseSearchVal.toCity}}
                                     </h6>
-                                    <p> Monday, Jul 11  | 1 Stop | 6h 10m</p>
+                                    <p> {{parseSearchVal.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
                                 </div>
                                 <div class="booking-inner-title-right" >
                                     <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
@@ -70,10 +70,9 @@
                             </div>
 
                             <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
-                                
-                                <div class="Booking-Flight-name">
+                                <div class="Booking-Flight-name" >
                                     <div class="Booking-Flight-name-left">
-                                        <img src="{{this.flightIcons[flights.airline].logo}}" width="22px" alt="">
+                                        <img *ngIf="flightIcons" src="{{flightIcons[flights.airline].logo}}" width="22px" alt="">
                                         <span class="fw_7">{{flights.airlineName}}</span>
                                         <span class="opacity_05">{{flights.airline}}-{{flights.flightNumber}}</span>
                                     </div>
@@ -84,19 +83,19 @@
                                 <div class="Booking-Flight-time">
                                     <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
                                     <span class="round round-line"></span>
-                                    <div class="Flight-time-name">
-                                        <h6>{{this.airportsNameJson[flights.departureAirport].city}}</h6>
-                                        <p>{{this.airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                        <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                        <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
                                         <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
                                     </div>
                                 </div> 
 
                                 <div class="Booking-Flight-time">
-                                    <h6>08:05</h6>
+                                    <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
                                     <span class="round"></span>
-                                    <div class="Flight-time-name">
-                                        <h6>{{this.airportsNameJson[flights.arrivalAirport].city}}</h6>
-                                        <p>{{this.airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                        <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                        <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                                     </div>
                                 </div> 
 
@@ -127,9 +126,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="change-planes">
-                                <h6>Change of planes・ Layover in </h6>
+                                <!-- <div class="change-planes" *ngIf="getLayoverHour(flightDetails[i],flightDetails[i+1]) && airportsNameJson">
+                                    <h6>Change of planes・{{getLayoverHour(flightDetails[i],flightDetails[i+1]) | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                </div> -->
+                                <div class="change-planes" *ngIf="dateHour && airportsNameJson && flightDetails[i+1]">
+                                    <h6>Change of planes・{{dateHour | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                </div>
                             </div>
 
                             <!-- <div class="Flight-One">
