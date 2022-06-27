@@ -11,7 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './core/search/search.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatSliderModule} from '@angular/material/slider';
+import { MaterialModule } from './material.module';
+
 
 
 
@@ -34,7 +35,8 @@ import {MatSliderModule} from '@angular/material/slider';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatSliderModule
+    MaterialModule
+
 
   ],
   exports:[SearchComponent],
