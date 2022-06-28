@@ -4,6 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'YYYY-MM-DD',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
 
 declare var $: any;
 
@@ -11,7 +23,9 @@ declare var $: any;
   selector: 'app-flight-list',
   templateUrl: './flight-list.component.html',
   styleUrls: ['./flight-list.component.css'],
-
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   flightList: any = [];
@@ -1217,7 +1231,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     let flightDetailsArr :any= { "flights": flights , "priceSummary": selected };
     localStorage.setItem("flightDetailsArr",JSON.stringify(flightDetailsArr));
     this._flightService.setFlightsDetails(flightDetailsArr);
-    this.router.navigate(['flight-details']);
+    this.router.navigate(['flight-booking/flight-details']);
   }
 
 

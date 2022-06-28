@@ -32,7 +32,7 @@ $(document).ready(function($) {
     //     singleDatePicker: true,
     //     opens: 'center'
     // });
-
+    
     // $('.daterange-right').daterangepicker({
     //     opens: 'center'
     // });
@@ -64,23 +64,31 @@ $(document).ready(function($) {
 
 
 
-    // $(".Travellers-dropdown-title").click(function(){
-    //     $(".Travellers-dropdown-data").toggleClass("Travellershide");
-    // });
 
-    // $(".select-root-left h5").click(function(){
-    //     $(".flight-from-data").toggleClass("flight-from-hide");
-    // });
+    $(".Addnew-Adult-btn").click(function(){
+        $(".add-traveller-adults").toggle();
+    });
+    
+    $(".Addnew-Child-btn").click(function(){
+        $(".traveller-child .add-search-ul").toggle();
+        $(".add-Child-adults").toggle();
+    });
 
-    // $(".select-root-right h5").click(function(){
-    //     $(".flight-to-data").toggleClass("flight-from-hide");
-    // });
+    $(".Addnew-infant-btn").click(function(){
+        $(".traveller-infant .traveller-infant-details .add-search-ul").toggle();
+        $(".traveller-infant .add-Child-adults").toggle();
+    });
 
-    // $(".Preferred-title").click(function(){
-    //     $(".Preferred-data").toggleClass("Preferred-hide");
-    // });
+    $(".PayPoints-Getotp").click(function(){
+        $(".PayPoints-terms").hide();
+        $(".PayPoints-otp-generated").show();
+    });
 
-
+    $(".add-mult-card").click(function(){ 
+        $(".Add-Card-btn").hide();
+        $(".add-card-form").show();
+    });
+    
 
     var owlslider = jQuery(".carousel-search-date");
     if (owlslider.length > 0) {
