@@ -7,16 +7,35 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
 declare var $: any;
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'YYYY-MM-DD',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
+
 })
+
+
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   sub?: Subscription;
   loader = false;
@@ -47,6 +66,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   continueSearchVal:any;
   fromContryName:any;
   toContryName:any;
+  
   // fromCityValidation = false;
   // toCityValidation = false;
   // departDateValidation = false;
@@ -238,7 +258,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
-    
+    debugger
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -251,7 +271,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectToFlightList(para2: any) {
-    
+    debugger
     this.flightData.value.flightfrom=localStorage.getItem('fromCityId');
     localStorage.setItem('toCityId' ,para2.id);
     this.flightData.value.flightto = para2.id;
@@ -294,6 +314,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
   flightSearch() {
     this.submitted = true;
+    debugger;
     this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
       this.dateValidation=false;
@@ -334,8 +355,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this._flightService.flightListData = this.flightList;
         this._flightService.flightListDate = this.oneWayDate;
         let query:any = localStorage.getItem('searchVal');
-        
-        
         let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
         this.router.navigateByUrl(url);
         //this.router.navigate(['flight-list'],  { queryParams: { flights : decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)))}});

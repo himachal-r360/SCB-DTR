@@ -142,7 +142,11 @@ $(document).ready(function($) {
     
 
     $(".flight-details-click").click(function(){
-        $(".flight-details-box").toggleClass("flight-details-box-hide");
+        $(".flightfaresbox").toggleClass("flight-details-box-hide");
+    });
+
+    $(".viewfares").click(function(){
+        $(".viewfaresbox").toggleClass("viewfares-box-hide");
     });
 
     /*-------------------------------------------------------------
@@ -150,7 +154,7 @@ $(document).ready(function($) {
     ---------------------------------------------------------------*/ 
     $(window).ready(function(){
 		// loader JS Start
-		$('.loader-box').fadeOut();
+		// $('.loader-box').fadeOut();
 		// loader JS End 
 	});
 

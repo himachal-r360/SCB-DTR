@@ -33,9 +33,9 @@ $(document).ready(function($) {
     //     opens: 'center'
     // });
     
-    $('.daterange-right').daterangepicker({
-        opens: 'center'
-    });
+    // $('.daterange-right').daterangepicker({
+    //     opens: 'center'
+    // });
 
 
     // quantity
@@ -80,6 +80,30 @@ $(document).ready(function($) {
         $(".Preferred-data").toggleClass("Preferred-hide");
     });
 
+
+    $(".Addnew-Adult-btn").click(function(){
+        $(".add-traveller-adults").toggle();
+    });
+    
+    $(".Addnew-Child-btn").click(function(){
+        $(".traveller-child .add-search-ul").toggle();
+        $(".add-Child-adults").toggle();
+    });
+
+    $(".Addnew-infant-btn").click(function(){
+        $(".traveller-infant .traveller-infant-details .add-search-ul").toggle();
+        $(".traveller-infant .add-Child-adults").toggle();
+    });
+
+    $(".PayPoints-Getotp").click(function(){
+        $(".PayPoints-terms").hide();
+        $(".PayPoints-otp-generated").show();
+    });
+
+    $(".add-mult-card").click(function(){ 
+        $(".Add-Card-btn").hide();
+        $(".add-card-form").show();
+    });
     
 
     var owlslider = jQuery(".carousel-search-date");

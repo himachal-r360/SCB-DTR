@@ -5,6 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { DurationTimePipe } from '../pipes/duration-time.pipe';
 import { FlightDetailComponent } from './flight-detail/flight-detail.component';
+import { MaterialModule } from '../material.module';
+import { TravellerDetailComponent } from './traveller-detail/traveller-detail.component';
+import { FlightStepperNavComponent } from './flight-stepper-nav/flight-stepper-nav.component';
+import { FareSummaryComponent } from './fare-summary/fare-summary.component';
 
 
 
@@ -16,6 +20,18 @@ const routes: Routes = [
   },
   {
     path:"flight-details" ,component:FlightDetailComponent
+  },
+  {
+    path:"flight-booking" ,component:FlightStepperNavComponent,  children: [
+      {
+        path: 'flight-details', 
+        component: FlightDetailComponent,
+      },
+      {
+        path: 'traveller-detail', 
+        component: TravellerDetailComponent,
+      },
+    ]
   }
 ];
 
@@ -23,7 +39,10 @@ const routes: Routes = [
   declarations: [
     FlightListComponent,
     DurationTimePipe,
-    FlightDetailComponent
+    FlightDetailComponent,
+    TravellerDetailComponent,
+    FlightStepperNavComponent,
+    FareSummaryComponent
     
     
   ],
@@ -31,7 +50,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    MaterialModule
 
     
   ],

@@ -245,7 +245,7 @@
                                             <div class="root-date">
                                                 <div class="select-root-area">
                                                     <div class="select-dep-ret">
-                                                        <!-- <div class="area-root-departure" id="DepartureDate">
+                                                        <div class="area-root-departure" id="DepartureDate">
                                                             <div class="select-root-departure departure-date">
                                                                 <span class="select-roottitle">DEPARTURE</span>
                                                                 <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
@@ -262,8 +262,8 @@
                                                                 <input type="hidden" name="hdnDepartureDate"
                                                                     value="{{departureDate}}" formControlName="departure">
                                                             </div>
-                                                        </div> -->
-                                                        <div class="area-root-departure" (click)="picker.open()">
+                                                        </div>
+                                                        <!-- <div class="area-root-departure" (click)="picker.open()">
                                                             <div class="select-root-departure departure-date">
                                                                 <span class="select-roottitle">DEPARTURE</span>
                                                                 <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
@@ -276,13 +276,13 @@
                                                             </div>
                                                             <div class="select-root-date">
                                                                 <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
-                                                                 <mat-form-field class="d-none">
-                                                                         <input matInput [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" >
+                                                                <mat-form-field [hidden]="true">
+                                                                         <input matInput [matDatepicker]="picker"   formControlName="departure" [(ngModel)]="departureDate">
                                                                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                                          <mat-datepicker #picker hidden></mat-datepicker>
                                                                   </mat-form-field>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="area-root-reutrn">
                                                             <div class="select-root-reutrn">
                                                                 <span class="select-roottitle">RETURN</span>

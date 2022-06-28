@@ -24,6 +24,7 @@ export class FlightService {
   constructor(private http: HttpClient) { }
 
   flightList(para: any) {
+    debugger;
     let body = JSON.stringify(para)
     return this.http.post(this.flight, body, { headers: this.header })
   }
