@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DebugNode, OnInit } from '@angular/core';
 import { FlightService } from 'src/app/common/flight.service';
 
 @Component({
@@ -13,29 +13,42 @@ export class FlightDetailComponent implements OnInit {
   airportsNameJson:any;
   EMI_interest: number = 16;
   EMIAvailableLimit: number = 3000;
+  getsearchVal:any;
+  parseSearchVal:any;
+  getFlightDetailLocalStorage:any;
+  totalDuration:number=0;
 
   constructor(private _flightService:FlightService) { }
 
   ngOnInit(): void {
-    this.getFlightDetails();
+    this.getsearchVal = localStorage.getItem('searchVal');
+    this.parseSearchVal = JSON.parse(this.getsearchVal);
     this.getFlightIcon();
     this.getAirpotsList();
+    // setTimeout(() => {
+    this.getFlightDetails();
+    // }, 100);
   }
 
   getFlightDetails(){
     //this._flightService.getFlightDetailsVal()
-    // console.log(this._flightService.flightDetailsObservable.subscribe());
     // this.commonService.getShowLoginDashboardStatus().subscribe((dashboardLoginStatus) => {
     //   this.show = dashboardLoginStatus;
     // });
-    this._flightService.getFlightDetailsVal().subscribe((param:any)=>{
-      debugger
-        this.flightDetails = param[0].flights;
-        this.selectedVendor = param[1].priceSummary;
-        console.log(this.selectedVendor);
-        console.log(this.flightDetails , "param");
-        
-    })
+    let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
+    let param=JSON.parse(flightDetailsArrVal);
+      if(param!=null){
+        this.flightDetails = param.flights;
+        this.selectedVendor = param.priceSummary;  
+        this.durationCalc();
+      }
+
+    // this._flightService.getFlightDetailsVal().subscribe((param:any)=>{
+    //   if(param!=null){
+    //     this.flightDetails = param.flights;
+    //     this.selectedVendor = param.priceSummary;  
+    //   }
+    // })
   }
 
     // Get flight Icons
@@ -51,7 +64,6 @@ export class FlightDetailComponent implements OnInit {
 
     this._flightService.getAirportName().subscribe((res:any)=>{
       this.airportsNameJson = res;
-      console.log(this.airportsNameJson);
     })
   }
 
@@ -59,20 +71,38 @@ export class FlightDetailComponent implements OnInit {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
+  // getLayoverHour(obj1:any, obj2:any)
+  // {
+    
+  //   let dateHour:any;
+  //   if(obj2!=null || obj2!=undefined)
+  //   {
+      
+  //     let obj2Date=new Date(obj2.departureDateTime);
+  //     let obj1Date=new Date(obj1.arrivalDateTime);
+  //     dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
+        
+  //   }
+  //   return dateHour;
+  // }
+  dateHour:any;
   getLayoverHour(obj1:any, obj2:any)
   {
-    let dateHour:any;
     if(obj2!=null || obj2!=undefined)
     {
-      
       let obj2Date=new Date(obj2.departureDateTime);
-      let obj1Date=new Date(obj1.departureDateTime);
-      dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
-        
+      let obj1Date=new Date(obj1.arrivalDateTime);
+      this.dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
     }
-    return dateHour;
   }
 
-  
-
+  durationCalc(){
+    this.totalDuration=0;
+    for(let i = 0;i<this.flightDetails.length;i++){
+      this.totalDuration+=this.flightDetails[i].duration;
+      if(this.flightDetails[i+1]!=null && this.flightDetails[i+1]!=undefined){
+        this.getLayoverHour(this.flightDetails[i],this.flightDetails[i+1]);
+      }
+    }
+  }
 }

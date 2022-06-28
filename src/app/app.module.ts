@@ -1,4 +1,4 @@
-import { NgModule,APP_INITIALIZER } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule,APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent,AlertDialogComponent } from './app.component';
@@ -20,7 +20,7 @@ import { CommunicationService } from './shared/services/communication.service';
 import {MatBottomSheet, MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA,MatBottomSheetConfig} from '@angular/material/bottom-sheet';
 import {MaterialModule} from './material.module';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
-
+import { MatSliderModule } from '@angular/material/slider'; 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -47,7 +47,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    MaterialModule,MatSliderModule
   ],
   exports:[SearchComponent],
    providers: [
@@ -63,6 +63,7 @@ SimpleGlobal,CommonHelper,CommunicationService,MatBottomSheet
   
   ],
      entryComponents: [AlertDialogComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
