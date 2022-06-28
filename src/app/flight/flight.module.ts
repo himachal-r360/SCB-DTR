@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { DurationTimePipe } from '../pipes/duration-time.pipe';
 import { FlightDetailComponent } from './flight-detail/flight-detail.component';
+import { MaterialModule } from '../material.module';
+import { DirectiveModule } from '../directives/directive.module';
 
 
 
@@ -24,16 +26,17 @@ const routes: Routes = [
     FlightListComponent,
     DurationTimePipe,
     FlightDetailComponent
-    
-    
+
+
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+  MaterialModule,
+  DirectiveModule
 
-    
   ],
   exports: [RouterModule]
 })

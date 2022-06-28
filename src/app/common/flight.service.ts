@@ -17,8 +17,8 @@ export class FlightService {
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
- 
-  
+
+
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) { }
