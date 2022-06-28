@@ -61,16 +61,16 @@ export class AppComponent implements OnInit {
 
     //closing all dialogs before session expiry
    // console.log(dialog.openDialogs)
-    if (dialog.openDialogs.length > 0) {
-        dialog.closeAll();
-    }
+                    if (dialog.openDialogs.length > 0) {
+                        dialog.closeAll();
+                    }
 
 		const dialogRef = this.dialog.open(AlertDialogComponent, {
                 panelClass: 'alert_Timer',
                 disableClose: true,
                 id: 'messageforSessionDialog1',
 		width: '310px',
-    height: 'auto',
+                height: 'auto',
 		data: {beforeExpiry: true,afterExpiry:false}
 		});
 
