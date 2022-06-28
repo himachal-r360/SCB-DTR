@@ -9,6 +9,7 @@ import { MaterialModule } from '../material.module';
 import { TravellerDetailComponent } from './traveller-detail/traveller-detail.component';
 import { FlightStepperNavComponent } from './flight-stepper-nav/flight-stepper-nav.component';
 import { FareSummaryComponent } from './fare-summary/fare-summary.component';
+import { DirectiveModule } from '../directives/directive.module';
 
 
 
@@ -51,9 +52,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    MaterialModule
+  MaterialModule,
+  DirectiveModule
 
-    
   ],
   exports: [RouterModule]
 })

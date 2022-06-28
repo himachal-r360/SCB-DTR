@@ -17,11 +17,11 @@
                                         <span class="selectway">Multicity</span>
                                     </li>
                                     <li>
-                                        <div class="Travellers-dropdown ms-3">
+                                        <div class="Travellers-dropdown ms-3" appDropdown>
                                             <div class="Travellers-dropdown-title">
                                                 <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i></h5>
                                             </div>
-                                            <ul class="Travellers-dropdown-data Travellershide">
+                                            <ul class="Travellers-dropdown-data flight-from-hide dropdown">
                                                 <li>
                                                     <p class="t-title">Travellers</p>
                                                 </li>
@@ -77,12 +77,18 @@
 
                                     </li>
                                     <li>
-                                        <select name="" class="liothers class-select ms-4" value="B" [(ngModel)]="flightClassVal" aria-label="Default select example" formControlName="flightclass">
+                                        <!-- <select name="" class="liothers class-select ms-4" value="B" [(ngModel)]="flightClassVal" aria-label="Default select example" formControlName="flightclass">
                                             <option selected="selected" value="B">Business Class</option>
                                             <option value="E">Economy Class</option>
                                             <option value="F">First Class</option>
                                             <option value="P">Premium Economy</option>
-                                        </select>
+                                        </select> -->
+                                        <mat-select class=" ms-4" [(ngModel)]="flightClassVal" formControlName="flightclass">
+                                          <mat-option value="B">Business Class</mat-option>
+                                          <mat-option value="E">Economy Class</mat-option>
+                                          <mat-option value="F">First Class</mat-option>
+                                          <mat-option value="P">Premium Economy</mat-option>
+                                        </mat-select>
                                     </li>
                                 </ul>
                             </div>
@@ -90,11 +96,11 @@
                                 <div class="row g-2">
                                     <div class="col-lg-6">
                                         <div class="select-root-area">
-                                            <div class="select-root-left">
+                                            <div class="select-root-left" appDropdown>
                                                 <span class="select-roottitle">FROM</span>
                                                 <h5 class="fw_6 ">{{fromCityName}}</h5>
                                                 <span class="select-roottitle">{{fromAirpotName}}</span>
-                                                <div class="flight-from-data flight-from-hide" >
+                                                <div class="flight-from-data flight-from-hide dropdown">
                                                     <div class="flight-from-data-search">
                                                         <input type="text" autocomplete="off" name=""   class="w-100" id="fromCitySearch"   placeholder="Search City" (keyup)="fromList($event)">
                                                         <!-- <input type="hidden" name="" id="hdnFromCitySearch" formControlName="flightfrom" placeholder="Search City">
@@ -123,12 +129,12 @@
                                             <div class="select-root-icons" (click)="swap()">
                                                 <img src="./assets/images/icons/twoway.png" alt="">
                                             </div>
-                                            <div class="select-root-right">
+                                            <div class="select-root-right" appDropdown>
                                                 <span class="select-roottitle">TO</span>
                                                 <h5 class="fw_6 ">{{toCityName}}</h5>
                                                 <span class="select-roottitle">{{toAirpotName}}</span>
 
-                                                <div class="flight-to-data flight-from-hide" >
+                                                <div class="flight-to-data flight-from-hide dropdown" >
                                                     <div class="flight-from-data-search">
                                                         <input type="text" name="" autocomplete="off" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
                                                     </div>
@@ -157,7 +163,7 @@
                                         <div class="root-date">
                                             <div class="select-root-area">
                                                 <div class="select-dep-ret">
-                                                    <div class="area-root-departure"  id="DepartureDate">
+                                                    <div class="area-root-departure" (click)="picker.open()"  >
                                                         <div class="select-root-departure">
                                                             <span class="select-roottitle">DEPARTURE</span>
                                                             <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
@@ -165,7 +171,12 @@
                                                         </div>
                                                         <div class="select-root-date">
                                                             <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
-                                                            <input type="hidden" name="hdnDepartureDate" value={{departureDate}}  formControlName="departure">
+                                                            <mat-form-field  style="visibility:hidden;">
+                                                              <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" >
+                                                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                              <mat-datepicker #picker ></mat-datepicker>
+                                                       </mat-form-field>
+                                                            <!-- <input type="hidden" name="hdnDepartureDate" value={{departureDate}}  formControlName="departure"> -->
                                                         </div>
                                                     </div>
                                                     <!-- <div class="area-root-departure" (click)="picker.open()">
@@ -306,7 +317,9 @@
                                     <span class="ms-3 me-3">-</span>
                                     <input type="number" min="0"  [value]="maxPrice" [max]="maxPrice" oninput="validity.valid" id="max_price" class="price-range-field" />
                                 </div>
-                                <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+                                <!-- <div id="slider-range" class="price-filter-range" name="rangeInput"></div> -->
+                                <mat-slider min="1" max="100" step="1" value="50"></mat-slider>
+
                             </div>
                         </div>
                         <hr>
@@ -899,7 +912,7 @@
                                                                 <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                     <!-- <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in Nagpur </p> -->
                                                                     <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
-                                                                </div> 
+                                                                </div>
                                                             </div>
                                                             <!-- <div class="tabs-depart-three">
                                                                 <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
@@ -1145,11 +1158,11 @@
 
 
         <!-- ------------------------------
-            >>> Modal bookingprocess 
+            >>> Modal bookingprocess
         ---------------------------------->
         <div class="modal bookingprocess" id="bookingprocess">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">  
+                <div class="modal-content">
                     <div class="modal-body ">
                         <div class="bookingprocess-items">
                             <div class="bookingprocess-title text-center">

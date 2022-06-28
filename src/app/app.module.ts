@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,7 @@ import { SearchComponent } from './core/search/search.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { DirectiveModule } from './directives/directive.module';
 
 
 
@@ -22,10 +23,7 @@ import { MaterialModule } from './material.module';
     HeaderComponent,
     HomeComponent,
     SearchComponent,
-    FooterComponent,
-
-    
-    
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -35,12 +33,12 @@ import { MaterialModule } from './material.module';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MaterialModule
-    
-    
+    MaterialModule,
+    DirectiveModule
   ],
   exports:[SearchComponent],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
