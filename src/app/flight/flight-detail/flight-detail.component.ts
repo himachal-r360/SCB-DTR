@@ -32,9 +32,7 @@ export class FlightDetailComponent implements OnInit {
 
   getFlightDetails(){
     //this._flightService.getFlightDetailsVal()
-    // this.commonService.getShowLoginDashboardStatus().subscribe((dashboardLoginStatus) => {
-    //   this.show = dashboardLoginStatus;
-    // });
+
     let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
     let param=JSON.parse(flightDetailsArrVal);
       if(param!=null){
