@@ -39,7 +39,7 @@
     </div>
     <!-- Smartbuy new Disclamier popup code  -->
     <!-- Button trigger modal -->
-    <button type="button" class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></button>
+    <a  class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></a>
     <div class="container_hftab">
         <div class="d-none d-sm-none d-lg-block">
             <nav class=" sb_head">
@@ -82,7 +82,7 @@
                                 </ul>
                             </div>
 
-    <button type="button" class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></button>
+    <a class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></a>
                             <span class="focus-border"></span>
                             <span class="icn_tool"> 
                                 <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
@@ -341,7 +341,7 @@
                         <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you</a>
                     </li>
                     <li class="dropdown">
-                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train' ? 'active' : ''">Travel & Stays</a>
+                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays</a>
                         <div class="dropdown-content-list list-travel">
                             <div class="row">
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
@@ -374,7 +374,7 @@
                                     <div>
                                         <div>
                                             <p><a href="javascript:;" (click)="goTo('train')" class="list-travel-font">Trains</a></p>
-                                            <p class="points">3X Reward Points | 5% Cashback</p>
+                                            <p class="points">{{serviceSettings.offer_construct.train.reward}}X Reward Points | {{serviceSettings.offer_construct.train.cashback}}% Cashback</p>
                                             <p class="mb-2 mt-3"><a href="javascript:;" (click)="goTo('train/pnr')">Check PNR Status</a></p>
                                         </div>
                                     </div>
@@ -412,7 +412,7 @@
                                     <div>
                                         <div>
                                             <p><a href="javascript:;" (click)="goTo('bus')" class="list-travel-font">Bus</a></p>
-                                            <p class="points">5X Reward Points | 5% Cashback</p>
+                                            <p class="points">{{serviceSettings.offer_construct.bus.reward}}X Reward Points | {{serviceSettings.offer_construct.bus.cashback}}% Cashback</p>
                                         </div>
                                     </div>
                                     <div class="mt-3">
@@ -593,13 +593,13 @@
                                 </div>
                                 <div class="col-sm-6 col-lg-6 text-center">
                                     <h4 class="title">Offers on Top Brands</h4>
-                                    <div class="brand_img">
+                                    <div class="brand_img" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
                                         <img (click)="redirectUrlpopup('amazon',0,'amazon')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/amazon.svg" alt="amazon">
                                     </div>
-                                    <div class="brand_img">
+                                    <div class="brand_img" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
                                         <img (click)="redirectUrlpopup('flipkart',0,'flipkart')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/flipkart.svg" alt="flipkart">
                                     </div>
-                                    <div class="brand_img">
+                                    <div class="brand_img" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
                                         <img (click)="redirectUrlpopup('imagine',0,'imagine')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/premium.svg" alt="imaginetresor">
                                     </div>
                                 </div>

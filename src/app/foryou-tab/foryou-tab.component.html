@@ -624,7 +624,7 @@
 
 
     <!-- Trending Items section  -->
-    <div class=" pt-3 pt-sm-0 container_ftab" *ngIf="showShoppingItems && amazonCategories">
+    <div class=" pt-3 pt-sm-0 container_ftab" *ngIf="showShoppingItems && amazonCategories && DOMAIN_SETTINGS.AMAZON_PANTRY==1">
         <div class="d-none d-sm-block web_code" >
             <h3 class="d-inline">Trending items</h3>
             <span class="">
@@ -686,27 +686,6 @@
     </div>
 </div>
 </div>
-<!-- <div>
-      <div class="">
-       <div class="product_info">
-          <div class="d-inline">
-            <span class="sold_tag">sold this week</span>
-            <span class="whilist_tag">Heart</span>
-          </div>
-          <div class="">
-            <div class="p-3 text-center mt-sm-3">
-              <img src="{{cdnUrl}}images/smartbuy/partner/amazon.png" alt="product_img" class="img-fluid" height="100px" width="100px">
-            </div>
-            <p class="prd_name">Samsung</p>
-            <p class="prd_desc ">Samsung Galaxy M30s 128GB (Opal Black, 6G…</p>
-            <p class="rating_star"><span class="fa fa-star checked"></span> 4.5</p>
-            <p class="price"><i class="fa fa-rupee"></i>14,699 <span class="points">+250px</span></p>
-            <p class="emi_text">EMI starting at <span><i class="fa fa-rupee"></i>500</span></p>
-            <p class="partner_img">Best Price on <span><img src="{{cdnUrl}}images/smartbuy/partner/amazon.png" alt="partner"></span></p>
-          </div>
-        </div> 
-      </div>
-    </div>-->
 </div>
 
 
@@ -746,15 +725,7 @@
                     </div>
                 </div>
             </a>
-            <!-- <a  (click)="goTo('train')">
-        <div class="emi_content_cate">
-          <img src="{{cdnUrl}}images/smartbuy/emi_train.png" alt="partner_logo" class="">
-          <div class="emi_text">
-            <p class="cate_name">Trains</p>
-            <p class="cate_price"><span>Starting EMI</span> <span><b>@399</b></span></p>
-          </div>
-        </div>
-      </a> -->
+
             <a (click)="redirectUrl('amazon',0,'amazon')"  *ngIf="DOMAIN_SETTINGS.AMAZON==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_amazon.png" alt="Amazon" class="">

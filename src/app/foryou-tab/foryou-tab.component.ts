@@ -459,7 +459,7 @@ public modeselectTrending= 'All';
   }, 50);
   
 
-    if (this.showShoppingItems) {
+    if (this.showShoppingItems && this.DOMAIN_SETTINGS['AMAZON_PANTRY']==1) {
       //Shopping Products   
       var getShoopingParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: 'All' })) };
       this.rest.getShoopingProducts(JSON.stringify(getShoopingParam)).subscribe(result => {
@@ -784,7 +784,7 @@ public modeselectTrending= 'All';
 
   brandOptions: any = {
     loop: true,
-    autoplay: false,
+    autoplay: true,
     autoplayTimeout: 8000,
     autoplayHoverPause: true,
     margin: 15,

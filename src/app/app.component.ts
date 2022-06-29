@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
         this.domainName='SMARTBUY';
         
         setTimeout(() => {
-        $('link[href="smartbuy.css"]'). attr("href","smartbuy.css");
+       // $('link[href="smartbuy.css"]'). attr("href","smartbuy.css");
         },1000);
        
        
@@ -314,18 +314,13 @@ export class AppComponent implements OnInit {
         } 
       }
      
-    this.router.events.subscribe((event: any) => {
     
+    this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-
 	if(this.activatedRoute.snapshot.queryParamMap.get('channel')=='payzapp' || sessionStorage.getItem("channel")=="payzapp"){
 	this.showHeader=false;
-  $(".bus-home").removeClass("m-pt60");
-  $(".train-home").removeClass("m-pt60");
 	sessionStorage.setItem("channel", "payzapp");
 	}else{
-      $(".bus-home").addClass("m-pt60");
-      $(".train-home").addClass("m-pt60");
      this.deviceInfo = this.deviceService.getDeviceInfo();
       const isMobile = this.deviceService.isMobile();
       this.isMobile=isMobile;
@@ -333,41 +328,21 @@ export class AppComponent implements OnInit {
       const isDesktopDevice = this.deviceService.isDesktop();
 
         var pageUrl=event.urlAfterRedirects.split('?')[0];
-        console.log(pageUrl);
-        
         if(isDesktopDevice){
          this.mobileClassName='';
-         
-              switch (pageUrl) {
+                switch (pageUrl) {
+               
                 case '/foryou' :
-               //this.loadStyle('owl_default.css','owl_default');
-	        //this.loadStyle('owl_carousel.css','owl_carousel');
+                this.menuActiveClass='foryou';
                 break;
                 
-               /*  case '/' :
-	        this.loadStyle('jquery-ui.css','jquery-ui');
-	        this.loadStyle('bootstrap-select.css','bootstrap-select');
-	        this.loadStyle('bootstrap-datepicker.css','bootstrap-datepicker');
-	        this.loadStyle('daterangepicker.css','daterangepicker');
+                  case '/' :  case '/flight-list':
+                this.menuActiveClass='flight';
                 break;
-                   
-                 case '/flight-list' :
-	        this.loadStyle('jquery-ui.css','jquery-ui');
-	        this.loadStyle('bootstrap-select.css','jbootstrap-select');
-	        this.loadStyle('bootstrap-datepicker.css','bootstrap-datepicker');
-	        this.loadStyle('daterangepicker.css','daterangepicker');
-                break;
-                */
-                }
+          }     
         }else{
-        this.mobileClassName='bg-mobile';
-              switch (pageUrl) {
-                case '/foryou' :
-               	//this.loadStyle('owl_default.css','owl_default');
-	       // this.loadStyle('owl_carousel.css','owl_carousel');
-                break;
-                
-                }
+
+        
        }
      
       }
