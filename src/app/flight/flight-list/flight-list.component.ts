@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { Options } from '@angular-slider/ngx-slider';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -111,7 +112,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   fromContryName: any;
   toContryName: any;
   minDate = new Date();
-
+  options: Options = {
+    floor: 0,
+    ceil: 1000
+  };
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
@@ -729,16 +733,18 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
       });
-      this.flightList = filteredStopOver;
+     // this.flightList = filteredStopOver;
     }
     //PriceFilter
     if (this.flightList.length > 0) {
-      var min_price = parseFloat($('#min_price').val());
-      var max_price = parseFloat($('#max_price').val());
+      // var min_price = parseFloat($('#min_price').val());
+      // var max_price = parseFloat($('#max_price').val());
+      var min_price = this.minPrice;
+      var max_price = this.maxPrice;
       var filteredPrice: any[] = [];
       this.flightList.filter((e: any) => {
         if (e.priceSummary.length > 0) {
-          if (e.priceSummary[0].totalFare > min_price && e.priceSummary[0].totalFare < max_price) {
+          if (e.priceSummary[0].totalFare >= min_price && e.priceSummary[0].totalFare <= max_price) {
             filteredPrice.push(e);
           }
         }
@@ -1034,73 +1040,73 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   Initslider() {
     var $that = this;
-    $('.js-range-slider').ionRangeSlider({
-      type: 'double',
-      min: 0,
-      max: 1000,
-      from: 200,
-      to: 500,
-      prefix: '$',
-      grid: true,
-    });
+    // $('.js-range-slider').ionRangeSlider({
+    //   type: 'double',
+    //   min: 0,
+    //   max: 1000,
+    //   from: 200,
+    //   to: 500,
+    //   prefix: '$',
+    //   grid: true,
+    // });
 
-    $('#price-range-submit').hide();
+    // $('#price-range-submit').hide();
 
-    $('#min_price,#max_price').on('change', function () {
-      $('#price-range-submit').show();
+    // $('#min_price,#max_price').on('change', function () {
+    //   $('#price-range-submit').show();
 
-      var min_price_range = parseInt($('#min_price').val());
+    //   var min_price_range = parseInt($('#min_price').val());
 
-      var max_price_range = parseInt($('#max_price').val());
+    //   var max_price_range = parseInt($('#max_price').val());
 
-      if (min_price_range > max_price_range) {
-        $('#max_price').val(min_price_range);
-      }
+    //   if (min_price_range > max_price_range) {
+    //     $('#max_price').val(min_price_range);
+    //   }
 
-      $('#slider-range').slider({
-        values: [min_price_range, max_price_range],
-      });
-    });
+    //   $('#slider-range').slider({
+    //     values: [min_price_range, max_price_range],
+    //   });
+    // });
 
-    $('#min_price,#max_price').on('paste keyup', function () {
-      $('#price-range-submit').show();
+    // $('#min_price,#max_price').on('paste keyup', function () {
+    //   $('#price-range-submit').show();
 
-      var min_price_range = parseInt($('#min_price').val());
+    //   var min_price_range = parseInt($('#min_price').val());
 
-      var max_price_range = parseInt($('#max_price').val());
+    //   var max_price_range = parseInt($('#max_price').val());
 
-      if (min_price_range == max_price_range) {
-        max_price_range = min_price_range + 100;
+    //   if (min_price_range == max_price_range) {
+    //     max_price_range = min_price_range + 100;
 
-        $('#min_price').val(min_price_range);
-        $('#max_price').val(max_price_range);
-      }
+    //     $('#min_price').val(min_price_range);
+    //     $('#max_price').val(max_price_range);
+    //   }
 
-      $('#slider-range').slider({
-        values: [min_price_range, max_price_range],
-      });
-      $that.sliderRange($that, $that.minPrice, $that.maxPrice);
-      // $('#slider-range').slider({
-      //   range: true,
-      //   orientation: 'horizontal',
-      //   min: $that.minPrice,
-      //   max: $that.maxPrice,
-      //   values: [ $that.minPrice, $that.maxPrice],
-      //   step: 100,
-      //   slide: function (event: any, ui: any) {
-      //     if (ui.values[0] == ui.values[1]) {
-      //       return false;
-      //     }
+    //   $('#slider-range').slider({
+    //     values: [min_price_range, max_price_range],
+    //   });
+    //   $that.sliderRange($that, $that.minPrice, $that.maxPrice);
+    //   // $('#slider-range').slider({
+    //   //   range: true,
+    //   //   orientation: 'horizontal',
+    //   //   min: $that.minPrice,
+    //   //   max: $that.maxPrice,
+    //   //   values: [ $that.minPrice, $that.maxPrice],
+    //   //   step: 100,
+    //   //   slide: function (event: any, ui: any) {
+    //   //     if (ui.values[0] == ui.values[1]) {
+    //   //       return false;
+    //   //     }
 
-      //     $('#min_price').val(ui.values[0]);
-      //     $('#max_price').val(ui.values[1]);
-      //     return;
-      //   },
-      // });
+    //   //     $('#min_price').val(ui.values[0]);
+    //   //     $('#max_price').val(ui.values[1]);
+    //   //     return;
+    //   //   },
+    //   // });
 
-      $('#min_price').val($('#slider-range').slider('values', 0));
-      $('#max_price').val($('#slider-range').slider('values', 1));
-    });
+    //   $('#min_price').val($('#slider-range').slider('values', 0));
+    //   $('#max_price').val($('#slider-range').slider('values', 1));
+    // });
     $that.sliderRange($that, $that.minPrice, $that.maxPrice);
     // $('#slider-range').slider({
     //   range: true,
@@ -1120,54 +1126,69 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     //     return;
     //   },
     // });
-    $('#slider-range,#price-range-submit').click(function () {
-      var min_price = $('#min_price').val();
-      var max_price = $('#max_price').val();
+    // $('#slider-range,#price-range-submit').click(function () {
+    //   var min_price = $('#min_price').val();
+    //   var max_price = $('#max_price').val();
 
-      $('#searchResults').text(
-        'Here List of products will be shown which are cost between ' +
-        min_price +
-        ' ' +
-        'and' +
-        ' ' +
-        max_price +
-        '.'
-      );
-    });
+    //   $('#searchResults').text(
+    //     'Here List of products will be shown which are cost between ' +
+    //     min_price +
+    //     ' ' +
+    //     'and' +
+    //     ' ' +
+    //     max_price +
+    //     '.'
+    //   );
+    // });
 
-    $('.price-slider').slider({
-      range: true,
-      min: 0,
-      max: 24,
-      values: [0, 24],
-      slide: function (event: any, ui: any) {
-        $('.price-value').text(ui.values[0] + ' hrs');
-        $('.price-value2').text(ui.values[1] + ' hrs');
-        $that.popularFilterFlightData();
-      },
-    });
-    $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
-    $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
+    // $('.price-slider').slider({
+    //   range: true,
+    //   min: 0,
+    //   max: 24,
+    //   values: [0, 24],
+    //   slide: function (event: any, ui: any) {
+    //     $('.price-value').text(ui.values[0] + ' hrs');
+    //     $('.price-value2').text(ui.values[1] + ' hrs');
+    //     $that.popularFilterFlightData();
+    //   },
+    // });
+    // $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
+    // $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
   }
   sliderRange($that: this, minPrice: number, maxPrice: number) {
+    $that.options = {
+      floor: minPrice,
+      ceil: maxPrice
+    };
 
-    $('#slider-range').slider({
-      range: true,
-      orientation: 'horizontal',
-      min: minPrice,
-      max: maxPrice,
-      values: [minPrice, maxPrice],
-      step: 100,
-      slide: function (event: any, ui: any) {
-        if (ui.values[0] == ui.values[1]) {
-          return false;
-        }
-        $('#min_price').val(ui.values[0]);
-        $('#max_price').val(ui.values[1]);
-        $that.popularFilterFlightData();
-        return;
-      },
-    });
+    // $('#slider-range').slider({
+    //   range: true,
+    //   orientation: 'horizontal',
+    //   min: minPrice,
+    //   max: maxPrice,
+    //   values: [minPrice, maxPrice],
+    //   step: 100,
+    //   slide: function (event: any, ui: any) {
+    //     if (ui.values[0] == ui.values[1]) {
+    //       return false;
+    //     }
+    //     $('#min_price').val(ui.values[0]);
+    //     $('#max_price').val(ui.values[1]);
+    //     $that.popularFilterFlightData();
+    //     return;
+    //   },
+    // });
+  }
+  onMinValueChange(event:any)
+  {
+    this.minPrice = event;
+    this.popularFilterFlightData();
+    // console.log(event)
+  }
+  onMaxValueChange(event:any)
+  {
+    this.maxPrice = event;
+    this.popularFilterFlightData();
   }
   resetPricefilter() {
     $('#min_price').val(this.minPrice)
