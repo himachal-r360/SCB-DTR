@@ -735,6 +735,18 @@ export class TravelSearchComponent implements OnInit {
    }
   }
   
+  mliteDatepickerOpened(){
+  console.log('opened');
+  $("body").css("overflow-x", "visible");
+  }
+  
+  mliteDatepickerClosed(){
+       setTimeout(()=>{  
+         $("body").css("overflow-x", "hidden");
+        }, 100);
+   
+  }
+  
   updatetraveller() {
     var adultcount = (this.adult_cnt);
     var childcount = (this.child_cnt);
