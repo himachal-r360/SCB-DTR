@@ -104,6 +104,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   minPrice: number = 0;
   maxPrice: number = 10000;
+  resetMinPrice: number = 0;
+  resetMaxPrice: number = 10000;
+  minStopOver:number = 0;
+  maxStopOver:number = 24;
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
@@ -114,7 +118,17 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   minDate = new Date();
   options: Options = {
     floor: 0,
-    ceil: 1000
+    ceil: 1000,
+    translate: (value: number): string => {
+      return '';
+    }
+  };
+  optionsStopOver: Options = {
+    floor: 0,
+    ceil: 24,
+    translate: (value: number): string => {
+      return '';
+    }
   };
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location) { }
 
@@ -718,8 +732,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //StopOverFilter
     if (this.flightList.length > 0) {
-      var start = parseInt($('.price-value').text().replace(' hrs', ''));
-      var end = parseInt($('.price-value2').text().replace(' hrs', ''));
+      // var start = parseInt($('.price-value').text().replace(' hrs', ''));
+      // var end = parseInt($('.price-value2').text().replace(' hrs', ''));
+      var start = this.minStopOver;
+      var end =this.maxStopOver;
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = [];
@@ -733,7 +749,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
       });
-     // this.flightList = filteredStopOver;
+      this.flightList = filteredStopOver;
     }
     //PriceFilter
     if (this.flightList.length > 0) {
@@ -918,8 +934,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.flightList.length > 0) {
         this.minPrice = this.flightList[0].priceSummary[0].totalFare;
         this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
-        $('#min_price').val(this.minPrice);
-        $('#max_price').val(this.maxPrice);
+
+        // $('#min_price').val(this.minPrice);
+        // $('#max_price').val(this.maxPrice);
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
       let query: any = localStorage.getItem('searchVal');
@@ -1158,9 +1175,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   sliderRange($that: this, minPrice: number, maxPrice: number) {
     $that.options = {
       floor: minPrice,
-      ceil: maxPrice
+      ceil: maxPrice,
+      translate: (value: number): string => {
+        return '';
+      }
     };
-
+  this.resetMinPrice = minPrice;
+  this.resetMaxPrice = maxPrice;
     // $('#slider-range').slider({
     //   range: true,
     //   orientation: 'horizontal',
@@ -1191,16 +1212,31 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.popularFilterFlightData();
   }
   resetPricefilter() {
-    $('#min_price').val(this.minPrice)
-    $('#max_price').val(this.maxPrice)
+    this.minPrice = this.resetMinPrice;
+    this.maxPrice = this.resetMaxPrice;
+    // $('#min_price').val(this.minPrice)
+    // $('#max_price').val(this.maxPrice)
     this.Initslider();
     this.popularFilterFlightData();
   }
+  onMinStopOverChange(event:any)
+  {
+    this.minStopOver = event;
+    this.popularFilterFlightData();
+    // console.log(event)
+  }
+  onMaxStopOverChange(event:any)
+  {
+    this.maxStopOver = event;
+    this.popularFilterFlightData();
+  }
   ResetStopOver() {
-    $('.price-slider').slider('values', 0, 0)
-    $('.price-slider').slider('values', 1, 24)
-    $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
-    $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
+    this.minStopOver = 0;
+    this.maxStopOver = 24;
+    // $('.price-slider').slider('values', 0, 0)
+    // $('.price-slider').slider('values', 1, 24)
+    // $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
+    // $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
     this.popularFilterFlightData();
   }
 
