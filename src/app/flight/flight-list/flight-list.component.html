@@ -169,9 +169,9 @@
                                                             <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
                                                             <span class="select-roottitle">{{departureDate | date:'EEEE' }}</span>
                                                         </div>
-                                                        <div class="select-root-date">
+                                                        <div class="select-root-date" style="position: relative; left: 0;">
                                                             <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
-                                                            <mat-form-field  style="visibility:hidden;">
+                                                            <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                               <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" >
                                                               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                               <mat-datepicker #picker ></mat-datepicker>
@@ -674,7 +674,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="flight-info-box">
                                     <!-- <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> -->
                                     <p></p>
