@@ -20,7 +20,7 @@ import { CommunicationService } from './shared/services/communication.service';
 import {MatBottomSheet, MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA,MatBottomSheetConfig} from '@angular/material/bottom-sheet';
 import {MaterialModule} from './material.module';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
-import { MatSliderModule } from '@angular/material/slider'; 
+import { DirectiveModule } from './directives/directive.module';
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -47,7 +47,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
     BrowserAnimationsModule,
-    MaterialModule,MatSliderModule
+    MaterialModule,DirectiveModule
   ],
   exports:[SearchComponent],
    providers: [

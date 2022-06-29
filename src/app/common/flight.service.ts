@@ -17,13 +17,14 @@ export class FlightService {
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
- 
-  
+
+
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) { }
 
   flightList(para: any) {
+    debugger;
     let body = JSON.stringify(para)
     return this.http.post(this.flight, body, { headers: this.header })
   }
