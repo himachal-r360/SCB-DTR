@@ -17,6 +17,8 @@ export class FlightService {
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
+  private travellerDetailsSubject = new BehaviorSubject<any>(null);
+  travellerDetailsObservalble= this.travellerDetailsSubject.asObservable();
 
 
 
@@ -24,7 +26,6 @@ export class FlightService {
   constructor(private http: HttpClient) { }
 
   flightList(para: any) {
-    debugger;
     let body = JSON.stringify(para)
     return this.http.post(this.flight, body, { headers: this.header })
   }
@@ -50,5 +51,13 @@ export class FlightService {
   getFlightDetailsVal(): Observable<any> {
     return this.flightDetailsSubject.asObservable();
   }
+
+  // setTravellerDetails(para:any){
+  //   this.travellerDetailsSubject.next(para);
+  // }
+
+  // getTravellerDetailsVal(): Observable<any> {
+  //   return this.travellerDetailsSubject.asObservable();
+  // }
 
 }

@@ -25,18 +25,18 @@
                             <div class="traveller-addbox-details traveller-adults-details">
                                 <div class="traveller-adults-ul">
                                     <ul class="add-search-ul d-block">
-                                        <li class="custom-check-box">
+                                        <li class="custom-check-box" *ngFor="let adult of adultDetailList">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input"
                                                         checked="checked">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">John Smith . </span>
-                                                    <span class="description fw_5">Male</span>
+                                                    <span class="description fs_14 text-black fw_7">{{adult.firstName}} {{adult.lastName}} . </span>
+                                                    <span class="description fw_5">{{adult.gender}}</span>
                                                 </label>
                                             </div>
                                         </li>
-                                        <!-- <li class="custom-check-box">
+                                         <!-- <li class="custom-check-box">
                                                             <div class="custom-controls-stacked">
                                                                 <label class="custom-control material-checkbox">
                                                                     <input type="checkbox" class="material-control-input">
@@ -45,19 +45,19 @@
                                                                     <span class="description fw_5">Male</span>
                                                                 </label>
                                                             </div>
-                                                        </li>  -->
+                                                        </li>   -->
                                     </ul>
 
                                     <div class="add-traveller-adults" *ngIf="toggleAdult">
                                         <form class="forms-field" [formGroup]="addAdultDetail">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <ul class="select-gender">
-                                                        <li>
-                                                            <a href="javascript:void(0);" class="active">Male</a>
+                                                    <ul class="select-gender" >
+                                                        <li >
+                                                            <a   [ngClass]="activeMaleClass == true ? 'active' : ''"  (click)="getGenderValue('Male')">Male</a>
                                                         </li>
-                                                        <li>
-                                                            <a href="javascript:void(0);">Female</a>
+                                                        <li >
+                                                            <a [ngClass]="activeFemaleClass == true ? 'active' : ''"  (click)="getGenderValue('Female')">Female</a>
                                                         </li>
                                                     </ul>
                                                 </div>
