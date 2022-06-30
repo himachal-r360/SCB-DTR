@@ -148,7 +148,7 @@ rd_site_url: any;shop_site_url;
 	voiceActiveSectionSuccess: boolean = false;
 	voiceActiveSectionListening: boolean = false;
 	voiceText: any;
-        
+        payzrestriction:boolean=false;
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
@@ -282,22 +282,14 @@ rd_site_url: any;shop_site_url;
     this.scrollMenu=this.serviceSettings.scrollMenu;
     this.new_header_footer=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['new_header_footer'];
     
-        const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+           const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
                 if(cookieExistsp){  
-                    this.showMenu=false;
+                    this.payzrestriction=true;
                 }else{
-                     this.showMenu=true;
-                }
-    
-    
-      /*  const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
-                if(cookieExistsp){  
-                    this.showHeader=false;
-                }else{
-                     this.showHeader=true;
-                }
-    
-    */
+                     this.payzrestriction=false;
+                } 
+                
+                
      if(this.serviceSettings.notifications==1){   
     //FCM Analytics
    /*const firebaseConfig = {

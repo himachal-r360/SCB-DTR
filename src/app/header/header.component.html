@@ -629,7 +629,15 @@
 </button>
 </a>
 </div>
-<div class="logo pl-10">
+
+<div class="logo pl-10" *ngIf="payzrestriction==true" >
+
+     <a href="{{DOMAIN_SETTINGS.main_domain_url}}"> <i class="fa fa-home sb-icon" aria-hidden="true" style="color:#007bff;"></i> </a>
+
+</div>
+
+
+<div class="logo pl-10" *ngIf="payzrestriction==false" >
 
     <span *ngIf="is_main==1">
 <a  href="https://www.hdfcbank.com/" target="_blank"  >
@@ -640,15 +648,17 @@
     <a href="{{DOMAIN_SETTINGS.main_domain_url}}"><img src="{{cdnUrl}}images/sb_img/smartbuy_new.svg" alt="Smartbuy" class="" width="120px"> </a>
 
 </div>
+
+
 </div>
 <div class="nav-right">
-    <div class="before_log_m" *ngIf="guestLogin==true &&  customerLogin==false">
+    <div class="before_log_m" *ngIf="guestLogin==true &&  customerLogin==false && payzrestriction==false">
 
         <div>
             <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
         </div>
     </div>
-        <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false">
+        <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false  && payzrestriction==false">
 
         <div>
             <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
@@ -745,7 +755,7 @@
 </div>
 </div>
 
-<div class="sb-m-search mt-2">
+<div class="sb-m-search mt-2" *ngIf="payzrestriction==false">
     <div class="search_input_m">
         <input class="form-control mr-sm-2 sb_search" type="text" placeholder="What’s on your mind?" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
         <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
@@ -826,7 +836,7 @@
         <div class="menu_body">
             <div>
                 <ul>
-                    <li *ngIf="showMenu">
+                    <li *ngIf="payzrestriction==false">
                         <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''">
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
@@ -836,12 +846,12 @@
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/shop.svg" alt="" class="svg_icn_menu"> Shop by Category</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
                     </li>
-                    <li *ngIf="showMenu">
+                    <li *ngIf="payzrestriction==false">
                         <a href="javascript:;" class="menu_name" (click)="menuMobile('privileges')">
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/privi.svg" alt="" class="svg_icn_menu"> Privileges</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
                     </li>
-                    <li>
+                    <li *ngIf="payzrestriction==false">
                         <a href="javascript:;" class="menu_name" (click)="menuMobile('deals')">
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/deals.svg" alt="" class="svg_icn_menu"> Deals & Offers</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
