@@ -10,6 +10,7 @@ import { TravellerDetailComponent } from './traveller-detail/traveller-detail.co
 import { FlightStepperNavComponent } from './flight-stepper-nav/flight-stepper-nav.component';
 import { FareSummaryComponent } from './fare-summary/fare-summary.component';
 import { DirectiveModule } from '../directives/directive.module';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 
 
@@ -25,11 +26,11 @@ const routes: Routes = [
   {
     path:"flight-booking" ,component:FlightStepperNavComponent,  children: [
       {
-        path: 'flight-details', 
+        path: 'flight-details',
         component: FlightDetailComponent,
       },
       {
-        path: 'traveller-detail', 
+        path: 'traveller-detail',
         component: TravellerDetailComponent,
       },
     ]
@@ -44,8 +45,8 @@ const routes: Routes = [
     TravellerDetailComponent,
     FlightStepperNavComponent,
     FareSummaryComponent
-    
-    
+
+
   ],
   imports: [
     CommonModule,
@@ -53,7 +54,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
   MaterialModule,
-  DirectiveModule
+  DirectiveModule,
+  NgxSliderModule
 
   ],
   exports: [RouterModule]

@@ -6,6 +6,7 @@ import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
+import { Options } from '@angular-slider/ngx-slider';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -104,6 +105,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   minPrice: number = 0;
   maxPrice: number = 10000;
+  resetMinPrice: number = 0;
+  resetMaxPrice: number = 10000;
+  minStopOver:number = 0;
+  maxStopOver:number = 24;
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
@@ -112,17 +117,30 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   fromContryName: any;
   toContryName: any;
   minDate = new Date();
-
+  options: Options = {
+    floor: 0,
+    ceil: 1000,
+    translate: (value: number): string => {
+      return '';
+    }
+  };
+  optionsStopOver: Options = {
+    floor: 0,
+    ceil: 24,
+    translate: (value: number): string => {
+      return '';
+    }
+  };
   constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location)  {
   
   
-     this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
-        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
-        this._styleManager.setScript('ion', `assets/js/ion.rangeSlider.min.js`);
-        this._styleManager.setScript('custom', `assets/js/custom.js`);
-        
-   }
+    this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+       this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+       this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+       this._styleManager.setScript('ion', `assets/js/ion.rangeSlider.min.js`);
+       this._styleManager.setScript('custom', `assets/js/custom.js`);
+       
+  }
 
   ngOnInit(): void {
     this.loader = true;
@@ -724,8 +742,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //StopOverFilter
     if (this.flightList.length > 0) {
-      var start = parseInt($('.price-value').text().replace(' hrs', ''));
-      var end = parseInt($('.price-value2').text().replace(' hrs', ''));
+      // var start = parseInt($('.price-value').text().replace(' hrs', ''));
+      // var end = parseInt($('.price-value2').text().replace(' hrs', ''));
+      var start = this.minStopOver;
+      var end =this.maxStopOver;
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = [];
@@ -743,12 +763,14 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     //PriceFilter
     if (this.flightList.length > 0) {
-      var min_price = parseFloat($('#min_price').val());
-      var max_price = parseFloat($('#max_price').val());
+      // var min_price = parseFloat($('#min_price').val());
+      // var max_price = parseFloat($('#max_price').val());
+      var min_price = this.minPrice;
+      var max_price = this.maxPrice;
       var filteredPrice: any[] = [];
       this.flightList.filter((e: any) => {
         if (e.priceSummary.length > 0) {
-          if (e.priceSummary[0].totalFare > min_price && e.priceSummary[0].totalFare < max_price) {
+          if (e.priceSummary[0].totalFare >= min_price && e.priceSummary[0].totalFare <= max_price) {
             filteredPrice.push(e);
           }
         }
@@ -922,8 +944,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.flightList.length > 0) {
         this.minPrice = this.flightList[0].priceSummary[0].totalFare;
         this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
-        $('#min_price').val(this.minPrice);
-        $('#max_price').val(this.maxPrice);
+
+        // $('#min_price').val(this.minPrice);
+        // $('#max_price').val(this.maxPrice);
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
       let query: any = localStorage.getItem('searchVal');
@@ -1050,73 +1073,73 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   Initslider() {
     var $that = this;
-    $('.js-range-slider').ionRangeSlider({
-      type: 'double',
-      min: 0,
-      max: 1000,
-      from: 200,
-      to: 500,
-      prefix: '$',
-      grid: true,
-    });
+    // $('.js-range-slider').ionRangeSlider({
+    //   type: 'double',
+    //   min: 0,
+    //   max: 1000,
+    //   from: 200,
+    //   to: 500,
+    //   prefix: '$',
+    //   grid: true,
+    // });
 
-    $('#price-range-submit').hide();
+    // $('#price-range-submit').hide();
 
-    $('#min_price,#max_price').on('change', function () {
-      $('#price-range-submit').show();
+    // $('#min_price,#max_price').on('change', function () {
+    //   $('#price-range-submit').show();
 
-      var min_price_range = parseInt($('#min_price').val());
+    //   var min_price_range = parseInt($('#min_price').val());
 
-      var max_price_range = parseInt($('#max_price').val());
+    //   var max_price_range = parseInt($('#max_price').val());
 
-      if (min_price_range > max_price_range) {
-        $('#max_price').val(min_price_range);
-      }
+    //   if (min_price_range > max_price_range) {
+    //     $('#max_price').val(min_price_range);
+    //   }
 
-      $('#slider-range').slider({
-        values: [min_price_range, max_price_range],
-      });
-    });
+    //   $('#slider-range').slider({
+    //     values: [min_price_range, max_price_range],
+    //   });
+    // });
 
-    $('#min_price,#max_price').on('paste keyup', function () {
-      $('#price-range-submit').show();
+    // $('#min_price,#max_price').on('paste keyup', function () {
+    //   $('#price-range-submit').show();
 
-      var min_price_range = parseInt($('#min_price').val());
+    //   var min_price_range = parseInt($('#min_price').val());
 
-      var max_price_range = parseInt($('#max_price').val());
+    //   var max_price_range = parseInt($('#max_price').val());
 
-      if (min_price_range == max_price_range) {
-        max_price_range = min_price_range + 100;
+    //   if (min_price_range == max_price_range) {
+    //     max_price_range = min_price_range + 100;
 
-        $('#min_price').val(min_price_range);
-        $('#max_price').val(max_price_range);
-      }
+    //     $('#min_price').val(min_price_range);
+    //     $('#max_price').val(max_price_range);
+    //   }
 
-      $('#slider-range').slider({
-        values: [min_price_range, max_price_range],
-      });
-      $that.sliderRange($that, $that.minPrice, $that.maxPrice);
-      // $('#slider-range').slider({
-      //   range: true,
-      //   orientation: 'horizontal',
-      //   min: $that.minPrice,
-      //   max: $that.maxPrice,
-      //   values: [ $that.minPrice, $that.maxPrice],
-      //   step: 100,
-      //   slide: function (event: any, ui: any) {
-      //     if (ui.values[0] == ui.values[1]) {
-      //       return false;
-      //     }
+    //   $('#slider-range').slider({
+    //     values: [min_price_range, max_price_range],
+    //   });
+    //   $that.sliderRange($that, $that.minPrice, $that.maxPrice);
+    //   // $('#slider-range').slider({
+    //   //   range: true,
+    //   //   orientation: 'horizontal',
+    //   //   min: $that.minPrice,
+    //   //   max: $that.maxPrice,
+    //   //   values: [ $that.minPrice, $that.maxPrice],
+    //   //   step: 100,
+    //   //   slide: function (event: any, ui: any) {
+    //   //     if (ui.values[0] == ui.values[1]) {
+    //   //       return false;
+    //   //     }
 
-      //     $('#min_price').val(ui.values[0]);
-      //     $('#max_price').val(ui.values[1]);
-      //     return;
-      //   },
-      // });
+    //   //     $('#min_price').val(ui.values[0]);
+    //   //     $('#max_price').val(ui.values[1]);
+    //   //     return;
+    //   //   },
+    //   // });
 
-      $('#min_price').val($('#slider-range').slider('values', 0));
-      $('#max_price').val($('#slider-range').slider('values', 1));
-    });
+    //   $('#min_price').val($('#slider-range').slider('values', 0));
+    //   $('#max_price').val($('#slider-range').slider('values', 1));
+    // });
     $that.sliderRange($that, $that.minPrice, $that.maxPrice);
     // $('#slider-range').slider({
     //   range: true,
@@ -1136,66 +1159,100 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     //     return;
     //   },
     // });
-    $('#slider-range,#price-range-submit').click(function () {
-      var min_price = $('#min_price').val();
-      var max_price = $('#max_price').val();
+    // $('#slider-range,#price-range-submit').click(function () {
+    //   var min_price = $('#min_price').val();
+    //   var max_price = $('#max_price').val();
 
-      $('#searchResults').text(
-        'Here List of products will be shown which are cost between ' +
-        min_price +
-        ' ' +
-        'and' +
-        ' ' +
-        max_price +
-        '.'
-      );
-    });
+    //   $('#searchResults').text(
+    //     'Here List of products will be shown which are cost between ' +
+    //     min_price +
+    //     ' ' +
+    //     'and' +
+    //     ' ' +
+    //     max_price +
+    //     '.'
+    //   );
+    // });
 
-    $('.price-slider').slider({
-      range: true,
-      min: 0,
-      max: 24,
-      values: [0, 24],
-      slide: function (event: any, ui: any) {
-        $('.price-value').text(ui.values[0] + ' hrs');
-        $('.price-value2').text(ui.values[1] + ' hrs');
-        $that.popularFilterFlightData();
-      },
-    });
-    $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
-    $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
+    // $('.price-slider').slider({
+    //   range: true,
+    //   min: 0,
+    //   max: 24,
+    //   values: [0, 24],
+    //   slide: function (event: any, ui: any) {
+    //     $('.price-value').text(ui.values[0] + ' hrs');
+    //     $('.price-value2').text(ui.values[1] + ' hrs');
+    //     $that.popularFilterFlightData();
+    //   },
+    // });
+    // $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
+    // $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
   }
   sliderRange($that: this, minPrice: number, maxPrice: number) {
-
-    $('#slider-range').slider({
-      range: true,
-      orientation: 'horizontal',
-      min: minPrice,
-      max: maxPrice,
-      values: [minPrice, maxPrice],
-      step: 100,
-      slide: function (event: any, ui: any) {
-        if (ui.values[0] == ui.values[1]) {
-          return false;
-        }
-        $('#min_price').val(ui.values[0]);
-        $('#max_price').val(ui.values[1]);
-        $that.popularFilterFlightData();
-        return;
-      },
-    });
+    $that.options = {
+      floor: minPrice,
+      ceil: maxPrice,
+      translate: (value: number): string => {
+        return '';
+      }
+    };
+  this.resetMinPrice = minPrice;
+  this.resetMaxPrice = maxPrice;
+    // $('#slider-range').slider({
+    //   range: true,
+    //   orientation: 'horizontal',
+    //   min: minPrice,
+    //   max: maxPrice,
+    //   values: [minPrice, maxPrice],
+    //   step: 100,
+    //   slide: function (event: any, ui: any) {
+    //     if (ui.values[0] == ui.values[1]) {
+    //       return false;
+    //     }
+    //     $('#min_price').val(ui.values[0]);
+    //     $('#max_price').val(ui.values[1]);
+    //     $that.popularFilterFlightData();
+    //     return;
+    //   },
+    // });
+  }
+  onMinValueChange(event:any)
+  {
+    this.minPrice = event;
+    this.popularFilterFlightData();
+    // console.log(event)
+  }
+  onMaxValueChange(event:any)
+  {
+    this.maxPrice = event;
+    this.popularFilterFlightData();
   }
   resetPricefilter() {
-    $('#min_price').val(this.minPrice)
-    $('#max_price').val(this.maxPrice)
+    this.minPrice = this.resetMinPrice;
+    this.maxPrice = this.resetMaxPrice;
+    // $('#min_price').val(this.minPrice)
+    // $('#max_price').val(this.maxPrice)
     this.Initslider();
     this.popularFilterFlightData();
   }
+  onMinStopOverChange(event:any)
+  {
+    this.minStopOver = event;
+    this.popularFilterFlightData();
+    // console.log(event)
+  }
+  onMaxStopOverChange(event:any)
+  {
+    this.maxStopOver = event;
+    this.popularFilterFlightData();
+  }
   ResetStopOver() {
-    $('.price-slider').slider('values', 0, 0)
-    $('.price-slider').slider('values', 1, 24)
-    $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
-    $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
+    this.minStopOver = 0;
+    this.maxStopOver = 24;
+    // $('.price-slider').slider('values', 0, 0)
+    // $('.price-slider').slider('values', 1, 24)
+    // $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
+    // $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
     this.popularFilterFlightData();
   }
 
