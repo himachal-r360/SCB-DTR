@@ -955,23 +955,25 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  HideShowCompareToFly(i: number, fromCall: string) {
+  HideShowCompareToFly(i: number, fromCall: string,j:number) {
 
-    $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
-    var element = document.getElementById('CompareToFly_' + i);
-    if (element?.classList.contains('flight-details-box-hide')) {
-      element.classList.remove('flight-details-box-hide');
-    } else {
-      element?.classList.add('flight-details-box-hide');
-    }
-    $('#CompareToFly_' + i + ' .flight-details,#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
+
+
+    if (fromCall == "fare-details") {
+      $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
+      var element = document.getElementById('CompareToFly_' + i);
+      if (element?.classList.contains('flight-details-box-hide')) {
+        element.classList.remove('flight-details-box-hide');
+      } else {
+        element?.classList.add('flight-details-box-hide');
+      }
+
+      $('#CompareToFly_' + i + ' .flight-details,#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
     // $('#flight_list_'+i+' #hidefares_'+ i).addClass('d-none');
     // $('#flight_list_'+i+' #viewfares_'+ i).removeClass('d-none');
     $('.hidefares,.hideflight_details').addClass('d-none');
     $('.viewfares,.viewflight_details').removeClass('d-none');
     $('.flight-details-box').addClass('flight-details-box-hide');
-    if (fromCall == "fare-details") {
-
       // $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
       // $('#CompareToFly_' + i+" .extra'tabs-ara div:first").addClass("flight-extra-content extra-active").show();
       $('#CompareToFly_' + i).removeClass('flight-details-box-hide');
@@ -983,28 +985,29 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     else if (fromCall == "flight-details") {
       // $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
       // $('#CompareToFly_' + i+" .extra-tabs-ara div:first").addClass("flight-extra-content extra-active").show();
-      $('#CompareToFly_' + i).removeClass('flight-details-box-hide');
-      $('#CompareToFly_' + i + " .flight-details").addClass("extra-active").show();
-      $('#flight_list_' + i + ' #viewflight_details_' + i).addClass('d-none');
-      $('#flight_list_' + i + ' #hideflight_details_' + i).removeClass('d-none');
+      $('#FlightDetails_' + i+'_'+j).removeClass('flight-details-box-hide');
+      $('#FlightDetails_' + i+'_'+j+" .flight-details").addClass("extra-active").show();
+      $('#viewflight_details_' + i +'_'+j).addClass('d-none');
+      $('#hideflight_details_' + i+'_'+j).removeClass('d-none');
       // this.flightdetailsHidden = true;
     }
 
   }
-  hideFarebutton(i: number, fromCall: string) {
+  hideFarebutton(i: number, fromCall: string,j:number) {
 
-    $('.flight-details-box').addClass('flight-details-box-hide');
+
     if (fromCall == "fare-details") {
+      $('.flight-details-box').addClass('flight-details-box-hide');
       $('#flight_list_' + i + ' #hidefares_' + i).addClass('d-none');
       $('#flight_list_' + i + ' #viewfares_' + i).removeClass('d-none');
       $('#CompareToFly_' + i).addClass('flight-details-box-hide');
       $('#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
     }
     else if (fromCall == "flight-details") {
-      $('#flight_list_' + i + ' #hideflight_details_' + i).addClass('d-none');
-      $('#flight_list_' + i + ' #viewflight_details_' + i).removeClass('d-none');
-      $('#CompareToFly_' + i).addClass('flight-details-box-hide');
-      $('#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
+      $('#hideflight_details_' + i+'_'+j).addClass('d-none');
+      $('#viewflight_details_' + i +'_'+j).removeClass('d-none');
+      $('#FlightDetails_' + i+'_'+j).addClass('flight-details-box-hide');
+      $('#FlightDetails_' + i +'_'+j+ ' .fare-details').removeClass("extra-active").hide();
     }
 
   }
