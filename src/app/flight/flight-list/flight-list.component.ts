@@ -148,6 +148,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     {name:'1_stops', active:false, value:'<p>1 <br> stops</p>'},
     {name:'2plus_stops', active:false, value:'<p>2+ <br> stops</p>'}
   ]
+  toggleStopsFilteritems = [
+    {name:'All_Flights', active:true, value:'All Flights'},
+    {name:'no_stops', active:false, value:'Non-Stop'},
+  ]
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
@@ -1276,21 +1280,28 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  searchNonStop(val: any) {
-    $(".flight-counts-list").removeClass("active");
-    if (val == "no_stops") {
-      $("#Flight_Stops .Stops-list[value=no_stops]").addClass("active")
-      //this.FlightStopsFilterFlightData(val)
-      this.popularFilterFlightData();
-      //$("[id*=All_Flights]").addClass("active");
-      $('#non_stop_Upper_filter').addClass("active");
+  searchNonStop(item: any) {
+    this.toggleStopsFilteritems.filter((itemp:any)=>{
+      itemp.active=false;
+      return itemp;
+    })
+    item.active=!item.active;
+    if(item.name=="no_stops" && item.active==true){
+      this.stopsFilteritems.filter((itemp:any)=>{
+        if(item.name=="no_stops" && itemp.name=="no_stops" && item.active==true){
+          itemp.active=true;
+        }
+      })
     }
-    else if (val == "All_Flights") {
-      $("#Flight_Stops .Stops-list[value=no_stops]").removeClass("active")
-      //this.FlightStopsFilterFlightData(val)
-      this.popularFilterFlightData()
-      $('#All_Flights_Upper_filter').addClass("active");
+    else if(item.name=="All_Flights")
+    {
+      this.stopsFilteritems.filter((itemp:any)=>{
+        if(itemp.name=="no_stops"){
+          itemp.active=false;
+        }
+      })
     }
+    this.popularFilterFlightData();
   }
 
 

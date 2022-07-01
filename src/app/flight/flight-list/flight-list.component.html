@@ -399,7 +399,7 @@
                                                 <span class="material-control-indicator"></span>
                                                 <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
                                             </label>
-                                            <p>&#8377;{{airline.price}}</p>
+                                            <p>&#8377;{{airline.price|number}}</p>
                                         </div>
                                     </li>
                                     <!-- <li class="custom-check-box" >
@@ -454,7 +454,7 @@
                                                 <span class="material-control-indicator"></span>
                                                 <span class="description">{{layover.arrivalAirport}}</span>
                                             </label>
-                                            <p>&#8377;{{layover.price}}</p>
+                                            <p>&#8377;{{layover.price|number}}</p>
                                         </div>
                                     </li>
                                     <!-- <li class="custom-check-box" *ngIf="showMoreLayover">
@@ -526,12 +526,23 @@
                                     </select>
                                     <div class="flight-search-filters-counts ms-3">
                                         <ul class="flight-counts">
-                                            <li class="flight-counts-list active" id="All_Flights_Upper_filter" value="All_Flights" (click)="searchNonStop('All_Flights')">
-                                                <p>All Flights</p>
+                                            <li class="flight-counts-list" id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"
+                                            value="{{Items.value}}" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
+                                                <p> <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span> {{Items.value}}</p>
                                             </li>
-                                            <li class="flight-counts-list " id="non_stop_Upper_filter" value="non-stop" (click)="searchNonStop('no_stops')">
+                                            <!-- <li class="flight-counts-list " id="non_stop_Upper_filter" value="{{popularItems.value}}" (click)="searchNonStop('no_stops')">
                                                 <p class=""> <span>{{nonStopCount}}</span> Non-Stop</p>
-                                            </li>
+                                            </li> -->
+                                            <!-- <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                        <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                                    </label>
+                                                </div>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
@@ -685,7 +696,7 @@
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                     <span class="information-icon">
-                                                     <h6>&#8377;  {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                     <h6>&#8377;  {{list.priceSummary[0].totalFare|number}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
                                                         <!-- <img src="assets/images/icons/info.png" class="ms-2" alt=""> -->
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
@@ -694,16 +705,16 @@
                                                             <div class="hover-popover-content">
                                                                 <div class="hover-popover-content-list">
                                                                     <p>Base Fare</p>
-                                                                    <p>&#8377;{{list.priceSummary[0].baseFare|number: '.2'}}</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].baseFare|number}}</p>
                                                                 </div>
                                                                 <div class="hover-popover-content-list">
                                                                     <p>Charges</p>
-                                                                    <p>&#8377;{{list.priceSummary[0].totalFare - list.priceSummary[0].baseFare |number: '.2'}}</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].totalFare - list.priceSummary[0].baseFare |number}}</p>
                                                                 </div>
                                                                 <hr class="m-0" />
                                                                 <div class="hover-popover-content-list popover-total">
                                                                     <p>Total</p>
-                                                                    <p>&#8377;{{list.priceSummary[0].totalFare|number: '.2'}}</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].totalFare|number}}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="hover-popover-footer">
@@ -745,10 +756,10 @@
                                             </div>
                                             <div class="flight-options-list-right">
                                                 <div class="emi-options" *ngIf="item.totalFare > EMIAvailableLimit">
-                                                    <p>EMI starts at &#8377; {{calculateEMI(item.totalFare)}} per month</p>
+                                                    <p>EMI starts at &#8377; {{calculateEMI(item.totalFare)|number}} per month</p>
                                                 </div>
                                                 <div class="flight-options-price d-flex align-items-center">
-                                                    <p>&#8377;{{item.totalFare}}</p>
+                                                    <p>&#8377;{{item.totalFare |number}}</p>
                                                     <span class="information-icon">
                                                         <img src="assets/images/icons/info.png" class="ms-2" alt="">
                                                         <div class="hover-popover">
@@ -758,16 +769,16 @@
                                                             <div class="hover-popover-content">
                                                                 <div class="hover-popover-content-list">
                                                                     <p>Base Fare</p>
-                                                                    <p>&#8377;{{item.baseFare}}</p>
+                                                                    <p>&#8377;{{item.baseFare | number}}</p>
                                                                 </div>
                                                                 <div class="hover-popover-content-list">
                                                                     <p>Charges</p>
-                                                                    <p>&#8377;{{item.totalFare - item.baseFare}}</p>
+                                                                    <p>&#8377;{{item.totalFare - item.baseFare |number}}</p>
                                                                 </div>
                                                                 <hr class="m-0" />
                                                                 <div class="hover-popover-content-list popover-total">
                                                                     <p>Total</p>
-                                                                    <p>&#8377;{{item.totalFare}}</p>
+                                                                    <p>&#8377;{{item.totalFare |number}}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="hover-popover-footer">
