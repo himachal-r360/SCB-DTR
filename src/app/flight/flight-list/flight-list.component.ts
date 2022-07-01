@@ -160,7 +160,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
        
   }
   ngOnInit(): void {
-    debugger;
+    //debugger;
     this.loader = true;
     this.getQueryParamData(null);
     this.flightList = this._flightService.flightListData;
@@ -498,7 +498,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
    // Flight popular filter
   FlightPopularFilterFlightData(popularItems: any) {
-    debugger;
+    //debugger;
     popularItems.active = !popularItems.active;
     if(popularItems.name=="Morning_Departures"){
       this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6"){item.active=!item.active; return item;}})
@@ -565,7 +565,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
-    debugger;
+    //debugger;
     let updatedflightList:any = [];
     let isfilterRefundableFares = false;
     let isfilterNonStop = false;
@@ -597,7 +597,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       isPopularFilter = true;
     }
 
-    debugger;
+    //debugger;
     let flightListWithOutFilter = this.flightListWithOutFilter;
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = flightListConst;
@@ -630,7 +630,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     if(isTimingFilterItems.length>0){
       isfilterFlightTiming = true;
     }
-    debugger;
+    //debugger;
 
     // Stops Filter
 
@@ -843,7 +843,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         var flights = e.flights.filter((d: any) => {
-          debugger;
+          //debugger;
           if((this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6"){return item;}}).length>0) && new Date(d.departureDateTime) > date1 && new Date(d.departureDateTime) < date2)
           {
             return e;
@@ -953,7 +953,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //PopularFilterData
   popularFilterFlights(flightList:any){
-    debugger;
+    //debugger;
     this.flightList=flightList;
     let updatedflightList = [];
     let isfilterRefundableFares = false;
