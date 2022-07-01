@@ -515,6 +515,19 @@ public modeselectTrending= 'All';
   showBlock(blockno) {
     this.showBlockno = blockno;
   }
+ 
+ goToNew(path){
+     if(environment.IS_MAIN==1){
+        const current = new Date();
+        this.redirectPopupTriggerTimestamp=current.getTime();
+        this.redirectPopupTrigger=1;
+        this.redirectPopup=2;
+        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
+     }else{
+        this.router.navigate([this.sg['domainPath']+path]);
+     }
+    }
+  
   goTo(path) {
     if (environment.IS_MAIN == 1) {
       const current = new Date();

@@ -222,7 +222,7 @@
      <div class="mlite_exclusive d-block d-sm-none" *ngIf="DOMAIN_SETTINGS">
         <div class="container_ftab">
             <h3 class="">Smartbuy Exclusive
-                <span class="float-right"><a href="#" class="view_all_link">Explore</a></span>
+                <span class="float-right"><a (click)="goToNew('/partners')" class="view_all_link">Explore</a></span>
             </h3>
             <div class="sb_exc_xs_latest">
                 <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
@@ -363,7 +363,7 @@
             </div>
         </div>
         <div class="text-center">
-            <a href="#" class="href_link">All Offers <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a (click)="redirectDisUrl('deals')" class="href_link">All Offers <i class="fa fa-angle-right" aria-hidden="true"></i></a>
         </div>
         <div>
 
@@ -496,7 +496,7 @@
     <div class=" container_ftab" *ngIf="topDeals && topDeals.length > 0">
         <div class="mt-4">
             <h3 class="d-inline">Offer and Deals 
-                <span class="float-end float-end mt-md-3"><a href="" class="view_all_link">View All Offers</a></span>
+                <span class="float-end float-end mt-md-3"><a (click)="redirectDisUrl('deals')" class="view_all_link">View All Offers</a></span>
             </h3>
             <span class="d-block d-sm-inline mt-2 mt-sm-0">
                 <span class="pe-0 pe-sm-3" *ngIf="topDealCategory.length >0" >
@@ -559,31 +559,6 @@
             </div>
         </ng-template>  
       </owl-carousel-o>
-
-            <!-- <owl-carousel-o [options]="dealOptions" class="partners_container_emi deal_item">
-                <ng-template carouselSlide  *ngFor="let hit of topDeals;  odd as isOdd; even as isEven;">
-                <div class="row row-cols-1">
-                    <div class="col">
-                    <div class="card h-100">
-                        <img src="{{cdnDealUrl+hit.image}}" class="card-img-top radius_8" alt="..." (error)="onImgErrorDeals($event)">
-                        <div class="card-body">
-                        <h5 class="card-title">{{hit.name}}</h5>
-                        <p class="card-text">{{hit.short_description}}</p>
-                        <div class="my-2" *ngIf="hit.end_date" >
-                            <p class="exp_date">Expires on {{hit.end_date}}</p>
-                             <p class="offerCard-expiry offerCard-title">{{hit.subcategory_1}}</p> 
-                        </div>
-                        </div>
-                        <div class="card-footer">
-                            <div>
-                                <button class="btn view_btn"  (click)="redirectDisUrl('offer_details/'+hit.slug_url)">View details</button>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-                </ng-template>  
-            </owl-carousel-o> -->
     
      
       </span>
@@ -604,7 +579,7 @@
 
     <div class=" container_ftab mt-3" *ngIf="foryouPartners.length > 0 ">
         <div class="">
-            <h3 class="d-inline">Explore Partners</h3> <span class="pl-3"><!--<a >View All</a>--></span>
+            <h3 class="d-inline">Explore Partners</h3> <span class="pl-3"><a (click)="goToNew('/partners')" class="ml-10">View All</a></span>
             <!-- <h3 class="d-inline">{{foryouPartners.length}}+ Partners</h3> <span class="pl-3"><a >View All</a></span> -->
         </div>
         <div>
@@ -745,13 +720,7 @@
                 </div>
             </a>
 
-            <!-- <div class="emi_content_cate all_content_cate">
-        <div class="emi_text">
-          <p class="emi_text_inner">EMI available on</p>
-          <p class="cate_price"><span><b>40+<br/> Product categories</b></span></p>
-            <a >View All</a>
-        </div>
-      </div>-->
+
         </div>
     </div>
 </div>
