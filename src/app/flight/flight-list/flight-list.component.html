@@ -238,7 +238,27 @@
                             </div>
                             <div class="widget-content">
                                 <ul class="category-list clearfix mt-2" id="popular-filters">
-                                    <li class="custom-check-box" >
+                                    
+                                    <!-- <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                        <div class="custom-controls-stacked">
+                                            <label class="custom-control material-checkbox">
+                                                <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" (change)="popularFilterFlightData()"/>
+                                                <span class="material-control-indicator"></span>
+                                                <span class="description">{{popularItems.value}} ({{RefundableFaresCount}})</span>
+                                            </label>
+                                        </div>
+                                    </li> -->
+                                    <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                        <div class="custom-controls-stacked">
+                                            <label class="custom-control material-checkbox">
+                                                <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
+                                                <span class="material-control-indicator"></span>
+                                                <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <!-- <li class="custom-check-box" >
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
                                                 <input type="checkbox" class="material-control-input" value="Refundable-Fares" (change)="popularFilterFlightData()"/>
@@ -273,7 +293,7 @@
                                                 <span class="description">Meals Included</span>
                                             </label>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>
@@ -286,7 +306,14 @@
                             <div class="widget-content">
                                 <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
                                 <div class="flighttiming-content flight-departing">
-                                    <div class="flighttiming-list" value="0_6" (click)="FlightTimingsFilterFlightData('0_6')">
+                                    <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"  
+                                    (click)="FlightTimingsFilterFlightData(timingsItems)">
+                                        <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                        <p [innerHTML]="timingsItems.value"></p>
+                                    </div>
+                                    <!-- <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" [innerHTML]="FlightStopitem.value">
+                                    </div> -->
+                                    <!-- <div class="flighttiming-list" value="0_6" (click)="FlightTimingsFilterFlightData('0_6')">
                                         <img src="assets/images/icons/timings/1.png" alt="">
                                         <p>00-06</p>
                                     </div>
@@ -301,7 +328,7 @@
                                     <div class="flighttiming-list" value="18_0" (click)="FlightTimingsFilterFlightData('18_0')">
                                         <img src="assets/images/icons/timings/4.png" alt="">
                                         <p>18-00</p>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -334,14 +361,8 @@
                             </div>
                             <div class="widget-content"  >
                                 <div class="Stops-content" >
-                                    <div class="Stops-list" value="no_stops" (click)="FlightStopsFilterFlightData('no_stops')">
-                                        <p>No <br> stops</p>
-                                    </div>
-                                    <div class="Stops-list " value="1_stops" (click)="FlightStopsFilterFlightData('1_stops')">
-                                        <p>1 <br> stops</p>
-                                    </div>
-                                    <div class="Stops-list" value="2plus_stops" (click)="FlightStopsFilterFlightData('2plus_stops')">
-                                        <p>2+ <br> stops</p>
+                                    <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" 
+                                    [innerHTML]="FlightStopitem.value">
                                     </div>
                                 </div>
                             </div>
