@@ -1,6 +1,6 @@
-<main class="site-main"> 
+<main class="site-main">
 
-   
+
 
     <section class="flight-details-area mt-10">
         <div class="container">
@@ -11,12 +11,12 @@
                             <h4>Flight Details</h4>
                         </div>
                         <div class="booking-inner-box from-to-box">
-                            
+
                             <div class="booking-inner-title">
                                 <div class="booking-inner-title-left" *ngIf="parseSearchVal">
                                     <h6>
                                         {{parseSearchVal.fromCity}}
-                                        <img src="./assets/images/icons/flight-right.png" class="ms-2 me-2" alt="">    
+                                        <img src="./assets/images/icons/flight-right.png" class="ms-2 me-2" alt="">
                                         {{parseSearchVal.toCity}}
                                     </h6>
                                     <p> {{parseSearchVal.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
@@ -46,7 +46,7 @@
                                         <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
                                         <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="Booking-Flight-time">
                                     <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
@@ -55,7 +55,7 @@
                                         <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
                                         <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="Booking-Flight-passanger">
                                     <div class="row">
@@ -75,7 +75,7 @@
                                             <h6>Cabin</h6>
                                             <p>7 Kgs <span>(1 plece only)</span></p>
                                             <p>7 Kgs  <span>(1 plece only)</span></p>
-                                            <p>7 Kgs <span>(1 plece only)</span></p> 
+                                            <p>7 Kgs <span>(1 plece only)</span></p>
                                         </div>
                                         <div class="col-md-4">
                                             <h6>Flight Extras</h6>
@@ -111,7 +111,7 @@
                                         <p>Chhatrapati Shivaji International Airport T1, Vile Parle, Mumbai</p>
                                         <span class="round-time mt-20 d-inline-block">1h 40m </span>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="Booking-Flight-time">
                                     <h6>08:05</h6>
@@ -120,7 +120,7 @@
                                         <h6>Nagpur</h6>
                                         <p>Dr. Babasaheb Ambedkar International Airport</p>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="Booking-Flight-passanger">
                                     <div class="row">
@@ -140,7 +140,7 @@
                                             <h6>Cabin</h6>
                                             <p>7 Kgs <span>(1 plece only)</span></p>
                                             <p>7 Kgs  <span>(1 plece only)</span></p>
-                                            <p>7 Kgs <span>(1 plece only)</span></p> 
+                                            <p>7 Kgs <span>(1 plece only)</span></p>
                                         </div>
                                         <div class="col-md-4">
                                             <h6>Flight Extras</h6>
@@ -237,7 +237,7 @@
                                     <div class="luggage-add-items">
                                         <div class="">
                                             <h6 class="fw_7 fs_18">&#8377; 600</h6>
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -248,51 +248,51 @@
                                 <h6>Fare Rules</h6>
                             </div>
                             <div class="flight-extra-details">
-                                <ul class="list-unstyled flight-extra-tabs"> 
+                                <ul class="list-unstyled flight-extra-tabs">
                                     <li>
-                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" data-bind="CancellationDetails"> Cancellation Details</a>
+                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Details</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" data-bind="DateChange"> Date Change Charges</a>
+                                        <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)"> Date Change Charges</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" data-bind="Fare"> Fare Rules </a>
+                                        <a href="javascript:void(0);" data-bind="Fare" (click)="changeFareRuleTab($event)"> Fare Rules </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" data-bind="Cancellation"> Cancellation Protection </a>
+                                        <a href="javascript:void(0);" data-bind="Cancellation" (click)="changeFareRuleTab($event)"> Cancellation Protection </a>
                                     </li>
                                 </ul>
                                 <div class="rules-flight">
                                     <div class="rules-flight-items">
                                         <div class="rules-flight-thumbe">
-                                            <img *ngIf="flightIcons" src="{{flightIcons[flightDetails[0].airline].logo}}" alt="">    
+                                            <img *ngIf="flightIcons" src="{{flightIcons[flightDetails[0].airline].logo}}" alt="">
                                         </div>
                                         <div class="rules-flight-content">
                                             <h6>
                                                 {{parseSearchVal.fromCity}}
-                                                <img src="./assets/images/icons/flight-right.png" alt="">    
+                                                <img src="./assets/images/icons/flight-right.png" alt="">
                                                 {{parseSearchVal.toCity}}
                                             </h6>
-                                        </div>                                                
+                                        </div>
                                     </div>
                                     <!-- <div class="rules-flight-items opacity_05">
                                         <div class="rules-flight-thumbe">
-                                            <img src="./assets/images/flights/flight-1.png" alt="">    
+                                            <img src="./assets/images/flights/flight-1.png" alt="">
                                         </div>
                                         <div class="rules-flight-content">
                                             <h6>
                                                 Hyderabad
-                                                <img src="./assets/images/icons/flight-right.png" alt="">    
+                                                <img src="./assets/images/icons/flight-right.png" alt="">
                                                 Mumbai
                                             </h6>
-                                        </div>                                                
+                                        </div>
                                     </div> -->
                                 </div>
-                                <div class="extra-tabs-ara"> 
+                                <div class="extra-tabs-ara">
                                     <div id="CancellationDetails" class="flight-extra-content extra-active">
-                                        <table class="table-bordered table-content w-100"> 
+                                        <table class="table-bordered table-content w-100">
                                             <tbody>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="fw_6 fs_13">Time Frame</p>
                                                         <p class="opacity_05">(From Scheduled flight departure)</p>
@@ -302,7 +302,7 @@
                                                         <p class="opacity_05">(Per passenger)</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">0 hours to 2 hours*</p>
                                                     </td>
@@ -312,7 +312,7 @@
                                                         <p>Infant : Non refundable</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">2 hours to 3 days*</p>
                                                     </td>
@@ -322,7 +322,7 @@
                                                         <p>Infant : Non refundable</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">3 days to 365 days*</p>
                                                     </td>
@@ -337,9 +337,9 @@
                                         <p class="oth-text mt-10">*From the date of Departure</p>
                                     </div>
                                     <div id="DateChange" class="flight-extra-content">
-                                        <table class="table-bordered table-content w-100"> 
+                                        <table class="table-bordered table-content w-100">
                                             <tbody>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="fw_6 fs_13">Time Frame</p>
                                                         <p class="opacity_05">(From Scheduled flight departure)</p>
@@ -349,7 +349,7 @@
                                                         <p class="opacity_05">(Per passenger)</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">0 hours to 2 hours*</p>
                                                     </td>
@@ -359,7 +359,7 @@
                                                         <p>Infant : Non refundable</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">2 hours to 3 days*</p>
                                                     </td>
@@ -369,7 +369,7 @@
                                                         <p>Infant : Non refundable</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">3 days to 365 days*</p>
                                                     </td>
@@ -384,9 +384,9 @@
                                         <p class="oth-text mt-10">*From the date of Departure</p>
                                     </div>
                                     <div id="Fare" class="flight-extra-content">
-                                        <table class="table-bordered table-content w-100"> 
+                                        <table class="table-bordered table-content w-100">
                                             <tbody>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="fw_6 fs_13">Time Frame</p>
                                                         <p class="opacity_05">(From Scheduled flight departure)</p>
@@ -396,7 +396,7 @@
                                                         <p class="opacity_05">(Per passenger)</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">0 hours to 2 hours*</p>
                                                     </td>
@@ -406,7 +406,7 @@
                                                         <p>Infant : Non refundable</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">2 hours to 3 days*</p>
                                                     </td>
@@ -416,7 +416,7 @@
                                                         <p>Infant : Non refundable</p>
                                                     </td>
                                                 </tr>
-                                                <tr> 
+                                                <tr>
                                                     <td>
                                                         <p class="opacity_05">3 days to 365 days*</p>
                                                     </td>
@@ -428,12 +428,12 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <p class="oth-text mt-10">*From the date of Departure</p> 
+                                        <p class="oth-text mt-10">*From the date of Departure</p>
                                     </div>
                                     <div id="Cancellation" class="flight-extra-content">
                                         <div class="extra-tabs-details Cancellation-box">
                                             <div class="extra-tabs-details-bottom">
-                                                <ul class="m-0 tabs-list-data"> 
+                                                <ul class="m-0 tabs-list-data">
                                                     <li><p>While Booking your flight ticket, select 'Cancellation Protection' option and pay a nominal cancellation premium and enjoy ZERO penalty in case you wish to cancel the booking.</p></li>
                                                     <li><p>Cancellation Protection is applicable on select one way domestic flights and starts at only Rs.149</p></li>
                                                     <li><p>Cancellation Protection is applicable on select one way domestic flights</p></li>
@@ -443,7 +443,7 @@
                                                     <li><p>In case of partial cancellation (cancelation of only some flights booked in an itinerary), waiver will not be given & normal cancelation penalties will be charged.</p></li>
                                                     <li><p>ZERO Cancellation service is valid only on complete cancellation of itinerary and not on date change of itinerary.</p></li>
                                                 </ul>
-                                            </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -461,11 +461,11 @@
                                         <p>Effective 22nd May,2021 it is mandatory for all passengers to carry a negative RT-PCR test report with QR code for boarding international flights to destinations where test reports are required as per the guidelines issued by the destination countries.</p>
                                     </li>
                                 </ul>
-                            </div>                                     
+                            </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                 <app-fare-summary></app-fare-summary>
             </div>
