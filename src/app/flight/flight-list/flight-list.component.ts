@@ -105,6 +105,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   minPrice: number = 0;
   maxPrice: number = 10000;
+  resetMinPrice: number = 0;
+  resetMaxPrice: number = 10000;
+  minStopOver:number = 0;
+  maxStopOver:number = 24;
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
@@ -115,7 +119,17 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   minDate = new Date();
   options: Options = {
     floor: 0,
-    ceil: 1000
+    ceil: 1000,
+    translate: (value: number): string => {
+      return '';
+    }
+  };
+  optionsStopOver: Options = {
+    floor: 0,
+    ceil: 24,
+    translate: (value: number): string => {
+      return '';
+    }
   };
   flight_PopularItems = [
     {name:'Refundable_Fares', active:false, value:'Refundable-Fares',count:0},
@@ -849,8 +863,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     //StopOverFilter
     this.flightList=this.airlineFilterFlights(this.flightList);
     if (this.flightList.length > 0) {
-      var start = parseInt($('.price-value').text().replace(' hrs', ''));
-      var end = parseInt($('.price-value2').text().replace(' hrs', ''));
+      // var start = parseInt($('.price-value').text().replace(' hrs', ''));
+      // var end = parseInt($('.price-value2').text().replace(' hrs', ''));
+      var start = this.minStopOver;
+      var end =this.maxStopOver;
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = [];
@@ -863,7 +879,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
           filteredStopOver.push(e);
         }
       });
-     // this.flightList = filteredStopOver;
+      this.flightList = filteredStopOver;
     }
     //PriceFilter
     if (this.flightList.length > 0) {
@@ -1319,8 +1335,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.flightList.length > 0) {
         this.minPrice = this.flightList[0].priceSummary[0].totalFare;
         this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
-        $('#min_price').val(this.minPrice);
-        $('#max_price').val(this.maxPrice);
+
+        // $('#min_price').val(this.minPrice);
+        // $('#max_price').val(this.maxPrice);
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
       let query: any = localStorage.getItem('searchVal');
@@ -1339,23 +1356,25 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  HideShowCompareToFly(i: number, fromCall: string) {
+  HideShowCompareToFly(i: number, fromCall: string,j:number) {
 
-    $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
-    var element = document.getElementById('CompareToFly_' + i);
-    if (element?.classList.contains('flight-details-box-hide')) {
-      element.classList.remove('flight-details-box-hide');
-    } else {
-      element?.classList.add('flight-details-box-hide');
-    }
-    $('#CompareToFly_' + i + ' .flight-details,#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
+
+
+    if (fromCall == "fare-details") {
+      $("[id*=CompareToFly_]").addClass("flight-details-box-hide");
+      var element = document.getElementById('CompareToFly_' + i);
+      if (element?.classList.contains('flight-details-box-hide')) {
+        element.classList.remove('flight-details-box-hide');
+      } else {
+        element?.classList.add('flight-details-box-hide');
+      }
+
+      $('#CompareToFly_' + i + ' .flight-details,#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
     // $('#flight_list_'+i+' #hidefares_'+ i).addClass('d-none');
     // $('#flight_list_'+i+' #viewfares_'+ i).removeClass('d-none');
     $('.hidefares,.hideflight_details').addClass('d-none');
     $('.viewfares,.viewflight_details').removeClass('d-none');
     $('.flight-details-box').addClass('flight-details-box-hide');
-    if (fromCall == "fare-details") {
-
       // $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
       // $('#CompareToFly_' + i+" .extra'tabs-ara div:first").addClass("flight-extra-content extra-active").show();
       $('#CompareToFly_' + i).removeClass('flight-details-box-hide');
@@ -1367,28 +1386,29 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     else if (fromCall == "flight-details") {
       // $('#CompareToFly_' + i+" .flight-extra-tabs li:first a").addClass("flight-extra-tabs-active");
       // $('#CompareToFly_' + i+" .extra-tabs-ara div:first").addClass("flight-extra-content extra-active").show();
-      $('#CompareToFly_' + i).removeClass('flight-details-box-hide');
-      $('#CompareToFly_' + i + " .flight-details").addClass("extra-active").show();
-      $('#flight_list_' + i + ' #viewflight_details_' + i).addClass('d-none');
-      $('#flight_list_' + i + ' #hideflight_details_' + i).removeClass('d-none');
+      $('#FlightDetails_' + i+'_'+j).removeClass('flight-details-box-hide');
+      $('#FlightDetails_' + i+'_'+j+" .flight-details").addClass("extra-active").show();
+      $('#viewflight_details_' + i +'_'+j).addClass('d-none');
+      $('#hideflight_details_' + i+'_'+j).removeClass('d-none');
       // this.flightdetailsHidden = true;
     }
 
   }
-  hideFarebutton(i: number, fromCall: string) {
+  hideFarebutton(i: number, fromCall: string,j:number) {
 
-    $('.flight-details-box').addClass('flight-details-box-hide');
+
     if (fromCall == "fare-details") {
+      $('.flight-details-box').addClass('flight-details-box-hide');
       $('#flight_list_' + i + ' #hidefares_' + i).addClass('d-none');
       $('#flight_list_' + i + ' #viewfares_' + i).removeClass('d-none');
       $('#CompareToFly_' + i).addClass('flight-details-box-hide');
       $('#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
     }
     else if (fromCall == "flight-details") {
-      $('#flight_list_' + i + ' #hideflight_details_' + i).addClass('d-none');
-      $('#flight_list_' + i + ' #viewflight_details_' + i).removeClass('d-none');
-      $('#CompareToFly_' + i).addClass('flight-details-box-hide');
-      $('#CompareToFly_' + i + ' .fare-details').removeClass("extra-active").hide();
+      $('#hideflight_details_' + i+'_'+j).addClass('d-none');
+      $('#viewflight_details_' + i +'_'+j).removeClass('d-none');
+      $('#FlightDetails_' + i+'_'+j).addClass('flight-details-box-hide');
+      $('#FlightDetails_' + i +'_'+j+ ' .fare-details').removeClass("extra-active").hide();
     }
 
   }
@@ -1559,9 +1579,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   sliderRange($that: this, minPrice: number, maxPrice: number) {
     $that.options = {
       floor: minPrice,
-      ceil: maxPrice
+      ceil: maxPrice,
+      translate: (value: number): string => {
+        return '';
+      }
     };
-
+  this.resetMinPrice = minPrice;
+  this.resetMaxPrice = maxPrice;
     // $('#slider-range').slider({
     //   range: true,
     //   orientation: 'horizontal',
@@ -1597,16 +1621,31 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.popularFilterFlightData();
   }
   resetPricefilter() {
-    $('#min_price').val(this.minPrice)
-    $('#max_price').val(this.maxPrice)
+    this.minPrice = this.resetMinPrice;
+    this.maxPrice = this.resetMaxPrice;
+    // $('#min_price').val(this.minPrice)
+    // $('#max_price').val(this.maxPrice)
     this.Initslider();
     this.popularFilterFlightData();
   }
+  onMinStopOverChange(event:any)
+  {
+    this.minStopOver = event;
+    this.popularFilterFlightData();
+    // console.log(event)
+  }
+  onMaxStopOverChange(event:any)
+  {
+    this.maxStopOver = event;
+    this.popularFilterFlightData();
+  }
   ResetStopOver() {
-    $('.price-slider').slider('values', 0, 0)
-    $('.price-slider').slider('values', 1, 24)
-    $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
-    $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
+    this.minStopOver = 0;
+    this.maxStopOver = 24;
+    // $('.price-slider').slider('values', 0, 0)
+    // $('.price-slider').slider('values', 1, 24)
+    // $('.price-value').text($('.price-slider').slider('values', 0) + ' hrs');
+    // $('.price-value2').text($('.price-slider').slider('values', 1) + ' hrs');
     this.popularFilterFlightData();
   }
 
