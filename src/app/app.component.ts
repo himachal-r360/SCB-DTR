@@ -163,7 +163,7 @@ export class AppComponent implements OnInit {
 
   
    ngAfterViewInit() {
-    let loader = this.renderer.selectRootElement('#loader');
+    let loader = this.renderer.selectRootElement('#loader_1');
     this.renderer.setStyle(loader, 'display', 'none');
   }
 
