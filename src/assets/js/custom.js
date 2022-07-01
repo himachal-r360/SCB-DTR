@@ -32,7 +32,7 @@ $(document).ready(function($) {
     //     singleDatePicker: true,
     //     opens: 'center'
     // });
-    
+
     // $('.daterange-right').daterangepicker({
     //     opens: 'center'
     // });
@@ -68,7 +68,7 @@ $(document).ready(function($) {
     // $(".Addnew-Adult-btn").click(function(){
     //     $(".add-traveller-adults").toggle();
     // });
-    
+
     // $(".Addnew-Child-btn").click(function(){
     //     $(".traveller-child .add-search-ul").toggle();
     //     $(".add-Child-adults").toggle();
@@ -84,11 +84,11 @@ $(document).ready(function($) {
         $(".PayPoints-otp-generated").show();
     });
 
-    $(".add-mult-card").click(function(){ 
+    $(".add-mult-card").click(function(){
         $(".Add-Card-btn").hide();
         $(".add-card-form").show();
     });
-    
+
 
     var owlslider = jQuery(".carousel-search-date");
     if (owlslider.length > 0) {
@@ -139,13 +139,13 @@ $(document).ready(function($) {
         });
     }
 
-    $('.flight-extra-tabs li a').on('click', function() {
-        var dashboard_menu_type = $(this).attr('data-bind');
-        $('.flight-extra-content').hide();
-        $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-        $('#' + dashboard_menu_type).show();
-        $(this).addClass('flight-extra-tabs-active');
-    });
+    // $('.flight-extra-tabs li a').on('click', function() {
+    //     var dashboard_menu_type = $(this).attr('data-bind');
+    //     $('.flight-extra-content').hide();
+    //     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+    //     $('#' + dashboard_menu_type).show();
+    //     $(this).addClass('flight-extra-tabs-active');
+    // });
 
 
 

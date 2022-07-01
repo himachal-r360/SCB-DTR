@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { retry, Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { Options } from '@angular-slider/ngx-slider';
+import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -76,7 +77,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   nonStopCount: number = 0;
   morningDearptureCount: number = 0;
   foodAllowanceCount: number = 0;
-
+  stopsFilterVal:string=""
 
   flightDataModify: any = this._fb.group({
     // flightfrom: ['DEL'],
@@ -131,6 +132,23 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       return '';
     }
   };
+  flight_PopularItems = [
+    {name:'Refundable_Fares', active:false, value:'Refundable-Fares',count:0},
+    {name:'non_stop', active:false, value:'non-stop',count:0},
+    {name:'Morning_Departures', active:false, value:'Morning-Departures',count:0},
+    {name:'Meals_Included', active:false, value:'Meals-Included',count:0}
+  ]
+  flight_Timingsitems = [
+    {name:'0_6', active:false, value:'00-06',image:'1.png'},
+    {name:'6_12', active:false, value:'06-12',image:'2.png'},
+    {name:'12_18', active:false, value:'12-18',image:'3.png'},
+    {name:'18_0', active:false, value:'18-00',image:'4.png'}
+  ]
+  stopsFilteritems = [
+    {name:'no_stops', active:false, value:'<p>No <br> stops</p>'},
+    {name:'1_stops', active:false, value:'<p>1 <br> stops</p>'},
+    {name:'2plus_stops', active:false, value:'<p>2+ <br> stops</p>'}
+  ]
   constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location)  {
   
   
@@ -141,8 +159,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
        this._styleManager.setScript('custom', `assets/js/custom.js`);
        
   }
-
   ngOnInit(): void {
+    debugger;
     this.loader = true;
     this.getQueryParamData(null);
     this.flightList = this._flightService.flightListData;
@@ -291,7 +309,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   getAirpotsList() {
     this._flightService.getAirportName().subscribe((res: any) => {
       this.airportsNameJson = res;
-
+      console.log(this.airportsNameJson,"this.airportsNameJson");
     })
   }
 
@@ -478,32 +496,57 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     return [date.getFullYear(), mnth, day].join('-');
   }
 
-  // Flight Timings Filter
-  FlightTimingsFilterFlightData(val: string) {
-    if ($("#Flight_Timings .flighttiming-list[value=" + val + "]").hasClass("active")) {
-      $("#Flight_Timings .flighttiming-list[value=" + val + "]").removeClass('active');
+   // Flight popular filter
+  FlightPopularFilterFlightData(popularItems: any) {
+    debugger;
+    popularItems.active = !popularItems.active;
+    if(popularItems.name=="Morning_Departures"){
+      this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6"){item.active=!item.active; return item;}})
     }
-    else {
-      $("#Flight_Timings .flighttiming-list[value=" + val + "]").addClass('active');
+    if(popularItems.name=="non_stop"){
+      this.stopsFilteritems.filter((item:any)=>{if(item.name=="non_stop"){item.active=!item.active; return item;}})
     }
     this.popularFilterFlightData();
   }
+  // Flight Timings Filter
+  FlightTimingsFilterFlightData(timingsItems: any) {
+    timingsItems.active = !timingsItems.active;
+    if(timingsItems.name=="0_6"){
+      this.flight_PopularItems.filter((item:any)=>{if(item.name=="Morning_Departures"){item.active; return item;}})
+    }
+    this.popularFilterFlightData();
+  }
+  // FlightTimingsFilterFlightData(val: string) {
+  //   if ($("#Flight_Timings .flighttiming-list[value=" + val + "]").hasClass("active")) {
+  //     $("#Flight_Timings .flighttiming-list[value=" + val + "]").removeClass('active');
+  //   }
+  //   else {
+  //     $("#Flight_Timings .flighttiming-list[value=" + val + "]").addClass('active');
+  //   }
+  //   this.popularFilterFlightData();
+  // }
 
   resetFlightTimings() {
     $("#Flight_Timings .flighttiming-list").removeClass('active');
     this.popularFilterFlightData();
   }
-
+  
   // Flight Stops Filter
-  FlightStopsFilterFlightData(val: string) {
-    if ($("#Flight_Stops .Stops-list[value=" + val + "]").hasClass("active")) {
-      $("#Flight_Stops .Stops-list[value=" + val + "]").removeClass('active');
-    }
-    else {
-      $("#Flight_Stops .Stops-list[value=" + val + "]").addClass('active');
-    }
+  FlightStopsFilterFlightData(FlightStopitem:any) {
+    FlightStopitem.active = !FlightStopitem.active;
+    console.log(this.stopsFilteritems);
     this.popularFilterFlightData();
   }
+  // FlightStopsFilterFlightData(event:any,val: string) {
+  //   debugger;
+  //   if ($("#Flight_Stops .Stops-list[value=" + val + "]").hasClass("active")) {
+  //     $("#Flight_Stops .Stops-list[value=" + val + "]").removeClass('active');
+  //   }
+  //   else {
+  //     $("#Flight_Stops .Stops-list[value=" + val + "]").addClass('active');
+  //   }
+  //   this.popularFilterFlightData();
+  // }
 
   resetFlightStops() {
     $("#Flight_Stops .Stops-list").removeClass('active');
@@ -522,12 +565,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
-
-    let updatedflightList = [];
+    debugger;
+    let updatedflightList:any = [];
     let isfilterRefundableFares = false;
     let isfilterNonStop = false;
     let isfilterMorningDepartures = false;
     let isfilterMealsIncluded = false;
+    let isPopularFilter = false;
 
     let isfilterFlightTiming = false;
     let filterFlightTimingval: string = "";
@@ -543,32 +587,72 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       isfilterMorningDepartures = popularFilter[j].value == "Morning-Departures" ? true : false;
       isfilterMealsIncluded = popularFilter[j].value == "Meals-Included" ? true : false;
     }
+    
+    let popularFilterItems=this.flight_PopularItems.filter((item:any)=>{
+      if(item.active==true){
+        return item;
+      }
+    })
+    if(popularFilterItems.length>0){
+      isPopularFilter = true;
+    }
+
+    debugger;
     let flightListWithOutFilter = this.flightListWithOutFilter;
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = flightListConst;
 
-    let timingFilter = $("#Flight_Timings .flighttiming-list.active");
-    let timingFilterArr: any = [];
-    let filterFlightTimingValue_0_6: string = "";
-    let filterFlightTimingValue_6_12: string = "";
-    let filterFlightTimingValue_12_18: string = "";
-    let filterFlightTimingValue_18_0: string = "";
-    for (let j = 0; j < timingFilter.length; j++) {
-      let filterFlightTimingValue = $(timingFilter[j]).attr("value");
-      if (filterFlightTimingValue == "0_6") { filterFlightTimingValue_0_6 = filterFlightTimingValue; }
-      if (filterFlightTimingValue == "6_12") { filterFlightTimingValue_6_12 = filterFlightTimingValue; }
-      if (filterFlightTimingValue == "12_18") { filterFlightTimingValue_12_18 = filterFlightTimingValue; }
-      if (filterFlightTimingValue == "18_0") { filterFlightTimingValue_18_0 = filterFlightTimingValue; }
-    }
 
-    if ($("#Flight_Timings .flighttiming-list").hasClass("active")) {
+    // let timingFilter = $("#Flight_Timings .flighttiming-list.active");
+    // let timingFilterArr: any = [];
+    // let filterFlightTimingValue_0_6: string = "";
+    // let filterFlightTimingValue_6_12: string = "";
+    // let filterFlightTimingValue_12_18: string = "";
+    // let filterFlightTimingValue_18_0: string = "";
+    // for (let j = 0; j < timingFilter.length; j++) {
+    //   let filterFlightTimingValue = $(timingFilter[j]).attr("value");
+    //   if (filterFlightTimingValue == "0_6") { filterFlightTimingValue_0_6 = filterFlightTimingValue; }
+    //   if (filterFlightTimingValue == "6_12") { filterFlightTimingValue_6_12 = filterFlightTimingValue; }
+    //   if (filterFlightTimingValue == "12_18") { filterFlightTimingValue_12_18 = filterFlightTimingValue; }
+    //   if (filterFlightTimingValue == "18_0") { filterFlightTimingValue_18_0 = filterFlightTimingValue; }
+    // }
+    // this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6"){item.active=false; return item;}})
+    // if(this.flight_PopularItems.filter((item:any)=>{if(item.name=="Morning_Departures" && item.active==true){return item;}}).length>0 || this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6" && item.active==true){return item;}}).length>0){
+    //   this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6"){item.active=true; return item;}})
+    // }
+    
+    let isTimingFilterItems=this.flight_Timingsitems.filter((item:any)=>{
+      if(item.active==true){
+        return item;
+      }
+    })
+    
+    if(isTimingFilterItems.length>0){
       isfilterFlightTiming = true;
-      filterFlightTimingval = $("#Flight_Timings .flighttiming-list.active").attr("value");
     }
-    if ($("#Flight_Stops .Stops-list").hasClass("active")) {
+    debugger;
+
+    // Stops Filter
+
+    // if ($("#Flight_Stops .Stops-list").hasClass("active")) {
+    //   isfilterFlightStops = true;
+    //   filterFlightStopsval = $("#Flight_Stops .Stops-list.active").attr("value");
+    // }
+    // this.stopsFilteritems.filter((item:any)=>{if(item.name=="no_stops"){item.active=false; return item;}})
+    // if((popularFilterItems.filter((item:any)=>{if(item.name=="non_stop" && item.active==true){return item;}}).length>0) || (this.stopsFilteritems.filter((item:any)=>{if(item.name=="non_stop" && item.active==true){return item;}}).length>0)){
+    //   this.stopsFilteritems.filter((item:any)=>{if(item.name=="non_stop"){item.active=true; return item;}})
+    // }
+    let isStopsFilterItems=this.stopsFilteritems.filter((item:any)=>{
+      if(item.active==true){
+        return item;
+      }
+    })
+    if(isStopsFilterItems.length>0){
       isfilterFlightStops = true;
-      filterFlightStopsval = $("#Flight_Stops .Stops-list.active").attr("value");
     }
+    // if(this.stopsFilteritems.filter((item)=>if(item.active==true){
+    //   isfilterFlightStops = true;
+    // }))
 
     var current_date = new Date(this.departureDate),
       current_year = current_date.getFullYear(),
@@ -577,10 +661,323 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-    var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
-    var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
-    var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+    // var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
+    // var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
+    // var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
 
+    //Popular Filter Search Data
+    updatedflightList=this.popularFilterFlights(this.flightList);
+
+
+    // for (let i = 0; i < this.flightList.length; i++) {
+    //   let singleFlightList = [];
+    //   singleFlightList = this.flightList[i].flights;
+
+    //   let isNonStop = false;
+    //   let isRefundableFares = false;
+    //   let isMealsInclude = false;
+    //   // let isFlightTiming = false;
+
+    //   if (singleFlightList != null && singleFlightList != undefined) {
+    //     if (isfilterNonStop == true || isfilterRefundableFares == true || isfilterMealsIncluded == true) {
+    //       if (isfilterNonStop == true) {
+    //         if (singleFlightList.filter(function (e: any) { if (e.stops == 0) { return e } }).length > 0) {
+    //           isNonStop = true;
+    //         }
+    //       }
+    //       if (isfilterRefundableFares == true) {
+    //         if (this.flightList[i].priceSummary.filter(function (e: any) { if (e.refundStatus == 1) { return e } }).length > 0) {
+    //           isRefundableFares = true;
+    //         }
+    //       }
+
+    //       if (isfilterMealsIncluded == true) {
+    //         let singleFlightPriceSummaryMeal = []
+    //         singleFlightPriceSummaryMeal = this.flightList[i].priceSummary.filter(function (e: any) { if (e.foodAllowance != "null") { return e } });
+
+    //         if (singleFlightPriceSummaryMeal.length > 0) {
+    //           this.flightList[i].priceSummary = [];
+    //           this.flightList[i].priceSummary = singleFlightPriceSummaryMeal;
+    //           isMealsInclude = true;
+    //         }
+    //         // isMealsInclude=true;
+    //       }
+    //       // if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
+    //       //   let singleFlightTiming = []
+
+    //       //   //Flight Timing Filter
+    //       //   singleFlightTiming = singleFlightList.filter(function (e: any, indx: number) {
+    //       //     if (indx == 0) {
+    //       //       if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="0_6"){return item;}}).length>0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2)
+    //       //       {
+    //       //         return e;
+    //       //       }
+    //       //       else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="6_12"){return item;}}).length>0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3)
+    //       //       {
+    //       //         return e;
+    //       //       }
+    //       //       else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="12_18"){return item;}}).length>0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4)
+    //       //       {
+    //       //         return e;
+    //       //       }
+    //       //       else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="18_0"){return item;}}).length>0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5)
+    //       //       {
+    //       //         return e;
+    //       //       }
+    //       //     }
+    //       //   });
+    //       //   if (singleFlightTiming.length > 0) {
+    //       //     isFlightTiming = true;
+    //       //   }
+    //       // }
+    //       if (isNonStop == true || isRefundableFares == true || isMealsInclude == true) {
+    //         updatedflightList.push(this.flightList[i]);
+    //       }
+    //     }
+    //     else {
+    //       updatedflightList.push(this.flightList[i]);
+    //     }
+    //   }
+    // }
+    
+    //Flight Timing Filter
+    //Timing Filter Data
+    updatedflightList=this.timingFilterFlights(updatedflightList);
+    
+    // if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
+      
+    //   var filteredTimingArr: any[] = [];
+    //   if(updatedflightList.length>0){
+    //     updatedflightList.filter((d: any) => {  
+    //       let singleFlightTiming = [];
+    //       singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
+    //         if (indx == 0) {
+    //           if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="0_6"){return item;}}).length>0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2)
+    //           {
+    //             return e;
+    //           }
+    //           else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="6_12"){return item;}}).length>0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3)
+    //           {
+    //             return e;
+    //           }
+    //           else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="12_18"){return item;}}).length>0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4)
+    //           {
+    //             return e;
+    //           }
+    //           else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="18_0"){return item;}}).length>0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5)
+    //           {
+    //             return e;
+    //           }
+    //         }
+    //       });
+    //       if(singleFlightTiming.length>0){
+    //         filteredTimingArr.push(d);
+    //       }
+    //     });
+    //   }
+    //   updatedflightList=filteredTimingArr;
+    // }
+    
+    //Flight Stops Filter
+    updatedflightList=this.stopsFilterFlights(updatedflightList);
+    // if (isfilterFlightStops == true) {
+    //   var filteredStopsArr: any[] = [];
+    //   if(updatedflightList.length>0){
+    //     updatedflightList.filter((d: any) => {  
+    //       let singleFlightStops = [];
+    //       singleFlightStops = d.flights.filter(function (e: any,indx:number) {
+    //         if(indx==0){
+    //           //0 - no_stops
+    //           if ((isStopsFilterItems.filter((item:any)=>{if(item.active==true && item.name=="no_stops"){return item;}}).length>0) && e.stops == 0) {
+    //             return e;
+    //           }
+    //           //0 - no_stops
+    //           if ((isStopsFilterItems.filter((item:any)=>{if(item.active==true && item.name=="1_stops"){return item;}}).length>0) && e.stops == 1) {
+    //             return e;
+    //           }
+    //           //0 - no_stops
+    //           if ((isStopsFilterItems.filter((item:any)=>{if(item.active==true && item.name=="2plus_stops"){return item;}}).length>0) && e.stops >1) {
+    //             return e;
+    //           }
+    //         }
+    //       });
+    //       if(singleFlightStops.length>0)
+    //       {
+    //         filteredStopsArr.push(d);
+    //       }
+    //     });
+    //   }
+    //   updatedflightList=filteredStopsArr;
+    // }
+
+    this.flightList = updatedflightList;
+
+    //it is used for getting values of count.
+    this.RefundableFaresCount = 0;
+    this.nonStopCount = 0;
+    this.foodAllowanceCount = 0;
+    this.morningDearptureCount = 0;
+    if (this.flightList.length > 0) {
+      this.flightList.filter((e: any) => {
+        var flights = e.flights.filter((d: any,indx:number) => { if (d.stops == 0 && indx==0) { return d; } }); // Non-Stop count
+        if (flights.length > 0) {
+          this.nonStopCount += 1;
+          this.flight_PopularItems.filter((item:any)=>{
+            if(item.name=="non_stop"){
+              item.count=this.nonStopCount
+            }
+          })
+        }
+        var flights = e.priceSummary.filter((d: any) => { if (d.refundStatus == 1) { return d; } }); // Refundable Fares Count
+        if (flights.length > 0) {
+          this.RefundableFaresCount += 1;
+          this.flight_PopularItems.filter((item:any)=>{
+            if(item.name=="Refundable_Fares"){
+              item.count=this.RefundableFaresCount
+            }
+          })
+        }
+        var flights = e.priceSummary.filter((d: any) => { if (d.foodAllowance != null) { return d; } });// Meals Included Count
+        if (flights.length > 0) {
+          this.foodAllowanceCount += 1;
+        }
+
+        var flights = e.flights.filter((d: any) => {
+          debugger;
+          if((this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6"){return item;}}).length>0) && new Date(d.departureDateTime) > date1 && new Date(d.departureDateTime) < date2)
+          {
+            return e;
+          }
+        }) // Meals Included Count
+        
+        if (flights.length > 0) {
+          this.morningDearptureCount += 1;
+          this.flight_PopularItems.filter((item:any)=>{
+            if(item.name=="Morning_Departures"){
+              item.count=this.morningDearptureCount
+            }
+          })
+        }
+      })
+      //Ascending Descending Order
+      let priceAscDesc = $("#priceAscDesc").val();
+      if (priceAscDesc == "P_L_H") {
+        this.flightList.sort((a: any, b: any) => a.priceSummary[0].totalFare - b.priceSummary[0].totalFare);
+      }
+      else if (priceAscDesc == "P_H_L") {
+        this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
+      }
+    }
+    
+    //StopOverFilter
+    this.flightList=this.airlineFilterFlights(this.flightList);
+    if (this.flightList.length > 0) {
+      // var start = parseInt($('.price-value').text().replace(' hrs', ''));
+      // var end = parseInt($('.price-value2').text().replace(' hrs', ''));
+      var start = this.minStopOver;
+      var end =this.maxStopOver;
+      var filteredStopOver: any[] = [];
+      this.flightList.forEach((e: any) => {
+        var flights = [];
+        e.flights.forEach((d: any) => {
+          if ((d.duration / 60) / 60 >= start && (d.duration / 60 / 60) <= end) {
+            flights.push(d);
+          }
+        })
+        if (flights.length > 0) {
+          filteredStopOver.push(e);
+        }
+      });
+      this.flightList = filteredStopOver;
+    }
+    //PriceFilter
+    if (this.flightList.length > 0) {
+      // var min_price = parseFloat($('#min_price').val());
+      // var max_price = parseFloat($('#max_price').val());
+      var min_price = this.minPrice;
+      var max_price = this.maxPrice;
+      var filteredPrice: any[] = [];
+      this.flightList.filter((e: any) => {
+        if (e.priceSummary.length > 0) {
+          if (e.priceSummary[0].totalFare >= min_price && e.priceSummary[0].totalFare <= max_price) {
+            filteredPrice.push(e);
+          }
+        }
+      });
+      this.flightList = filteredPrice;
+    }
+
+    //Airline Filter
+    this.flightList=this.airlineFilterFlights(this.flightList);
+    // if (this.flightList.length > 0) {
+    //   let airlineArr: any = [];
+    //   let airlineFilter = $("#airline_list input[type=checkbox]:checked");
+    //   for (let j = 0; j < airlineFilter.length; j++) {
+    //     airlineArr.push(airlineFilter[j].value);
+    //   }
+    //   var filteredAirlines: any[] = [];
+    //   if (airlineArr.length > 0) {
+    //     this.flightList.forEach((e: any) => {
+    //       var flights = [];
+    //       e.flights.filter((d: any) => {
+    //         if (airlineArr.indexOf(d.airlineName) > -1) {
+    //           flights.push(d);
+    //         }
+    //       })
+    //       if (flights.length > 0) {
+    //         filteredAirlines.push(e);
+    //       }
+    //     });
+    //     this.flightList = filteredAirlines;
+    //   }
+
+    //   //Get AirLines Count
+    //   if(this.airlines.length>0){
+    //     this.airlines.filter(function (e: any) { e.flighCount = 0; return e; })
+    //     for (let j = 0; j < this.airlines.length; j++) {
+    //       this.flightList.forEach((e: any) => {
+    //         e.flights.forEach((d: any, indx: number) => {
+    //           if (this.airlines[j].airlineName == d.airlineName && indx == 0) {
+    //             this.airlines[j].flighCount += 1;
+    //           }
+    //         })
+    //       });
+    //     }
+    //   }
+    // }
+    this.flightList=this.layoverFilterFlights(this.flightList);
+    
+    console.log(this.flightList,"this.flightList");
+  }
+
+
+  //PopularFilterData
+  popularFilterFlights(flightList:any){
+    debugger;
+    this.flightList=flightList;
+    let updatedflightList = [];
+    let isfilterRefundableFares = false;
+    let isfilterNonStop = false;
+    let isfilterMorningDepartures = false;
+    let isfilterMealsIncluded = false;
+    let isPopularFilter = false;
+	
+	  let popularFilter = $("#popular-filters input[type=checkbox]:checked");
+    for (let j = 0; j < popularFilter.length; j++) {
+      isfilterRefundableFares = popularFilter[j].value == "Refundable-Fares" ? true : false;
+      isfilterNonStop = popularFilter[j].value == "non-stop" ? true : false;
+      isfilterMorningDepartures = popularFilter[j].value == "Morning-Departures" ? true : false;
+      isfilterMealsIncluded = popularFilter[j].value == "Meals-Included" ? true : false;
+    }
+	
+	  let popularFilterItems=this.flight_PopularItems.filter((item:any)=>{
+      if(item.active==true){
+        return item;
+      }
+    })
+    if(popularFilterItems.length>0){
+      isPopularFilter = true;
+    }
     for (let i = 0; i < this.flightList.length; i++) {
       let singleFlightList = [];
       singleFlightList = this.flightList[i].flights;
@@ -588,12 +985,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       let isNonStop = false;
       let isRefundableFares = false;
       let isMealsInclude = false;
-      let isFlightTiming = false;
-      let isFlightStops = false;
-      let isMorningDepart = false;
+      // let isFlightTiming = false;
 
       if (singleFlightList != null && singleFlightList != undefined) {
-        if (isfilterNonStop == true || isfilterRefundableFares == true || isfilterMorningDepartures == true || isfilterMealsIncluded == true || isfilterFlightTiming == true || isfilterFlightStops == true) {
+        if (isfilterNonStop == true || isfilterRefundableFares == true || isfilterMealsIncluded == true) {
           if (isfilterNonStop == true) {
             if (singleFlightList.filter(function (e: any) { if (e.stops == 0) { return e } }).length > 0) {
               isNonStop = true;
@@ -616,78 +1011,35 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             // isMealsInclude=true;
           }
-          if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
-            let singleFlightTiming = []
+          // if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
+          //   let singleFlightTiming = []
 
-            if (isfilterMorningDepartures == true) {
-              filterFlightTimingval = "0_6";
-            }
-
-            //Flight Timing Filter
-            singleFlightTiming = singleFlightList.filter(function (e: any, indx: number) {
-
-              //0_6
-              // if (filterFlightTimingval == "0_6" && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
-              //   return e;
-              // }
-              // //6_12
-              // else if (filterFlightTimingval == "6_12" && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
-              //   return e;
-              // }
-              // //12_18
-              // else if (filterFlightTimingval == "12_18" && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
-              //   return e;
-              // }
-              // //18_0
-              // else if (filterFlightTimingval == "18_0" && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
-              //   return e;
-              // }
-              if (indx == 0) {
-                if (filterFlightTimingValue_0_6 == "0_6" && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
-                  return e;
-                }
-                //6_12
-                else if (filterFlightTimingValue_6_12 == "6_12" && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
-                  return e;
-                }
-                //12_18
-                else if (filterFlightTimingValue_12_18 == "12_18" && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
-                  return e;
-                }
-                //18_0
-                else if (filterFlightTimingValue_18_0 == "18_0" && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
-                  return e;
-                }
-              }
-            });
-            if (singleFlightTiming.length > 0) {
-              isFlightTiming = true;
-            }
-          }
-          if (isfilterFlightStops == true) {
-            let singleFlightStops = [];
-            //Flight Stops Filter
-            singleFlightStops = singleFlightList.filter(function (e: any) {
-
-              //0 - no_stops
-              if (filterFlightStopsval == "no_stops" && e.stops == 0) {
-                return e;
-                //singleFlightList.filter(function(e:any){if(e.stops==0){return e}}).length>0
-              }
-              //1
-              else if (filterFlightStopsval == "1_stops" && e.stops == 1) {
-                return e;
-              }
-              //2+
-              else if (filterFlightStopsval == "2plus_stops" && e.stops > 1) {
-                return e;
-              }
-            });
-            if (singleFlightStops.length > 0) {
-              isFlightStops = true;
-            }
-          }
-          if ((isNonStop == true || isRefundableFares == true || isMealsInclude == true) || isFlightTiming == true || isFlightStops == true) {
+          //   //Flight Timing Filter
+          //   singleFlightTiming = singleFlightList.filter(function (e: any, indx: number) {
+          //     if (indx == 0) {
+          //       if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="0_6"){return item;}}).length>0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2)
+          //       {
+          //         return e;
+          //       }
+          //       else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="6_12"){return item;}}).length>0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3)
+          //       {
+          //         return e;
+          //       }
+          //       else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="12_18"){return item;}}).length>0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4)
+          //       {
+          //         return e;
+          //       }
+          //       else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="18_0"){return item;}}).length>0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5)
+          //       {
+          //         return e;
+          //       }
+          //     }
+          //   });
+          //   if (singleFlightTiming.length > 0) {
+          //     isFlightTiming = true;
+          //   }
+          // }
+          if (isNonStop == true || isRefundableFares == true || isMealsInclude == true) {
             updatedflightList.push(this.flightList[i]);
           }
         }
@@ -696,126 +1048,131 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
+    return updatedflightList;
+  }
 
-    this.flightList = updatedflightList;
+  //Timing Filter Data
+  timingFilterFlights(flightList:any)
+  {
+    this.flightList=flightList;
+    let updatedflightList:any = [];
+    let isfilterMorningDepartures = false;
+    let isfilterFlightTiming = false;
+    var current_date = new Date(this.departureDate),
+      current_year = current_date.getFullYear(),
+      current_mnth = current_date.getMonth(),
+      current_day = current_date.getDate();
 
-    //it is used for getting values of count.
-    this.RefundableFaresCount = 0;
-    this.nonStopCount = 0;
-    this.foodAllowanceCount = 0;
-    this.morningDearptureCount = 0;
-    if (this.flightList.length > 0) {
-      this.flightList.filter((e: any) => {
-        var flights = e.flights.filter((d: any) => { if (d.stops == 0) { return d; } }); // Non-Stop count
-        if (flights.length > 0) {
-          this.nonStopCount += 1;
-        }
-        var flights = e.priceSummary.filter((d: any) => { if (d.refundStatus == 1) { return d; } }); // Refundable Fares Count
-        if (flights.length > 0) {
-          this.RefundableFaresCount += 1;
-        }
-        var flights = e.priceSummary.filter((d: any) => { if (d.foodAllowance != null) { return d; } });// Meals Included Count
-        if (flights.length > 0) {
-          this.foodAllowanceCount += 1;
-        }
-        var flights = e.flights.filter((d: any) => {
-          filterFlightTimingval = "0_6";
-          if (filterFlightTimingval == "0_6" && new Date(d.departureDateTime) > date1 && new Date(d.departureDateTime) < date2) {
-            return e;
-          }
-          filterFlightTimingval = "";
-        }) // Meals Included Count
-        if (flights.length > 0) {
-          this.morningDearptureCount += 1;
-        }
-        //return flights;
-      })
-
-      //Ascending Descending Order
-      let priceAscDesc = $("#priceAscDesc").val();
-      if (priceAscDesc == "P_L_H") {
-        this.flightList.sort((a: any, b: any) => a.priceSummary[0].totalFare - b.priceSummary[0].totalFare);
-      }
-      else if (priceAscDesc == "P_H_L") {
-        this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
-      }
+    var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
+    var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
+    var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
+    var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
+    var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+	
+	  let popularFilter = $("#popular-filters input[type=checkbox]:checked");
+    for (let j = 0; j < popularFilter.length; j++) {
+      isfilterMorningDepartures = popularFilter[j].value == "Morning-Departures" ? true : false;
     }
-    //StopOverFilter
-    if (this.flightList.length > 0) {
-      // var start = parseInt($('.price-value').text().replace(' hrs', ''));
-      // var end = parseInt($('.price-value2').text().replace(' hrs', ''));
-      var start = this.minStopOver;
-      var end =this.maxStopOver;
-      var filteredStopOver: any[] = [];
-      this.flightList.forEach((e: any) => {
-        var flights = [];
-        e.flights.forEach((d: any) => {
-          if ((d.duration / 60) / 60 >= start && (d.duration / 60 / 60) <= end) {
-            flights.push(d);
-          }
-        })
-        if (flights.length > 0) {
-          filteredStopOver.push(e);
-        }
-
-      });
-      this.flightList = filteredStopOver;
-    }
-    //PriceFilter
-    if (this.flightList.length > 0) {
-      // var min_price = parseFloat($('#min_price').val());
-      // var max_price = parseFloat($('#max_price').val());
-      var min_price = this.minPrice;
-      var max_price = this.maxPrice;
-      var filteredPrice: any[] = [];
-      this.flightList.filter((e: any) => {
-        if (e.priceSummary.length > 0) {
-          if (e.priceSummary[0].totalFare >= min_price && e.priceSummary[0].totalFare <= max_price) {
-            filteredPrice.push(e);
-          }
-        }
-      });
-      this.flightList = filteredPrice;
-    }
-
-    //Airline Filter
-    if (this.flightList.length > 0) {
-      let airlineArr: any = [];
-      let airlineFilter = $("#airline_list input[type=checkbox]:checked");
-      for (let j = 0; j < airlineFilter.length; j++) {
-        airlineArr.push(airlineFilter[j].value);
+    let isTimingFilterItems=this.flight_Timingsitems.filter((item:any)=>{
+      if(item.active==true){
+        return item;
       }
-      var filteredAirlines: any[] = [];
-      if (airlineArr.length > 0) {
-        this.flightList.forEach((e: any) => {
-          var flights = [];
-          e.flights.filter((d: any) => {
-            if (airlineArr.indexOf(d.airlineName) > -1) {
-              flights.push(d);
+    })
+    
+    if(isTimingFilterItems.length>0){
+      isfilterFlightTiming = true;
+    }
+    //Flight Timing Filter
+    if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
+      var filteredTimingArr: any[] = [];
+      if(flightList.length>0){
+        flightList.filter((d: any) => {  
+          let singleFlightTiming = [];
+          singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
+            if (indx == 0) {
+              if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="0_6"){return item;}}).length>0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2)
+              {
+                return e;
+              }
+              else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="6_12"){return item;}}).length>0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3)
+              {
+                return e;
+              }
+              else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="12_18"){return item;}}).length>0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4)
+              {
+                return e;
+              }
+              else if((isTimingFilterItems.filter((item:any)=>{if(item.active==true && item.name=="18_0"){return item;}}).length>0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5)
+              {
+                return e;
+              }
             }
-          })
-          if (flights.length > 0) {
-            filteredAirlines.push(e);
+          });
+          if(singleFlightTiming.length>0){
+            filteredTimingArr.push(d);
           }
         });
-        this.flightList = filteredAirlines;
       }
-
-      //Get AirLines Count
-      this.airlines.filter(function (e: any) { e.flighCount = 0; return e; })
-      for (let j = 0; j < this.airlines.length; j++) {
-        this.flightList.forEach((e: any) => {
-          e.flights.forEach((d: any, indx: number) => {
-            if (this.airlines[j].airlineName == d.airlineName && indx == 0) {
-              this.airlines[j].flighCount += 1;
+      updatedflightList=filteredTimingArr;
+    }
+    else{
+      updatedflightList=flightList;
+    }
+    return updatedflightList;
+  }
+  //stops Filter Flights
+  stopsFilterFlights(flightList:any)
+  {
+    this.flightList=flightList;
+    let updatedflightList:any = [];
+    let isfilterFlightStops=false;
+    let isStopsFilterItems=this.stopsFilteritems.filter((item:any)=>{
+      if(item.active==true){
+        return item;
+      }
+    })
+    if(isStopsFilterItems.length>0){
+      isfilterFlightStops = true;
+    }
+    if (isfilterFlightStops == true) {
+      var filteredStopsArr: any[] = [];
+      if(flightList.length>0){
+        flightList.filter((d: any) => {  
+          let singleFlightStops = [];
+          singleFlightStops = d.flights.filter(function (e: any,indx:number) {
+            if(indx==0){
+              //0 - no_stops
+              if ((isStopsFilterItems.filter((item:any)=>{if(item.active==true && item.name=="no_stops"){return item;}}).length>0) && e.stops == 0) {
+                return e;
+              }
+              //0 - no_stops
+              if ((isStopsFilterItems.filter((item:any)=>{if(item.active==true && item.name=="1_stops"){return item;}}).length>0) && e.stops == 1) {
+                return e;
+              }
+              //0 - no_stops
+              if ((isStopsFilterItems.filter((item:any)=>{if(item.active==true && item.name=="2plus_stops"){return item;}}).length>0) && e.stops >1) {
+                return e;
+              }
             }
-          })
+          });
+          if(singleFlightStops.length>0)
+          {
+            filteredStopsArr.push(d);
+          }
         });
       }
+      updatedflightList=filteredStopsArr;
     }
-
-    //layover airport filter
-    if (this.flightList.length > 0) {
+    else{
+      updatedflightList=flightList;
+    }
+    return updatedflightList;
+  }
+  //layover airport filter
+  layoverFilterFlights(flightList:any){
+    //this.flightList=flightList;
+    let updatedflightList:any = [];
+    if (flightList.length > 0) {
       let layoverArr: any = [];
       let layoverFilter = $("#layover_airport input[type=checkbox]:checked");
       for (let j = 0; j < layoverFilter.length; j++) {
@@ -823,7 +1180,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       var filteredAirlines: any[] = [];
       if (layoverArr.length > 0) {
-        this.flightList.forEach((e: any) => {
+        flightList.forEach((e: any) => {
           var flights = [];
           e.flights.filter((d: any) => {
             if (layoverArr.indexOf(d.arrivalAirport) > -1) {
@@ -834,10 +1191,52 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
             filteredAirlines.push(e);
           }
         });
-        this.flightList = filteredAirlines;
+        updatedflightList = filteredAirlines;
+      }
+      else{
+        updatedflightList=flightList;
       }
     }
+    return updatedflightList;
+  }
+  airlineFilterFlights(flightList:any){
+    if (flightList.length > 0) {
+      let airlineArr: any = [];
+      let airlineFilter = $("#airline_list input[type=checkbox]:checked");
+      for (let j = 0; j < airlineFilter.length; j++) {
+        airlineArr.push(airlineFilter[j].value);
+      }
+      var filteredAirlines: any[] = [];
+      if (airlineArr.length > 0) {
+        flightList.forEach((e: any) => {
+          var flights = [];
+          e.flights.filter((d: any) => {
+            if (airlineArr.indexOf(d.airlineName) > -1) {
+              flights.push(d);
+            }
+          })
+          if (flights.length > 0) {
+            filteredAirlines.push(e);
+          }
+        });
+        flightList = filteredAirlines;
+      }
 
+      //Get AirLines Count
+      if(this.airlines.length>0){
+        this.airlines.filter(function (e: any) { e.flighCount = 0; return e; })
+        for (let j = 0; j < this.airlines.length; j++) {
+          flightList.forEach((e: any) => {
+            e.flights.forEach((d: any, indx: number) => {
+              if (this.airlines[j].airlineName == d.airlineName && indx == 0) {
+                this.airlines[j].flighCount += 1;
+              }
+            })
+          });
+        }
+      }
+    }
+    return flightList;
   }
 
   // get airlines list and lowest price
@@ -856,15 +1255,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (h < singleFlightList.length - 1) {
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
-            let layOverFilterObj = {
-              "arrivalAirportCode": arrivalAirportCode,
-              "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
-              "price": priceSummaryList[0].totalFare
-            };
-            layOverArr.push(layOverFilterObj);
+            if(this.airportsNameJson!=null){
+              let layOverFilterObj = {
+                "arrivalAirportCode": arrivalAirportCode,
+                "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
+                "price": priceSummaryList[0].totalFare
+              };
+              layOverArr.push(layOverFilterObj);
+            }
           }
         }
-
         for (let p = 0; p < priceSummaryList.length; p++) {
           priceSummary = priceSummaryList[p].totalFare
           if (airlineNameArr.filter((d: any) => { if (d.airlineName == airlineName) { return d; } }).length < 1) {
@@ -886,7 +1286,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   searchNonStop(val: any) {
-
     $(".flight-counts-list").removeClass("active");
     if (val == "no_stops") {
       $("#Flight_Stops .Stops-list[value=no_stops]").addClass("active")
@@ -928,6 +1327,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     let searchValue = this.flightDataModify.value;
+    this.flightDataModify.value.departure=this.flightDataModify.value.departure.getFullYear()+'-' +(this.flightDataModify.value.departure.getMonth()+ 1)+'-' +this.flightDataModify.value.departure.getDate();
 
     let otherSearchValueObj = { 'fromAirportName': this.fromAirpotName, 'toAirportName': this.toAirpotName, 'toCity': this.toCityName, 'fromCity': this.fromCityName, 'fromContry': this.fromContryName, 'toContry': this.toContryName }
 
@@ -1121,7 +1521,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     //   $('#slider-range').slider({
     //     values: [min_price_range, max_price_range],
     //   });
-    //   $that.sliderRange($that, $that.minPrice, $that.maxPrice);
+    $that.sliderRange($that, $that.minPrice, $that.maxPrice);
     //   // $('#slider-range').slider({
     //   //   range: true,
     //   //   orientation: 'horizontal',
@@ -1222,12 +1622,17 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   onMinValueChange(event:any)
   {
     this.minPrice = event;
-    this.popularFilterFlightData();
+    if(this.minPrice!=null){
+      this.popularFilterFlightData();
+    }
     // console.log(event)
   }
   onMaxValueChange(event:any)
   {
     this.maxPrice = event;
+    if(this.maxPrice!=null){
+      this.popularFilterFlightData();
+    }
     this.popularFilterFlightData();
   }
   resetPricefilter() {

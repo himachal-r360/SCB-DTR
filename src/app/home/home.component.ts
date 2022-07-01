@@ -415,6 +415,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   continueSearch(param:any){
+    debugger;
     // let query:any = localStorage.getItem('searchVal');
     let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
     this.router.navigateByUrl(url);

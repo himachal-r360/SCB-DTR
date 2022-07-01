@@ -1,6 +1,8 @@
 import { Component, DebugNode, OnInit } from '@angular/core';
 import { FlightService } from 'src/app/common/flight.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-flight-detail',
   templateUrl: './flight-detail.component.html',
@@ -37,14 +39,14 @@ export class FlightDetailComponent implements OnInit {
     let param=JSON.parse(flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;
-        this.selectedVendor = param.priceSummary;  
+        this.selectedVendor = param.priceSummary;
         this.durationCalc();
       }
 
     // this._flightService.getFlightDetailsVal().subscribe((param:any)=>{
     //   if(param!=null){
     //     this.flightDetails = param.flights;
-    //     this.selectedVendor = param.priceSummary;  
+    //     this.selectedVendor = param.priceSummary;
     //   }
     // })
   }
@@ -71,15 +73,15 @@ export class FlightDetailComponent implements OnInit {
 
   // getLayoverHour(obj1:any, obj2:any)
   // {
-    
+
   //   let dateHour:any;
   //   if(obj2!=null || obj2!=undefined)
   //   {
-      
+
   //     let obj2Date=new Date(obj2.departureDateTime);
   //     let obj1Date=new Date(obj1.arrivalDateTime);
   //     dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
-        
+
   //   }
   //   return dateHour;
   // }
@@ -102,5 +104,14 @@ export class FlightDetailComponent implements OnInit {
         this.getLayoverHour(this.flightDetails[i],this.flightDetails[i+1]);
       }
     }
+  }
+
+  changeFareRuleTab(event:any){
+    console.log(event);
+    $('.flight-extra-content').hide();
+    $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+    var Element = document.getElementById(event.target.dataset['bind']);
+    Element!.style.display = 'block';
+    event.target.classList.add('flight-extra-tabs-active');
   }
 }
