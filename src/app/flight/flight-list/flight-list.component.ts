@@ -8,6 +8,8 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { Options } from '@angular-slider/ngx-slider';
 import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
+import { SimpleGlobal } from 'ng2-simple-global';
+import {environment} from '../../../environments/environment';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -154,13 +156,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     {name:'P_D_E', active:false, value:'Depart Ealry'},
     {name:'P_D_L', active:false, value:'Depart Late'},
   ]
-  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location)  {
   
+  cdnUrl: any;
+  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal)  {
+     this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
   
-    this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-       this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+       this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
-       this._styleManager.setScript('ion', `assets/js/ion.rangeSlider.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
        
   }
@@ -204,10 +206,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     $("#CompareToFly_" + indx + " a[value=" + value + "]").addClass("flight-extra-tabs-active");
   }
   ngAfterViewInit(): void {
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.Initslider();
       $('.selectpicker').selectpicker();
-    }, 200);
+    }, 200);*/
   }
   setSearchFilterData() {
     this.searchData = localStorage.getItem('searchVal');
@@ -1042,9 +1044,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub?.unsubscribe();
             
         this._styleManager.removeStyle('bootstrap-select');
-        this._styleManager.removeStyle('daterangepicker');
         this._styleManager.removeScript('bootstrap-select');
-          this._styleManager.removeScript('ion');
         this._styleManager.removeScript('custom');
   }
   HideShowCompareToFly(i: number, fromCall: string,j:number) {

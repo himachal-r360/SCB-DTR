@@ -226,13 +226,13 @@
                       <p>Compare &amp; Fly with our flight partners</p>
                       <ul class="list-inline ms-3">
                           <li class="list-inline-item">
-                              <img src="./assets/images/flight_partners/1.png" alt="">
+                              <img src="./assets/images/flight_partners/Cleartrip.png" alt="Cleartrip">
                           </li>
                           <li class="list-inline-item">
-                              <img src="./assets/images/flight_partners/2.png" alt="">
+                              <img src="./assets/images/flight_partners/Yatra.png" alt="Yatra">
                           </li>
                           <li class="list-inline-item">
-                              <img src="./assets/images/flight_partners/3.png" alt="">
+                              <img src="./assets/images/flight_partners/Easemytrip.png" alt="Easemytrip">
                           </li>
                       </ul>
                   </div>
@@ -678,7 +678,7 @@
                                         <div class="col-md-2">
                                             <div class="flight-radio">
                                                 <div class="flight-radio-image">
-                                                    <img src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                                    <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}" class="flight-image">
                                                 </div>
                                                 <div class="flight-radio-time" *ngIf="list.flights.length > 0">
                                                     <h6>{{list.flights[0].airlineName}}</h6>
@@ -708,8 +708,8 @@
                                         <div class="col-md-2">
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-image" *ngIf="list.priceSummary.length > 0">
-                                                    <!-- <img src="assets/images/flights/1.png" alt=""> -->
-                                                    <p>{{list.priceSummary[0].partnerName}}</p>
+                                                  <img src="{{cdnUrl}}/images/flight_partners/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}"> 
+                                                    <!--<p>{{list.priceSummary[0].partnerName}}</p>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -755,8 +755,8 @@
                                 </div>
 
                                 <div class="flight-info-box">
-                                    <!-- <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> -->
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
+                                    <!-- <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> 
+                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>-->
                                     <!-- <p></p>
                                     <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                     <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a> -->
@@ -767,6 +767,7 @@
                                         <div class="flight-options-list">
                                             <div class="flight-options-list-left">
                                                 <div class="flight-options-logo">
+                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" height="20"> 
                                                   {{item.partnerName}}
                                                     <!-- <img src="./assets/images/flights/1.png" alt="" /> -->
                                                 </div>
@@ -878,7 +879,7 @@
                                                             <div class="extra-tabs-details-bottom">
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one" >
-                                                                        <p class="depart-one-image"><img src="{{this.flightIcons[list.flights[0].airline].logo}}" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                                                        <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">IndiGo {{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
                                                                         <div class="tabs-depart-left">
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
