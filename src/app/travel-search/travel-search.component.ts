@@ -600,6 +600,9 @@ export class TravelSearchComponent implements OnInit {
   this.showFlightReturn=true;
     this.searchFlightForm.controls["flightReturn"].setValidators(Validators.required);
     this.searchFlightForm.controls["flightReturn"].updateValueAndValidity();
+  }else
+  if(event=='M'){
+    this.router.navigateByUrl('/home');
   }else{
   this.showFlightReturn=false;
   this.flightReturn=null;

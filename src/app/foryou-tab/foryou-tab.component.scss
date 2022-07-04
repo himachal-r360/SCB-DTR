@@ -6,13 +6,21 @@ $break-mob-3: 320px;
 $break-mob-2: 375px;
 $break-mob-1: 425px;
 $break-md-tab: 768px;
+
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .tab_inner {
     /* margin-top: 40px; */
-    padding: 0em 0px 1.5em 0px;
+    padding: 1em 0px 1.5em 0px;
     background-color: #f7faff;
 
     @media screen and (max-width: 768.98px) {
-        padding-top: 0em;
+        padding-top: 1em;
     } 
     /* @media screen and (min-width: 769px) and (max-width: 1024px) {
         margin-top: 1.5em;
@@ -235,14 +243,12 @@ h3 {
             width: 95%;
         }
         .logo_img {
+            @include flex;
             background-color: #fff4e6;
             border-radius: 8px 0px 0px 10px;
             height: 98px;
-            align-items: center;
-            display: flex;
             width: 50%;
             text-align: center;
-            justify-content: center;
             img {
                 width: auto;
                 height: 50px;
@@ -812,10 +818,8 @@ margin-top:-7px;
         margin-right: 15px;
         width: 100%;
         height: 60px;
-        display: flex;
-        align-items: center;
+        @include flex;
         padding: 10px;
-        justify-content: center;
         img {
             width: auto;
             padding: 10px;
@@ -835,7 +839,7 @@ margin-top:-7px;
         overflow-x: auto;
         overflow-y: hidden;
         padding: 0em 0px 0px;
-        margin-bottom: 20px;
+        margin-bottom: 0;
         -ms-overflow-style: none;
         /* IE and Edge */
         scrollbar-width: none;
@@ -849,16 +853,14 @@ margin-top:-7px;
         // flex-basis: 300px;
         flex-basis: auto;
         img {
-            max-width: 240px;
+            max-width: 90%;
             border-radius: 8px;
-            @media screen and (max-width: 1200px) and (min-width: 320px) {
-                max-width: 200px;
-            }
-            @media screen and (max-width: 1601px) and (min-width: 1536px)  {
-                max-width: 270px;
-            }
+            
             @media screen and (min-width: 1602px)  {
-                max-width: 300px;
+                max-width: 95%;
+            }
+            @media screen and (max-width: 600px)  {
+                max-width: 240px;
             }
         }
         @media screen and (max-width: 1024px) {
@@ -872,10 +874,16 @@ margin-top:-7px;
         text-align: center;
         position: absolute;
         top: 30px;
-        bottom: 0;
         left: 0;
         right: 0;
-        margin: auto;
+        width: 90%;
+        @media screen and (min-width: 1602px)  {
+            width: 95%;
+        }
+        @media screen and (max-width: 600px)  {
+            width: 240px;
+        }
+        /* margin: auto; */
         .cate_name {
             color: $black-color;
             font-size: 16px;
@@ -1962,7 +1970,7 @@ margin-top:-7px;
         width: 100%;
         padding-right: 1em;
         padding-left: 1em;
-        margin: 1.5em 0em;
+        /* margin: 1.5em 0em; */
         .view-all-deals {
             position: absolute;
             right: 10px;
@@ -1991,7 +1999,8 @@ margin-top:-7px;
     }
 }
 .c-space-2{
-    margin: 3em 0px;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
 }
 
 @media only screen and (min-width: 1366px) and (max-width: 1440.59px) {}
@@ -2234,9 +2243,7 @@ margin-top:-7px;
                 height: 30px;
                 background-color: $white-color;;
                 border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                @include flex;
                 margin: 0 auto;
                 img {
                     width: 15px;
@@ -2348,6 +2355,13 @@ margin-top:-7px;
                 font-family: 'opensans-bold';
             }
         }
+    }
+}
+.offers_link{
+    @include flex;
+    a{
+        @include flex;
+        font-weight: 600;
     }
 }
 
