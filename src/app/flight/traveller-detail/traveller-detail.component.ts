@@ -58,7 +58,7 @@ addInfantDetail: any = this._fb.group({
   ngOnInit(): void {  
     let parseVal:any = localStorage.getItem('searchVal')
     this.travelerDetails = JSON.parse(parseVal);
-    console.log(this.travelerDetails ,"travel details");
+    
   }
 
   getGenderValue(gender:any){
