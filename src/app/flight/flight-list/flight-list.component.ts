@@ -257,7 +257,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   getAirpotsList() {
     this._flightService.getAirportName().subscribe((res: any) => {
       this.airportsNameJson = res;
-      console.log(this.airportsNameJson,"this.airportsNameJson");
+      
     })
   }
 
@@ -436,7 +436,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightAcsDescFilterFlightData(event:any)
   {
-    console.log(event);
     let selectedVal=event.target.value;
     this.priceSortingFilteritems.filter((item:any)=>{
       item.active=false;
@@ -471,7 +470,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightAirlineFilterFlightData(airlineItem:any)
   {
-    debugger;
     airlineItem.active = !airlineItem.active;
     this.popularFilterFlightData();
   }
@@ -483,7 +481,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   /* Reset function Start*/
   //It is used for clear filters of Popular filter
   resetPopularFilter() {
-    debugger;
+    
     this.flight_PopularItems.filter((item:any)=>{item.active=false; return item;})
     this.popularFilterFlightData();
   }
@@ -665,7 +663,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     // Layover Filter Flights
     this.flightList=this.layoverFilterFlights(this.flightList);
     
-    console.log(this.flightList,"this.flightList");
+    
   }
 
   //Popular Filter Flights
@@ -887,7 +885,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //layover airport filter
   layoverFilterFlights(flightList:any){
-    debugger;
+    
+
     if (flightList.length > 0) {
       let layoverArr: any = [];
       layoverArr=this.layOverFilterArr.filter((item:any)=>{

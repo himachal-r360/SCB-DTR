@@ -2,11 +2,13 @@ import { JsonpClientBackend } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
+  Directive,
   ElementRef,
   OnDestroy,
   OnInit,
   Output,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -26,6 +28,7 @@ export const MY_DATE_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY'
   },
 };
+import {DropdownDirective} from '../directives/dropdown.directive'
 
 
 @Component({
@@ -73,6 +76,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   toContryName:any;
   @ViewChild("toCityInput") toCityInput!: ElementRef<HTMLInputElement>;
   @ViewChild("toCityDiv") toCityDiv!: ElementRef;
+  // @ViewChild(DropdownDirective) directive!:Directive
   
   
 
@@ -113,7 +117,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
     }
-    console.log(this.continueSearchVal);
+    
   }
   ngAfterViewInit(): void {
      this.toCityInput.nativeElement.focus();
@@ -218,8 +222,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromContryName = para1.country;
     localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
-    console.log(this.toCityDiv.nativeElement.appdropdown);
+    
     // this.toCityDiv.nativeElement.appdropdown
+    // this.directive()
+    
     this.toFlightList = true;
 
   }
@@ -240,7 +246,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // isValidation:boolean=false;
   // flightSearchValidation() {
-  //   debugger;
+  //   
   //   // if(this.flightData.value.flightfrom == "" || this.flightData.value.flightfrom == undefined || this.flightData.value.flightto == "" || this.flightData.value.flightto == undefined ||  this.flightData.value.departure == "" || this.flightData.value.departure == undefined ){
   //   //   this.toCityValidation =  true;
   //   //   this.fromCityValidation =  true;
@@ -293,7 +299,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
-      debugger;
+      
       if(continueSearch!=null && continueSearch.length>0){
         this.continueSearchFlights=JSON.parse(continueSearch);
         this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
@@ -303,8 +309,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         })
       }
-      console.log(this.continueSearchFlights);
-      debugger;
+      
+      
       this.continueSearchFlights.push(searchValueAllobj);
       
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
@@ -350,7 +356,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   continueSearch(param:any){
-    debugger;
+    
     // let query:any = localStorage.getItem('searchVal');
     let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
     this.router.navigateByUrl(url);
