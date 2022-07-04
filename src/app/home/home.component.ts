@@ -2,9 +2,11 @@ import { JsonpClientBackend } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -68,44 +70,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   continueSearchVal:any;
   fromContryName:any;
   toContryName:any;
+  @ViewChild("toCityInput") toCityInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("toCityDiv") toCityDiv!: ElementRef;
+  
+  
+
 
   minDate = new Date();
-  // fromCityValidation = false;
-  // toCityValidation = false;
-  // departDateValidation = false;
-
-  //get f() { return this.flightData.controls; }
-
-
-  // flightData: any = this._fb.group({
-  //   depart: ["2022-06-15"],
-  //   channel: ["web"],
-  //   arrive: [""],
-  //   leavingFrom: ["DEL"],
-  //   infants: ["0"],
-  //   child: ["0"],
-  //   goingTo: ["BLR"],
-  //   travel: ["DOM"],
-  //   classType: ["E"],
-  //   defaultType: ["O"],
-  //   sortBy: ["asc"],
-  //   count_t: ["1"],
-  //   adultsq: ["1"]
-  // })
-
-  // flightData: any = this._fb.group({
-  //   flightfrom: ["DEL"],
-  //   flightto: ["BLR"],
-  //   flightclass: ["E"],
-  //   flightdefault: ["O"],
-  //   departure: ["2022-05-31"],
-  //   arrival: [":"],
-  //   adults: ["1"],
-  //   child: ["0"],
-  //   infants: ["0"],
-  //   travel: ["DOM"],
-
-  // })
   constructor(
     public router: Router,
     private _fb: FormBuilder,
@@ -127,51 +98,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
-    //this.getCityList();
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
     }
-
-    // $(document).click(function (e: any) {
-    //   var containerLeft = $('.select-root-left');
-    //   if (!$(e.target).closest(containerLeft).length) {
-    //     $('.flight-from-data').addClass('flight-from-hide');
-    //   } else {
-    //     $('#fromCitySearch1').val('');
-    //     $('.flight-from-data').removeClass('flight-from-hide');
-    //     $("#fromCitySearch1").trigger("focus");
-    //   }
-
-    //   var containerRight = $('.select-root-right');
-    //   if (!$(e.target).closest(containerRight).length) {
-    //     $('.flight-to-data').addClass('flight-from-hide');
-    //   } else {
-    //     $('#toCitySearch1').val('');
-    //     $('.flight-to-data').removeClass('flight-from-hide');
-    //     $("#toCitySearch1").trigger("focus");
-    //   }
-
-    //   var TravellersDropdown = $('.Travellers-dropdown');
-    //   if (!$(e.target).closest(TravellersDropdown).length) {
-    //     $('.Travellers-dropdown-data').addClass('Travellershide');
-    //   } else {
-    //     $('.Travellers-dropdown-data').removeClass('Travellershide');
-    //   }
-    //   var Preferredtitle = $('.Preferred-title');
-    //   if (!$(e.target).closest(Preferredtitle).length) {
-    //     $('.Preferred-data').addClass('Preferred-hide');
-    //   } else {
-    //     $('.Preferred-data').removeClass('Preferred-hide');
-    //   }
-
-    // });
+    console.log(this.continueSearchVal);
   }
   ngAfterViewInit(): void {
-  //  setTimeout(() => {
-  //   $('.class-select').selectpicker();
-  //  }, 500);
+     this.toCityInput.nativeElement.focus();
+    
+    
+
   }
   selectDate(control: string) {
     let dep;
@@ -268,9 +206,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromAirpotName = para1.airport_name;
     this.fromCityName = para1.city;
     this.fromContryName = para1.country;
-
     localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
+    console.log(this.toCityDiv.nativeElement.appdropdown);
+    // this.toCityDiv.nativeElement.appdropdown
+    this.toFlightList = true;
+
   }
 
   selectToFlightList(para2: any) {
@@ -282,7 +223,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toAirpotName = para2.airport_name;
     this.toCityName = para2.city;
     this.toContryName = para2.country;
-
     localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
   }
@@ -343,10 +283,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
+      debugger;
       if(continueSearch!=null && continueSearch.length>0){
         this.continueSearchFlights=JSON.parse(continueSearch);
+        this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
+          if(item.flightfrom!=searchValueAllobj.flightfrom || item.flightto!=searchValueAllobj.flightto)
+          {
+              return item;
+          }
+        })
       }
+      console.log(this.continueSearchFlights);
+      debugger;
       this.continueSearchFlights.push(searchValueAllobj);
+      
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
@@ -369,21 +319,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }, (error) => { console.log(error) });
 
     }
-
-    //this.flightData.get('departure').setValue(this.departureDate)
-    // this.sub = this._flightService.flightList(this.flightData.value).subscribe(
-    //   (res: any) => {
-    //     this.loader = false;
-    //     this.show = true;
-    //     this.flightList = res.response.onwardFlights;
-    //     this._flightService.flightListData = this.flightList;
-    //     console.log(this.flightList, 'flight Search');
-    //     this.router.navigate(['flight-list']);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
   }
   ConvertObjToQueryString(obj:any)
   {
