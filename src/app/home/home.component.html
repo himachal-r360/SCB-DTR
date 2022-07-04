@@ -165,7 +165,7 @@
                                                             id="hdnfromCitySearch" > -->
                                                             <input type="text" autocomplete="off" class="w-100"
                                                                 id="fromCitySearch1" placeholder="Search City" formControlName="flightfrom"
-                                                                (keyup)="fromList($event)">
+                                                                (keyup)="fromList($event)" autofocus>
                                                             <input type="text" name="flightfrom" style="display:none"
                                                             id="fromCitySearch" >
 
@@ -178,7 +178,7 @@
                                                             <li class="flight-from-ul-li"
                                                                 *ngFor="let fromCity of cityList">
                                                                 <a href="#" class="flight-from-ul-li-a"
-                                                                    (click)="selectFromFlightList(fromCity._source)">
+                                                                    (click)="selectFromFlightList(fromCity._source)" >
                                                                     <div class="flight-from-name">
                                                                         <h6>{{fromCity._source.city}},
                                                                             {{fromCity._source.country}}</h6>
@@ -199,19 +199,19 @@
                                                 <div class="select-root-icons" (click)="swap()">
                                                     <img src="./assets/images/icons/twoway.png" alt="">
                                                 </div>
-                                                <div class="select-root-right" appDropdown>
+                                                <div class="select-root-right" appDropdown #toCityDiv>
                                                     <span class="select-roottitle">TO</span>
                                                     <h5 class="fw_6 ">{{toCityName}}</h5>
                                                     <span class="select-roottitle">{{toAirpotName}}</span>
 
-                                                    <div class="flight-to-data flight-from-hide dropdown">
+                                                    <div class="flight-to-data flight-from-hide dropdown" >
 
                                                         <div class="flight-from-data-search">
                                                             <input type="text" autocomplete="off" class="w-100"
                                                                 id="toCitySearch1" placeholder="Search City" formControlName="flightto"
-                                                                (keyup)="toList($event)">
+                                                                (keyup)="toList($event)" #toCityInput autofocus>
                                                             <input type="text"  name="flightto" style="display:none"
-                                                            id="toCitySearch">
+                                                            id="toCitySearch" >
                                                         </div>
                                                         <ul class="flight-from-data-ul" *ngIf="toFlightList">
                                                             <li class="flight-from-ul-li">
