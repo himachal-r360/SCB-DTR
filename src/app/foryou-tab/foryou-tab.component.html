@@ -1,5 +1,5 @@
 <div class="tab_inner pb-0">
-    <div class=" container_ftab mb-1 pt-16">
+    <div class=" container_ftab c-space-2 mb-1 pt-16">
         <div class="row">
             <div class="col-lg-12 col-sm-12" *ngIf="isLogged==false">
                 <div id="sync1" class="topBannerSlider owl-carousel" *ngIf="topBanner">
@@ -184,7 +184,7 @@
                     </div>
 
                     <!-- Recent Search -->
-                    <div class="container_ftab p-0 mb-0" *ngIf="recentsearchDataAll.length > 0">
+                    <div class="container_ftab c-space-2 p-0 mb-0" *ngIf="recentsearchDataAll.length > 0">
                         <h3 class="">Recent Searches</h3>
                         <div class="recent_ser_m">
                             <div class="item" *ngFor="let rec of recentsearchDataAll">
@@ -220,7 +220,7 @@
 
      <!-- Smartbuy Exclusive Mlite Code -->
      <div class="mlite_exclusive d-block d-sm-none" *ngIf="DOMAIN_SETTINGS">
-        <div class="container_ftab">
+        <div class="container_ftab c-space-2">
             <h3 class="">Smartbuy Exclusive
                 <span class="float-right"><a (click)="goToNew('/partners')" class="view_all_link">Explore</a></span>
             </h3>
@@ -361,10 +361,11 @@
                     </a>
                 </div> -->
             </div>
+            <div class="text-center">
+                <a (click)="redirectDisUrl('deals')" class="href_link">All Offers <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
         </div>
-        <div class="text-center">
-            <a (click)="redirectDisUrl('deals')" class="href_link">All Offers <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-        </div>
+        
         <div>
 
         </div>
@@ -374,7 +375,7 @@
 
     <!-- Travel & Stay Bookings made easy starts -->
     <div>
-        <div class="container_ftab d-none d-sm-none d-md-none d-lg-block" *ngIf="DOMAIN_SETTINGS">
+        <div class="container_ftab c-space-2 d-none d-sm-none d-md-none d-lg-block" *ngIf="DOMAIN_SETTINGS">
             <div class="">
                 <h3 class="">Travel & Stay Bookings made easy</h3>
             </div>
@@ -433,7 +434,7 @@
         </div>
         <!-- Book travel, stay & more mlite starts -->
 
-        <div class="container_ftab p-0 d-block d-sm-block d-md-block d-lg-none">
+        <div class="container_ftab c-space-2 p-0 d-block d-sm-block d-md-block d-lg-none">
             <div class="book_travel_mlite">
                 <div class="container">
                     <h3 class="">Book travel, stay & more</h3>
@@ -493,7 +494,7 @@
 
     <!-- Offers and Deals section  -->
 
-    <div class=" container_ftab" *ngIf="topDeals && topDeals.length > 0">
+    <div class=" container_ftab c-space-2" *ngIf="topDeals && topDeals.length > 0">
         <div class="mt-4">
             <h3 class="d-inline">Offer and Deals 
                 <span class="float-end float-end mt-md-3"><a (click)="redirectDisUrl('deals')" class="view_all_link">View All Offers</a></span>
@@ -514,7 +515,7 @@
 
                     <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
                         <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
-                            <mat-option value="All">All Sub Categoriess</mat-option>
+                            <mat-option value="All">All Sub Categories</mat-option>
                             <mat-option *ngFor="let cat of topDealSubCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -522,7 +523,7 @@
 
                     <mat-form-field class="" *ngIf="topDealSubCategory.length==0">
                         <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select"  [(value)]="modeselectDealSubCat" >
-                            <mat-option value="All">All Sub Categoriess</mat-option>
+                            <mat-option value="All">All Sub Categories</mat-option>
                         </mat-select>
                     </mat-form-field>
                 
@@ -577,9 +578,9 @@
 
     <!-- Partner logos section  -->
 
-    <div class=" container_ftab mt-3" *ngIf="foryouPartners.length > 0 ">
+    <div class=" container_ftab c-space-2 mt-3" *ngIf="foryouPartners.length > 0 ">
         <div class="">
-            <h3 class="d-inline">Explore Partners</h3> <span class="pl-3"><a (click)="goToNew('/partners')" class="ml-10">View All</a></span>
+            <h3 class="d-inline">Explore Partners</h3> <span class="float-end mt-md-3"><a class="view_all_link" (click)="goToNew('/partners')">View All</a></span> 
             <!-- <h3 class="d-inline">{{foryouPartners.length}}+ Partners</h3> <span class="pl-3"><a >View All</a></span> -->
         </div>
         <div>
@@ -599,13 +600,13 @@
 
 
     <!-- Trending Items section  -->
-    <div class=" pt-3 pt-sm-0 container_ftab" *ngIf="showShoppingItems && amazonCategories && DOMAIN_SETTINGS.AMAZON_PANTRY==1">
+    <div class=" pt-3 pt-sm-0 container_ftab c-space-2" *ngIf="showShoppingItems && amazonCategories && DOMAIN_SETTINGS.AMAZON_PANTRY==1">
         <div class="d-none d-sm-block web_code" >
             <h3 class="d-inline">Trending items</h3>
             <span class="">
                 <mat-form-field class="ps-3" *ngIf="showShoppingItems && amazonCategories['category_filter']">
                     <mat-select  (selectionChange) ="selectAmazonCategory($event)" class="categorie_select trend_select"  [(value)]="modeselectTrending">
-                        <mat-option value="All">All Sub Categoriess</mat-option>
+                        <mat-option value="All">All Sub Categories</mat-option>
                         <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -617,7 +618,7 @@
                 <span class="">
                     <mat-form-field class="" *ngIf="showShoppingItems && amazonCategories['category_filter']">
                         <mat-select  (selectionChange) ="selectAmazonCategory($event)" class="categorie_select"  [(value)]="modeselectTrending">
-                            <mat-option value="All">All Sub Categoriess</mat-option>
+                            <mat-option value="All">All Sub Categories</mat-option>
                             <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -666,7 +667,7 @@
 
 <!-- Top categories EMI section  -->
 
-<div class=" pt-16 container_ftab">
+<div class=" pt-16 container_ftab c-space-2">
     <div class="">
         <h3 class="d-inline">Top categories on EMI</h3>
     </div>
@@ -729,7 +730,7 @@
 
 <!-- Brand in Focus section -->
 
-<div class=" container_ftab" *ngIf="foryouBrands.length > 0 ">
+<div class=" container_ftab c-space-2" *ngIf="foryouBrands.length > 0 ">
     <div class="">
         <h3 class="d-inline">Brands in focus</h3> <span class="pl-3"><!--<a >View All</a>--></span>
     </div>
