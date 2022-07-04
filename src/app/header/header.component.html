@@ -317,7 +317,7 @@
                                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('customer_support')">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-help.svg" alt="account" class="">
-                                                <span>Help</span>
+                                                <span>Customer Support</span>
                                             </div>
                                         </a>
                                         <a class="dropdown-item" href="{{domainRedirect}}logout">
@@ -431,16 +431,17 @@
                         <a class="nav_link_item" href="javascript:;">Shop</a>
                         <div class="dropdown-content-list list-shop">
                             <!-- <h5>E-Commerce</h5> -->
-                            <div class="row mb-4">
-                                <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
-                                    <div class="content_show" >
-                                        <a href="javascript:;" (click)="redirectUrlpopup('amazon',0,'amazon')">
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/amazon.svg" alt="amazon">
-                                            <h5>Amazon</h5>
-                                            <p class="points m-0">{{serviceSettings.offer_construct.amazon.reward}}X Reward Points | {{serviceSettings.offer_construct.amazon.cashback}}% Cashback</p>
-                                        </a>
+                            <div class="row g-4">
+                                    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+                                        <div class="content_show" >
+                                            <a href="javascript:;" (click)="redirectUrlpopup('amazon',0,'amazon')">
+                                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/amazon.svg" alt="amazon">
+                                                <h5>Amazon</h5>
+                                                <p class="points m-0">{{serviceSettings.offer_construct.amazon.reward}}X Reward Points | {{serviceSettings.offer_construct.amazon.cashback}}% Cashback</p>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
+
                                 <div class="col-sm-4"  *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
                                     <div class="content_show">
                                         <a href="javascript:;" (click)="redirectUrlpopup('flipkart',0,'flipkart')">
@@ -459,8 +460,8 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+                            <!-- </div> -->
+                            <!-- <div class="row"> -->
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.IGP==1">
                                     <div class="content_show" >
                                         <a href="javascript:;" (click)="redirectUrlpopup('igp',0,'igp')">
@@ -737,7 +738,7 @@
                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('customer_support')">
                             <div class="item">
                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-help.svg" alt="account" class="">
-                                <span>Help</span>
+                                <span>Customer Support</span>
                             </div>
                         </a>
                         <a class="dropdown-item" href="{{domainRedirect}}logout">
