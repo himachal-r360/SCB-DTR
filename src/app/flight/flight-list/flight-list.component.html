@@ -17,7 +17,7 @@
                                         <span class="selectway">Multicity</span>
                                     </li>
                                     <li>
-                                        <div class="Travellers-dropdown ms-3" appDropdown>
+                                        <div class="Travellers-dropdown ms-3" appDropdown id="openTravellers">
                                             <div class="Travellers-dropdown-title">
                                                 <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i></h5>
                                             </div>
@@ -129,7 +129,7 @@
                                             <div class="select-root-icons" (click)="swap()">
                                                 <img src="./assets/images/icons/twoway.png" alt="">
                                             </div>
-                                            <div class="select-root-right" appDropdown>
+                                            <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
                                                 <span class="select-roottitle">TO</span>
                                                 <h5 class="fw_6 ">{{toCityName}}</h5>
                                                 <span class="select-roottitle">{{toAirpotName}}</span>
@@ -163,7 +163,7 @@
                                         <div class="root-date">
                                             <div class="select-root-area">
                                                 <div class="select-dep-ret">
-                                                    <div class="area-root-departure" (click)="picker.open()"  >
+                                                    <div class="area-root-departure" (click)="picker.open()" id="datePickerOpen" >
                                                         <div class="select-root-departure">
                                                             <span class="select-roottitle">DEPARTURE</span>
                                                             <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
@@ -172,7 +172,7 @@
                                                         <div class="select-root-date" style="position: relative; left: 0;">
                                                             <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
                                                             <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                              <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" >
+                                                              <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClicked($event)">
                                                               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                               <mat-datepicker #picker ></mat-datepicker>
                                                        </mat-form-field>
