@@ -503,7 +503,7 @@
                                     <div class="col-sm-10 col-lg-10">
                                         <ul class="list_group">
                                             <li *ngFor="let vouchercat of getVouchersList">
-                                                <h5>{{vouchercat.voucher_name}}</h5>
+                                                <h5>{{vouchercat.voucher_name|nospace}}</h5>
                                                 <a href="javascript:;" *ngFor="let vouchercatval of vouchercat.voucher_value" (click)="redirectUrlpopup('instavouchers',1,vouchercatval.url)">{{vouchercatval.name}}</a>
                                             </li>
 
