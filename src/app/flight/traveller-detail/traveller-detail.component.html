@@ -4,8 +4,8 @@
             <div class="col-md-8">
                 <div class="booking-process-content">
                     <div class="booking-title-box">
-                        <h4>Traveller Details <span>{{travelerDetails.adults}} Adults, {{travelerDetails.child}} Child,
-                                {{travelerDetails.infants}} infant</span></h4>
+                        <h4>Traveller Details <span *ngIf="travelerDetails.adults >0">{{travelerDetails.adults}} Adults,</span> <span *ngIf="travelerDetails.child > 0">{{travelerDetails.child}} Child,</span> 
+                        <span *ngIf="travelerDetails.infants>0">{{travelerDetails.infants}} infant</span></h4>
                     </div>
                     <div class="booking-inner-box traveller-person-box">
                         <div class="traveller-person-title">
@@ -50,7 +50,7 @@
                                     </ul>
 
                                     <div class="add-traveller-adults" *ngIf="toggleAdult">
-                                        <form class="forms-field" [formGroup]="addAdultDetail">
+                                        <form class="forms-field" [formGroup]="addAdultDetail" >
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <ul class="select-gender" >
@@ -63,7 +63,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" *ngFor="let item of InputArray.adult">
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>First Name</mat-label>
@@ -80,7 +80,7 @@
                                                     <div class="form-group">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth">
+                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" >
                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                             </mat-datepicker-toggle>
                                                             <mat-datepicker #picker></mat-datepicker>
@@ -131,7 +131,7 @@
                                     </ul>
 
                                     <div class="add-Child-adults" *ngIf="toggleChild">
-                                        <form class="forms-field">
+                                        <form class="forms-field" [formGroup]="addChildDetail">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <ul class="select-gender">
@@ -144,7 +144,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" *ngFor="let item of InputArray.child">
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>First Name</mat-label>
@@ -154,7 +154,7 @@
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name" formControlName="firstName">
+                                                        <input matInput placeholder="Last Name" formControlName="lastName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
@@ -212,7 +212,7 @@
                                     </ul>
 
                                     <div class="add-Child-adults" *ngIf="infantToggle">
-                                        <form class="forms-field">
+                                        <form class="forms-field" [formGroup]="addInfantDetail">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <ul class="select-gender">
@@ -225,7 +225,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" *ngFor="let item of InputArray.infants">
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>First Name</mat-label>
