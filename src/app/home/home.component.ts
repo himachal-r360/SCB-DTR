@@ -4,11 +4,11 @@ import {
   Component,
   Directive,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
-  Output,
   ViewChild,
-  ViewChildren,
+  
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -28,7 +28,6 @@ export const MY_DATE_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY'
   },
 };
-import {DropdownDirective} from '../directives/dropdown.directive'
 
 
 @Component({
@@ -37,12 +36,16 @@ import {DropdownDirective} from '../directives/dropdown.directive'
   styleUrls: ['./home.component.css'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
+  ],
 
 })
 
 
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('toCityInput') toCityInput!: ElementRef;
+  @ViewChild('fromCityInput') fromCityInput!:ElementRef;
+  @ViewChild('toCityDiv') toCityDiv!:ElementRef;
+
   sub?: Subscription;
   loader = false;
   show = false;
@@ -74,27 +77,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   continueSearchVal:any;
   fromContryName:any;
   toContryName:any;
-  @ViewChild("toCityInput") toCityInput!: ElementRef<HTMLInputElement>;
-  @ViewChild("toCityDiv") toCityDiv!: ElementRef;
-  // @ViewChild(DropdownDirective) directive!:Directive
-  
-  
-
-
   minDate = new Date();
   constructor(
   public _styleManager: StyleManagerService,
     public router: Router,
     private _fb: FormBuilder,
     private _flightService: FlightService
+    
   ) {
-  
+
     setTimeout(() => {
-        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
-        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
-        this._styleManager.setScript('custom', `assets/js/custom.js`);
-     }, 10);
+      this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+      this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+      this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+      this._styleManager.setScript('custom', `assets/js/custom.js`);
+   }, 10);
+
   }
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
@@ -118,13 +116,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
     }
     
-  }
-  ngAfterViewInit(): void {
-     this.toCityInput.nativeElement.focus();
-    
-    
 
   }
+  ngAfterViewInit(): void {
+ 
+  }
+
+  currentPeriodClicked(datePicker:any){
+    let date = datePicker.target.value
+    if(date){
+      setTimeout(() => {
+        let openTravellers = document.getElementById('openTravellers')
+        openTravellers?.click();  
+      }, 50);
+    }
+  }
+
   selectDate(control: string) {
     let dep;
     // $('#'+control).daterangepicker({
@@ -213,6 +220,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
+    
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -222,12 +230,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromContryName = para1.country;
     localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
+    let removeClassToCity = document.getElementById('removeClassToCity');
+    removeClassToCity?.classList.remove('flight-from-hide');
+    // this.toFlightList = true;
+    setTimeout(() => {
+      let toCityDivElement=document.getElementById("toCityDiv");
+      toCityDivElement?.click();
+      this.toCityInput.nativeElement.focus();  
+    }, 50);
     
-    // this.toCityDiv.nativeElement.appdropdown
-    // this.directive()
-    
-    this.toFlightList = true;
-
   }
 
   selectToFlightList(para2: any) {
@@ -241,7 +252,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toContryName = para2.country;
     localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
+    setTimeout(() => {
+      let datePickerOpen=document.getElementById("datePickerOpen");
+      datePickerOpen?.click();
+    }, 50);
   }
+
 
 
   // isValidation:boolean=false;
