@@ -109,7 +109,6 @@ export class FlightDetailComponent implements OnInit {
   }
 
   changeFareRuleTab(event:any){
-    console.log(event);
     $('.flight-extra-content').hide();
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
     var Element = document.getElementById(event.target.dataset['bind']);

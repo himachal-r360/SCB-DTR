@@ -2,11 +2,13 @@ import { JsonpClientBackend } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
+  Directive,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
-  Output,
   ViewChild,
+  
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -33,12 +35,16 @@ export const MY_DATE_FORMATS = {
   styleUrls: ['./home.component.css'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
+  ],
 
 })
 
 
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('toCityInput') toCityInput!: ElementRef;
+  @ViewChild('fromCityInput') fromCityInput!:ElementRef;
+  @ViewChild('toCityDiv') toCityDiv!:ElementRef;
+
   sub?: Subscription;
   loader = false;
   show = false;
@@ -70,17 +76,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   continueSearchVal:any;
   fromContryName:any;
   toContryName:any;
-  @ViewChild("toCityInput") toCityInput!: ElementRef<HTMLInputElement>;
-  @ViewChild("toCityDiv") toCityDiv!: ElementRef;
-  
-  
-
-
   minDate = new Date();
   constructor(
     public router: Router,
     private _fb: FormBuilder,
     private _flightService: FlightService
+    
   ) {}
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
@@ -103,14 +104,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
     }
-    console.log(this.continueSearchVal);
-  }
-  ngAfterViewInit(): void {
-     this.toCityInput.nativeElement.focus();
-    
     
 
   }
+  ngAfterViewInit(): void {
+ 
+  }
+
+  currentPeriodClicked(datePicker:any){
+    let date = datePicker.target.value
+    if(date){
+      setTimeout(() => {
+        let openTravellers = document.getElementById('openTravellers')
+        openTravellers?.click();  
+      }, 50);
+    }
+  }
+
   selectDate(control: string) {
     let dep;
     // $('#'+control).daterangepicker({
@@ -199,6 +209,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
+    
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -208,10 +219,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromContryName = para1.country;
     localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
-    console.log(this.toCityDiv.nativeElement.appdropdown);
-    // this.toCityDiv.nativeElement.appdropdown
-    this.toFlightList = true;
-
+    let removeClassToCity = document.getElementById('removeClassToCity');
+    removeClassToCity?.classList.remove('flight-from-hide');
+    // this.toFlightList = true;
+    setTimeout(() => {
+      let toCityDivElement=document.getElementById("toCityDiv");
+      toCityDivElement?.click();
+      this.toCityInput.nativeElement.focus();  
+    }, 50);
+    
   }
 
   selectToFlightList(para2: any) {
@@ -225,12 +241,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toContryName = para2.country;
     localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
+    setTimeout(() => {
+      let datePickerOpen=document.getElementById("datePickerOpen");
+      datePickerOpen?.click();
+    }, 50);
   }
+
 
 
   // isValidation:boolean=false;
   // flightSearchValidation() {
-  //   debugger;
+  //   
   //   // if(this.flightData.value.flightfrom == "" || this.flightData.value.flightfrom == undefined || this.flightData.value.flightto == "" || this.flightData.value.flightto == undefined ||  this.flightData.value.departure == "" || this.flightData.value.departure == undefined ){
   //   //   this.toCityValidation =  true;
   //   //   this.fromCityValidation =  true;
@@ -283,7 +304,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
-      debugger;
+      
       if(continueSearch!=null && continueSearch.length>0){
         this.continueSearchFlights=JSON.parse(continueSearch);
         this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
@@ -293,8 +314,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         })
       }
-      console.log(this.continueSearchFlights);
-      debugger;
+      
+      
       this.continueSearchFlights.push(searchValueAllobj);
       
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
@@ -335,7 +356,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   continueSearch(param:any){
-    debugger;
+    
     // let query:any = localStorage.getItem('searchVal');
     let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
     this.router.navigateByUrl(url);

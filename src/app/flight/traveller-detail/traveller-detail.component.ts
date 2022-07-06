@@ -23,80 +23,162 @@ export const MY_DATE_FORMATS = {
   ]
 })
 export class TravellerDetailComponent implements OnInit {
-  travelerDetails:any;
+  travelerDetails:any={};
+  travellerDetailsArr:any;
   toggleAdult:boolean= false;
   toggleChild:boolean = false;
   infantToggle:boolean = false;
   adultDetailList:any[]=[];
   activeMaleClass:boolean=true;
   activeFemaleClass:boolean= false;
+  activeChildMaleClass:boolean = true;
+  activeChildFemaleClass:boolean = false
+  activeInfantMaleClass:boolean = true;
+  activeInfantFemaleClass:boolean = false;
+  checked:any= false;
+  whatsAppCheck:boolean = true;
+  gstNumber:any
+  mobileNumber:any;
+  email:any
+  InputArray:any;
+
+  adultArr:any;
+  adultArrData:any;
+  
+ 
 
   addAdultDetail: any = this._fb.group({
-      firstName:[],
-      lastName:[],
-      dateOfBirth:[],
-      gender:["Male"]
+    firstName:[],
+    lastName:[],
+    dateOfBirth:[],
+    gender:["Male"]
   })
   addChildDetail: any = this._fb.group({
     firstName:[],
     lastName:[],
     dateOfBirth:[],
     gender:[]
-})
-
-addInfantDetail: any = this._fb.group({
-  firstName:[],
-  lastName:[],
-  dateOfBirth:[],
-  gender:[]
-})
-
-
+  })
+  addInfantDetail: any = this._fb.group({
+    firstName:[],
+    lastName:[],
+    dateOfBirth:[],
+    gender:[]
+  })
+  adultsCount:number=0;
 
   constructor(private _fb: FormBuilder, private _flightService:FlightService) { }
 
   ngOnInit(): void {  
     let parseVal:any = localStorage.getItem('searchVal')
     this.travelerDetails = JSON.parse(parseVal);
-    console.log(this.travelerDetails ,"travel details");
+    
+    // this.travelerDetails.adults=parseInt(this.travelerDetails.adults);
+    // this.adultsCount=parseInt(this.travelerDetails.adults);
+    // this.travelerDetails.child=parseInt(this.travelerDetails.child);
+    // this.travelerDetails.infants=parseInt(this.travelerDetails.infants);
+    // console.log(this.travelerDetails);
+    this.InputArray=
+    {
+      adult: this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults)),
+      child:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.child)),
+      infants:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.infants)),
+    }
+    this.adultArr=this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults));
+    
+    
   }
 
-  getGenderValue(gender:any){
+  getAdultGenderValue(gender:any , i:any){
+    this.InputArray.adult[i].gender = gender; 
     if(gender == "Male"){
-      this.addAdultDetail.value.gender = gender;
-      this.activeMaleClass = true;
-      this.activeFemaleClass = false;
+      this.activeMaleClass = !this.activeMaleClass;
+      this.activeFemaleClass = !this.activeFemaleClass;
     }
     else if(gender == "Female"){
-      this.addAdultDetail.value.gender = gender;
-      this.activeMaleClass = false;
-      this.activeFemaleClass = true;
+      this.activeMaleClass = !this.activeMaleClass;
+      this.activeFemaleClass = !this.activeFemaleClass;
     }
- 
-     console.log(gender) ;
-
   }
 
+  getChildGenderValue(gender:any , i:any){
+    this.InputArray.child[i].gender = gender;
+    if(gender == "Male"){
+      this.activeChildMaleClass =! this.activeChildMaleClass;
+      this.activeChildFemaleClass =! this.activeChildFemaleClass;
+    }
+    else if(gender == "Female"){
+      this.activeChildMaleClass =! this.activeChildMaleClass;
+      this.activeChildFemaleClass =! this.activeChildFemaleClass;
+    }
+  }
+  getInfantsGenderValue(gender:any , i:any){
+    this.InputArray.infants[i].gender = gender;
+    if(gender == "Male"){
+      this.activeInfantMaleClass =! this.activeInfantMaleClass;
+      this.activeInfantFemaleClass =! this.activeInfantFemaleClass;
+    }
+    else if(gender == "Female" ){
+      this.InputArray.infants[i].gender = gender;
+      this.activeInfantMaleClass =! this.activeInfantMaleClass;
+      this.activeInfantFemaleClass =! this.activeInfantFemaleClass;
+    }
+  }
+  GetArrOfTravellerDetails(detailsCount:any)
+  {
+      let resultArr=[];
+      for(let i=0;i<detailsCount;i++){
+          let traverller_obj={Id:i, firstName:'', lastName:'', dateOfBirth:'' ,gender:''}
+          resultArr.push(traverller_obj);
+      }
+      return resultArr;
+  }
+  
+  
   postAdultDetails(){
     this.toggleAdult =! this.toggleAdult
-    if(this.toggleAdult == false){
-      this.adultDetailList.push(this.addAdultDetail.value)
-      this.addAdultDetail.reset()
-      // this._flightService.setTravellerDetails(JSON.stringify(this.addAdultDetail.value));
+    // this.InputArray.adult.push();
+    this.travellerDetailsArr= this.InputArray;
+    
+    
+    // this.adultArrData.push();
+ 
+    // let travellerDetailsObj={adults:[],Child:[],infant:[] }
+    //   let traverller_obj={Id:0, FirstName:'', LastName:'', DOB:''};
+    //   let adultArr=[];
+    //       for(let i=0;i<adult;i++){
+    //       traverller_obj={Id:i, FirstName:'', LastName:'', DOB:''}
+    //       console.log(traverller_obj);
+    //       adultArr.push(traverller_obj);
+    //   }
 
-    }
   }
 
-
-  
-
-
   postChildDetails(){
-
+    this.toggleChild =! this.toggleChild
+    this.InputArray.child.push();
+    this.travellerDetailsArr= this.InputArray;
+    
   }
 
   postInfantDetails(){
+    this.infantToggle =! this.infantToggle
+    this.InputArray.infants.push();
+    this.travellerDetailsArr= this.InputArray;
+    
 
+  }
+
+  saveTravellerHistory(para:any){
+    this.checked = para.target.checked;
+    localStorage.setItem('isCheckedTravellerDetails', this.checked);
+    if(this.checked == true){
+      let saveTravellerDetailsArr :any ;
+      saveTravellerDetailsArr = this.InputArray
+      
+      
+      localStorage.setItem('travellerDetailsArray' , JSON.stringify(saveTravellerDetailsArr));
+    }
   }
     
 

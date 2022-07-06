@@ -1,4 +1,4 @@
-import { AfterViewInit, Component,  OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component,  ElementRef,  OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { retry, Subscription } from 'rxjs';
@@ -81,6 +81,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
    DocKey:any;
 
   @ViewChild('bookingprocess') bookingprocess: any;
+  @ViewChild('toCityInput') toCityInput!: ElementRef;
 
 
   flightDataModify: any = this._fb.group({
@@ -247,7 +248,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   getAirpotsList() {
     this._flightService.getAirportName().subscribe((res: any) => {
       this.airportsNameJson = res;
-      console.log(this.airportsNameJson,"this.airportsNameJson");
+
     })
   }
 
@@ -406,6 +407,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromCityName = para1.city;
     this.fromContryName = para1.country;
     this.fromFlightList = false;
+    setTimeout(() => {
+      let toCityDivElement=document.getElementById("toCityDiv");
+      toCityDivElement?.click();
+      this.toCityInput.nativeElement.focus();
+    }, 50);
   }
 
   selectToFlightList(para2: any) {
@@ -415,7 +421,23 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toCityName = para2.city;
     this.toContryName = para2.country;
     this.toFlightList = false;
+    setTimeout(() => {
+      let datePickerOpen=document.getElementById("datePickerOpen");
+      datePickerOpen?.click();
+    }, 50);
   }
+
+//mat date picker
+  currentPeriodClicked(datePicker:any){
+    let date = datePicker.target.value
+    if(date){
+      setTimeout(() => {
+        let openTravellers = document.getElementById('openTravellers')
+        openTravellers?.click();
+      }, 50);
+    }
+  }
+
 
   convertDate(str: any) {
     var date = new Date(str),
@@ -426,7 +448,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightAcsDescFilterFlightData(event:any)
   {
-    console.log(event);
     let selectedVal=event.target.value;
     this.priceSortingFilteritems.filter((item:any)=>{
       item.active=false;
@@ -461,7 +482,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightAirlineFilterFlightData(airlineItem:any)
   {
-    debugger;
     airlineItem.active = !airlineItem.active;
     this.popularFilterFlightData();
   }
@@ -473,7 +493,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   /* Reset function Start*/
   //It is used for clear filters of Popular filter
   resetPopularFilter() {
-    debugger;
+
     this.flight_PopularItems.filter((item:any)=>{item.active=false; return item;})
     this.popularFilterFlightData();
   }
@@ -655,7 +675,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     // Layover Filter Flights
     this.flightList=this.layoverFilterFlights(this.flightList);
 
-    console.log(this.flightList,"this.flightList");
+
   }
 
   //Popular Filter Flights
@@ -877,7 +897,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //layover airport filter
   layoverFilterFlights(flightList:any){
-    debugger;
+
+
     if (flightList.length > 0) {
       let layoverArr: any = [];
       layoverArr=this.layOverFilterArr.filter((item:any)=>{

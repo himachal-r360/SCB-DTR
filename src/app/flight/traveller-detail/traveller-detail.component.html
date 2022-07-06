@@ -4,8 +4,10 @@
             <div class="col-md-8">
                 <div class="booking-process-content">
                     <div class="booking-title-box">
-                        <h4>Traveller Details <span>{{travelerDetails.adults}} Adults, {{travelerDetails.child}} Child,
-                                {{travelerDetails.infants}} infant</span></h4>
+                        <h4>Traveller Details <span> {{InputArray.adult.length}} Adults,</span> <span >{{travelerDetails.child}} Child,</span> <span >{{travelerDetails.infants}} Infant</span></h4>
+                        <!-- <h4>Traveller Details <span *ngIf="travelerDetails.adults >0">{{travelerDetails.adults}} Adults,</span> 
+                            <span *ngIf="travelerDetails.child > 0">{{travelerDetails.child}} Child,</span> 
+                        <span *ngIf="travelerDetails.infants>0">{{travelerDetails.infants}} infant</span></h4> -->
                     </div>
                     <div class="booking-inner-box traveller-person-box">
                         <div class="traveller-person-title">
@@ -24,8 +26,8 @@
                             </div>
                             <div class="traveller-addbox-details traveller-adults-details">
                                 <div class="traveller-adults-ul">
-                                    <ul class="add-search-ul d-block">
-                                        <li class="custom-check-box" *ngFor="let adult of adultDetailList">
+                                    <ul class="add-search-ul d-block d-none" *ngIf="InputArray.adult">
+                                        <li class="custom-check-box" *ngFor="let adult of InputArray.adult">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input"
@@ -36,55 +38,48 @@
                                                 </label>
                                             </div>
                                         </li>
-                                         <!-- <li class="custom-check-box">
-                                                            <div class="custom-controls-stacked">
-                                                                <label class="custom-control material-checkbox">
-                                                                    <input type="checkbox" class="material-control-input">
-                                                                    <span class="material-control-indicator"></span>
-                                                                    <span class="description fs_14 text-black fw_7">Abhay Rege . </span>
-                                                                    <span class="description fw_5">Male</span>
-                                                                </label>
-                                                            </div>
-                                                        </li>   -->
                                                         
                                     </ul>
 
                                     <div class="add-traveller-adults" *ngIf="toggleAdult">
-                                        <form class="forms-field" [formGroup]="addAdultDetail">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <ul class="select-gender" >
-                                                        <li >
-                                                            <a   [ngClass]="activeMaleClass == true ? 'active' : ''"  (click)="getGenderValue('Male')">Male</a>
-                                                        </li>
-                                                        <li >
-                                                            <a [ngClass]="activeFemaleClass == true ? 'active' : ''"  (click)="getGenderValue('Female')">Female</a>
-                                                        </li>
-                                                    </ul>
+                                        <form class="forms-field" [formGroup]="addAdultDetail" >
+                                            <div *ngFor="let item of InputArray.adult;let i = index">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <ul class="select-gender" >
+                                                            <li >
+                                                                <a [ngClass]="activeMaleClass == true ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"  value="male" >Male</a>
+                                                            </li>
+                                                            <li >
+                                                                <a [ngClass]="activeFemaleClass == true ? 'active' : ''" (click)="getAdultGenderValue('Female', i)" value="female" >Female</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <mat-form-field appearance="outline">
-                                                        <mat-label>First Name</mat-label>
-                                                        <input matInput placeholder="First Name" formControlName="firstName">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <mat-form-field appearance="outline">
-                                                        <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name" formControlName="lastName">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <div class="form-group">
+                                                
+                                                <div class="row" >
+                                                    <div class="col-xl-4 col-lg-4 col-md-6">
                                                         <mat-form-field appearance="outline">
-                                                            <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth">
-                                                            <mat-datepicker-toggle matSuffix [for]="picker">
-                                                            </mat-datepicker-toggle>
-                                                            <mat-datepicker #picker></mat-datepicker>
+                                                            <mat-label>First Name</mat-label>
+                                                            <input matInput placeholder="First Name" formControlName="firstName" [(ngModel)]="item.firstName">
                                                         </mat-form-field>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-label>Last Name</mat-label>
+                                                            <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="item.lastName">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                                        <div class="form-group">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Date of Birth</mat-label>
+                                                                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" [(ngModel)]="item.dateOfBirth">
+                                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                </mat-datepicker-toggle>
+                                                                <mat-datepicker #picker></mat-datepicker>
+                                                            </mat-form-field>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,62 +101,56 @@
                             </div>
                             <div class="traveller-addbox-details traveller-adults-details">
                                 <div class="traveller-adults-ul">
-                                    <ul class="add-search-ul" style="display: none;">
-                                        <li class="custom-check-box">
+                                    
+                                    <ul class="add-search-ul d-none" *ngIf="InputArray.child">
+                                        <li class="custom-check-box" *ngFor="let child of travellerDetailsArr.child">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input"
                                                         checked="checked">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">John Smith . </span>
-                                                    <span class="description fw_5">Male</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input">
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">Abhay Rege . </span>
-                                                    <span class="description fw_5">Male</span>
+                                                    <span class="description fs_14 text-black fw_7">{{child.firstName}} {{child.lastName}} . </span>
+                                                    <span class="description fw_5">{{child.gender}}</span>
                                                 </label>
                                             </div>
                                         </li>
                                     </ul>
 
                                     <div class="add-Child-adults" *ngIf="toggleChild">
-                                        <form class="forms-field">
+                                        <form class="forms-field" [formGroup]="addChildDetail" >
+                                            <div *ngFor="let item of InputArray.child ;let i = index">
+
+                                            
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <ul class="select-gender">
-                                                        <li>
-                                                            <a href="javascript:void(0);" class="active">Male</a>
+                                                    <ul class="select-gender" >
+                                                        <li >
+                                                            <a [ngClass]="activeChildMaleClass == true ? 'active' : ''" (click)="getChildGenderValue('Male' , i)"  value="male" >Male</a>
                                                         </li>
-                                                        <li>
-                                                            <a href="javascript:void(0);">Female</a>
+                                                        <li >
+                                                            <a [ngClass]="activeChildFemaleClass == true ? 'active' : ''" (click)="getChildGenderValue('Female', i)" value="female" >Female</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" >
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>First Name</mat-label>
-                                                        <input matInput placeholder="First Name" formControlName="firstName">
+                                                        <input matInput placeholder="First Name" formControlName="firstName" [(ngModel)]="item.firstName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name" formControlName="firstName">
+                                                        <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="item.lastName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <div class="form-group">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth">
+                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" [(ngModel)]="item.dateOfBirth">
                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                             </mat-datepicker-toggle>
                                                             <mat-datepicker #picker></mat-datepicker>
@@ -169,12 +158,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                         </form>
                                     </div>
 
                                     <div class="add-traveller-btn">
-                                        <a href="javascript:void(0);" class="Addnew-Child-btn"
-                                            (click)="toggleChild =! toggleChild ">+ Add New Child</a>
+                                        <a href="javascript:void(0);" class="Addnew-Child-btn" 
+                                            (click)="postChildDetails()" >+ Add New Child</a>
                                     </div>
                                 </div>
                             </div>
@@ -187,62 +177,54 @@
                             </div>
                             <div class="traveller-addbox-details traveller-infant-details">
                                 <div class="traveller-adults-ul">
-                                    <ul class="add-search-ul" style="display: none;">
-                                        <li class="custom-check-box">
+                                    <ul class="add-search-ul d-none"  *ngIf="InputArray.infants">
+                                        <li class="custom-check-box" *ngFor="let infants of travellerDetailsArr.infants">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input"
                                                         checked="checked">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">John Smith . </span>
-                                                    <span class="description fw_5">Male</span>
+                                                    <span class="description fs_14 text-black fw_7">{{infants.firstName}} {{infants.lastName}} . </span>
+                                                    <span class="description fw_5">{{infants.gender}}</span>
                                                 </label>
                                             </div>
                                         </li>
-                                        <li class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input">
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">Abhay Rege . </span>
-                                                    <span class="description fw_5">Male</span>
-                                                </label>
-                                            </div>
-                                        </li>
+                                    
                                     </ul>
 
                                     <div class="add-Child-adults" *ngIf="infantToggle">
-                                        <form class="forms-field">
+                                        <form class="forms-field" [formGroup]="addInfantDetail" >
+                                            <div *ngFor="let item of InputArray.infants;let i = index"> 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <ul class="select-gender">
-                                                        <li>
-                                                            <a href="javascript:void(0);" class="active">Male</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:void(0);">Female</a>
-                                                        </li>
-                                                    </ul>
+                                                        <ul class="select-gender">
+                                                            <li >
+                                                                <a [ngClass]="activeInfantMaleClass  == true  ? 'active': ''" (click)="getInfantsGenderValue('Male' , i)"  value="male" >Male</a>
+                                                            </li>
+                                                            <li >
+                                                                <a [ngClass]="activeInfantFemaleClass == true ? 'active'  :''" (click)="getInfantsGenderValue('Female', i)" value="female" >Female</a>
+                                                            </li>
+                                                        </ul>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" >
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>First Name</mat-label>
-                                                        <input matInput placeholder="First Name" formControlName="firstName">
+                                                        <input matInput placeholder="First Name" formControlName="firstName"  [(ngModel)]="item.firstName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name" formControlName="lastName">
+                                                        <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="item.lastName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <div class="form-group">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth">
+                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" [(ngModel)]="item.dateOfBirth">
                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                             </mat-datepicker-toggle>
                                                             <mat-datepicker #picker></mat-datepicker>
@@ -250,12 +232,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                         </form>
                                     </div>
 
                                     <div class="add-traveller-btn">
                                         <a href="javascript:void(0);" class="Addnew-infant-btn"
-                                            (click)="infantToggle =! infantToggle">+ Add New Child</a>
+                                            (click)="postInfantDetails()">+ Add New Child</a>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +249,7 @@
                                 <li class="custom-check-box">
                                     <div class="custom-controls-stacked">
                                         <label class="custom-control material-checkbox">
-                                            <input type="checkbox" class="material-control-input" checked="checked">
+                                            <input type="checkbox" class="material-control-input" [checked]="checked" [(ngModel)]="checked" (change)="saveTravellerHistory($event)">
                                             <span class="material-control-indicator"></span>
                                             <span class="description fs_12 text-black">Add these travellers to
                                                 Travellers list. </span>
@@ -284,18 +267,18 @@
                         <h6>Contact Details</h6>
                         <p>Your booking information will be sent here</p>
 
-                        <form action="" class="forms-field">
+                        <form  class="forms-field">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Email</mat-label>
-                                        <input matInput placeholder="Email"  type="email">
+                                        <input matInput placeholder="Email"  type="email" [(ngModel)]="InputArray.eamil">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Mobile Number</mat-label>
-                                        <input matInput placeholder="Mobile Number">
+                                        <input matInput placeholder="Mobile Number" [(ngModel)]="InputArray.mobile">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -308,7 +291,7 @@
                                 <span class="fw_7">WhatsApp</span>
                             </div>
                             <div class="form-check form-switch m-0">
-                                <input class="form-check-input" type="checkbox" role="switch" checked="checked" />
+                                <input class="form-check-input" type="checkbox" role="switch" [checked]="whatsAppCheck" />
                             </div>
                         </div>
                     </div>
@@ -318,13 +301,13 @@
                         <h6>GST number for business travel (Optional)</h6>
                         <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                         </p>
-
-                        <form action="" class="forms-field">
+                      
+                        <form  class="forms-field">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>GST Number</mat-label>
-                                        <input matInput placeholder="GST Number">
+                                        <input matInput placeholder="GST Number"  [(ngModel)]="InputArray.gstNumber">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -332,7 +315,7 @@
                     </div>
                 </div>
             </div>
-
+               
             <div class="col-md-4">
                 <app-fare-summary></app-fare-summary>
             </div>
