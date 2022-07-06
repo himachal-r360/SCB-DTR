@@ -31,4 +31,5 @@ export class FareSummaryComponent implements OnInit {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
+
 }

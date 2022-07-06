@@ -20,7 +20,7 @@
                                 </p>
                             </div>
                             <div class="fare-list-right">
-                                <p>&#8377;{{selectedVendor.baseFare|number: '.2'}}</p>
+                                <p>&#8377;{{selectedVendor.baseFare|number}}</p>
                             </div>
                         </div>
                     </li>
@@ -69,8 +69,8 @@
                                 <h6 class="fw_7">Grand Total</h6>
                             </div>
                             <div class="fare-list-right">
-                                <h6 class="fw_7">₹{{selectedVendor.totalFare|number: '.2'}}</h6>
-                                <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(selectedVendor.totalFare)|number: '.2'}}/month</p>
+                                <h6 class="fw_7">₹{{selectedVendor.totalFare|number}}</h6>
+                                <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(selectedVendor.totalFare)|number}}/month</p>
                             </div>
                         </div>
                     </li>
@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="continue-widget mb-20">
-            <a href="" class="button-style w-100">Continue</a>
+            <a href="javascript:void(0);" class="button-style w-100">Continue</a>
         </div>
         <div class="sidebar-widget coupon-code-widget">
             <div class="widget-title">
