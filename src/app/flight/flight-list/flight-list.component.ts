@@ -78,7 +78,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   morningDearptureCount: number = 0;
   foodAllowanceCount: number = 0;
   stopsFilterVal:string=""
-  
+   DocKey:any;
 
   @ViewChild('bookingprocess') bookingprocess: any;
 
@@ -156,7 +156,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
-    
+
     this.loader = true;
     this.getQueryParamData(null);
     this.flightList = this._flightService.flightListData;
@@ -522,12 +522,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     FlightStopitem.active = !FlightStopitem.active;
     this.popularFilterFlightData();
   }
- 
+
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
-    
+
     let updatedflightList:any = [];
-    
+
     let flightListWithOutFilter = this.flightListWithOutFilter;
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = flightListConst;
@@ -545,7 +545,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //Timing Filter Data
     updatedflightList=this.timingFilterFlights(updatedflightList);
-    
+
     //Flight Stops Filter
     updatedflightList=this.stopsFilterFlights(updatedflightList);
 
@@ -582,13 +582,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         var flights = e.flights.filter((d: any) => {
-          
+
           if((this.flight_Timingsitems.filter((item:any)=>{if(item.name=="0_6"){return item;}}).length>0) && new Date(d.departureDateTime) > date1 && new Date(d.departureDateTime) < date2)
           {
             return e;
           }
         }) // Meals Included Count
-        
+
         if (flights.length > 0) {
           this.morningDearptureCount += 1;
           this.flight_PopularItems.filter((item:any)=>{
@@ -611,7 +611,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       })
     }
-    
+
     // Airlines Filter
     this.flightList=this.airlineFilterFlights(this.flightList);
 
@@ -651,22 +651,22 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //Airline Filter
     this.flightList=this.airlineFilterFlights(this.flightList);
-    
+
     // Layover Filter Flights
     this.flightList=this.layoverFilterFlights(this.flightList);
-    
+
     console.log(this.flightList,"this.flightList");
   }
 
   //Popular Filter Flights
   popularFilterFlights(flightList:any){
-    
+
     this.flightList=flightList;
     let updatedflightList = [];
     let isfilterRefundableFares:any = false;
     let isfilterNonStop:any = false;
     let isfilterMealsIncluded:any = false;
-	
+
     this.flight_PopularItems.filter((item:any)=>{
       if(item.active==true && item.name=="Refundable_Fares"){ isfilterRefundableFares= true}
       if(item.active==true && item.name=="non_stop"){isfilterNonStop=true}
@@ -730,7 +730,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
     var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
     var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
-	
+
     this.flight_PopularItems.filter((item)=>{
       if(item.name=="Morning_Departures" && item.active==true){
         isfilterMorningDepartures = true;
@@ -748,7 +748,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
       var filteredTimingArr: any[] = [];
       if(flightList.length>0){
-        flightList.filter((d: any) => {  
+        flightList.filter((d: any) => {
           let singleFlightTiming = [];
           singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
             if (indx == 0) {
@@ -799,7 +799,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     if (isfilterFlightStops == true) {
       var filteredStopsArr: any[] = [];
       if(flightList.length>0){
-        flightList.filter((d: any) => {  
+        flightList.filter((d: any) => {
           let singleFlightStops = [];
           singleFlightStops = d.flights.filter(function (e: any,indx:number) {
             if(indx==0){
@@ -830,7 +830,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return updatedflightList;
   }
-  
+
   // Airline Filter Flights
   airlineFilterFlights(flightList:any){
     if (flightList.length > 0) {
@@ -1007,6 +1007,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
       this.loader = false
+      console.log(res)
+      this.DocKey = res.response.docKey;
       this.flightList = res.response.onwardFlights;
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
@@ -1130,7 +1132,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.popularFilterFlightData();
   }
-  
+
   onMinStopOverChange(event:any)
   {
     this.minStopOver = event;
@@ -1141,7 +1143,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.maxStopOver = event;
     this.popularFilterFlightData();
   }
-  
+
   GetMinAndMaxPriceForFilter() {
     if (this.flightList.length > 0) {
       this.minPrice = this.flightList[0].priceSummary[0].totalFare;
@@ -1173,11 +1175,14 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     return dateHour;
   }
 
-  bookingSummary(flights: any, selected: any) {
-    let flightDetailsArr :any= { "flights": flights , "priceSummary": selected };
+  bookingSummary(flights: any, selected: any,flightKey:any) {
+    let flightDetailsArr :any= { "flights": flights , "priceSummary": selected,"docKey":this.DocKey,"flightKey":flightKey};
     localStorage.setItem("flightDetailsArr",JSON.stringify(flightDetailsArr));
     this._flightService.setFlightsDetails(flightDetailsArr);
     setTimeout(() => {
+
+      $('#bookingprocess').modal('hide');
+
       // this.bookingprocess.nativeElement.querySelectorAll('.modal-backdrop').forEach(
       //   (bookingprocess:any) => {
       //     bookingprocess.classList.remove('modal-backdrop');

@@ -20,7 +20,7 @@
                                 </p>
                             </div>
                             <div class="fare-list-right">
-                                <p>&#8377;{{selectedVendor.baseFare|number: '.2'}}</p>
+                                <p>&#8377;{{BaseFare|number: '.2'}}</p>
                             </div>
                         </div>
                     </li>
@@ -33,7 +33,7 @@
                                 </p>
                             </div>
                             <div class="fare-list-right">
-                                <p>&#8377;2,034</p>
+                                <p>&#8377;{{Tax |number: '.2'}}</p>
                             </div>
                         </div>
                     </li>
@@ -69,8 +69,8 @@
                                 <h6 class="fw_7">Grand Total</h6>
                             </div>
                             <div class="fare-list-right">
-                                <h6 class="fw_7">₹{{selectedVendor.totalFare|number: '.2'}}</h6>
-                                <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(selectedVendor.totalFare)|number: '.2'}}/month</p>
+                                <h6 class="fw_7">₹{{TotalFare|number: '.2'}}</h6>
+                                <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(TotalFare)|number: '.2'}}/month</p>
                             </div>
                         </div>
                     </li>
