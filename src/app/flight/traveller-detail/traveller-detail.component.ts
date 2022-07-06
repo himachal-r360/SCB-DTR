@@ -85,8 +85,8 @@ export class TravellerDetailComponent implements OnInit {
       infants:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.infants)),
     }
     this.adultArr=this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults));
-    console.log(this.checked);
-    console.log(this.InputArray);
+    
+    
   }
 
   getAdultGenderValue(gender:any , i:any){
@@ -139,8 +139,8 @@ export class TravellerDetailComponent implements OnInit {
     this.toggleAdult =! this.toggleAdult
     // this.InputArray.adult.push();
     this.travellerDetailsArr= this.InputArray;
-    console.log(this.travellerDetailsArr , "traveller");
-    console.log(this.InputArray.adult,"adult");
+    
+    
     // this.adultArrData.push();
  
     // let travellerDetailsObj={adults:[],Child:[],infant:[] }
@@ -158,14 +158,14 @@ export class TravellerDetailComponent implements OnInit {
     this.toggleChild =! this.toggleChild
     this.InputArray.child.push();
     this.travellerDetailsArr= this.InputArray;
-    console.log(this.InputArray.child,"child");
+    
   }
 
   postInfantDetails(){
     this.infantToggle =! this.infantToggle
     this.InputArray.infants.push();
     this.travellerDetailsArr= this.InputArray;
-    console.log(this.InputArray.infants,"Infants");
+    
 
   }
 
@@ -175,7 +175,7 @@ export class TravellerDetailComponent implements OnInit {
     if(this.checked == true){
       let saveTravellerDetailsArr :any ;
       saveTravellerDetailsArr = this.InputArray
-      console.log(saveTravellerDetailsArr,"save details");
+      
       
       localStorage.setItem('travellerDetailsArray' , JSON.stringify(saveTravellerDetailsArr));
     }
