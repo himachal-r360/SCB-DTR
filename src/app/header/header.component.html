@@ -86,10 +86,10 @@
                             <span class="icn_tool"> 
                                 <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
                                 <ng-template #voiceSearch>
-                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> |
+                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
 
 
-                                <span *ngIf="voiceActiveSectionDisabled; else voicesection;">
+                                <span *ngIf="voiceActiveSectionDisabled; else voicesection;"  class="mic-span">
                                     <a (click)="startVoiceRecognition()">
                                         <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
                                     </a>
@@ -786,8 +786,8 @@
         <span class="icn_tool"> 
             <span class="cross_icn" *ngIf="searchBarValue;else voiceSearchMobile"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
             <ng-template #voiceSearchMobile>
-                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> |
-                <span *ngIf="voiceActiveSectionDisabled; else voicesection;">
+                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
+                <span *ngIf="voiceActiveSectionDisabled; else voicesection;" class="mic-span">
                     <a (click)="startVoiceRecognition()">
                         <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
                     </a>
