@@ -631,7 +631,8 @@ closeCookieConsent(value){
                 }, 3000);
            
           }else{
-           setTimeout(function() {$('#sb_dis_popup').trigger('click');}, 3000);
+           setTimeout(function() {
+           $('#sb_dis_popup').trigger('click');  console.log('d'); }, 3000);
           }
         }  
         }

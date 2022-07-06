@@ -22,7 +22,6 @@ export class PartnersComponent implements OnInit {
         this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
         this.getVouchersList =this.serviceSettings.voucher_lists;
         this.partner_lists =this.serviceSettings.partner_lists;
-      console.log(this.getVouchersList);
    }
 
   
