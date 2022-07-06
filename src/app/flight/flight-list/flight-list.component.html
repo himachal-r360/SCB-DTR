@@ -255,7 +255,7 @@
                             </div>
                             <div class="widget-content">
                                 <ul class="category-list clearfix mt-2" id="popular-filters">
-                                    
+
                                     <!-- <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control material-checkbox">
@@ -323,7 +323,7 @@
                             <div class="widget-content">
                                 <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
                                 <div class="flighttiming-content flight-departing">
-                                    <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"  
+                                    <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
                                     (click)="FlightTimingsFilterFlightData(timingsItems)">
                                         <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
                                         <p [innerHTML]="timingsItems.value"></p>
@@ -378,7 +378,7 @@
                             </div>
                             <div class="widget-content"  >
                                 <div class="Stops-content" >
-                                    <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" 
+                                    <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
                                     [innerHTML]="FlightStopitem.value">
                                     </div>
                                 </div>
@@ -544,7 +544,7 @@
                                         <option value="P_D_E">Depart Ealry</option>
                                         <option value="P_D_L">Depart Late</option> -->
                                     </select>
- 
+
                                     <div class="flight-search-filters-counts ms-3">
                                         <ul class="flight-counts">
                                             <li class="flight-counts-list" id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"
@@ -810,7 +810,7 @@
                                                 </div>
                                                 <div class="flight-options-book">
                                                   <!-- <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item)">Book</a> -->
-                                                  <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item)">Book</a>
+                                                  <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item,list.flightKey)">Book</a>
                                                 </div>
                                             </div>
                                         </div>

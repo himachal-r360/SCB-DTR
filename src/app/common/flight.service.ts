@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class FlightService {
   flight = environment.url + "api/flightSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
+  flightInfo =  environment.url + "api/flightInfo";
   flightListData: any;
   flightListDate:any;
   flightsIcon = "assets/Json/airlines.json";
@@ -59,5 +60,10 @@ export class FlightService {
   // getTravellerDetailsVal(): Observable<any> {
   //   return this.travellerDetailsSubject.asObservable();
   // }
+
+  getFlightInfo(param:any)
+  {
+    return this.http.post(this.flightInfo, param, { headers: this.header })
+  }
 
 }

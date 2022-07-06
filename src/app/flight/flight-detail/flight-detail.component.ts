@@ -36,7 +36,9 @@ export class FlightDetailComponent implements OnInit {
     //this._flightService.getFlightDetailsVal()
 
     let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
+
     let param=JSON.parse(flightDetailsArrVal);
+    console.log(param)
       if(param!=null){
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
