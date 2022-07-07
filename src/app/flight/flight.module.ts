@@ -11,6 +11,7 @@ import { FlightStepperNavComponent } from './flight-stepper-nav/flight-stepper-n
 import { FareSummaryComponent } from './fare-summary/fare-summary.component';
 import { DirectiveModule } from '../directives/directive.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { SeatsMealsComponent } from './seats-meals/seats-meals.component';
 
 
 
@@ -33,6 +34,10 @@ const routes: Routes = [
         path: 'traveller-detail',
         component: TravellerDetailComponent,
       },
+      {
+        path: 'seats-meals',
+        component: SeatsMealsComponent,
+      }
     ]
   }
 ];
@@ -44,7 +49,8 @@ const routes: Routes = [
     FlightDetailComponent,
     TravellerDetailComponent,
     FlightStepperNavComponent,
-    FareSummaryComponent
+    FareSummaryComponent,
+    SeatsMealsComponent
 
 
   ],
