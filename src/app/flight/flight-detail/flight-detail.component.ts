@@ -23,7 +23,7 @@ export class FlightDetailComponent implements OnInit {
   constructor(private _flightService:FlightService) { }
 
   ngOnInit(): void {
-    this.getsearchVal = localStorage.getItem('searchVal');
+    this.getsearchVal = sessionStorage.getItem('searchVal');
     this.parseSearchVal = JSON.parse(this.getsearchVal);
     this.getFlightIcon();
     this.getAirpotsList();
@@ -35,7 +35,7 @@ export class FlightDetailComponent implements OnInit {
   getFlightDetails(){
     //this._flightService.getFlightDetailsVal()
 
-    let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
+    let flightDetailsArrVal:any=sessionStorage.getItem("flightDetailsArr");
 
     let param=JSON.parse(flightDetailsArrVal);
     console.log(param)
