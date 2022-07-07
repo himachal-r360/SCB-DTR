@@ -96,7 +96,7 @@ public modeselectTrending= 'All';
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
-    console.log(JSON.parse(this.poweredByPartners));
+    console.log((this.poweredByPartners));
 
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
