@@ -39,7 +39,7 @@
     </div>
     <!-- Smartbuy new Disclamier popup code  -->
     <!-- Button trigger modal -->
-    <a  class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></a>
+    <button  class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></button>
     <div class="container_hftab">
         <div class="d-none d-sm-none d-lg-block">
             <nav class=" sb_head">
@@ -82,15 +82,14 @@
                                 </ul>
                             </div>
 
-    <a class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></a>
                             <span class="focus-border"></span>
                             <span class="icn_tool"> 
                                 <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
                                 <ng-template #voiceSearch>
-                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> |
+                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
 
 
-                                <span *ngIf="voiceActiveSectionDisabled; else voicesection;">
+                                <span *ngIf="voiceActiveSectionDisabled; else voicesection;"  class="mic-span">
                                     <a (click)="startVoiceRecognition()">
                                         <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
                                     </a>
@@ -503,7 +502,7 @@
                                     <div class="col-sm-10 col-lg-10">
                                         <ul class="list_group">
                                             <li *ngFor="let vouchercat of getVouchersList">
-                                                <h5>{{vouchercat.voucher_name}}</h5>
+                                                <h5>{{vouchercat.voucher_name|nospace}}</h5>
                                                 <a href="javascript:;" *ngFor="let vouchercatval of vouchercat.voucher_value" (click)="redirectUrlpopup('instavouchers',1,vouchercatval.url)">{{vouchercatval.name}}</a>
                                             </li>
 
@@ -787,8 +786,8 @@
         <span class="icn_tool"> 
             <span class="cross_icn" *ngIf="searchBarValue;else voiceSearchMobile"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
             <ng-template #voiceSearchMobile>
-                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> |
-                <span *ngIf="voiceActiveSectionDisabled; else voicesection;">
+                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
+                <span *ngIf="voiceActiveSectionDisabled; else voicesection;" class="mic-span">
                     <a (click)="startVoiceRecognition()">
                         <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
                     </a>

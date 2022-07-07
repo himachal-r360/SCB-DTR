@@ -96,25 +96,21 @@ export class AppComponent implements OnInit {
 	this.assetPath="infinia/";
         this.domainPath="infinia/";
         this.domainName='INFINIA';
-        this.loadStyle('infinia.css','main');
 	break;
 	case ('regalia'):
 	this.assetPath="regalia/";
         this.domainPath="regalia/";
         this.domainName='REGALIA';
-       this.loadStyle('regalia.css','main');
 	break;
 	case ('corporate'):
 	this.assetPath="corporate/";
         this.domainPath="corporate/";
         this.domainName='CORPORATE';
-      this.loadStyle('corporate.css','main');
 	break;
 	case ('business'):
 	this.assetPath="business/";
         this.domainPath="business/";
         this.domainName='BUSINESS';
-       this.loadStyle('business.css','main');
 	break;
 	default:
 	this.assetPath="";
@@ -142,24 +138,6 @@ export class AppComponent implements OnInit {
         
   }
   
-  loadStyle(styleName: string,styleId: string) {
-    const head = this.document.getElementsByTagName('head')[0];
-
-    let themeLink = this.document.getElementById(
-      'client-theme'
-    ) as HTMLLinkElement;
-    if (themeLink) {
-      themeLink.href = styleName;
-    } else {
-      const style = this.document.createElement('link');
-      style.id = `${styleId}`;
-       style.class = 'dynacss';
-      style.rel = 'stylesheet';
-      style.href = `${styleName}`;
-
-      head.appendChild(style);
-    }
-  }
 
   
    ngAfterViewInit() {

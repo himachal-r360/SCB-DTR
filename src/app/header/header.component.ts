@@ -152,6 +152,8 @@ rd_site_url: any;shop_site_url;
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
+
+  
   
      setTimeout(() => {
     //Check Laravel Seesion
@@ -620,6 +622,10 @@ closeCookieConsent(value){
   }
 
   ngAfterViewInit(){
+    
+   if (!annyang) {
+    $('.mic-span').hide();
+   }
       this.deviceInfo = this.deviceService.getDeviceInfo();
         if(this.serviceSettings.DISCLAIMER_ENABLED){
         const cookieExistsDisclimer: boolean = this.cookieService.check(this.serviceSettings.cookieDisclaimerName);
@@ -631,7 +637,8 @@ closeCookieConsent(value){
                 }, 3000);
            
           }else{
-           setTimeout(function() {$('#sb_dis_popup').trigger('click');}, 3000);
+           setTimeout(function() {
+           $('#sb_dis_popup').trigger('click');   }, 3000);
           }
         }  
         }
@@ -715,7 +722,6 @@ this.customerLogin=true;*/
         annyang.abort();
         }
         });
-
         annyang.addCallback('soundstart', (res) => {
         this.ngZone.run(() => this.voiceActiveSectionListening = true);
         });
@@ -748,6 +754,7 @@ this.customerLogin=true;*/
         this.voiceText = undefined;
 
         if (annyang) {
+      
         let commands = {
         'demo-annyang': () => { }
         };
@@ -755,8 +762,10 @@ this.customerLogin=true;*/
         annyang.addCommands(commands);
 
         this.initializeVoiceRecognitionCallback();
-
+      
         annyang.start({ autoRestart: false });
+        }else{
+             $('.mic-span').hide();
         }
         }
 
@@ -768,6 +777,7 @@ this.customerLogin=true;*/
         this.voiceText = undefined;
 
         if(annyang){
+     
         annyang.abort();
         }
         }

@@ -2,9 +2,13 @@ import { JsonpClientBackend } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
+  Directive,
+  ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
-  Output,
+  ViewChild,
+  
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -32,12 +36,16 @@ export const MY_DATE_FORMATS = {
   styleUrls: ['./home.component.css'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
+  ],
 
 })
 
 
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('toCityInput') toCityInput!: ElementRef;
+  @ViewChild('fromCityInput') fromCityInput!:ElementRef;
+  @ViewChild('toCityDiv') toCityDiv!:ElementRef;
+
   sub?: Subscription;
   loader = false;
   show = false;
@@ -69,57 +77,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   continueSearchVal:any;
   fromContryName:any;
   toContryName:any;
-
   minDate = new Date();
-  // fromCityValidation = false;
-  // toCityValidation = false;
-  // departDateValidation = false;
-
-  //get f() { return this.flightData.controls; }
-
-
-  // flightData: any = this._fb.group({
-  //   depart: ["2022-06-15"],
-  //   channel: ["web"],
-  //   arrive: [""],
-  //   leavingFrom: ["DEL"],
-  //   infants: ["0"],
-  //   child: ["0"],
-  //   goingTo: ["BLR"],
-  //   travel: ["DOM"],
-  //   classType: ["E"],
-  //   defaultType: ["O"],
-  //   sortBy: ["asc"],
-  //   count_t: ["1"],
-  //   adultsq: ["1"]
-  // })
-
-  // flightData: any = this._fb.group({
-  //   flightfrom: ["DEL"],
-  //   flightto: ["BLR"],
-  //   flightclass: ["E"],
-  //   flightdefault: ["O"],
-  //   departure: ["2022-05-31"],
-  //   arrival: [":"],
-  //   adults: ["1"],
-  //   child: ["0"],
-  //   infants: ["0"],
-  //   travel: ["DOM"],
-
-  // })
   constructor(
   public _styleManager: StyleManagerService,
     public router: Router,
     private _fb: FormBuilder,
     private _flightService: FlightService
+    
   ) {
-  
+
     setTimeout(() => {
-        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
-        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
-        this._styleManager.setScript('custom', `assets/js/custom.js`);
-     }, 10);
+      this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+      this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+      this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+      this._styleManager.setScript('custom', `assets/js/custom.js`);
+   }, 10);
+
   }
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
@@ -137,52 +110,28 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
-    //this.getCityList();
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
     }
+    
 
-    // $(document).click(function (e: any) {
-    //   var containerLeft = $('.select-root-left');
-    //   if (!$(e.target).closest(containerLeft).length) {
-    //     $('.flight-from-data').addClass('flight-from-hide');
-    //   } else {
-    //     $('#fromCitySearch1').val('');
-    //     $('.flight-from-data').removeClass('flight-from-hide');
-    //     $("#fromCitySearch1").trigger("focus");
-    //   }
-
-    //   var containerRight = $('.select-root-right');
-    //   if (!$(e.target).closest(containerRight).length) {
-    //     $('.flight-to-data').addClass('flight-from-hide');
-    //   } else {
-    //     $('#toCitySearch1').val('');
-    //     $('.flight-to-data').removeClass('flight-from-hide');
-    //     $("#toCitySearch1").trigger("focus");
-    //   }
-
-    //   var TravellersDropdown = $('.Travellers-dropdown');
-    //   if (!$(e.target).closest(TravellersDropdown).length) {
-    //     $('.Travellers-dropdown-data').addClass('Travellershide');
-    //   } else {
-    //     $('.Travellers-dropdown-data').removeClass('Travellershide');
-    //   }
-    //   var Preferredtitle = $('.Preferred-title');
-    //   if (!$(e.target).closest(Preferredtitle).length) {
-    //     $('.Preferred-data').addClass('Preferred-hide');
-    //   } else {
-    //     $('.Preferred-data').removeClass('Preferred-hide');
-    //   }
-
-    // });
   }
   ngAfterViewInit(): void {
-  //  setTimeout(() => {
-  //   $('.class-select').selectpicker();
-  //  }, 500);
+ 
   }
+
+  currentPeriodClicked(datePicker:any){
+    let date = datePicker.target.value
+    if(date){
+      setTimeout(() => {
+        let openTravellers = document.getElementById('openTravellers')
+        openTravellers?.click();  
+      }, 50);
+    }
+  }
+
   selectDate(control: string) {
     let dep;
     // $('#'+control).daterangepicker({
@@ -271,6 +220,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
+    
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -278,9 +228,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromAirpotName = para1.airport_name;
     this.fromCityName = para1.city;
     this.fromContryName = para1.country;
-
     localStorage.setItem('fromCity', this.fromCityName);
     this.fromFlightList = false;
+    let removeClassToCity = document.getElementById('removeClassToCity');
+    removeClassToCity?.classList.remove('flight-from-hide');
+    // this.toFlightList = true;
+    setTimeout(() => {
+      let toCityDivElement=document.getElementById("toCityDiv");
+      toCityDivElement?.click();
+      this.toCityInput.nativeElement.focus();  
+    }, 50);
+    
   }
 
   selectToFlightList(para2: any) {
@@ -292,15 +250,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toAirpotName = para2.airport_name;
     this.toCityName = para2.city;
     this.toContryName = para2.country;
-
     localStorage.setItem('toCity' ,this.toCityName);
     this.toFlightList = false;
+    setTimeout(() => {
+      let datePickerOpen=document.getElementById("datePickerOpen");
+      datePickerOpen?.click();
+    }, 50);
   }
+
 
 
   // isValidation:boolean=false;
   // flightSearchValidation() {
-  //   debugger;
+  //   
   //   // if(this.flightData.value.flightfrom == "" || this.flightData.value.flightfrom == undefined || this.flightData.value.flightto == "" || this.flightData.value.flightto == undefined ||  this.flightData.value.departure == "" || this.flightData.value.departure == undefined ){
   //   //   this.toCityValidation =  true;
   //   //   this.fromCityValidation =  true;
@@ -353,10 +315,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
+      
       if(continueSearch!=null && continueSearch.length>0){
         this.continueSearchFlights=JSON.parse(continueSearch);
+        this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
+          if(item.flightfrom!=searchValueAllobj.flightfrom || item.flightto!=searchValueAllobj.flightto)
+          {
+              return item;
+          }
+        })
       }
+      
+      
       this.continueSearchFlights.push(searchValueAllobj);
+      
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
@@ -379,21 +351,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }, (error) => { console.log(error) });
 
     }
-
-    //this.flightData.get('departure').setValue(this.departureDate)
-    // this.sub = this._flightService.flightList(this.flightData.value).subscribe(
-    //   (res: any) => {
-    //     this.loader = false;
-    //     this.show = true;
-    //     this.flightList = res.response.onwardFlights;
-    //     this._flightService.flightListData = this.flightList;
-    //     console.log(this.flightList, 'flight Search');
-    //     this.router.navigate(['flight-list']);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
   }
   ConvertObjToQueryString(obj:any)
   {
@@ -415,7 +372,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   continueSearch(param:any){
-    debugger;
+    
     // let query:any = localStorage.getItem('searchVal');
     let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
     this.router.navigateByUrl(url);

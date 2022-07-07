@@ -36,7 +36,9 @@ export class FlightDetailComponent implements OnInit {
     //this._flightService.getFlightDetailsVal()
 
     let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
+
     let param=JSON.parse(flightDetailsArrVal);
+    console.log(param)
       if(param!=null){
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
@@ -107,7 +109,6 @@ export class FlightDetailComponent implements OnInit {
   }
 
   changeFareRuleTab(event:any){
-    console.log(event);
     $('.flight-extra-content').hide();
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
     var Element = document.getElementById(event.target.dataset['bind']);
