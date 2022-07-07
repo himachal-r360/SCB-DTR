@@ -387,11 +387,8 @@
                         <p class="main_text">Flights</p>
                     </div>
                     <p class="sub_text mb-1"><span>Powered by </span> </p>
-                    <p class="icns" *ngFor="let partner of poweredByPartners">
-                        <span>{{partners}}</span>
-                            <span *ngFor="let flight of partner.flights" >
-                                {{flight.name}} 
-                            </span>
+                    <p class="icns" *ngFor="let flights of poweredByPartners.flights"> {{flights.name}}
+                          
                         <!-- <span *ngIf="serviceSettings.partners_status.Easemytrip==1"><img  src="{{cdnUrl}}images/smartbuy/partner/travel/emt.svg" alt="EMT"></span>
                         <span *ngIf="serviceSettings.partners_status.Yatra==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span>
                         <span *ngIf="serviceSettings.partners_status.Cleartrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="ClearTrip"></span> -->

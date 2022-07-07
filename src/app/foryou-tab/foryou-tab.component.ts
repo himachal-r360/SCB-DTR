@@ -82,7 +82,7 @@ public modeselectTrending= 'All';
   cookie_redirectUrl: boolean = false;
   cookie_redirectNavigation: boolean = false;
   bannerSlide:number=1;
-  poweredByPartners:any;
+  poweredByPartners:[];
 
   constructor(public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router) {
     this.serviceSettings = this.appConfigService.getConfig();
@@ -96,7 +96,7 @@ public modeselectTrending= 'All';
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
-    console.log(JSON.parse(this.poweredByPartners));
+    console.log((this.poweredByPartners));
 
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
