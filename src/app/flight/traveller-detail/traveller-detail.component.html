@@ -4,10 +4,10 @@
             <div class="col-md-8">
                 <div class="booking-process-content">
                     <div class="booking-title-box">
-                        <h4>Traveller Details <span> {{InputArray.adult.length}} Adults,</span> <span >{{travelerDetails.child}} Child,</span> <span >{{travelerDetails.infants}} Infant</span></h4>
-                        <!-- <h4>Traveller Details <span *ngIf="travelerDetails.adults >0">{{travelerDetails.adults}} Adults,</span> 
-                            <span *ngIf="travelerDetails.child > 0">{{travelerDetails.child}} Child,</span> 
-                        <span *ngIf="travelerDetails.infants>0">{{travelerDetails.infants}} infant</span></h4> -->
+                        <!-- <h4>Traveller Details <span> {{InputArray.adult.length}} Adults,</span> <span >{{travelerDetails.child}} Child,</span> <span >{{travelerDetails.infants}} Infant</span></h4> -->
+                        <h4>Traveller Details <span *ngIf="travelerDetails.adults >0">{{travelerDetails.adults}} Adults</span> 
+                        <span *ngIf="travelerDetails.child > 0">,{{travelerDetails.child}} Child</span> 
+                        <span *ngIf="travelerDetails.infants>0">,{{travelerDetails.infants}} infant</span></h4>
                     </div>
                     <div class="booking-inner-box traveller-person-box">
                         <div class="traveller-person-title">
@@ -41,17 +41,17 @@
                                                         
                                     </ul>
 
-                                    <div class="add-traveller-adults" *ngIf="toggleAdult">
-                                        <form class="forms-field" [formGroup]="addAdultDetail" >
+                                    <div class="add-traveller-adults" *ngIf="toggleAdult" >
+                                        <form class="forms-field" #addAdultForm="ngForm">
                                             <div *ngFor="let item of InputArray.adult;let i = index">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <ul class="select-gender" >
+                                                        <ul class="select-gender">
                                                             <li >
-                                                                <a [ngClass]="activeMaleClass == true ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"  value="male" >Male</a>
+                                                                <a [ngClass]="item.gender == 'Male' ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"  value="Male" >Male</a>
                                                             </li>
                                                             <li >
-                                                                <a [ngClass]="activeFemaleClass == true ? 'active' : ''" (click)="getAdultGenderValue('Female', i)" value="female" >Female</a>
+                                                                <a [ngClass]="item.gender == 'Female' ? 'active' : ''" (click)="getAdultGenderValue('Female', i)" value="Female" >Female</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -61,20 +61,20 @@
                                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>First Name</mat-label>
-                                                            <input matInput placeholder="First Name" formControlName="firstName" [(ngModel)]="item.firstName">
+                                                            <input matInput placeholder="First Name"  [(ngModel)]="item.firstName" name="firstName">
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Last Name</mat-label>
-                                                            <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="item.lastName">
+                                                            <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName">
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                                         <div class="form-group">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Date of Birth</mat-label>
-                                                                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" [(ngModel)]="item.dateOfBirth">
+                                                                <input matInput [matDatepicker]="picker" placeholder="Date of Birth"  [(ngModel)]="item.dateOfBirth" name="dateOfBirth">
                                                                 <mat-datepicker-toggle matSuffix [for]="picker">
                                                                 </mat-datepicker-toggle>
                                                                 <mat-datepicker #picker></mat-datepicker>
@@ -87,8 +87,8 @@
                                     </div>
 
                                     <div class="add-traveller-btn">
-                                        <a href="javascript:void(0);" class="Addnew-Adult-btn"
-                                            (click)="postAdultDetails()">+ Add New Adult</a>
+                                        <a href="javascript:void(0);" class="Addnew-Adult-btn" [ngClass]="toggleAdult == true ? 'disable':''"
+                                            (click)="postAdultDetails()" >+ Add New Adult</a>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                 <div class="traveller-adults-ul">
                                     
                                     <ul class="add-search-ul d-none" *ngIf="InputArray.child">
-                                        <li class="custom-check-box" *ngFor="let child of travellerDetailsArr.child">
+                                        <li class="custom-check-box" *ngFor="let child of InputArray.child">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input"
@@ -117,7 +117,7 @@
                                     </ul>
 
                                     <div class="add-Child-adults" *ngIf="toggleChild">
-                                        <form class="forms-field" [formGroup]="addChildDetail" >
+                                        <form class="forms-field"  >
                                             <div *ngFor="let item of InputArray.child ;let i = index">
 
                                             
@@ -125,10 +125,10 @@
                                                 <div class="col-md-12">
                                                     <ul class="select-gender" >
                                                         <li >
-                                                            <a [ngClass]="activeChildMaleClass == true ? 'active' : ''" (click)="getChildGenderValue('Male' , i)"  value="male" >Male</a>
+                                                            <a [ngClass]="item.gender == 'Male' ? 'active' : ''" (click)="getChildGenderValue('Male' , i)"  value="Male" >Male</a>
                                                         </li>
                                                         <li >
-                                                            <a [ngClass]="activeChildFemaleClass == true ? 'active' : ''" (click)="getChildGenderValue('Female', i)" value="female" >Female</a>
+                                                            <a [ngClass]="item.gender == 'Female' == true ? 'active' : ''" (click)="getChildGenderValue('Female', i)" value="Female" >Female</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -137,20 +137,20 @@
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>First Name</mat-label>
-                                                        <input matInput placeholder="First Name" formControlName="firstName" [(ngModel)]="item.firstName">
+                                                        <input matInput placeholder="First Name"  [(ngModel)]="item.firstName" name="firstName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="item.lastName">
+                                                        <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <div class="form-group">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" [(ngModel)]="item.dateOfBirth">
+                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth"  [(ngModel)]="item.dateOfBirth" name="dateOfBirth">
                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                             </mat-datepicker-toggle>
                                                             <mat-datepicker #picker></mat-datepicker>
@@ -163,7 +163,7 @@
                                     </div>
 
                                     <div class="add-traveller-btn">
-                                        <a href="javascript:void(0);" class="Addnew-Child-btn" 
+                                        <a href="javascript:void(0);" class="Addnew-Child-btn" [ngClass]="InputArray.child < 1 || toggleChild == true ? 'disable':''"
                                             (click)="postChildDetails()" >+ Add New Child</a>
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@
                             <div class="traveller-addbox-details traveller-infant-details">
                                 <div class="traveller-adults-ul">
                                     <ul class="add-search-ul d-none"  *ngIf="InputArray.infants">
-                                        <li class="custom-check-box" *ngFor="let infants of travellerDetailsArr.infants">
+                                        <li class="custom-check-box" *ngFor="let infants of InputArray.infants">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input"
@@ -193,16 +193,16 @@
                                     </ul>
 
                                     <div class="add-Child-adults" *ngIf="infantToggle">
-                                        <form class="forms-field" [formGroup]="addInfantDetail" >
+                                        <form class="forms-field" >
                                             <div *ngFor="let item of InputArray.infants;let i = index"> 
                                             <div class="row">
                                                 <div class="col-md-12">
                                                         <ul class="select-gender">
                                                             <li >
-                                                                <a [ngClass]="activeInfantMaleClass  == true  ? 'active': ''" (click)="getInfantsGenderValue('Male' , i)"  value="male" >Male</a>
+                                                                <a [ngClass]="item.gender == 'Male'  ? 'active': ''" (click)="getInfantsGenderValue('Male' , i)"  value="Male" >Male</a>
                                                             </li>
                                                             <li >
-                                                                <a [ngClass]="activeInfantFemaleClass == true ? 'active'  :''" (click)="getInfantsGenderValue('Female', i)" value="female" >Female</a>
+                                                                <a [ngClass]="item.gender == 'Female' ? 'active'  :''" (click)="getInfantsGenderValue('Female', i)" value="Female" >Female</a>
                                                             </li>
                                                         </ul>
                                                 </div>
@@ -211,20 +211,20 @@
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>First Name</mat-label>
-                                                        <input matInput placeholder="First Name" formControlName="firstName"  [(ngModel)]="item.firstName">
+                                                        <input matInput placeholder="First Name"   [(ngModel)]="item.firstName" name="firstName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="item.lastName">
+                                                        <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <div class="form-group">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" [(ngModel)]="item.dateOfBirth">
+                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="item.dateOfBirth"  name="dateOfBirth">
                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                             </mat-datepicker-toggle>
                                                             <mat-datepicker #picker></mat-datepicker>
@@ -237,7 +237,7 @@
                                     </div>
 
                                     <div class="add-traveller-btn">
-                                        <a href="javascript:void(0);" class="Addnew-infant-btn"
+                                        <a href="javascript:void(0);" class="Addnew-infant-btn" [ngClass]="InputArray.infants < 1 || infantToggle == true ? 'disable':''"
                                             (click)="postInfantDetails()">+ Add New Child</a>
                                     </div>
                                 </div>
@@ -272,13 +272,14 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Email</mat-label>
-                                        <input matInput placeholder="Email"  type="email" [(ngModel)]="InputArray.eamil">
+                                        <input matInput placeholder="Email"  type="email" [(ngModel)]="InputArray.email" name="email">
                                     </mat-form-field>
+                                    
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Mobile Number</mat-label>
-                                        <input matInput placeholder="Mobile Number" [(ngModel)]="InputArray.mobile">
+                                        <input matInput placeholder="Mobile Number" [(ngModel)]="InputArray.mobileNumber" name="mobileNumber">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -307,8 +308,9 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>GST Number</mat-label>
-                                        <input matInput placeholder="GST Number"  [(ngModel)]="InputArray.gstNumber">
+                                        <input matInput placeholder="GST Number"  [(ngModel)]="InputArray.gstNumber" name="gstNumber">
                                     </mat-form-field>
+                                    
                                 </div>
                             </div>
                         </form>
@@ -317,7 +319,113 @@
             </div>
                
             <div class="col-md-4">
-                <app-fare-summary></app-fare-summary>
+                <!-- <app-fare-summary (continueTravller)="continueTravellerDetails()"></app-fare-summary> -->
+                <div class="default-sidebar">
+                    <div class="sidebar-widget session-expires-widget">
+                        <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p>
+                    </div>
+                    <div class="sidebar-widget fare-summary-widget">
+                        <div class="widget-title">
+                            <h4>Fare Summary</h4>
+                            <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                            <p>{{selectedVendor.partnerName}}</p>
+                        </div>
+                        <div class="widget-content">
+                            <ul class="widget-list clearfix">
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Base Fare
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{selectedVendor.baseFare|number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Taxes and Fees
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;2,034</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Baggage/Seat/Meals
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;600</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Discounts
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p class="text-green">-&#8377;500</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box pt-30">
+                                        <div class="fare-list-left">
+                                            <h6 class="fw_7">Grand Total</h6>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <h6 class="fw_7">₹{{selectedVendor.totalFare|number}}</h6>
+                                            <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(selectedVendor.totalFare)|number}}/month</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="continue-widget mb-20">
+                        <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()">Continue</a>
+                    </div>
+                    <div class="sidebar-widget coupon-code-widget">
+                        <div class="widget-title">
+                            <h4>Coupon Code</h4>
+                        </div>
+                        <div class="widget-content">
+                            <form action="coupon-code-form">
+                                <div class="coupon-input">
+                                    <input type="text" value="SBFLY">
+                                    <a href="">Apply</a>
+                                </div>
+                            </form>
+                            <div class="couponcode-box">
+                                <div class="couponcode-list active">
+                                    <h6>SBFLY</h6>
+                                    <p class="text-green">Congratulations! Promo discount of  ₹500 applied successfully</p>
+                                    <a href="" class="remove-text">Remove</a>
+                                </div>
+                                <div class="couponcode-list">
+                                    <h6>CT15</h6>
+                                    <p class="opacity_05">Flat 1.5% on cleartrip flight bookings</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
