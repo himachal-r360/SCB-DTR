@@ -386,11 +386,15 @@
                     <div>
                         <p class="main_text">Flights</p>
                     </div>
-                    <p class="sub_text mb-1"><span>Powered by</span> </p>
-                    <p class="icns">
-                        <span *ngIf="serviceSettings.partners_status.Easemytrip==1"><img  src="{{cdnUrl}}images/smartbuy/partner/travel/emt.svg" alt="EMT"></span>
+                    <p class="sub_text mb-1"><span>Powered by </span> </p>
+                    <p class="icns" *ngFor="let partner of poweredByPartners">
+                        <span>{{partners}}</span>
+                            <span *ngFor="let flight of partner.flights" >
+                                {{flight.name}} 
+                            </span>
+                        <!-- <span *ngIf="serviceSettings.partners_status.Easemytrip==1"><img  src="{{cdnUrl}}images/smartbuy/partner/travel/emt.svg" alt="EMT"></span>
                         <span *ngIf="serviceSettings.partners_status.Yatra==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span>
-                        <span *ngIf="serviceSettings.partners_status.Cleartrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="ClearTrip"></span>
+                        <span *ngIf="serviceSettings.partners_status.Cleartrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="ClearTrip"></span> -->
                     </p>
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.flight.cashback}}% cashback and {{serviceSettings.offer_construct.flight.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 2}"> <app-travel-search searchDisplayForm="flight"  webView="1"   showType="1"  popular="0" tab="0"  ></app-travel-search></span>
@@ -401,9 +405,11 @@
                     </div>
                     <p class="sub_text mb-1"><span>Powered by</span> </p>
                     <p class="icns">
-                        <span *ngIf="serviceSettings.partners_status.Makemytrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/mmt.svg" alt="MMT"></span>
+                       
+
+                        <!-- <span *ngIf="serviceSettings.partners_status.Makemytrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/mmt.svg" alt="MMT"></span>
                         <span *ngIf="serviceSettings.partners_status.Cleartrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="cleartrip"></span>
-                        <span *ngIf="serviceSettings.partners_status.Yatra==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span>
+                        <span *ngIf="serviceSettings.partners_status.Yatra==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span> -->
                     </p>
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.hotel.cashback}}% cashback and {{serviceSettings.offer_construct.hotel.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 1}"><app-travel-search searchDisplayForm="hotel"  webView="1" showType="1"  popular="0" tab="0"  ></app-travel-search></span>

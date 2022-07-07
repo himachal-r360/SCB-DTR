@@ -16,6 +16,7 @@ import { MatBottomSheet, MatBottomSheetRef, MatBottomSheetConfig } from '@angula
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
+import { parse } from 'path';
 
 declare var $: any;
 @Component({
@@ -81,6 +82,7 @@ public modeselectTrending= 'All';
   cookie_redirectUrl: boolean = false;
   cookie_redirectNavigation: boolean = false;
   bannerSlide:number=1;
+  poweredByPartners:any;
 
   constructor(public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router) {
     this.serviceSettings = this.appConfigService.getConfig();
@@ -93,7 +95,9 @@ public modeselectTrending= 'All';
     this.foryouBrands = this.serviceSettings.foryou_brands;
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
-    
+    this.poweredByPartners = this.serviceSettings.poweredByPartners;
+    console.log(JSON.parse(this.poweredByPartners));
+
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
@@ -205,7 +209,8 @@ public modeselectTrending= 'All';
  }
 
   ngOnInit() {
-  
+    
+
      setTimeout(() => {
      
      
@@ -451,10 +456,11 @@ public modeselectTrending= 'All';
         this.topBanner = [];
       }
 
+      
 
     }); 
       
-      
+    
       
   }, 50);
   
