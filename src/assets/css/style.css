@@ -5727,7 +5727,7 @@ button.accordion-button .xlsheats{
     width: 100%;
     height: 3px;
     background: #1D86FF;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     right: 0;
 }
@@ -5745,18 +5745,8 @@ button.accordion-button .xlsheats{
     line-height: 14px;
     color: #000000;
     opacity: 0.5;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.seatsname::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.seatsname {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
+} 
+ 
 
 
 
@@ -6222,8 +6212,457 @@ button.accordion-button .xlsheats{
     margin: 0 0 20px 0;
 }
 
-/* vikas - chnages */
 
-.departure-date {
-    height: 74px;
+.payment-options-area {
+    display: flex;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.payment-selections-box {
+    max-width: 270px;
+    width: 100%;
+    position: relative;
+    border-right: 1px solid #e8eaf2;
+    background-color: #fff; 
+}
+
+.payment-selections a {
+    padding: 15px 15px;
+    display: flex;
+    width: 100%;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #555555;
+    align-items: center;
+    gap: 12px;
+}
+.payment-selections a.payment-selections-active{
+    background: rgba(29, 134, 255, 0.1);
+    color: #000000;
+}
+
+.payment-selections a.payment-selections-active img{
+    filter: none;
+    opacity: 1;
+}
+
+.payment-selections a img{
+    width: 20px;
+    filter: brightness(10) invert(1);
+    opacity: 0.8;
+}
+
+.payment-datas-box {
+    position: relative;
+    width: calc(100% - 270px);
+    background-color: #fff;
+    padding: 15px;
+}
+
+.payment-datas{display: none;}
+.payment-datas-active{display: block;}
+
+
+.Flexipay-wigets-top {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    border-bottom: 1px solid rgb(136 136 136 / 25%);
+    padding-bottom: 20px;
+}
+
+.Flexipay-wigets-text p{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #555555;
+}
+
+.payment-pay-total {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #000000;
+}
+.payment-pay-price{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #000000;
+}
+.payment-pay-note{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+}
+
+
+.payment-pay-btn a {
+    background: #0088ff;
+    padding: 15px 70px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #FFFFFF !important;
+    width: 70%;
+}
+
+.Payment-call{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #565252;
+    margin-bottom: 20px;
+}
+
+.Flexipay-opt-list{
+    background: #FBFBFB;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+}
+
+.Flexipay-opt-list.active{
+    background: rgba(29, 134, 255, 0.1);
+    border: 2px solid #1D86FF;
+    border-radius: 8px;
+}
+
+.Flexipay-opt-list h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    color: #000000;
+}
+.Flexipay-opt-list p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: rgba(0, 0, 0, 0.5);    
+}
+
+.SavedCards-selected-list {
+    background: #FBFBFB;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.SavedCards-selected-list .SavedCards-cvc input {
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    width: 100px;
+    padding: 8px 15px 8px 10px;
+    background: transparent;
+    margin-top: 15px;
+    position: relative;
+}
+
+.SavedCards-radio-box {
+    position: relative;
+    width: 35px;
+}
+
+.SavedCards-radio-box [type="radio"]:checked + label,
+.SavedCards-radio-box [type="radio"]:not(:checked) + label {
+    position: relative;
+    padding-left: 24px;
+    cursor: pointer;
+    display: inline-block;
+    top: -17px;
+}
+
+.SavedCards-cvc{
+    position: relative;
+    display: inline-block;
+}
+
+.SavedCards-cvc .information-icon:hover .hover-popover {
+    transform: translate(-102px, 20px);
+    bottom: 48px;
+}
+
+.SavedCards-cvc .information-icon {
+    position: absolute;
+    right: 10px;
+    top: 23px;
+}
+.SavedCards-selected-details > h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.SavedCards-selected-details > p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #888888;
+}
+
+
+
+.sheat-info {
+    position: absolute;
+    top: 10px;
+    background: #fff;
+    padding: 6px;
+    left: 10px;
+}
+.sheat-info p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;    
+    color: #000000;
+}
+.sheat-info span{
+    width: 26px;
+    height: 25px;
+    left: 82px;
+    top: 574px;
+    
+    border-radius: 3px;
+    display: inline-block;
+}
+.s-free{
+    background: #E6F9DF !important;
+}
+.s-price-one{
+    background: #D2E7FF !important;
+}
+.s-price-two{
+    background: #FDCDCF !important;
+}
+.sheat-free, .sheat-price1, .sheat-price2 {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.flight-lavatory{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px 0px 30px;
+}
+
+
+
+.flight-top img {
+    width: 472px;
+}
+.flight-sheat-area {
+    background: #E7F2FF;    
+    position: relative;
+}
+
+.flight-img-box {
+    text-align: center;
+    max-height: 720px;
+    overflow: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.flight-sheat-box {
+    position: relative;
+    max-width: 466px;
+    background: #ffffff;
+    margin: 0 auto; 
+}
+.flight-lavatory > div {
+    background: rgba(136, 136, 136, 0.1);
+    border-radius: 2px;
+    padding: 10px 24px;
+}
+
+
+.flight-exit {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px 0px 30px
+}
+.exit-door p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 43px; 
+    color: #000000;
+}
+.exit-door {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+.exit-line {
+    background: #DE1D1D;
+    height: 60%;
+    width: 1px;
+    position: relative;
+}
+
+.exit-left-line:after {
+    width: 0;
+    height: 0;
+    border-top: 3px solid transparent;
+    border-right: 6px solid red;
+    border-bottom: 3px solid transparent;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.exit-right-line:after {
+    width: 0;
+    height: 0;
+    border-top: 3px solid transparent;
+    border-left: 6px solid red;
+    border-bottom: 3px solid transparent;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 0;
+}
+
+.tooltip-inner {
+    background-color: #ffffff;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.18);
+    opacity: 1 !important;
+    color: #000000;
+}
+.tooltip.bs-tooltip-right .tooltip-arrow::before {
+    border-right-color: #ffffff !important;
+}
+.tooltip.bs-tooltip-left .tooltip-arrow::before {
+    border-left-color: #ffffff !important;
+}
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #ffffff !important;
+}
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #ffffff !important;
+}
+
+
+.flight-sheat-selection-box {
+    padding: 0 10px;
+}
+.sheat-col {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sheat-col > div {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 40px;
+    color: #000000;
+    background: rgba(29, 134, 255, 0.2);
+    border-radius: 2px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.sheat-col > div:nth-child(1) {
+    width: 20px;
+    text-align: right;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 43px; 
+    color: #000000;
+}
+.sheat-col > div:nth-last-child(1) {
+    width: 20px;
+    text-align: left;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 43px; 
+    color: #000000;
+}
+
+.sheat-col > div.active{
+    background: #1D86FF;    
+}
+.sheat-col > div.active:after {
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    color: #fff;
+}
+
+
+.Single-Seat {
+    position: absolute;
+    top: 10px;
+    background: #fff;
+    padding: 6px;
+    right: 10px;
+}
+.Single-Seat .Travellers-dropdown .Travellers-dropdown-data { 
+    right: 0;
+}
+.Single-Seat .Travellers-dropdown-title h5, 
+.Single-Seat .Travellers-dropdown-data h5 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+} 
+.Single-Seat .Travellers-dropdown .Travellers-dropdown-data {
+    padding: 8px 5px;
+    box-shadow: none;
+    border-radius: 0;
+    min-width: 119px;
+    top: 32px;
+    right: -6px !important;
+}
+
+.flight-remove-area {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 30px 80px 30px;
+}
+.flight-remove-area a{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #1D86FF;
 }
