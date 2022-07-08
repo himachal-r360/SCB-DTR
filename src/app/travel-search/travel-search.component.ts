@@ -215,6 +215,8 @@ export class TravelSearchComponent implements OnInit {
         pnrNumber:string;
     redirectPopupTrigger:number=0; redirectPopupPartner;redirectPopupType;redirectPopupUrl;redirectPopupHeader;redirectPopupImpmessage;redirectPopupMessage;redirectPopup;
    redirectPopupTriggerTimestamp;
+  poweredByPartners:any =[];
+
    constructor(private activatedRoute: ActivatedRoute,private _elRef: ElementRef,private dialog: MatDialog,private router: Router,private es: ElasticsearchService,private formBuilder: FormBuilder,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private pay: PayService, private commonHelper: CommonHelper,private cookieService: CookieService, public formatter: NgbDateParserFormatter,private calendar: NgbCalendar,public irctc:IrctcApiService, 
   //  private _css: ClipboardService,
     ) { 
@@ -222,6 +224,8 @@ export class TravelSearchComponent implements OnInit {
         this.serviceSettings=this.appConfigService.getConfig();
         this.cdnUrl = environment.cdnUrl;
         this.siteUrl=environment.MAIN_SITE_URL;
+        // this.poweredByPartners = JSON.parse(JSON.stringify(this.serviceSettings.poweredByPartners));
+        this.poweredByPartners = this.serviceSettings.poweredByPartners;
         this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
         this.enableEs=this.serviceSettings.enableEs;
 	this.hotelCheckin = calendar.getToday();
