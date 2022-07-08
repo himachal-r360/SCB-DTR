@@ -983,8 +983,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightSearch() {
     this.loader = true;
-    console.log("flight search");
-
     this.searchData = sessionStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
     if (
@@ -1015,7 +1013,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
       this.loader = false
-      console.log(res)
       this.DocKey = res.response.docKey;
       this.flightList = res.response.onwardFlights;
       this.oneWayDate = res.responseDateTime;
@@ -1183,7 +1180,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey };
     let randomFlightDetailKey = this.getRandomString(44);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
-    console.log(flightDetailsArr, "booking details");
     this._flightService.setFlightsDetails(flightDetailsArr);
     const myInterval =setInterval(()=>{
       this.loaderValue = this.loaderValue + 10;

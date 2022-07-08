@@ -90,12 +90,6 @@ export class TravellerDetailComponent implements OnInit {
       this.addAdultDetail = this.InputArray.adult;
       this.addChildDetail = this.InputArray.adult;
       this.addInfantDetail = this.InputArray.infants;
-
-      
-      console.log(this.addAdultDetail , "adult form")
-      console.log(this.addInfantDetail,"infant form");
-      console.log(this.addChildDetail,"child form");
-
     
     this.getFlightDetails()
     
@@ -204,11 +198,7 @@ export class TravellerDetailComponent implements OnInit {
     }
     else{
       localStorage.setItem('finalTravellerDetail',JSON.stringify(this.InputArray));  
-      console.log("called function");
-
     }
-      
-   
   }
 
 }
