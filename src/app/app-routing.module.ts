@@ -11,9 +11,12 @@ const routes: Routes = [
   {
     path:"home" , component:HomeComponent 
   },
-  {
-    path:"partners" , component:PartnersComponent 
+  
+    {
+    path: 'partners',
+    loadChildren: () => import('./partners/partners.module').then(m => m.PartnersModule)
   },
+  
   {
     path: 'flights',
     loadChildren: () => import('./flight/flight.module').then(m => m.FlightModule)
