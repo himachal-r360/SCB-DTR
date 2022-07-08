@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { retry, Subscription } from 'rxjs';
+import { retry, Subscription, timeInterval } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -79,6 +79,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal: string = ""
   DocKey: any;
+
+   loaderValue = 10;
 
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
@@ -1183,12 +1185,20 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     console.log(flightDetailsArr, "booking details");
     this._flightService.setFlightsDetails(flightDetailsArr);
-    setTimeout(() => {
-      $('#bookingprocess').modal('hide');
-      let url = 'flight-booking/flight-details?searchFlightKey=' + randomFlightDetailKey;
-      this.router.navigateByUrl(url);
-    }, 1000);
+    const myInterval =setInterval(()=>{
+      this.loaderValue = this.loaderValue + 10;
+      if(this.loaderValue == 110)
+      {
+        
+        clearInterval(myInterval);
+        $('#bookingprocess').modal('hide');
+        let url = 'flight-booking/flight-details?searchFlightKey=' + randomFlightDetailKey;
+        this.router.navigateByUrl(url);
+        
+      }
+    },300)
   }
+ 
 
 // get rendom string value
   getRandomString(length: any) {
