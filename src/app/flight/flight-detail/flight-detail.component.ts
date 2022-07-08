@@ -193,7 +193,6 @@ export class FlightDetailComponent implements OnInit {
   getFlightInfo(param:any)
   {
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
-      console.log(res ,"res")
       if(res.statusCode ==200)
       {
           this.BaseFare =res.response.comboFare.onwardBaseFare;
