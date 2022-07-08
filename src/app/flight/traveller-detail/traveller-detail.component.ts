@@ -67,7 +67,7 @@ export class TravellerDetailComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _flightService:FlightService) { }
 
   ngOnInit(): void {  
-    let parseVal:any = localStorage.getItem('searchVal')
+    let parseVal:any = sessionStorage.getItem('searchVal')
     this.travelerDetails = JSON.parse(parseVal);
     
     // this.travelerDetails.adults=parseInt(this.travelerDetails.adults);
@@ -102,7 +102,7 @@ export class TravellerDetailComponent implements OnInit {
   }
 
   getFlightDetails(){
-    let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
+    let flightDetailsArrVal:any=sessionStorage.getItem("flightDetailsArr");
     let param=JSON.parse(flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;

@@ -467,7 +467,115 @@
                 </div>
 
                 <div class="col-md-4">
-                <app-fare-summary></app-fare-summary>
+                <!-- <app-fare-summary></app-fare-summary> -->
+                <div class="default-sidebar">
+                    <div class="sidebar-widget session-expires-widget">
+                        <!-- <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p> -->
+                        <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
+                    </div>
+                    <div class="sidebar-widget fare-summary-widget">
+                        <div class="widget-title">
+                            <h4>Fare Summary</h4>
+                            <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                            <p *ngIf="selectedVendor">{{selectedVendor.partnerName}}</p>
+                        </div>
+                        <div class="widget-content">
+                            <ul class="widget-list clearfix">
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Base Fare
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{BaseFare|number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Taxes and Fees
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{Tax |number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Baggage/Seat/Meals
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;600</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Discounts
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p class="text-green">-&#8377;500</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box pt-30">
+                                        <div class="fare-list-left">
+                                            <h6 class="fw_7">Grand Total</h6>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <h6 class="fw_7">₹{{TotalFare|number: '.2'}}</h6>
+                                            <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(TotalFare)|number: '.2'}}/month</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="continue-widget mb-20">
+                        <a href="javascript:void(0);" class="button-style w-100">Continue</a>
+                    </div>
+                    <div class="sidebar-widget coupon-code-widget">
+                        <div class="widget-title">
+                            <h4>Coupon Code</h4>
+                        </div>
+                        <div class="widget-content">
+                          <form action="coupon-code-form">
+                              <div class="coupon-input">
+                                  <input type="text" value="SBFLY">
+                                  <a href="">Apply</a>
+                              </div>
+                          </form>
+                          <div class="couponcode-box">
+                              <div class="couponcode-list active">
+                                  <h6>SBFLY</h6>
+                                  <p class="text-green">Congratulations! Promo discount of  ₹500 applied successfully</p>
+                                  <a href="" class="remove-text">Remove</a>
+                              </div>
+                              <div class="couponcode-list">
+                                  <h6>CT15</h6>
+                                  <p class="opacity_05">Flat 1.5% on cleartrip flight bookings</p>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            
             </div>
             </div>
         </div>

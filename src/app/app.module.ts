@@ -17,6 +17,8 @@ import { DirectiveModule } from './directives/directive.module';
 
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,10 +36,11 @@ import { DirectiveModule } from './directives/directive.module';
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    DirectiveModule
+    DirectiveModule,
+    
   ],
   exports:[SearchComponent],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
