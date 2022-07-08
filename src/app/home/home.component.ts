@@ -330,7 +330,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.continueSearchFlights.push(searchValueAllobj);
       
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
-      localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
+      sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
       localStorage.setItem('toAirportName', this.toAirpotName);
       this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
@@ -340,7 +340,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.oneWayDate = res.responseDateTime;
         this._flightService.flightListData = this.flightList;
         this._flightService.flightListDate = this.oneWayDate;
-        let query:any = localStorage.getItem('searchVal');
+        let query:any = sessionStorage.getItem('searchVal');
 
 
         let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));

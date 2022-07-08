@@ -1,7 +1,7 @@
 import { AfterViewInit, Component,  ElementRef,  OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { retry, Subscription } from 'rxjs';
+import { retry, Subscription, timeInterval } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -82,6 +82,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal:string=""
    DocKey:any;
+
+   loaderValue = 10;
 
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
@@ -186,7 +188,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.queryFlightData = paramObj;
       this.fromContryName = this.queryFlightData.fromContry;
       this.toContryName = this.queryFlightData.toContry;
-      localStorage.setItem('searchVal', JSON.stringify(paramObj));
+      sessionStorage.setItem('searchVal', JSON.stringify(paramObj));
     }
     else {
       this.route.queryParams
@@ -194,7 +196,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.queryFlightData = params;
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
-          localStorage.setItem('searchVal', JSON.stringify(params));
+          sessionStorage.setItem('searchVal', JSON.stringify(params));
         });
     }
   }
@@ -213,7 +215,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 200);*/
   }
   setSearchFilterData() {
-    this.searchData = localStorage.getItem('searchVal');
+    this.searchData = sessionStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
     this.fromCityName = searchObj.fromCity; //searchObj.flightfrom;
     this.toCityName = searchObj.toCity;//localStorage.getItem('toCity');
@@ -1010,7 +1012,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightSearch() {
     this.loader = true;
-    this.searchData = localStorage.getItem('searchVal');
+    console.log("flight search");
+
+    this.searchData = sessionStorage.getItem('searchVal');
     let searchObj = JSON.parse(this.searchData);
     if (
       this.flightDataModify.value.flightfrom == null ||
@@ -1037,7 +1041,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     let otherSearchValueObj = { 'fromAirportName': this.fromAirpotName, 'toAirportName': this.toAirpotName, 'toCity': this.toCityName, 'fromCity': this.fromCityName, 'fromContry': this.fromContryName, 'toContry': this.toContryName }
 
     let searchValueAllobj = Object.assign(searchValue, otherSearchValueObj);
-    localStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
+    sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
       this.loader = false
       console.log(res)
@@ -1053,7 +1057,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
-      let query: any = localStorage.getItem('searchVal');
+      let query: any = sessionStorage.getItem('searchVal');
       let url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
       this.getAirlinelist();
       this.popularFilterFlightData()
@@ -1213,19 +1217,29 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bookingSummary(flights: any, selected: any,flightKey:any) {
-    let flightDetailsArr :any= { "flights": flights , "priceSummary": selected,"docKey":this.DocKey,"flightKey":flightKey};
-    localStorage.setItem("flightDetailsArr",JSON.stringify(flightDetailsArr));
-    this._flightService.setFlightsDetails(flightDetailsArr);
-    setTimeout(() => {
 
-      $('#bookingprocess').modal('hide');
+    let flightDetailsArr :any= { "flights": flights , "priceSummary": selected,"docKey":this.DocKey,"flightKey":flightKey};
+    sessionStorage.setItem("flightDetailsArr",JSON.stringify(flightDetailsArr));
+    this._flightService.setFlightsDetails(flightDetailsArr);
+    const myInterval =setInterval(()=>{
+      this.loaderValue = this.loaderValue + 10;
+      if(this.loaderValue == 110)
+      {
+        clearInterval(myInterval);
+        // $('#bookingprocess').modal('hide');
+        // this.router.navigate(['flight-booking/flight-details']);
+      }
+    },300)
+    // setTimeout(() => {
+    //   this.loaderValue = 100;
+      //$('#bookingprocess').modal('hide');
 
       // this.bookingprocess.nativeElement.querySelectorAll('.modal-backdrop').forEach(
       //   (bookingprocess:any) => {
       //     bookingprocess.classList.remove('modal-backdrop');
       //   })
-      this.router.navigate(['flight-booking/flight-details']);
-    }, 1000);
+//      this.router.navigate(['flight-booking/flight-details']);
+    // }, 1000);
   }
 
 

@@ -1135,10 +1135,10 @@
         <div class="modal bookingprocess" id="bookingprocess">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-body ">
+                    <div class="modal-body " style="padding: 25px;">
                         <div class="bookingprocess-items">
-                            <div class="bookingprocess-title text-center">
-                                <h5>We are processing your booking. <br> Please wait...</h5>
+                            <div class="bookingprocess-title text-center mb-30">
+                                <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
                             </div>
                             <div class="bookingprocess-content">
                                 <div class="bookingprocess-flight">
@@ -1148,13 +1148,13 @@
                                 </div>
                                 <div class="bookingprocess-processbar">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="max-width: 60%;">
+                                        <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0" aria-valuemax="100"  [ngStyle]="{'max-width':loaderValue +'%'}" >
                                             <span class="title"> &nbsp; </span>
                                         </div>
                                       </div>
                                 </div>
                             </div>
-                            <div class="refresh-text text-center">
+                            <div class="refresh-text text-center pt-2">
                                 <p>Please don't click or refresh the page</p>
                             </div>
                         </div>
