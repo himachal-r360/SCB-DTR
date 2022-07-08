@@ -1,7 +1,7 @@
 import { AfterViewInit, Component,  ElementRef,  OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { retry, Subscription } from 'rxjs';
+import { retry, Subscription, timeInterval } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -79,6 +79,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal:string=""
    DocKey:any;
+
+   loaderValue = 10;
 
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
@@ -1197,19 +1199,30 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bookingSummary(flights: any, selected: any,flightKey:any) {
+
     let flightDetailsArr :any= { "flights": flights , "priceSummary": selected,"docKey":this.DocKey,"flightKey":flightKey};
+
     localStorage.setItem("flightDetailsArr",JSON.stringify(flightDetailsArr));
     this._flightService.setFlightsDetails(flightDetailsArr);
-    setTimeout(() => {
-
-      $('#bookingprocess').modal('hide');
+    const myInterval =setInterval(()=>{
+      this.loaderValue = this.loaderValue + 10;
+      if(this.loaderValue == 110)
+      {
+        clearInterval(myInterval);
+        // $('#bookingprocess').modal('hide');
+        // this.router.navigate(['flight-booking/flight-details']);
+      }
+    },300)
+    // setTimeout(() => {
+    //   this.loaderValue = 100;
+      //$('#bookingprocess').modal('hide');
 
       // this.bookingprocess.nativeElement.querySelectorAll('.modal-backdrop').forEach(
       //   (bookingprocess:any) => {
       //     bookingprocess.classList.remove('modal-backdrop');
       //   })
-      this.router.navigate(['flight-booking/flight-details']);
-    }, 1000);
+//      this.router.navigate(['flight-booking/flight-details']);
+    // }, 1000);
   }
 
 
