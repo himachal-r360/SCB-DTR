@@ -1026,12 +1026,9 @@
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.hotel.cashback}}% cashback and {{serviceSettings.offer_construct.hotel.reward}}X reward points</p>
                 </div>
                 <p class="sub_text"><span>Powered by</span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/mmt.svg" alt="MMT"></span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/oyo.svg" alt="oyo"></span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span>
-                    <!-- <span><img src="{{cdnUrl}}images/smartbuy/partner/cleartrip.svg" alt="Cleartrip"></span>
-           <span><img src="{{cdnUrl}}images/smartbuy/partner/yatra.svg" alt="Yatra"></span>
-           <span><img src="{{cdnUrl}}images/smartbuy/partner/mmt.svg" alt="MMT"></span> -->
+                    <span *ngFor="let hotels of poweredByPartners.hotels" >
+                        <img *ngIf="hotels.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{hotels.img}}" alt="{{hotels.name}}">
+                    </span>
                 </p>
                 <div>
                     <div class="trip_details">
@@ -1234,17 +1231,10 @@
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.flight.cashback}}% cashback and {{serviceSettings.offer_construct.flight.reward}}X reward points</p>
 
                 </div>
-                <p class="sub_text"><span>Powered by 22</span>
+                <p class="sub_text"><span>Powered by</span>
                     <span *ngFor="let flights of poweredByPartners.flights" >
-                        {{flights.name}}
-                        <!-- <img *ngIf="flights.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{flights.img}}" alt="{{flights.name}}"> -->
+                        <img *ngIf="flights.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{flights.img}}" alt="{{flights.name}}">
                     </span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/emt.svg" alt="EMT"></span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="ClearTrip"></span>
-                    <!-- <span><img src="{{cdnUrl}}images/smartbuy/partner/cleartrip.svg" alt="Cleartrip"></span>
-           <span><img src="{{cdnUrl}}images/smartbuy/partner/yatra.svg" alt="Yatra"></span>
-           <span><img src="{{cdnUrl}}images/smartbuy/partner/mmt.svg" alt="MMT"></span> -->
                 </p>
                 <div>
                     <div class="buttonTrip">
@@ -1502,8 +1492,9 @@
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.bus.cashback}}% cashback and {{serviceSettings.offer_construct.bus.reward}}X reward points</p>
                 </div>
                 <p class="sub_text"><span>Powered by</span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/redbus.svg" alt="partner_logo" class=""></span>
-                    <!-- <span><img src="{{cdnUrl}}images/smartbuy/partner/redbus.svg" alt="rebus_icon" class="wi-25"></span> -->
+                    <span *ngFor="let bus of poweredByPartners.bus" >
+                        <img *ngIf="bus.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{bus.img}}" alt="{{bus.name}}">
+                    </span>
                 </p>
                 <div class="trip_details">
                     <div class="select_city mb-15">
@@ -1638,8 +1629,9 @@
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.train.cashback}}% cashback and {{serviceSettings.offer_construct.train.reward}}X reward points</p>
                 </div>
                 <p class="sub_text"><span>Powered by</span>
-                    <span><img src="{{cdnUrl}}images/smartbuy/partner/travel/irctc.svg" alt="partner_logo" class=""></span>
-                    <!-- <span><img src="{{cdnUrl}}images/smartbuy/partner/irctc.svg" alt="icon_irctc" class="wi-25"></span> -->
+                    <span *ngFor="let train of poweredByPartners.train" >
+                        <img *ngIf="train.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{train.img}}" alt="{{train.name}}">
+                    </span>
                 </p>
                 <div class="trip_details">
                     <div class="select_city mb-15">

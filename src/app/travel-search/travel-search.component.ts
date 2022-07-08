@@ -224,8 +224,8 @@ export class TravelSearchComponent implements OnInit {
         this.serviceSettings=this.appConfigService.getConfig();
         this.cdnUrl = environment.cdnUrl;
         this.siteUrl=environment.MAIN_SITE_URL;
-        this.poweredByPartners = JSON.parse(JSON.stringify(this.serviceSettings.poweredByPartners));
-        console.log(this.poweredByPartners);
+        // this.poweredByPartners = JSON.parse(JSON.stringify(this.serviceSettings.poweredByPartners));
+        this.poweredByPartners = this.serviceSettings.poweredByPartners;
         this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
         this.enableEs=this.serviceSettings.enableEs;
 	this.hotelCheckin = calendar.getToday();
