@@ -12,6 +12,9 @@ import { FareSummaryComponent } from './fare-summary/fare-summary.component';
 import { DirectiveModule } from '../directives/directive.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SeatsMealsComponent } from './seats-meals/seats-meals.component';
+import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
+
+
 
 
 
@@ -50,7 +53,8 @@ const routes: Routes = [
     TravellerDetailComponent,
     FlightStepperNavComponent,
     FareSummaryComponent,
-    SeatsMealsComponent
+    SeatsMealsComponent,
+    MinuteSecondPipe
 
 
   ],
@@ -61,9 +65,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
   MaterialModule,
   DirectiveModule,
-  NgxSliderModule
+  NgxSliderModule,
+  
 
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [ ]
 })
 export class FlightModule { }

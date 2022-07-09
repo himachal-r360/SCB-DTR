@@ -884,7 +884,7 @@
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                                <p class="mt-1 opacity_05">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
                                                                             </div>
                                                                             <div class="tabs-depart-total">
                                                                                 <p>{{details.duration | durationTime}}</p>
@@ -892,7 +892,7 @@
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                                <p class="mt-1 opacity_05">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
                                                                             </div>
                                                                         </div>
                                                                         <div class="tabs-depart-right">

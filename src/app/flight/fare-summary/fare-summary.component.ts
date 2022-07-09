@@ -23,23 +23,22 @@ export class FareSummaryComponent implements OnInit {
 
 
   getFlightDetails(){
-    let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
+    let flightDetailsArrVal:any=sessionStorage.getItem("flightDetailsArr");
     let param=JSON.parse(flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
         var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
-var body = {
-  "docKey": param.docKey,
-  "flightKeys": [
-    param.flightKey
-  ],
-  "partnerName": this.selectedVendor.partnerName,
-  "onwardFlightFareKey": onwardFlightFareKey,
-  "returnFlightFareKey": "",
-  "splrtFlight": this.selectedVendor.splrtFareFlight
-}
-console.log(JSON.stringify(body))
+        var body = {
+          "docKey": param.docKey,
+          "flightKeys": [
+            param.flightKey
+          ],
+          "partnerName": this.selectedVendor.partnerName,
+          "onwardFlightFareKey": onwardFlightFareKey,
+          "returnFlightFareKey": "",
+          "splrtFlight": this.selectedVendor.splrtFareFlight
+        }
         this.getFlightInfo(body);
       }
   }
@@ -51,7 +50,6 @@ console.log(JSON.stringify(body))
   getFlightInfo(param:any)
   {
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
-      console.log(res)
       if(res.statusCode ==200)
       {
           this.BaseFare =res.response.comboFare.onwardBaseFare;
