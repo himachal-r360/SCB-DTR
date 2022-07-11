@@ -1,0 +1,759 @@
+<div class="tab_inner pb-0">
+    <div class=" container_ftab c-space-2 mb-1 pt-16">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12" *ngIf="isLogged==false">
+                <div id="sync1" class="topBannerSlider owl-carousel" *ngIf="topBanner">
+                    <div *ngFor="let tbanner of topBanner; let i = index" id="{{i}}">
+                        <span class="d-block d-sm-none" *ngIf="tbanner.redriect_url!=''"> <a href="{{tbanner.redriect_url}}"><img data-src="{{tbanner.image}}" class="d-block w-100 owl-lazy" title="{{tbanner.title}}" alt="{{tbanner.title}}"   (error)="onImgError($event)"  /></a></span>
+                        <span class="d-block d-sm-none" *ngIf="tbanner.redriect_url==''"><img data-src="{{tbanner.image}}" class="d-block w-100 lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}" (error)="onImgError($event)"  /></span>
+
+                        <span class="d-none d-sm-none d-lg-block" *ngIf="tbanner.redriect_url!=''"> <a href="{{tbanner.redriect_url}}"><img data-src="{{tbanner.full_image}}" class="d-block  imgscale5  lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}"   (error)="onImgErrorFull($event)" height="387px"/></a></span>
+                        <span class="d-none d-sm-none d-lg-block" *ngIf="tbanner.redriect_url==''"><img data-src="{{tbanner.full_image}}" class="d-block  imgscale5  lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}" (error)="onImgErrorFull($event)" height="387px" /></span>
+                    </div>
+                </div>
+
+                <div id="sync2" class="navigation-thumbs banner_thumbs mb-2 owl-carousel">
+                    <button class="item  active_thumb " *ngFor="let tbanner of topBanner; let i = index" id="{{i}}">
+                <span class="bgbox bgbox-{{i}}">
+                <svg xmlns="http://www.w3.org/2000/svg"  width="100px" height="60px"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path  stroke="none" [attr.fill]="tbanner.bg_color_code" d="M100,0V5.8c-3.47,.54-12.76,2.94-15.19,13.46-3,13-2.63,19.29-10.1,28.47-8.41,10.33-22.71,10.53-24.28,10.53-7.03-.06-13.87-2.3-19.57-6.41-1.55-1.11-2.75-2.23-3.57-3.06,0,0-.51-.52-1-1.06-5.74-6.41-8.02-16.65-8.02-16.65-1.69-7.61-.78-12.32-4.36-18.08-.54-.87-.93-1.36-1.12-1.59C9.25,7.32,3.9,6.12,0,5.74V0H100Z"/></g></g></svg>
+                </span>
+                <div class="circle-box" id="{{i}}" >
+                <h3 class="percentage">
+                <img src="{{tbanner.brand}}" class="d-block gifImage"    (error)="onImgError($event)"   />
+                </h3>
+                <div class="outer">
+                <svg width="65px" height="65px">
+                <circle class="circle circle--3" cx="35" cy="35" r="28"></circle>
+                </svg>
+                </div>
+                </div>
+                </button>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6 col-sm-12 " *ngIf="isLogged==true">
+
+                <div id="sync1" class="topBannerSlider owl-carousel" *ngIf="topBanner">
+                    <div *ngFor="let tbanner of topBanner; let i = index" id="{{i}}">
+                        <span *ngIf="tbanner.redriect_url!=''"> <a href="{{tbanner.redriect_url}}"><img data-src="{{tbanner.image}}" class="d-block w-100 lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}"   (error)="onImgError($event)" /></a></span>
+                        <span *ngIf="tbanner.redriect_url==''"><img data-src="{{tbanner.image}}" class="d-block w-100 lazyOwl" title="{{tbanner.title}}" alt="{{tbanner.title}}" (error)="onImgError($event)"  /></span>
+                    </div>
+                </div>
+
+
+                <div id="sync2" class="navigation-thumbs banner_thumbs mb-2 owl-carousel">
+                    <button class="item  active_thumb " *ngFor="let tbanner of topBanner; let i = index" id="{{i}}">
+                <span class="bgbox bgbox-{{i}}">
+                <svg xmlns="http://www.w3.org/2000/svg"  width="100px" height="60px"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path  stroke="none" [attr.fill]="tbanner.bg_color_code" d="M100,0V5.8c-3.47,.54-12.76,2.94-15.19,13.46-3,13-2.63,19.29-10.1,28.47-8.41,10.33-22.71,10.53-24.28,10.53-7.03-.06-13.87-2.3-19.57-6.41-1.55-1.11-2.75-2.23-3.57-3.06,0,0-.51-.52-1-1.06-5.74-6.41-8.02-16.65-8.02-16.65-1.69-7.61-.78-12.32-4.36-18.08-.54-.87-.93-1.36-1.12-1.59C9.25,7.32,3.9,6.12,0,5.74V0H100Z"/></g></g></svg>
+                </span>
+                <div class="circle-box" id="{{i}}" >
+                <h3 class="percentage">
+                <img src="{{tbanner.brand}}" class="d-block gifImage"    (error)="onImgError($event)"   />
+                </h3>
+                <div class="outer">
+                <svg width="65px" height="65px">
+                <circle class="circle circle--3" cx="35" cy="35" r="28"></circle>
+                </svg>
+                </div>
+                </div>
+                </button>
+                </div>
+
+
+            </div>
+
+
+            <div class="col-lg-6 col-sm-12" *ngIf="isLogged==true">
+
+                <div class="row mb-3">
+                    <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints">
+                        <div class="card_points_info">
+                            <div>
+                                <div class="card_select">
+                                    <select (change)="selectedCard($event)">
+                    <option *ngFor="let each of customercards" value="{{each.id}}"   >{{each.card}}</option>
+                  </select>
+                                    <!--<div class="d-inline-block pl-4"><a href="">View Details</a></div>-->
+                                </div>
+                            </div>
+                            <div class="points_section">
+                                <!--<div class="counter_points">
+                  <p><i class="fa fa-rupee"></i>XXXXX</p>
+                  <p>saved in XXXXX</p>
+                </div>-->
+                                <div class="counter_points">
+                                    <p>{{customeravailablepoints}}</p>
+                                    <p>Reward points</p>
+                                </div>
+                                <!--<div class="counter_points">
+                  <p>XXXXX <span class="total_points">/XXXXX</span></p>
+                  <p>Points expiring</p>
+                </div>-->
+                                <div class="voucher-code-entry">
+                                    <div class="redeem_error">
+                                        <small>{{errorMsg0}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="">
+                            <a href="#" class=""> <img src="https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/images/banners/mobile/recents_nodata.png" alt="rec_small_banner" class="img-fluid"> </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-none d-lg-block">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="recent_search_sec" *ngIf="recentsearchData.length>0">
+                                <div>
+                                    <p class="mb-1"><span>Recent Searches</span>
+                                        <!--<span class="recent_view">View All</span>--></p>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-12" *ngFor="let rsearchval of recentsearchData">
+                                        <div class="row journey_search_box">
+                                            <div class="col-sm-3 col-4 p-0">
+                                                <div [ngClass]="['journey_search', rsearchval.type]">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-8">
+                                                <div class="js_child">
+                                                    <p class="">
+                                                        <span *ngIf="rsearchval.type !='hotel'">{{rsearchval.searchFrom | uppercase | slice:0:11 }}{{rsearchval.searchFrom.length > 11 ? '...' : ''}}</span>
+                                                        <span *ngIf="rsearchval.type ==='hotel'">{{rsearchval.searchFrom | uppercase | slice:0:28 }}{{rsearchval.searchFrom.length > 28 ? '...' : ''}}</span>
+                                                        <span class="p-0">            
+                              <img *ngIf="rsearchval.type !='hotel'" src="{{cdnUrl}}images/smartbuy/icons/{{rsearchval.type}}_line.svg" alt="{{rsearchval.type}}-icon" class="">
+                            </span>
+                                                        <span *ngIf="rsearchval.type !='hotel'">{{rsearchval.searchTo | uppercase | slice:0:10 }}{{rsearchval.searchTo.length > 10 ? '...' : ''}}</span>
+                                                    </p>
+                                                    <p class="date_info col-12"><span class="date">{{rsearchval.showdate}}</span></p>
+                                                </div>
+                                                <p class="search_icon">
+                                                    <a href="{{rsearchval.Redirecturl}}" class=""><img src="{{cdnUrl}}images/smartbuy/icons/right_icon.svg" alt="icon" class="" width="25px" height="25px"></a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- Recent Search small Banner Place holder  -->
+                                <div class="col-12 p-0" *ngIf="recentsearchData.length==1">
+                                    <div class="mt-lg-2 mt-xl-3" *ngFor="let BannerRecentSearch of topBannerRecentSearch">
+                                        <a href="{{BannerRecentSearch.redriect_url}}" class=""> <img src="{{BannerRecentSearch.image}}" alt="rec_small_banner" class="img-fluid"> </a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Recent Search Full Banner Place holder  -->
+                            <div *ngIf="recentsearchData.length==0 ||  recentsearchData== undefined">
+                                <div>
+                                    <a *ngFor="let BannerRecentSearch of topBannerRecentSearch" href="{{BannerRecentSearch.redriect_url}}" class=""> <img src="{{BannerRecentSearch.full_image}}" alt="rec_full_banner" class="img-fluid"> </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-sm-4 pl-0">
+                            <div>
+                                <!-- Sb Recomeends Full Banner Place holder  -->
+                                <div class="recomend_prd_img" *ngIf="topBannerSbRecommands.length>0">
+                                    <img src="{{topBannerSbRecommands[0].full_image}}" alt="rec_small_banner" class="img-fluid d-none d-sm-block">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Mlite Recent Search -->
+                <div class="d-block d-sm-none">
+                    <div class="text-center mb-4" *ngIf="topBannerSbRecommands.length>0">
+                        <!-- <img src="{{topBannerSbRecommands[0].image}}" alt="rec_small_banner" class="img-fluid"> -->
+                        <img src="{{cdnUrl}}images/sb_img/sb_rec_m.png" alt="rec_small_banner" class="img-fluid">
+                    </div>
+
+                    <!-- Recent Search -->
+                    <div class="container_ftab c-space-2 p-0 mb-0" *ngIf="recentsearchDataAll.length > 0">
+                        <h3 class="">Recent Searches</h3>
+                        <div class="recent_ser_m">
+                            <div class="item" *ngFor="let rec of recentsearchDataAll">
+                                <a href="{{rec.Redirecturl}}">
+                                    <p class="cate">{{rec.type}}</p>
+                                    <p class="mb-2" *ngIf="rec.type=='flight' || rec.type=='bus' || rec.type=='train' "><span class="name">{{rec.searchFrom}}</span><span class="px-2"><img src="{{cdnUrl}}images/smartbuy/icons/right_icn.svg"></span><span class="name">{{rec.searchTo}}</span></p>
+                                    <p class="mb-2" *ngIf="rec.type=='hotel' "><span class="name">{{rec.searchFrom}}</span></p>
+                                    <p class="time">{{rec.showdate}}</p>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Recent Search Full Banner Place holder  -->
+                    <div *ngIf="recentsearchData.length==0 ||  recentsearchData== undefined" class="pt-3">
+                        <a *ngFor="let BannerRecentSearch of topBannerRecentSearch" href="{{BannerRecentSearch.redriect_url}}" class=""> <img src="{{BannerRecentSearch.full_image}}" alt="rec_small_banner" class="img-fluid"> </a>
+                    </div>
+
+                    <!-- Recent Search small Banner Place holder  -->
+                    <div class="col-12 p-0" *ngIf="recentsearchData.length==1">
+                        <div class="pt-3" *ngFor="let BannerRecentSearch of topBannerRecentSearch">
+                            <a href="{{BannerRecentSearch.redriect_url}}" class=""> <img src="{{BannerRecentSearch.image}}" alt="rec_small_banner" class="img-fluid"> </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+     <!-- Smartbuy Exclusive Mlite Code -->
+     <div class="mlite_exclusive d-block d-sm-none" *ngIf="DOMAIN_SETTINGS">
+        <div class="container_ftab c-space-2">
+            <h3 class="">Smartbuy Exclusive
+                <span class="float-right"><a (click)="goToNew('/partners')" class="view_all_link">Explore</a></span>
+            </h3>
+            <div class="sb_exc_xs_latest">
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+                    <a (click)="redirectUrl('amazon',0,'amazon')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/amazon.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.amazon.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.amazon.cashback}}%</span> CB</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+                    <a (click)="redirectUrl('flipkart',0,'flipkart')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/flipkart.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.flipkart.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.flipkart.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
+                    <a (click)="redirectUrl('imagine',0,'imagine')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/imagine.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.imagine.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.imagine.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.MMT==1">
+                    <a (click)="redirectUrl('mmt',0,'mmt')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/mmt.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.mmt.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.mmt.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.BUS==1">
+                    <a (click)="goTo('/bus')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/redbus.svg" alt="" class="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.bus.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.bus.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.IGP==1">
+                    <a (click)="redirectUrl('igp',0,'igp')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/igp.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.igp.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.igp.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+                      <a  (click)="clickUrl('compare-fly')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/flight.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_red_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.flight.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.flight.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+                    <a  (click)="clickUrl('compare-stay')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/stay.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_red_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.hotel.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.hotel.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
+                    <a (click)="goTo('/train')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/irctc.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg m-0">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.train.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.train.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
+                    <a (click)="redirectUrl('jockey',0,'jockey')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/jockey.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.jockey.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.jockey.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.INSTANT_VOUCHER==1">
+                    <a (click)="redirectUrl('instavouchers',0,'instavouchers')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/gyftr.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.instant_voucher.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.instant_voucher.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- <div class="item_b warning_bg" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
+                    <a (click)="redirectUrl('imagine',0,'imagine')">
+                        <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/premium.svg" alt="" class="exclusive_brand_img"></div>
+                        <div class="dark_warning_bg">
+                        <div class="points_text">
+                            <p class="rp_text"><span>{{serviceSettings.offer_construct.imagine.reward}}X</span> RP</p>
+                            <p class="cb_text"><span>{{serviceSettings.offer_construct.imagine.cashback}}%</span> CB</p>
+                        </div>
+                        </div>
+                    </a>
+                </div> -->
+            </div>
+            <div class="text-center">
+                <div class="offers_link">
+                    <a (click)="redirectDisUrl('deals')" class="href_link"><span>All Offers</span>  <span class="material-icons">chevron_right</span></a>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Travel & Stay Bookings made easy starts -->
+    <div>
+        <div class="container_ftab c-space-2 d-none d-sm-none d-md-none d-lg-block" *ngIf="DOMAIN_SETTINGS">
+            <div class="">
+                <h3 class="">Travel & Stay Bookings made easy</h3>
+            </div>
+            <div class="travel_sec_flex ">
+                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 2}" (mouseenter)="showBlock(2)" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+                    <div>
+                        <p class="main_text">Flights</p>
+                    </div>
+                    <p class="sub_text mb-1"><span>Powered by </span> </p>
+                    <p class="icns" > 
+                        <span *ngFor="let flights of poweredByPartners.flights" ><img *ngIf="flights.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{flights.img}}" alt="{{flights.name}}"></span>
+                    </p>
+                    <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.flight.cashback}}% cashback and {{serviceSettings.offer_construct.flight.reward}}X reward points</p>
+                    <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 2}"> <app-travel-search searchDisplayForm="flight"  webView="1"   showType="1"  popular="0" tab="0"  ></app-travel-search></span>
+                </div>
+                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 1}" (mouseenter)="showBlock(1)" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+                    <div>
+                        <p class="main_text">Stays</p>
+                    </div>
+                    <p class="sub_text mb-1"><span>Powered by</span> </p>
+                    <p class="icns" > 
+                        <span *ngFor="let hotels of poweredByPartners.hotels"><img *ngIf="hotels.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{hotels.img}}" alt="{{hotels.name}}"></span>
+                    </p>
+                    <p class="icns">
+                       
+
+                        <!-- <span *ngIf="serviceSettings.partners_status.Makemytrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/mmt.svg" alt="MMT"></span>
+                        <span *ngIf="serviceSettings.partners_status.Cleartrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="cleartrip"></span>
+                        <span *ngIf="serviceSettings.partners_status.Yatra==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span> -->
+                    </p>
+                    <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.hotel.cashback}}% cashback and {{serviceSettings.offer_construct.hotel.reward}}X reward points</p>
+                    <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 1}"><app-travel-search searchDisplayForm="hotel"  webView="1" showType="1"  popular="0" tab="0"  ></app-travel-search></span>
+                </div>
+                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 3}" (mouseenter)="showBlock(3)" *ngIf="DOMAIN_SETTINGS.BUS==1">
+                    <div>
+                        <p class="main_text">Bus</p>
+                    </div>
+                    <p class="sub_text mb-1"><span>Powered by</span> </p>
+                    <p class="icns" > 
+                        <span *ngFor="let bus of poweredByPartners.bus"><img *ngIf="bus.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{bus.img}}" alt="{{bus.name}}"></span>
+                    </p>
+                    <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.bus.cashback}}% cashback and {{serviceSettings.offer_construct.bus.reward}}X reward points</p>
+
+                    <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 3}"> <app-travel-search searchDisplayForm="bus" webView="1"  showType="1"  popular="0" tab="0"  ></app-travel-search></span>
+                </div>
+                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 4}" (mouseenter)="showBlock(4)" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
+                    <div>
+                        <p class="main_text">Train</p>
+                    </div>
+                    <p class="sub_text mb-1"><span>Powered by</span> </p>
+                    <p class="icns" > 
+                        <span *ngFor="let train of poweredByPartners.train"><img *ngIf="train.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{train.img}}" alt="{{train.name}}"></span>
+                    </p>
+                    <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.train.cashback}}% cashback and {{serviceSettings.offer_construct.train.reward}}X reward points</p>
+                    <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 4}"><app-travel-search searchDisplayForm="train" webView="1"  showType="1"  popular="0" tab="0"  ></app-travel-search></span>
+                </div>
+
+            </div>
+        </div>
+        <!-- Book travel, stay & more mlite starts -->
+
+        <div class="d-block d-sm-block d-md-block d-lg-none">
+            <div class="book_travel_mlite container_ftab c-space-2 px-0">
+                <div class="container">
+                    <h3 class="">Book travel, stay & more</h3>
+                </div>
+                <ul class="nav nav-pills" id="pills-book" role="tablist">
+                    <li class="nav-item" role="presentation" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+                        <a class="nav-link active" id="pills-flight-tab" data-bs-toggle="pill" href="#pills-flight" role="tab" aria-controls="pills-flight" aria-selected="true">
+                            <div>
+                                <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/flight_icn.svg" alt=""></div>
+                                <p class="tab_name">Flights</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+                        <a class="nav-link" id="pills-hotel-tab" data-bs-toggle="pill" href="#pills-hotel" role="tab" aria-controls="pills-hotel" aria-selected="false">
+                            <div>
+                                <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/hotel_icn.svg" alt=""></div>
+                                <p class="tab_name">Stays</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation" *ngIf="DOMAIN_SETTINGS.BUS==1">
+                        <a class="nav-link" id="pills-bus-tab" data-bs-toggle="pill" href="#pills-bus" role="tab" aria-controls="pills-bus" aria-selected="false">
+                            <div>
+                                <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/bus_icn.svg" alt=""></div>
+                                <p class="tab_name">Bus</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
+                        <a class="nav-link" id="pills-train-tab" data-bs-toggle="pill" href="#pills-train" role="tab" aria-controls="pills-train" aria-selected="false">
+                            <div>
+                                <div class="circle_icn"><img src="{{cdnUrl}}images/smartbuy/icons/mobile/train_icn.svg" alt=""></div>
+                                <p class="tab_name">Train</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-bookContent">
+                    <div class="tab-pane fade show active" id="pills-flight" role="tabpanel" aria-labelledby="pills-flight-tab">
+                        <app-travel-search searchDisplayForm="flight" webView="0" showType="1" popular="0" tab="0"></app-travel-search>
+                    </div>
+                    <div class="tab-pane fade" id="pills-hotel" role="tabpanel" aria-labelledby="pills-hotel-tab">
+                        <app-travel-search searchDisplayForm="hotel" webView="0" showType="1" popular="0" tab="0"></app-travel-search>
+                    </div>
+                    <div class="tab-pane fade" id="pills-bus" role="tabpanel" aria-labelledby="pills-bus-tab">
+                        <app-travel-search searchDisplayForm="bus" webView="0" showType="1" popular="0" tab="0"></app-travel-search>
+                    </div>
+                    <div class="tab-pane fade" id="pills-train" role="tabpanel" aria-labelledby="pills-train-tab">
+                        <app-travel-search searchDisplayForm="train" webView="0" showType="1" popular="0" tab="0"></app-travel-search>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Offers and Deals section  -->
+
+    <div class=" container_ftab c-space-2" *ngIf="topDeals && topDeals.length > 0">
+        <div class="mt-4">
+            <h3 class="d-inline">Offer and Deals 
+                <span class="float-end float-end mt-md-3"><a (click)="redirectDisUrl('deals')" class="view_all_link">View All Offers</a></span>
+            </h3>
+            <span class="d-block d-sm-inline mt-2 mt-sm-0">
+                <span class="pe-0 pe-sm-3" *ngIf="topDealCategory.length >0" >
+                
+                    <mat-form-field class="">
+                        <mat-select  (selectionChange) ="selectDealCategory($event)" class="categorie_select"  [(value)]="modeselectDealCat" >
+                            <mat-option value="All">All Categories</mat-option>
+                            <mat-option *ngFor="let cat of topDealCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+
+                <!-- Sub Catogery Dropdown-->
+                <span class="ps-3">
+
+                    <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
+                        <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
+                            <mat-option value="All">All Sub Categories</mat-option>
+                            <mat-option *ngFor="let cat of topDealSubCategory" value="{{cat.key}}">{{cat.key}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+                    <mat-form-field class="" *ngIf="topDealSubCategory.length==0">
+                        <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select"  [(value)]="modeselectDealSubCat" >
+                            <mat-option value="All">All Sub Categories</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                
+                </span>
+            </span>
+            <!-- <span class="view-all-deals pull-right pr-sm-4"><a href="javascript:;">View All Offers</a></span> -->
+        </div>
+
+
+        <div class="trend_items_carousel">
+            <!-- <div class="trend_items_carousel d-none d-sm-none d-md-none d-lg-none d-xl-block"> -->
+            <span *ngIf="showDealList && topDeals.length > 0">
+    
+     <owl-carousel-o [options]="dealOptions" class="partners_container_emi deal_item">
+        <ng-template carouselSlide  *ngFor="let hit of topDeals;  odd as isOdd; even as isEven;">
+            <div class="cardblock item">
+              <div class="card_long ">
+                <div class="img_sec">
+                  <img src="{{cdnDealUrl+hit.image}}" alt="" class="img-fluid radius_8"   (error)="onImgErrorDeals($event)"  > 
+                </div>
+                <hr class="visi-hide" />
+                <div>
+                  <h1 class="offerCard-title">{{hit.name}}</h1>
+                  <p class="offerCard-desc">{{hit.short_description}}</p>
+                </div>
+                <div class="my-2" *ngIf="hit.end_date" >
+                  <p class="exp_date">Expires on {{hit.end_date}}</p>
+                  <!-- <p class="offerCard-expiry offerCard-title">{{hit.subcategory_1}}</p> -->
+                </div>
+                <div>
+                  <button class="btn view_btn"  (click)="redirectDisUrl('offer_details/'+hit.slug_url)">View details</button>
+                </div>
+              </div>
+            </div>
+        </ng-template>  
+      </owl-carousel-o>
+    
+     
+      </span>
+            <div *ngIf="showDealListLoader" class="text-center">
+                <div>
+                    <button class="btn spinBtn">
+              <span class=""><i class="fa fa-spinner spinLoader mr-2" aria-hidden="true"></i> Loading ... </span>
+            </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- Partner logos section  -->
+
+    <div class=" container_ftab c-space-2" *ngIf="foryouPartners.length > 0 ">
+        <div class="">
+            <h3 class="d-inline">Explore Partners</h3> <span class="float-end mt-md-3"><a class="view_all_link" (click)="goToNew('/partners')">View All</a></span> 
+            <!-- <h3 class="d-inline">{{foryouPartners.length}}+ Partners</h3> <span class="pl-3"><a >View All</a></span> -->
+        </div>
+        <div>
+            <div class="trend_items_carousel ">
+                <owl-carousel-o [options]="brandOptions" class="partners_container">
+                    <ng-template carouselSlide *ngFor="let partner of foryouPartners; let i = index">
+                        <div>
+                            <img src="{{cdnUrl}}images/smartbuy/partner/svg/{{partner.image}}" alt="{{partner.title}}" height="75px">
+                        </div>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Trending Items section  -->
+    <div class=" pt-3 pt-sm-0 container_ftab c-space-2" *ngIf="showShoppingItems && amazonCategories && DOMAIN_SETTINGS.AMAZON_PANTRY==1">
+        <div class="d-none d-sm-block web_code" >
+            <h3 class="d-inline">Trending items</h3>
+            <span class="">
+                <mat-form-field class="ps-3" *ngIf="showShoppingItems && amazonCategories['category_filter']">
+                    <mat-select  (selectionChange) ="selectAmazonCategory($event)" class="categorie_select trend_select"  [(value)]="modeselectTrending">
+                        <mat-option value="All">All Sub Categories</mat-option>
+                        <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </span>
+        </div>
+        <div class="d-block d-sm-none mlite_code" >
+            <div class="trendItems_mlite">
+                <h3 class="">Trending items</h3>
+                <span class="">
+                    <mat-form-field class="" *ngIf="showShoppingItems && amazonCategories['category_filter']">
+                        <mat-select  (selectionChange) ="selectAmazonCategory($event)" class="categorie_select"  [(value)]="modeselectTrending">
+                            <mat-option value="All">All Sub Categories</mat-option>
+                            <mat-option *ngFor="let cat of amazonCategories['category_filter']['buckets']" value="{{cat.key}}">{{cat.key}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+            </div>
+        </div>
+        <p class="points_note">Get <b>{{serviceSettings.offer_construct.amazon.reward}}X reward points</b> on every Smartbuy transaction</p>
+        <div class="trend_items_carousel">
+            <span *ngIf="showProductList">
+      <owl-carousel-o [options]="trendingOptions" class="trend_item">
+        <ng-template carouselSlide *ngFor="let item of amazonProducts" >
+          <div class="">
+            <div class="product_info">
+            <a  (click)="clickUrl('grocery/product/'+item.slug_title+'/'+item.id)" target="_blank">
+            <div class="">
+              <span class="new_tag" *ngIf="item.item_condition=='New'" >New</span>
+            <!-- <span class="whilist_tag paapi5-pa-percent-off" *ngIf="item.best_discount_percentage > 0">{{item.best_discount_percentage}} %</span> -->
+        </div>
+        <div class="">
+            <div class="p-3 text-center mt-sm-3 positionRelative">
+                <div class="imgscale amazon-imgscale" [ngStyle]="{'background-image': 'url(' + item.image + ')'}"></div>
+            </div>
+            <p class="prd_name" *ngIf="item.brand"><span>{{item.brand}}</span> <span class="dot"></span> <span class="status">{{item.item_inventory}}</span></p>
+            <p class="prd_desc"><span>{{item.title | slice:0:55 }}{{item.title.length > 55 ? '...' : ''}}</span></p>
+            <p class="price"><i class="fa fa-rupee"></i>{{item.sale_price}}
+            </p>
+            <p class="ship_charge" *ngIf="item.item_shipping_charge > 0">+ ₹{{item.item_shipping_charge | number: '1.0-0'}} Shipping Charge</p>
+            <p class="partner_img d-inline-flex" *ngIf="item.item_is_eligible_for_prime==1"><span>Eligible for</span><span><img src="{{cdnUrl}}images/smartbuy/partner/prime.svg" alt="prime"></span></p>
+        </div>
+        </a>
+    </div>
+</div>
+</ng-template>
+</owl-carousel-o>
+</span>
+<div *ngIf="showProductListLoader" class="text-center">
+    <div>
+        <button class="btn spinBtn">
+              <span class=""><i class="fa fa-spinner spinLoader mr-2" aria-hidden="true"></i> Loading ... </span>
+            </button>
+    </div>
+</div>
+</div>
+</div>
+
+
+<!-- Top categories EMI section  -->
+
+<div class=" pt-16 container_ftab c-space-2">
+    <div class="">
+        <h3 class="d-inline">Top categories on EMI</h3>
+    </div>
+    <p class="points_note">Who said good things take time?</p>
+    <div>
+        <div class="partners_container_emi">
+            <a href="javascript:;" (click)="clickUrl('compare-fly')" target="_blank"  *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+                <div class="emi_content_cate">
+                    <img src="{{cdnUrl}}images/smartbuy/emi_flight.png" alt="Flights" class="">
+                    <div class="emi_text">
+                        <p class="cate_name">Flights</p>
+                        <p class="cate_price"><span>Starting EMI</span> <span><b>@664</b></span></p>
+                    </div>
+                </div>
+            </a>
+            <a href="javascript:;" (click)="clickUrl('compare-stay')" target="_blank"  *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+                <div class="emi_content_cate">
+                    <img src="{{cdnUrl}}images/smartbuy/emi_stays.png" alt="Holiday packages" class="">
+                    <div class="emi_text">
+                        <p class="cate_name">Holiday packages</p>
+                        <p class="cate_price"><span>Starting EMI</span> <span><b>@399</b></span></p>
+                    </div>
+                </div>
+            </a>
+            <a (click)="goTo('bus')"  *ngIf="DOMAIN_SETTINGS.BUS==1">
+                <div class="emi_content_cate">
+                    <img src="{{cdnUrl}}images/smartbuy/emi_bus.png" alt="Buses" class="">
+                    <div class="emi_text">
+                        <p class="cate_name">Buses</p>
+                        <p class="cate_price"><span>Starting EMI</span> <span><b>@399</b></span></p>
+                    </div>
+                </div>
+            </a>
+
+            <a (click)="redirectUrl('amazon',0,'amazon')"  *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+                <div class="emi_content_cate">
+                    <img src="{{cdnUrl}}images/smartbuy/emi_amazon.png" alt="Amazon" class="">
+                    <div class="emi_text">
+                        <p class="cate_name">Amazon</p>
+                        <p class="cate_price"><span>Starting EMI</span> <span><b>@999</b></span></p>
+                    </div>
+                </div>
+            </a>
+            <a (click)="redirectUrl('flipkart',0,'flipkart')"  *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+                <div class="emi_content_cate">
+                    <img src="{{cdnUrl}}images/smartbuy/emi_flipkart.png" alt="Flipkart" class="">
+                    <div class="emi_text">
+                        <p class="cate_name">Flipkart</p>
+                        <p class="cate_price"><span>Starting EMI</span> <span><b>@999</b></span></p>
+                    </div>
+                </div>
+            </a>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Brand in Focus section -->
+
+<div class=" container_ftab c-space-2" *ngIf="foryouBrands.length > 0 ">
+    <div class="">
+        <h3 class="d-inline">Brands in focus</h3> <span class="pl-3"><!--<a >View All</a>--></span>
+    </div>
+    <div>
+        <div class="trend_items_carousel mt-2 mt-sm-0">
+            <owl-carousel-o [options]="brandOptions" class="partners_container">
+                <ng-template carouselSlide *ngFor="let brand of foryouBrands; let i = index">
+                    <div>
+                        <a (click)="redirectUrl('instavouchers',1,brand.url)"> <img src="{{cdnUrl}}images/smartbuy/brands/svg/{{brand.image}}" alt="{{brand.title}}" height="60px"></a>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    </div>
+</div>
+<!-- </div> -->
+
+
+
+<app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"
+    [redirectPopupHeader]="redirectPopupHeader" [redirectPopupImpmessage]="redirectPopupImpmessage" [redirectPopupMessage]="redirectPopupMessage"></app-redirect-popup>
