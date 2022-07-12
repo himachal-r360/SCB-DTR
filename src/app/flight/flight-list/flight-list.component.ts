@@ -1189,11 +1189,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#bookingprocess').modal('hide');
         let url = 'flight-booking/flight-details?searchFlightKey=' + randomFlightDetailKey;
         this.router.navigateByUrl(url);
-        console.log(flightDetailsArr);
       }
     },300)
   }
- 
+
 
 // get rendom string value
   getRandomString(length: any) {
@@ -1206,7 +1205,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     return result;
   }
 
-  
+
 
 
 }

@@ -242,12 +242,18 @@
             <div class="col-lg-12">
                 <div class="layout-box">
                   <div class="layout-left">
-                    <div class="Filterslayout d-flex justify-content-between align-items-center">
+                    <ngx-skeleton-loader *ngIf="loader" count="10" appearance="line" animation="pulse"
+                        [theme]="{
+
+                           height: '90px',
+                          'border-radius': 0
+                        }"></ngx-skeleton-loader>
+                    <div class="Filterslayout d-flex justify-content-between align-items-center" [hidden]="loader">
                         <h6 class="fs_16">Filters</h6>
                         <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
                     </div>
                     <hr>
-                    <div class="default-sidebar flight-sidebar">
+                    <div class="default-sidebar flight-sidebar" [hidden]="loader">
                         <div class="sidebar-widget search-widget">
                             <div class="widget-title">
                                 <h6 class="">Popular Filters</h6>
@@ -528,7 +534,7 @@
                     <div class="layout-right">
 
 
-                        <div class="flightsfound">
+                        <div class="flightsfound" [hidden]="loader">
                             <div class="flight-tosearch">
                                 <h6>
                                     <img src="assets/images/icons/flight-listing.png" alt="">
@@ -644,7 +650,7 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="tabletitle-area">
+                        <div class="tabletitle-area" [hidden]="loader">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="tabletitle-content">
@@ -671,6 +677,11 @@
                             </div>
                         </div>
                         <!-- Listing -->
+                        <ngx-skeleton-loader *ngIf="loader" count="10" appearance="line" animation="pulse"
+                        [theme]="{
+                           height: '90px',
+                          'border-radius': 0
+                        }"></ngx-skeleton-loader>
                         <div class="flight-listing-area">
                             <div class="flight-listing" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
                                 <div class="flight-listing-content">
@@ -1165,9 +1176,9 @@
 
 <!-- loader -->
 
-<div class="loader-box" *ngIf="loader">
+<!-- <div class="loader-box" *ngIf="loader">
     <div class="loader-round"></div>
-</div>
+</div> -->
 
 
 
