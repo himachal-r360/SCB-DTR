@@ -1,4 +1,4 @@
-import { Component, DebugNode, OnInit, ViewChild } from '@angular/core';
+import { Component, DebugNode, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
@@ -16,7 +16,7 @@ declare var $: any;
   templateUrl: './flight-detail.component.html',
   styleUrls: ['./flight-detail.component.css']
 })
-export class FlightDetailComponent implements OnInit {
+export class FlightDetailComponent implements OnInit ,OnDestroy {
   flightDetails:any;
   selectedVendor:any;
   flightIcons:any;
@@ -33,16 +33,12 @@ export class FlightDetailComponent implements OnInit {
   TotalFare:any;
   sessionTimer:any = 3;
   timeLeft:any = 900;
-
-
+  baggageInfo:any;
+  
 
 
   constructor(private _flightService:FlightService, private route:ActivatedRoute ,private router:Router) { 
- 
-  
     this.startTimer();
-
-
   }
 
   ngOnInit(): void {
@@ -76,14 +72,16 @@ export class FlightDetailComponent implements OnInit {
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
         this.selectedVendor = param.priceSummary;
-        var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
+        // var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
+        var onwardFlightFareKey = JSON.parse(param.priceSummary.ctFareObject);
         var body = {
           "docKey": param.docKey,
           "flightKeys": [
             param.flightKey
           ],
           "partnerName": this.selectedVendor.partnerName,
-          "onwardFlightFareKey": onwardFlightFareKey,
+          // "onwardFlightFareKey": onwardFlightFareKey,
+          "onwardFlightFareKey": onwardFlightFareKey.ItineraryKey,
           "returnFlightFareKey": "",
           "splrtFlight": this.selectedVendor.splrtFareFlight
         }
@@ -122,11 +120,11 @@ export class FlightDetailComponent implements OnInit {
           this.timeLeft--;
         
         } else if( this.timeLeft == 0) {
-          setTimeout(() => {
+          // setTimeout(() => {
             let searchVal:any = sessionStorage.getItem('searchVal')
             let url="flight-list?"+ this.ConvertObjToQueryString(JSON.parse(searchVal));
             this.router.navigateByUrl(url);
-           });
+          //  });
         }
       },1000)
     
@@ -189,18 +187,30 @@ export class FlightDetailComponent implements OnInit {
     event.target.classList.add('flight-extra-tabs-active');
   }
 
- 
+
   getFlightInfo(param:any)
   {
+    console.log(param , "para");
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
+      console.log(res , "response");
+      
       if(res.statusCode ==200)
       {
-          this.BaseFare =res.response.comboFare.onwardBaseFare;
-          this.Tax =res.response.comboFare.onwardTax;
-          this.TotalFare =res.response.comboFare.onwardTotalFare;
-      }
-
+        this.BaseFare =res.response.comboFare.onwardBaseFare;
+        this.Tax =res.response.comboFare.onwardTax;
+        this.TotalFare =res.response.comboFare.onwardTotalFare;
+        this.baggageInfo = res.response.onwardFlightDetails
+        console.log(this.baggageInfo , "baggage");
+        }
     }, (error) => { console.log(error) });
-
   }
+
+  ngOnDestroy(): void {
+    if(this.sessionTimer){
+      clearInterval(this.sessionTimer);
+    }
+  }
+
+
+
 }
