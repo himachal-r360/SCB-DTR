@@ -1210,10 +1210,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       if(this.loaderValue == 110)
       {
         clearInterval(myInterval);
-        // $('#bookingprocess').modal('hide');
-        // this.router.navigate(['flight-booking/flight-details']);
+        $('#bookingprocess').modal('hide');
+        this.router.navigate(['flight-booking/flight-details']);
       }
-    },300)
+    },200)
     // setTimeout(() => {
     //   this.loaderValue = 100;
       //$('#bookingprocess').modal('hide');
