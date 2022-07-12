@@ -12,6 +12,7 @@ import { FareSummaryComponent } from './fare-summary/fare-summary.component';
 import { DirectiveModule } from '../directives/directive.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SeatsMealsComponent } from './seats-meals/seats-meals.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 
 
@@ -66,8 +67,7 @@ const routes: Routes = [
   MaterialModule,
   DirectiveModule,
   NgxSliderModule,
-  
-
+  NgxSkeletonLoaderModule
   ],
   exports: [RouterModule],
   providers: [ ]
