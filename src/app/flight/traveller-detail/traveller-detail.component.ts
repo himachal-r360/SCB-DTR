@@ -67,7 +67,7 @@ export class TravellerDetailComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _flightService:FlightService) { }
 
   ngOnInit(): void {  
-    let parseVal:any = localStorage.getItem('searchVal')
+    let parseVal:any = sessionStorage.getItem('searchVal')
     this.travelerDetails = JSON.parse(parseVal);
     
     // this.travelerDetails.adults=parseInt(this.travelerDetails.adults);
@@ -90,19 +90,13 @@ export class TravellerDetailComponent implements OnInit {
       this.addAdultDetail = this.InputArray.adult;
       this.addChildDetail = this.InputArray.adult;
       this.addInfantDetail = this.InputArray.infants;
-
-      
-      console.log(this.addAdultDetail , "adult form")
-      console.log(this.addInfantDetail,"infant form");
-      console.log(this.addChildDetail,"child form");
-
     
     this.getFlightDetails()
     
   }
 
   getFlightDetails(){
-    let flightDetailsArrVal:any=localStorage.getItem("flightDetailsArr");
+    let flightDetailsArrVal:any=sessionStorage.getItem("flightDetailsArr");
     let param=JSON.parse(flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;
@@ -204,11 +198,7 @@ export class TravellerDetailComponent implements OnInit {
     }
     else{
       localStorage.setItem('finalTravellerDetail',JSON.stringify(this.InputArray));  
-      console.log("called function");
-
     }
-      
-   
   }
 
 }

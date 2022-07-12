@@ -13,6 +13,9 @@ import { DirectiveModule } from '../directives/directive.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SeatsMealsComponent } from './seats-meals/seats-meals.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
+
+
 
 
 
@@ -51,7 +54,8 @@ const routes: Routes = [
     TravellerDetailComponent,
     FlightStepperNavComponent,
     FareSummaryComponent,
-    SeatsMealsComponent
+    SeatsMealsComponent,
+    MinuteSecondPipe
 
 
   ],
@@ -65,6 +69,7 @@ const routes: Routes = [
   NgxSliderModule,
   NgxSkeletonLoaderModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [ ]
 })
 export class FlightModule { }

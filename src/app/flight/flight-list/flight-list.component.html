@@ -688,8 +688,8 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="flight-radio">
-                                                <div class="flight-radio-image">
-                                                    <img src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                                <div class="flight-radio-image" >
+                                                    <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
                                                 </div>
                                                 <div class="flight-radio-time" *ngIf="list.flights.length > 0">
                                                     <h6>{{list.flights[0].airlineName}}</h6>
@@ -889,12 +889,12 @@
                                                             <div class="extra-tabs-details-bottom">
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one" >
-                                                                        <p class="depart-one-image"><img src="{{this.flightIcons[list.flights[0].airline].logo}}" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                                                        <p class="depart-one-image" *ngIf="flightIcons"><img src="{{this.flightIcons[list.flights[0].airline].logo}}" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
                                                                         <div class="tabs-depart-left">
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                                <p class="mt-1 opacity_05">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
                                                                             </div>
                                                                             <div class="tabs-depart-total">
                                                                                 <p>{{details.duration | durationTime}}</p>
@@ -902,7 +902,7 @@
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                                <p class="mt-1 opacity_05">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
                                                                             </div>
                                                                         </div>
                                                                         <div class="tabs-depart-right">
