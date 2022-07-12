@@ -74,8 +74,8 @@
                                         <a style="width:100%;" class="searchResults_a">
                                             <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px" class="mr-2"></div>
                                             <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
-                                            <div style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['_source']['name']}}</div>
-                                            <div class="compare-title" style="float: right;" *ngIf="searchOption['_source']['category']">Offers in {{searchOption['_source']['category']}}</div>
+                                             <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && !searchOption['highlight']['name']"><span [innerHTML]="searchOption['fields']['name']"></span></div>                                  <div style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['fields']['name']}}</div>
+                                            <div class="compare-title" style="float: right;" *ngIf="searchOption['fields']['category']">Offers in {{searchOption['fields']['category']}}</div>
                                         </a>
                                     </li>
                                     <li *ngIf="searchResults.length==0"><a>No Results Found...</a></li>
@@ -354,18 +354,10 @@
                                         </div>
                                     </div>
                                     <div class="list-travel-img mt-4">
-                                        <a href="javascript:;">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-2.svg" alt="cleartrip" />
-                                        </a>
-                                        <a href="javascript:;">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-4.svg" alt="yatra" />
-                                        </a>
-                                        <a href="javascript:;">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-1.svg" alt="goibibo" />
-                                        </a>
-                                        <a href="javascript:;">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-3.svg" alt="easemytrip" />
-                                        </a>
                                     </div>
                                 </div>
 
@@ -774,8 +766,10 @@
                     <a style="width:100%;" class="searchResults_a">
                         <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px" class="mr-2"></div>
                         <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
-                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['_source']['name']}}</div>
-                        <div class="compare-title" style="float: right;" *ngIf="!searchOption['_source']['category']">Offers in {{searchOption['_source']['category']}}</div>
+                        
+                          <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="searchOption['highlight'] && !searchOption['highlight']['name']"><span [innerHTML]="searchOption['fields']['name']"></span></div>
+                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['fields']['name']}}</div>
+                        <div class="compare-title" style="float: right;" *ngIf="searchOption['fields']['category']">Offers in {{searchOption['fields']['category']}}</div>
                     </a>
                 </li>
                 <li *ngIf="searchResults.length==0"><a>No Results Found...</a></li>
