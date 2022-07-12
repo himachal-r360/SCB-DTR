@@ -57,7 +57,6 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
       this.route.queryParams
         .subscribe((params: any) => {
         this.randomFlightDetailKey = params.searchFlightKey
-          
           sessionStorage.getItem(this.randomFlightDetailKey);
         });
   }
@@ -190,17 +189,13 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
 
   getFlightInfo(param:any)
   {
-    console.log(param , "para");
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
-      console.log(res , "response");
-      
       if(res.statusCode ==200)
       {
         this.BaseFare =res.response.comboFare.onwardBaseFare;
         this.Tax =res.response.comboFare.onwardTax;
         this.TotalFare =res.response.comboFare.onwardTotalFare;
         this.baggageInfo = res.response.onwardFlightDetails
-        console.log(this.baggageInfo , "baggage");
         }
     }, (error) => { console.log(error) });
   }
@@ -211,6 +206,8 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
     }
   }
 
+  sendFlightDetails(){
 
+  }
 
 }

@@ -36,7 +36,6 @@ export class TravellerDetailComponent implements OnInit {
   mobileNumber:any;
   email:any
   InputArray:any;
-
   adultArr:any;
   adultArrData:any;
   flightDetails:any
@@ -83,16 +82,12 @@ export class TravellerDetailComponent implements OnInit {
       email:"",
       mobileNumber:"",
       gstNumber:"",
-
     }
     this.adultArr=this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults));
-
       this.addAdultDetail = this.InputArray.adult;
       this.addChildDetail = this.InputArray.adult;
       this.addInfantDetail = this.InputArray.infants;
-    
     this.getFlightDetails()
-    
   }
 
   getFlightDetails(){
