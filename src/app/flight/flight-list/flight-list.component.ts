@@ -1201,7 +1201,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.loaderValue = this.loaderValue + 10;
       if(this.loaderValue == 110)
       {
-
         clearInterval(myInterval);
         $('#bookingprocess').modal('hide');
         let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
