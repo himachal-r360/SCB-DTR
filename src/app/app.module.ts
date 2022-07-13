@@ -23,6 +23,7 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
 
+
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -55,6 +56,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   ],
   exports:[SearchComponent],
    providers: [
+
    StyleManagerService,
    AppConfigService,
     {

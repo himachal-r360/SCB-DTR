@@ -1,13 +1,16 @@
 import { Component, OnInit,Input, Output, EventEmitter,Inject, ViewChild, ElementRef, HostListener } from '@angular/core'; 
-import {APP_CONFIG, AppConfig} from '../../configs/app.config';
+import {APP_CONFIG, AppConfig} from '../configs/app.config';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
-import {environment} from '../../../environments/environment';
-import { AppConfigService } from '../../app-config.service';
+import {environment} from '../../environments/environment';
+import { AppConfigService } from '../app-config.service';
 import {  FormGroup,  FormControl,   Validators,   FormBuilder} from '@angular/forms';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+
+declare var $: any;
+
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { SimpleGlobal } from 'ng2-simple-global';
   import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';

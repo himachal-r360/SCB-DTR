@@ -143,5 +143,36 @@ getupdateCardDetails(): Observable<any> {
 	return this.http.post( this.endpoint+'getDeals',param, config).pipe(map((response: any) => response));
     }
  }
+ 
+   validateCoupon (param):Observable<any> {
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/validateCoupon.json');
+    }else{
+	    return this.http.post( this.endpoint+'coupon/validateCoupon',param, config).pipe(map((response: any) => response));
+    }
+  }
+
+  validateSBCoupon (param):Observable<any> {
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/SBvalidateCoupon.json');
+    }else{
+	    return this.http.post( this.endpoint+'coupon/SBvalidateCoupon',param, config).pipe(map((response: any) => response));
+    }
+  }
+  
+  removeSBCoupon (param):Observable<any> {
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/removeSBCoupon.json');
+    }else{
+	    return this.http.post( this.endpoint+'coupon/removeSBCoupon',param, config).pipe(map((response: any) => response));
+    }
+  }
+    getCoupons (param):Observable<any> { 
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/coupon.json');
+    }else{
+	return this.http.post( this.endpoint+'coupon/getCoupons',param, config).pipe(map((response: any) => response));
+    }
+  }
 
 }
