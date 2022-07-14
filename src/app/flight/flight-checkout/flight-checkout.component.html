@@ -1,4 +1,4 @@
-<main class="site-main">
+<main class="site-main" *ngIf="showLoader==0">
     <section class="details-steps-area mt-40 mb-40">
         <div class="container">
             <div class="row justify-content-center">
@@ -7,31 +7,31 @@
                         <ul class="m-0 details-steps-ul">
                             <li>
                                 <a  [ngClass]="{'active': steps > 0 && steps < 4 }"> <!-- steps-done - Class For done steps --> 
-                                    <span class="steps-icons"><img src="./assets/images/flights_details/flight.png" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/flight.png" alt="" /></span>
                                     <span class="steps-text">Flight Details</span>
                                 </a>
                             </li>
                             <li>
                                 <a  [ngClass]="{'active': steps > 1 && steps < 4 }">
-                                    <span class="steps-icons"><img src="./assets/images/flights_details/user.png" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/user.png" alt="" /></span>
                                     <span class="steps-text">Traveller Details</span>
                                 </a>
                             </li>
                             <li>
                                 <a  [ngClass]="{'active': steps > 2 && steps < 4 }">
-                                    <span class="steps-icons"><img src="./assets/images/flights_details/meal.png" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/meal.png" alt="" /></span>
                                     <span class="steps-text">Seats & Meals</span>
                                 </a>
                             </li>
                             <li>
                                 <a  [ngClass]="{'active': steps > 3 && steps < 4 }" >
-                                    <span class="steps-icons"><img src="./assets/images/flights_details/review.png" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/review.png" alt="" /></span>
                                     <span class="steps-text">Review Booking</span>
                                 </a>
                             </li>
                             <li>
-                                <a  [ngClass]="{'active': steps== 4 }">
-                                    <span class="steps-icons"><img src="./assets/images/flights_details/payment.png" alt="" /></span>
+                                <a  [ngClass]="{'active': steps== 5 }">
+                                    <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/payment.png" alt="" /></span>
                                     <span class="steps-text">Payment</span>
                                 </a>
                             </li>
@@ -43,42 +43,43 @@
     </section>
 
 
-  <section class="flight-details-area mt-10" *ngIf="steps==1">
+  <section class="flight-details-area mt-10" >
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+            
+              <!--Steps 1-->
+                <div class="col-md-8" *ngIf="steps==1">
                     <div class="booking-process-content"  >
                         <div class="booking-title-box">
                             <h4>Flight Details</h4>
                         </div>
-  
-  
+           
                         <div class="booking-inner-box from-to-box">
 
                             <div class="booking-inner-title">
                                 <div class="booking-inner-title-left" *ngIf="parseSearchVal">
                                     <h6>
                                         {{parseSearchVal.fromCity}}
-                                        <img src="./assets/images/icons/flight-right.png" class="ms-2 me-2" alt="">
+                                        <img src="{{cdnUrl}}/images/icons/flight-right.png" class="ms-2 me-2" alt="">
                                         {{parseSearchVal.toCity}}
                                     </h6>
                                     <p> {{parseSearchVal.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
                                 </div>
                                 <div class="booking-inner-title-right" >
                                     <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
-                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
+                                    <p class="refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
                                 </div>
                             </div>
 
                             <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
                                 <div class="Booking-Flight-name" >
                                     <div class="Booking-Flight-name-left">
-                                        <img *ngIf="flightIcons" src="{{flightIcons[flights.airline].logo}}" width="22px" alt="">
+                                        <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" alt="{{flights.airline}}" class="flight-image mr-10">
                                         <span class="fw_7">{{flights.airlineName}}</span>
                                         <span class="opacity_05">{{flights.airline}}-{{flights.flightNumber}}</span>
                                     </div>
                                     <div class="Booking-Flight-name-right">
-                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="./assets/images/icons/info.png" width="10px" alt=""></p>
+                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
                                     </div>
                                 </div>
                                 <div class="Booking-Flight-time">
@@ -100,38 +101,36 @@
                                     </div>
                                 </div>
 
-                                <div class="Booking-Flight-passanger" >
+                                <div class="Booking-Flight-passanger" *ngIf="baggageInfo"  >
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <h6>Baggage</h6>
-                                            <p>Adult</p>
-                                            <p *ngIf="baggageInfo.fare.CHD">Child</p>
-                                            <p *ngIf="baggageInfo.fare.INF">Infant</p>
-                                           
+                                            <h6>Airline</h6>
                                         </div>
                                         <div class="col-md-3">
-                                            <h6>Check-in</h6>
-                                            <p *ngIf="baggageInfo">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p>
-                                            <p *ngIf="baggageInfo.fare.CHD">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p>
-                                            <!-- <p *ngIf="baggageInfo">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p> -->
-                                            <!-- <p>15 Kgs <span>(1 piece only)</span></p>
-                                            <p>Cabin bag only</p> -->
+                                            <h6>Check-in Baggage</h6>
                                         </div>
                                         <div class="col-md-3">
-                                            <h6>Cabin</h6>
-                                            <p *ngIf="baggageInfo">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p>
-                                            <p *ngIf="baggageInfo.fare.CHD">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p>
-                                            <!-- <p *ngIf="baggageInfo">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p> -->
-                                            
-                                            <!-- <p>7 Kgs  <span>(1 plece only)</span></p>
-                                            <p>7 Kgs <span>(1 plece only)</span></p> -->
+                                            <h6>Cabin Baggage</h6>
                                         </div>
-                                        <div class="col-md-4">
+                                        <!--<div class="col-md-4">
                                             <h6>Flight Extras</h6>
-                                            <p class="text-green fw_6"><img src="./assets/images/icons/meals.png" alt="" /> Meals</p>
-                                            <p class="text-green fw_6"><img src="./assets/images/icons/sat.png" alt="" />  Seat Selections</p>
-                                        </div>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                        </div>-->
                                     </div>
+                                <div class="row"  *ngFor="let bag of baggageInfo">
+                                        <div class="col-md-2">
+                                            <p>{{bag.flightName}}<br>{{bag.flightNo}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p>{{bag.checkIn}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p>{{bag.cabin}}</p>
+                                        </div>
+                                
+                                    </div> 
+                                    
                                 </div>
                                 <!-- <div class="change-planes" *ngIf="getLayoverHour(flightDetails[i],flightDetails[i+1]) && airportsNameJson">
                                     <h6>Change of planes・{{getLayoverHour(flightDetails[i],flightDetails[i+1]) | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
@@ -144,12 +143,12 @@
                             <!-- <div class="Flight-One">
                                 <div class="Booking-Flight-name">
                                     <div class="Booking-Flight-name-left">
-                                        <img src="./assets/images/flights/flight-1.png" width="22px" alt="">
+                                        <img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" alt="">
                                         <span class="fw_7">IndiGo</span>
                                         <span class="opacity_05">6E-956</span>
                                     </div>
                                     <div class="Booking-Flight-name-right">
-                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="./assets/images/icons/info.png" width="10px" alt=""></p>
+                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
                                     </div>
                                 </div>
                                 <div class="Booking-Flight-time">
@@ -193,8 +192,8 @@
                                         </div>
                                         <div class="col-md-4">
                                             <h6>Flight Extras</h6>
-                                            <p class="text-green fw_6"><img src="./assets/images/icons/meals.png" alt="" /> Meals</p>
-                                            <p class="text-green fw_6"><img src="./assets/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
                                         </div>
                                     </div>
                                 </div>
@@ -203,7 +202,7 @@
 
                             <div class="luggage-box">
                                 <div class="luggage-text">
-                                    <img src="./assets/images/icons/luggage.png" alt="">
+                                    <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
                                     <p>Got excess luggage? Don't stress, buy extra check-in baggage allowance at fab  rate!</p>
                                 </div>
                                 <div class="luggage-btn">
@@ -213,7 +212,7 @@
                             <div  class="collapse luggage-add-box" id="luggagecollapse">
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="./assets/images/icons/bag.png" alt=""> 5 KG</h6>
+                                        <h6><img src="{{cdnUrl}}/images/icons/bag.png" alt=""> 5 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -230,7 +229,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="./assets/images/icons/bag-more.png" alt=""> 10 KG</h6>
+                                        <h6><img src="{{cdnUrl}}/images/icons/bag-more.png" alt=""> 10 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -247,7 +246,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="./assets/images/icons/bag-more.png" alt=""> 15 KG</h6>
+                                        <h6><img src="{{cdnUrl}}/images/icons/bag-more.png" alt=""> 15 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -264,7 +263,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="./assets/images/icons/bag-more.png" alt=""> 20 KG</h6>
+                                        <h6><img src="{{cdnUrl}}/images/icons/bag-more.png" alt=""> 20 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -299,41 +298,34 @@
                             <div class="flight-extra-details">
                                 <ul class="list-unstyled flight-extra-tabs">
                                     <li>
-                                        <!-- <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Details</a> -->
-                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Charges</a>
+                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails">Fare Rules</a>
                                     </li>
                                     <li>
-                                        <!-- <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)"> Date Change Charges</a> -->
                                         <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)">Baggage Policy</a>
                                     </li>
-                                    <li>
-                                        <a href="javascript:void(0);" data-bind="Fare" (click)="changeFareRuleTab($event)"> Fare Rules </a>
-                                    </li>
-                                    <li>
-                                        <!-- <a href="javascript:void(0);" data-bind="Cancellation" (click)="changeFareRuleTab($event)"> Cancellation Protection </a>    -->
-                                    </li>
+                                  
                                 </ul>
                                 <div class="rules-flight">
                                     <div class="rules-flight-items">
                                         <div class="rules-flight-thumbe">
-                                            <img *ngIf="flightIcons" src="{{flightIcons[flightDetails[0].airline].logo}}" alt="">
+                                            <img src="{{cdnUrl}}/images/airlines/{{flightDetails[0].airline}}.gif" alt="{{flightDetails[0].airline}}" class="flight-image mr-10">
                                         </div>
                                         <div class="rules-flight-content">
                                             <h6>
                                                 {{parseSearchVal.fromCity}}
-                                                <img src="./assets/images/icons/flight-right.png" alt="">
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                 {{parseSearchVal.toCity}}
                                             </h6>
                                         </div>
                                     </div>
                                     <!-- <div class="rules-flight-items opacity_05">
                                         <div class="rules-flight-thumbe">
-                                            <img src="./assets/images/flights/flight-1.png" alt="">
+                                            <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                         </div>
                                         <div class="rules-flight-content">
                                             <h6>
                                                 Hyderabad
-                                                <img src="./assets/images/icons/flight-right.png" alt="">
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                 Mumbai
                                             </h6>
                                         </div>
@@ -516,104 +508,10 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                <!-- <app-fare-summary></app-fare-summary> -->
-                <div class="default-sidebar">
-                    <div class="sidebar-widget session-expires-widget">
-                        <!-- <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p> -->
-                        <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
-                    </div>
-                    <div class="sidebar-widget fare-summary-widget">
-                        <div class="widget-title">
-                            <h4>Fare Summary</h4>
-                            <!-- <img src="./assets/images/flights/1.png" alt=""> -->
-                            <p *ngIf="selectedVendor">{{selectedVendor.partnerName}}</p>
-                        </div>
-                        <div class="widget-content">
-                            <ul class="widget-list clearfix">
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Base Fare
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;{{BaseFare|number}}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Taxes and Fees
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;{{Tax |number}}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Baggage/Seat/Meals
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;600</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Discounts
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p class="text-green">-&#8377;500</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box pt-30">
-                                        <div class="fare-list-left">
-                                            <h6 class="fw_7">Grand Total</h6>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <h6 class="fw_7">₹{{TotalFare|number}}</h6>
-                                            <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(TotalFare)|number: '.2'}}/month</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="continue-widget mb-20">
-                        <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()">Continue</a>
-                    </div>
-               
-                </div>
-            
-            </div>
-            </div>
-        </div>
-    </section>
-    
-    
-    <section class="flight-details-area mt-10" *ngIf="steps==2">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
+                <!--Steps 1 Ends-->
+                
+                <!--Steps 2 Starts-->
+                 <div class="col-md-8" *ngIf="steps==2">
                 <form [formGroup]="travellerDetailsForm">
                     <div class="booking-process-content">
                         <div class="booking-title-box">
@@ -966,7 +864,7 @@
                             <div class="contact-whatsapp">
                                 <div class="contact-whatsapp-info me-2">
                                     <span>Send my booking information through</span>
-                                    <img src="./assets/images/icons/whatsapp.png" class="ms-2" alt="">
+                                    <img src="{{cdnUrl}}/images/icons/whatsapp.png" class="ms-2" alt="">
                                     <span class="fw_7">WhatsApp</span>
                                 </div>
                                 <div class="form-check form-switch m-0">
@@ -999,107 +897,9 @@
                     </div>
             </form>
             </div>
-
-
-
-        <div class="col-md-4">
-            <!-- <app-fare-summary (continueTravller)="continueTravellerDetails()"></app-fare-summary> -->
-            <div class="default-sidebar">
-                <div class="sidebar-widget session-expires-widget">
-                    <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in:
-                        <strong>{{timeLeft | minuteSecond}}</strong></p>
-                </div>
-                <div class="sidebar-widget fare-summary-widget">
-                    <div class="widget-title">
-                        <h4>Fare Summary</h4>
-                        <!-- <img src="./assets/images/flights/1.png" alt=""> -->
-                        <p>{{selectedVendor.partnerName}}</p>
-                    </div>
-                    <div class="widget-content">
-                        <ul class="widget-list clearfix">
-                            <li class="fare-list-item">
-                                <div class="fare-list-box">
-                                    <div class="fare-list-left">
-                                        <p>
-                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                            Base Fare
-                                        </p>
-                                    </div>
-                                    <div class="fare-list-right">
-                                        <!-- <p>&#8377;{{selectedVendor.baseFare|number}}</p> -->
-                                        <p>&#8377;{{BaseFare|number}}</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="fare-list-item">
-                                <div class="fare-list-box">
-                                    <div class="fare-list-left">
-                                        <p>
-                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                            Taxes and Fees
-                                        </p>
-                                    </div>
-                                    <div class="fare-list-right">
-                                        <p>&#8377;{{Tax | number}}</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="fare-list-item">
-                                <div class="fare-list-box">
-                                    <div class="fare-list-left">
-                                        <p>
-                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                            Baggage/Seat/Meals
-                                        </p>
-                                    </div>
-                                    <div class="fare-list-right">
-                                        <p>&#8377;600</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="fare-list-item">
-                                <div class="fare-list-box">
-                                    <div class="fare-list-left">
-                                        <p>
-                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                            Discounts
-                                        </p>
-                                    </div>
-                                    <div class="fare-list-right">
-                                        <p class="text-green">-&#8377;500</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="fare-list-item">
-                                <div class="fare-list-box pt-30">
-                                    <div class="fare-list-left">
-                                        <h6 class="fw_7">Grand Total</h6>
-                                    </div>
-                                    <div class="fare-list-right">
-                                        <h6 class="fw_7">₹{{TotalFare|number}}</h6>
-                                        <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @
-                                            {{calculateEMI(selectedVendor.totalFare)|number}}/month</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="continue-widget mb-20">
-                    <a href="javascript:void(0);" class="button-style w-100"
-                        (click)="continueTravellerDetails()">Continue</a>
-                </div>
-          
-            </div>
-        </div>
-    </div>
-    </div>
-</section>
-    
-    <section class="flight-details-area mt-10" *ngIf="steps==3">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-8">
+                <!--Step2 Ends-->
+                   <!--Step3 Starts-->
+                 <div class="col-md-8" *ngIf="steps==3">
               <div class="booking-process-content">
                   <div class="booking-title-box">
                       <h4>Seats & Meals <span>2 Adults, 1 Child, 1 Infant</span></h4>
@@ -1109,9 +909,9 @@
                           <div class="accordion-item">
                               <h4 class="accordion-header" id="headingOne">
                                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                      <img src="./assets/images/icons/seats.png" class="me-2" alt=""> Select Seats
+                                      <img src="{{cdnUrl}}/images/icons/seats.png" class="me-2" alt=""> Select Seats
                                       <span class="xlsheats">
-                                          <img src="./assets/images/icons/xl-seats.png" alt=""> XL seats available
+                                          <img src="{{cdnUrl}}/images/icons/xl-seats.png" alt=""> XL seats available
                                       </span>
                                   </button>
                               </h4>
@@ -1120,24 +920,24 @@
                                       <div class="rules-flight">
                                           <div class="rules-flight-items">
                                               <div class="rules-flight-thumbe">
-                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                               </div>
                                               <div class="rules-flight-content">
                                                   <h6>
                                                       Mumbai
-                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                       Hyderabad
                                                   </h6>
                                               </div>
                                           </div>
                                           <div class="rules-flight-items opacity_05">
                                               <div class="rules-flight-thumbe">
-                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                               </div>
                                               <div class="rules-flight-content">
                                                   <h6>
                                                       Hyderabad
-                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                       Mumbai
                                                   </h6>
                                               </div>
@@ -1149,7 +949,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item active">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Amit Kumar</h6>
@@ -1160,7 +960,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Sara Rege</h6>
@@ -1171,7 +971,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Zara Smith</h6>
@@ -1182,7 +982,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Zara Smith</h6>
@@ -1193,7 +993,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Zara Smith</h6>
@@ -1233,15 +1033,15 @@
                                               <div class="Travellers-dropdown">
                                                   <div class="Travellers-dropdown-title">
                                                       <h5>
-                                                          <img src="./assets/images/icons/seats_flight.png" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/seats_flight.png" alt="">
                                                           Single Seat
-                                                          <img class="ms-2" src="./assets/images/icons/down.png" alt="">
+                                                          <img class="ms-2" src="{{cdnUrl}}/images/icons/down.png" alt="">
                                                       </h5>
                                                   </div>
                                                   <ul class="Travellers-dropdown-data Travellershide">
                                                       <li>
                                                           <h5>
-                                                              <img src="./assets/images/icons/seats_flight.png" alt="">
+                                                              <img src="{{cdnUrl}}/images/icons/seats_flight.png" alt="">
                                                               Single Seat
                                                           </h5>
                                                       </li>
@@ -1251,16 +1051,16 @@
                                           <!-- flight img box -->
                                           <div class="flight-img-box">
                                               <div class="flight-top">
-                                                  <img src="./assets/images/flights/flight_top.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/flights/flight_top.png" alt="">
                                               </div>
                                               <div class="flight-sheat-box">
                                                   <!-- lavatory -->
                                                   <div class="flight-lavatory">
                                                       <div class="flight-Lavatory" data-bs-toggle="tooltip" title="Lavatory">
-                                                          <img src="./assets/images/icons/Lavatory.png" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/Lavatory.png" alt="">
                                                       </div>
                                                       <div class="flight-Galley" data-bs-toggle="tooltip" title="Galley">
-                                                          <img src="./assets/images/icons/Galley.png" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/Galley.png" alt="">
                                                       </div>
                                                   </div>
                                                   <!-- exit -->
@@ -1676,16 +1476,16 @@
                                                   <!-- lavatory -->
                                                   <div class="flight-lavatory">
                                                       <div class="flight-Lavatory" data-bs-toggle="tooltip" title="Lavatory">
-                                                          <img src="./assets/images/icons/Lavatory.png" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/Lavatory.png" alt="">
                                                       </div>
                                                       <div class="flight-Galley" data-bs-toggle="tooltip" title="Galley">
-                                                          <img src="./assets/images/icons/Galley.png" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/Galley.png" alt="">
 
                                                       </div>
                                                   </div>
                                               </div>
                                               <div class="flight-bottom">
-                                                  <img src="./assets/images/flights/flight_bottom.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/flights/flight_bottom.png" alt="">
                                               </div>
                                           </div>
                                       </div>
@@ -1704,7 +1504,7 @@
                           <div class="accordion-item">
                               <h4 class="accordion-header" id="headingTwo">
                                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                      <img src="./assets/images/icons/Meals-1.png" class="me-2" alt=""> Buy in-flight meal
+                                      <img src="{{cdnUrl}}/images/icons/Meals-1.png" class="me-2" alt=""> Buy in-flight meal
 
                                   </button>
                               </h4>
@@ -1713,24 +1513,24 @@
                                       <div class="rules-flight">
                                           <div class="rules-flight-items">
                                               <div class="rules-flight-thumbe">
-                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                               </div>
                                               <div class="rules-flight-content">
                                                   <h6>
                                                       Mumbai
-                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                       Hyderabad
                                                   </h6>
                                               </div>
                                           </div>
                                           <div class="rules-flight-items opacity_05">
                                               <div class="rules-flight-thumbe">
-                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                               </div>
                                               <div class="rules-flight-content">
                                                   <h6>
                                                       Hyderabad
-                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                       Mumbai
                                                   </h6>
                                               </div>
@@ -1742,7 +1542,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item active">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Amit Kumar</h6>
@@ -1753,7 +1553,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Sara Rege</h6>
@@ -1764,7 +1564,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Zara Smith</h6>
@@ -1775,7 +1575,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Zara Smith</h6>
@@ -1786,7 +1586,7 @@
                                           <li class="seatsname-li">
                                               <div class="seatsname-item">
                                                   <div class="seatsname-thumb">
-                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/seats-user.png" alt="">
                                                   </div>
                                                   <div class="seatsname-content">
                                                       <h6>Zara Smith</h6>
@@ -1823,7 +1623,7 @@
                                       <div class="meal-data">
                                           <div class="luggage-add-list">
                                               <div class="luggage-add-name">
-                                                  <h6><img src="./assets/images/icons/bag.png" alt=""> Beverage</h6>
+                                                  <h6><img src="{{cdnUrl}}/images/icons/bag.png" alt=""> Beverage</h6>
                                               </div>
                                               <div class="luggage-add-items">
                                                   <div class="">
@@ -1840,7 +1640,7 @@
                                           </div>
                                           <div class="luggage-add-list">
                                               <div class="luggage-add-name">
-                                                  <h6><img src="./assets/images/icons/bag.png" alt=""> Cucumber tomato and cheese in multigrain bread</h6>
+                                                  <h6><img src="{{cdnUrl}}/images/icons/bag.png" alt=""> Cucumber tomato and cheese in multigrain bread</h6>
                                               </div>
                                               <div class="luggage-add-items">
                                                   <div class="">
@@ -1857,7 +1657,7 @@
                                           </div>
                                           <div class="luggage-add-list">
                                               <div class="luggage-add-name">
-                                                  <h6><img src="./assets/images/icons/bag.png" alt=""> Chicken Junglee in Marble Bread</h6>
+                                                  <h6><img src="{{cdnUrl}}/images/icons/bag.png" alt=""> Chicken Junglee in Marble Bread</h6>
                                               </div>
                                               <div class="luggage-add-items">
                                                   <div class="">
@@ -1898,95 +1698,116 @@
                           </div>
                       </div>
                   </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="default-sidebar">
-                  <div class="sidebar-widget session-expires-widget">
-                      <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p>
+                   </div>
                   </div>
-                  <div class="sidebar-widget fare-summary-widget">
-                      <div class="widget-title">
-                          <h4>Fare Summary</h4>
-                          <img src="./assets/images/flights/1.png" alt="">
-                      </div>
-                      <div class="widget-content">
-                          <ul class="widget-list clearfix">
-                              <li class="fare-list-item">
-                                  <div class="fare-list-box">
-                                      <div class="fare-list-left">
-                                          <p>
-                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                              Base Fare
-                                          </p>
-                                      </div>
-                                      <div class="fare-list-right">
-                                          <p>&#8377;16,650</p>
-                                      </div>
-                                  </div>
-                              </li>
-                              <li class="fare-list-item">
-                                  <div class="fare-list-box">
-                                      <div class="fare-list-left">
-                                          <p>
-                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                              Taxes and Fees
-                                          </p>
-                                      </div>
-                                      <div class="fare-list-right">
-                                          <p>&#8377;2,034</p>
-                                      </div>
-                                  </div>
-                              </li>
-                              <li class="fare-list-item">
-                                  <div class="fare-list-box">
-                                      <div class="fare-list-left">
-                                          <p>
-                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                              Baggage/Seat/Meals
-                                          </p>
-                                      </div>
-                                      <div class="fare-list-right">
-                                          <p>&#8377;600</p>
-                                      </div>
-                                  </div>
-                              </li>
-                              <li class="fare-list-item">
-                                  <div class="fare-list-box">
-                                      <div class="fare-list-left">
-                                          <p>
-                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                              Discounts
-                                          </p>
-                                      </div>
-                                      <div class="fare-list-right">
-                                          <p class="text-green">-&#8377;500</p>
-                                      </div>
-                                  </div>
-                              </li>
-                              <li class="fare-list-item">
-                                  <div class="fare-list-box pt-30">
-                                      <div class="fare-list-left">
-                                          <h6 class="fw_7">Grand Total</h6>
-                                      </div>
-                                      <div class="fare-list-right">
-                                          <h6 class="fw_7">&#8377;8,784</h6>
-                                          <p class="opacity_05">EMI @ 789/month</p>
-                                      </div>
-                                  </div>
-                              </li>
-                          </ul>
-                      </div>
-                  </div>
-                  <div class="continue-widget mb-20">
-                      <a href="flight_review.html" class="button-style w-100">Continue</a>
-                  </div>
+                   <!--Step3 Ends-->
 
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
+                <div class="col-md-4">
+                <!-- <app-fare-summary></app-fare-summary> -->
+                <div class="default-sidebar">
+                    <div class="sidebar-widget session-expires-widget">
+                        <!-- <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p> -->
+                        <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
+                    </div>
+                    <div class="sidebar-widget fare-summary-widget">
+                        <div class="widget-title">
+                            <h4>Fare Summary</h4>
+                            <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                            <p *ngIf="selectedVendor">{{selectedVendor.partnerName}}</p>
+                        </div>
+                        <div class="widget-content">
+                            <ul class="widget-list clearfix">
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                Base Fare
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{BaseFare|number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                Taxes and Fees
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{Tax |number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                Baggage/Seat/Meals
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;600</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                Discounts
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p class="text-green">-&#8377;{{coupon_amount}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box pt-30">
+                                        <div class="fare-list-left">
+                                            <h6 class="fw_7">Grand Total</h6>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
+                                            <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="continue-widget mb-20" >
+                        <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()" *ngIf="steps==1">Continue</a>
+                          <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
+                            <a href="javascript:void(0);" class="button-style w-100"  *ngIf="steps==3">Continue</a>
+                    </div>
+                    <div *ngIf="steps==5">
+                    <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount+pgCharges"
+[passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
+  (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+</app-coupons>
+               </div>
+                </div>
+            
+            </div>
+            </div>
+        </div>
+    </section>
+    
     
     
     </main>
+    
+<div class="app-loading-new" *ngIf="showLoader==1" >
+<div class="logo">
+<img src="assets/images/Loading-gif" />
+</div>
+<h4>LOADING...</h4>
+</div>

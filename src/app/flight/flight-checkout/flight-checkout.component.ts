@@ -4,7 +4,8 @@ import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-
+import { SimpleGlobal } from 'ng2-simple-global';
+import {environment} from '../../../environments/environment';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -32,7 +33,8 @@ declare var $: any;
   ]
 })
 export class FlightCheckoutComponent implements OnInit ,OnDestroy {
-
+  cdnUrl: any;
+       customerInfo: any;
       coupon_id: any;
     intialTotalFare: number = 0;
     indexCoupon: any;
@@ -55,7 +57,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         convenience_fee: number = 0;
     convienceChargesEnable: boolean = true;
     convienceChargesEnabledValue: number = 0;
-
+partnerToken:any;
 
   flightDetails:any;
   selectedVendor:any;
@@ -73,7 +75,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   TotalFare:any;
   sessionTimer:any = 3;
   timeLeft:any = 900;
-  baggageInfo:any;
+  baggageInfo:any='';
   flightDetailsArrVal:any;
   steps:any = 1;
 
@@ -94,6 +96,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   adultArr:any;
   adultArrData:any;
   adultsCount:number=0;
+  showLoader:number=1;
   travellerDetailsForm!:any;
   
   // adultDetail!:FormArray;
@@ -123,7 +126,8 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
 
 
-  constructor(private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router) { 
+  constructor(private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal) { 
+   this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
     this.startTimer();
         this.travellerDetailsForm = this._fb.group({
       adult : this._fb.array([]),
@@ -133,26 +137,27 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getQueryParamData();
-    this.getsearchVal = sessionStorage.getItem('searchVal');
-    this.parseSearchVal = JSON.parse(this.getsearchVal);
-    this.getFlightIcon();
-    this.getAirpotsList();
-    // setTimeout(() => {
-    this.getFlightDetails();
+  
+     setTimeout(() => {
+  
+       //Check Laravel Seesion
+        if(this.sg['customerInfo']){
+         var customer_cookie;
+          if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
+          if(customer_cookie == 1){
+               this.customerInfo = this.sg['customerInfo'];
+             if(this.customerInfo["guestLogin"]==true){
+             }else{
+              this.initiatePage();
+             }
 
-    // }, 100);
-    
-        this.InputArray =
-    {
-      adult: this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults)),
-      child:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.child)),
-      infants:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.infants)),
-      email:"",
-      mobileNumber:"",
-      gstNumber:"",
-    }
-    
+          }else{
+              this.customerInfo =[];
+          }
+        
+      }
+
+      }, 50);
     
   }
 
@@ -163,48 +168,59 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
           sessionStorage.getItem(this.randomFlightDetailKey);
         });
   }
+  initiatePage(){
+  
+    this.getQueryParamData();
+    this.getsearchVal = sessionStorage.getItem('searchVal');
+    this.parseSearchVal = JSON.parse(this.getsearchVal);
+   // this.getFlightIcon();
+    this.getAirpotsList();
+    
+    this.getFlightDetails();
+
+    
+        this.InputArray =
+    {
+      adult: this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults)),
+      child:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.child)),
+      infants:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.infants)),
+      email:"",
+      mobileNumber:"",
+      gstNumber:"",
+    }
+  
+  }
 
   getFlightDetails(){
     //this._flightService.getFlightDetailsVal()
-
+    this.showLoader=1;
      this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
-     console.log(this.flightDetailsArrVal, "Param");
+     //console.log(this.flightDetailsArrVal, "Param");
     let param=JSON.parse(this.flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
-        this.selectedVendor = param.priceSummary;
-        // var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
-        var onwardFlightFareKey = JSON.parse(param.priceSummary.ctFareObject);
+        this.partnerToken=this.selectedVendor.partnerName;
+         var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
+        
         var body = {
           "docKey": param.docKey,
           "flightKeys": [
             param.flightKey
           ],
           "partnerName": this.selectedVendor.partnerName,
-           "onwardFlightFareKey": '',
-         // "onwardFlightFareKey": onwardFlightFareKey.ItineraryKey,
+          "onwardFlightFareKey": onwardFlightFareKey,
           "returnFlightFareKey": "",
           "splrtFlight": this.selectedVendor.splrtFareFlight
         }
-        this.getFlightInfo(body);
+        this.getFlightInfo(body,this.selectedVendor.partnerName);
         this.durationCalc();
       }
 
-    // this._flightService.getFlightDetailsVal().subscribe((param:any)=>{
-    //   if(param!=null){
-    //     this.flightDetails = param.flights;
-    //     this.selectedVendor = param.priceSummary;
-    //   }
-    // })
+
   }
 
-    // Get flight Icons
-    getFlightIcon(){
-      this._flightService.getFlightIcon().subscribe((res:any)=>{
-        this.flightIcons = res;
-      })
-    }
+
 
     ConvertObjToQueryString(obj: any) {
       var str = [];
@@ -289,16 +305,71 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   }
 
 
-  getFlightInfo(param:any)
+  getFlightInfo(param:any,partner:any)
   {
   
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
+     this.showLoader=0;
       if(res.statusCode ==200)
       {
-        this.BaseFare =res.response.comboFare.onwardBaseFare;
-        this.Tax =res.response.comboFare.onwardTax;
-        this.TotalFare =res.response.comboFare.onwardTotalFare;
-        this.baggageInfo = res.response.onwardFlightDetails
+       
+        let baseFare=0; let taxFare=0; let totalFare=0;
+       
+        if(partner=='Yatra'){
+      if(res.response.onwardFlightDetails.fare.O){
+        if(res.response.onwardFlightDetails.fare.O.ADT){
+        baseFare+=Number(res.response.onwardFlightDetails.fare.O.ADT.bf * res.response.onwardFlightDetails.fare.O.ADT.qt );
+        totalFare+=Number(res.response.onwardFlightDetails.fare.O.ADT.tf * res.response.onwardFlightDetails.fare.O.ADT.qt ) ;
+        }
+
+        if(res.response.onwardFlightDetails.fare.O.CHD){
+        baseFare+=Number(res.response.onwardFlightDetails.fare.O.CHD.bf * res.response.onwardFlightDetails.fare.O.CHD.qt );
+        totalFare+=Number(res.response.onwardFlightDetails.fare.O.CHD.tf * res.response.onwardFlightDetails.fare.O.CHD.qt );
+        }
+
+        if(res.response.onwardFlightDetails.fare.O.INF){
+        baseFare+=Number(res.response.onwardFlightDetails.fare.O.INF.bf * res.response.onwardFlightDetails.fare.O.INF.qt );
+        totalFare+=Number(res.response.onwardFlightDetails.fare.O.INF.tf * res.response.onwardFlightDetails.fare.O.INF.qt );
+        } 
+
+        }
+
+
+        }else{
+        if(res.response.onwardFlightDetails.fare){
+        if(res.response.onwardFlightDetails.fare.ADT){
+        baseFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt );
+        totalFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt )+ Number(res.response.onwardFlightDetails.fare.ADT.TX) ;
+        }
+
+        if(res.response.onwardFlightDetails.fare.CHD){
+        baseFare+=Number(res.response.onwardFlightDetails.fare.CHD.bf * res.response.onwardFlightDetails.fare.CHD.qt );
+        totalFare+=Number(res.response.onwardFlightDetails.fare.CHD.bf * res.response.onwardFlightDetails.fare.CHD.qt )+ Number(res.response.onwardFlightDetails.fare.CHD.TX) ;
+        }
+
+        if(res.response.onwardFlightDetails.fare.INF){
+        baseFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt );
+        totalFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt )+ Number(res.response.onwardFlightDetails.fare.INF.TX) ;
+        } 
+
+        }
+
+       } 
+       
+       console.log(totalFare);
+        
+         taxFare=totalFare-baseFare;
+      
+        this.BaseFare =baseFare;
+        this.Tax =taxFare;
+        this.TotalFare =totalFare;
+        
+       this.totalCollectibleAmount = Number(this.TotalFare) + Number(this.convenience_fee) ;
+       this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
+       
+       if(res.response.onwardFlightDetails.bg.length >0) 
+       this.baggageInfo = res.response.onwardFlightDetails.bg;
+        
         }
     }, (error) => { console.log(error) });
   }

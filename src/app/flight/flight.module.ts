@@ -13,9 +13,6 @@ import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.compo
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 
 
-
-
-
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent
@@ -38,15 +35,15 @@ const routes: Routes = [
 
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot(routes),
-  MaterialModule,
-  DirectiveModule,
-  NgxSliderModule,
-  NgxSkeletonLoaderModule,
-  CouponsModule
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        DirectiveModule,
+        NgxSliderModule,
+        NgxSkeletonLoaderModule,
+        CouponsModule,
+          RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
   providers: [ ]

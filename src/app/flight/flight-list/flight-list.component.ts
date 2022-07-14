@@ -1039,7 +1039,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       let query: any = sessionStorage.getItem('searchVal');
       let url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
-      this.getAirlinelist();
       this.popularFilterFlightData()
 
       this.location.replaceState(url);
