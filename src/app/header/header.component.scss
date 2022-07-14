@@ -3563,10 +3563,16 @@ marquee {
         }
         .tab_content {
             min-height: 100px !important;
-            max-height: 185px !important;
+            max-height: 240px !important;
             overflow-y: scroll;
             overflow-x: hidden;
             margin-right: 3px;
+            .push-new-notify {
+                padding: 10px 15px;
+                font-size: 16px;
+                font-family: 'opensans-medium';
+                margin-bottom: 0px;
+            }
             .offers-tab-data {
                 padding: 9px 12px;
                 background-color: #F6F9FD;
@@ -4057,7 +4063,7 @@ marquee {
                 margin-top: 10%;
                 p {
                     font-size: 18px;
-                    font-family: 'opensans_bold';
+                    font-family: 'opensans-bold';
                     font-weight: 900;
                     margin-bottom: 20px;
                 }
@@ -4095,6 +4101,12 @@ marquee {
                 margin: 0px;
             }
             .tab-content {
+                .push-new-notify {
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    font-family: "opensans-medium";
+                    margin-bottom: 0px;
+                }
                 a {
                     .new-notify-wrap {
                         padding: 10px 12px;
@@ -4578,16 +4590,33 @@ marquee {
     position: fixed;
     right: 18px;
     bottom: 20px;
-    width: 300px;
+    width: 400px;
     z-index: 100;
     border-radius: 3px;
     // box-shadow: 0.5px 0.9px 4px 0 #ededed;
     display: block;
+    @media screen and (max-width: 767px) {
+        width: 90%;
+    }
 }
 
 .toast-wrap {
-    display: flex;
+    // display: flex;
     color: $black-color;
+}
+
+.push-wrapper-new {
+    position: relative;
+}
+
+.notify-pos-abs {
+    position: absolute;
+    right: -9px;
+    bottom: 0px;
+    @media screen and (max-width: 767px) {
+        right: -20px;
+        bottom: 9px;
+    }
 }
 
 .notify-opacity {
@@ -4622,6 +4651,7 @@ marquee {
 .text-truncate {
     float: right;
     width: 235px;
+    margin-left: 10px;
     color: $black-color;
     h4 {
         font-size: 14px;
@@ -5131,7 +5161,7 @@ marquee {
                     float: left;
                     margin-right: 10px;
                 }
-                img{
+                img {
                     float: left;
                     margin: 5px;
                 }
