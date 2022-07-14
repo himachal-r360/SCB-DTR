@@ -1,0 +1,1992 @@
+<main class="site-main">
+    <section class="details-steps-area mt-40 mb-40">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="details-steps-box">
+                        <ul class="m-0 details-steps-ul">
+                            <li>
+                                <a  [ngClass]="{'active': steps > 0 && steps < 4 }"> <!-- steps-done - Class For done steps --> 
+                                    <span class="steps-icons"><img src="./assets/images/flights_details/flight.png" alt="" /></span>
+                                    <span class="steps-text">Flight Details</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  [ngClass]="{'active': steps > 1 && steps < 4 }">
+                                    <span class="steps-icons"><img src="./assets/images/flights_details/user.png" alt="" /></span>
+                                    <span class="steps-text">Traveller Details</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  [ngClass]="{'active': steps > 2 && steps < 4 }">
+                                    <span class="steps-icons"><img src="./assets/images/flights_details/meal.png" alt="" /></span>
+                                    <span class="steps-text">Seats & Meals</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  [ngClass]="{'active': steps > 3 && steps < 4 }" >
+                                    <span class="steps-icons"><img src="./assets/images/flights_details/review.png" alt="" /></span>
+                                    <span class="steps-text">Review Booking</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  [ngClass]="{'active': steps== 4 }">
+                                    <span class="steps-icons"><img src="./assets/images/flights_details/payment.png" alt="" /></span>
+                                    <span class="steps-text">Payment</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+  <section class="flight-details-area mt-10" *ngIf="steps==1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="booking-process-content"  >
+                        <div class="booking-title-box">
+                            <h4>Flight Details</h4>
+                        </div>
+  
+  
+                        <div class="booking-inner-box from-to-box">
+
+                            <div class="booking-inner-title">
+                                <div class="booking-inner-title-left" *ngIf="parseSearchVal">
+                                    <h6>
+                                        {{parseSearchVal.fromCity}}
+                                        <img src="./assets/images/icons/flight-right.png" class="ms-2 me-2" alt="">
+                                        {{parseSearchVal.toCity}}
+                                    </h6>
+                                    <p> {{parseSearchVal.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
+                                </div>
+                                <div class="booking-inner-title-right" >
+                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
+                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
+                                </div>
+                            </div>
+
+                            <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
+                                <div class="Booking-Flight-name" >
+                                    <div class="Booking-Flight-name-left">
+                                        <img *ngIf="flightIcons" src="{{flightIcons[flights.airline].logo}}" width="22px" alt="">
+                                        <span class="fw_7">{{flights.airlineName}}</span>
+                                        <span class="opacity_05">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                    </div>
+                                    <div class="Booking-Flight-name-right">
+                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="./assets/images/icons/info.png" width="10px" alt=""></p>
+                                    </div>
+                                </div>
+                                <div class="Booking-Flight-time">
+                                    <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                                    <span class="round round-line"></span>
+                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                        <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                        <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                        <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                    </div>
+                                </div>
+
+                                <div class="Booking-Flight-time">
+                                    <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                                    <span class="round"></span>
+                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                        <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                        <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="Booking-Flight-passanger" >
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h6>Baggage</h6>
+                                            <p>Adult</p>
+                                            <p *ngIf="baggageInfo.fare.CHD">Child</p>
+                                            <p *ngIf="baggageInfo.fare.INF">Infant</p>
+                                           
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h6>Check-in</h6>
+                                            <p *ngIf="baggageInfo">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p>
+                                            <p *ngIf="baggageInfo.fare.CHD">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p>
+                                            <!-- <p *ngIf="baggageInfo">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p> -->
+                                            <!-- <p>15 Kgs <span>(1 piece only)</span></p>
+                                            <p>Cabin bag only</p> -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h6>Cabin</h6>
+                                            <p *ngIf="baggageInfo">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p>
+                                            <p *ngIf="baggageInfo.fare.CHD">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p>
+                                            <!-- <p *ngIf="baggageInfo">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p> -->
+                                            
+                                            <!-- <p>7 Kgs  <span>(1 plece only)</span></p>
+                                            <p>7 Kgs <span>(1 plece only)</span></p> -->
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6>Flight Extras</h6>
+                                            <p class="text-green fw_6"><img src="./assets/images/icons/meals.png" alt="" /> Meals</p>
+                                            <p class="text-green fw_6"><img src="./assets/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="change-planes" *ngIf="getLayoverHour(flightDetails[i],flightDetails[i+1]) && airportsNameJson">
+                                    <h6>Change of planes・{{getLayoverHour(flightDetails[i],flightDetails[i+1]) | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                </div> -->
+                                <div class="change-planes" *ngIf="dateHour && airportsNameJson && flightDetails[i+1]">
+                                    <h6>Change of planes・{{dateHour | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                </div>
+                            </div>
+
+                            <!-- <div class="Flight-One">
+                                <div class="Booking-Flight-name">
+                                    <div class="Booking-Flight-name-left">
+                                        <img src="./assets/images/flights/flight-1.png" width="22px" alt="">
+                                        <span class="fw_7">IndiGo</span>
+                                        <span class="opacity_05">6E-956</span>
+                                    </div>
+                                    <div class="Booking-Flight-name-right">
+                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="./assets/images/icons/info.png" width="10px" alt=""></p>
+                                    </div>
+                                </div>
+                                <div class="Booking-Flight-time">
+                                    <h6>08:05</h6>
+                                    <span class="round round-line"></span>
+                                    <div class="Flight-time-name">
+                                        <h6>Mumbai</h6>
+                                        <p>Chhatrapati Shivaji International Airport T1, Vile Parle, Mumbai</p>
+                                        <span class="round-time mt-20 d-inline-block">1h 40m </span>
+                                    </div>
+                                </div>
+
+                                <div class="Booking-Flight-time">
+                                    <h6>08:05</h6>
+                                    <span class="round"></span>
+                                    <div class="Flight-time-name">
+                                        <h6>Nagpur</h6>
+                                        <p>Dr. Babasaheb Ambedkar International Airport</p>
+                                    </div>
+                                </div>
+
+                                <div class="Booking-Flight-passanger">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h6>Baggage</h6>
+                                            <p>Adult</p>
+                                            <p>Child</p>
+                                            <p>Infant</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h6>Check-in</h6>
+                                            <p>15 Kgs <span>(1 piece only)</span></p>
+                                            <p>15 Kgs <span>(1 piece only)</span></p>
+                                            <p>Cabin bag only</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h6>Cabin</h6>
+                                            <p>7 Kgs <span>(1 plece only)</span></p>
+                                            <p>7 Kgs  <span>(1 plece only)</span></p>
+                                            <p>7 Kgs <span>(1 plece only)</span></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6>Flight Extras</h6>
+                                            <p class="text-green fw_6"><img src="./assets/images/icons/meals.png" alt="" /> Meals</p>
+                                            <p class="text-green fw_6"><img src="./assets/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> -->
+
+                            <div class="luggage-box">
+                                <div class="luggage-text">
+                                    <img src="./assets/images/icons/luggage.png" alt="">
+                                    <p>Got excess luggage? Don't stress, buy extra check-in baggage allowance at fab  rate!</p>
+                                </div>
+                                <div class="luggage-btn">
+                                    <a class="luggage-add" data-bs-toggle="collapse" href="#luggagecollapse" role="button" aria-expanded="false" aria-controls="luggagecollapse">+ Add</a>
+                                </div>
+                            </div>
+                            <div  class="collapse luggage-add-box" id="luggagecollapse">
+                                <div class="luggage-add-list">
+                                    <div class="luggage-add-name">
+                                        <h6><img src="./assets/images/icons/bag.png" alt=""> 5 KG</h6>
+                                    </div>
+                                    <div class="luggage-add-items">
+                                        <div class="">
+                                            <h6>&#8377; 600</h6>
+                                        </div>
+                                        <div class="Travellers-qty ms-4">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="qty-buttons minus">
+                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                <input type="button" value="+" class="qty-buttons plus">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="luggage-add-list">
+                                    <div class="luggage-add-name">
+                                        <h6><img src="./assets/images/icons/bag-more.png" alt=""> 10 KG</h6>
+                                    </div>
+                                    <div class="luggage-add-items">
+                                        <div class="">
+                                            <h6>&#8377; 1200</h6>
+                                        </div>
+                                        <div class="Travellers-qty ms-4">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="qty-buttons minus">
+                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                <input type="button" value="+" class="qty-buttons plus">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="luggage-add-list">
+                                    <div class="luggage-add-name">
+                                        <h6><img src="./assets/images/icons/bag-more.png" alt=""> 15 KG</h6>
+                                    </div>
+                                    <div class="luggage-add-items">
+                                        <div class="">
+                                            <h6>&#8377; 1800</h6>
+                                        </div>
+                                        <div class="Travellers-qty ms-4">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="qty-buttons minus">
+                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                <input type="button" value="+" class="qty-buttons plus">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="luggage-add-list">
+                                    <div class="luggage-add-name">
+                                        <h6><img src="./assets/images/icons/bag-more.png" alt=""> 20 KG</h6>
+                                    </div>
+                                    <div class="luggage-add-items">
+                                        <div class="">
+                                            <h6>&#8377; 2400</h6>
+                                        </div>
+                                        <div class="Travellers-qty ms-4">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="qty-buttons minus">
+                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                <input type="button" value="+" class="qty-buttons plus">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="luggage-add-list">
+                                    <div class="luggage-add-name">
+                                        <h6 class="fw_7 fs_18">Total</h6>
+                                    </div>
+                                    <div class="luggage-add-items">
+                                        <div class="">
+                                            <h6 class="fw_7 fs_18">&#8377; 600</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="booking-inner-box fare-rules-box">
+                            <div class="fare-rules-title">
+                                <h6>Fare Rules</h6>
+                            </div>
+                            <div class="flight-extra-details">
+                                <ul class="list-unstyled flight-extra-tabs">
+                                    <li>
+                                        <!-- <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Details</a> -->
+                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Charges</a>
+                                    </li>
+                                    <li>
+                                        <!-- <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)"> Date Change Charges</a> -->
+                                        <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)">Baggage Policy</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" data-bind="Fare" (click)="changeFareRuleTab($event)"> Fare Rules </a>
+                                    </li>
+                                    <li>
+                                        <!-- <a href="javascript:void(0);" data-bind="Cancellation" (click)="changeFareRuleTab($event)"> Cancellation Protection </a>    -->
+                                    </li>
+                                </ul>
+                                <div class="rules-flight">
+                                    <div class="rules-flight-items">
+                                        <div class="rules-flight-thumbe">
+                                            <img *ngIf="flightIcons" src="{{flightIcons[flightDetails[0].airline].logo}}" alt="">
+                                        </div>
+                                        <div class="rules-flight-content">
+                                            <h6>
+                                                {{parseSearchVal.fromCity}}
+                                                <img src="./assets/images/icons/flight-right.png" alt="">
+                                                {{parseSearchVal.toCity}}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="rules-flight-items opacity_05">
+                                        <div class="rules-flight-thumbe">
+                                            <img src="./assets/images/flights/flight-1.png" alt="">
+                                        </div>
+                                        <div class="rules-flight-content">
+                                            <h6>
+                                                Hyderabad
+                                                <img src="./assets/images/icons/flight-right.png" alt="">
+                                                Mumbai
+                                            </h6>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="extra-tabs-ara">
+                                    <div id="CancellationDetails" class="flight-extra-content extra-active">
+                                        <table class="table-bordered table-content w-100">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                        <p class="opacity_05">(Per passenger)</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                    </div>
+                                    <div id="DateChange" class="flight-extra-content">
+                                        <table class="table-bordered table-content w-100">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                        <p class="opacity_05">(Per passenger)</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                    </div>
+                                    <div id="Fare" class="flight-extra-content">
+                                        <table class="table-bordered table-content w-100">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                        <p class="opacity_05">(Per passenger)</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Adult : Non refundable</p>
+                                                        <p>Child : Non refundable</p>
+                                                        <p>Infant : Non refundable</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                    </div>
+                                    <div id="Cancellation" class="flight-extra-content">
+                                        <div class="extra-tabs-details Cancellation-box">
+                                            <div class="extra-tabs-details-bottom">
+                                                <ul class="m-0 tabs-list-data">
+                                                    <li><p>While Booking your flight ticket, select 'Cancellation Protection' option and pay a nominal cancellation premium and enjoy ZERO penalty in case you wish to cancel the booking.</p></li>
+                                                    <li><p>Cancellation Protection is applicable on select one way domestic flights and starts at only Rs.149</p></li>
+                                                    <li><p>Cancellation Protection is applicable on select one way domestic flights</p></li>
+                                                    <li><p>Tickets should be cancelled 25 hrs prior to scheduled departure of the flight to avail this feature.</p></li>
+                                                    <li><p>Cancellation should be done ONLY on airlines for the cancellation charges to be void.</p></li>
+                                                    <li><p>Waiver is valid only for FULL cancellations (cancellations of all flights of a particular passenger, booked in an itinerary) for any or all passengers in a booking.</p></li>
+                                                    <li><p>In case of partial cancellation (cancelation of only some flights booked in an itinerary), waiver will not be given & normal cancelation penalties will be charged.</p></li>
+                                                    <li><p>ZERO Cancellation service is valid only on complete cancellation of itinerary and not on date change of itinerary.</p></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="booking-inner-box important-information-box">
+                            <div class="imp-Information">
+                                <h6>Important Information</h6>
+                                <ul class="imp-Information-list">
+                                    <li>
+                                        <p>Flights are operating in strict compliance with the EXIT and ENTRY regulations applicable at origin and destination as defined by the competent authorities.</p>
+                                    </li>
+                                    <li>
+                                        <p>Effective 22nd May,2021 it is mandatory for all passengers to carry a negative RT-PCR test report with QR code for boarding international flights to destinations where test reports are required as per the guidelines issued by the destination countries.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                <!-- <app-fare-summary></app-fare-summary> -->
+                <div class="default-sidebar">
+                    <div class="sidebar-widget session-expires-widget">
+                        <!-- <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p> -->
+                        <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
+                    </div>
+                    <div class="sidebar-widget fare-summary-widget">
+                        <div class="widget-title">
+                            <h4>Fare Summary</h4>
+                            <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                            <p *ngIf="selectedVendor">{{selectedVendor.partnerName}}</p>
+                        </div>
+                        <div class="widget-content">
+                            <ul class="widget-list clearfix">
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Base Fare
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{BaseFare|number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Taxes and Fees
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{Tax |number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Baggage/Seat/Meals
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;600</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                                Discounts
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p class="text-green">-&#8377;500</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box pt-30">
+                                        <div class="fare-list-left">
+                                            <h6 class="fw_7">Grand Total</h6>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <h6 class="fw_7">₹{{TotalFare|number}}</h6>
+                                            <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(TotalFare)|number: '.2'}}/month</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="continue-widget mb-20">
+                        <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()">Continue</a>
+                    </div>
+               
+                </div>
+            
+            </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section class="flight-details-area mt-10" *ngIf="steps==2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <form [formGroup]="travellerDetailsForm">
+                    <div class="booking-process-content">
+                        <div class="booking-title-box">
+                            <!-- <h4>Traveller Details <span> {{InputArray.adult.length}} Adults,</span> <span >{{travelerDetails.child}} Child,</span> <span >{{travelerDetails.infants}} Infant</span></h4> -->
+                            <h4>Traveller Details <span>{{travelerDetails.adults}} Adults,</span>
+                                <span *ngIf="travelerDetails.child > 0">{{travelerDetails.child}} Child,</span>
+                                <span *ngIf="travelerDetails.infants > 0">{{travelerDetails.infants}} infant</span>
+                            </h4>
+                        </div>
+                        <div class="booking-inner-box traveller-person-box">
+                            <div class="traveller-person-title">
+                                <div class="traveller-person-left">
+                                    <h6>Add Travellers</h6>
+                                </div>
+                                <div class="traveller-person-right">
+                                    <p class="text-color">Name should be same as in Government ID proof</p>
+                                </div>
+                            </div>
+
+                            <div class="traveller-addbox traveller-adults">
+                                <div class="traveller-addbox-title">
+                                    <h6>Adult (12 yrs+) <span class="opacity_05"><span class="fw_7 opacity_1">1/2</span>
+                                            added</span></h6>
+                                </div>
+                                <div class="traveller-addbox-details traveller-adults-details">
+                                    <div class="traveller-adults-ul">
+                                        <ul class="add-search-ul d-block d-none" *ngIf="InputArray.adult">
+                                            <li class="custom-check-box" *ngFor="let adult of InputArray.adult">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input"
+                                                            checked="checked">
+                                                        <span class="material-control-indicator"></span>
+                                                        <span
+                                                            class="description fs_14 text-black fw_7">{{adult.firstName}}
+                                                            {{adult.lastName}} . </span>
+                                                        <span class="description fw_5">{{adult.gender}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+                                        <div class="add-traveller-adults" *ngIf="toggleAdult">
+                                            <div formArrayName="adult"
+                                                *ngFor="let adult of travellerDetailsForm.get('adult')['controls']; let i = index;">
+                                                <form class="forms-field" [formGroupName]="i">
+                                                    <!-- <div *ngFor="let item of InputArray.adult;let i = index" > -->
+                                                    <div >
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <ul class="select-gender">
+                                                                    <li>
+                                                                      
+                                                                        <!-- <a [ngClass]="item.gender == 'Male' ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"  value="Male" formControlName="gender">Male</a> -->
+                                                                        <a [ngClass]="adult.value.gender == 'Male' ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"
+                                                                            value="Male"
+                                                                            >Male</a>
+
+                                                                    </li>
+                                                                    <li>
+                                                                        <!-- <a [ngClass]="item.gender == 'Female' ? 'active' : ''" (click)="getAdultGenderValue('Female', i)" value="Female" formControlName="gender">Female</a> -->
+                                                                        <a [ngClass]="adult.value.gender == 'Female' ? 'active' : ''" (click)="getAdultGenderValue('Female', i)"
+                                                                            value="Female"
+                                                                           >Female</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>First Name</mat-label>
+                                                                    <!-- <input matInput placeholder="First Name"  [(ngModel)]="item.firstName" name="firstName" formControlName="firstName"> -->
+                                                                    <input matInput placeholder="First Name"
+                                                                        name="firstName" formControlName="firstName">
+                                                                        <mat-error *ngIf="adult.get('firstName').errors && adult.get('firstName')hasError('required')">First Name
+                                                                    is required.</mat-error>
+                                                                    </mat-form-field>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Last Name</mat-label>
+                                                                    <!-- <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName" formControlName="lastName"> -->
+                                                                    <input matInput placeholder="Last Name"
+                                                                        name="lastName" formControlName="lastName">
+                                                                    <!-- <mat-error *ngIf="Error('lastName', 'required')">Last Name
+
+                                                                is required.</mat-error> -->
+                                                                <mat-error *ngIf="adult.get('lastName').errors && adult.get('lastName')hasError('required')" class="validation">Last Name
+                                                                    is required.</mat-error>
+                                                            </mat-form-field>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                                <div class="form-group">
+                                                                    <mat-form-field appearance="outline">
+                                                                        <mat-label>Date of Birth</mat-label>
+                                                                        <!-- <input matInput [matDatepicker]="picker" placeholder="Date of Birth"  [(ngModel)]="item.dateOfBirth" name="dateOfBirth" formControlName="lastName"> -->
+                                                                        <input matInput [matDatepicker]="picker"
+                                                                            placeholder="Date of Birth"
+                                                                            name="dateOfBirth"
+                                                                            formControlName="dateOfBirth">
+                                                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                        </mat-datepicker-toggle>
+                                                                        <mat-datepicker #picker></mat-datepicker>
+                                                                        <!-- <mat-error *ngIf="Error('dateOfBirth', 'required')">Date Of Birth
+                                                                    is required.</mat-error> -->
+                                                                    <mat-error *ngIf="adult.get('dateOfBirth').errors && adult.get('dateOfBirth')hasError('required')">Date of birth
+                                                                   is required.</mat-error>
+                                                                </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="add-traveller-btn">
+                                            <!-- <a href="javascript:void(0);" class="Addnew-Adult-btn" [ngClass]="toggleAdult == true ? 'disable':''"
+                                            (click)="postAdultDetails()" >+ Add New Adult</a> -->
+                                            <a href="javascript:void(0);" class="Addnew-Adult-btn"
+                                                (click)="addAdultForm()">+ Add New Adult</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="traveller-addbox traveller-child">
+                                <div class="traveller-addbox-title">
+                                    <h6>Child (2-11 yrs) <span class="opacity_05"><span
+                                                class="fw_7 opacity_1">1/2</span>
+                                            added</span></h6>
+                                </div>
+                                <div class="traveller-addbox-details traveller-adults-details">
+                                    <div class="traveller-adults-ul">
+
+                                        <ul class="add-search-ul d-none" *ngIf="InputArray.child">
+                                            <li class="custom-check-box" *ngFor="let child of InputArray.child">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input"
+                                                            checked="checked">
+                                                        <span class="material-control-indicator"></span>
+                                                        <span
+                                                            class="description fs_14 text-black fw_7">{{child.firstName}}
+                                                            {{child.lastName}} . </span>
+                                                        <span class="description fw_5">{{child.gender}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                        <div class="add-Child-adults" *ngIf="toggleChild">
+                                            <form class="forms-field">
+                                                <div *ngFor="let item of InputArray.child ;let i = index">
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <ul class="select-gender">
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Male' ? 'active' : ''"
+                                                                        (click)="getChildGenderValue('Male' , i)"
+                                                                        value="Male">Male</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Female' == true ? 'active' : ''"
+                                                                        (click)="getChildGenderValue('Female', i)"
+                                                                        value="Female">Female</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>First Name</mat-label>
+                                                                <input matInput placeholder="First Name"
+                                                                    [(ngModel)]="item.firstName" name="firstName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Last Name</mat-label>
+                                                                <input matInput placeholder="Last Name"
+                                                                    [(ngModel)]="item.lastName" name="lastName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <div class="form-group">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Date of Birth</mat-label>
+                                                                    <input matInput [matDatepicker]="picker"
+                                                                        placeholder="Date of Birth"
+                                                                        [(ngModel)]="item.dateOfBirth"
+                                                                        name="dateOfBirth">
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                    </mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker></mat-datepicker>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="add-traveller-btn">
+                                            <a href="javascript:void(0);" class="Addnew-Child-btn"
+                                                [ngClass]="InputArray.child < 1 || toggleChild == true ? 'disable':''"
+                                                (click)="postChildDetails()">+ Add New Child</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="traveller-addbox traveller-infant">
+                                <div class="traveller-addbox-title">
+                                    <h6>Infant ( &lt; 2 yrs) <span class="opacity_05"><span
+                                                class="fw_7 opacity_1">1/2</span> added</span></h6>
+                                </div>
+                                <div class="traveller-addbox-details traveller-infant-details">
+                                    <div class="traveller-adults-ul">
+                                        <ul class="add-search-ul d-none" *ngIf="InputArray.infants">
+                                            <li class="custom-check-box" *ngFor="let infants of InputArray.infants">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input"
+                                                            checked="checked">
+                                                        <span class="material-control-indicator"></span>
+                                                        <span
+                                                            class="description fs_14 text-black fw_7">{{infants.firstName}}
+                                                            {{infants.lastName}} . </span>
+                                                        <span class="description fw_5">{{infants.gender}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+                                        <div class="add-Child-adults" *ngIf="infantToggle">
+                                            <form class="forms-field">
+                                                <div *ngFor="let item of InputArray.infants;let i = index">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <ul class="select-gender">
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Male'  ? 'active': ''"
+                                                                        (click)="getInfantsGenderValue('Male' , i)"
+                                                                        value="Male">Male</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Female' ? 'active'  :''"
+                                                                        (click)="getInfantsGenderValue('Female', i)"
+                                                                        value="Female">Female</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>First Name</mat-label>
+                                                                <input matInput placeholder="First Name"
+                                                                    [(ngModel)]="item.firstName" name="firstName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Last Name</mat-label>
+                                                                <input matInput placeholder="Last Name"
+                                                                    [(ngModel)]="item.lastName" name="lastName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <div class="form-group">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Date of Birth</mat-label>
+                                                                    <input matInput [matDatepicker]="picker"
+                                                                        placeholder="Date of Birth"
+                                                                        [(ngModel)]="item.dateOfBirth"
+                                                                        name="dateOfBirth">
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                    </mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker></mat-datepicker>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="add-traveller-btn">
+                                            <a href="javascript:void(0);" class="Addnew-infant-btn"
+                                                [ngClass]="InputArray.infants < 1 || infantToggle == true ? 'disable':''"
+                                                (click)="postInfantDetails()">+ Add New Child</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="othertraveller">
+                                <ul class="add-search-ul d-block">
+                                    <li class="custom-check-box">
+                                        <div class="custom-controls-stacked">
+                                            <label class="custom-control material-checkbox">
+                                                <input type="checkbox" class="material-control-input"
+                                                    [checked]="checked" [(ngModel)]="checked"
+                                                    (change)="saveTravellerHistory($event)">
+                                                <span class="material-control-indicator"></span>
+                                                <span class="description fs_12 text-black">Add these travellers to
+                                                    Travellers list. </span>
+                                                <span class="description fs_12">You won't have to fill traveller info on
+                                                    your next visit</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div class="booking-inner-box gst-number-box">
+                            <h6>Contact Details</h6>
+                            <p>Your booking information will be sent here</p>
+
+                            <form class="forms-field">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input matInput placeholder="Email" type="email"
+                                                [(ngModel)]="InputArray.email" name="email">
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Mobile Number</mat-label>
+                                            <input matInput placeholder="Mobile Number"
+                                                [(ngModel)]="InputArray.mobileNumber" name="mobileNumber">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="contact-whatsapp">
+                                <div class="contact-whatsapp-info me-2">
+                                    <span>Send my booking information through</span>
+                                    <img src="./assets/images/icons/whatsapp.png" class="ms-2" alt="">
+                                    <span class="fw_7">WhatsApp</span>
+                                </div>
+                                <div class="form-check form-switch m-0">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        [checked]="whatsAppCheck" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="booking-inner-box gst-number-box">
+                            <h6>GST number for business travel (Optional)</h6>
+                            <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST
+                                number
+                            </p>
+
+                            <form class="forms-field">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>GST Number</mat-label>
+                                            <input matInput placeholder="GST Number" [(ngModel)]="InputArray.gstNumber"
+                                                name="gstNumber">
+                                        </mat-form-field>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </form>
+            </div>
+
+
+
+        <div class="col-md-4">
+            <!-- <app-fare-summary (continueTravller)="continueTravellerDetails()"></app-fare-summary> -->
+            <div class="default-sidebar">
+                <div class="sidebar-widget session-expires-widget">
+                    <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in:
+                        <strong>{{timeLeft | minuteSecond}}</strong></p>
+                </div>
+                <div class="sidebar-widget fare-summary-widget">
+                    <div class="widget-title">
+                        <h4>Fare Summary</h4>
+                        <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                        <p>{{selectedVendor.partnerName}}</p>
+                    </div>
+                    <div class="widget-content">
+                        <ul class="widget-list clearfix">
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Base Fare
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <!-- <p>&#8377;{{selectedVendor.baseFare|number}}</p> -->
+                                        <p>&#8377;{{BaseFare|number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Taxes and Fees
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{Tax | number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Baggage/Seat/Meals
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;600</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Discounts
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-green">-&#8377;500</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box pt-30">
+                                    <div class="fare-list-left">
+                                        <h6 class="fw_7">Grand Total</h6>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <h6 class="fw_7">₹{{TotalFare|number}}</h6>
+                                        <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @
+                                            {{calculateEMI(selectedVendor.totalFare)|number}}/month</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="continue-widget mb-20">
+                    <a href="javascript:void(0);" class="button-style w-100"
+                        (click)="continueTravellerDetails()">Continue</a>
+                </div>
+          
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+    
+    <section class="flight-details-area mt-10" *ngIf="steps==3">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-8">
+              <div class="booking-process-content">
+                  <div class="booking-title-box">
+                      <h4>Seats & Meals <span>2 Adults, 1 Child, 1 Infant</span></h4>
+                  </div>
+                  <div class="seats-accordion ">
+                      <div class="accordion" id="accordionExample">
+                          <div class="accordion-item">
+                              <h4 class="accordion-header" id="headingOne">
+                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      <img src="./assets/images/icons/seats.png" class="me-2" alt=""> Select Seats
+                                      <span class="xlsheats">
+                                          <img src="./assets/images/icons/xl-seats.png" alt=""> XL seats available
+                                      </span>
+                                  </button>
+                              </h4>
+                              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                  <div class="ps-4 pe-4">
+                                      <div class="rules-flight">
+                                          <div class="rules-flight-items">
+                                              <div class="rules-flight-thumbe">
+                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                              </div>
+                                              <div class="rules-flight-content">
+                                                  <h6>
+                                                      Mumbai
+                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      Hyderabad
+                                                  </h6>
+                                              </div>
+                                          </div>
+                                          <div class="rules-flight-items opacity_05">
+                                              <div class="rules-flight-thumbe">
+                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                              </div>
+                                              <div class="rules-flight-content">
+                                                  <h6>
+                                                      Hyderabad
+                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      Mumbai
+                                                  </h6>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="seatsname">
+                                      <ul class="seatsname-ul">
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item active">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Amit Kumar</h6>
+                                                      <p>E2  |  ₹200</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Sara Rege</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Zara Smith</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Zara Smith</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Zara Smith</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <div class="sheat-box">
+                                      <div class="flight-sheat-area">
+                                          <!-- sheat info -->
+                                          <div class="sheat-info">
+                                              <ul>
+                                                  <li>
+                                                      <div class="sheat-free">
+                                                          <span class="s-free"></span>
+                                                          <p>Free</p>
+                                                      </div>
+                                                  </li>
+                                                  <li>
+                                                      <div class="sheat-price1">
+                                                          <span class="s-price-one"></span>
+                                                          <p>&#8377;150 - 500</p>
+                                                      </div>
+                                                  </li>
+                                                  <li>
+                                                      <div class="sheat-price2 mb-0">
+                                                          <span class="s-price-two"></span>
+                                                          <p>&#8377;700 - 1000</p>
+                                                      </div>
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                          <!-- Single Seat -->
+                                          <div class="Single-Seat">
+                                              <div class="Travellers-dropdown">
+                                                  <div class="Travellers-dropdown-title">
+                                                      <h5>
+                                                          <img src="./assets/images/icons/seats_flight.png" alt="">
+                                                          Single Seat
+                                                          <img class="ms-2" src="./assets/images/icons/down.png" alt="">
+                                                      </h5>
+                                                  </div>
+                                                  <ul class="Travellers-dropdown-data Travellershide">
+                                                      <li>
+                                                          <h5>
+                                                              <img src="./assets/images/icons/seats_flight.png" alt="">
+                                                              Single Seat
+                                                          </h5>
+                                                      </li>
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                          <!-- flight img box -->
+                                          <div class="flight-img-box">
+                                              <div class="flight-top">
+                                                  <img src="./assets/images/flights/flight_top.png" alt="">
+                                              </div>
+                                              <div class="flight-sheat-box">
+                                                  <!-- lavatory -->
+                                                  <div class="flight-lavatory">
+                                                      <div class="flight-Lavatory" data-bs-toggle="tooltip" title="Lavatory">
+                                                          <img src="./assets/images/icons/Lavatory.png" alt="">
+                                                      </div>
+                                                      <div class="flight-Galley" data-bs-toggle="tooltip" title="Galley">
+                                                          <img src="./assets/images/icons/Galley.png" alt="">
+                                                      </div>
+                                                  </div>
+                                                  <!-- exit -->
+                                                  <div class="flight-exit">
+                                                      <div class="exit-door exit-left">
+                                                          <span class="exit-line exit-left-line"></span>
+                                                          <p class="ms-3">EXIT</p>
+                                                      </div>
+                                                      <div class="exit-door exit-right">
+                                                          <p class="me-3">EXIT</p>
+                                                          <span class="exit-line exit-right-line"></span>
+                                                      </div>
+                                                  </div>
+                                                  <!-- sheat selection -->
+                                                  <div class="flight-sheat-selection-box">
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent opacity-50">&nbsp;</div>
+                                                          <div class="bg-transparent opacity-50">A</div>
+                                                          <div class="bg-transparent opacity-50">B</div>
+                                                          <div class="bg-transparent opacity-50">C</div>
+                                                          <div class="bg-transparent opacity-50">&nbsp;</div>
+                                                          <div class="bg-transparent opacity-50">&nbsp;</div>
+                                                          <div class="bg-transparent opacity-50">A</div>
+                                                          <div class="bg-transparent opacity-50">B</div>
+                                                          <div class="bg-transparent opacity-50">C</div>
+                                                          <div class="bg-transparent opacity-50 ">&nbsp;</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">1</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="bg-transparent ">1</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">2</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="s-price-two">XL</div>
+                                                          <div class="bg-transparent">2</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">3</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="active" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">3</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">4</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">4</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">5</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">5</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">6</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">6</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">7</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">7</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">8</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">8</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">9</div>
+                                                          <div class="s-free" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="s-free" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="s-free" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="s-free" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="s-free" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="s-free" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent" >9</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">10</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">10</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">11</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">11</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">12</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">12</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">13</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">13</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">14</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">14</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">15</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">15</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">15</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">16</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">17</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">17</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">18</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">18</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">19</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">19</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">20</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">20</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">21</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">21</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">22</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">22</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">23</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">23</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">24</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">24</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">25</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">25</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">25</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">26</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">27</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">27</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">28</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">28</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">29</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">29</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">30</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">30</div>
+                                                      </div>
+                                                      <div class="sheat-col">
+                                                          <div class="bg-transparent">31</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="bg-transparent">&nbsp;</div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="" data-bs-toggle="tooltip" title="3A Window Seat  |  &#8377;900"></div>
+                                                          <div class="bg-transparent">31</div>
+                                                      </div>
+                                                  </div>
+
+                                                  <!-- exit -->
+                                                  <div class="flight-exit">
+                                                      <div class="exit-door exit-left">
+                                                          <span class="exit-line exit-left-line"></span>
+                                                          <p class="ms-3">EXIT</p>
+                                                      </div>
+                                                      <div class="exit-door exit-right">
+                                                          <p class="me-3">EXIT</p>
+                                                          <span class="exit-line exit-right-line"></span>
+                                                      </div>
+                                                  </div>
+                                                  <!-- lavatory -->
+                                                  <div class="flight-lavatory">
+                                                      <div class="flight-Lavatory" data-bs-toggle="tooltip" title="Lavatory">
+                                                          <img src="./assets/images/icons/Lavatory.png" alt="">
+                                                      </div>
+                                                      <div class="flight-Galley" data-bs-toggle="tooltip" title="Galley">
+                                                          <img src="./assets/images/icons/Galley.png" alt="">
+
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="flight-bottom">
+                                                  <img src="./assets/images/flights/flight_bottom.png" alt="">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- remove section -->
+                                      <div class="flight-remove-area">
+                                          <div class="Remove-Selections">
+                                              <a href="">Remove all Selections</a>
+                                          </div>
+                                          <div class="Skip-Payment">
+                                              <a href="">Skip to Payment</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="accordion-item">
+                              <h4 class="accordion-header" id="headingTwo">
+                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      <img src="./assets/images/icons/Meals-1.png" class="me-2" alt=""> Buy in-flight meal
+
+                                  </button>
+                              </h4>
+                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                  <div class="ps-4 pe-4">
+                                      <div class="rules-flight">
+                                          <div class="rules-flight-items">
+                                              <div class="rules-flight-thumbe">
+                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                              </div>
+                                              <div class="rules-flight-content">
+                                                  <h6>
+                                                      Mumbai
+                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      Hyderabad
+                                                  </h6>
+                                              </div>
+                                          </div>
+                                          <div class="rules-flight-items opacity_05">
+                                              <div class="rules-flight-thumbe">
+                                                  <img src="./assets/images/flights/flight-1.png" alt="">
+                                              </div>
+                                              <div class="rules-flight-content">
+                                                  <h6>
+                                                      Hyderabad
+                                                      <img src="./assets/images/icons/flight-right.png" alt="">
+                                                      Mumbai
+                                                  </h6>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="seatsname">
+                                      <ul class="seatsname-ul">
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item active">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Amit Kumar</h6>
+                                                      <p>E2  |  ₹200</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Sara Rege</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Zara Smith</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Zara Smith</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li class="seatsname-li">
+                                              <div class="seatsname-item">
+                                                  <div class="seatsname-thumb">
+                                                      <img src="./assets/images/icons/seats-user.png" alt="">
+                                                  </div>
+                                                  <div class="seatsname-content">
+                                                      <h6>Zara Smith</h6>
+                                                      <p>Select Seat</p>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <div class="p-4 meal-flight">
+                                      <div class="catagory-veg-nonveg mb-10">
+                                          <ul class="add-search-ul">
+                                              <li class="custom-check-box">
+                                                  <div class="custom-controls-stacked">
+                                                      <label class="custom-control material-checkbox">
+                                                          <input type="checkbox" class="material-control-input" checked="checked">
+                                                          <span class="material-control-indicator"></span>
+                                                          <span class="description">Veg</span>
+                                                      </label>
+                                                  </div>
+                                              </li>
+                                              <li class="custom-check-box">
+                                                  <div class="custom-controls-stacked">
+                                                      <label class="custom-control material-checkbox">
+                                                          <input type="checkbox" class="material-control-input">
+                                                          <span class="material-control-indicator"></span>
+                                                          <span class="description">Non Veg</span>
+                                                      </label>
+                                                  </div>
+                                              </li>
+                                          </ul>
+                                      </div>
+
+                                      <div class="meal-data">
+                                          <div class="luggage-add-list">
+                                              <div class="luggage-add-name">
+                                                  <h6><img src="./assets/images/icons/bag.png" alt=""> Beverage</h6>
+                                              </div>
+                                              <div class="luggage-add-items">
+                                                  <div class="">
+                                                      <h6>₹ 70</h6>
+                                                  </div>
+                                                  <div class="Travellers-qty ms-4">
+                                                      <div class="quantity buttons_added">
+                                                          <input type="button" value="-" class="qty-buttons minus">
+                                                          <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                          <input type="button" value="+" class="qty-buttons plus">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="luggage-add-list">
+                                              <div class="luggage-add-name">
+                                                  <h6><img src="./assets/images/icons/bag.png" alt=""> Cucumber tomato and cheese in multigrain bread</h6>
+                                              </div>
+                                              <div class="luggage-add-items">
+                                                  <div class="">
+                                                      <h6>₹ 250</h6>
+                                                  </div>
+                                                  <div class="Travellers-qty ms-4">
+                                                      <div class="quantity buttons_added">
+                                                          <input type="button" value="-" class="qty-buttons minus">
+                                                          <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                          <input type="button" value="+" class="qty-buttons plus">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="luggage-add-list">
+                                              <div class="luggage-add-name">
+                                                  <h6><img src="./assets/images/icons/bag.png" alt=""> Chicken Junglee in Marble Bread</h6>
+                                              </div>
+                                              <div class="luggage-add-items">
+                                                  <div class="">
+                                                      <h6>₹ 250</h6>
+                                                  </div>
+                                                  <div class="Travellers-qty ms-4">
+                                                      <div class="quantity buttons_added">
+                                                          <input type="button" value="-" class="qty-buttons minus">
+                                                          <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                          <input type="button" value="+" class="qty-buttons plus">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="luggage-add-list">
+                                              <div class="luggage-add-name">
+                                                  <h6 class="fw_7 fs_18">Total</h6>
+                                              </div>
+                                              <div class="luggage-add-items">
+                                                  <div class="">
+                                                      <h6 class="fw_7 fs_18">₹ 600</h6>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="remove-area">
+                                          <div class="Remove-left">
+                                              <a href="" class="Removeall">Remove all Selections</a>
+                                          </div>
+                                          <div class="Remove-right">
+                                              <a href="">Skip to Payment</a>
+                                              <a href="" class="button-style">Done</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="default-sidebar">
+                  <div class="sidebar-widget session-expires-widget">
+                      <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p>
+                  </div>
+                  <div class="sidebar-widget fare-summary-widget">
+                      <div class="widget-title">
+                          <h4>Fare Summary</h4>
+                          <img src="./assets/images/flights/1.png" alt="">
+                      </div>
+                      <div class="widget-content">
+                          <ul class="widget-list clearfix">
+                              <li class="fare-list-item">
+                                  <div class="fare-list-box">
+                                      <div class="fare-list-left">
+                                          <p>
+                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                              Base Fare
+                                          </p>
+                                      </div>
+                                      <div class="fare-list-right">
+                                          <p>&#8377;16,650</p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li class="fare-list-item">
+                                  <div class="fare-list-box">
+                                      <div class="fare-list-left">
+                                          <p>
+                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                              Taxes and Fees
+                                          </p>
+                                      </div>
+                                      <div class="fare-list-right">
+                                          <p>&#8377;2,034</p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li class="fare-list-item">
+                                  <div class="fare-list-box">
+                                      <div class="fare-list-left">
+                                          <p>
+                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                              Baggage/Seat/Meals
+                                          </p>
+                                      </div>
+                                      <div class="fare-list-right">
+                                          <p>&#8377;600</p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li class="fare-list-item">
+                                  <div class="fare-list-box">
+                                      <div class="fare-list-left">
+                                          <p>
+                                              <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                              Discounts
+                                          </p>
+                                      </div>
+                                      <div class="fare-list-right">
+                                          <p class="text-green">-&#8377;500</p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li class="fare-list-item">
+                                  <div class="fare-list-box pt-30">
+                                      <div class="fare-list-left">
+                                          <h6 class="fw_7">Grand Total</h6>
+                                      </div>
+                                      <div class="fare-list-right">
+                                          <h6 class="fw_7">&#8377;8,784</h6>
+                                          <p class="opacity_05">EMI @ 789/month</p>
+                                      </div>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="continue-widget mb-20">
+                      <a href="flight_review.html" class="button-style w-100">Continue</a>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+    
+    
+    </main>

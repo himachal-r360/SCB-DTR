@@ -24,7 +24,9 @@ API_URL:{
     ANGULAR_SITE_URL:'https://smartbuydev.reward360.in/lite/',
    enableEncryptionRequestResponse:false,
   'IS_MAIN':0,
-  
+    recaptcha: {
+    siteKey: '6Lf7UL0cAAAAAIt_m-d24WG4mA1XFPHE8yVckc5S',
+  },
   
   
   BUS_SITE_URL:{
