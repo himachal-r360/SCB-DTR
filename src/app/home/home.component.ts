@@ -106,9 +106,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
     }
-
+    
+    this.setSearchFilterData()
    
-      // this.setSearchFilterData()
    
    
     
@@ -260,6 +260,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setSearchFilterData() {
     this.searchData = sessionStorage.getItem('searchVal');
+    if(this.searchData != null || this.searchData != undefined){
     let searchObj = JSON.parse(this.searchData);
     this.fromCityName = searchObj.fromCity; //searchObj.flightfrom;
     this.toCityName = searchObj.toCity;//localStorage.getItem('toCity');
@@ -285,6 +286,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.flightData.get('infants').setValue(this.infantsVal);
     this.flightData.value.infants = this.infantsVal;
     this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+    }
   }
 
   flightSearch() {
