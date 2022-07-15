@@ -3489,7 +3489,7 @@ marquee {
     .no-notifications {
         width: 75%;
         margin: 0 auto;
-        margin-top: 10%;
+        margin-top: 4%;
         p {
             font-size: 18px;
             font-weight: 700;
@@ -4060,7 +4060,7 @@ marquee {
             .no-notifications {
                 width: 90%;
                 margin: 0 auto;
-                margin-top: 10%;
+                margin-top: 5%;
                 p {
                     font-size: 18px;
                     font-family: 'opensans-bold';
@@ -4343,38 +4343,52 @@ marquee {
     }
     .push_noti_non {
         .modal-content {
-            position: absolute;
-            top: 45px;
-            right: 26px;
-            width: 300px;
+            position: fixed;
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 0;
             box-shadow: 0px 3px 6px #00000029;
-            border-radius: 0px 0px 6px 6px;
-            border-radius: 6px;
-            &::before {
-                content: '';
-                width: 0;
-                height: 0;
-                border-left: 12px solid transparent;
-                border-right: 12px solid transparent;
-                border-bottom: 12px solid $white-color;
-                position: absolute;
-                right: 80px;
-                top: -12px;
+            border-radius: 15px;
+            animation-name: bottom_top_animation;
+            animation-duration: 200ms;
+            animation-timing-function: ease-in-out;
+            @keyframes bottom_top_animation {
+                from {
+                    bottom: 200px;
+                    opacity: 0
+                }
+                to {
+                    bottom: 0;
+                    opacity: 1
+                }
+            }
+            .no-notifications {
+                width: 90%;
+                margin: 0 auto;
+                margin-top: 5%;
+                p {
+                    font-size: 18px;
+                    font-family: 'opensans-bold';
+                    font-weight: 900;
+                    margin-bottom: 20px;
+                }
             }
         }
         .modal-header {
-            /*  background-color: #084C8F; */
+            // background-color: #084C8F;
             color: #151515;
-            font-family: $medium;
+            font-family: 'opensans-medium';
+            padding: 15px;
             .modal-title {
                 font-size: 16px;
-                font-family: $bold;
+                font-family: 'opensans-bold';
             }
-            /* .push-not-font {
-                display: block;
-                text-align: left;
-                padding-left: 15px;
-            } */
+            // .push-not-font {
+            //     display: block;
+            //     text-align: left;
+            //     padding-left: 15px;
+            // }
             .push-modal-head {
                 width: 100%;
                 display: block;
@@ -4385,7 +4399,114 @@ marquee {
         }
         .modal-body {
             line-height: 20px;
-            padding: 7px 9px;
+            padding: 0px 0px;
+            .recent-head {
+                padding: 10px 15px;
+                font-size: 16px;
+                font-family: 'opensans-medium';
+                margin: 0px;
+            }
+            .tab-content {
+                .push-new-notify {
+                    padding: 10px 15px;
+                    font-size: 14px;
+                    font-family: "opensans-medium";
+                    margin-bottom: 0px;
+                }
+                a {
+                    .new-notify-wrap {
+                        padding: 10px 12px;
+                        .push-wrapper-new {
+                            position: relative;
+                            .notify-pos-abs {
+                                position: absolute;
+                                bottom: 50px;
+                                right: -22px;
+                                @media screen and(min-width: 388px) {
+                                    position: absolute;
+                                    bottom: 30px;
+                                    right: -15px;
+                                }
+                            }
+                            .read-notify {
+                                position: absolute;
+                                top: -3px;
+                                left: 9px;
+                                height: 10px;
+                                width: 10px;
+                                background-color: #1D84FC;
+                                border-radius: 20px;
+                                text-align: center;
+                                padding: 3px;
+                                color: #fff;
+                                vertical-align: middle;
+                                line-height: 12px;
+                                border-style: solid;
+                                border-width: 2px;
+                                border-color: #1D84FC;
+                                z-index: 10;
+                            }
+                        }
+                        .offers-tab-content {
+                            // width: 260px;	
+                            display: inline-block;
+                            padding-left: 30px;
+                            h4 {
+                                margin-top: 0px;
+                                font-size: 14px;
+                                color: #111211;
+                                font-family: 'opensans-regular';
+                                font-weight: bold;
+                                white-space: break-spaces;
+                                word-break: break-word;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                line-height: normal;
+                                color: #111211;
+                            }
+                            h5 {
+                                // width: 385px;	
+                                margin-top: 0px;
+                                font-size: 14px;
+                                color: #111211;
+                                font-family: 'opensans-regular';
+                                white-space: break-spaces;
+                                word-break: break-word;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                line-height: normal;
+                            }
+                            p {
+                                // width: 385px;	
+                                font-size: 12px;
+                                color: #676967;
+                                font-family: 'opensans-regular';
+                                margin-bottom: 7px;
+                                white-space: break-spaces;
+                                word-break: break-word;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 3;
+                                overflow: hidden;
+                                -webkit-box-orient: vertical;
+                                line-height: normal;
+                            }
+                            img {
+                                width: 100%;
+                            }
+                        }
+                        &:hover {
+                            background-color: #F7F7F7;
+                        }
+                    }
+                }
+                .hr-line {
+                    margin: 0px 0px 0px 1px;
+                }
+            }
         }
         .nav-item {
             margin-right: 8px;
@@ -4403,22 +4524,22 @@ marquee {
             justify-content: center;
             border-top: 0px solid transparent;
             .btn_pref_save {
-                background-color: $primary-color;
-                color: $white-color;
+                background-color: #1D86FF;
+                color: #ffffff;
                 height: 40px;
                 font-size: 14px;
                 border-radius: 8px;
             }
             .btn_pref_cancel {
                 margin-left: 10px;
-                border: 1px solid $primary-color;
+                border: 1px solid #1D86FF;
                 border-radius: 8px;
-                color: $black-color;
-                background-color: $white-color;
+                color: #000;
+                background-color: #fff;
             }
         }
         .tab-content {
-            /*  min-height: 120px; */
+            // min-height: 120px;
             min-height: 50px;
             max-height: 300px;
             overflow-y: scroll;
@@ -4427,11 +4548,14 @@ marquee {
             .m-offers-tab-data {
                 background-color: #F6F9FD;
                 margin-bottom: 15px;
-                /*  box-shadow: -1px 2px 6px #00000029; */
+                // box-shadow: -1px 2px 6px #00000029;
                 border-radius: 4px;
                 padding: 0px;
                 .push-wrapper-new {
                     padding: 0px;
+                }
+                .push-wrap-pad {
+                    padding-left: 10px;
                 }
                 .push-hor-line {
                     margin: 0px;
@@ -4440,15 +4564,16 @@ marquee {
                 }
                 .m-push-image-placeholder {
                     float: left;
-                    width: 30px;
-                    height: 30px;
+                    width: 35px;
+                    height: 35px;
                     margin-right: 8px;
-                    margin-left: 6px;
                     padding: 5px;
-                    background-color: $white-color;
+                    margin-left: 6px;
+                    background-color: transparent;
                 }
                 .m-offers-tab-content {
                     width: 100%;
+                    // display: inline-block;
                     h4 {
                         margin-top: 0px;
                         margin-bottom: 5px;
@@ -4506,6 +4631,7 @@ marquee {
                     padding-left: 0px;
                     h5,
                     p {
+                        // width: 52vw !important;
                         line-height: normal;
                     }
                 }
