@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { retry, Subscription, timeInterval } from 'rxjs';
+import { retry, Subscription, timeInterval, window } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
-import { Location } from '@angular/common';
+import { DOCUMENT, Location, ViewportScroller } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Options } from '@angular-slider/ngx-slider';
 import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
@@ -74,7 +74,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   showLessLayover = true;
   showMoreLayover = false;
   hideShowModal = false;
-
+  showScroll?:boolean;
+  topPosToStartShowing = 100;
   flightListMod: any;
   RefundableFaresCount: number = 0;
   nonStopCount: number = 0;
@@ -82,12 +83,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal: string = ""
   DocKey: any;
-
-   loaderValue = 10;
-
+  loaderValue = 10;
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
-
+  @HostListener("window:scroll", [])
 
   flightDataModify: any = this._fb.group({
     flightfrom: [],
@@ -103,7 +102,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   });
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
-
   minPrice: number = 0;
   maxPrice: number = 10000;
   resetMinPrice: number = 0;
@@ -156,8 +154,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   priceSortingFilteritems = [
     { name: 'P_L_H', active: true, value: 'Price Low to High' },
     { name: 'P_H_L', active: false, value: 'Price High to Low' },
-    { name: 'P_D_E', active: false, value: 'Depart Ealry' },
-    { name: 'P_D_L', active: false, value: 'Depart Late' },
+    { name: 'D_E', active: false, value: 'Depart Earliest' },
+    { name: 'D_L', active: false, value: 'Depart Latest' },
+    { name: 'D_Short', active: false, value: 'Duration Shortest'},
+    { name: 'D_Long', active: false, value: 'Duration Longest'},
+    { name: 'A_E', active: false, value: 'Arrival Earliest'},
+    { name: 'A_L', active: false, value: 'Arrival Latest'},
   ]
   cdnUrl: any;
   constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal)  {
@@ -173,12 +175,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loader = true;
     this.getQueryParamData(null);
     this.flightList = this._flightService.flightListData;
-
     this.getCityList();
     //this.getFlightIcon();
     this.getAirpotsList();
     this.setSearchFilterData();
     this.flightSearch();
+   
   }
 
   getQueryParamData(paramObj: any) {
@@ -632,6 +634,25 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         else if (item.name == 'P_H_L' && item.active == true) {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
+        else if (item.name == 'D_Short' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => a.flights[0].duration - b.flights[0].duration);
+        }
+        else if (item.name == 'D_Long' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
+        }
+        else if (item.name == 'D_E' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());  
+        }
+        else if (item.name == 'D_L' && item.active == true) {
+        this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());  
+        }
+        else if (item.name == 'A_E' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());  
+        }
+        else if (item.name == 'A_L' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());  
+        }
+
       })
     }
 
@@ -1220,6 +1241,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  gotoTop() {
+   // this.scroll.scrollToPosition([0,0]);
+  }
 
-
+  
 }
