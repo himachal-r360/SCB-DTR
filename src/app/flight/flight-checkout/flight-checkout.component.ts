@@ -2,10 +2,17 @@ import { Component, OnInit,OnDestroy,DebugNode, NgModule,ViewChild, ChangeDetect
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
+import { AppConfigService } from '../../app-config.service';
+import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
+import { RestapiService } from 'src/app/shared/services/restapi.service';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+
+import { FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -33,31 +40,82 @@ declare var $: any;
   ]
 })
 export class FlightCheckoutComponent implements OnInit ,OnDestroy {
-  cdnUrl: any;
-       customerInfo: any;
-      coupon_id: any;
-    intialTotalFare: number = 0;
-    indexCoupon: any;
-    coupon_name: any;
-    coupon_code: any;
-    remove_Coupon: any;
-    send_RemoveCouponDetail: any;
-    coupon_amount: number = 0;
-    REWARD_CUSTOMERID: string;
-    REWARD_EMAILID: string;
-    REWARD_MOBILE: string;
-    REWARD_CUSTOMERNAME: string;
-    REWARD_TITLE:string;
+  passengerForm: FormGroup;
+     submitted = false;
+         error: number = 0;
+   patternName = /^(?:(?!.*[ ]{2})(?!(?:.*[']){2})(?!(?:.*[-]){2})(?:[a-zA-Z0-9 \p{L}'-]{3,48}$))$/;
+    emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    gstpattern :any;
+    documentPattern = /^(?!^0+$)[a-zA-Z0-9]{3,20}$/;
+        maxAdults: number;
+        maxChilds: number;
+        maxInfants: number;
+    minNameLength: number;
+    maxNameLength: number;
+    minPassportLength: number;
+    maxPassportLength: number;
+   cityList:any;
+     urlparam:any;
+        cdnUrl: any;
+            serviceSettings:any;
+               whatsappFeature: number = 0;
+        customerInfo: any;
+        coupon_id: any;
+        intialTotalFare: number = 0;
+        indexCoupon: any;
+        coupon_name: any;
+        coupon_code: any;
+        remove_Coupon: any;
+        send_RemoveCouponDetail: any;
+        coupon_amount: number = 0;
+        REWARD_CUSTOMERID: string;
+        REWARD_EMAILID: string;
+        REWARD_MOBILE: string;
+        REWARD_CUSTOMERNAME: string;
+        REWARD_TITLE:string;
         flexipaysummry:boolean;
-    flexiDiscount:any;
-    flexiIntrest:any;
+        flexiDiscount:any;
+        flexiIntrest:any;
         totalCollectibleAmount: any;
-    totalCollectibleAmountFromPartnerResponse: any;
-    couponapplyamount:any;
+        totalCollectibleAmountFromPartnerResponse: any;
+        couponapplyamount:any;
         convenience_fee: number = 0;
-    convienceChargesEnable: boolean = true;
-    convienceChargesEnabledValue: number = 0;
-partnerToken:any;
+        convienceChargesEnable: boolean = true;
+        convienceChargesEnabledValue: number = 0;
+        partnerToken:any;
+        
+
+        isExpanded:boolean = false;
+        isAdultExpanded:boolean = false;
+        isInfantExpanded:boolean = false;
+        isGstExpanded:boolean = false;
+        enablesavedTraveller:number=0;
+        enableGST:any; 
+        saveTravllerShow:boolean=false;
+        travellerlist:any;
+        adulttravellerlist:any;
+        checkPaxCount:any;
+        savePaxcount:any=0;
+        savecustomerResp:any;
+        GSTList:any=[];
+        GSTListLength:any;
+        selectedGST:any=[];
+        checkedGST:any=[];
+        disableCheckbox:any = [];
+        disableCheckboxInfant:any = [];
+        selectedCheckbox:any=[];
+        selectedCheckboxInfant:any=[];
+        getGSTShow:Boolean=false;
+        modalcheckedvalue:any = []; modalcheckedvalueInfant:any = [];
+        gstmodalcheckedvalue:any = false;
+        isCheckedGST:any=[];
+        adults = []; children = [];
+        adultsArray = []; 
+        childrenArray = [];
+
+        adultsArrayM = []; 
+        childrenArrayM = [];
+
 
   flightDetails:any;
   selectedVendor:any;
@@ -70,6 +128,7 @@ partnerToken:any;
   getFlightDetailLocalStorage:any;
   totalDuration:number=0;
   randomFlightDetailKey:any;
+  searchData:any;
   BaseFare:any;
   Tax:any;
   TotalFare:any;
@@ -77,7 +136,7 @@ partnerToken:any;
   timeLeft:any = 900;
   baggageInfo:any='';
   flightDetailsArrVal:any;
-  steps:any = 1;
+  steps:any = 2;
 
 
 
@@ -92,53 +151,24 @@ partnerToken:any;
   gstNumber:any
   mobileNumber:any;
   email:any
-  InputArray:any;
   adultArr:any;
   adultArrData:any;
   adultsCount:number=0;
   showLoader:number=1;
-  travellerDetailsForm!:any;
-  
-  // adultDetail!:FormArray;
-  
-  
-  // addAdultDetail: any = this._fb.group({
-  //   firstName:['',[Validators.required]],
-  //   lastName:['',[Validators.required]],
-  //   dateOfBirth:['',[Validators.required]],
-  //   gender:[]
-  // })
-
-  addChildDetail: any = this._fb.group({
-    firstName:[],
-    lastName:[],
-    dateOfBirth:[],
-    gender:[]
-  })
-
-  // addChildDetail: any = this._fb.group({})
-
-  addInfantDetail: any = this._fb.group({
-  
-  })
 
 
 
 
 
-  constructor(private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal) { 
+
+
+  constructor(private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService) { 
    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
-    this.startTimer();
-        this.travellerDetailsForm = this._fb.group({
-      adult : this._fb.array([]),
-      child : this._fb.array([]),
-      infant : this._fb.array([]),
-    })
-  }
-
-  ngOnInit(): void {
-  
-     setTimeout(() => {
+    this.serviceSettings=this.appConfigService.getConfig();
+           this.whatsappFeature =this.serviceSettings.whatsappFeature;
+        this.enableGST = this.serviceSettings.enableSavedGST;
+        this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
+        setTimeout(() => {
   
        //Check Laravel Seesion
         if(this.sg['customerInfo']){
@@ -149,6 +179,21 @@ partnerToken:any;
              if(this.customerInfo["guestLogin"]==true){
              }else{
               this.initiatePage();
+              
+              /*    this.passengerForm.patchValue({
+                    passengerMobile: this.customerInfo["mobile"],
+                    passengerEmail: this.customerInfo["email"]
+                });
+              */
+                if(this.enablesavedTraveller == 1){
+                this.checksavedtraveller();
+                }
+                if(this.enableGST==1){
+                this.getCustomerGstDetails();
+                }
+
+    
+              
              }
 
           }else{
@@ -158,6 +203,15 @@ partnerToken:any;
       }
 
       }, 50);
+       const jobGroup: FormGroup = new FormGroup({});
+          this.passengerForm = jobGroup;
+    this.startTimer();
+
+  }
+
+  ngOnInit(): void {
+  
+
     
   }
 
@@ -179,15 +233,7 @@ partnerToken:any;
     this.getFlightDetails();
 
     
-        this.InputArray =
-    {
-      adult: this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults)),
-      child:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.child)),
-      infants:this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.infants)),
-      email:"",
-      mobileNumber:"",
-      gstNumber:"",
-    }
+
   
   }
 
@@ -195,8 +241,14 @@ partnerToken:any;
     //this._flightService.getFlightDetailsVal()
     this.showLoader=1;
      this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
-     //console.log(this.flightDetailsArrVal, "Param");
     let param=JSON.parse(this.flightDetailsArrVal);
+    this.searchData=JSON.parse(param.searchData);
+    console.log(this.searchData);
+        this.maxAdults=Number(this.searchData.adults);
+        this.maxChilds=Number(this.searchData.child);
+        this.maxInfants=Number(this.searchData.infants);
+   this.travelerDetails=this.searchData;
+   
       if(param!=null){
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
@@ -219,7 +271,523 @@ partnerToken:any;
 
 
   }
+  
+        passengerFormCount: number = 1;
+        currentId: any;
 
+        clickPassenger($event,passenger,checkboxIndex) {
+        if($event.target.checked){
+        if(passenger.age > 12)
+        this.addTraveller(passenger,checkboxIndex);
+        else
+        this.addChild(passenger,checkboxIndex);
+        }else{
+        if(passenger.age > 12){
+        this.currentId=$('#passengerBoxId_'+checkboxIndex).val();
+        this.removeTraveller(parseInt(this.currentId),checkboxIndex);
+        } else{
+        this.currentId=$('#passengerChildBoxId_'+checkboxIndex).val();
+        this.removeChild(parseInt(this.currentId),checkboxIndex);
+        }
+
+        }
+        }
+    
+        
+       manualAddTraveller(type){
+        if(type==1)
+        this.addTraveller(-1,-1);
+        else
+        this.addChild(-1,-1);
+       }
+      addTraveller(passenger,checkboxIndex) {
+           if ((this.adultsArray.length ) < (this.maxAdults)) {
+            this.adults.push(this.adultsArray.length);
+            this.adultsArray.push(this.passengerFormCount);
+            
+             if(checkboxIndex ==-1)
+            this.adultsArrayM.push(this.passengerFormCount);
+
+            var i = Number(this.passengerFormCount);
+            
+            if(checkboxIndex !=-1)
+            this.saveTravellerId[checkboxIndex]=i;
+            
+                var title="";   var adult_first_name = "";var adult_last_name = "";
+                
+                if(checkboxIndex !=-1){
+                
+                title=passenger.title;
+                adult_first_name=passenger.firstName;
+                adult_last_name=passenger.lastName;
+                
+                }
+ 
+             this.passengerForm.addControl('adult_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+             this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+             this.passengerForm.addControl('adult_last_name' + i, new FormControl(adult_last_name, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+            
+            
+
+           // this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
+           // this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
+           // this.passengerForm.controls['passengerAgree'].setValidators([Validators.required, Validators.pattern('true')]);
+
+
+           this.passengerForm.controls['adult_title' + i].updateValueAndValidity();
+            this.passengerForm.controls['adult_first_name' + i].updateValueAndValidity();
+             this.passengerForm.controls['adult_last_name' + i].updateValueAndValidity();
+           // this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
+            //this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
+           // this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
+         
+
+
+            this.passengerFormCount++;
+            
+             if(checkboxIndex !=-1){
+               $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
+             $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             }
+        } else {
+         if(checkboxIndex !=-1){
+          $('#passengerBox_'+checkboxIndex).addClass('hidden');
+          $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
+         } 
+ 
+        }
+
+    }
+    
+    
+    
+    removeTraveller(val,checkboxIndex) {
+    
+        
+         
+        var passengerName = this.passengerForm.controls['adult_first_name' + val]['value'];
+        const index = this.adultsArray.indexOf(val, 0);
+         if(checkboxIndex !=-1)
+     $('#passengerBox_'+checkboxIndex).addClass('hidden');
+        if (index > -1) {
+            this.adultsArray.splice(index, 1);
+        }
+        
+        if(checkboxIndex ==-1){
+        const index1 = this.adultsArrayM.indexOf(val, 0); 
+        if (index1 > -1) {
+        this.adultsArrayM.splice(index1, 1);
+        }
+        }
+
+        
+        if (this.travellerlist.length > 0) {
+            var trvList = [];
+            for (let i of this.travellerlist) {
+                var trvlist = i;
+                var combineName = trvlist.firstName;
+                trvList.push({name:combineName}); 
+            }
+            for (var index1 in trvList) {
+                var fullName = trvList[index1]['name'];
+                if(fullName == passengerName) {
+                    this.disableCheckbox[index1]=true;
+                    this.modalcheckedvalue[index1]=false;
+                    this.selectedCheckbox.splice(index1,1);
+                    break;
+                }
+            }
+        }
+
+        this.passengerForm.removeControl('adult_first_name' + val);
+        this.passengerForm.removeControl('adult_last_name'+val);
+        this.passengerForm.clearValidators();
+        this.passengerForm.updateValueAndValidity();
+
+        
+        this.adults.splice(val, 1);
+        
+
+      
+        this.error = 0;
+
+    }
+    childCount: number = 1;
+    addChild(passenger,checkboxIndex) {
+    
+    
+        if ((this.childrenArray.length + 1) <= (this.maxChilds)) {
+        
+            if(checkboxIndex ==-1)
+            this.childrenArrayM.push(this.childCount);
+        
+            this.childrenArray.push(this.childCount);
+            var i = Number(this.childCount);
+            
+            if(checkboxIndex !=-1)
+            this.saveChildTravellerId[checkboxIndex]=i;
+            
+            var gender=""; var arrAge = ""; var childpassenger = "";
+           if(passenger !=-1){
+              
+                if((passenger.gender == 'M') || (passenger.gender == 'Male')) {
+                gender = 'M'
+                }else if((passenger.gender == 'F') || (passenger.gender == 'Female')){
+                gender = 'F';
+                }
+               
+                if(passenger.age != undefined){
+                arrAge = passenger.age;
+                }else{
+                arrAge = passenger.age;
+                }
+             childpassenger=passenger.firstName+' '+passenger.lastName;
+            }    
+            
+            this.passengerForm.addControl('childName' + i, new FormControl(childpassenger, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength)]));
+            this.passengerForm.addControl('childGender' + i, new FormControl(gender, Validators.required));
+            this.passengerForm.addControl('childAge' + i, new FormControl(arrAge, Validators.required));
+            // this.passengerForm.addControl('saveTravellerInfant' + i, new FormControl('1'));
+            
+            this.passengerForm.controls['childName' + i].updateValueAndValidity();
+            this.passengerForm.controls['childGender' + i].updateValueAndValidity();
+            this.passengerForm.controls['childAge' + i].updateValueAndValidity();
+            this.childCount++;
+              if(checkboxIndex !=-1){
+           $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+           $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
+           }
+            
+        } else {
+          if(checkboxIndex !=-1){
+          $('#passengerBox_'+checkboxIndex).addClass('hidden');
+          $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
+          }
+    
+        }
+    }
+    
+    
+    removeChild(val,checkboxIndex) {
+        var passengerName = this.passengerForm.controls['childName' + val]['value'];
+         if(checkboxIndex !=-1)
+         $('#passengerBox_'+checkboxIndex).addClass('hidden');
+ 
+ 
+ 
+        const index = this.childrenArray.indexOf(val, 0); 
+        if (index > -1) {
+            this.childrenArray.splice(index, 1);
+        }
+        
+        
+        if(checkboxIndex ==-1){
+        const index1 = this.childrenArrayM.indexOf(val, 0); 
+        if (index1 > -1) {
+        this.childrenArrayM.splice(index1, 1);
+        }
+
+        }
+
+        if (this.travellerlist.length > 0) {
+            var trvList = [];
+            for (let i of this.travellerlist) {
+                var trvlist = i;
+                var combineName = trvlist.firstName+ " " +trvlist.lastName;
+                trvList.push({name:combineName}); 
+            }
+            for (var index1 in trvList) {
+                var fullName = trvList[index1]['name'];
+                if(fullName == passengerName) {
+                    this.disableCheckboxInfant[index1]=true;
+                    this.modalcheckedvalueInfant[index1]=false;
+                    break;
+                }
+            }
+        }
+
+        this.passengerForm.removeControl('childName' + val);
+        this.passengerForm.removeControl('childGender' + val);
+        this.passengerForm.removeControl('childAge' + val);
+
+        this.passengerForm.clearValidators();
+        this.childCount--;
+        this.children.splice(val, 1);
+
+    }
+    
+    resetFormValidation(){
+    this.submitted=false;
+     this.passengerForm.markAsUntouched();
+    this.passengerForm.setErrors(null);
+    }
+  
+    saveTravellerId=[]; saveChildTravellerId=[];
+        /**--------------------------------------SAVED TRAVELLER ------------------------------------------------------------------------ */
+    checksavedtraveller(){
+        let checksavedtravConfig = this.serviceSettings.enablesavedTraveller
+        if(checksavedtravConfig == 1){
+            this.saveTravllerShow = true;
+            var requestParams = {
+            'customerId':this.REWARD_CUSTOMERID
+            };
+
+            var postsavedTravellers = {
+            postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
+            };
+
+            this.rest.getCustomertravellerInfo(postsavedTravellers).subscribe(response =>{
+                // let respData = JSON.parse(this.EncrDecr.get(response.result ));
+                let resp = response['errorcode']; 
+                if(response['errorcode'] == 0){
+
+                if(response['value'].length > 0){
+                response['value'] =   response['value'].sort(function (a, b) {
+                var x = a['age']; var y = b['age'];
+                return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+                });
+                }
+                this.travellerlist = response['value'];
+                
+                
+		this.adulttravellerlist =  this.travellerlist.filter(function(tra) {
+		return tra.age > 1;
+		});
+		
+		
+                for(let i=0;i<this.travellerlist.length;i++){
+                if(this.adulttravellerlist[i].age > 12)
+                this.saveTravellerId[this.adulttravellerlist[i].id]=-1
+                else
+                this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
+                }
+                
+                console.log(this.adulttravellerlist);
+	                
+                this.checkPaxCount = this.adulttravellerlist.length;
+                }
+            }),(err:HttpErrorResponse)=>{
+               console.log('Something went wrong !');
+            
+            }
+        }
+    }
+ getCustomerGstDetails(){
+        if(this.enableGST==1){ 
+        var requestParams = {
+            'customerId':this.REWARD_CUSTOMERID
+        };
+        var requestParamsEncrpt = {
+            postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
+        };
+        this.rest.getCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
+            // let respData = JSON.parse(this.EncrDecr.get(response.result ));
+            if(response['errorcode'] == 0){
+            
+            if(response['value'].length > 0){
+        response['value'] =   response['value'].sort(function (a, b) {
+        var x = a['id']; var y = b['id'];
+        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+        });
+        }
+            
+                this.GSTList = response['value'];
+                this.GSTListLength=this.GSTList.length;
+                    if(this.GSTListLength>0){
+                this.getGSTShow=true;
+            }else{
+                this.getGSTShow=false;
+            }
+            }
+        });
+        }else{
+        this.getGSTShow=false;
+       }
+       for(let i=0;i<this.GSTListLength;i++){
+            this.isCheckedGST[i]=false;
+        }
+    }
+    fillupGSTDetailOnCheck($event,data,GSTIndex){ 
+        if($event.target.checked){
+            this.selectedGST.push(GSTIndex);
+            this.checkedGST.push({ 
+                                    "gstNumber":  data.gstNumber,
+                                    "gstName":    data.gstName,
+                                    "address":    data.address,
+                                    "pinCode":    data.pinCode,
+                                    "city":       data.city,
+                                    "state":      data.state,
+                                    });
+            var checkedGSTLength=this.checkedGST.length;
+
+            this.passengerForm['controls']['gstNumber'].setValue(this.checkedGST[checkedGSTLength-1].gstNumber);
+            this.passengerForm['controls']['gstBusinessName'].setValue(this.checkedGST[checkedGSTLength-1].gstName);
+            this.passengerForm['controls']['gstAddress'].setValue(this.checkedGST[checkedGSTLength-1].address);
+            this.passengerForm['controls']['gstPincode'].setValue(this.checkedGST[checkedGSTLength-1].pinCode);
+            this.passengerForm['controls']['gstCity'].setValue(this.checkedGST[checkedGSTLength-1].city);
+            this.passengerForm['controls']['gstState'].setValue(this.checkedGST[checkedGSTLength-1].state);
+            this.isCheckedGST[GSTIndex]=true;
+        }else{
+            this.selectedGST.pop(GSTIndex);
+             this.isCheckedGST[GSTIndex]=false;
+            this.checkedGST.pop({ 
+                                    "gstNumber":  data.gstNumber,
+                                    "gstName":    data.gstName,
+                                    "address":    data.address,
+                                    "pinCode":    data.pinCode,
+                                    "city":       data.city,
+                                    "state":      data.state,
+                                });
+            if(this.passengerForm.controls['gstNumber'].value==data.gstNumber){
+                this.passengerForm['controls']['gstNumber'].setValue('');
+                this.passengerForm['controls']['gstBusinessName'].setValue('');
+                this.passengerForm['controls']['gstAddress'].setValue('');
+                this.passengerForm['controls']['gstPincode'].setValue('');
+                this.passengerForm['controls']['gstCity'].setValue('');
+                this.passengerForm['controls']['gstState'].setValue('');
+            }
+        }
+    }
+
+    saveTravellerFunc(){
+        var saveTravellerArray: any=[];
+        var ii=1;
+        
+        if (this.adultsArray.length > 0) {
+           for (let i of this.adultsArray) {
+
+                var checksaveTraveller;
+                if(this.passengerForm.controls['saveTraveller']['value'] == true){
+                    checksaveTraveller=1;
+                }else{
+                    checksaveTraveller= 0;
+                }
+
+                if(checksaveTraveller==1){
+                    var gender;
+                    if(this.passengerForm.controls['passengerGender' + i]['value']=="Male"){
+                        gender='M';
+                    }else if(this.passengerForm.controls['passengerGender' + i]['value']=="Female"){
+                        gender='F';
+                    }else{
+                        gender=this.passengerForm.controls['passengerGender' + i]['value'];
+                    }
+                    saveTravellerArray.push({
+                        "age": this.passengerForm.controls['passengerAge' + i]['value'],
+                        "birthPreference": this.passengerForm.controls['passengerBerthChoice' + i]['value'],
+                        "concessionType": '',
+                        "customerId": this.REWARD_CUSTOMERID,
+                        "dateOfBirth": "",
+                        "emailId": this.passengerForm.controls['passengerEmail']['value'],
+                        "firstName": this.passengerForm.controls['passengerName' + i]['value'].trim(),
+                        "gender": gender,
+                        "id": i,
+                        "lastName": '',
+                        "mobileNumber": this.passengerForm.controls['passengerMobile']['value'],
+                        "passportExpiryDate": "",
+                        "passportIssueCountry": "",
+                        "passportIssueDate": "",
+                        "passportNumber": "",
+                        "paxBirthCountry": "",
+                        "paxNationality": "",
+                        "status": 0,
+                        "title": ""
+                        });
+
+                }
+               
+                ii++;
+           }
+           
+       }
+       
+        if (this.childrenArray.length > 0) {
+           for (let i of this.childrenArray) {
+
+                var checksaveTravellerInfant;
+                if(this.passengerForm.controls['saveTraveller']['value'] == true){
+                    checksaveTravellerInfant=1;
+                }else{
+                    checksaveTravellerInfant= 0;
+                }
+
+                if(checksaveTravellerInfant==1){
+                    var gender;
+                    if(this.passengerForm.controls['childGender' + i]['value']=="Male"){
+                        gender='M';
+                    }else if(this.passengerForm.controls['childGender' + i]['value']=="Female"){
+                        gender='F';
+                    }else{
+                        gender=this.passengerForm.controls['childGender' + i]['value'];
+                    }
+                    saveTravellerArray.push({
+                        "age": this.passengerForm.controls['childAge' + i]['value'],
+                        "birthPreference": '',
+                        "concessionType": '',
+                        "customerId": this.REWARD_CUSTOMERID,
+                        "dateOfBirth": "",
+                        "emailId": this.passengerForm.controls['passengerEmail']['value'],
+                        "firstName": this.passengerForm.controls['childName' + i]['value'].trim(),
+                        "gender": gender,
+                        "id": i,
+                        "lastName": '',
+                        "mobileNumber": this.passengerForm.controls['passengerMobile']['value'],
+                        "passportExpiryDate": "",
+                        "passportIssueCountry": "",
+                        "passportIssueDate": "",
+                        "passportNumber": "",
+                        "paxBirthCountry": "",
+                        "paxNationality": "",
+                        "status": 0,
+                        "title": ""
+                        });
+
+                }
+               
+                ii++;
+           }
+           
+       }
+       
+       
+        if( this.enablesavedTraveller==1 && saveTravellerArray.length >0){
+            var requestParamsEncrpt = {
+            postData:this.EncrDecr.set(JSON.stringify(saveTravellerArray)) 
+            };
+            this.rest.saveCustomertravellerInfo(requestParamsEncrpt).subscribe(response => {
+            })
+        }
+    }
+    saveCustomerGst(){
+       if(this.passengerForm['controls']['saveGST'].value == true){
+        var saveGSTArray: any=[];
+          saveGSTArray.push({
+          "address": this.passengerForm.controls['gstAddress']['value'],
+          "city": this.passengerForm.controls['gstCity']['value'],
+          "customerId": this.REWARD_CUSTOMERID,
+          "gstName": this.passengerForm.controls['gstBusinessName']['value'],
+          "gstNumber": this.passengerForm.controls['gstNumber']['value'],
+          "id": 0,
+          "pinCode": this.passengerForm.controls['gstPincode']['value'],
+          "state": this.passengerForm.controls['gstState']['value'],
+        });
+	  var requestParamsEncrpt = {
+	    postData:this.EncrDecr.set(JSON.stringify(saveGSTArray)) 
+	  };
+	  this.rest.saveCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
+	     // console.log(response);
+	  })
+       } 
+    }
+
+
+    expandItemsAdult() {
+        if(this.isAdultExpanded == false){
+          this.isAdultExpanded = true;
+        }else if(this.isAdultExpanded == true){
+          this.isAdultExpanded = false;
+        }
+      }
 
 
     ConvertObjToQueryString(obj: any) {
@@ -356,8 +924,6 @@ partnerToken:any;
 
        } 
        
-       console.log(totalFare);
-        
          taxFare=totalFare-baseFare;
       
         this.BaseFare =baseFare;
@@ -395,129 +961,15 @@ partnerToken:any;
     return result;
   }
 
-  addAdultForm(){
-    this.toggleAdult =! this.toggleAdult
-    let adults = this.travellerDetailsForm.get('adult') as FormArray;
-    adults.push(this._fb.group({
-      // Id:['', [Validators.required]],
-      firstName:['', [Validators.required]],
-      lastName:['', [Validators.required]],
-      dateOfBirth:['', [Validators.required]],
-      gender:['Male']
-    }));
-    console.log(adults , "adult");
-    
-  }
-
-  // addAdult(){
-  //   this.toggleAdult =! this.toggleAdult
-  //   let adult = this.travellerDetailsForm.get('customerInfo') as FormArray;
-  //   adult.push(this._fb.group({
-  //     firstName : ['', [Validators.required]],
-  //     lastName : ['', [Validators.required]],
-  //     dateOfBirth:['',[Validators.required]],
-  //     gender:['Male']
-  //   }));
-  // }
-
-  public Error = (controlName: string, errorName: string) => {
-    return this.travellerDetailsForm.controls[controlName].hasError(errorName);
-  };
 
 
 
 
-
-
-  getAdultGenderValue(gender:any , i:any){
-    // this.InputArray.adult[i].gender = gender; 
-    
-    this.travellerDetailsForm.value.adult[i].gender = gender; 
-    console.log(this.travellerDetailsForm);
-    if(gender == "Male"){ }
-    else if(gender == "Female"){}
-  }
-  getChildGenderValue(gender:any , i:any){
-    this.travellerDetailsForm.value.child[i].gender = gender; 
-    // this.InputArray.child[i].gender = gender;
-    if(gender == "Male"){}
-    else if(gender == "Female"){}
-  }
-  getInfantsGenderValue(gender:any , i:any){
-    this.travellerDetailsForm.value.intant[i].gender = gender; 
-    // this.InputArray.infants[i].gender = gender;
-    if(gender == "Male"){}
-    else if(gender == "Female" ){}
-  }
-
-  GetArrOfTravellerDetails(detailsCount:any)
-  {
-    console.log(detailsCount);
-    
-      //let resultArr=[];
-      for(let i=0;i<detailsCount;i++){
-          // let traverller_obj={Id:i, firstName:'', lastName:'', dateOfBirth:'' ,gender:'Male'}
-          // resultArr.push(traverller_obj);
-          this.addAdultForm();
-      }
-      //return resultArr;
-  }
-  
-  
-  postAdultDetails(){
-    this.toggleAdult =! this.toggleAdult
-    // this.InputArray.adult.push();
-    this.travellerDetailsArr= this.InputArray;
-    
-    
-    // this.adultArrData.push();
- 
-    // let travellerDetailsObj={adults:[],Child:[],infant:[] }
-    //   let traverller_obj={Id:0, FirstName:'', LastName:'', DOB:''};
-    //   let adultArr=[];
-    //       for(let i=0;i<adult;i++){
-    //       traverller_obj={Id:i, FirstName:'', LastName:'', DOB:''}
-    //       console.log(traverller_obj);
-    //       adultArr.push(traverller_obj);
-    //   }
-
-  }
-
-  postChildDetails(){
-    this.toggleChild =! this.toggleChild
-    this.InputArray.child.push();
-    this.travellerDetailsArr= this.InputArray;
-    
-  }
-
-  postInfantDetails(){
-    this.infantToggle =! this.infantToggle
-    this.InputArray.infants.push();
-    this.travellerDetailsArr= this.InputArray;
-    
-
-  }
-
-  saveTravellerHistory(para:any){
-    this.checked = para.target.checked;
-    localStorage.setItem('isCheckedTravellerDetails', this.checked);
-    if(this.checked == true){
-      let saveTravellerDetailsArr :any ;
-      saveTravellerDetailsArr = this.InputArray
-      localStorage.setItem('travellerDetailsArray' , JSON.stringify(saveTravellerDetailsArr));
-    }
-  }
   
 
   
   continueTravellerDetails(){
-    // if(this.InputArray){
-    //   return
-    // }
-    // else{
-    //   localStorage.setItem('finalTravellerDetail',JSON.stringify(this.InputArray));  
-    // }
-    //this.travellerDetailsForm.markAllAsTouched();
+
     this.steps=3;
   }
 

@@ -177,7 +177,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.flightList = this._flightService.flightListData;
 
     this.getCityList();
-    this.getFlightIcon();
+    //this.getFlightIcon();
     this.getAirpotsList();
     this.setSearchFilterData();
     this.flightSearch();
@@ -1192,7 +1192,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey };
+    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"searchData":this.searchData };
     let randomFlightDetailKey = this.getRandomString(44);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     this._flightService.setFlightsDetails(flightDetailsArr);

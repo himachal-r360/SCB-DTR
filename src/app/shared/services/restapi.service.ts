@@ -174,5 +174,46 @@ getupdateCardDetails(): Observable<any> {
 	return this.http.post( this.endpoint+'coupon/getCoupons',param, config).pipe(map((response: any) => response));
     }
   }
+  getCustomertravellerInfo(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/getCustomertravellerInfo.json');
+  }else{
+    return this.http.post( this.endpoint+'getCustomertravellerInfo',param, config).pipe(map((response: any) => response));
+  }
+} 
+  
+saveCustomertravellerInfo(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/saveCustomertravellerInfo.json');
+  }else{
+    return this.http.post( this.endpoint+'saveCustomertravellerInfo',param, config).pipe(map((response: any) => response));
+  }
+} 
+
+getCustomerGstDetails(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/getCustomerGstDetails.json');
+  }else{
+    return this.http.post( this.endpoint+'getCustomerGstDetails',param, config).pipe(map((response: any) => response));
+  }
+} 
+  
+saveCustomerGstDetails(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/saveCustomerGstDetails.json');
+  }else{
+    return this.http.post( this.endpoint+'saveCustomerGstDetails',param, config).pipe(map((response: any) => response));
+  }
+} 
+
+checksavedtravellers(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/savedtravellerResponse.json');
+  }
+  else{
+  return this.http.post( this.endpoint+'getCustomertravellerInfo',param, config).pipe(map((response: any) => response));
+  }
+} 
+
 
 }
