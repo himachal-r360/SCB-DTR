@@ -98,7 +98,6 @@ export class TravellerDetailComponent implements OnInit,OnDestroy {
     // this.adultsCount=parseInt(this.travelerDetails.adults);
     // this.travelerDetails.child=parseInt(this.travelerDetails.child);
     // this.travelerDetails.infants=parseInt(this.travelerDetails.infants);
-    // console.log(this.travelerDetails);
     this.InputArray =
     {
       adult: this.GetArrOfTravellerDetails(parseInt(this.travelerDetails.adults)),
@@ -126,7 +125,6 @@ export class TravellerDetailComponent implements OnInit,OnDestroy {
       dateOfBirth:['', [Validators.required]],
       gender:['Male']
     }));
-    console.log(adults , "adult");
     
   }
 
@@ -183,7 +181,6 @@ export class TravellerDetailComponent implements OnInit,OnDestroy {
     // this.InputArray.adult[i].gender = gender; 
     
     this.travellerDetailsForm.value.adult[i].gender = gender; 
-    console.log(this.travellerDetailsForm);
     if(gender == "Male"){ }
     else if(gender == "Female"){}
   }
@@ -202,8 +199,6 @@ export class TravellerDetailComponent implements OnInit,OnDestroy {
 
   GetArrOfTravellerDetails(detailsCount:any)
   {
-    console.log(detailsCount);
-    
       //let resultArr=[];
       for(let i=0;i<detailsCount;i++){
           // let traverller_obj={Id:i, firstName:'', lastName:'', dateOfBirth:'' ,gender:'Male'}
@@ -227,7 +222,6 @@ export class TravellerDetailComponent implements OnInit,OnDestroy {
     //   let adultArr=[];
     //       for(let i=0;i<adult;i++){
     //       traverller_obj={Id:i, FirstName:'', LastName:'', DOB:''}
-    //       console.log(traverller_obj);
     //       adultArr.push(traverller_obj);
     //   }
 
