@@ -30,6 +30,10 @@ const routes: Routes = [
    {
     path: 'diners/foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
+  },
+  {
+    path: 'regalia_gold/foryou',
+    loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   }
 ];
 
