@@ -30,7 +30,7 @@
     </div>
 </div>
 
- <div class="header-sticky fixed-top bg-white " *ngIf="showmHeader">
+<div class="header-sticky fixed-top bg-white " *ngIf="showmHeader">
     <div class="row marquee-row-new" *ngIf="importantMessage">
         <div class="container-fluid">
             <div class="col-md-2 message">Important Message:</div>
@@ -39,7 +39,7 @@
     </div>
     <!-- Smartbuy new Disclamier popup code  -->
     <!-- Button trigger modal -->
-    <button  class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></button>
+    <button class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></button>
     <div class="container_hftab">
         <div class="d-none d-sm-none d-lg-block">
             <nav class=" sb_head">
@@ -74,7 +74,8 @@
                                         <a style="width:100%;" class="searchResults_a">
                                             <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px" class="mr-2"></div>
                                             <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
-                                             <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && !searchOption['highlight']['name']"><span [innerHTML]="searchOption['fields']['name']"></span></div>                                  <div style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['fields']['name']}}</div>
+                                            <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && !searchOption['highlight']['name']"><span [innerHTML]="searchOption['fields']['name']"></span></div>
+                                            <div style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['fields']['name']}}</div>
                                             <div class="compare-title" style="float: right;" *ngIf="searchOption['fields']['category']">Offers in {{searchOption['fields']['category']}}</div>
                                         </a>
                                     </li>
@@ -85,44 +86,45 @@
                             <span class="focus-border"></span>
                             <span class="icn_tool"> 
                                 <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
-                                <ng-template #voiceSearch>
+                            <ng-template #voiceSearch>
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
 
 
-                                <span *ngIf="voiceActiveSectionDisabled; else voicesection;"  class="mic-span">
+                                <span *ngIf="voiceActiveSectionDisabled; else voicesection;" class="mic-span">
                                     <a (click)="startVoiceRecognition()">
                                         <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                                    </a>
+                                </a>
                                 </span>
 
 
 
                                 <ng-template #voicesection>
-                                <ng-container *ngIf="!voiceActiveSectionError; else failure">
-                                <ng-container *ngIf="voiceText; else start">
-                                <a (click)="startVoiceRecognition()">
-                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                                </a>
-                                </ng-container>
-                                <ng-template #start>
-                                <ng-container
-                                *ngIf="voiceActiveSectionListening; else beginning">
-                                <a (click)="startVoiceRecognition()">
-                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                                </a>
-                                </ng-container>
-                                <ng-template #beginning>
-                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic-l.svg" alt="mic"  class="mic_lis" ></span>
+                                    <ng-container *ngIf="!voiceActiveSectionError; else failure">
+                                        <ng-container *ngIf="voiceText; else start">
+                                            <a (click)="startVoiceRecognition()">
+                                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                            </a>
+                                        </ng-container>
+                                        <ng-template #start>
+                                            <ng-container *ngIf="voiceActiveSectionListening; else beginning">
+                                                <a (click)="startVoiceRecognition()">
+                                                    <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                                </a>
+                                            </ng-container>
+                                            <ng-template #beginning>
+                                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic-l.svg" alt="mic"  class="mic_lis" ></span>
+                                            </ng-template>
+                                        </ng-template>
+                                    </ng-container>
+                                    <ng-template #failure>
+                                        <a (click)="startVoiceRecognition()">
+                                            <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                        </a>
+                                    </ng-template>
                                 </ng-template>
-                                </ng-template>
-                                </ng-container>
-                                <ng-template #failure>  <a (click)="startVoiceRecognition()">
-                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                                </a>                   </ng-template>
-                                </ng-template>
-                                </ng-template>
-                            
-                            
+                            </ng-template>
+
+
                             </span>
                         </div>
                     </div>
@@ -139,6 +141,9 @@
                                     <div class="position-push-data" *ngIf="enablePushBox && serviceSettings.notifications==1 ">
                                         <div class=" ">
                                             <div class="modal-content push_noti_content " *ngIf="enableQuesBox ">
+
+
+
                                                 <div class="modal-header ">
                                                     <h6 class="modal-title ">Push Notification Box</h6>
 
@@ -158,16 +163,21 @@
                                                 </div>
                                             </div>
                                             <div class="modal-content push_noti_content " *ngIf="enablePushContentBox">
+                                                <div class="no-notifications text-center" *ngIf="enableNoNotify==false " style="display:none;">
+                                                    <p>Currently, there are no notifications for you!</p>
+                                                    <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
+                                                </div>
                                                 <div class="modal-header push-modal-new-head">
                                                     <h6 class="modal-title " *ngIf="enablePushTitle==false ">Push Notification Box </h6>
-                                                    <p class="modal-title push-modal-head" *ngIf="enablePushTitle==true ">Special offers for you </p>
+                                                    <p class="modal-title push-modal-head" *ngIf="enablePushTitle==true ">Notifications </p>
                                                     <p *ngIf="enablePushTitle==true " class="push-not-font">Push on notifications enabled. Device now setup to receive push notifications</p>
 
                                                 </div>
                                                 <div class="modal-body" *ngIf="!deviceService.isMobile()">
-                                                    <div class="tab-content " id="pills-tabContent " [innerHtml]="contentHtml "></div>
+
+                                                    <div class="tab-content " id="pills-tabContent " [innerHtml]="contentHtml"></div>
                                                 </div>
-                                                                                       </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +282,7 @@
                             <div *ngIf="guestLogin==true && customerLogin==false">
                                 <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
                             </div>
-                            
+
                             <div class="head_img" *ngIf="guestLogin==false && customerLogin==true">
                                 <div class="dropdown myaccount-drop">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdown-user" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -282,7 +292,7 @@
                                     </a>
                                     <div class="dropdown-menu user-menu myaccount-drop" aria-labelledby="dropdown-user">
                                         <div class="">
-                               
+
                                             <div class="points_sec" *ngIf="customeravailableStatus">
                                                 <div class="px-4 py-2">
                                                     <div class="row">
@@ -305,14 +315,14 @@
                                                 <span>Manage account</span>
                                             </div>
                                         </a>
-                        
+
                                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('manage_orders')">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-orders.svg" alt="account" class="">
                                                 <span>My Orders / Bookings</span>
                                             </div>
                                         </a>
-                           
+
                                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('customer_support')">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-help.svg" alt="account" class="">
@@ -354,10 +364,10 @@
                                         </div>
                                     </div>
                                     <div class="list-travel-img mt-4">
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-2.svg" alt="cleartrip" />
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-4.svg" alt="yatra" />
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-1.svg" alt="goibibo" />
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-3.svg" alt="easemytrip" />
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-2.svg" alt="cleartrip" />
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-4.svg" alt="yatra" />
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-1.svg" alt="goibibo" />
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-3.svg" alt="easemytrip" />
                                     </div>
                                 </div>
 
@@ -370,7 +380,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-3">
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-5.svg" alt="cleartrip" />
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-5.svg" alt="cleartrip" />
                                     </div>
 
                                 </div>
@@ -383,14 +393,14 @@
                                         </div>
                                     </div>
                                     <div class="list-travel-img mt-4">
-                                        
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-6.svg" alt="cleartrip" />
-                                        
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-2.svg" alt="yatra" />
-                                        
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-4.svg" alt="goibibo" />
-                                        
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-1.svg" alt="easemytrip" />
+
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-6.svg" alt="cleartrip" />
+
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-2.svg" alt="yatra" />
+
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-4.svg" alt="goibibo" />
+
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-1.svg" alt="easemytrip" />
                                     </div>
                                 </div>
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.BUS==1">
@@ -401,7 +411,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-3">
-                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-7.svg" alt="cleartrip" />
+                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-7.svg" alt="cleartrip" />
                                     </div>
                                 </div>
 
@@ -415,17 +425,17 @@
                         <div class="dropdown-content-list list-shop">
                             <!-- <h5>E-Commerce</h5> -->
                             <div class="row g-4">
-                                    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
-                                        <div class="content_show" >
-                                            <a href="javascript:;" (click)="redirectUrlpopup('amazon',0,'amazon')">
-                                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/amazon.svg" alt="amazon">
-                                                <h5>Amazon</h5>
-                                                <p class="points m-0">{{serviceSettings.offer_construct.amazon.reward}}X Reward Points | {{serviceSettings.offer_construct.amazon.cashback}}% Cashback</p>
-                                            </a>
-                                        </div>
+                                <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+                                    <div class="content_show">
+                                        <a href="javascript:;" (click)="redirectUrlpopup('amazon',0,'amazon')">
+                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/amazon.svg" alt="amazon">
+                                            <h5>Amazon</h5>
+                                            <p class="points m-0">{{serviceSettings.offer_construct.amazon.reward}}X Reward Points | {{serviceSettings.offer_construct.amazon.cashback}}% Cashback</p>
+                                        </a>
                                     </div>
+                                </div>
 
-                                <div class="col-sm-4"  *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+                                <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
                                     <div class="content_show">
                                         <a href="javascript:;" (click)="redirectUrlpopup('flipkart',0,'flipkart')">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/flipkart.svg" alt="flipkart">
@@ -434,7 +444,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-sm-4"  *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
+                                <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
                                     <div class="content_show">
                                         <a href="javascript:;" (click)="redirectUrlpopup('imagine',0,'imagine')">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/imagine.svg" alt="imagine">
@@ -443,10 +453,10 @@
                                         </a>
                                     </div>
                                 </div>
-                            <!-- </div> -->
-                            <!-- <div class="row"> -->
+                                <!-- </div> -->
+                                <!-- <div class="row"> -->
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.IGP==1">
-                                    <div class="content_show" >
+                                    <div class="content_show">
                                         <a href="javascript:;" (click)="redirectUrlpopup('igp',0,'igp')">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/igp.svg" alt="igp">
                                             <h5>IGP</h5>
@@ -455,7 +465,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
-                                    <div class="content_show" >
+                                    <div class="content_show">
                                         <a href="javascript:;" (click)="redirectUrlpopup('jockey',0,'jockey')">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/jockey.svg" alt="jockey">
                                             <h5>Jockey</h5>
@@ -465,7 +475,7 @@
                                 </div>
 
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON_PANTRY==1">
-                                    <div class="content_show" >
+                                    <div class="content_show">
                                         <a href="javascript:;" (click)="goTo('grocery')">
                                             <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/grocery.svg" alt="grocery">
                                             <h5>Amazon Grocery</h5>
@@ -614,14 +624,14 @@
 </a>
 </div>
 
-<div class="logo pl-10" *ngIf="payzrestriction==true" >
+<div class="logo pl-10" *ngIf="payzrestriction==true">
 
-     <a href="{{DOMAIN_SETTINGS.main_domain_url}}"> <i class="fa fa-home sb-icon" aria-hidden="true" style="color:#007bff;"></i> </a>
+    <a href="{{DOMAIN_SETTINGS.main_domain_url}}"> <i class="fa fa-home sb-icon" aria-hidden="true" style="color:#007bff;"></i> </a>
 
 </div>
 
 
-<div class="logo pl-10" *ngIf="payzrestriction==false" >
+<div class="logo pl-10" *ngIf="payzrestriction==false">
 
     <span *ngIf="is_main==1">
 <a  href="https://www.hdfcbank.com/" target="_blank"  >
@@ -642,13 +652,13 @@
             <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
         </div>
     </div>
-        <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false  && payzrestriction==false">
+    <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false  && payzrestriction==false">
 
         <div>
             <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
         </div>
     </div>
-    
+
     <div class="after_log_m">
         <div class="inner_m_item">
             <div class="icn" *ngIf="serviceSettings.notifications==1">
@@ -668,7 +678,7 @@
         <div class="inner_m_item">
             <div class="head_img icn pr-0" *ngIf="guestLogin==false && customerLogin==true">
                 <div class="dropdown myaccount-drop-m">
-                    <a class="dropdown-toggle" href="{{domainRedirect}}manage_account" role="button" id="dropdown-user-m" >
+                    <a class="dropdown-toggle" href="{{domainRedirect}}manage_account" role="button" id="dropdown-user-m">
                         <img src="{{cdnUrl}}images/smartbuy/icons/payment/profile.svg" alt="profile" class="profile_pic">
                     </a>
                     <div class="dropdown-menu user-menu myaccount-drop-m" aria-labelledby="dropdown-user-m">
@@ -700,7 +710,7 @@
                                 <span>Manage account</span>
                             </div>
                         </a>
-                       <!-- <a class="dropdown-item" href="javascript:;" (click)="clickUrl('saved_cards')">
+                        <!-- <a class="dropdown-item" href="javascript:;" (click)="clickUrl('saved_cards')">
                             <div class="item">
                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-card.svg" alt="account" class="">
                                 <span>Saved cards</span>
@@ -747,7 +757,7 @@
                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
                     <a style="width:100%;" class="searchResults_a">
                         <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px"></div>
-                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left">{{searchOption['name']}}</div>
+                        <div class=" ps-3 ps-sm-0 " style="width:60%;float:left">{{searchOption['name']}}</div>
                         <div class="compare-title" style="float: right;">Offers in {{searchOption.subcategory_1}}</div>
                     </a>
                 </li>
@@ -757,10 +767,10 @@
                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
                     <a style="width:100%;" class="searchResults_a">
                         <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px" class="mr-2"></div>
-                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
-                        
-                          <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="searchOption['highlight'] && !searchOption['highlight']['name']"><span [innerHTML]="searchOption['fields']['name']"></span></div>
-                        <div class=" ps-3 ps-sm-0 "style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['fields']['name']}}</div>
+                        <div class=" ps-3 ps-sm-0 " style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
+
+                        <div class=" ps-3 ps-sm-0 " style="width:60%;float:left" *ngIf="searchOption['highlight'] && !searchOption['highlight']['name']"><span [innerHTML]="searchOption['fields']['name']"></span></div>
+                        <div class=" ps-3 ps-sm-0 " style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['fields']['name']}}</div>
                         <div class="compare-title" style="float: right;" *ngIf="searchOption['fields']['category']">Offers in {{searchOption['fields']['category']}}</div>
                     </a>
                 </li>
@@ -771,35 +781,35 @@
         <span class="focus-border"></span>
         <span class="icn_tool"> 
             <span class="cross_icn" *ngIf="searchBarValue;else voiceSearchMobile"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
-            <ng-template #voiceSearchMobile>
-                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
-                <span *ngIf="voiceActiveSectionDisabled; else voicesection;" class="mic-span">
+        <ng-template #voiceSearchMobile>
+            <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
+            <span *ngIf="voiceActiveSectionDisabled; else voicesection;" class="mic-span">
                     <a (click)="startVoiceRecognition()">
                         <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                    </a>
-                </span>
-                <ng-template #voicesection>
-                    <ng-container *ngIf="!voiceActiveSectionError; else failure">
+            </a>
+            </span>
+            <ng-template #voicesection>
+                <ng-container *ngIf="!voiceActiveSectionError; else failure">
                     <ng-container *ngIf="voiceText; else start">
-                    <a (click)="startVoiceRecognition()">
-                    <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                    </a>
+                        <a (click)="startVoiceRecognition()">
+                            <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                        </a>
                     </ng-container>
-                        <ng-template #start>
-                            <ng-container *ngIf="voiceActiveSectionListening; else beginning">
-                                <a (click)="startVoiceRecognition()">
+                    <ng-template #start>
+                        <ng-container *ngIf="voiceActiveSectionListening; else beginning">
+                            <a (click)="startVoiceRecognition()">
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
-                                </a>
-                            </ng-container>
+                            </a>
+                        </ng-container>
                         <ng-template #beginning>
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic-l.svg" alt="mic"  class="mic_lis" ></span>
                         </ng-template>
-                        </ng-template>
-                    </ng-container>
-                    <ng-template #failure>
                     </ng-template>
+                </ng-container>
+                <ng-template #failure>
                 </ng-template>
             </ng-template>
+        </ng-template>
         </span>
     </div>
 </div>
@@ -867,7 +877,9 @@
             <div class="m_disclaimer">
                 <p class="title">Disclaimer:</p>
                 <p>
-                    HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers. HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC Bank is merely facilitating the payment to its Customers by providing the Payment Gateway Services. HDFC Bank is neither guaranteeing nor making any representation. HDFC Bank is not responsible for Sale/Quality/Features of the Products/Services under the offers.
+                    HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers. HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC
+                    Bank is merely facilitating the payment to its Customers by providing the Payment Gateway Services. HDFC Bank is neither guaranteeing nor making any representation. HDFC Bank is not responsible for Sale/Quality/Features of the Products/Services
+                    under the offers.
                 </p>
             </div>
 
@@ -1229,13 +1241,20 @@
     <!-- Push Notification Mlite Modal  -->
     <div class="modal-dialog web" role="document" *ngIf="enablePushContentBox">
         <div class="modal-content">
+            <div class="no-notifications text-center" *ngIf="enableNoNotifyMb==false " style="display:none;">
+                <button class="close" aria-label="Close" data-dismiss="modal" type="button"><span class="" aria-hidden="true">×</span></button>
+                <p>Currently, there are no notifications for you!</p>
+                <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
+            </div>
+
             <div class="modal-header">
-                <h5 class="modal-title" id="pushNotifiModalLabel">Special offers for you</h5>
+                <h5 class="modal-title" id="pushNotifiModalLabel">Notifications</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
             </div>
             <div class="modal-body" *ngIf="deviceService.isMobile()">
+
                 <div class="tab-content" id="pills-tabContent" [innerHtml]="contentHtml"></div>
                 <div class="modal-footer d-block">
                     <div class="row">
@@ -1292,7 +1311,7 @@
     <div class="modal-dialog" role="document" *ngIf="pushNotification_disable">
         <div class="modal-content">
             <div class="modal-header">
-                   </div>
+            </div>
             <div class="modal-body">
                 <p class="ques">Are you sure you want to disable push on notifications?</p>
                 <p class="noti_text">You will be missing out on realtime updates. You will still have access to all notifications when you open the Notification Inbox.</p>
@@ -1389,7 +1408,7 @@
     <div class="modal-dialog" role="document" *ngIf="pushNotification_disable">
         <div class="modal-content">
             <div class="modal-header">
-                    </div>
+            </div>
             <div class="modal-body">
                 <p class="ques">Are you sure you want to disable push on notifications?</p>
                 <p class="noti_text">You will be missing out on realtime updates. You will still have access to all notifications when you open the Notification Inbox.</p>
@@ -1402,4 +1421,3 @@
 
 <app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"
     [redirectPopupHeader]="redirectPopupHeader" [redirectPopupImpmessage]="redirectPopupImpmessage" [redirectPopupMessage]="redirectPopupMessage"></app-redirect-popup>
-

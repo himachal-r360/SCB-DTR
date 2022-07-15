@@ -148,6 +148,9 @@ rd_site_url: any;shop_site_url;
 	voiceActiveSectionSuccess: boolean = false;
 	voiceActiveSectionListening: boolean = false;
 	voiceText: any;
+  parsed_date:any;
+  relative_to:any;
+  delta:any;
         payzrestriction:boolean=false;
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private ngZone: NgZone,private modalService: NgbModal,
@@ -356,14 +359,34 @@ rd_site_url: any;shop_site_url;
                                                 '</div></div>';
               break;
               case 'TEXT_LOGO':
-                 html ='<div class="toast_push " id="toast_'+index+'"  >'+
-                                                 '<div class="toast-body" > <div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
-                          '<span class="toast-close" aria-hidden="true" >&times;</span>'+
-                        '</button><div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <a href="'+val['redirect_url']+'">  <img src="'+this.cdnUrl+'images/push-icon-'+val['serviceToken'].toLowerCase()+'.svg" class="img-fluid push-image-placeholder col-md-2" alt="..."  ><div class="text-truncate col-md-10">'+
-                        '<h4 style="-webkit-box-orient: vertical;">Congratulations! </h4>'+
-                                          '<h5 style="-webkit-box-orient: vertical;">Your '+val['serviceToken'].toLowerCase()+' booking confirmed.</h5>'+
-                                          '<p style="-webkit-box-orient: vertical;"> Booked on '+val['orderDate']+'</p></div></div></a></div>'+
-                                                '</div></div>';
+                var subimage_url = '';
+                if(val['serviceToken'] !=null ){
+                   
+                   subimage_url=val['serviceToken'];
+               }else if(val['tag'] !=null){
+                   
+                   subimage_url=val['tag'].toLowerCase();
+               }else{
+                   
+                   subimage_url='';
+               }
+               subimage_url = this.cdnUrl+'images/'+subimage_url+'-notify.png';
+               var image_url = ''
+               if(val['image_url'] != null && val['image_url'] != ''){
+                   image_url=val['image_url'];
+               }else if(val['logo_url'] !=null && val['logo_url'] !=''){
+                   image_url=val['logo_url'];
+               }else{
+                   image_url='';
+               }
+                 html ='<a href="'+val['redirect_url']+'"><div class="toast_push " id="toast_'+index+'"  >'+
+                                                 '<div class="toast-body" > <div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <div class="row"><div class="col-2 push-wrapper-new"><img src="'+image_url+'" class="" alt="..."  ><img class="notify-pos-abs" src="'+subimage_url+'" alt=""/></div><div class="text-truncate col-10">'+
+                        '<h4 style="-webkit-box-orient: vertical;">'+val['title']+' </h4>'+
+                                          '<h5 style="-webkit-box-orient: vertical;">'+val['text']+' </h5>'+
+                                          '<p style="-webkit-box-orient: vertical;"> '+this.converttime(val['created_at'])+'</p></div></div></div>'+
+                                                '</div></div><div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
+                                                '<span class="toast-close" aria-hidden="true" >&times;</span>'+
+                                              '</button></div></a>';
               break;
               case 'TEXT_IMAGE':
                  html ='<div class="toast_push " id="toast_'+index+'"  >'+
@@ -375,6 +398,35 @@ rd_site_url: any;shop_site_url;
             }
             return html;
 
+  }
+  converttime(date_str){
+    if (!date_str) {return;}
+    date_str = $.trim(date_str);
+    date_str = date_str.replace(/\.\d\d\d+/,""); // remove the milliseconds
+    date_str = date_str.replace(/-/,"/").replace(/-/,"/"); //substitute - with /
+    date_str = date_str.replace(/T/," ").replace(/Z/," UTC"); //remove T and substitute Z with UTC
+    date_str = date_str.replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2"); // +08:00 -> +0800
+    this.parsed_date = new Date(date_str);
+    this.relative_to = (arguments.length > 1) ? arguments[1] : new Date(); //defines relative to what ..default is now
+    this.delta = <number>((this.relative_to.getTime()-this.parsed_date)/1000);
+    this.delta=(this.delta<2)?2:this.delta;
+    var r = '';
+    if (this.delta < 60) {
+    r = this.delta + ' seconds ago';
+    } else if(this.delta < 120) {
+    r = 'a minute ago';
+    } else if(this.delta < (45*60)) {
+    r = (<number>(this.delta / 60, 10)).toString() + ' minutes ago';
+    } else if(this.delta < (2*60*60)) {
+    r = 'an hour ago';
+    } else if(this.delta < (24*60*60)) {
+    r = '' + (<number>(this.delta / 3600, 10)).toString() + ' hours ago';
+    } else if(this.delta < (48*60*60)) {
+    r = 'a day ago';
+    } else {
+    r = (<number>(this.delta / 86400, 10)).toString() + ' days ago';
+    }
+    return r;
   }
      receiveVoiceSearchResults($event) {
         $('.sb_search').val($event);
