@@ -5,11 +5,11 @@ import { retry, Subscription, timeInterval } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { Options } from '@angular-slider/ngx-slider';
 import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
+import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -159,7 +159,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'P_D_E', active: false, value: 'Depart Ealry' },
     { name: 'P_D_L', active: false, value: 'Depart Late' },
   ]
-  
   cdnUrl: any;
   constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
@@ -169,7 +168,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
        this._styleManager.setScript('custom', `assets/js/custom.js`);
        
   }
-
   ngOnInit(): void {
 
     this.loader = true;
@@ -209,10 +207,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     $("#CompareToFly_" + indx + " a[value=" + value + "]").addClass("flight-extra-tabs-active");
   }
   ngAfterViewInit(): void {
-    /*setTimeout(() => {
+    setTimeout(() => {
       this.Initslider();
-      $('.selectpicker').selectpicker();
-    }, 200);*/
+      //$('.selectpicker').selectpicker();
+    }, 200);
   }
   setSearchFilterData() {
     this.searchData = sessionStorage.getItem('searchVal');
@@ -1039,6 +1037,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       let query: any = sessionStorage.getItem('searchVal');
       let url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
+      this.getAirlinelist();
       this.popularFilterFlightData()
 
       this.location.replaceState(url);

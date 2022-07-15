@@ -9,9 +9,12 @@ import { AppConfigService } from '../../app-config.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-
+import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { createMask } from '@ngneat/input-mask';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -26,9 +29,6 @@ export const MY_DATE_FORMATS = {
 };
 
 
-
-
-
 declare var $: any;
 
 @Component({
@@ -41,7 +41,25 @@ declare var $: any;
 })
 export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   passengerForm: FormGroup;
+        passengerAdultFormCount: number = 1;
+        passengerChildFormCount: number = 1;
+        passengerInfantFormCount: number = 1;
+        currentId: any;
+  dateInputMask = createMask<Date>({
+    alias: 'datetime',
+    inputFormat: 'dd/mm/yyyy',
+    parser: (value: string) => {
+      const values = value.split('/');
+      const year = +values[2];
+      const month = +values[1] - 1;
+      const date = +values[0];
+      return new Date(year, month, date);
+    },
+  });
+  
+  emailInputMask = createMask({ alias: 'email' });
      submitted = false;
+         saveAdultTravellerId=[]; saveChildTravellerId=[];    saveInfantTravellerId=[]; 
          error: number = 0;
    patternName = /^(?:(?!.*[ ]{2})(?!(?:.*[']){2})(?!(?:.*[-]){2})(?:[a-zA-Z0-9 \p{L}'-]{3,48}$))$/;
     emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
@@ -87,13 +105,17 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
         isExpanded:boolean = false;
         isAdultExpanded:boolean = false;
+        isChildExpanded:boolean = false;
         isInfantExpanded:boolean = false;
         isGstExpanded:boolean = false;
         enablesavedTraveller:number=0;
         enableGST:any; 
         saveTravllerShow:boolean=false;
         travellerlist:any;
-        adulttravellerlist:any;
+        filterTravellerList:any;
+        adultTravellerList:any;
+        childTravellerList:any;
+        infantTravellerList:any;
         checkPaxCount:any;
         savePaxcount:any=0;
         savecustomerResp:any;
@@ -109,12 +131,16 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         modalcheckedvalue:any = []; modalcheckedvalueInfant:any = [];
         gstmodalcheckedvalue:any = false;
         isCheckedGST:any=[];
-        adults = []; children = [];
+        
+        
+        adults = []; child = [];infant = [];
         adultsArray = []; 
-        childrenArray = [];
+        childArray = [];
+        infantArray = [];
 
         adultsArrayM = []; 
-        childrenArrayM = [];
+        childArrayM = [];
+         infantArrayM = [];
 
 
   flightDetails:any;
@@ -162,7 +188,9 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
 
 
-  constructor(private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService) { 
+  constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private toastrService: ToastrService,private modalService:NgbModal) { 
+
+ console.log(this.dateInputMask);
    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
     this.serviceSettings=this.appConfigService.getConfig();
            this.whatsappFeature =this.serviceSettings.whatsappFeature;
@@ -180,11 +208,11 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
              }else{
               this.initiatePage();
               
-              /*    this.passengerForm.patchValue({
+                  this.passengerForm.patchValue({
                     passengerMobile: this.customerInfo["mobile"],
                     passengerEmail: this.customerInfo["email"]
                 });
-              */
+              
                 if(this.enablesavedTraveller == 1){
                 this.checksavedtraveller();
                 }
@@ -205,6 +233,23 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
       }, 50);
        const jobGroup: FormGroup = new FormGroup({});
           this.passengerForm = jobGroup;
+           jobGroup.addControl('saveTraveller',new FormControl(''));
+            jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE));
+        jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID));
+        jobGroup.addControl('whatsappFlag', new FormControl('1'));
+        //jobGroup.addControl('passengerAgree', new FormControl(''));
+
+        jobGroup.addControl('gstNumber', new FormControl());
+        jobGroup.addControl('gstBusinessName', new FormControl());
+        jobGroup.addControl('gstAddress', new FormControl());
+        jobGroup.addControl('gstCity', new FormControl());
+        jobGroup.addControl('gstPincode', new FormControl());
+        jobGroup.addControl('gstState', new FormControl());
+        
+
+        jobGroup.addControl('saveGST', new FormControl('1'));
+         
+          
     this.startTimer();
 
   }
@@ -229,11 +274,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
     this.parseSearchVal = JSON.parse(this.getsearchVal);
    // this.getFlightIcon();
     this.getAirpotsList();
-    
     this.getFlightDetails();
-
-    
-
   
   }
 
@@ -272,78 +313,92 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
   }
   
-        passengerFormCount: number = 1;
-        currentId: any;
+       
 
         clickPassenger($event,passenger,checkboxIndex) {
         if($event.target.checked){
         if(passenger.age > 12)
-        this.addTraveller(passenger,checkboxIndex);
-        else
+        this.addAdult(passenger,checkboxIndex);
+        else if(passenger.age > 2  && passenger.age < 5)
         this.addChild(passenger,checkboxIndex);
+        else if(passenger.age > 1  && passenger.age < 3 )
+        this.addInfant(passenger,checkboxIndex);
         }else{
-        if(passenger.age > 12){
+         if(passenger.age > 12){
         this.currentId=$('#passengerBoxId_'+checkboxIndex).val();
-        this.removeTraveller(parseInt(this.currentId),checkboxIndex);
-        } else{
-        this.currentId=$('#passengerChildBoxId_'+checkboxIndex).val();
+        this.removeAdult(parseInt(this.currentId),checkboxIndex);
+        }else if(passenger.age > 2  && passenger.age < 5){
+        this.currentId=$('#passengerBoxId_'+checkboxIndex).val();
         this.removeChild(parseInt(this.currentId),checkboxIndex);
+        } else if(passenger.age > 1  && passenger.age < 3 ){
+        this.currentId=$('#passengerChildBoxId_'+checkboxIndex).val();
+        this.removeInfant(parseInt(this.currentId),checkboxIndex);
         }
 
         }
         }
     
         
-       manualAddTraveller(type){
-        if(type==1)
-        this.addTraveller(-1,-1);
-        else
+       manualAdultTraveller(type){
+        this.addAdult(-1,-1);
+       }
+       
+      manualChildTraveller(type){
         this.addChild(-1,-1);
        }
-      addTraveller(passenger,checkboxIndex) {
+       
+      manualInfantTraveller(type){
+        this.addInfant(-1,-1);
+       }
+       
+       
+      addAdult(passenger,checkboxIndex) {
            if ((this.adultsArray.length ) < (this.maxAdults)) {
             this.adults.push(this.adultsArray.length);
-            this.adultsArray.push(this.passengerFormCount);
+            this.adultsArray.push(this.passengerAdultFormCount);
             
              if(checkboxIndex ==-1)
-            this.adultsArrayM.push(this.passengerFormCount);
+            this.adultsArrayM.push(this.passengerAdultFormCount);
 
-            var i = Number(this.passengerFormCount);
+            var i = Number(this.passengerAdultFormCount);
             
             if(checkboxIndex !=-1)
-            this.saveTravellerId[checkboxIndex]=i;
+            this.saveAdultTravellerId[checkboxIndex]=i;
             
-                var title="";   var adult_first_name = "";var adult_last_name = "";
+                var title="";   var adult_first_name = "";var adult_last_name = "";var adult_dob='';
                 
                 if(checkboxIndex !=-1){
-                
                 title=passenger.title;
                 adult_first_name=passenger.firstName;
                 adult_last_name=passenger.lastName;
-                
+                adult_dob=passenger.dateOfBirth;
                 }
  
              this.passengerForm.addControl('adult_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
-             this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
-             this.passengerForm.addControl('adult_last_name' + i, new FormControl(adult_last_name, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+             this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+             this.passengerForm.addControl('adult_last_name' + i, new FormControl(adult_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+            
+             this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob, [Validators.required]));
             
             
 
-           // this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
-           // this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
-           // this.passengerForm.controls['passengerAgree'].setValidators([Validators.required, Validators.pattern('true')]);
+                this.passengerForm.controls['adult_title' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_first_name' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_last_name' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_dob' + i].updateValueAndValidity();
+                
+                
+                 this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
+                 this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
+                // this.passengerForm.controls['passengerAgree'].setValidators([Validators.required, Validators.pattern('true')]);
 
-
-           this.passengerForm.controls['adult_title' + i].updateValueAndValidity();
-            this.passengerForm.controls['adult_first_name' + i].updateValueAndValidity();
-             this.passengerForm.controls['adult_last_name' + i].updateValueAndValidity();
-           // this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
-            //this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-           // this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
+                 this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
+                this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
+                // this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
          
 
 
-            this.passengerFormCount++;
+            this.passengerAdultFormCount++;
             
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
@@ -359,11 +414,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
     }
     
-    
-    
-    removeTraveller(val,checkboxIndex) {
-    
-        
+    removeAdult(val,checkboxIndex) {
          
         var passengerName = this.passengerForm.controls['adult_first_name' + val]['value'];
         const index = this.adultsArray.indexOf(val, 0);
@@ -398,131 +449,239 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
                 }
             }
         }
-
+        this.passengerAdultFormCount--;
         this.passengerForm.removeControl('adult_first_name' + val);
         this.passengerForm.removeControl('adult_last_name'+val);
         this.passengerForm.clearValidators();
         this.passengerForm.updateValueAndValidity();
-
-        
         this.adults.splice(val, 1);
-        
-
-      
         this.error = 0;
 
     }
-    childCount: number = 1;
-    addChild(passenger,checkboxIndex) {
     
-    
-        if ((this.childrenArray.length + 1) <= (this.maxChilds)) {
-        
-            if(checkboxIndex ==-1)
-            this.childrenArrayM.push(this.childCount);
-        
-            this.childrenArray.push(this.childCount);
-            var i = Number(this.childCount);
+     addChild(passenger,checkboxIndex) {
+           if ((this.childArray.length ) < (this.maxChilds)) {
+            this.child.push(this.childArray.length);
+            this.childArray.push(this.passengerChildFormCount);
+            
+             if(checkboxIndex ==-1)
+            this.childArrayM.push(this.passengerChildFormCount);
+
+            var i = Number(this.passengerChildFormCount);
             
             if(checkboxIndex !=-1)
             this.saveChildTravellerId[checkboxIndex]=i;
             
-            var gender=""; var arrAge = ""; var childpassenger = "";
-           if(passenger !=-1){
-              
-                if((passenger.gender == 'M') || (passenger.gender == 'Male')) {
-                gender = 'M'
-                }else if((passenger.gender == 'F') || (passenger.gender == 'Female')){
-                gender = 'F';
+                var title="";   var child_first_name = "";var child_last_name = "";var child_dob='';
+                if(checkboxIndex !=-1){
+                title=passenger.title;
+                child_first_name=passenger.firstName;
+                child_last_name=passenger.lastName;
+                child_dob=passenger.dateOfBirth;
                 }
-               
-                if(passenger.age != undefined){
-                arrAge = passenger.age;
-                }else{
-                arrAge = passenger.age;
-                }
-             childpassenger=passenger.firstName+' '+passenger.lastName;
-            }    
+ 
+             this.passengerForm.addControl('child_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+             this.passengerForm.addControl('child_first_name' + i, new FormControl(child_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+             this.passengerForm.addControl('child_last_name' + i, new FormControl(child_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
             
-            this.passengerForm.addControl('childName' + i, new FormControl(childpassenger, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength)]));
-            this.passengerForm.addControl('childGender' + i, new FormControl(gender, Validators.required));
-            this.passengerForm.addControl('childAge' + i, new FormControl(arrAge, Validators.required));
-            // this.passengerForm.addControl('saveTravellerInfant' + i, new FormControl('1'));
+             this.passengerForm.addControl('child_dob' + i, new FormControl(child_dob, [Validators.required]));
+
+                this.passengerForm.controls['child_title' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_first_name' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_last_name' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_dob' + i].updateValueAndValidity();
+
+            this.passengerChildFormCount++;
             
-            this.passengerForm.controls['childName' + i].updateValueAndValidity();
-            this.passengerForm.controls['childGender' + i].updateValueAndValidity();
-            this.passengerForm.controls['childAge' + i].updateValueAndValidity();
-            this.childCount++;
-              if(checkboxIndex !=-1){
-           $('#passengerBox_'+checkboxIndex).removeClass('hidden');
-           $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
-           }
-            
+             if(checkboxIndex !=-1){
+               $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
+             $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             }
         } else {
-          if(checkboxIndex !=-1){
+         if(checkboxIndex !=-1){
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
-          }
-    
+         } 
+ 
         }
+
     }
     
     
+    
     removeChild(val,checkboxIndex) {
-        var passengerName = this.passengerForm.controls['childName' + val]['value'];
+        var passengerName = this.passengerForm.controls['child_first_name' + val]['value'];
+        const index = this.childArray.indexOf(val, 0);
          if(checkboxIndex !=-1)
-         $('#passengerBox_'+checkboxIndex).addClass('hidden');
- 
- 
- 
-        const index = this.childrenArray.indexOf(val, 0); 
+     $('#passengerBox_'+checkboxIndex).addClass('hidden');
         if (index > -1) {
-            this.childrenArray.splice(index, 1);
+            this.childArray.splice(index, 1);
         }
-        
         
         if(checkboxIndex ==-1){
-        const index1 = this.childrenArrayM.indexOf(val, 0); 
+        const index1 = this.childArrayM.indexOf(val, 0); 
         if (index1 > -1) {
-        this.childrenArrayM.splice(index1, 1);
+        this.childArrayM.splice(index1, 1);
         }
-
         }
-
         if (this.travellerlist.length > 0) {
             var trvList = [];
             for (let i of this.travellerlist) {
                 var trvlist = i;
-                var combineName = trvlist.firstName+ " " +trvlist.lastName;
+                var combineName = trvlist.firstName;
                 trvList.push({name:combineName}); 
             }
             for (var index1 in trvList) {
                 var fullName = trvList[index1]['name'];
                 if(fullName == passengerName) {
-                    this.disableCheckboxInfant[index1]=true;
-                    this.modalcheckedvalueInfant[index1]=false;
+                    this.disableCheckbox[index1]=true;
+                    this.modalcheckedvalue[index1]=false;
+                    this.selectedCheckbox.splice(index1,1);
                     break;
                 }
             }
         }
 
-        this.passengerForm.removeControl('childName' + val);
-        this.passengerForm.removeControl('childGender' + val);
-        this.passengerForm.removeControl('childAge' + val);
-
+        this.passengerForm.removeControl('child_first_name' + val);
+        this.passengerForm.removeControl('child_last_name'+val);
         this.passengerForm.clearValidators();
-        this.childCount--;
-        this.children.splice(val, 1);
+        this.passengerForm.updateValueAndValidity();
+        this.child.splice(val, 1);
+        this.passengerChildFormCount--;
+        this.error = 0;
 
     }
     
+    
+     addInfant(passenger,checkboxIndex) {
+           if ((this.infantArray.length ) < (this.maxInfants)) {
+            this.infant.push(this.infantArray.length);
+            this.infantArray.push(this.passengerInfantFormCount);
+            
+             if(checkboxIndex ==-1)
+            this.infantArrayM.push(this.passengerInfantFormCount);
+
+            var i = Number(this.passengerInfantFormCount);
+            
+            if(checkboxIndex !=-1)
+            this.saveInfantTravellerId[checkboxIndex]=i;
+            
+                var title="";   var infant_first_name = "";var infant_last_name = "";var infant_dob='';
+                if(checkboxIndex !=-1){
+                title=passenger.title;
+                infant_first_name=passenger.firstName;
+                infant_last_name=passenger.lastName;
+                infant_dob=passenger.dateOfBirth;
+                }
+ 
+             this.passengerForm.addControl('infant_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+             this.passengerForm.addControl('infant_first_name' + i, new FormControl(infant_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+             this.passengerForm.addControl('infant_last_name' + i, new FormControl(infant_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+            
+             this.passengerForm.addControl('infant_dob' + i, new FormControl(infant_dob, [Validators.required]));
+
+           this.passengerForm.controls['infant_title' + i].updateValueAndValidity();
+            this.passengerForm.controls['infant_first_name' + i].updateValueAndValidity();
+             this.passengerForm.controls['infant_last_name' + i].updateValueAndValidity();
+               this.passengerForm.controls['infant_dob' + i].updateValueAndValidity();
+             
+
+            this.passengerInfantFormCount++;
+            
+             if(checkboxIndex !=-1){
+               $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
+             $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             }
+        } else {
+         if(checkboxIndex !=-1){
+          $('#passengerBox_'+checkboxIndex).addClass('hidden');
+          $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
+         } 
+ 
+        }
+
+    }
+    
+    
+    
+    removeInfant(val,checkboxIndex) {
+        var passengerName = this.passengerForm.controls['infant_first_name' + val]['value'];
+        const index = this.infantArray.indexOf(val, 0);
+         if(checkboxIndex !=-1)
+     $('#passengerBox_'+checkboxIndex).addClass('hidden');
+        if (index > -1) {
+            this.infantArray.splice(index, 1);
+        }
+        
+        if(checkboxIndex ==-1){
+        const index1 = this.infantArrayM.indexOf(val, 0); 
+        if (index1 > -1) {
+        this.infantArrayM.splice(index1, 1);
+        }
+        }
+        if (this.travellerlist.length > 0) {
+            var trvList = [];
+            for (let i of this.travellerlist) {
+                var trvlist = i;
+                var combineName = trvlist.firstName;
+                trvList.push({name:combineName}); 
+            }
+            for (var index1 in trvList) {
+                var fullName = trvList[index1]['name'];
+                if(fullName == passengerName) {
+                    this.disableCheckbox[index1]=true;
+                    this.modalcheckedvalue[index1]=false;
+                    this.selectedCheckbox.splice(index1,1);
+                    break;
+                }
+            }
+        }
+
+        this.passengerForm.removeControl('infant_first_name' + val);
+        this.passengerForm.removeControl('infant_last_name'+val);
+        this.passengerForm.clearValidators();
+        this.passengerForm.updateValueAndValidity();
+        this.infant.splice(val, 1);
+        this.error = 0;
+        this.passengerInfantFormCount--;
+
+    }
+   
     resetFormValidation(){
     this.submitted=false;
      this.passengerForm.markAsUntouched();
     this.passengerForm.setErrors(null);
     }
-  
-    saveTravellerId=[]; saveChildTravellerId=[];
+    
+        numberInput($event) {
+        var keycode = $event.which;
+        if (!(keycode >= 48 && keycode <= 57)) {
+            event.preventDefault();
+        }
+    }
+      AvoidSpace($event) {
+        var keycode = $event.which;
+        if (keycode == 32)
+            event.preventDefault();
+    }
+    specialcharInputAddress($event) {
+        var keycode = $event.which;
+        if ((keycode >= 33 && keycode <= 34) || (keycode >= 36 && keycode <= 43) || (keycode >= 60 && keycode <= 64) || (keycode >= 91 && keycode <= 96) || (keycode >= 123 && keycode <= 126) || (keycode == 8377) || (keycode == 8364) || (keycode == 128) || (keycode == 163) ||
+            (keycode == 165)) {
+            event.preventDefault();
+        }
+    }
+        convertToUpperCase($event) {
+        $event.target.value = $event.target.value.toUpperCase();
+    }
+    
+    
+        openmodal(content) {
+        this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
+        this.modalService.open(content, { centered: true });
+      }
+    
+    
         /**--------------------------------------SAVED TRAVELLER ------------------------------------------------------------------------ */
     checksavedtraveller(){
         let checksavedtravConfig = this.serviceSettings.enablesavedTraveller
@@ -550,21 +709,57 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
                 this.travellerlist = response['value'];
                 
                 
-		this.adulttravellerlist =  this.travellerlist.filter(function(tra) {
+		this.filterTravellerList =  this.travellerlist.filter(function(tra) {
 		return tra.age > 1;
 		});
 		
+		this.adultTravellerList =  this.filterTravellerList.filter(function(tra) {
+		return tra.age > 12;
+		});
+		
+		
+		this.childTravellerList =  this.filterTravellerList.filter(function(tra) {
+		return tra.age > 2 && tra.age < 5 ;
+		});
+		
+		
+		this.infantTravellerList =  this.filterTravellerList.filter(function(tra) {
+		return tra.age < 2;
+		});
+		
+		console.log(this.adultTravellerList);
+		console.log(this.childTravellerList);
+		console.log(this.infantTravellerList);
+		
+		
+		for(let i=0;i<(this.maxAdults-this.adultTravellerList);i++){
+		this.manualAdultTraveller(1);
+		}
+		
+		for(let i=0;i<(this.maxChilds-this.childTravellerList);i++){
+		this.manualChildTraveller(1);
+		}
+		
+		
+		for(let i=0;i<(this.maxInfants-this.infantTravellerList);i++){
+		this.manualInfantTraveller(1);
+		}
+		
 		
                 for(let i=0;i<this.travellerlist.length;i++){
-                if(this.adulttravellerlist[i].age > 12)
-                this.saveTravellerId[this.adulttravellerlist[i].id]=-1
+                if(this.filterTravellerList[i].age > 12)
+                this.saveAdultTravellerId[this.filterTravellerList[i].id]=-1
+                
+                else if(this.filterTravellerList[i].age > 2 && this.filterTravellerList[i].age < 5 )
+                this.saveChildTravellerId[this.filterTravellerList[i].id]=-1
+                
                 else
-                this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
+                this.saveChildTravellerId[this.filterTravellerList[i].id]=-1
+                
                 }
                 
-                console.log(this.adulttravellerlist);
 	                
-                this.checkPaxCount = this.adulttravellerlist.length;
+                this.checkPaxCount = this.filterTravellerList.length;
                 }
             }),(err:HttpErrorResponse)=>{
                console.log('Something went wrong !');
@@ -701,8 +896,8 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
            
        }
        
-        if (this.childrenArray.length > 0) {
-           for (let i of this.childrenArray) {
+        if (this.childArray.length > 0) {
+           for (let i of this.childArray) {
 
                 var checksaveTravellerInfant;
                 if(this.passengerForm.controls['saveTraveller']['value'] == true){
@@ -758,6 +953,8 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
             })
         }
     }
+    
+
     saveCustomerGst(){
        if(this.passengerForm['controls']['saveGST'].value == true){
         var saveGSTArray: any=[];
@@ -789,7 +986,22 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         }
       }
 
-
+    expandItemsChild() {
+        if(this.isChildExpanded == false){
+          this.isChildExpanded = true;
+        }else if(this.isChildExpanded == true){
+          this.isChildExpanded = false;
+        }
+      }
+    
+        expandItemsInfant() {
+        if(this.isInfantExpanded == false){
+          this.isInfantExpanded = true;
+        }else if(this.isInfantExpanded == true){
+          this.isInfantExpanded = false;
+        }
+      }
+      
     ConvertObjToQueryString(obj: any) {
       var str = [];
       for (var p in obj)
@@ -829,20 +1041,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
-  // getLayoverHour(obj1:any, obj2:any)
-  // {
 
-  //   let dateHour:any;
-  //   if(obj2!=null || obj2!=undefined)
-  //   {
-
-  //     let obj2Date=new Date(obj2.departureDateTime);
-  //     let obj1Date=new Date(obj1.arrivalDateTime);
-  //     dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
-
-  //   }
-  //   return dateHour;
-  // }
   dateHour:any;
   getLayoverHour(obj1:any, obj2:any)
   {
@@ -963,14 +1162,57 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
 
 
-
-
   
 
   
   continueTravellerDetails(){
-
-    this.steps=3;
+  
+    if(this.adultsArray.length <  this.maxAdults){
+     this.toastrService.error('Please add adult traveller', '');
+    return;
+    }
+ 
+    if(this.childArray.length <  this.maxChilds){
+     this.toastrService.error('Please add child traveller', '');
+    return;
+    }
+     
+      if(this.infantArray.length <  this.maxInfants){
+     this.toastrService.error('Please add infant traveller', '');
+    return;
+    }
+    
+    console.log(this.passengerAdultFormCount);
+    
+    
+        for(let i=1;i<(this.passengerAdultFormCount);i++){
+        this.passengerForm.controls['adult_title' + i].markAsTouched();
+        this.passengerForm.controls['adult_first_name' + i].markAsTouched();
+        this.passengerForm.controls['adult_last_name' + i].markAsTouched();
+        this.passengerForm.controls['adult_dob' + i].markAsTouched();
+        }
+    
+       for(let i=1;i<(this.passengerChildFormCount);i++){
+        this.passengerForm.controls['child_title' + i].markAsTouched();
+        this.passengerForm.controls['child_first_name' + i].markAsTouched();
+        this.passengerForm.controls['child_last_name' + i].markAsTouched();
+        this.passengerForm.controls['child_dob' + i].markAsTouched();
+        }
+    
+           for(let i=1;i<(this.passengerInfantFormCount);i++){
+        this.passengerForm.controls['infant_title' + i].markAsTouched();
+        this.passengerForm.controls['infant_first_name' + i].markAsTouched();
+        this.passengerForm.controls['infant_last_name' + i].markAsTouched();
+        this.passengerForm.controls['infant_dob' + i].markAsTouched();
+        }
+    
+        this.submitted = true;
+        if (this.passengerForm.invalid || this.error == 1) {
+        console.log(this.passengerAdultFormCount);
+        return;
+        } else {
+        this.steps=3;
+       }
   }
 
 

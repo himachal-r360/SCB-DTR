@@ -11,7 +11,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.component';
 import { CouponsModule } from 'src/app/coupons/coupons.module';
-
+import { InputMaskModule } from '@ngneat/input-mask';
 
 const routes: Routes = [
   {
@@ -37,6 +37,7 @@ const routes: Routes = [
   imports: [
         CommonModule,
         FormsModule,
+        InputMaskModule,
         ReactiveFormsModule,
         MaterialModule,
         DirectiveModule,
