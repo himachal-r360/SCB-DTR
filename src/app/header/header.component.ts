@@ -28,10 +28,12 @@ declare var $: any;
 declare var jQuery: any;
 declare const annyang: any;
 
+
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  styleUrls: ['./header.component.scss',],
   encapsulation: ViewEncapsulation.None,
  //changeDetection: ChangeDetectionStrategy.OnPush,
  animations: [
@@ -47,7 +49,10 @@ declare const annyang: any;
 })
 
 export class HeaderComponent implements OnInit {
-rd_site_url: any;shop_site_url;
+  
+
+
+  rd_site_url: any;shop_site_url;
         loginUrl:string='check-login?g=1';
         addtocart: boolean = false;
         counter:number = 1;
@@ -153,7 +158,6 @@ rd_site_url: any;shop_site_url;
   constructor(private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
 
-  
   
      setTimeout(() => {
     //Check Laravel Seesion

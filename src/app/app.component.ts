@@ -102,6 +102,14 @@ export class AppComponent implements OnInit {
         this.domainPath="regalia/";
         this.domainName='REGALIA';
 	break;
+  case ('regalia_gold'):
+	this.assetPath="regalia_gold/";
+        this.domainPath="regalia_gold/";
+        this.domainName='REGALIA_GOLD';
+        setTimeout(() => {
+          $('link[href="smartbuy-styles.scss"]'). attr("href","regalia_gold-styles.scss");
+          }, 1000);
+	break;
 	case ('corporate'):
 	this.assetPath="corporate/";
         this.domainPath="corporate/";
