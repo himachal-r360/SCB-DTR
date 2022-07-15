@@ -150,6 +150,7 @@ rd_site_url: any;shop_site_url;
 	voiceText: any;
   parsed_date:any;
   relative_to:any;
+  push_ids:any;
   delta:any;
         payzrestriction:boolean=false;
  @ViewChild("content") modalContent: TemplateRef<any>;
@@ -471,6 +472,7 @@ rd_site_url: any;shop_site_url;
   }
 
   trackEventNotificationClick(urls,id){
+    this.getCountClicked(id);
     let trackUrlParams = new HttpParams()
 	.set('current_url', window.location.href)
 	.set('category', 'push notification view')
@@ -523,11 +525,11 @@ rd_site_url: any;shop_site_url;
       customerid=this.customerInfo['id']
     }
     
-    logEvent(this.analytics, event,{
-              notification_url: url,
-              notification_id: id,
-              customer_id: customerid,
-            });
+    // logEvent(this.analytics, event,{
+    //           notification_url: url,
+    //           notification_id: id,
+    //           customer_id: customerid,
+    //         });
   }
 
   disablePushBtn(){
@@ -1213,7 +1215,29 @@ this.customerLogin=true;*/
     }
     
     
-    
+    getCountClicked(id) {
+      this.push_ids = [];
+      if(!this.cookieService.get("push_status")){
+          this.push_ids.push(id);
+          this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
+          // console.log('here');
+      }else{
+          this.push_ids = JSON.parse(this.cookieService.get("push_status"));
+           if(!this.push_ids.includes(this.push_ids)){
+              this.push_ids.push(this.push_ids);
+            }
+            // if (typeof this.push_ids === 'object' && this.push_ids !== null) {
+            //   console.log('am');
+              this.cookieService.set('push_status',this.push_ids, null, '/', null, null, null);
+            // }else{
+            //   this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
+            // }
+          
+          // $.cookie("push_status", JSON.stringify(push_ids));
+          // console.log(this.cookieService.get("push_status"));
+      }
+
+  }
     
     OpenDisclaimerMobile(): void {
     const config: MatBottomSheetConfig = {
