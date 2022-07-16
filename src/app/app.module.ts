@@ -22,7 +22,6 @@ import {MaterialModule} from './material.module';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
-import { ToastrModule } from 'ngx-toastr';
 
 
 export function appInitializerFn(appConfig: AppConfigService) {
@@ -43,11 +42,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
   imports: [
  BrowserModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      timeOut:3000, // 3 seconds
-      closeButton: true,
-      progressBar: true,
-    }),
     AppRoutingModule,
     FlightModule,
     HttpClientModule,

@@ -9,13 +9,14 @@ import { AppConfigService } from '../../app-config.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { createMask } from '@ngneat/input-mask';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
-
+import alertifyjs from 'alertifyjs';
+import * as moment from 'moment';
+declare let alertify: any;
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -40,7 +41,20 @@ declare var $: any;
   ]
 })
 export class FlightCheckoutComponent implements OnInit ,OnDestroy {
+
+priceSummaryResponse:any;
+pricingId:any;
+itineraryid:any;
+partnerConvFee: number = 0;
+old_fare: number = 0;
+new_fare: number = 0;
+      flightSessionData:any;
+       flightInfo:any;
+       itinararyResponse:any;
+        enableVAS: number = 0;
+        completedSteps=1;
         passengerForm: FormGroup;
+        loaderValue = 10;
         passengerAdultFormCount: number = 1;
         passengerChildFormCount: number = 1;
         passengerInfantFormCount: number = 1;
@@ -59,7 +73,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
         emailInputMask = createMask({ alias: 'email' });
         saveAdultTravellerId=[]; saveChildTravellerId=[];    saveInfantTravellerId=[]; 
-        patternName = /^(?:(?!.*[ ]{2})(?!(?:.*[']){2})(?!(?:.*[-]){2})(?:[a-zA-Z0-9 \p{L}'-]{3,48}$))$/;
+        patternName = /^[a-zA-Z\s]*$/;
         emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         maxAdults: number;
         maxChilds: number;
@@ -80,6 +94,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         coupon_code: any;
         remove_Coupon: any;
         coupon_amount: number = 0;
+        vas_amount: number = 0;
         REWARD_CUSTOMERID: string;
         REWARD_EMAILID: string;
         REWARD_MOBILE: string;
@@ -113,7 +128,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         modalcheckedvalue:any = []; modalcheckedvalueInfant:any = [];
         gstmodalcheckedvalue:any = false;
         isCheckedGST:any=[];
-
+        gstDetails:any;
         adults = []; child = [];infant = [];
         adultsArray = []; 
         childArray = [];
@@ -130,9 +145,6 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         airportsNameJson:any;
         EMI_interest: number = 16;
         EMIAvailableLimit: number = 3000;
-        getsearchVal:any;
-        parseSearchVal:any;
-        getFlightDetailLocalStorage:any;
         totalDuration:number=0;
         randomFlightDetailKey:any;
         searchData:any;
@@ -143,8 +155,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         timeLeft:any = 900;
         baggageInfo:any='';
         flightDetailsArrVal:any;
-        steps:any = 2;
-
+        steps:any = 1;
 
         travelerDetails:any={};
         checked:any= false;
@@ -155,15 +166,20 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 
 
 
-  constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private toastrService: ToastrService,private modalService:NgbModal) { 
+  constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal) { 
 
-   this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
-    this.serviceSettings=this.appConfigService.getConfig();
-           this.whatsappFeature =this.serviceSettings.whatsappFeature;
-        this.enableGST = this.serviceSettings.enableSavedGST;
-        this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
-        setTimeout(() => {
-  
+
+                this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+                this.serviceSettings=this.appConfigService.getConfig();
+                this.whatsappFeature =this.serviceSettings.whatsappFeature;
+                this.enableGST = this.serviceSettings.enableSavedGST;
+                this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
+
+                this.getAirpotsList();
+
+        
+        
+      setTimeout(() => {
        //Check Laravel Seesion
         if(this.sg['customerInfo']){
          var customer_cookie;
@@ -172,8 +188,31 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
                this.customerInfo = this.sg['customerInfo'];
              if(this.customerInfo["guestLogin"]==true){
              }else{
-              this.initiatePage();
-              
+               this.getQueryParamData();
+                this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
+                
+                
+                 
+                this.flightSessionData=JSON.parse(this.flightDetailsArrVal);
+                this.searchData=(this.flightSessionData.queryFlightData);
+             //   console.log(  this.searchData);
+              console.log(this.flightSessionData);
+                setTimeout(() => {
+                 $("#bookingprocess").modal('show');
+                 
+                this.maxAdults=Number(this.searchData.adults);
+                this.maxChilds=Number(this.searchData.child);
+                this.maxInfants=Number(this.searchData.infants);
+                this.travelerDetails=this.searchData;
+                this.flightDetails = this.flightSessionData.flights;
+                this.selectedVendor = this.flightSessionData.priceSummary;
+                this.partnerToken=this.selectedVendor.partnerName;
+                this.enableVAS= this.serviceSettings.enabledVAS[this.partnerToken];
+                //console.log(this.partnerToken);
+                 //console.log(this.enableVAS);
+                 
+                 this.getFlightDetails(this.flightSessionData);
+                  }, 50);
                   this.passengerForm.patchValue({
                     passengerMobile: this.customerInfo["mobile"],
                     passengerEmail: this.customerInfo["email"]
@@ -185,9 +224,6 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
                 if(this.enableGST==1){
                 this.getCustomerGstDetails();
                 }
-
-    
-              
              }
 
           }else{
@@ -211,11 +247,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         jobGroup.addControl('gstCity', new FormControl());
         jobGroup.addControl('gstPincode', new FormControl());
         jobGroup.addControl('gstState', new FormControl());
-        
-
         jobGroup.addControl('saveGST', new FormControl('1'));
-         
-          
     this.startTimer();
 
   }
@@ -233,35 +265,12 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
           sessionStorage.getItem(this.randomFlightDetailKey);
         });
   }
-  initiatePage(){
-  
-    this.getQueryParamData();
-    this.getsearchVal = sessionStorage.getItem('searchVal');
-    this.parseSearchVal = JSON.parse(this.getsearchVal);
-   // this.getFlightIcon();
-    this.getAirpotsList();
-    this.getFlightDetails();
-  
-  }
 
-  getFlightDetails(){
+
+  getFlightDetails(param){
     //this._flightService.getFlightDetailsVal()
-    this.showLoader=1;
-     this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
-    let param=JSON.parse(this.flightDetailsArrVal);
-    this.searchData=JSON.parse(param.searchData);
-    console.log(this.searchData);
-        this.maxAdults=Number(this.searchData.adults);
-        this.maxChilds=Number(this.searchData.child);
-        this.maxInfants=Number(this.searchData.infants);
-   this.travelerDetails=this.searchData;
-   
       if(param!=null){
-        this.flightDetails = param.flights;
-        this.selectedVendor = param.priceSummary;
-        this.partnerToken=this.selectedVendor.partnerName;
          var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
-        
         var body = {
           "docKey": param.docKey,
           "flightKeys": [
@@ -331,13 +340,24 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
             if(checkboxIndex !=-1)
             this.saveAdultTravellerId[checkboxIndex]=i;
             
-                var title="";   var adult_first_name = "";var adult_last_name = "";var adult_dob='';
+                var title="";   var adult_first_name = "";var adult_last_name = "";let adult_dob:any;
                 
                 if(checkboxIndex !=-1){
                 title=passenger.title;
                 adult_first_name=passenger.firstName;
                 adult_last_name=passenger.lastName;
-                adult_dob=passenger.dateOfBirth;
+                
+                
+                if(passenger.dateOfBirth){
+                const values = passenger.dateOfBirth.split('/');
+                const year = +values[2];
+                const month = +values[1]-1;
+                const date = +values[0];
+                adult_dob=new Date(year, month, date);
+                }
+                
+                
+                
                 }
  
              this.passengerForm.addControl('adult_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
@@ -439,12 +459,20 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
             if(checkboxIndex !=-1)
             this.saveChildTravellerId[checkboxIndex]=i;
             
-                var title="";   var child_first_name = "";var child_last_name = "";var child_dob='';
+                var title="";   var child_first_name = "";var child_last_name = "";let child_dob:any;
                 if(checkboxIndex !=-1){
                 title=passenger.title;
                 child_first_name=passenger.firstName;
                 child_last_name=passenger.lastName;
-                child_dob=passenger.dateOfBirth;
+                
+                         if(passenger.dateOfBirth){
+                const values = passenger.dateOfBirth.split('/');
+                const year = +values[2];
+                const month = +values[1]-1;
+                const date = +values[0];
+                child_dob=new Date(year, month, date);
+                }
+                
                 }
  
              this.passengerForm.addControl('child_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
@@ -533,12 +561,21 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
             if(checkboxIndex !=-1)
             this.saveInfantTravellerId[checkboxIndex]=i;
             
-                var title="";   var infant_first_name = "";var infant_last_name = "";var infant_dob='';
+                var title="";   var infant_first_name = "";var infant_last_name = "";let infant_dob:any;
                 if(checkboxIndex !=-1){
                 title=passenger.title;
                 infant_first_name=passenger.firstName;
                 infant_last_name=passenger.lastName;
-                infant_dob=passenger.dateOfBirth;
+                
+                                if(passenger.dateOfBirth){
+                const values = passenger.dateOfBirth.split('/');
+                const year = +values[2];
+                const month = +values[1]-1;
+                const date = +values[0];
+                infant_dob=new Date(year, month, date);
+                }
+                
+                
                 }
  
              this.passengerForm.addControl('infant_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
@@ -678,6 +715,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
 		return tra.age > 12;
 		});
 		
+		console.log(this.adultTravellerList);
 		
 		this.childTravellerList =  this.filterTravellerList.filter(function(tra) {
 		return tra.age > 2 && tra.age < 5 ;
@@ -1079,14 +1117,28 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   getFlightInfo(param:any,partner:any)
   {
   
+  const myInterval =setInterval(()=>{
+      this.loaderValue = this.loaderValue + 10;
+      if(this.loaderValue == 110)
+      {
+      this.loaderValue=10;
+      }
+    },700) ; 
+  
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
-     this.showLoader=0;
+                
+      let baseFare=0; let taxFare=0; let totalFare=0;
+         clearInterval(myInterval);
+         $('#bookingprocess').modal('hide');
+      
+      if(this.searchData.travel=='DOM'){
       if(res.statusCode ==200)
       {
        
-        let baseFare=0; let taxFare=0; let totalFare=0;
-       
-        if(partner=='Yatra'){
+       if(res.response && res.response.onwardFlightDetails){
+       this.flightInfo=res.response.onwardFlightDetails;
+      
+       if(partner=='Yatra'){
       if(res.response.onwardFlightDetails.fare.O){
         if(res.response.onwardFlightDetails.fare.O.ADT){
         baseFare+=Number(res.response.onwardFlightDetails.fare.O.ADT.bf * res.response.onwardFlightDetails.fare.O.ADT.qt );
@@ -1102,11 +1154,10 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         baseFare+=Number(res.response.onwardFlightDetails.fare.O.INF.bf * res.response.onwardFlightDetails.fare.O.INF.qt );
         totalFare+=Number(res.response.onwardFlightDetails.fare.O.INF.tf * res.response.onwardFlightDetails.fare.O.INF.qt );
         } 
-
         }
-
-
         }else{
+        
+        /*
         if(res.response.onwardFlightDetails.fare){
         if(res.response.onwardFlightDetails.fare.ADT){
         baseFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt );
@@ -1122,12 +1173,19 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
         baseFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt );
         totalFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt )+ Number(res.response.onwardFlightDetails.fare.INF.TX) ;
         } 
-
-        }
-
+        }*/
+        totalFare+=Number(res.response.comboFare.onwardTotalFare);
+         baseFare+=Number(res.response.comboFare.onwardBaseFare);
+        
        } 
+       if(res.response && res.response.onwardFlightDetails.bg.length >0) 
+       this.baggageInfo = res.response.onwardFlightDetails.bg;
        
-         taxFare=totalFare-baseFare;
+       }else{
+            $('#bookingprocessFailed').modal('show');           
+       }
+       }
+        taxFare=totalFare-baseFare;
       
         this.BaseFare =baseFare;
         this.Tax =taxFare;
@@ -1136,11 +1194,36 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
        this.totalCollectibleAmount = Number(this.TotalFare) + Number(this.convenience_fee) ;
        this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
        
-       if(res.response.onwardFlightDetails.bg.length >0) 
-       this.baggageInfo = res.response.onwardFlightDetails.bg;
-        
+
         }
-    }, (error) => { console.log(error) });
+    }, (error) => { ;
+    
+        clearInterval(myInterval);
+         $('#bookingprocess').modal('hide');
+       $('#bookingprocessFailed').modal('show');  
+     });
+  }
+  
+  triggerBack(){
+   $('#bookingprocessFailed').modal('hide');  
+  let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
+  this.router.navigateByUrl(url);
+
+   
+     /*  alertify.alert('').setHeader('<b>Fetching flight details</b>').set('closable', false)   
+        .setting({
+    'label':'<b>Retry</b>',
+    'message': 'An Error occurred during fetching flight details. Do Not Worry! <br> Click on Retry' ,
+    'onok': function(){ 
+    
+     // let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
+          console.log("0000000");
+        //
+    
+    
+    }
+  }).show();*/
+  
   }
 
   ngOnDestroy(): void {
@@ -1150,6 +1233,7 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   }
 
   sendFlightDetails(){
+     this.completedSteps=2;
      this.steps=2;
   }
 
@@ -1165,103 +1249,353 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
   }
 
 
-
+   
   
 
   
   continueTravellerDetails(){
-  
-    if(this.adultsArray.length <  this.maxAdults){
-     this.toastrService.error('Please add adult traveller', '');
-    return;
-    }
- 
-    if(this.childArray.length <  this.maxChilds){
-     this.toastrService.error('Please add child traveller', '');
-    return;
-    }
-     
-      if(this.infantArray.length <  this.maxInfants){
-     this.toastrService.error('Please add infant traveller', '');
-    return;
-    }
-    
-    console.log(this.passengerAdultFormCount);
-    
-        for(let i=1;i<(this.passengerAdultFormCount);i++){
-        this.passengerForm.controls['adult_title' + i].markAsTouched();
-        this.passengerForm.controls['adult_first_name' + i].markAsTouched();
-        this.passengerForm.controls['adult_last_name' + i].markAsTouched();
-        this.passengerForm.controls['adult_dob' + i].markAsTouched();
+        alertify.set('notifier','position', 'top-center');
+        if(this.adultsArray.length <  this.maxAdults){
+        alertify.error('Please add adult traveller', '').delay(3);
+        return;
         }
-    
-       for(let i=1;i<(this.passengerChildFormCount);i++){
-        this.passengerForm.controls['child_title' + i].markAsTouched();
-        this.passengerForm.controls['child_first_name' + i].markAsTouched();
-        this.passengerForm.controls['child_last_name' + i].markAsTouched();
-        this.passengerForm.controls['child_dob' + i].markAsTouched();
+
+        if(this.childArray.length <  this.maxChilds){
+        alertify.error('Please add child traveller', '').delay(3);
+        return;
         }
-    
-           for(let i=1;i<(this.passengerInfantFormCount);i++){
-        this.passengerForm.controls['infant_title' + i].markAsTouched();
-        this.passengerForm.controls['infant_first_name' + i].markAsTouched();
-        this.passengerForm.controls['infant_last_name' + i].markAsTouched();
-        this.passengerForm.controls['infant_dob' + i].markAsTouched();
+
+        if(this.infantArray.length <  this.maxInfants){
+        alertify.error('Please add infant traveller', '').delay(3);
+        return;
         }
-    
-    
-            if (this.gstSelected == true) {
-            this.passengerForm.controls['gstNumber'].setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$'), Validators.minLength(15)]);
-            this.passengerForm.controls['gstBusinessName'].setValidators([Validators.required, Validators.pattern("^[a-z A-Z 0-9]*$"), Validators.minLength(2)]);
-            this.passengerForm.controls['gstAddress'].setValidators([Validators.required, Validators.pattern("^[a-z A-Z 0-9 /,]*$"), Validators.minLength(2)]);
-            this.passengerForm.controls['gstCity'].setValidators([Validators.required, Validators.pattern(this.patternName), Validators.minLength(2)]);
-            this.passengerForm.controls['gstPincode'].setValidators([Validators.required, Validators.minLength(6)]);
-            this.passengerForm.controls['gstState'].setValidators([Validators.required, Validators.pattern(this.patternName), Validators.minLength(2)]);
-            this.passengerForm.controls['gstNumber'].updateValueAndValidity();
-            this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
-            this.passengerForm.controls['gstAddress'].updateValueAndValidity();
-            this.passengerForm.controls['gstCity'].updateValueAndValidity();
-            this.passengerForm.controls['gstPincode'].updateValueAndValidity();
-            this.passengerForm.controls['gstState'].updateValueAndValidity();
-            
-            
-            this.passengerForm.get('gstNumber').markAsTouched();
-            this.passengerForm.get('gstBusinessName').markAsTouched();
-            this.passengerForm.get('gstAddress').markAsTouched();
-            this.passengerForm.get('gstCity').markAsTouched();
-            this.passengerForm.get('gstPincode').markAsTouched();
-            this.passengerForm.get('gstState').markAsTouched();
-            this.passengerForm.controls['gstNumber'].markAsTouched();
-            this.passengerForm.controls['gstBusinessName'].markAsTouched();
-            this.passengerForm.controls['gstAddress'].markAsTouched();
-            this.passengerForm.controls['gstCity'].markAsTouched();
-            this.passengerForm.controls['gstPincode'].markAsTouched();
-            this.passengerForm.controls['gstState'].markAsTouched();
-            
+
+
+        if (this.gstSelected == true) {
+        this.passengerForm.controls['gstNumber'].setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$'), Validators.minLength(15)]);
+        this.passengerForm.controls['gstBusinessName'].setValidators([Validators.required, Validators.pattern("^[a-z A-Z 0-9]*$"), Validators.minLength(2)]);
+        this.passengerForm.controls['gstAddress'].setValidators([Validators.required, Validators.pattern("^[a-z A-Z 0-9 /,]*$"), Validators.minLength(2)]);
+        this.passengerForm.controls['gstCity'].setValidators([Validators.required, Validators.pattern(this.patternName), Validators.minLength(2)]);
+        this.passengerForm.controls['gstPincode'].setValidators([Validators.required, Validators.minLength(6)]);
+        this.passengerForm.controls['gstState'].setValidators([Validators.required, Validators.pattern(this.patternName), Validators.minLength(2)]);
+        this.passengerForm.controls['gstNumber'].updateValueAndValidity();
+        this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
+        this.passengerForm.controls['gstAddress'].updateValueAndValidity();
+        this.passengerForm.controls['gstCity'].updateValueAndValidity();
+        this.passengerForm.controls['gstPincode'].updateValueAndValidity();
+        this.passengerForm.controls['gstState'].updateValueAndValidity();
+
         } else {
-            this.passengerForm.get('gstNumber').clearValidators();
-            this.passengerForm.get('gstBusinessName').clearValidators();
-            this.passengerForm.get('gstAddress').clearValidators();
-            this.passengerForm.get('gstCity').clearValidators();
-            this.passengerForm.get('gstPincode').clearValidators();
-            this.passengerForm.get('gstState').clearValidators();
-            this.passengerForm.controls['gstNumber'].updateValueAndValidity();
-            this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
-            this.passengerForm.controls['gstAddress'].updateValueAndValidity();
-            this.passengerForm.controls['gstCity'].updateValueAndValidity();
-            this.passengerForm.controls['gstPincode'].updateValueAndValidity();
-            this.passengerForm.controls['gstState'].updateValueAndValidity();
+        this.passengerForm.get('gstNumber').clearValidators();
+        this.passengerForm.get('gstBusinessName').clearValidators();
+        this.passengerForm.get('gstAddress').clearValidators();
+        this.passengerForm.get('gstCity').clearValidators();
+        this.passengerForm.get('gstPincode').clearValidators();
+        this.passengerForm.get('gstState').clearValidators();
+        this.passengerForm.controls['gstNumber'].updateValueAndValidity();
+        this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
+        this.passengerForm.controls['gstAddress'].updateValueAndValidity();
+        this.passengerForm.controls['gstCity'].updateValueAndValidity();
+        this.passengerForm.controls['gstPincode'].updateValueAndValidity();
+        this.passengerForm.controls['gstState'].updateValueAndValidity();
         }
+
+        this.passengerForm.markAllAsTouched();
+        
     
         if (this.passengerForm.invalid ) {
        // console.log(this.passengerAdultFormCount);
         return;
         } else {
-        this.steps=3;
+        
+        
+        
+         
+         
+         let itineraryType;
+        if(this.searchData.travel=='INT') { //International
+        if(this.searchData.flightdefault=='O') //international oneway
+        itineraryType=3;
+        else
+        itineraryType=4; // international return
+        }else{
+        if(this.searchData.flightdefault=='O') //domestic oneway
+        itineraryType=1;
+        else
+        itineraryType=2; //domestic return
+        }
+
+        if(this.gstSelected){
+            this.gstDetails = {
+                "city": this.passengerForm.controls['gstCity']['value'],
+                "address": this.passengerForm.controls['gstAddress']['value'],
+                "gstNumber": this.passengerForm.controls['gstNumber']['value'],
+                "name": this.passengerForm.controls['gstBusinessName']['value'],
+                "pincode": this.passengerForm.controls['gstPincode']['value'],
+                "state": this.passengerForm.controls['gstState']['value']
+            }
+        if( this.enablesavedTraveller==1)
+             this.saveCustomerGst();
+        }else{
+            this.gstDetails = {
+                "address": '',
+                "city": '',
+                "gstNumber": '',
+                "name": '',
+                "pincode": '',
+                "state": '',
+              }
+        }
+      
+        let paxInfo=[]; var paxInfoCnt=1;
+ 
+        for(let i=1;i<(this.passengerAdultFormCount);i++){
+        
+          paxInfo.push(       {
+                "title": this.passengerForm.controls['adult_title'+i]['value'],
+                "firstName": this.passengerForm.controls['adult_first_name'+i]['value'],
+                "lastName": this.passengerForm.controls['adult_last_name'+i]['value'],
+                "type": "ADT",
+                "dateOfBirth": moment(this.passengerForm.controls['adult_dob'+i]['value']).format('YYYY-MM-DD') ,
+                "paxNationality": "IN",
+                "frequentFlyerNumbers": [],
+                "paxID": paxInfoCnt
+              });
+        paxInfoCnt++;
+        }
+        
+        
+                for(let i=1;i<(this.passengerChildFormCount);i++){
+          paxInfo.push(       {
+                "title": this.passengerForm.controls['child_title'+i]['value'],
+                "firstName": this.passengerForm.controls['child_first_name'+i]['value'],
+                "lastName": this.passengerForm.controls['child_last_name'+i]['value'],
+                "type": "CHD",
+                "dateOfBirth": moment(this.passengerForm.controls['child_dob'+i]['value']).format('YYYY-MM-DD') ,
+                "paxNationality": "IN",
+                "frequentFlyerNumbers": [],
+                "paxID": paxInfoCnt
+              });
+        paxInfoCnt++;
+        }
+        
+        
+                for(let i=1;i<(this.passengerInfantFormCount);i++){
+          paxInfo.push(       {
+                "title": this.passengerForm.controls['infant_title'+i]['value'],
+                "firstName": this.passengerForm.controls['infant_first_name'+i]['value'],
+                "lastName": this.passengerForm.controls['infant_last_name'+i]['value'],
+                "type": "INF",
+                "dateOfBirth": moment(this.passengerForm.controls['infant_dob'+i]['value']).format('YYYY-MM-DD') ,
+                "paxNationality": "IN",
+                "frequentFlyerNumbers": [],
+                "paxID": paxInfoCnt
+              });
+        paxInfoCnt++;
+        }
+        console.log(this.flightSessionData.flightKey);
+        let fareDetails=[];
+        fareDetails.push({ "amount": this.totalCollectibleAmountFromPartnerResponse,   "fareKey": this.flightInfo.fareKey, "flightKey": this.flightSessionData.flightKey });
+        
+        
+        let flightDetails=[];
+        
+        
+        console.log(this.flightSessionData);
+        
+        for(let i=0;i<(this.flightSessionData.flights.length);i++){ 
+        flightDetails.push({
+                      "apar": this.partnerToken,
+                      "departureAirport":  this.flightSessionData.flights[i]['departureAirport'],
+                      "arrivalAirport":  this.flightSessionData.flights[i]['arrivalAirport'],
+                      "flightNumber": this.flightSessionData.flights[i]['flightNumber'],
+                      "airline": this.flightSessionData.flights[i]['airline'],
+                      "operatingAirline": "",
+                      "departureDate": moment(this.flightSessionData.flights[i]['departureDateTime']).format('YYYY-MM-DD'),
+                      "stops": 0,
+                      "segNum": "1",
+                      "duration": this.flightSessionData.flights[i]['duration'],
+                      "arrivalDateTime": moment(this.flightSessionData.flights[i]['arrivalDateTime']).format('HH:mm:ss'),
+                      "departureDateTime": moment(this.flightSessionData.flights[i]['departureDateTime']).format('HH:mm:ss'),
+                      "arrivalDate": moment(this.flightSessionData.flights[i]['arrivalDateTime']).format('YYYY-MM-DD'),
+                      "bookingClass": this.flightSessionData.priceSummary['bookingClass']
+                    });
+        }
+        
+        
+        
+        let itineraryRequest={
+          "serviceName": "Flight",
+          "clientName": "HDFC243",
+          "partnerName":   this.partnerToken,
+          "itineraryType": itineraryType,
+          "itineraryId": "",
+          "price": this.totalCollectibleAmountFromPartnerResponse,
+          "comboFare": "false",
+          "origin": this.searchData.flightfrom,
+          "destination": this.searchData.flightto,
+          "onwardCheckInDate": moment(this.searchData.departure).format('YYYY-MM-DD') ,
+          "threadName": "",
+          "tripType": this.searchData.travel,
+          "operator": "",
+          "orderId": "",
+          "adults": this.searchData.adults,
+          "child": this.searchData.child,
+          "infants": this.searchData.infants,
+          "convFee": 0,
+          "customerId": this.customerInfo["id"],
+          "osVersion": "web",
+          "couponCode": "",
+          "discountAmount": 0,
+          "scid": "",
+          "errorStatus": 0,
+          "gstDetails": this.gstDetails,
+          "itinerary": {
+            "fareDetails":fareDetails,
+            "flights": [
+              {
+                "segments": {
+                  "onwardSegmentSpec": flightDetails
+                }
+              }
+            ],
+            "paxInfoList": paxInfo,
+            "contactDetail": {
+              "title": this.passengerForm.controls['adult_title1']['value'],
+              "firstName": this.passengerForm.controls['adult_first_name1']['value'],
+              "lastName": this.passengerForm.controls['adult_last_name1']['value'],
+              "email": this.passengerForm.controls['passengerEmail']['value'],
+              "address": "Lavelle Road",
+              "mobile":  this.passengerForm.controls['passengerMobile']['value'],
+              "mobileIsdCode": "91",
+              "landline": "000",
+              "cityName": "Bangalore",
+              "stateName": "Karnataka",
+              "countryName": "India",
+              "pinCode": "560001",
+              "additionalContact": {
+                "email": this.passengerForm.controls['passengerEmail']['value'],
+                "mobile":this.passengerForm.controls['passengerMobile']['value'],
+                "mobileIsdCode": "91"
+              }
+            },
+            "paymentDetail": {
+              "paymentType": "",
+              "depositAccountId": ""
+            },
+            "cabinType": this.searchData.flightclass
+          }
+        };
+            $('#bookingprocess').modal('show');       
+      this.loaderValue=10;
+        const myInterval1 =setInterval(()=>{
+        this.loaderValue = this.loaderValue + 10;
+        if(this.loaderValue == 110)
+        {
+        this.loaderValue=10;
+        }
+        },700) ;  
+     
+     
+        var requestParamsEncrpt = {
+        postData:this.EncrDecr.set(JSON.stringify(itineraryRequest)) 
+        };
+        this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
+        
+        console.log(this.EncrDecr.get(response.result ));
+        this.itinararyResponse= JSON.parse(this.EncrDecr.get(response.result ));
+        //this.itinararyResponse=(response);
+          if(this.itinararyResponse['response'] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']==200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"]==200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"]==200){
+          
+                   if(this.partnerToken=='Yatra'){
+                this.pricingId=this.itinararyResponse['response']['itineraryResponseDetails']['pricingId'];
+                this.itineraryid=this.itinararyResponse['response']['itineraryResponseDetails']['superPnr'];
+		 //$json_data=$result_array['response']["pricingResponseDetails"]['partnerErrorMessage'];
+		// $getStopOver=Yatraflight::getStopOver($json_data,$data['post_data'],$session_flight_key);
+		
+               }else{
+	        this.itineraryid=this.itinararyResponse['response']['itineraryResponseDetails']['itineraryId'];
+		}
+	         this.partnerConvFee = 0;
+		if((this.itinararyResponse['response']["pricingResponseDetails"]["partnerConvFee"]) && this.itinararyResponse['response']["pricingResponseDetails"]["partnerConvFee"] != '' ){
+			this.partnerConvFee =this.itinararyResponse['response']["pricingResponseDetails"]["partnerConvFee"];
+		}
+		let priceSummary; let setOrderAmount;
+		this.priceSummaryResponse=this.itinararyResponse['response']["pricingResponseDetails"]['priceSummary'];
+		priceSummary=JSON.parse(this.priceSummaryResponse);
+                this.new_fare = Number(priceSummary['total_fare'])-Number(this.coupon_amount);
+                setOrderAmount=Number(priceSummary['total_fare']) ? Number((priceSummary['total_fare'])) : 0;
+
+		this.old_fare=this.totalCollectibleAmountFromPartnerResponse;
+		
+		if(this.partnerConvFee > 0){
+                	setOrderAmount = setOrderAmount+Number(this.partnerConvFee);
+                }
+                
+               this.totalCollectibleAmount = Number(setOrderAmount) ;
+               this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
+		if(this.new_fare != this.old_fare){
+		 clearInterval(myInterval1);
+		 $('#bookingprocess').modal('hide');
+		 $('#bookingprocessPriceChange').modal('show');
+ 		}else{
+ 		 clearInterval(myInterval1);
+ 		 $('#bookingprocess').modal('hide');
+                        if(this.enableVAS==1){
+                        this.steps=3;
+                        this.completedSteps=3;
+                        }else{
+                        this.steps=4;
+                        this.completedSteps=4;
+                        }
+ 		}
+          
+          }else{
+           clearInterval(myInterval1);
+            $('#bookingprocess').modal('hide');
+            $('#bookingprocessFailed').modal('show');
+          }
+         }),(err:HttpErrorResponse)=>{
+         clearInterval(myInterval1);
+              $('#bookingprocess').modal('hide');
+              $('#bookingprocessFailed').modal('show');
+         }
+       
        }
   }
+  continueWithNewFare(){
+  $('#bookingprocessPriceChange').modal('hide');
+      if(this.enableVAS==1){
+        this.steps=3;
+        this.completedSteps=3;
+        }else{
+        this.steps=4;
+        this.completedSteps=4;
+        }
+   }
+   
+        moveTab(page){
+        if(page <= this.completedSteps){
+        this.steps=page;
+        }
+        }
+
+        continueSeatSelection(){
+        this.steps=4;
+        this.completedSteps=4;
+        }
 
 
+       continueReviewBooking(){
+        this.steps=5;
+        this.completedSteps=5;
+        }
+
+       continuePayment(){
+        
+        }
+
+                       
 
     /***----- APPLY COUPON (--parent--) ------***/
     receiveCouponDetails($event) {

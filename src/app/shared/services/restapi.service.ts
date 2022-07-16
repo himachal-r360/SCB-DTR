@@ -215,5 +215,14 @@ checksavedtravellers(param){
   }
 } 
 
+createItinerary(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/ItineraryResponse.json');
+  }
+  else{
+  return this.http.post( this.endpoint+'createItinerary',param, config).pipe(map((response: any) => response));
+  }
+} 
+
 
 }

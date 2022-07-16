@@ -1212,10 +1212,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"searchData":this.searchData };
+    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};
     let randomFlightDetailKey = this.getRandomString(44);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     this._flightService.setFlightsDetails(flightDetailsArr);
+    let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
+        this.router.navigateByUrl(url);
+    /*
     const myInterval =setInterval(()=>{
       this.loaderValue = this.loaderValue + 10;
       if(this.loaderValue == 110)
@@ -1225,7 +1228,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
         this.router.navigateByUrl(url);
       }
-    },300)
+    },10)*/
   }
 
 

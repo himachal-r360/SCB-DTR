@@ -1,36 +1,36 @@
-<main class="site-main" *ngIf="showLoader==0">
+<main class="site-main" >
     <section class="details-steps-area mt-40 mb-40">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div [ngClass]="{'col-md-7': enableVAS==1, 'col-md-6':enableVAS==0 }" >
                     <div class="details-steps-box">
                         <ul class="m-0 details-steps-ul">
                             <li>
-                                <a  [ngClass]="{'active': steps > 0 && steps < 4 }"> <!-- steps-done - Class For done steps --> 
+                                <a href="javascript:void(0)"  [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }"  (click)="moveTab(1)"> <!-- steps-done - Class For done steps --> 
                                     <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/flight.png" alt="" /></span>
                                     <span class="steps-text">Flight Details</span>
                                 </a>
                             </li>
                             <li>
-                                <a  [ngClass]="{'active': steps > 1 && steps < 4 }">
+                                <a href="javascript:void(0)"  [ngClass]="{'active1': completedSteps >2  , 'active':steps==2 }" (click)="moveTab(2)">
                                     <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/user.png" alt="" /></span>
                                     <span class="steps-text">Traveller Details</span>
                                 </a>
                             </li>
-                            <li>
-                                <a  [ngClass]="{'active': steps > 2 && steps < 4 }">
+                            <li *ngIf="enableVAS==1">
+                                <a href="javascript:void(0)"  [ngClass]="{'active1': completedSteps > 3 , 'active':steps==3 }" (click)="moveTab(3)">
                                     <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/meal.png" alt="" /></span>
                                     <span class="steps-text">Seats & Meals</span>
                                 </a>
                             </li>
                             <li>
-                                <a  [ngClass]="{'active': steps > 3 && steps < 4 }" >
+                                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 4 , 'active':steps==4 }" (click)="moveTab(4)">
                                     <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/review.png" alt="" /></span>
                                     <span class="steps-text">Review Booking</span>
                                 </a>
                             </li>
                             <li>
-                                <a  [ngClass]="{'active': steps== 5 }">
+                                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 5 , 'active':steps==5  }" (click)="moveTab(5)">
                                     <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/payment.png" alt="" /></span>
                                     <span class="steps-text">Payment</span>
                                 </a>
@@ -41,15 +41,13 @@
             </div>
         </div>
     </section>
-
-
   <section class="flight-details-area mt-10" >
         <div class="container">
             <div class="row">
             
               <!--Steps 1-->
                 <div class="col-md-8" *ngIf="steps==1">
-                    <div class="booking-process-content"  >
+                    <div class="booking-process-content" *ngIf="flightDetails" >
                         <div class="booking-title-box">
                             <h4>Flight Details</h4>
                         </div>
@@ -57,15 +55,15 @@
                         <div class="booking-inner-box from-to-box">
 
                             <div class="booking-inner-title">
-                                <div class="booking-inner-title-left" *ngIf="parseSearchVal">
+                                <div class="booking-inner-title-left" *ngIf="searchData">
                                     <h6>
-                                        {{parseSearchVal.fromCity}}
+                                        {{searchData.fromCity}}
                                         <img src="{{cdnUrl}}/images/icons/flight-right.png" class="ms-2 me-2" alt="">
-                                        {{parseSearchVal.toCity}}
+                                        {{searchData.toCity}}
                                     </h6>
-                                    <p> {{parseSearchVal.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
+                                    <p> {{searchData.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
                                 </div>
-                                <div class="booking-inner-title-right" >
+                                <div class="booking-inner-title-right" *ngIf="selectedVendor" >
                                     <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
                                     <p class="refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
                                 </div>
@@ -200,7 +198,7 @@
 
                             </div> -->
 
-                            <div class="luggage-box">
+                            <div class="luggage-box" *ngIf="enableVAS==1">
                                 <div class="luggage-text">
                                     <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
                                     <p>Got excess luggage? Don't stress, buy extra check-in baggage allowance at fab  rate!</p>
@@ -305,16 +303,16 @@
                                     </li>
                                   
                                 </ul>
-                                <div class="rules-flight">
+                                <div class="rules-flight" >
                                     <div class="rules-flight-items">
                                         <div class="rules-flight-thumbe">
                                             <img src="{{cdnUrl}}/images/airlines/{{flightDetails[0].airline}}.gif" alt="{{flightDetails[0].airline}}" class="flight-image mr-10">
                                         </div>
                                         <div class="rules-flight-content">
                                             <h6>
-                                                {{parseSearchVal.fromCity}}
+                                                {{searchData.fromCity}}
                                                 <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
-                                                {{parseSearchVal.toCity}}
+                                                {{searchData.toCity}}
                                             </h6>
                                         </div>
                                     </div>
@@ -2045,7 +2043,7 @@
                                               <a href="">Remove all Selections</a>
                                           </div>
                                           <div class="Skip-Payment">
-                                              <a href="">Skip to Payment</a>
+                                              <a href="javascript:;" (click)="moveTab(4)">Skip to Payment</a>
                                           </div>
                                       </div>
                                   </div>
@@ -2251,6 +2249,28 @@
                    </div>
                   </div>
                    <!--Step3 Ends-->
+                   
+                <!--Steps 4-->
+                <div class="col-md-8" *ngIf="steps==4">
+                <div class="booking-process-content" *ngIf="flightDetails" >
+                <div class="booking-title-box">
+                <h4>Review Booking</h4>
+                </div>
+
+                </div>
+                </div>    
+                <!--Step4 Ends-->   
+                
+                 <!--Steps 5-->
+                <div class="col-md-8" *ngIf="steps==5">
+                <div class="booking-process-content" *ngIf="flightDetails" >
+                <div class="booking-title-box">
+                <h4>Payment</h4>
+                </div>
+
+                </div>
+                </div>    
+                <!--Step5 Ends-->    
 
                 <div class="col-md-4">
                 <!-- <app-fare-summary></app-fare-summary> -->
@@ -2293,7 +2313,21 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="fare-list-item">
+                                
+                                                    <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                {{selectedVendor.partnerName}} ConvFee
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{partnerConvFee |number}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
                                     <div class="fare-list-box">
                                         <div class="fare-list-left">
                                             <p>
@@ -2302,7 +2336,7 @@
                                             </p>
                                         </div>
                                         <div class="fare-list-right">
-                                            <p>&#8377;600</p>
+                                            <p>&#8377;{{vas_amount}}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -2335,8 +2369,10 @@
                     </div>
                     <div class="continue-widget mb-20" >
                         <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()" *ngIf="steps==1">Continue</a>
-                          <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
-                            <a href="javascript:void(0);" class="button-style w-100"  *ngIf="steps==3">Continue</a>
+                        <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
+                        <a href="javascript:void(0);" class="button-style w-100" (click)="continueSeatSelection()"  *ngIf="steps==3">Continue</a>
+                         <a href="javascript:void(0);" class="button-style w-100"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
+                          <a href="javascript:void(0);" class="button-style w-100" (click)="continuePayment()"  *ngIf="steps==5">Continue</a>
                     </div>
                     <div *ngIf="steps==5">
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount+pgCharges"
@@ -2350,14 +2386,82 @@
             </div>
         </div>
     </section>
+            <!-- ------------------------------
+            >>> Modal bookingprocess
+        ---------------------------------->
+        <div class="modal bookingprocess" id="bookingprocess" *ngIf="searchData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body " style="padding: 25px;">
+                        <div class="bookingprocess-items">
+                            <div class="bookingprocess-title text-center mb-30">
+                                <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
+                            </div>
+                            <div class="bookingprocess-content">
+                                <div class="bookingprocess-flight">
+                                    <h6>{{searchData.fromCity}},{{searchData.fromContry}} ({{searchData.flightfrom}})</h6>
+                                    <p class="mt-10">{{searchData.departure | date:'dd.MM.yyyy'}} - <span>{{searchData.adults}} Adult,</span> <span *ngIf="searchData.child != '0'">{{searchData.child}} Child,</span> <span *ngIf="searchData.infants != '0'">{{searchData.infants}} Infants,</span> {{searchData.flightclass == "B" ? "Business":null || searchData.flightclass == "E" ? "Economy":null || searchData.flightclass == "F" ? "First":null  || searchData.flightclass == "P" ? "Premium":null}}</p>
+                                    <h6>{{searchData.toCity}},{{searchData.toContry}} ({{searchData.flightto}})</h6>
+                                </div>
+                                <div class="bookingprocess-processbar">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0" aria-valuemax="100"  [ngStyle]="{'max-width':loaderValue +'%'}" >
+                                            <span class="title"> &nbsp; </span>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="refresh-text text-center pt-2">
+                                <p>Please don't click or refresh the page</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-    
-    
+        <div class="modal fade bookingprocess" id="bookingprocessFailed"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body " style="padding: 25px;">
+                        <div class="bookingprocess-items">
+                            <div class="bookingprocess-content">
+                               An Error occurred during fetching flight details. Do Not Worry! <br><br> Click on Retry
+                            </div>
+                            <div class="refresh-text text-center pt-2">
+                               <button type="button" class="btn btn-primary" (click)="triggerBack()">Retry</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+                <div class="modal fade bookingprocess" id="bookingprocessPriceChange"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body " style="padding: 25px;">
+                        <div class="bookingprocess-items">
+                           <div class="bookingprocess-title text-center mb-30">
+                                <h5><strong>Price has changed</strong></h5>
+                            </div>
+                            <div class="bookingprocess-content">
+                               <p>The fare of the itinerary you have chosen has changed</p>
+                               <div><b>Old Price</b> : {{old_fare}}</div>
+                               <hr>
+                               <div><b>New Price</b> : {{new_fare}}</div>
+                            </div>
+                            <div class="refresh-text text-center pt-2">
+                               <button type="button" class="btn btn-primary" (click)="continueWithNewFare()">Continue with New Fare</button>
+                            </div>
+                             <div class="refresh-text text-center pt-2">
+                               <button type="button" class="btn" (click)="triggerBack()">Choose Different Itinerary</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </main>
-    
-<div class="app-loading-new" *ngIf="showLoader==1" >
-<div class="logo">
-<img src="assets/images/Loading-gif" />
-</div>
-<h4>LOADING...</h4>
-</div>
+
