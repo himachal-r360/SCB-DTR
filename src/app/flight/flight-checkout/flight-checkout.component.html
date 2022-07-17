@@ -72,9 +72,9 @@
                             <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
                                 <div class="Booking-Flight-name" >
                                     <div class="Booking-Flight-name-left">
-                                        <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" alt="{{flights.airline}}" class="flight-image mr-10">
-                                        <span class="fw_7">{{flights.airlineName}}</span>
-                                        <span class="opacity_05">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                        <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
+                                        <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                                        <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
                                     </div>
                                     <div class="Booking-Flight-name-right">
                                         <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
@@ -510,7 +510,7 @@
                 
                 <!--Steps 2 Starts-->
                  <div class="col-md-8" *ngIf="steps==2">
-                 <form [formGroup]="passengerForm" name="passengerForm">
+                 <form [formGroup]="passengerForm" name="passengerForm" ngxScrollToFirstInvalid>
                     <div class="booking-process-content">
                         <div class="booking-title-box">
                             <h4>Traveller Details <span>{{travelerDetails.adults}} Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span>                                <span *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span>
@@ -540,8 +540,8 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
-                                                        <span class="description fw_5">  {{passenger.gender}}</span>
+                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                        <span class="description fw_5 ">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
                                                 
@@ -615,7 +615,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -779,7 +779,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -854,7 +854,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -1017,7 +1017,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -1092,7 +1092,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -2256,6 +2256,53 @@
                 <div class="booking-title-box">
                 <h4>Review Booking</h4>
                 </div>
+                <div class="booking-inner-box from-to-box">
+                            <div class="booking-inner-title">
+                                <div class="booking-inner-title-left" *ngIf="searchData">
+                                    <h6>
+                                        {{searchData.fromCity}}
+                                        <img src="{{cdnUrl}}/images/icons/flight-right.png" class="ms-2 me-2" alt="">
+                                        {{searchData.toCity}}
+                                    </h6>
+                                    <p> {{searchData.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
+                                </div>
+                                <div class="booking-inner-title-right" *ngIf="selectedVendor" >
+                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
+                                    <p class="refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
+                                </div>
+                            </div>
+
+                            <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
+                                <div class="Booking-Flight-name" >
+                                    <div class="Booking-Flight-name-left">
+                                        <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
+                                        <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                                        <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                    </div>
+                                    <div class="Booking-Flight-name-right">
+                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
+                                    </div>
+                                </div>
+                                <div class="Booking-Flight-time">
+                                    <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                                    <span class="round round-line"></span>
+                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                        <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                        <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                        <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                    </div>
+                                </div>
+
+                                <div class="Booking-Flight-time">
+                                    <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                                    <span class="round"></span>
+                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                        <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                        <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                 </div>
                 </div>    
@@ -2276,14 +2323,12 @@
                 <!-- <app-fare-summary></app-fare-summary> -->
                 <div class="default-sidebar">
                     <div class="sidebar-widget session-expires-widget">
-                        <!-- <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p> -->
                         <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
                     </div>
                     <div class="sidebar-widget fare-summary-widget">
-                        <div class="widget-title">
+                        <div class="widget-title" >
                             <h4>Fare Summary</h4>
-                            <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
-                            <p *ngIf="selectedVendor">{{selectedVendor.partnerName}}</p>
+                            <img *ngIf="selectedVendor" src="{{cdnUrl}}images/flight_partners/{{selectedVendor.partnerName}}.png" alt="{{selectedVendor.partnerName}}"> 
                         </div>
                         <div class="widget-content">
                             <ul class="widget-list clearfix">
@@ -2426,7 +2471,7 @@
                     <div class="modal-body " style="padding: 25px;">
                         <div class="bookingprocess-items">
                             <div class="bookingprocess-content">
-                               An Error occurred during fetching flight details. Do Not Worry! <br><br> Click on Retry
+                               An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
                             </div>
                             <div class="refresh-text text-center pt-2">
                                <button type="button" class="btn btn-primary" (click)="triggerBack()">Retry</button>
@@ -2443,13 +2488,13 @@
                     <div class="modal-body " style="padding: 25px;">
                         <div class="bookingprocess-items">
                            <div class="bookingprocess-title text-center mb-30">
-                                <h5><strong>Price has changed</strong></h5>
+                                <h5><strong>Fare has changed</strong></h5>
                             </div>
                             <div class="bookingprocess-content">
                                <p>The fare of the itinerary you have chosen has changed</p>
-                               <div><b>Old Price</b> : {{old_fare}}</div>
+                               <div><b>Old Price</b> : ₹ {{old_fare}}</div>
                                <hr>
-                               <div><b>New Price</b> : {{new_fare}}</div>
+                               <div><b>New Price</b> : ₹ {{new_fare}}</div>
                             </div>
                             <div class="refresh-text text-center pt-2">
                                <button type="button" class="btn btn-primary" (click)="continueWithNewFare()">Continue with New Fare</button>

@@ -12,6 +12,7 @@ import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.component';
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
+import {NgxScrollToFirstInvalidModule} from '@ismaestro/ngx-scroll-to-first-invalid';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
         NgxSliderModule,
         NgxSkeletonLoaderModule,
         CouponsModule,
+        NgxScrollToFirstInvalidModule,
           RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
