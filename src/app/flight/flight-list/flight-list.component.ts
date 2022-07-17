@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostListener,  OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { retry, Subscription, timeInterval, window } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
-import { DOCUMENT, Location, ViewportScroller } from '@angular/common';
+import { Location, ViewportScroller } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Options } from '@angular-slider/ngx-slider';
 import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
@@ -86,7 +86,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   loaderValue = 10;
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
-  @HostListener("window:scroll", [])
 
   flightDataModify: any = this._fb.group({
     flightfrom: [],
@@ -115,6 +114,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   queryFlightData: any;
   fromContryName: any;
   toContryName: any;
+  math = Math;
   minDate = new Date();
   options: Options = {
     floor: 0,
@@ -1045,11 +1045,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
       this.loader = false
       this.DocKey = res.response.docKey;
-      this.flightList = res.response.onwardFlights;
+      // this.flightList = res.response.onwardFlights;
+      this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
-
+ 
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
         this.minPrice = this.flightList[0].priceSummary[0].totalFare;
@@ -1060,13 +1061,23 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       let url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
       this.getAirlinelist();
       this.popularFilterFlightData()
-
       this.location.replaceState(url);
       this.getQueryParamData(JSON.parse(query));
 
     }, (error) => { console.log(error) });
   }
-
+  ascPriceSummaryFlighs(flightsData:any)
+  {
+    flightsData.filter((flightItem:any,indx:number)=>{
+      
+      let priceSummaryArr=flightItem.priceSummary;
+      if(priceSummaryArr.length>1){
+        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        flightItem.priceSummary=priceSummaryArr;
+      }
+    })
+    return flightsData;
+  }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
             
@@ -1248,5 +1259,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
    // this.scroll.scrollToPosition([0,0]);
   }
 
+  
+ 
+
+  
   
 }
