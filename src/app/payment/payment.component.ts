@@ -518,33 +518,18 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			
 	ngOnInit() {
 	this.siteKey=this.serviceSettings.SITEKEY;
-	if(this.serviceId == 'RedBus'){
-		this.Partnertoken = "RedBus";
+		this.Partnertoken = "Flight";
 		this.ServiceToken = "BUS";
-		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['BUS'] == 1) {
+		
+		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['Flight'] == 1) {
 			this.showRewardsBox=true;
 		}else{
 			this.showRewardsBox=false;
 		}
-	}else if(this.serviceId == 'IRCTC'){
-		this.Partnertoken = "IRCTC";
-		this.ServiceToken = "Train";
-		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['TRAIN'] == 1) {
-			this.showRewardsBox=true;
-		}else{
-			this.showRewardsBox=false;
-		}
-	}else if(this.serviceId == 'Freshmenu'){
-		this.Partnertoken = "Freshmenu";
-		this.ServiceToken = "Shopping";
-		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['FRESHMENU'] == 1) {
-			this.showRewardsBox=true;
-		}else{
-			this.showRewardsBox=false;
-		}
-	}
 
-	this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
+console.log(this.serviceId);
+
+	         this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
 
 
 			this.domainName=this.sg['domainName'];
@@ -2437,7 +2422,7 @@ export class PaywithpointsDialog {
 	verificationText:any;
 	noLeadingZeroPattern=/^(?!0)[0-9]*$/;
 	VOUCHER_NAME:any="Voucher Code";
-	constructor(@Inject(APP_CONFIG) appConfig: any,public dialogPaywithpoints: MatDialogRef < PaywithpointsDialog >,@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,private sg: SimpleGlobal,public rest:RestapiService,private EncrDecr: EncrDecrService,private pay: PayService,private bnIdle: BnNgIdleService,private communicate: CommunicationService,private appConfigService:AppConfigService) {
+	constructor(public dialogPaywithpoints: MatDialogRef < PaywithpointsDialog >,@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,private sg: SimpleGlobal,public rest:RestapiService,private EncrDecr: EncrDecrService,private pay: PayService,private bnIdle: BnNgIdleService,private communicate: CommunicationService,private appConfigService:AppConfigService) {
 			this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
 			this.popup=data.popup;
 			this.passSessionKey=data.passSessionKey;
