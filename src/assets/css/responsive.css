@@ -108,6 +108,26 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         grid-template-columns: repeat(3, 1fr);
     }
 
+    .mat-datepicker-content-container {
+      position: fixed;
+      bottom: 0;
+      background: #fff;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      left: 0;
+      border-radius: 15px 15px 0 0;
+  }
+
+  .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+      opacity: 1;
+      background: #b3b3b3;
+  }
+
+  .mat-datepicker-content .mat-calendar {
+      width: 100% !important;
+      height: auto !important;
+  }
 
 
 
@@ -182,11 +202,11 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         flex-direction: column;
     }
     .area-root-departure, .area-root-reutrn {
-        width: 100%;
+        width: 100% !important;
     }
     .area-root-departure {
-        padding-right: 0;
-        border-right: none;
+        padding-right: 0 !important;
+        border-right: none !important;
     }
     .root-search {
         width: 100%;
@@ -241,7 +261,7 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         display: flex;
     }
     .flight-from-data-ul {
-        max-height: 100%;
+      max-height: 350px !important;
         overflow: auto;
         height: calc(100% - 30%);
         background: #fff;
@@ -374,7 +394,7 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         display: inline-block;
     }
 
-    .root-date { 
+    .root-date {
         gap: 8px;
     }
 
@@ -384,9 +404,9 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     .preferred-airline-hide{
         display: inline-flex;
     }
-    
-} 
- 
+
+}
+
 @media only screen and (max-width: 767px) {
     .mtb-90 {
         margin-top: 30px !important;
