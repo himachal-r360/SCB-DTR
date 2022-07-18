@@ -2314,7 +2314,10 @@
                 <div class="booking-title-box">
                 <h4>Payment</h4>
                 </div>
-
+<app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchTrainKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
+[passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE"
+[passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)" >
+</app-payment>
                 </div>
                 </div>    
                 <!--Step5 Ends-->    
@@ -2420,7 +2423,7 @@
                           <a href="javascript:void(0);" class="button-style w-100" (click)="continuePayment()"  *ngIf="steps==5">Continue</a>
                     </div>
                     <div *ngIf="steps==5">
-                    <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount+pgCharges"
+                    <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
   (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
 </app-coupons>

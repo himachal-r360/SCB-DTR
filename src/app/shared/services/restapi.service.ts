@@ -215,6 +215,13 @@ checksavedtravellers(param){
   }
 } 
 
+  isCardValid(param): Observable<any> {
+    if(LOCALJSON=='true')
+      return this.http.get('assets/data/isCardValid.json?version='+new Date().getTime());
+     else
+  	return this.http.post(MAIN_SITE_URL+ this.domainPath+'card_validate', param, config).pipe(map((response: any) => response));
+
+ }
 createItinerary(param){
   if(LOCALJSON=='true'){
     return this.http.get('assets/data/ItineraryResponse.json');
@@ -223,6 +230,74 @@ createItinerary(param){
   return this.http.post( this.endpoint+'createItinerary',param, config).pipe(map((response: any) => response));
   }
 } 
-
-
+  IsDcemiEligible (param):Observable<any> {
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/IsDcemiEligible.json');
+    }else{
+	return this.http.post( this.endpoint+'IsDcemiEligible',param, config).pipe(map((response: any) => response));
+    }
+  } 
+  
+  checkExistingCustomer (param):Observable<any> {
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/checkExistingCustomer.json');
+    }else{
+	return this.http.post( this.endpoint+'checkExistingCustomer',param, config).pipe(map((response: any) => response));
+    }
+  }
+  
+  validateOTPDCEMI (param):Observable<any> {
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/validateOTPDCEMI.json');
+    }else{
+	return this.http.post( this.endpoint+'validateOTPDCEMI',param, config).pipe(map((response: any) => response));
+    }
+  }
+     getSaveCards (param):Observable<any> {
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/get_pay_saved_cards.json');
+    }else{
+      return this.http.post( this.endpoint+'get_pay_saved_cards', param, config).pipe(map((response: any) => response));
+    }
+    
+  }
+  
+ getFlexipayDetails ():Observable<any> {
+      return this.http.post(this.endpoint+'get-flexipay-details', config).pipe(map((response: any) => response));  
+  }
+  getCCEMIDetails ():Observable<any> {
+    return this.http.post(this.endpoint+'get-ccemi-details', config).pipe(map((response: any) => response));
+  }
+  getDCEMIDetails ():Observable<any> {
+    return this.http.post(this.endpoint+'get-dcemi-details', config).pipe(map((response: any) => response));
+  }
+    validatePGData (param):Observable<any> {
+     if(LOCALJSON=='true'){
+           return this.http.get('assets/data/validatePGData.json');
+     }else{
+     return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
+     } 
+     //return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
+  }
+   isFlexiPayEligible (param):Observable<any> {
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/isflexipayeligible.json');
+  }else{
+return this.http.post( this.endpoint+'is_flexipay_eligible',param, config).pipe(map((response: any) => response));
+  }
+}
+flexipayExistingCustomer(param):Observable<any>{
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/flexipayexistingcustomer.json');
+  }else{
+return this.http.post( this.endpoint+'flexiPay_check_existingcustomer',param, config).pipe(map((response: any) => response));
+  }
+}
+flexipayvalidateOTP(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/flexipayvalidateOTP.json');
+  }else{
+return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe(map((response: any) => response));
+  }
+}
 }

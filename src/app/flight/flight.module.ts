@@ -13,6 +13,7 @@ import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.compo
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import {NgxScrollToFirstInvalidModule} from '@ismaestro/ngx-scroll-to-first-invalid';
+import { PaymentModule } from 'src/app/payment/payment.module';
 
 const routes: Routes = [
   {
@@ -44,7 +45,7 @@ const routes: Routes = [
         DirectiveModule,
         NgxSliderModule,
         NgxSkeletonLoaderModule,
-        CouponsModule,
+        CouponsModule,PaymentModule,
         NgxScrollToFirstInvalidModule,
           RouterModule.forRoot(routes)
   ],

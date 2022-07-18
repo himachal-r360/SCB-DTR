@@ -16,6 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import alertifyjs from 'alertifyjs';
 import * as moment from 'moment';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 declare let alertify: any;
 export const MY_DATE_FORMATS = {
   parse: {
@@ -41,7 +42,10 @@ declare var $: any;
   ]
 })
 export class FlightCheckoutComponent implements OnInit ,OnDestroy {
-
+   savedCards: any = [];
+       XSRFTOKEN: string;
+           IsDcemiEligibleFlag: boolean = false;  
+               isFlexipayEligibleFlag:boolean = false;
 priceSummaryResponse:any;
 pricingId:any;
 itineraryid:any;
@@ -155,7 +159,7 @@ new_fare: number = 0;
         timeLeft:any = 900;
         baggageInfo:any='';
         flightDetailsArrVal:any;
-        steps:any = 1;
+        steps:any = 5;
 
         travelerDetails:any={};
         checked:any= false;
@@ -163,10 +167,10 @@ new_fare: number = 0;
         gstNumber:any
         mobileNumber:any;
         showLoader:number=1;
+ serviceId:string='Flight';
 
 
-
-  constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal) { 
+  constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal, @Inject(DOCUMENT) private document: any) { 
 
 
                 this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
@@ -177,29 +181,44 @@ new_fare: number = 0;
 
                 this.getAirpotsList();
 
-        
-        
-      setTimeout(() => {
-       //Check Laravel Seesion
+
+          /*** SESSION */
+        sessionStorage.removeItem("coupon_amount");
+  setTimeout(() => {
+    //Check Laravel Seesion
         if(this.sg['customerInfo']){
-         var customer_cookie;
-          if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
-          if(customer_cookie == 1){
-               this.customerInfo = this.sg['customerInfo'];
-             if(this.customerInfo["guestLogin"]==true){
+          this.customerInfo=this.sg['customerInfo'];
+		if(sessionStorage.getItem("channel")=="payzapp"){
+		var customerInfo = this.sg['customerInfo'];  
+		this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+		this.REWARD_CUSTOMERID = '0000';
+		this.REWARD_EMAILID = '';
+		this.REWARD_MOBILE = '';
+		this.REWARD_CUSTOMERNAME = '';
+
+             
+		}else{
+		 var customerInfo = this.sg['customerInfo'];
+            if(customerInfo["org_session"]==1){
+             
+            // console.log(customerInfo)
+             if(customerInfo["guestLogin"]==true){
+              
+                this.REWARD_CUSTOMERID = customerInfo["id"];
+                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+                this.IsDcemiEligibleFlag=true;
+                this.isFlexipayEligibleFlag=true;
+                this.enablesavedTraveller=0;
              }else{
-               this.getQueryParamData();
+                this.getQueryParamData();
                 this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
-                
-                
-                 
+
                 this.flightSessionData=JSON.parse(this.flightDetailsArrVal);
                 this.searchData=(this.flightSessionData.queryFlightData);
-             //   console.log(  this.searchData);
-              console.log(this.flightSessionData);
-                setTimeout(() => {
-                 $("#bookingprocess").modal('show');
-                 
+                //   console.log(  this.searchData);
+                console.log(this.flightSessionData);
+                $("#bookingprocess").modal('show');
+
                 this.maxAdults=Number(this.searchData.adults);
                 this.maxChilds=Number(this.searchData.child);
                 this.maxInfants=Number(this.searchData.infants);
@@ -209,30 +228,132 @@ new_fare: number = 0;
                 this.partnerToken=this.selectedVendor.partnerName;
                 this.enableVAS= this.serviceSettings.enabledVAS[this.partnerToken];
                 //console.log(this.partnerToken);
-                 //console.log(this.enableVAS);
-                 
-                 this.getFlightDetails(this.flightSessionData);
-                  }, 50);
-                  this.passengerForm.patchValue({
-                    passengerMobile: this.customerInfo["mobile"],
-                    passengerEmail: this.customerInfo["email"]
+                //console.log(this.enableVAS);
+
+                this.getFlightDetails(this.flightSessionData);
+             
+             
+                this.REWARD_CUSTOMERID = customerInfo["id"];
+                this.REWARD_EMAILID = customerInfo["email"];
+                this.REWARD_MOBILE = customerInfo["mobile"];
+                this.REWARD_TITLE = customerInfo["title"];
+
+                this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
+                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+
+                const urlSearchParams = new HttpParams()
+                    .set('customerid', customerInfo["id"])
+                    .set('programName', this.sg['domainName']);
+                let body: string = urlSearchParams.toString();
+
+                this.passengerForm.patchValue({
+                    passengerMobile: customerInfo["mobile"],
+                    passengerEmail: customerInfo["email"]
                 });
-              
-                if(this.enablesavedTraveller == 1){
+
+                //Check Dc Emi Eligible
+                if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].DEBIT_EMI==1){
+                var checkEligibleParams = {
+                    'client_token': 'HDFC243',
+                    'mobile': customerInfo["mobile"],
+                };
+                var postCheckEligibleParam = {
+                    postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
+                };
+
+                this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
+                    if (results.result) {
+                        let result = JSON.parse(this.EncrDecr.get(results.result));
+                        this.IsDcemiEligibleFlag = result.eligible; 
+                    }
+                });
+               }
+               
+
+                var saveCardPostParam = {
+                    "customerid": customerInfo["id"],
+                    "programName": this.sg['domainName']
+                };
+
+                var saveCardParam = {
+                    postData: this.EncrDecr.set(JSON.stringify(saveCardPostParam))
+                };
+
+
+                this.rest.getSaveCards(saveCardParam).subscribe(data => {
+                let cardData = data;
+                let newCardArr = [];
+                this.savedCards = data;
+                /* if(this.domainName != "SMARTBUY"){
+                for(var i=0;i<cardData.length;i++){
+                if(cardData[i].type == this.domainName){
+                newCardArr.push({"bin":cardData[i].bin,"card_display_name":cardData[i].card_display_name,
+                "card_id":cardData[i].card_id,"id":cardData[i].id,"type":cardData[i].type})
+                this.savedCards = newCardArr;
+                }else{
+                this.savedCards = [];
+                }
+                }
+                }else{
+                this.savedCards = cardData;
+                }*/
+
+                // this.savedCards = data;
+                });
+
+                //check flexipay eligible
+               if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].FLEXI_PAY==1){
+                var eligibleparam = {
+                 'mobile': customerInfo["mobile"] 
+                }
+                var postEligibleParam = {
+                 postData: this.EncrDecr.set(JSON.stringify(eligibleparam))
+             };
+             this.rest.isFlexiPayEligible(postEligibleParam).subscribe(results => {
+                 let resp = JSON.parse(this.EncrDecr.get(results.result));
+                 this.isFlexipayEligibleFlag = resp.status;
+                
+             })
+            }
+            if(this.enablesavedTraveller == 1){
                 this.checksavedtraveller();
-                }
-                if(this.enableGST==1){
+              }
+              if(this.enableGST==1){
                 this.getCustomerGstDetails();
-                }
+              }
+              
+              
+              
+              
              }
+     
+             
+               
+            } else {
+                this.REWARD_CUSTOMERID = '0000';
+                this.REWARD_EMAILID = '';
+                this.REWARD_MOBILE = '';
+                this.REWARD_CUSTOMERNAME = '';
+                this.XSRFTOKEN = 'NULL';
+                if (environment.localInstance == 0)
+                    this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
+            }
+          }  
+        }else {
+            this.REWARD_CUSTOMERID = '0000';
+            this.REWARD_EMAILID = '';
+            this.REWARD_MOBILE = '';
+            this.REWARD_CUSTOMERNAME = '';
+            this.XSRFTOKEN = 'NULL';
+            if (environment.localInstance == 0)
+                this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
+         }
+     }, 50);
 
-          }else{
-              this.customerInfo =[];
-          }
+
         
-      }
-
-      }, 50);
+        
+    
        const jobGroup: FormGroup = new FormGroup({});
           this.passengerForm = jobGroup;
            jobGroup.addControl('saveTraveller',new FormControl(''));
@@ -268,7 +389,6 @@ new_fare: number = 0;
 
 
   getFlightDetails(param){
-    //this._flightService.getFlightDetailsVal()
       if(param!=null){
          var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
         var body = {
@@ -1193,7 +1313,6 @@ new_fare: number = 0;
         
        this.totalCollectibleAmount = Number(this.TotalFare) + Number(this.convenience_fee) ;
        this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
-       
 
         }
     }, (error) => { ;
@@ -1531,6 +1650,8 @@ new_fare: number = 0;
 		if(this.partnerConvFee > 0){
                 	setOrderAmount = setOrderAmount+Number(this.partnerConvFee);
                 }
+                
+                this.convenience_fee=this.partnerConvFee;
                 
                this.totalCollectibleAmount = Number(setOrderAmount) ;
                this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
