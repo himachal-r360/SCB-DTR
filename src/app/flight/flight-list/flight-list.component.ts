@@ -81,6 +81,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   DocKey: any;
 
    loaderValue = 10;
+   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;

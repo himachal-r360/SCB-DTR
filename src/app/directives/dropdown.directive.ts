@@ -13,17 +13,17 @@ export class DropdownDirective{
         //this.isOpen = this.elRef.nativeElement.contains(event.target) ? !this.isOpen : false;
         if(this.elRef.nativeElement.contains(event.target))
         {
-          
+
           this.elRef.nativeElement
           .querySelector('.dropdown')
-          .classList.remove('flight-from-hide');
+          .classList.remove('flight-from-hide')
           let fromCitySearch = document.getElementById('fromCitySearch');
           let toCitySearch = document.getElementById('toCitySearch');
           fromCitySearch?.focus();
           toCitySearch?.focus();
         }
         else{
-          
+
           this.elRef.nativeElement
           .querySelector('.dropdown')
           .classList.add('flight-from-hide');

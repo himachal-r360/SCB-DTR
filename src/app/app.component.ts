@@ -7,5 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'reward360';
+
+  scrollTop(){
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+  }
 }
 
