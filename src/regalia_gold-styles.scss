@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import './assets/sharedscss/color-regalia_gold';
 @import './assets/shared_inner_scss/regalia_gold_inner';
 @import "./assets/sharedscss/fonts";
 @import './assets/sharedscss/spacing';
@@ -796,6 +795,12 @@ a {
 
 
 /* Agular Material Override css */
+.mat-calendar-body-selected{
+    background-color: $primary-color;
+}
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical){
+    background-color: #caa893;
+}
 @media only screen and (max-width: 997px){
     .mat-select-value, .mat-select, .mat-select-value-text{
         font-family: 'opensans-regular';

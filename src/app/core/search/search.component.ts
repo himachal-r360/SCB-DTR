@@ -96,10 +96,7 @@ export class SearchComponent implements OnInit ,OnDestroy {
     //   dep = e.format()
     //   this.selectDate = dep;
     //   // this.newDate = e.format()
-    //   // console.log(this.newDate ,"new date");
     //   // dep = e.format()
-
-    //    console.log(this.selectDate);
     // });
     const a=this;
     $('#'+control).daterangepicker({

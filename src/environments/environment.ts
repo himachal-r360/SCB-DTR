@@ -13,6 +13,7 @@ export const environment = {
   cdnDealUrl: 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/',
 API_URL:{
  'SMARTBUY': 'https://smartbuydev.reward360.in/api/',
+ //'SMARTBUY': 'http://offers.smartbuylocal.reward360.us/api/',
  'DINERS': 'https://smartbuydev.reward360.in/diners/api/',
  'INFINIA'  : 'https://smartbuydev.reward360.in/infinia/api/',
  'REGALIA': 'https://smartbuydev.reward360.in/regalia/api/',
@@ -25,11 +26,8 @@ API_URL:{
     ANGULAR_SITE_URL:'https://smartbuydev.reward360.in/lite/',
    enableEncryptionRequestResponse:false,
   'IS_MAIN':0,
-    recaptcha: {
-    siteKey: '6Lf7UL0cAAAAAIt_m-d24WG4mA1XFPHE8yVckc5S',
-  },
-  
-  
+
+
   BUS_SITE_URL:{
  'SMARTBUY': 'https://smartbuydev.reward360.in/lite/',
  'DINERS': 'https://smartbuydev.reward360.in/lite/diners/',

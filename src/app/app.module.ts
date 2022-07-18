@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule,APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent,AlertDialogComponent } from './app.component';
 import { FlightModule } from './flight/flight.module';
@@ -13,7 +14,6 @@ import { SearchComponent } from './core/search/search.component';
 import { AppConfigService } from './app-config.service';
 import {APP_CONFIG, AppConfig} from './configs/app.config';
 import { SimpleGlobal } from 'ng2-simple-global';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule} from '@angular/material/dialog';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { CommunicationService } from './shared/services/communication.service';
@@ -40,7 +40,8 @@ export function appInitializerFn(appConfig: AppConfigService) {
     
   ],
   imports: [
-    BrowserModule,
+ BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FlightModule,
     HttpClientModule,
@@ -51,7 +52,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
       headerName: 'X-XSRF-TOKEN'
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
-    BrowserAnimationsModule,
     MaterialModule,DirectiveModule,PartnersModule
   ],
   exports:[SearchComponent],

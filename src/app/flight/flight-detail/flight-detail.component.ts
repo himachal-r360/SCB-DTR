@@ -65,7 +65,6 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
     //this._flightService.getFlightDetailsVal()
 
      this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
-     console.log(this.flightDetailsArrVal, "Param");
     let param=JSON.parse(this.flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;
