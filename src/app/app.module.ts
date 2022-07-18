@@ -13,6 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { DirectiveModule } from './directives/directive.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 
@@ -37,6 +38,7 @@ import { DirectiveModule } from './directives/directive.module';
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
+    CarouselModule
     
   ],
   exports:[SearchComponent],
