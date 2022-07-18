@@ -83,7 +83,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal: string = ""
   DocKey: any;
-  loaderValue = 10;
+
+   loaderValue = 10;
+   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
+
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
 
@@ -180,7 +183,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getAirpotsList();
     this.setSearchFilterData();
     this.flightSearch();
-   
+
   }
 
   getQueryParamData(paramObj: any) {
@@ -641,16 +644,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
         }
         else if (item.name == 'D_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());  
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
         }
         else if (item.name == 'D_L' && item.active == true) {
-        this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());  
+        this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
         }
         else if (item.name == 'A_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());  
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
         }
         else if (item.name == 'A_L' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());  
+          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
         }
 
       })
@@ -1050,7 +1053,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
- 
+
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
         this.minPrice = this.flightList[0].priceSummary[0].totalFare;
@@ -1069,7 +1072,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   ascPriceSummaryFlighs(flightsData:any)
   {
     flightsData.filter((flightItem:any,indx:number)=>{
-      
+
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
         priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
@@ -1259,9 +1262,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
    // this.scroll.scrollToPosition([0,0]);
   }
 
-  
- 
 
-  
-  
+
+
+
+
 }

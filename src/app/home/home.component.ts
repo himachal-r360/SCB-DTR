@@ -8,7 +8,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  
+
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -78,6 +78,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   fromContryName:any;
   toContryName:any;
   minDate = new Date();
+  isMobile:boolean = false;
+  isClosed:boolean = true;
   searchData:any;
   flightClassVal:any;
   constructor(
@@ -112,20 +114,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    console.log(window.innerWidth)
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
     }
-    
+
     this.setSearchFilterData()
-   
-   
-   
-    
   }
   ngAfterViewInit(): void {
- 
+
   }
 
   currentPeriodClicked(datePicker:any){
@@ -133,7 +133,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(date){
       setTimeout(() => {
         let openTravellers = document.getElementById('openTravellers')
-        openTravellers?.click();  
+        openTravellers?.click();
       }, 50);
     }
   }
@@ -223,7 +223,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
-    
+
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -239,9 +239,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       let toCityDivElement=document.getElementById("toCityDiv");
       toCityDivElement?.click();
-      this.toCityInput.nativeElement.focus();  
+      this.toCityInput.nativeElement.focus();
     }, 50);
-    
+
   }
 
   selectToFlightList(para2: any) {
@@ -326,7 +326,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
-      
+
       if(continueSearch!=null && continueSearch.length>0){
         this.continueSearchFlights=JSON.parse(continueSearch);
         this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
@@ -337,7 +337,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       }
       this.continueSearchFlights.push(searchValueAllobj);
-      
+
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
@@ -528,5 +528,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toCityName = FromData.fromCityName;
     localStorage.setItem('toCity' ,FromData.fromCityName);
 
+  }
+
+  onClose(){
+    // var element = document.querySelector('.flight-from-data')
+    // element?.classList.add('form-hide');
+  }
+
+  onOpen()
+  {
+    if(this.isMobile)
+    {
+      var element = document.querySelector('.flight-from-data')
+    element?.classList.remove('form-hide');
+    }
   }
 }

@@ -2409,7 +2409,7 @@ textarea.error {
     font-size: 12px;
     text-align: center;
     border-radius: 25px;
-    z-index: 99;
+    z-index: 8;
     cursor: pointer;
     transition: all 1s;
     transform: translateY(100%);
@@ -2655,7 +2655,9 @@ ul.travel-select-trip-ul {
 
 
 .travel-data {
-    margin-top: 20px;
+    margin-top: 15px;
+    display: inline-block;
+    width: 100%;
 }
 .select-root-area {
     display: flex;
@@ -3494,6 +3496,109 @@ hr:not([size]) {
     font-weight: 500;
     background: transparent;
 }
+
+.flight-listing-area {
+    position: relative;
+}
+
+
+.listing-loader {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 8;
+    background: #FFFFFF;
+    border: 1px solid rgb(0 0 0 / 10%);
+    border-radius: 8px;
+    display: flex;
+    gap: 30px;
+    padding: 15px;
+    left: 0;
+    top: 0;
+}
+
+.listing-loader-thumb {
+    background: #D9D9D9;
+    opacity: 0.5;
+    border-radius: 8px;
+    width: 126px;
+}
+
+.listing-loader-content {
+    width: 100%;
+    height: 100%;
+}
+.loader-box-title {
+    background: #D9D9D9;
+    opacity: 0.5;
+    border-radius: 3px;
+    width: calc(100% - 10px);
+    height: 20px;
+    display: inline-block;
+    margin-top: 9px;
+}
+
+span.loader-box-subtext {
+    background: #D9D9D9;
+    opacity: 0.5;
+    border-radius: 3px;
+    width: calc(100% - 10px);
+    height: 8px;
+    display: inline-block;
+}
+
+
+.filter-loaders{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 8;
+    background: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    gap: 0;
+    padding: 15px;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+}
+.filter-loader{
+    position: relative;
+    height: auto;
+    width: 100%;
+    z-index: 8;
+    background: #FFFFFF;
+    border: 1px solid rgb(0 0 0 / 10%);
+    border-radius: 8px;
+    display: flex;
+    gap: 30px;
+    padding: 5px;
+    left: 0;
+    top: 0;
+    margin-bottom: 18px;
+}
+.filter-loader-content {
+    width: 100%;
+}
+.filter-box-title{
+    background: #D9D9D9;
+    opacity: 0.5;
+    border-radius: 3px;
+    width: calc(100% - 10px);
+    height: 20px;
+    display: inline-block;
+}
+
+.filter-box-subtext {
+    background: #D9D9D9;
+    opacity: 0.5;
+    border-radius: 3px;
+    width: calc(100% - 10px);
+    height: 8px;
+    display: inline-block;
+}
+
+
 
 
 .flight-listing {
@@ -4719,6 +4824,13 @@ table.table-bordered.table-content {
     color: #000000;
     background: #FFF1F1;
     border-radius: 6px;
+}
+
+.bookingprocess {
+    background: #7c7d80;
+}
+.bookingprocess .modal-content {
+    border: none;
 }
 
 .bookingprocess-title{
@@ -6870,10 +6982,148 @@ button.accordion-button .xlsheats{
 .emi-content-list.active{
     background: #fff;
 }
+ 
 
-.bookingprocess {
-    background: #7c7d80;
+
+.mob-select-roottitle, .mob-search, .mob-Preferred-done, .form-hide, .to-hide {
+    display: none;
 }
-.bookingprocess .modal-content {
-    border: none;
+
+.mob-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    display: none;
+}
+
+.mob-title h3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17.3521px;
+    line-height: 24px;
+    color: #000000;
+}
+
+
+.mob-Preferred-done, .mob-Choose-done {
+    position: relative; 
+    width: 100%;
+    background: #fff;
+    padding: 15px;
+}
+.mob-Preferred-done a, .mob-Choose-done a {
+    background: #1D86FF;
+    border-radius: 8.28571px;
+    height: 43px;
+    display: inline-block;
+    width: 100%;
+    line-height: 43px;
+    text-align: center;
+    color: #fff;
+}
+
+
+
+.mob-travellers-class {
+    width: 100%;
+    position: relative;
+    display: none;
+}
+.mob-travellers-class-box-left > span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #A6A6A6;
+}
+.mob-travellers-class-box-left h5 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+}
+.mob-travellers-class-box-left h5 span{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+    opacity: 0.6;
+}
+.mob-travellers-class-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    border: 1px solid #d3d3d3;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 15px;
+    gap: 15px;
+    justify-content: space-between;
+}
+.mob-Choose-class h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+    opacity: 0.5;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.mob-filter-travellers {
+    position: fixed;
+    bottom: 0;
+    top: inherit;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    width: 100%;
+    height: calc(100vh - 0px);
+    border-radius: 0;
+    background: #b3b3b3;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 100%;
+    display: none;
+    z-index: 9;
+}
+
+.mob-add-travels {
+    width: 100%;
+    background: #fff;
+    padding: 0 15px;
+}
+
+.mob-Choose-class ul li {
+    display: inline-block; 
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+.mob-Choose-class a {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 45px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    color: rgba(0, 0, 0, 0.5);
+    display: inline-block; 
+    padding: 0 15px;
+}
+.mob-Choose-class a.active {
+    background: #1D86FF;
+    color: #fff;
+    border: 1px solid #1D86FF;
 }
