@@ -262,8 +262,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showmoreAirline() {
-    this.showLessAirline = false
-    this.showMoreAirline = true;
+    // let airlineSize = 2
+    // let modifyAirline = this.airlines.slice(0, airlineSize)
+    
   }
 
   increaseAdult() {

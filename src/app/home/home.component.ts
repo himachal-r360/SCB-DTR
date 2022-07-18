@@ -262,19 +262,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.searchData = sessionStorage.getItem('searchVal');
     if(this.searchData != null || this.searchData != undefined){
     let searchObj = JSON.parse(this.searchData);
-    this.fromCityName = searchObj.fromCity; //searchObj.flightfrom;
-    this.toCityName = searchObj.toCity;//localStorage.getItem('toCity');
+    this.fromCityName = searchObj.fromCity; 
+    this.toCityName = searchObj.toCity;
     this.departureDate = new Date(searchObj.departure);
-
     this.flightClassVal = searchObj.flightclass;
     this.adultsVal = searchObj.adults;
     this.childVal = searchObj.child;
     this.infantsVal = searchObj.infants;
-    this.fromAirpotName = searchObj.fromAirportName;//localStorage.getItem('fromAirportName');
-    this.toAirpotName = searchObj.toAirportName;//localStorage.getItem('toAirportName');
+    this.fromAirpotName = searchObj.fromAirportName;
+    this.toAirpotName = searchObj.toAirportName;
     this.flightTimingfrom = searchObj.flightfrom
     this.flightTimingto = searchObj.flightto
-
     this.fromFlightId = searchObj.flightfrom;
     this.toFlightId = searchObj.flightto;
     this.flightData.get('flightfrom').setValue(searchObj.flightfrom)
