@@ -240,292 +240,311 @@
             <div class="col-lg-12">
                 <div class="layout-box">
                   <div class="layout-left">
-                    <ngx-skeleton-loader *ngIf="loader" count="10" appearance="line" animation="pulse"
+                    <div class="filter-loaders animation-loader" *ngIf="loader">
+                      <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                          <div class="filter-loader-content ">
+                              <span class="filter-box-title mt-0 w-50"><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                [theme]="{
+                                  'border-radius': 0
+                                }"></ngx-skeleton-loader></span>
+                              <span class="filter-box-subtext "><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                [theme]="{
+                                  'height':'8px',
+                                  'border-radius': '3px'
+                                }"></ngx-skeleton-loader></span>
+                          </div>
+                      </div>
+
+                  </div>
+                    <!-- <ngx-skeleton-loader *ngIf="loader" count="10" appearance="line" animation="pulse"
                         [theme]="{
 
                            height: '90px',
                           'border-radius': 0
-                        }"></ngx-skeleton-loader>
-                    <div class="Filterslayout d-flex justify-content-between align-items-center" [hidden]="loader">
-                        <h6 class="fs_16">Filters</h6>
-                        <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
-                    </div>
-                    <hr>
-                    <div class="default-sidebar flight-sidebar" [hidden]="loader">
-                        <div class="sidebar-widget search-widget">
-                            <div class="widget-title">
-                                <h6 class="">Popular Filters</h6>
-                                <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
-                            </div>
-                            <div class="widget-content">
-                                <ul class="category-list clearfix mt-2" id="popular-filters">
+                        }"></ngx-skeleton-loader> -->
+                        <div [hidden]="loader">
+                          <div class="Filterslayout d-flex justify-content-between align-items-center" >
+                            <h6 class="fs_16">Filters</h6>
+                            <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
+                        </div>
+                        <hr>
+                        <div class="default-sidebar flight-sidebar" [hidden]="loader">
+                            <div class="sidebar-widget search-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Popular Filters</h6>
+                                    <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="category-list clearfix mt-2" id="popular-filters">
 
-                                    <!-- <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">{{popularItems.value}} ({{RefundableFaresCount}})</span>
-                                            </label>
-                                        </div>
-                                    </li> -->
-                                    <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
-                                                <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <!-- <li class="custom-check-box" >
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="Refundable-Fares" (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Refundable Fares ({{RefundableFaresCount}})</span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="non-stop" (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Non-stop ({{nonStopCount}})</span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="Morning-Departures"  (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Morning Departures ({{morningDearptureCount}})</span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="Meals-Included"  (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Meals Included</span>
-                                            </label>
-                                        </div>
-                                    </li> -->
-                                </ul>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
-                            <div class="widget-title">
-                                <h6 class="">Flight Timings</h6>
-                                <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
-                            </div>
-                            <div class="widget-content">
-                                <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
-                                <div class="flighttiming-content flight-departing">
-                                    <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
-                                    (click)="FlightTimingsFilterFlightData(timingsItems)">
-                                        <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
-                                        <p [innerHTML]="timingsItems.value"></p>
-                                    </div>
-                                    <!-- <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" [innerHTML]="FlightStopitem.value">
-                                    </div> -->
-                                    <!-- <div class="flighttiming-list" value="0_6" (click)="FlightTimingsFilterFlightData('0_6')">
-                                        <img src="assets/images/icons/timings/1.png" alt="">
-                                        <p>00-06</p>
-                                    </div>
-                                    <div class="flighttiming-list " value="6_12" (click)="FlightTimingsFilterFlightData('6_12')">
-                                        <img src="assets/images/icons/timings/2.png" alt="">
-                                        <p>06-12</p>
-                                    </div>
-                                    <div class="flighttiming-list" value="12_18" (click)="FlightTimingsFilterFlightData('12_18')">
-                                        <img src="assets/images/icons/timings/3.png" alt="">
-                                        <p>12-18</p>
-                                    </div>
-                                    <div class="flighttiming-list" value="18_0" (click)="FlightTimingsFilterFlightData('18_0')">
-                                        <img src="assets/images/icons/timings/4.png" alt="">
-                                        <p>18-00</p>
-                                    </div> -->
+                                        <!-- <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{popularItems.value}} ({{RefundableFaresCount}})</span>
+                                                </label>
+                                            </div>
+                                        </li> -->
+                                        <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                    <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <!-- <li class="custom-check-box" >
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="Refundable-Fares" (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Refundable Fares ({{RefundableFaresCount}})</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="non-stop" (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Non-stop ({{nonStopCount}})</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="Morning-Departures"  (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Morning Departures ({{morningDearptureCount}})</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="Meals-Included"  (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Meals Included</span>
+                                                </label>
+                                            </div>
+                                        </li> -->
+                                    </ul>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="sidebar-widget Price-widget" >
-                            <div class="widget-title">
-                                <h6 class="">Price</h6>
-                                <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
-                            </div>
-                            <div class="widget-content mt-10 mb-30 price-widget-content">
-                                <div style="margin:0 0 20px 0">
-                                    <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice"  id="min_price" class="price-range-field" />
-                                    <span class="ms-3 me-3">-</span>
-                                    <input type="number" min="0"  [(ngModel)]="maxPrice" [max]="resetMaxPrice"  id="max_price" class="price-range-field" />
+                            <hr>
+                            <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                <div class="widget-title">
+                                    <h6 class="">Flight Timings</h6>
+                                    <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
                                 </div>
-                                <!-- <div id="slider-range" class="price-filter-range" name="rangeInput"></div> -->
-                                <!-- <mat-slider min="1" max="100" step="1" value="50"></mat-slider> -->
-                                <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"
-                                (valueChange)="onMinValueChange($event)"
-                                  (highValueChange)="onMaxValueChange($event)"
-                                ></ngx-slider>
-
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="sidebar-widget stops-widget" id="Flight_Stops">
-                            <div class="widget-title">
-                                <h6 class="">Stops</h6>
-                                <a href="javascript:void(0)" (click)="resetFlightStopsFilter()">Reset</a>
-                            </div>
-                            <div class="widget-content"  >
-                                <div class="Stops-content" >
-                                    <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
-                                    [innerHTML]="FlightStopitem.value">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="sidebar-widget Airlines-widget">
-                            <div class="widget-title">
-                                <h6 class="">Airlines</h6>
-                                <a href="javascript:void(0)" (click)="resetAirlineFlightsFilter()">Reset</a>
-                            </div>
-                            <div class="widget-content" id="airline_list">
-                                <ul class="category-list clearfix mt-2" >
-                                    <!-- <li class="custom-check-box" *ngFor="let airline of airlines ; let i = index ">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox" >
-                                                <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
-                                            </label>
-                                            <p>&#8377;{{airline.price|number}}</p>
+                                <div class="widget-content">
+                                    <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
+                                    <div class="flighttiming-content flight-departing">
+                                        <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
+                                        (click)="FlightTimingsFilterFlightData(timingsItems)">
+                                            <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                            <p [innerHTML]="timingsItems.value"></p>
                                         </div>
-                                    </li> -->
-                                    <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox" >
-                                                <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
-                                            </label>
-                                            <p>&#8377;{{airlineItem.price}}</p>
-                                        </div>
-                                    </li>
-                                    <!-- <li class="custom-check-box" >
-                                        <div class="custom-controls-stacked" >
-                                            <label class="custom-control material-checkbox" >
-                                                <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
-                                            </label>
-                                            <p>&#8377;{{airline.price}}</p>
-                                        </div>
-                                    </li> -->
-                                </ul>
-                                <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()">+2 more</a>
-                                <a href="javascript:void(0)" class="widget-content-more ml-20" ></a>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="sidebar-widget stopover-widget">
-                            <div class="widget-title">
-                                <h6 class="">Stopover</h6>
-                                <a href="javascript:void(0)" (click)="resetStopOverFilter()">Reset</a>
-                            </div>
-                            <div class="widget-content mt-20 mb-20">
-                                <!-- <input type="text" class="js-range-slider" name="my_range" value="" /> -->
-
-                                <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver"
-                                 [options]="optionsStopOver"
-                                 (valueChange)="onMinStopOverChange($event)"
-                                 (highValueChange)="onMaxStopOverChange($event)"
-                                ></ngx-slider>
-                                <!-- <div class="price-slider"></div> -->
-                                <div class="Stopover-value">
-                                    <p class="price-value" >{{minStopOver}} hrs</p>
-                                    <p class="price-value2">{{maxStopOver}} hrs</p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-<!-- lay over airport list -->
-                        <div class="sidebar-widget layover-airports-widget">
-                            <div class="widget-title">
-                                <h6 class="">Layover Airports</h6>
-                                <a href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
-                            </div>
-                            <div class="widget-content" id="layover_airport">
-                                <ul class="category-list clearfix mt-2" >
-                                    <!-- <li class="custom-check-box"  *ngFor="let layover of layOverFilterArr ; let i = index ">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">{{layover.arrivalAirport}}</span>
-                                            </label>
-                                            <p>&#8377;{{layover.price|number}}</p>
-                                        </div>
-                                    </li> -->
-                                    <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr ; let i = index " [ngClass]="{'active': layoverItem.active}">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">{{layoverItem.arrivalAirport}}</span>
-                                            </label>
-                                            <p>&#8377;{{layoverItem.price}}</p>
-                                        </div>
-                                    </li>
-                                    <!-- <li class="custom-check-box" *ngIf="showMoreLayover">
-                                        <div class="custom-controls-stacked" >
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">{{layover.arrivalAirport}}</span>
-                                            </label>
-                                            <p>&#8377;{{layover.price}}</p>
-                                        </div>
-                                    </li> -->
-                                    <!-- <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" checked="checked" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Kempegowda Internat</span>
-                                            </label>
-                                            <p>&#8377;6,356</p>
+                                        <!-- <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" [innerHTML]="FlightStopitem.value">
                                         </div> -->
-                                    <!-- </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Jabalpur</span>
-                                            </label>
-                                            <p>&#8377;7,356</p>
+                                        <!-- <div class="flighttiming-list" value="0_6" (click)="FlightTimingsFilterFlightData('0_6')">
+                                            <img src="assets/images/icons/timings/1.png" alt="">
+                                            <p>00-06</p>
                                         </div>
-                                    </li>
-                                    <li class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" />
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Chatrapati Shivaji</span>
-                                            </label>
-                                            <p>&#8377;9,356</p>
+                                        <div class="flighttiming-list " value="6_12" (click)="FlightTimingsFilterFlightData('6_12')">
+                                            <img src="assets/images/icons/timings/2.png" alt="">
+                                            <p>06-12</p>
                                         </div>
-                                    </li> -->
-                                </ul>
+                                        <div class="flighttiming-list" value="12_18" (click)="FlightTimingsFilterFlightData('12_18')">
+                                            <img src="assets/images/icons/timings/3.png" alt="">
+                                            <p>12-18</p>
+                                        </div>
+                                        <div class="flighttiming-list" value="18_0" (click)="FlightTimingsFilterFlightData('18_0')">
+                                            <img src="assets/images/icons/timings/4.png" alt="">
+                                            <p>18-00</p>
+                                        </div> -->
+                                    </div>
+                                </div>
                             </div>
+                            <hr>
+                            <div class="sidebar-widget Price-widget" >
+                                <div class="widget-title">
+                                    <h6 class="">Price</h6>
+                                    <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content mt-10 mb-30 price-widget-content">
+                                    <div style="margin:0 0 20px 0">
+                                        <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice"  id="min_price" class="price-range-field" />
+                                        <span class="ms-3 me-3">-</span>
+                                        <input type="number" min="0"  [(ngModel)]="maxPrice" [max]="resetMaxPrice"  id="max_price" class="price-range-field" />
+                                    </div>
+                                    <!-- <div id="slider-range" class="price-filter-range" name="rangeInput"></div> -->
+                                    <!-- <mat-slider min="1" max="100" step="1" value="50"></mat-slider> -->
+                                    <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"
+                                    (valueChange)="onMinValueChange($event)"
+                                      (highValueChange)="onMaxValueChange($event)"
+                                    ></ngx-slider>
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="sidebar-widget stops-widget" id="Flight_Stops">
+                                <div class="widget-title">
+                                    <h6 class="">Stops</h6>
+                                    <a href="javascript:void(0)" (click)="resetFlightStopsFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content"  >
+                                    <div class="Stops-content" >
+                                        <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
+                                        [innerHTML]="FlightStopitem.value">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="sidebar-widget Airlines-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Airlines</h6>
+                                    <a href="javascript:void(0)" (click)="resetAirlineFlightsFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content" id="airline_list">
+                                    <ul class="category-list clearfix mt-2" >
+                                        <!-- <li class="custom-check-box" *ngFor="let airline of airlines ; let i = index ">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
+                                                </label>
+                                                <p>&#8377;{{airline.price|number}}</p>
+                                            </div>
+                                        </li> -->
+                                        <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                </label>
+                                                <p>&#8377;{{airlineItem.price}}</p>
+                                            </div>
+                                        </li>
+                                        <!-- <li class="custom-check-box" >
+                                            <div class="custom-controls-stacked" >
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
+                                                </label>
+                                                <p>&#8377;{{airline.price}}</p>
+                                            </div>
+                                        </li> -->
+                                    </ul>
+                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()">+2 more</a>
+                                    <a href="javascript:void(0)" class="widget-content-more ml-20" ></a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="sidebar-widget stopover-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Stopover</h6>
+                                    <a href="javascript:void(0)" (click)="resetStopOverFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content mt-20 mb-20">
+                                    <!-- <input type="text" class="js-range-slider" name="my_range" value="" /> -->
+
+                                    <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver"
+                                     [options]="optionsStopOver"
+                                     (valueChange)="onMinStopOverChange($event)"
+                                     (highValueChange)="onMaxStopOverChange($event)"
+                                    ></ngx-slider>
+                                    <!-- <div class="price-slider"></div> -->
+                                    <div class="Stopover-value">
+                                        <p class="price-value" >{{minStopOver}} hrs</p>
+                                        <p class="price-value2">{{maxStopOver}} hrs</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+    <!-- lay over airport list -->
+                            <div class="sidebar-widget layover-airports-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Layover Airports</h6>
+                                    <a href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content" id="layover_airport">
+                                    <ul class="category-list clearfix mt-2" >
+                                        <!-- <li class="custom-check-box"  *ngFor="let layover of layOverFilterArr ; let i = index ">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{layover.arrivalAirport}}</span>
+                                                </label>
+                                                <p>&#8377;{{layover.price|number}}</p>
+                                            </div>
+                                        </li> -->
+                                        <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr ; let i = index " [ngClass]="{'active': layoverItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                </label>
+                                                <p>&#8377;{{layoverItem.price}}</p>
+                                            </div>
+                                        </li>
+                                        <!-- <li class="custom-check-box" *ngIf="showMoreLayover">
+                                            <div class="custom-controls-stacked" >
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{layover.arrivalAirport}}</span>
+                                                </label>
+                                                <p>&#8377;{{layover.price}}</p>
+                                            </div>
+                                        </li> -->
+                                        <!-- <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" checked="checked" />
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Kempegowda Internat</span>
+                                                </label>
+                                                <p>&#8377;6,356</p>
+                                            </div> -->
+                                        <!-- </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" />
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Jabalpur</span>
+                                                </label>
+                                                <p>&#8377;7,356</p>
+                                            </div>
+                                        </li>
+                                        <li class="custom-check-box">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox">
+                                                    <input type="checkbox" class="material-control-input" />
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">Chatrapati Shivaji</span>
+                                                </label>
+                                                <p>&#8377;9,356</p>
+                                            </div>
+                                        </li> -->
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
                         </div>
 
-                    </div>
 
                 </div>
 
@@ -675,11 +694,35 @@
                             </div>
                         </div>
                         <!-- Listing -->
-                        <ngx-skeleton-loader *ngIf="loader" count="10" appearance="line" animation="pulse"
-                        [theme]="{
-                           height: '90px',
-                          'border-radius': 0
-                        }"></ngx-skeleton-loader>
+                        <div class="flight-listing-area" *ngIf="loader">
+                          <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
+                              <div class="listing-loader-thumb">
+                                  <span class="loader-box-image"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                    [theme]="{
+                                      'height':'100%',
+                                      'border-radius': '8px'
+                                    }"></ngx-skeleton-loader></span>
+                              </div>
+                              <div class="listing-loader-content">
+                                  <span class="loader-box-title"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                    [theme]="{
+                                      'height':'20px',
+                                      'border-radius': '3px'
+                                    }"></ngx-skeleton-loader></span>
+                                  <span class="loader-box-subtext"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                    [theme]="{
+                                      'height':'8px',
+                                      'border-radius': '3px'
+                                    }"></ngx-skeleton-loader></span>
+                                  <span class="loader-box-subtext w-50"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                    [theme]="{
+                                      'height':'8px',
+                                      'border-radius': '3px'
+                                    }"></ngx-skeleton-loader></span>
+                              </div>
+                          </div>
+                          </div>
+
                         <div class="flight-listing-area">
                             <div class="flight-listing" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
                                 <div class="flight-listing-content">

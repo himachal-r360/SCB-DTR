@@ -10,20 +10,21 @@ export class DropdownDirective{
     //     this.isOpen=!this.isOpen;
     // }
     @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
+      var element = event?.target as HTMLElement
         //this.isOpen = this.elRef.nativeElement.contains(event.target) ? !this.isOpen : false;
-        if(this.elRef.nativeElement.contains(event.target))
+        if(this.elRef.nativeElement.contains(event.target) && !element.classList.contains('close-mobile'))
         {
-          
+
           this.elRef.nativeElement
           .querySelector('.dropdown')
-          .classList.remove('flight-from-hide');
+          .classList.remove('flight-from-hide')
           let fromCitySearch = document.getElementById('fromCitySearch');
           let toCitySearch = document.getElementById('toCitySearch');
           fromCitySearch?.focus();
           toCitySearch?.focus();
         }
         else{
-          
+
           this.elRef.nativeElement
           .querySelector('.dropdown')
           .classList.add('flight-from-hide');
