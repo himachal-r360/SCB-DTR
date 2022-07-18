@@ -162,21 +162,28 @@
                                                             <img src="/assets/images/icons/close.png" (click)="onClose()"  class="close-mobile"  alt="" />
                                                         </a>
                                                     </div>
-                                                    <div class="mob-search">
+                                                    <div class="mob-search"  *ngIf="isMobile">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="mob-search-list">
                                                                     <label for="">From</label>
-                                                                    <input type="text" name="" class="w-100" id="" value="Mumbai (BOM)">
+                                                                    <input type="text" autocomplete="off" class="w-100"
+                                                                     placeholder="Search City" formControlName="flightfrom"
+                                                                    (keyup)="fromList($event)" (focus)="isFromorNot= true;fromList($event)" [(ngModel)]="fromCityName">
+
                                                                 </div>
                                                                 <div class="mob-search-list">
-                                                                    <label for="">From</label>
-                                                                    <input type="text" name="" class="w-100" id="" value="Hyderabad (HYD)">
+                                                                    <label for="">To</label>
+                                                                    <input type="text" autocomplete="off" class="w-100"
+                                                             placeholder="Search City" formControlName="flightto"
+                                                                (keyup)="toList($event)"  (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                            <input type="text"  name="flightto" style="display:none"
+                                                            id="toCitySearch" >
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                        <div class="flight-from-data-search">
+                                                        <div class="flight-from-data-search" *ngIf="!isMobile">
                                                             <!-- <input type="text" autocomplete="off" class="w-100"
                                                                 id="fromCitySearch" placeholder="Search City"
                                                                 (keyup)="fromList($event)">
@@ -190,8 +197,8 @@
 
                                                         </div>
 
-                                                        <ul class="flight-from-data-ul" *ngIf="fromFlightList">
-                                                            <li class="flight-from-ul-li">
+                                                        <ul class="flight-from-data-ul"  *ngIf="fromFlightList  && !isMobile">
+                                                            <li class="flight-from-ul-li" >
                                                                 <p class="flight-Results-text">Results</p>
                                                             </li>
                                                             <li class="flight-from-ul-li"
@@ -208,9 +215,27 @@
                                                                     </div>
                                                                 </a>
                                                             </li>
-
-
                                                         </ul>
+                                                        <ul class="flight-from-data-ul" *ngIf="isMobile">
+                                                          <li class="flight-from-ul-li">
+                                                              <p class="flight-Results-text">Results</p>
+                                                          </li>
+                                                          <li class="flight-from-ul-li"
+                                                              *ngFor="let toCity of cityList">
+                                                              <a href="#" class="flight-from-ul-li-a"
+                                                                  (click)="isFromorNot == true ?selectFromFlightList(toCity._source) : selectToFlightList(toCity._source) ">
+                                                                  <div class="flight-from-name">
+                                                                      <h6>{{toCity._source.city}},
+                                                                          {{toCity._source.country}}</h6>
+                                                                      <p>{{toCity._source.airport_name}} </p>
+                                                                  </div>
+                                                                  <div class="flight-from-shortname">
+                                                                      <h6>{{toCity._source.airport_code}}</h6>
+                                                                  </div>
+                                                              </a>
+                                                          </li>
+
+                                                      </ul>
                                                     </div>
 
                                                 </div>
@@ -223,16 +248,42 @@
                                                     <h5 class="fw_6 ">{{toCityName}}</h5>
                                                     <span class="select-roottitle">{{toAirpotName}}</span>
 
-                                                    <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
+                                                    <div class="flight-to-data flight-from-hide dropdown"  #removeClassToCity>
+                                                      <div class="mob-title">
+                                                        <h3>Select City</h3>
+                                                        <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile" >
+                                                            <img src="/assets/images/icons/close.png"   class="close-mobile"  alt="" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="mob-search"  *ngIf="isMobile">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="mob-search-list">
+                                                                    <label for="">From</label>
+                                                                    <input type="text" autocomplete="off" (focus)="isFromorNot= true;fromList($event)" class="w-100"
+                                                                     placeholder="Search City" formControlName="flightfrom"
+                                                                    (keyup)="fromList($event)" [(ngModel)]="fromCityName">
 
-                                                        <div class="flight-from-data-search">
+                                                                </div>
+                                                                <div class="mob-search-list">
+                                                                    <label for="">To</label>
+                                                                    <input type="text" autocomplete="off" class="w-100"
+                                                             placeholder="Search City" formControlName="flightto"
+                                                                (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                            <input type="text"  name="flightto" style="display:none"
+                                                            id="toCitySearch" >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <div class="flight-from-data-search"  *ngIf="!isMobile">
                                                             <input type="text" autocomplete="off" class="w-100"
                                                                 id="toCitySearch" placeholder="Search City" formControlName="flightto"
                                                                 (keyup)="toList($event)" #toCityInput autofocus  [(ngModel)]="flightData.value.flightto">
                                                             <input type="text"  name="flightto" style="display:none"
                                                             id="toCitySearch" >
                                                         </div>
-                                                        <ul class="flight-from-data-ul" *ngIf="toFlightList">
+                                                        <ul class="flight-from-data-ul" *ngIf="toFlightList && !isMobile">
                                                             <li class="flight-from-ul-li">
                                                                 <p class="flight-Results-text">Results</p>
                                                             </li>
@@ -252,6 +303,25 @@
                                                             </li>
 
                                                         </ul>
+                                                        <ul class="flight-from-data-ul" *ngIf="isMobile" >
+                                                          <li class="flight-from-ul-li" >
+                                                              <p class="flight-Results-text">Results</p>
+                                                          </li>
+                                                          <li class="flight-from-ul-li"
+                                                              *ngFor="let fromCity of cityList">
+                                                              <a href="#" class="flight-from-ul-li-a"
+                                                                  (click)="isFromorNot == true ?selectFromFlightList(fromCity._source) : selectToFlightList(fromCity._source)" >
+                                                                  <div class="flight-from-name">
+                                                                      <h6>{{fromCity._source.city}},
+                                                                          {{fromCity._source.country}}</h6>
+                                                                      <p>{{fromCity._source.airport_name}} </p>
+                                                                  </div>
+                                                                  <div class="flight-from-shortname">
+                                                                      <h6>{{fromCity._source.airport_code}}</h6>
+                                                                  </div>
+                                                              </a>
+                                                          </li>
+                                                      </ul>
                                                     </div>
 
                                                 </div>

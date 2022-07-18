@@ -79,6 +79,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   minDate = new Date();
   isMobile:boolean = false;
   isClosed:boolean = true;
+  isFromorNot:boolean = false;
   searchData:any;
   flightClassVal:any;
   constructor(
@@ -228,9 +229,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     removeClassToCity?.classList.remove('flight-from-hide');
     // this.toFlightList = true;
     setTimeout(() => {
-      let toCityDivElement=document.getElementById("toCityDiv");
-      toCityDivElement?.click();
-      this.toCityInput.nativeElement.focus();
+      // if(!this.isMobile)
+      // {
+        let toCityDivElement=document.getElementById("toCityDiv");
+        toCityDivElement?.click();
+        this.toCityInput.nativeElement.focus();
+      // }
     }, 50);
 
   }
