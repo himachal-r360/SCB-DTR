@@ -57,25 +57,31 @@
                                     </div>
                                 </div>
 
-                                <div class="Booking-Flight-passanger">
+                                <div class="Booking-Flight-passanger" >
                                     <div class="row">
                                         <div class="col-md-2">
                                             <h6>Baggage</h6>
                                             <p>Adult</p>
-                                            <p>Child</p>
-                                            <p>Infant</p>
+                                            <p *ngIf="baggageInfo.fare.CHD">Child</p>
+                                            <p *ngIf="baggageInfo.fare.INF">Infant</p>
+                                           
                                         </div>
                                         <div class="col-md-3">
                                             <h6>Check-in</h6>
-                                            <p>15 Kgs <span>(1 piece only)</span></p>
-                                            <p>15 Kgs <span>(1 piece only)</span></p>
-                                            <p>Cabin bag only</p>
+                                            <p *ngIf="baggageInfo">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p>
+                                            <p *ngIf="baggageInfo.fare.CHD">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p>
+                                            <!-- <p *ngIf="baggageInfo">{{baggageInfo.bg[i].checkIn}} <span>(1 piece only)</span></p> -->
+                                            <!-- <p>15 Kgs <span>(1 piece only)</span></p>
+                                            <p>Cabin bag only</p> -->
                                         </div>
                                         <div class="col-md-3">
                                             <h6>Cabin</h6>
-                                            <p>7 Kgs <span>(1 plece only)</span></p>
-                                            <p>7 Kgs  <span>(1 plece only)</span></p>
-                                            <p>7 Kgs <span>(1 plece only)</span></p>
+                                            <p *ngIf="baggageInfo">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p>
+                                            <p *ngIf="baggageInfo.fare.CHD">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p>
+                                            <!-- <p *ngIf="baggageInfo">{{baggageInfo.bg[i].cabin}} <span>(1 plece only)</span></p> -->
+                                            
+                                            <!-- <p>7 Kgs  <span>(1 plece only)</span></p>
+                                            <p>7 Kgs <span>(1 plece only)</span></p> -->
                                         </div>
                                         <div class="col-md-4">
                                             <h6>Flight Extras</h6>
@@ -250,16 +256,18 @@
                             <div class="flight-extra-details">
                                 <ul class="list-unstyled flight-extra-tabs">
                                     <li>
-                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Details</a>
+                                        <!-- <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Details</a> -->
+                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Charges</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)"> Date Change Charges</a>
+                                        <!-- <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)"> Date Change Charges</a> -->
+                                        <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)">Baggage Policy</a>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0);" data-bind="Fare" (click)="changeFareRuleTab($event)"> Fare Rules </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" data-bind="Cancellation" (click)="changeFareRuleTab($event)"> Cancellation Protection </a>
+                                        <!-- <a href="javascript:void(0);" data-bind="Cancellation" (click)="changeFareRuleTab($event)"> Cancellation Protection </a>    -->
                                     </li>
                                 </ul>
                                 <div class="rules-flight">
@@ -539,7 +547,7 @@
                                             <h6 class="fw_7">Grand Total</h6>
                                         </div>
                                         <div class="fare-list-right">
-                                            <h6 class="fw_7">₹{{TotalFare|number: '.2'}}</h6>
+                                            <h6 class="fw_7">₹{{TotalFare|number}}</h6>
                                             <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(TotalFare)|number: '.2'}}/month</p>
                                         </div>
                                     </div>
@@ -548,7 +556,7 @@
                         </div>
                     </div>
                     <div class="continue-widget mb-20">
-                        <a href="javascript:void(0);" class="button-style w-100">Continue</a>
+                        <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()">Continue</a>
                     </div>
                     <div class="sidebar-widget coupon-code-widget">
                         <div class="widget-title">

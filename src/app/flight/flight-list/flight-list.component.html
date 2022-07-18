@@ -121,8 +121,6 @@
                                                                 </div>
                                                             </a>
                                                         </li>
-
-
                                                     </ul>
                                                 </div>
                                             </div>
@@ -564,7 +562,7 @@
 
                                 <div class="flight-search-filters-right">
                                     <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterFlightData($event)">
-                                        <option [selected]="{'selected': item.active}" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.value}}</option>
+                                        <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.value}}</option>
                                         <!-- <option value="P_H_L">Price High to Low</option>
                                         <option value="P_D_E">Depart Ealry</option>
                                         <option value="P_D_L">Depart Late</option> -->
@@ -771,7 +769,7 @@
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                     <span class="information-icon">
-                                                     <h6>&#8377;  {{list.priceSummary[0].totalFare|number}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                     <h6>&#8377; {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
                                                         <!-- <img src="assets/images/icons/info.png" class="ms-2" alt=""> -->
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
@@ -1222,6 +1220,11 @@
 <!-- <div class="loader-box" *ngIf="loader">
     <div class="loader-round"></div>
 </div> -->
+
+    <a href="javascript:void(0)"  (click)="gotoTop()"  class="scrollToTop" >
+        <i class="far fa-dot-circle"></i>
+        <span>Top</span>
+    </a>
 
 
 

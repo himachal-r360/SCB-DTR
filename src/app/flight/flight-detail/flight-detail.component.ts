@@ -1,4 +1,4 @@
-import { Component, DebugNode, OnInit, ViewChild } from '@angular/core';
+import { Component, DebugNode, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
@@ -16,7 +16,7 @@ declare var $: any;
   templateUrl: './flight-detail.component.html',
   styleUrls: ['./flight-detail.component.css']
 })
-export class FlightDetailComponent implements OnInit {
+export class FlightDetailComponent implements OnInit ,OnDestroy {
   flightDetails:any;
   selectedVendor:any;
   flightIcons:any;
@@ -33,16 +33,12 @@ export class FlightDetailComponent implements OnInit {
   TotalFare:any;
   sessionTimer:any = 3;
   timeLeft:any = 900;
-
-
+  baggageInfo:any;
+  flightDetailsArrVal:any;
 
 
   constructor(private _flightService:FlightService, private route:ActivatedRoute ,private router:Router) { 
- 
-  
     this.startTimer();
-
-
   }
 
   ngOnInit(): void {
@@ -61,7 +57,6 @@ export class FlightDetailComponent implements OnInit {
       this.route.queryParams
         .subscribe((params: any) => {
         this.randomFlightDetailKey = params.searchFlightKey
-          
           sessionStorage.getItem(this.randomFlightDetailKey);
         });
   }
@@ -69,21 +64,22 @@ export class FlightDetailComponent implements OnInit {
   getFlightDetails(){
     //this._flightService.getFlightDetailsVal()
 
-    let flightDetailsArrVal:any=sessionStorage.getItem(this.randomFlightDetailKey);
-
-    let param=JSON.parse(flightDetailsArrVal);
+     this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
+    let param=JSON.parse(this.flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
         this.selectedVendor = param.priceSummary;
-        var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
+        // var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
+        var onwardFlightFareKey = JSON.parse(param.priceSummary.ctFareObject);
         var body = {
           "docKey": param.docKey,
           "flightKeys": [
             param.flightKey
           ],
           "partnerName": this.selectedVendor.partnerName,
-          "onwardFlightFareKey": onwardFlightFareKey,
+          // "onwardFlightFareKey": onwardFlightFareKey,
+          "onwardFlightFareKey": onwardFlightFareKey.ItineraryKey,
           "returnFlightFareKey": "",
           "splrtFlight": this.selectedVendor.splrtFareFlight
         }
@@ -122,11 +118,11 @@ export class FlightDetailComponent implements OnInit {
           this.timeLeft--;
         
         } else if( this.timeLeft == 0) {
-          setTimeout(() => {
+          // setTimeout(() => {
             let searchVal:any = sessionStorage.getItem('searchVal')
             let url="flight-list?"+ this.ConvertObjToQueryString(JSON.parse(searchVal));
             this.router.navigateByUrl(url);
-           });
+          //  });
         }
       },1000)
     
@@ -136,7 +132,6 @@ export class FlightDetailComponent implements OnInit {
 
   // get airport list
   getAirpotsList() {
-
     this._flightService.getAirportName().subscribe((res:any)=>{
       this.airportsNameJson = res;
     })
@@ -189,18 +184,42 @@ export class FlightDetailComponent implements OnInit {
     event.target.classList.add('flight-extra-tabs-active');
   }
 
- 
+
   getFlightInfo(param:any)
   {
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
       if(res.statusCode ==200)
       {
-          this.BaseFare =res.response.comboFare.onwardBaseFare;
-          this.Tax =res.response.comboFare.onwardTax;
-          this.TotalFare =res.response.comboFare.onwardTotalFare;
-      }
-
+        this.BaseFare =res.response.comboFare.onwardBaseFare;
+        this.Tax =res.response.comboFare.onwardTax;
+        this.TotalFare =res.response.comboFare.onwardTotalFare;
+        this.baggageInfo = res.response.onwardFlightDetails
+        }
     }, (error) => { console.log(error) });
-
   }
+
+  ngOnDestroy(): void {
+    if(this.sessionTimer){
+      clearInterval(this.sessionTimer);
+    }
+  }
+
+  sendFlightDetails(){
+    let randomFlightDetailKey = this.getRandomString(44);
+    sessionStorage.setItem(randomFlightDetailKey, this.flightDetailsArrVal);
+    let url = 'flight-booking/traveller-detail?searchFlightKey=' + randomFlightDetailKey;
+    this.router.navigateByUrl(url);
+  }
+
+  // get rendom string value
+  getRandomString(length: any) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random()*charactersLength));
+    }
+    return result;
+  }
+
 }

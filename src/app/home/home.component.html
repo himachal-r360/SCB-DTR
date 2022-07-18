@@ -73,7 +73,7 @@
                                                                         title="Qty"
                                                                         class="input-text qty text quantity_adult1_events"
                                                                         formControlName="adults" size="4" pattern=""
-                                                                        inputmode="">
+                                                                        inputmode="" [(ngModel)]="flightData.value.adults">
                                                                     <input type="button" (click)="increaseAdult()"
                                                                         value="+" [disabled]="disableParent"
                                                                         class="qty-buttons plus">
@@ -95,7 +95,7 @@
                                                                         name="quantity" value="0" title="Qty"
                                                                         class="input-text qty text quantity_adult1_events"
                                                                         size="4" pattern="" inputmode=""
-                                                                        formControlName="child">
+                                                                        formControlName="child" [(ngModel)]="flightData.value.child">
                                                                     <input type="button" (click)="increaseChild()"
                                                                         [disabled]="disablechildren" value="+"
                                                                         class="qty-buttons plus">
@@ -104,7 +104,6 @@
                                                         </div>
                                                     </li>
                                                     <li>
-
 
                                                         <div class="Travellers-passengers-data">
                                                             <div class="Travellers-name">
@@ -118,7 +117,7 @@
                                                                     <input type="number" step="1" min="0" max="6"
                                                                         name="quantity" value="0" title="Qty"
                                                                         class="input-text qty text quantity_adult1_events"
-                                                                        size="4" pattern="" formControlName="infants"
+                                                                        size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants"
                                                                         inputmode="">
                                                                     <input type="button" (click)="increaseInfant()"
                                                                         [disabled]="disableinfants" value="+"
@@ -185,7 +184,7 @@
                                                             id="hdnfromCitySearch" > -->
                                                             <input type="text" autocomplete="off" class="w-100"
                                                                 id="fromCitySearch" placeholder="Search City" formControlName="flightfrom"
-                                                                (keyup)="fromList($event)" autofocus #fromCityInput >
+                                                                (keyup)="fromList($event)" autofocus #fromCityInput [(ngModel)]="flightData.value.flightfrom">
                                                             <input type="text" name="flightfrom" style="display:none"
                                                             id="fromCitySearch" >
 
@@ -229,7 +228,7 @@
                                                         <div class="flight-from-data-search">
                                                             <input type="text" autocomplete="off" class="w-100"
                                                                 id="toCitySearch" placeholder="Search City" formControlName="flightto"
-                                                                (keyup)="toList($event)" #toCityInput autofocus>
+                                                                (keyup)="toList($event)" #toCityInput autofocus  [(ngModel)]="flightData.value.flightto">
                                                             <input type="text"  name="flightto" style="display:none"
                                                             id="toCitySearch" >
                                                         </div>
