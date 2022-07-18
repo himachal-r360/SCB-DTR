@@ -81,6 +81,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   isClosed:boolean = true;
   searchData:any;
   flightClassVal:any;
+  showTravellerBlock = false;
+
   constructor(
     public router: Router,
     private _fb: FormBuilder,
@@ -112,6 +114,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.setSearchFilterData()
+  
   }
   ngAfterViewInit(): void {
 
@@ -522,7 +525,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.isMobile)
     {
       var element = document.querySelector('.flight-from-data')
-    element?.classList.remove('form-hide');
+      element?.classList.remove('form-hide');
     }
   }
+
+openTravellerBlock(){
+  this.showTravellerBlock =! this.showTravellerBlock;
+  // $(".mob-filter-travellers").toggleClass("preferred-airline-hide");
+}
+
+closeTravllerBlock(){
+  this.showTravellerBlock =! this.showTravellerBlock;
+
+}
+
+getClassVal(val:any){
+  this.flightData.value.flightclass =  val;
+  
+}
+
 }
