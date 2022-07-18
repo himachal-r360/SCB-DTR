@@ -660,74 +660,9 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Chennai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/round.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Mumbai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/next-active.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>  -->
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Chennai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/round.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
-                <div class="col-md-3" *ngFor="let continue of continueSearchVal; let i = index">
-
+            <!-- continue search website view  -->
+                <ng-container *ngIf="windowItem.innerWidth > 991 ?  true : false">
+                <div class="col-md-3" *ngFor="let continue of continueSearchVal; let i = index" >
                     <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearch(continue)" >
                         <div class="Continuesearch-items ">
                             <div class="Continuesearch-items-text">
@@ -749,6 +684,35 @@
                         </div>
                     </a>
                 </div>
+                </ng-container>
+            <!-- continue search mobile view  -->
+            <div class="box-item" *ngIf="windowItem.innerWidth < 991 ?  true : false">
+                <owl-carousel-o [options]="customOptions">
+                    <ng-container *ngFor="let continue of continueSearchVal; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearch(continue)" >
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.fromCity}}</h6>
+                                                    <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img src="./assets/images/icons/next-active.png" alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.toCity}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="./assets/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                    </a>
+                            </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+                </div> 
             </div>
         </div>
     </section>
