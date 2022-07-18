@@ -2,426 +2,501 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="booking-process-content">
-                    <div class="booking-title-box">
-                        <!-- <h4>Traveller Details <span> {{InputArray.adult.length}} Adults,</span> <span >{{travelerDetails.child}} Child,</span> <span >{{travelerDetails.infants}} Infant</span></h4> -->
-                        <h4>Traveller Details <span *ngIf="travelerDetails.adults >0">{{travelerDetails.adults}} Adults</span> 
-                        <span *ngIf="travelerDetails.child > 0">,{{travelerDetails.child}} Child</span> 
-                        <span *ngIf="travelerDetails.infants>0">,{{travelerDetails.infants}} infant</span></h4>
-                    </div>
-                    <div class="booking-inner-box traveller-person-box">
-                        <div class="traveller-person-title">
-                            <div class="traveller-person-left">
-                                <h6>Add Travellers</h6>
-                            </div>
-                            <div class="traveller-person-right">
-                                <p class="text-color">Name should be same as in Government ID proof</p>
-                            </div>
+                <form [formGroup]="travellerDetailsForm">
+                    <div class="booking-process-content">
+                        <div class="booking-title-box">
+                            <!-- <h4>Traveller Details <span> {{InputArray.adult.length}} Adults,</span> <span >{{travelerDetails.child}} Child,</span> <span >{{travelerDetails.infants}} Infant</span></h4> -->
+                            <h4>Traveller Details <span>{{travelerDetails.adults}} Adults,</span>
+                                <span *ngIf="travelerDetails.child > 0">{{travelerDetails.child}} Child,</span>
+                                <span *ngIf="travelerDetails.infants > 0">{{travelerDetails.infants}} infant</span>
+                            </h4>
                         </div>
-
-                        <div class="traveller-addbox traveller-adults">
-                            <div class="traveller-addbox-title">
-                                <h6>Adult (12 yrs+) <span class="opacity_05"><span class="fw_7 opacity_1">1/2</span>
-                                        added</span></h6>
+                        <div class="booking-inner-box traveller-person-box">
+                            <div class="traveller-person-title">
+                                <div class="traveller-person-left">
+                                    <h6>Add Travellers</h6>
+                                </div>
+                                <div class="traveller-person-right">
+                                    <p class="text-color">Name should be same as in Government ID proof</p>
+                                </div>
                             </div>
-                            <div class="traveller-addbox-details traveller-adults-details">
-                                <div class="traveller-adults-ul">
-                                    <ul class="add-search-ul d-block d-none" *ngIf="InputArray.adult">
-                                        <li class="custom-check-box" *ngFor="let adult of InputArray.adult">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input"
-                                                        checked="checked">
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">{{adult.firstName}} {{adult.lastName}} . </span>
-                                                    <span class="description fw_5">{{adult.gender}}</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                                        
-                                    </ul>
 
-                                    <div class="add-traveller-adults" *ngIf="toggleAdult" >
-                                        <form class="forms-field">
-                                            <div *ngFor="let item of InputArray.adult;let i = index">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <ul class="select-gender">
-                                                            <li >
-                                                                <a [ngClass]="item.gender == 'Male' ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"  value="Male" >Male</a>
-                                                            </li>
-                                                            <li >
-                                                                <a [ngClass]="item.gender == 'Female' ? 'active' : ''" (click)="getAdultGenderValue('Female', i)" value="Female" >Female</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                            <div class="traveller-addbox traveller-adults">
+                                <div class="traveller-addbox-title">
+                                    <h6>Adult (12 yrs+) <span class="opacity_05"><span class="fw_7 opacity_1">1/2</span>
+                                            added</span></h6>
+                                </div>
+                                <div class="traveller-addbox-details traveller-adults-details">
+                                    <div class="traveller-adults-ul">
+                                        <ul class="add-search-ul d-block d-none" *ngIf="InputArray.adult">
+                                            <li class="custom-check-box" *ngFor="let adult of InputArray.adult">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input"
+                                                            checked="checked">
+                                                        <span class="material-control-indicator"></span>
+                                                        <span
+                                                            class="description fs_14 text-black fw_7">{{adult.firstName}}
+                                                            {{adult.lastName}} . </span>
+                                                        <span class="description fw_5">{{adult.gender}}</span>
+                                                    </label>
                                                 </div>
-                                                
-                                                <div class="row" >
-                                                    <div class="col-xl-4 col-lg-4 col-md-6">
-                                                        <mat-form-field appearance="outline">
-                                                            <mat-label>First Name</mat-label>
-                                                            <input matInput placeholder="First Name"  [(ngModel)]="item.firstName" name="firstName">
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-xl-4 col-lg-4 col-md-6">
-                                                        <mat-form-field appearance="outline">
-                                                            <mat-label>Last Name</mat-label>
-                                                            <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName">
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-xl-4 col-lg-4 col-md-6">
-                                                        <div class="form-group">
-                                                            <mat-form-field appearance="outline">
-                                                                <mat-label>Date of Birth</mat-label>
-                                                                <input matInput [matDatepicker]="picker" placeholder="Date of Birth"  [(ngModel)]="item.dateOfBirth" name="dateOfBirth">
-                                                                <mat-datepicker-toggle matSuffix [for]="picker">
-                                                                </mat-datepicker-toggle>
-                                                                <mat-datepicker #picker></mat-datepicker>
+                                            </li>
+
+                                        </ul>
+
+                                        <div class="add-traveller-adults" *ngIf="toggleAdult">
+                                            <div formArrayName="adult"
+                                                *ngFor="let adult of travellerDetailsForm.get('adult')['controls']; let i = index;">
+                                                <form class="forms-field" [formGroupName]="i">
+                                                    <!-- <div *ngFor="let item of InputArray.adult;let i = index" > -->
+                                                    <div >
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <ul class="select-gender">
+                                                                    <li>
+                                                                      
+                                                                        <!-- <a [ngClass]="item.gender == 'Male' ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"  value="Male" formControlName="gender">Male</a> -->
+                                                                        <a [ngClass]="adult.value.gender == 'Male' ? 'active' : ''" (click)="getAdultGenderValue('Male' , i)"
+                                                                            value="Male"
+                                                                            >Male</a>
+
+                                                                    </li>
+                                                                    <li>
+                                                                        <!-- <a [ngClass]="item.gender == 'Female' ? 'active' : ''" (click)="getAdultGenderValue('Female', i)" value="Female" formControlName="gender">Female</a> -->
+                                                                        <a [ngClass]="adult.value.gender == 'Female' ? 'active' : ''" (click)="getAdultGenderValue('Female', i)"
+                                                                            value="Female"
+                                                                           >Female</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>First Name</mat-label>
+                                                                    <!-- <input matInput placeholder="First Name"  [(ngModel)]="item.firstName" name="firstName" formControlName="firstName"> -->
+                                                                    <input matInput placeholder="First Name"
+                                                                        name="firstName" formControlName="firstName">
+                                                                        <mat-error *ngIf="adult.get('firstName').errors && adult.get('firstName')hasError('required')">First Name
+                                                                    is required.</mat-error>
+                                                                    </mat-form-field>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Last Name</mat-label>
+                                                                    <!-- <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName" formControlName="lastName"> -->
+                                                                    <input matInput placeholder="Last Name"
+                                                                        name="lastName" formControlName="lastName">
+                                                                    <!-- <mat-error *ngIf="Error('lastName', 'required')">Last Name
+
+                                                                is required.</mat-error> -->
+                                                                <mat-error *ngIf="adult.get('lastName').errors && adult.get('lastName')hasError('required')" class="validation">Last Name
+                                                                    is required.</mat-error>
                                                             </mat-form-field>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                                <div class="form-group">
+                                                                    <mat-form-field appearance="outline">
+                                                                        <mat-label>Date of Birth</mat-label>
+                                                                        <!-- <input matInput [matDatepicker]="picker" placeholder="Date of Birth"  [(ngModel)]="item.dateOfBirth" name="dateOfBirth" formControlName="lastName"> -->
+                                                                        <input matInput [matDatepicker]="picker"
+                                                                            placeholder="Date of Birth"
+                                                                            name="dateOfBirth"
+                                                                            formControlName="dateOfBirth">
+                                                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                        </mat-datepicker-toggle>
+                                                                        <mat-datepicker #picker></mat-datepicker>
+                                                                        <!-- <mat-error *ngIf="Error('dateOfBirth', 'required')">Date Of Birth
+                                                                    is required.</mat-error> -->
+                                                                    <mat-error *ngIf="adult.get('dateOfBirth').errors && adult.get('dateOfBirth')hasError('required')">Date of birth
+                                                                   is required.</mat-error>
+                                                                </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="add-traveller-btn">
+                                            <!-- <a href="javascript:void(0);" class="Addnew-Adult-btn" [ngClass]="toggleAdult == true ? 'disable':''"
+                                            (click)="postAdultDetails()" >+ Add New Adult</a> -->
+                                            <a href="javascript:void(0);" class="Addnew-Adult-btn"
+                                                (click)="addAdultForm()">+ Add New Adult</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="traveller-addbox traveller-child">
+                                <div class="traveller-addbox-title">
+                                    <h6>Child (2-11 yrs) <span class="opacity_05"><span
+                                                class="fw_7 opacity_1">1/2</span>
+                                            added</span></h6>
+                                </div>
+                                <div class="traveller-addbox-details traveller-adults-details">
+                                    <div class="traveller-adults-ul">
+
+                                        <ul class="add-search-ul d-none" *ngIf="InputArray.child">
+                                            <li class="custom-check-box" *ngFor="let child of InputArray.child">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input"
+                                                            checked="checked">
+                                                        <span class="material-control-indicator"></span>
+                                                        <span
+                                                            class="description fs_14 text-black fw_7">{{child.firstName}}
+                                                            {{child.lastName}} . </span>
+                                                        <span class="description fw_5">{{child.gender}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                        <div class="add-Child-adults" *ngIf="toggleChild">
+                                            <form class="forms-field">
+                                                <div *ngFor="let item of InputArray.child ;let i = index">
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <ul class="select-gender">
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Male' ? 'active' : ''"
+                                                                        (click)="getChildGenderValue('Male' , i)"
+                                                                        value="Male">Male</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Female' == true ? 'active' : ''"
+                                                                        (click)="getChildGenderValue('Female', i)"
+                                                                        value="Female">Female</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>First Name</mat-label>
+                                                                <input matInput placeholder="First Name"
+                                                                    [(ngModel)]="item.firstName" name="firstName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Last Name</mat-label>
+                                                                <input matInput placeholder="Last Name"
+                                                                    [(ngModel)]="item.lastName" name="lastName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <div class="form-group">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Date of Birth</mat-label>
+                                                                    <input matInput [matDatepicker]="picker"
+                                                                        placeholder="Date of Birth"
+                                                                        [(ngModel)]="item.dateOfBirth"
+                                                                        name="dateOfBirth">
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                    </mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker></mat-datepicker>
+                                                                </mat-form-field>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                            </form>
+                                        </div>
 
-                                    <div class="add-traveller-btn">
-                                        <a href="javascript:void(0);" class="Addnew-Adult-btn" [ngClass]="toggleAdult == true ? 'disable':''"
-                                            (click)="postAdultDetails()" >+ Add New Adult</a>
+                                        <div class="add-traveller-btn">
+                                            <a href="javascript:void(0);" class="Addnew-Child-btn"
+                                                [ngClass]="InputArray.child < 1 || toggleChild == true ? 'disable':''"
+                                                (click)="postChildDetails()">+ Add New Child</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div> -->
 
-                        <div class="traveller-addbox traveller-child">
-                            <div class="traveller-addbox-title">
-                                <h6>Child (2-11 yrs) <span class="opacity_05"><span class="fw_7 opacity_1">1/2</span>
-                                        added</span></h6>
-                            </div>
-                            <div class="traveller-addbox-details traveller-adults-details">
-                                <div class="traveller-adults-ul">
-                                    
-                                    <ul class="add-search-ul d-none" *ngIf="InputArray.child">
-                                        <li class="custom-check-box" *ngFor="let child of InputArray.child">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input"
-                                                        checked="checked">
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">{{child.firstName}} {{child.lastName}} . </span>
-                                                    <span class="description fw_5">{{child.gender}}</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                            <!-- <div class="traveller-addbox traveller-infant">
+                                <div class="traveller-addbox-title">
+                                    <h6>Infant ( &lt; 2 yrs) <span class="opacity_05"><span
+                                                class="fw_7 opacity_1">1/2</span> added</span></h6>
+                                </div>
+                                <div class="traveller-addbox-details traveller-infant-details">
+                                    <div class="traveller-adults-ul">
+                                        <ul class="add-search-ul d-none" *ngIf="InputArray.infants">
+                                            <li class="custom-check-box" *ngFor="let infants of InputArray.infants">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input"
+                                                            checked="checked">
+                                                        <span class="material-control-indicator"></span>
+                                                        <span
+                                                            class="description fs_14 text-black fw_7">{{infants.firstName}}
+                                                            {{infants.lastName}} . </span>
+                                                        <span class="description fw_5">{{infants.gender}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
 
-                                    <div class="add-Child-adults" *ngIf="toggleChild">
-                                        <form class="forms-field"  >
-                                            <div *ngFor="let item of InputArray.child ;let i = index">
+                                        </ul>
 
-                                            
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <ul class="select-gender" >
-                                                        <li >
-                                                            <a [ngClass]="item.gender == 'Male' ? 'active' : ''" (click)="getChildGenderValue('Male' , i)"  value="Male" >Male</a>
-                                                        </li>
-                                                        <li >
-                                                            <a [ngClass]="item.gender == 'Female' == true ? 'active' : ''" (click)="getChildGenderValue('Female', i)" value="Female" >Female</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="row" >
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <mat-form-field appearance="outline">
-                                                        <mat-label>First Name</mat-label>
-                                                        <input matInput placeholder="First Name"  [(ngModel)]="item.firstName" name="firstName">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <mat-form-field appearance="outline">
-                                                        <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <div class="form-group">
-                                                        <mat-form-field appearance="outline">
-                                                            <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth"  [(ngModel)]="item.dateOfBirth" name="dateOfBirth">
-                                                            <mat-datepicker-toggle matSuffix [for]="picker">
-                                                            </mat-datepicker-toggle>
-                                                            <mat-datepicker #picker></mat-datepicker>
-                                                        </mat-form-field>
+                                        <div class="add-Child-adults" *ngIf="infantToggle">
+                                            <form class="forms-field">
+                                                <div *ngFor="let item of InputArray.infants;let i = index">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <ul class="select-gender">
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Male'  ? 'active': ''"
+                                                                        (click)="getInfantsGenderValue('Male' , i)"
+                                                                        value="Male">Male</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a [ngClass]="item.gender == 'Female' ? 'active'  :''"
+                                                                        (click)="getInfantsGenderValue('Female', i)"
+                                                                        value="Female">Female</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>First Name</mat-label>
+                                                                <input matInput placeholder="First Name"
+                                                                    [(ngModel)]="item.firstName" name="firstName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Last Name</mat-label>
+                                                                <input matInput placeholder="Last Name"
+                                                                    [(ngModel)]="item.lastName" name="lastName">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                                            <div class="form-group">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Date of Birth</mat-label>
+                                                                    <input matInput [matDatepicker]="picker"
+                                                                        placeholder="Date of Birth"
+                                                                        [(ngModel)]="item.dateOfBirth"
+                                                                        name="dateOfBirth">
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                    </mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker></mat-datepicker>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
-                                        </form>
-                                    </div>
 
-                                    <div class="add-traveller-btn">
-                                        <a href="javascript:void(0);" class="Addnew-Child-btn" [ngClass]="InputArray.child < 1 || toggleChild == true ? 'disable':''"
-                                            (click)="postChildDetails()" >+ Add New Child</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="traveller-addbox traveller-infant">
-                            <div class="traveller-addbox-title">
-                                <h6>Infant ( &lt; 2 yrs) <span class="opacity_05"><span
-                                            class="fw_7 opacity_1">1/2</span> added</span></h6>
-                            </div>
-                            <div class="traveller-addbox-details traveller-infant-details">
-                                <div class="traveller-adults-ul">
-                                    <ul class="add-search-ul d-none"  *ngIf="InputArray.infants">
-                                        <li class="custom-check-box" *ngFor="let infants of InputArray.infants">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input"
-                                                        checked="checked">
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description fs_14 text-black fw_7">{{infants.firstName}} {{infants.lastName}} . </span>
-                                                    <span class="description fw_5">{{infants.gender}}</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    
-                                    </ul>
-
-                                    <div class="add-Child-adults" *ngIf="infantToggle">
-                                        <form class="forms-field" >
-                                            <div *ngFor="let item of InputArray.infants;let i = index"> 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                        <ul class="select-gender">
-                                                            <li >
-                                                                <a [ngClass]="item.gender == 'Male'  ? 'active': ''" (click)="getInfantsGenderValue('Male' , i)"  value="Male" >Male</a>
-                                                            </li>
-                                                            <li >
-                                                                <a [ngClass]="item.gender == 'Female' ? 'active'  :''" (click)="getInfantsGenderValue('Female', i)" value="Female" >Female</a>
-                                                            </li>
-                                                        </ul>
-                                                </div>
-                                            </div>
-                                            <div class="row" >
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <mat-form-field appearance="outline">
-                                                        <mat-label>First Name</mat-label>
-                                                        <input matInput placeholder="First Name"   [(ngModel)]="item.firstName" name="firstName">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <mat-form-field appearance="outline">
-                                                        <mat-label>Last Name</mat-label>
-                                                        <input matInput placeholder="Last Name"  [(ngModel)]="item.lastName" name="lastName">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                                    <div class="form-group">
-                                                        <mat-form-field appearance="outline">
-                                                            <mat-label>Date of Birth</mat-label>
-                                                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="item.dateOfBirth"  name="dateOfBirth">
-                                                            <mat-datepicker-toggle matSuffix [for]="picker">
-                                                            </mat-datepicker-toggle>
-                                                            <mat-datepicker #picker></mat-datepicker>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="add-traveller-btn">
+                                            <a href="javascript:void(0);" class="Addnew-infant-btn"
+                                                [ngClass]="InputArray.infants < 1 || infantToggle == true ? 'disable':''"
+                                                (click)="postInfantDetails()">+ Add New Child</a>
                                         </div>
-                                        </form>
-                                    </div>
-
-                                    <div class="add-traveller-btn">
-                                        <a href="javascript:void(0);" class="Addnew-infant-btn" [ngClass]="InputArray.infants < 1 || infantToggle == true ? 'disable':''"
-                                            (click)="postInfantDetails()">+ Add New Child</a>
                                     </div>
                                 </div>
+                            </div> -->
+
+                            <div class="othertraveller">
+                                <ul class="add-search-ul d-block">
+                                    <li class="custom-check-box">
+                                        <div class="custom-controls-stacked">
+                                            <label class="custom-control material-checkbox">
+                                                <input type="checkbox" class="material-control-input"
+                                                    [checked]="checked" [(ngModel)]="checked"
+                                                    (change)="saveTravellerHistory($event)">
+                                                <span class="material-control-indicator"></span>
+                                                <span class="description fs_12 text-black">Add these travellers to
+                                                    Travellers list. </span>
+                                                <span class="description fs_12">You won't have to fill traveller info on
+                                                    your next visit</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
+
                         </div>
 
-                        <div class="othertraveller">
-                            <ul class="add-search-ul d-block">
-                                <li class="custom-check-box">
-                                    <div class="custom-controls-stacked">
-                                        <label class="custom-control material-checkbox">
-                                            <input type="checkbox" class="material-control-input" [checked]="checked" [(ngModel)]="checked" (change)="saveTravellerHistory($event)">
-                                            <span class="material-control-indicator"></span>
-                                            <span class="description fs_12 text-black">Add these travellers to
-                                                Travellers list. </span>
-                                            <span class="description fs_12">You won't have to fill traveller info on
-                                                your next visit</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <div class="booking-inner-box gst-number-box">
+                            <h6>Contact Details</h6>
+                            <p>Your booking information will be sent here</p>
 
-                    </div>
+                            <form class="forms-field">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input matInput placeholder="Email" type="email"
+                                                [(ngModel)]="InputArray.email" name="email">
+                                        </mat-form-field>
 
-                    <div class="booking-inner-box gst-number-box">
-                        <h6>Contact Details</h6>
-                        <p>Your booking information will be sent here</p>
-
-                        <form  class="forms-field">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Email</mat-label>
-                                        <input matInput placeholder="Email"  type="email" [(ngModel)]="InputArray.email" name="email">
-                                    </mat-form-field>
-                                    
-                                </div>
-                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Mobile Number</mat-label>
-                                        <input matInput placeholder="Mobile Number" [(ngModel)]="InputArray.mobileNumber" name="mobileNumber">
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </form>
-
-                        <div class="contact-whatsapp">
-                            <div class="contact-whatsapp-info me-2">
-                                <span>Send my booking information through</span>
-                                <img src="./assets/images/icons/whatsapp.png" class="ms-2" alt="">
-                                <span class="fw_7">WhatsApp</span>
-                            </div>
-                            <div class="form-check form-switch m-0">
-                                <input class="form-check-input" type="checkbox" role="switch" [checked]="whatsAppCheck" />
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="booking-inner-box gst-number-box">
-                        <h6>GST number for business travel (Optional)</h6>
-                        <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
-                        </p>
-                      
-                        <form  class="forms-field">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>GST Number</mat-label>
-                                        <input matInput placeholder="GST Number"  [(ngModel)]="InputArray.gstNumber" name="gstNumber">
-                                    </mat-form-field>
-                                    
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-               
-            <div class="col-md-4">
-                <!-- <app-fare-summary (continueTravller)="continueTravellerDetails()"></app-fare-summary> -->
-                <div class="default-sidebar">
-                    <div class="sidebar-widget session-expires-widget">
-                        <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>14:54</strong></p>
-                    </div>
-                    <div class="sidebar-widget fare-summary-widget">
-                        <div class="widget-title">
-                            <h4>Fare Summary</h4>
-                            <!-- <img src="./assets/images/flights/1.png" alt=""> -->
-                            <p>{{selectedVendor.partnerName}}</p>
-                        </div>
-                        <div class="widget-content">
-                            <ul class="widget-list clearfix">
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Base Fare
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;{{selectedVendor.baseFare|number}}</p>
-                                        </div>
                                     </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Taxes and Fees
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;2,034</p>
-                                        </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Mobile Number</mat-label>
+                                            <input matInput placeholder="Mobile Number"
+                                                [(ngModel)]="InputArray.mobileNumber" name="mobileNumber">
+                                        </mat-form-field>
                                     </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Baggage/Seat/Meals
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;600</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="./assets/images/icons/add.png" alt="">
-                                                Discounts
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p class="text-green">-&#8377;500</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box pt-30">
-                                        <div class="fare-list-left">
-                                            <h6 class="fw_7">Grand Total</h6>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <h6 class="fw_7">₹{{selectedVendor.totalFare|number}}</h6>
-                                            <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(selectedVendor.totalFare)|number}}/month</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="continue-widget mb-20">
-                        <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()">Continue</a>
-                    </div>
-                    <div class="sidebar-widget coupon-code-widget">
-                        <div class="widget-title">
-                            <h4>Coupon Code</h4>
-                        </div>
-                        <div class="widget-content">
-                            <form action="coupon-code-form">
-                                <div class="coupon-input">
-                                    <input type="text" value="SBFLY">
-                                    <a href="">Apply</a>
                                 </div>
                             </form>
-                            <div class="couponcode-box">
-                                <div class="couponcode-list active">
-                                    <h6>SBFLY</h6>
-                                    <p class="text-green">Congratulations! Promo discount of  ₹500 applied successfully</p>
-                                    <a href="" class="remove-text">Remove</a>
+
+                            <div class="contact-whatsapp">
+                                <div class="contact-whatsapp-info me-2">
+                                    <span>Send my booking information through</span>
+                                    <img src="./assets/images/icons/whatsapp.png" class="ms-2" alt="">
+                                    <span class="fw_7">WhatsApp</span>
                                 </div>
-                                <div class="couponcode-list">
-                                    <h6>CT15</h6>
-                                    <p class="opacity_05">Flat 1.5% on cleartrip flight bookings</p>
+                                <div class="form-check form-switch m-0">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        [checked]="whatsAppCheck" />
                                 </div>
+                            </div>
+                        </div>
+
+
+                        <div class="booking-inner-box gst-number-box">
+                            <h6>GST number for business travel (Optional)</h6>
+                            <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST
+                                number
+                            </p>
+
+                            <form class="forms-field">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>GST Number</mat-label>
+                                            <input matInput placeholder="GST Number" [(ngModel)]="InputArray.gstNumber"
+                                                name="gstNumber">
+                                        </mat-form-field>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </form>
+            </div>
+
+
+
+        <div class="col-md-4">
+            <!-- <app-fare-summary (continueTravller)="continueTravellerDetails()"></app-fare-summary> -->
+            <div class="default-sidebar">
+                <div class="sidebar-widget session-expires-widget">
+                    <p><img src="./assets/images/icons/sestion.png" class="me-2" alt="">Session Expires in:
+                        <strong>{{timeLeft | minuteSecond}}</strong></p>
+                </div>
+                <div class="sidebar-widget fare-summary-widget">
+                    <div class="widget-title">
+                        <h4>Fare Summary</h4>
+                        <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                        <p>{{selectedVendor.partnerName}}</p>
+                    </div>
+                    <div class="widget-content">
+                        <ul class="widget-list clearfix">
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Base Fare
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <!-- <p>&#8377;{{selectedVendor.baseFare|number}}</p> -->
+                                        <p>&#8377;{{BaseFare|number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Taxes and Fees
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{Tax | number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Baggage/Seat/Meals
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;600</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="./assets/images/icons/add.png" alt="">
+                                            Discounts
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-green">-&#8377;500</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box pt-30">
+                                    <div class="fare-list-left">
+                                        <h6 class="fw_7">Grand Total</h6>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <h6 class="fw_7">₹{{TotalFare|number}}</h6>
+                                        <p class="opacity_05" *ngIf="selectedVendor.totalFare > EMIAvailableLimit">EMI @
+                                            {{calculateEMI(selectedVendor.totalFare)|number}}/month</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="continue-widget mb-20">
+                    <a href="javascript:void(0);" class="button-style w-100"
+                        (click)="continueTravellerDetails()">Continue</a>
+                </div>
+                <div class="sidebar-widget coupon-code-widget">
+                    <div class="widget-title">
+                        <h4>Coupon Code</h4>
+                    </div>
+                    <div class="widget-content">
+                        <form action="coupon-code-form">
+                            <div class="coupon-input">
+                                <input type="text" value="SBFLY">
+                                <a href="">Apply</a>
+                            </div>
+                        </form>
+                        <div class="couponcode-box">
+                            <div class="couponcode-list active">
+                                <h6>SBFLY</h6>
+                                <p class="text-green">Congratulations! Promo discount of ₹500 applied successfully</p>
+                                <a href="" class="remove-text">Remove</a>
+                            </div>
+                            <div class="couponcode-list">
+                                <h6>CT15</h6>
+                                <p class="opacity_05">Flat 1.5% on cleartrip flight bookings</p>
                             </div>
                         </div>
                     </div>
@@ -429,4 +504,6 @@
             </div>
         </div>
     </div>
+    </div>
+
 </section>

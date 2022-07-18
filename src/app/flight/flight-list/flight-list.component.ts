@@ -1,12 +1,15 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostListener,  OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { retry, Subscription, timeInterval } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
-import { Location } from '@angular/common';
+import { Location, ViewportScroller } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Options } from '@angular-slider/ngx-slider';
 import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
+import { SimpleGlobal } from 'ng2-simple-global';
+import {environment} from '../../../environments/environment';
+import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -71,7 +74,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   showLessLayover = true;
   showMoreLayover = false;
   hideShowModal = false;
-
+  showScroll?:boolean;
+  topPosToStartShowing = 100;
   flightListMod: any;
   RefundableFaresCount: number = 0;
   nonStopCount: number = 0;
@@ -81,10 +85,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   DocKey: any;
 
    loaderValue = 10;
+   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
-
 
   flightDataModify: any = this._fb.group({
     flightfrom: [],
@@ -100,7 +104,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   });
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
-
   minPrice: number = 0;
   maxPrice: number = 10000;
   resetMinPrice: number = 0;
@@ -114,6 +117,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   queryFlightData: any;
   fromContryName: any;
   toContryName: any;
+  math = Math;
   minDate = new Date();
   options: Options = {
     floor: 0,
@@ -153,22 +157,33 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   priceSortingFilteritems = [
     { name: 'P_L_H', active: true, value: 'Price Low to High' },
     { name: 'P_H_L', active: false, value: 'Price High to Low' },
-    { name: 'P_D_E', active: false, value: 'Depart Ealry' },
-    { name: 'P_D_L', active: false, value: 'Depart Late' },
+    { name: 'D_E', active: false, value: 'Depart Earliest' },
+    { name: 'D_L', active: false, value: 'Depart Latest' },
+    { name: 'D_Short', active: false, value: 'Duration Shortest'},
+    { name: 'D_Long', active: false, value: 'Duration Longest'},
+    { name: 'A_E', active: false, value: 'Arrival Earliest'},
+    { name: 'A_L', active: false, value: 'Arrival Latest'},
   ]
-  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location) { }
-
+  cdnUrl: any;
+  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal)  {
+     this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+  
+       this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+       this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+       this._styleManager.setScript('custom', `assets/js/custom.js`);
+       
+  }
   ngOnInit(): void {
 
     this.loader = true;
     this.getQueryParamData(null);
     this.flightList = this._flightService.flightListData;
-
     this.getCityList();
-    this.getFlightIcon();
+    //this.getFlightIcon();
     this.getAirpotsList();
     this.setSearchFilterData();
     this.flightSearch();
+
   }
 
   getQueryParamData(paramObj: any) {
@@ -199,7 +214,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.Initslider();
-      $('.selectpicker').selectpicker();
+      //$('.selectpicker').selectpicker();
     }, 200);
   }
   setSearchFilterData() {
@@ -622,6 +637,25 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         else if (item.name == 'P_H_L' && item.active == true) {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
+        else if (item.name == 'D_Short' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => a.flights[0].duration - b.flights[0].duration);
+        }
+        else if (item.name == 'D_Long' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
+        }
+        else if (item.name == 'D_E' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
+        }
+        else if (item.name == 'D_L' && item.active == true) {
+        this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
+        }
+        else if (item.name == 'A_E' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
+        }
+        else if (item.name == 'A_L' && item.active == true) {
+          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
+        }
+
       })
     }
 
@@ -1014,7 +1048,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
       this.loader = false
       this.DocKey = res.response.docKey;
-      this.flightList = res.response.onwardFlights;
+      // this.flightList = res.response.onwardFlights;
+      this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
@@ -1029,15 +1064,29 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       let url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
       this.getAirlinelist();
       this.popularFilterFlightData()
-
       this.location.replaceState(url);
       this.getQueryParamData(JSON.parse(query));
 
     }, (error) => { console.log(error) });
   }
+  ascPriceSummaryFlighs(flightsData:any)
+  {
+    flightsData.filter((flightItem:any,indx:number)=>{
 
+      let priceSummaryArr=flightItem.priceSummary;
+      if(priceSummaryArr.length>1){
+        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        flightItem.priceSummary=priceSummaryArr;
+      }
+    })
+    return flightsData;
+  }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+            
+        this._styleManager.removeStyle('bootstrap-select');
+        this._styleManager.removeScript('bootstrap-select');
+        this._styleManager.removeScript('custom');
   }
   HideShowCompareToFly(i: number, fromCall: string, j: number) {
     if (fromCall == "fare-details") {
@@ -1177,20 +1226,23 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey };
+    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};
     let randomFlightDetailKey = this.getRandomString(44);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     this._flightService.setFlightsDetails(flightDetailsArr);
+    let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
+        this.router.navigateByUrl(url);
+    /*
     const myInterval =setInterval(()=>{
       this.loaderValue = this.loaderValue + 10;
       if(this.loaderValue == 110)
       {
         clearInterval(myInterval);
         $('#bookingprocess').modal('hide');
-        let url = 'flight-booking/flight-details?searchFlightKey=' + randomFlightDetailKey;
+        let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
         this.router.navigateByUrl(url);
       }
-    },300)
+    },10)*/
   }
 
 
@@ -1204,6 +1256,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return result;
   }
+
+
+  gotoTop() {
+   // this.scroll.scrollToPosition([0,0]);
+  }
+
+
 
 
 

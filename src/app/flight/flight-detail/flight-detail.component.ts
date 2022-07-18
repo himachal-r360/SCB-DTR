@@ -34,7 +34,7 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
   sessionTimer:any = 3;
   timeLeft:any = 900;
   baggageInfo:any;
-  
+  flightDetailsArrVal:any;
 
 
   constructor(private _flightService:FlightService, private route:ActivatedRoute ,private router:Router) { 
@@ -64,9 +64,8 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
   getFlightDetails(){
     //this._flightService.getFlightDetailsVal()
 
-    let flightDetailsArrVal:any=sessionStorage.getItem(this.randomFlightDetailKey);
-
-    let param=JSON.parse(flightDetailsArrVal);
+     this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
+    let param=JSON.parse(this.flightDetailsArrVal);
       if(param!=null){
         this.flightDetails = param.flights;
         this.selectedVendor = param.priceSummary;
@@ -133,7 +132,6 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
 
   // get airport list
   getAirpotsList() {
-
     this._flightService.getAirportName().subscribe((res:any)=>{
       this.airportsNameJson = res;
     })
@@ -207,7 +205,21 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
   }
 
   sendFlightDetails(){
+    let randomFlightDetailKey = this.getRandomString(44);
+    sessionStorage.setItem(randomFlightDetailKey, this.flightDetailsArrVal);
+    let url = 'flight-booking/traveller-detail?searchFlightKey=' + randomFlightDetailKey;
+    this.router.navigateByUrl(url);
+  }
 
+  // get rendom string value
+  getRandomString(length: any) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random()*charactersLength));
+    }
+    return result;
   }
 
 }
