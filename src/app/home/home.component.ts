@@ -510,8 +510,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onClose(){
-    var element = document.querySelector('.flight-from-data')
-    element?.classList.add('form-hide');
+    // var element = document.querySelector('.flight-from-data')
+    // element?.classList.add('form-hide');
   }
 
   onOpen()
