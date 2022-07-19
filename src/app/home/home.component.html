@@ -162,21 +162,28 @@
                                                             <img src="/assets/images/icons/close.png" (click)="onClose()"  class="close-mobile"  alt="" />
                                                         </a>
                                                     </div>
-                                                    <div class="mob-search">
+                                                    <div class="mob-search"  *ngIf="isMobile">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="mob-search-list">
                                                                     <label for="">From</label>
-                                                                    <input type="text" name="" class="w-100" id="" value="Mumbai (BOM)">
+                                                                    <input type="text" autocomplete="off" class="w-100"
+                                                                     placeholder="Search City" formControlName="flightfrom"
+                                                                    (keyup)="fromList($event)" (focus)="isFromorNot= true;fromList($event)" [(ngModel)]="fromCityName">
+
                                                                 </div>
                                                                 <div class="mob-search-list">
-                                                                    <label for="">From</label>
-                                                                    <input type="text" name="" class="w-100" id="" value="Hyderabad (HYD)">
+                                                                    <label for="">To</label>
+                                                                    <input type="text" autocomplete="off" class="w-100"
+                                                             placeholder="Search City" formControlName="flightto"
+                                                                (keyup)="toList($event)"  (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                            <input type="text"  name="flightto" style="display:none"
+                                                            id="toCitySearch" >
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                        <div class="flight-from-data-search">
+                                                        <div class="flight-from-data-search" *ngIf="!isMobile">
                                                             <!-- <input type="text" autocomplete="off" class="w-100"
                                                                 id="fromCitySearch" placeholder="Search City"
                                                                 (keyup)="fromList($event)">
@@ -190,8 +197,8 @@
 
                                                         </div>
 
-                                                        <ul class="flight-from-data-ul" *ngIf="fromFlightList">
-                                                            <li class="flight-from-ul-li">
+                                                        <ul class="flight-from-data-ul"  *ngIf="fromFlightList  && !isMobile">
+                                                            <li class="flight-from-ul-li" >
                                                                 <p class="flight-Results-text">Results</p>
                                                             </li>
                                                             <li class="flight-from-ul-li"
@@ -208,9 +215,27 @@
                                                                     </div>
                                                                 </a>
                                                             </li>
-
-
                                                         </ul>
+                                                        <ul class="flight-from-data-ul" *ngIf="isMobile">
+                                                          <li class="flight-from-ul-li">
+                                                              <p class="flight-Results-text">Results</p>
+                                                          </li>
+                                                          <li class="flight-from-ul-li"
+                                                              *ngFor="let toCity of cityList">
+                                                              <a href="#" class="flight-from-ul-li-a"
+                                                                  (click)="isFromorNot == true ?selectFromFlightList(toCity._source) : selectToFlightList(toCity._source) ">
+                                                                  <div class="flight-from-name">
+                                                                      <h6>{{toCity._source.city}},
+                                                                          {{toCity._source.country}}</h6>
+                                                                      <p>{{toCity._source.airport_name}} </p>
+                                                                  </div>
+                                                                  <div class="flight-from-shortname">
+                                                                      <h6>{{toCity._source.airport_code}}</h6>
+                                                                  </div>
+                                                              </a>
+                                                          </li>
+
+                                                      </ul>
                                                     </div>
 
                                                 </div>
@@ -223,16 +248,42 @@
                                                     <h5 class="fw_6 ">{{toCityName}}</h5>
                                                     <span class="select-roottitle">{{toAirpotName}}</span>
 
-                                                    <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
+                                                    <div class="flight-to-data flight-from-hide dropdown"  #removeClassToCity>
+                                                      <div class="mob-title">
+                                                        <h3>Select City</h3>
+                                                        <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile" >
+                                                            <img src="/assets/images/icons/close.png"   class="close-mobile"  alt="" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="mob-search"  *ngIf="isMobile">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="mob-search-list">
+                                                                    <label for="">From</label>
+                                                                    <input type="text" autocomplete="off" (focus)="isFromorNot= true;fromList($event)" class="w-100"
+                                                                     placeholder="Search City" formControlName="flightfrom"
+                                                                    (keyup)="fromList($event)" [(ngModel)]="fromCityName">
 
-                                                        <div class="flight-from-data-search">
+                                                                </div>
+                                                                <div class="mob-search-list">
+                                                                    <label for="">To</label>
+                                                                    <input type="text" autocomplete="off" class="w-100"
+                                                             placeholder="Search City" formControlName="flightto"
+                                                                (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                            <input type="text"  name="flightto" style="display:none"
+                                                            id="toCitySearch" >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <div class="flight-from-data-search"  *ngIf="!isMobile">
                                                             <input type="text" autocomplete="off" class="w-100"
                                                                 id="toCitySearch" placeholder="Search City" formControlName="flightto"
                                                                 (keyup)="toList($event)" #toCityInput autofocus  [(ngModel)]="flightData.value.flightto">
                                                             <input type="text"  name="flightto" style="display:none"
                                                             id="toCitySearch" >
                                                         </div>
-                                                        <ul class="flight-from-data-ul" *ngIf="toFlightList">
+                                                        <ul class="flight-from-data-ul" *ngIf="toFlightList && !isMobile">
                                                             <li class="flight-from-ul-li">
                                                                 <p class="flight-Results-text">Results</p>
                                                             </li>
@@ -252,6 +303,25 @@
                                                             </li>
 
                                                         </ul>
+                                                        <ul class="flight-from-data-ul" *ngIf="isMobile" >
+                                                          <li class="flight-from-ul-li" >
+                                                              <p class="flight-Results-text">Results</p>
+                                                          </li>
+                                                          <li class="flight-from-ul-li"
+                                                              *ngFor="let fromCity of cityList">
+                                                              <a href="#" class="flight-from-ul-li-a"
+                                                                  (click)="isFromorNot == true ?selectFromFlightList(fromCity._source) : selectToFlightList(fromCity._source)" >
+                                                                  <div class="flight-from-name">
+                                                                      <h6>{{fromCity._source.city}},
+                                                                          {{fromCity._source.country}}</h6>
+                                                                      <p>{{fromCity._source.airport_name}} </p>
+                                                                  </div>
+                                                                  <div class="flight-from-shortname">
+                                                                      <h6>{{fromCity._source.airport_code}}</h6>
+                                                                  </div>
+                                                              </a>
+                                                          </li>
+                                                      </ul>
                                                     </div>
 
                                                 </div>
@@ -332,6 +402,131 @@
 
                                                     </div>
                                                 </div>
+                                                <div class="mob-travellers-class">
+                                                    <div class="mob-travellers-class-box" (click)="openTravellerBlock()">
+                                                        <div class="mob-travellers-class-box-left">
+                                                            <span>Travellers and Class</span>
+                                                            <h5>{{flightData.value.flightclass == 'E' ?"Economy Class" : ""}}{{flightData.value.flightclass == 'F' ?"First Class" : ""}}{{flightData.value.flightclass == 'P' ?"Premium Economy" : ""}}{{flightData.value.flightclass == 'B' ?"Business" : ""}} <span>{{flightData.value.adults}} Adults, {{flightData.value.child}} Child, {{flightData.value.infants}} Infant</span></h5>
+                                                        </div>
+                                                        <div class="mob-travellers-class-box-right">
+                                                            <img src="./assets/images/icons/down.png" class="ms-1" alt="">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mob-filter-travellers" [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
+                                                        <div class="mob-title">
+                                                            <h3>Preferred Airline</h3>
+                                                            <a href="#" class="mob-close mob-preferred-airline-close"  (click)="closeTravllerBlock()">
+                                                                <img src="./assets/images/icons/close.png" alt="" >
+                                                            </a>
+                                                        </div>  
+                                                        <div class="mob-add-travels">
+                                                            <ul class="Travellers-dropdown-data"> 
+                                                                <li>
+                                                                    <div class="Travellers-passengers-data">
+                                                                        <div class="Travellers-name">
+                                                                            <h6>Adult</h6>
+                                                                            <p>12 years &amp; above</p>
+                                                                        </div>
+                                                                        <div class="Travellers-qty">
+                                                                        
+                                                                            <div class="quantity buttons_added">
+                                                                                <input type="button" (click)="decreaseAdult()"
+                                                                                value="-" class="qty-buttons minus">
+                                                                            <input type="number" step="1"
+                                                                                oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
+                                                                                min="1" max="9" name="quantity" value="0"
+                                                                                title="Qty"
+                                                                                class="input-text qty text quantity_adult1_events"
+                                                                                formControlName="adults" size="4" pattern=""
+                                                                                inputmode="" [(ngModel)]="flightData.value.adults">
+                                                                            <input type="button" (click)="increaseAdult()"
+                                                                                value="+" [disabled]="disableParent"
+                                                                                class="qty-buttons plus">
+                                                                                <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="Travellers-passengers-data">
+                                                                        <div class="Travellers-name">
+                                                                            <h6>Child</h6>
+                                                                            <p>2 - 11 years</p>
+                                                                        </div>
+                                                                        <div class="Travellers-qty">
+                                                                            <div class="quantity buttons_added">
+                                                                                <input type="button" (click)="decreaseChild()"
+                                                                                value="-" class="qty-buttons minus">
+                                                                            <input type="number" step="1" min="0" max="6"
+                                                                                name="quantity" value="0" title="Qty"
+                                                                                class="input-text qty text quantity_adult1_events"
+                                                                                size="4" pattern="" inputmode=""
+                                                                                formControlName="child" [(ngModel)]="flightData.value.child">
+                                                                            <input type="button" (click)="increaseChild()"
+                                                                                [disabled]="disablechildren" value="+"
+                                                                                class="qty-buttons plus">
+                                                                                <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="Travellers-passengers-data">
+                                                                        <div class="Travellers-name">
+                                                                            <h6>Infant</h6>
+                                                                            <p>Under 2 years</p>
+                                                                        </div>
+                                                                        <div class="Travellers-qty">
+                                                                            <div class="quantity buttons_added">
+                                                                                <input type="button" (click)="decreaseInfant()"
+                                                                                value="-" class="qty-buttons minus">
+                                                                            <input type="number" step="1" min="0" max="6"
+                                                                                name="quantity" value="0" title="Qty"
+                                                                                class="input-text qty text quantity_adult1_events"
+                                                                                size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants"
+                                                                                inputmode="">
+                                                                            <input type="button" (click)="increaseInfant()"
+                                                                                [disabled]="disableinfants" value="+"
+                                                                                class="qty-buttons plus">
+                                                                                <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="mob-Choose-class">
+                                                                <h6>Choose Cabin Class</h6>
+                                                                <ul class="" > 
+                                                                    <li>
+                                                                        <a href="javascript:void(0)" class="" value="E" (click)="getClassVal('E')" [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium Economy</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="javascript:void(0)" class="" value="P" (click)="getClassVal('P')" [ngClass]="this.flightData.value.flightclass == 'P' ? 'active':'' ">Premium Economy</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="javascript:void(0)" class="" value="B" (click)="getClassVal('B')" [ngClass]="this.flightData.value.flightclass == 'B' ? 'active':'' ">Business</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="javascript:void(0)" class="" value="F" (click)="getClassVal('F')" [ngClass]="this.flightData.value.flightclass == 'F' ? 'active':'' ">First Class</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+                                                            <div class="mob-Choose-done pt-1 pl-0 pr-0">
+                                                                <a href="javascript:void(0)" (click)="closeTravllerBlock()">
+                                                                    Done
+                                                                </a>
+                                                            </div>
+                                                        </div>                                                          
+                                                    </div>
+                                                </div>
                                                 <div class="root-search">
                                                     <button type="submit" class="searchbn">Search</button>
                                                 </div>
@@ -345,6 +540,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
 
 
                                 <div class="add-search-area">
@@ -464,74 +660,9 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Chennai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/round.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Mumbai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/next-active.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>  -->
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Chennai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/round.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
-                <div class="col-md-3" *ngFor="let continue of continueSearchVal; let i = index">
-
+            <!-- continue search website view  -->
+                <ng-container *ngIf="windowItem.innerWidth > 991 ?  true : false">
+                <div class="col-md-3" *ngFor="let continue of continueSearchVal; let i = index" >
                     <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearch(continue)" >
                         <div class="Continuesearch-items ">
                             <div class="Continuesearch-items-text">
@@ -553,6 +684,35 @@
                         </div>
                     </a>
                 </div>
+                </ng-container>
+            <!-- continue search mobile view  -->
+            <div class="box-item" *ngIf="windowItem.innerWidth < 991 ?  true : false">
+                <owl-carousel-o [options]="customOptions">
+                    <ng-container *ngFor="let continue of continueSearchVal; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearch(continue)" >
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.fromCity}}</h6>
+                                                    <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img src="./assets/images/icons/next-active.png" alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.toCity}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="./assets/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                    </a>
+                            </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+                </div> 
             </div>
         </div>
     </section>

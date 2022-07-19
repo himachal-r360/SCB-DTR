@@ -156,6 +156,7 @@ export class HeaderComponent implements OnInit {
   parsed_date:any;
   relative_to:any;
   push_ids:any;
+  cdnnotifyUrl:any;
   delta:any;
         payzrestriction:boolean=false;
  @ViewChild("content") modalContent: TemplateRef<any>;
@@ -268,6 +269,7 @@ export class HeaderComponent implements OnInit {
 
     this.is_main=environment.IS_MAIN;
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.cdnnotifyUrl = environment.cdnnotifyUrl+this.sg['assetPath'];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.trainUrl = environment.TRAIN_SITE_URL[this.sg['domainName']];
     this.showCart=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['FRESHMENU'];
@@ -363,35 +365,38 @@ export class HeaderComponent implements OnInit {
                         '</button><div class="toast-wrap" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <a href="'+val['redirect_url']+'">  <img src="'+this.cdnUrl+'images/push-icon.svg" class="img-fluid push-image-placeholder" alt="..."  ><div class="text-truncate"><h6 class="toast-font" style="-webkit-box-orient: vertical;">'+val['title']+'</h6><p class="toast-para" style="-webkit-box-orient: vertical;">'+val['text']+'</p></div></div></a></div>'+
                                                 '</div></div>';
               break;
-              case 'TEXT_LOGO':
-                var subimage_url = '';
-                if(val['serviceToken'] !=null ){
-                   
-                   subimage_url=val['serviceToken'];
-               }else if(val['tag'] !=null){
-                   
-                   subimage_url=val['tag'].toLowerCase();
-               }else{
-                   
-                   subimage_url='';
-               }
-               subimage_url = this.cdnUrl+'images/'+subimage_url+'-notify.png';
-               var image_url = ''
-               if(val['image_url'] != null && val['image_url'] != ''){
-                   image_url=val['image_url'];
-               }else if(val['logo_url'] !=null && val['logo_url'] !=''){
-                   image_url=val['logo_url'];
-               }else{
-                   image_url='';
-               }
-                 html ='<a href="'+val['redirect_url']+'"><div class="toast_push " id="toast_'+index+'"  >'+
-                                                 '<div class="toast-body" > <div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <div class="row"><div class="col-2 push-wrapper-new"><img src="'+image_url+'" class="" alt="..."  ><img class="notify-pos-abs" src="'+subimage_url+'" alt=""/></div><div class="text-truncate col-10">'+
+              
+                case 'TEXT_LOGO':
+                  var subimage_url = '';
+                  if(val['serviceToken'] !=null ){
+  
+                     subimage_url=val['serviceToken'].toLowerCase();
+                 }else if(val['tag'] !=null){
+  
+                     subimage_url=val['tag'].toLowerCase();
+                 }else{
+  
+                     subimage_url='';
+                 }
+                 subimage_url = this.cdnnotifyUrl+'services/'+subimage_url+'.png';
+                 var image_url = ''
+                 if(val['image_url'] != null && val['image_url'] != ''){
+                    image_url=val['image_url'];
+                  }else if(val['logo_url'] !=null && val['logo_url'] !=''){
+                    image_url=val['logo_url'];
+                  }else if(val['partner_token'] != null && val['partner_token'] != ''){
+                    image_url=this.cdnnotifyUrl+'partner/'+val['partner_token'].toLowerCase()+'.png';
+                  }else{
+                    image_url='';
+                  }
+                 html ='<div class="toast_push " id="toast_'+index+'"  >'+
+                                                 '<div class="toast-body" ><div class="toast-wrapper"> <button type="button" class="ml-2  close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
+                                                 '<span class="toast-close" aria-hidden="true" >&times;</span>'+
+                                               '</button></div> <div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')"><a href="'+val['redirect_url']+'">  <div class="row"><div class="col-2 "><div class="push-wrapper-new"><img src="'+image_url+'" class="" alt="..."  ><img class="notify-pos-abs" src="'+subimage_url+'" alt=""/></div></div><div class="text-truncate-new col-10">'+
                         '<h4 style="-webkit-box-orient: vertical;">'+val['title']+' </h4>'+
                                           '<h5 style="-webkit-box-orient: vertical;">'+val['text']+' </h5>'+
                                           '<p style="-webkit-box-orient: vertical;"> '+this.converttime(val['created_at'])+'</p></div></div></div>'+
-                                                '</div></div><div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
-                                                '<span class="toast-close" aria-hidden="true" >&times;</span>'+
-                                              '</button></div></a>';
+                                                '</div></div></a>';
               break;
               case 'TEXT_IMAGE':
                  html ='<div class="toast_push " id="toast_'+index+'"  >'+
@@ -1227,8 +1232,8 @@ this.customerLogin=true;*/
           // console.log('here');
       }else{
           this.push_ids = JSON.parse(this.cookieService.get("push_status"));
-           if(!this.push_ids.includes(this.push_ids)){
-              this.push_ids.push(this.push_ids);
+           if(!this.push_ids.includes(id)){
+              this.push_ids.push(id);
             }
             // if (typeof this.push_ids === 'object' && this.push_ids !== null) {
             //   console.log('am');

@@ -10,6 +10,7 @@ export const environment = {
   // url:"https://smartbuyadminuat.reward360.in/"
   url:"https://smartbuydev.reward360.in/",
    cdnUrl: 'assets/',
+     cdnnotifyUrl: 'https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/notification/',
   cdnDealUrl: 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/',
 API_URL:{
  'SMARTBUY': 'https://smartbuydev.reward360.in/api/',
