@@ -159,7 +159,7 @@ new_fare: number = 0;
         timeLeft:any = 900;
         baggageInfo:any='';
         flightDetailsArrVal:any;
-        steps:any = 5;
+        steps:any = 1;
 
         travelerDetails:any={};
         checked:any= false;
