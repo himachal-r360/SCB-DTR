@@ -1225,21 +1225,15 @@ this.customerLogin=true;*/
       if(!this.cookieService.get("push_status")){
           this.push_ids.push(id);
           this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
-          // console.log('here');
+          // console.log('if',this.push_ids);
       }else{
           this.push_ids = JSON.parse(this.cookieService.get("push_status"));
            if(!this.push_ids.includes(id)){
               this.push_ids.push(id);
+              // console.log('else',this.push_ids);
             }
-            // if (typeof this.push_ids === 'object' && this.push_ids !== null) {
-            //   console.log('am');
-              this.cookieService.set('push_status',this.push_ids, null, '/', null, null, null);
-            // }else{
-            //   this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
-            // }
-          
-          // $.cookie("push_status", JSON.stringify(push_ids));
-          // console.log(this.cookieService.get("push_status"));
+             this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
+            
       }
 
   }
