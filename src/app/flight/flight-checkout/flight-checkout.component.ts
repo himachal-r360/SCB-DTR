@@ -1255,7 +1255,7 @@ new_fare: number = 0;
       if(res.statusCode ==200)
       {
        
-       if(res.response && res.response.onwardFlightDetails){
+       if(res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.fareKey){
        this.flightInfo=res.response.onwardFlightDetails;
       
        if(partner=='Yatra'){
