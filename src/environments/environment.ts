@@ -17,6 +17,7 @@ API_URL:{
  'DINERS': 'https://smartbuydev.reward360.in/diners/api/',
  'INFINIA'  : 'https://smartbuydev.reward360.in/infinia/api/',
  'REGALIA': 'https://smartbuydev.reward360.in/regalia/api/',
+ 'REGALIA_GOLD': 'https://smartbuydev.reward360.in/regalia_gold/api/',
  'CORPORATE': 'https://smartbuydev.reward360.in/corporate/api/',
  'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
   },
