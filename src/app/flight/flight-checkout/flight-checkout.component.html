@@ -77,7 +77,8 @@
                                         <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
                                     </div>
                                     <div class="Booking-Flight-name-right">
-                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
+                                        <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>-->
+                                        <p>{{flightClasses[searchData.flightclass]}}</p>
                                     </div>
                                 </div>
                                 <div class="Booking-Flight-time">
@@ -116,15 +117,19 @@
                                             <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
                                         </div>-->
                                     </div>
-                                <div class="row"  *ngFor="let bag of baggageInfo">
+                                <div class="row"  >
                                         <div class="col-md-2">
-                                            <p>{{bag.flightName}}<br>{{bag.flightNo}}</p>
+                                            <p>{{baggageInfo[i].flightName}}<br>{{baggageInfo[i].flightNo}}</p>
                                         </div>
                                         <div class="col-md-3">
-                                            <p>{{bag.checkIn}}</p>
+                                            <p *ngIf="baggageInfo[i].checkIn;then checkIn_content else checkIn_blank"></p>
+                                            <ng-template #checkIn_content>{{baggageInfo[i].checkIn}}</ng-template>
+                                            <ng-template #checkIn_blank>NA</ng-template>
                                         </div>
                                         <div class="col-md-3">
-                                            <p>{{bag.cabin}}</p>
+                                            <p *ngIf="baggageInfo[i].cabin ;then cabin_content else cabin_blank"></p>
+                                           <ng-template #cabin_content>{{baggageInfo[i].cabin}}</ng-template>
+                                            <ng-template #cabin_blank>NA</ng-template>
                                         </div>
                                 
                                     </div> 

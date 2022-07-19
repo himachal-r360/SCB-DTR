@@ -90,6 +90,7 @@ new_fare: number = 0;
         gstSelected: boolean = false;
         cdnUrl: any;
         serviceSettings:any;
+        flightClasses:any;
         whatsappFeature: number = 0;
         customerInfo: any;
         coupon_id: any;
@@ -178,6 +179,7 @@ new_fare: number = 0;
                 this.whatsappFeature =this.serviceSettings.whatsappFeature;
                 this.enableGST = this.serviceSettings.enableSavedGST;
                 this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
+                this.flightClasses = this.serviceSettings.flightClasses;
 
                 this.getAirpotsList();
 
@@ -1246,6 +1248,8 @@ new_fare: number = 0;
     },700) ; 
   
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
+        
+      console.log(res.response);
                 
       let baseFare=0; let taxFare=0; let totalFare=0;
          clearInterval(myInterval);
