@@ -80,8 +80,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal: string = ""
   DocKey: any;
-
-  isMobile:boolean = false;
+  isMobile:boolean= false
    loaderValue = 10;
    dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
@@ -162,18 +161,20 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'A_E', active: false, value: 'Arrival Earliest'},
     { name: 'A_L', active: false, value: 'Arrival Latest'},
   ]
-
-
+  
+  
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location ,private scroll: ViewportScroller ) {
-
-   }
-
+    
+  }
+  @HostListener('window:resize', ['$event'])
+  
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.loader = true;
     this.getQueryParamData(null);
-    this.flightList = this._flightService.flightListData;
+    // this.flightList = this._flightService.flightListData;
+    this.headerHideShow(null)
     this.getCityList();
     this.getFlightIcon();
     this.getAirpotsList();
@@ -1301,6 +1302,12 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
   }
 
+  headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+      this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none"; 
+    }
+  }
   openMobileFilterSection()
   {
     var filterDiv = document.getElementById('sortMobileFilter');
@@ -1327,4 +1334,5 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.popularFilterFlightData();
   }
+
 }
