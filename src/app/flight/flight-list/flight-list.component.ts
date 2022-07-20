@@ -152,14 +152,14 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'no_stops', active: false, value: 'Non-Stop' },
   ]
   priceSortingFilteritems = [
-    { name: 'P_L_H', active: true, value: 'Price Low to High' },
-    { name: 'P_H_L', active: false, value: 'Price High to Low' },
-    { name: 'D_E', active: false, value: 'Depart Earliest' },
-    { name: 'D_L', active: false, value: 'Depart Latest' },
-    { name: 'D_Short', active: false, value: 'Duration Shortest'},
-    { name: 'D_Long', active: false, value: 'Duration Longest'},
-    { name: 'A_E', active: false, value: 'Arrival Earliest'},
-    { name: 'A_L', active: false, value: 'Arrival Latest'},
+    { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.png', sortValue:'Price'},
+    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-l.png',sortValue:'Price' },
+    { name: 'D_E', active: false, value: 'Earliest' , image:'/assets/images/icons/Departure.png',sortValue:'Depart'},
+    { name: 'D_L', active: false, value: 'Latest' ,image:'/assets/images/icons/Departure.png',sortValue:'Depart'},
+    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.png',sortValue:'Duration'},
+    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.png',sortValue:'Duration'},
+    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
+    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
   ]
   
   
@@ -270,7 +270,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     let airlineSize = 2
     if(this.airlines.length > 2) {
       let modifyAirline = this.airlines.slice(0, airlineSize)
-      console.log(this.airlines.length - modifyAirline.length);
     }
     // else  {
 
@@ -477,6 +476,27 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       return item;
     })
+    this.popularFilterFlightData();
+  }
+
+  //sorting in mobile version
+  flightSortingMobile(val:any) {
+    let selectedVal = val;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    })
+  }
+
+  applySortingMobile() {
+    let sortingBtn = document.getElementById('sortMobileFilter');
+    if(sortingBtn)
+    {
+      sortingBtn.style.display = 'none';
+    }
     this.popularFilterFlightData();
   }
 
