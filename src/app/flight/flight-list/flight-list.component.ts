@@ -43,7 +43,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   adultsVal: any;
   childVal: any;
   infantsVal: any;
-  cdnUrl:any;
+
   sub?: Subscription;
   show = false;
   SearchCityName: any;
@@ -83,7 +83,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal: string = ""
   DocKey: any;
-  isMobile:boolean= false
+  isMobile:boolean= true;
    loaderValue = 10;
    dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
@@ -164,19 +164,19 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'A_E', active: false, value: 'Arrival Earliest'},
     { name: 'A_L', active: false, value: 'Arrival Latest'},
   ]
-  
-  
-  constructor(public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal,private scroll: ViewportScroller ) {
-    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+  cdnUrl: any;
+  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+     this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
   
        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
+       
   }
-  @HostListener('window:resize', ['$event'])
   
+@HostListener('window:resize', ['$event'])
 
-  ngOnInit(): void {
+ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.loader = true;
     this.getQueryParamData(null);
@@ -1319,6 +1319,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
+      console.log(this._flightService.headerHideShow);
       this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none"; 
     }
   }

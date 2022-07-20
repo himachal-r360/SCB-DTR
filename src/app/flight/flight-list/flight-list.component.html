@@ -1,4 +1,4 @@
-<section class="flight-area mt-10" *ngIf="!isMobile">
+<section class="flight-area mt-150" *ngIf="!isMobile">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -125,7 +125,7 @@
                                                 </div>
                                             </div>
                                             <div class="select-root-icons" (click)="swap()">
-                                                <img src="./assets/images/icons/twoway.png" alt="">
+                                                <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                                             </div>
                                             <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
                                                 <span class="select-roottitle">TO</span>
@@ -224,13 +224,13 @@
                       <p>Compare &amp; Fly with our flight partners</p>
                       <ul class="list-inline ms-3">
                           <li class="list-inline-item">
-                              <img src="./assets/images/flight_partners/Cleartrip.png" alt="Cleartrip">
+                              <img src="{{cdnUrl}}/images/flight_partners/Cleartrip.png" alt="Cleartrip">
                           </li>
                           <li class="list-inline-item">
-                              <img src="./assets/images/flight_partners/Yatra.png" alt="Yatra">
+                              <img src="{{cdnUrl}}/images/flight_partners/Yatra.png" alt="Yatra">
                           </li>
                           <li class="list-inline-item">
-                              <img src="./assets/images/flight_partners/Easemytrip.png" alt="Easemytrip">
+                              <img src="{{cdnUrl}}/images/flight_partners/Easemytrip.png" alt="Easemytrip">
                           </li>
                       </ul>
                   </div>
@@ -743,7 +743,7 @@
                                                 <div class="flight-listing-time">
                                                     <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} </h6>
                                                     <p>{{list.flights[0].departureAirport}}</p>
-                                                    <img src="./assets/images/icons/flight-right.png" alt="">
+                                                    <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                 </div>
                                                 <div class="flight-listing-time">
                                                     <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -807,11 +807,11 @@
                                 </div>
 
                                     <!-- <div class="flight-info-box">
-                                <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> 
-                                    <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>-->
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> 
+                                    <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>-->
                                     <!-- <p></p>
-                                    <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a> 
+                                    <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
+                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a> 
                                 </div>-->
                                 <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{i}}" >
                                   <div class="flight-options-box" id="FareDetails_{{i}}">
@@ -821,7 +821,7 @@
                                                 <div class="flight-options-logo">
                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" height="20"> 
                                                   {{item.partnerName}}
-                                                    <!-- <img src="./assets/images/flights/1.png" alt="" /> -->
+                                                    <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
                                                 </div>
                                                 <div class="flight-options-text">
                                                   <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -871,7 +871,7 @@
                                           <ul class="extra-tabs-right-ul">
                                                 <!-- <li class="ms-0">
                                                     <p>
-                                                        <img src="./assets/images/icons/details/1.png" alt="">
+                                                        <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
                                                     </p>
                                                     <div class="hover-popover">
                                                         <div class="hover-popover-content">
@@ -880,7 +880,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <p><img src="./assets/images/icons/details/2.png" alt=""></p>
+                                                    <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
                                                     <div class="hover-popover">
                                                         <div class="hover-popover-content">
                                                             <p>Meals Selection</p>
@@ -888,7 +888,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <p><img src="./assets/images/icons/details/3.png" alt=""></p>
+                                                    <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
                                                     <div class="hover-popover">
                                                         <div class="hover-popover-content">
                                                             <p>Seats Selection</p>
@@ -896,9 +896,9 @@
                                                     </div>
                                                 </li>-->
                                             </ul>
-                                            <!-- <a href="javascript:void(0);" class="flight-details-click">Flight Details <img src="./assets/images/icons/down.png" class="ms-1"  alt=""></a> -->
-                                            <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}_{{j}}" (click)="HideShowCompareToFly(i,'flight-details',j)" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                            <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}_{{j}}" (click)="hideFarebutton(i,'flight-details',j)" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
+                                            <!-- <a href="javascript:void(0);" class="flight-details-click">Flight Details <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1"  alt=""></a> -->
+                                            <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}_{{j}}" (click)="HideShowCompareToFly(i,'flight-details',j)" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
+                                            <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}_{{j}}" (click)="hideFarebutton(i,'flight-details',j)" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
                                         </div>
                                         <div class="flight-details-box flightfaresbox flight-details-box-hide" id="FlightDetails_{{i}}_{{j}}">
                                             <div class="flight-extra-details">
@@ -1187,7 +1187,7 @@
               <div class="mob-listing-header">
                   <div class="mob-listing-header-left">
                       <a href="index.html" >
-                          <img src="./assets/images/icons/left.png" alt="" />
+                          <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>
                   <div class="mob-listing-header-center">
@@ -1200,7 +1200,7 @@
                   </div>
                   <div class="mob-listing-header-right">
                       <a href="index.html" >
-                          <img src="./assets/images/icons/edit.png" alt="" />
+                          <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                       </a>
                   </div>
               </div>
@@ -1209,7 +1209,7 @@
               <div class="mob-listing-fiters">
                   <h6>{{flightList.length}} Flights Found</h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()">
-                      <img src="/assets/images/icons/filter.png" alt="">
+                      <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
                       <span>Sort/Filters</span>
                   </a>
               </div>
@@ -1234,7 +1234,7 @@
                       <div class="mob-list-items-name">
                           <div class="mob-list-items-name-top">
                               <div class="mob-list-items-image">
-                                  <img src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                  <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                   <div class="mob-list-flight-name"  *ngIf="list.flights.length > 0">
                                       <h6>{{list.flights[0].airlineName}}</h6>
                                       <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
@@ -1253,7 +1253,7 @@
                                   </div>
                                   <div class="name-bottom-top-center">
                                       <p>{{ list.flights[0].duration | durationTime }}</p>
-                                      <img src="/assets/images/icons/mob-flight.png" alt="" />
+                                      <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
                                       <p>{{ list.flights[0].duration | durationTime }}</p>
                                   </div>
                                   <div class="name-bottom-top-right">
@@ -1262,7 +1262,7 @@
                                   </div>
                               </div>
                               <div class="name-bottom-bottom">
-                                  <p><img src="/assets/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
+                                  <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
                               </div>
                           </div>
                       </div>
@@ -1271,7 +1271,7 @@
                               <div class="mob-book-list-top">
                                   <div class="mob-booking-image">
                                     {{item.partnerName}}
-                                      <!-- <img src="/assets/images/flights/1.png" alt="" /> -->
+                                      <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
                                   </div>
                                   <div class="mob-booking-price">
                                       <h6>₹ {{item.totalFare |number}}</h6>
@@ -1287,18 +1287,18 @@
                                   <div class="mob-extra">
                                       <ul>
                                           <li>
-                                              <img src="/assets/images/icons/details/1.png" alt="" />
+                                              <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
                                           </li>
                                           <li>
-                                              <img src="/assets/images/icons/details/2.png" alt="" />
+                                              <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
                                           </li>
                                           <li>
-                                              <img src="/assets/images/icons/details/3.png" alt="" />
+                                              <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
                                           </li>
                                       </ul>
                                   </div>
                                   <div class="mob-details">
-                                      <a href="">Flight Details <img src="/assets/images/icons/mob-down.png" alt="" /> </a>
+                                      <a href="">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
                                   </div>
                               </div>
                           </div>
@@ -1319,7 +1319,7 @@
               <div class="mob-title">
                   <h3>Sort & Filters</h3>
                   <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
-                      <img src="/assets/images/icons/close.png" alt="">
+                      <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                   </a>
               </div>
               <div class="mob-sf-tabs">
@@ -1337,49 +1337,49 @@
                               <div class="mob-sf-sort-by">
                                   <div class="mob-sf-sort-by-items active">
                                       <p>
-                                          <img src="./assets/images/icons/price-l.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/price-l.png" alt="" />
                                           <span><strong>Price</strong> <br> Low to High</span>
                                       </p>
                                   </div>
                                   <div class="mob-sf-sort-by-items">
                                       <p>
-                                          <img src="./assets/images/icons/price-h.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/price-h.png" alt="" />
                                           <span><strong>Price</strong> <br> High to Low</span>
                                       </p>
                                   </div>
                                   <div class="mob-sf-sort-by-items">
                                       <p>
-                                          <img src="./assets/images/icons/clock.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
                                           <span><strong>Duration</strong> <br> Shortest</span>
                                       </p>
                                   </div>
                                   <div class="mob-sf-sort-by-items">
                                       <p>
-                                          <img src="./assets/images/icons/clock.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
                                           <span><strong>Duration</strong> <br> Longest</span>
                                       </p>
                                   </div>
                                   <div class="mob-sf-sort-by-items">
                                       <p>
-                                          <img src="./assets/images/icons/Departure.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
                                           <span><strong>Departure </strong> <br> Earliest</span>
                                       </p>
                                   </div>
                                   <div class="mob-sf-sort-by-items">
                                       <p>
-                                          <img src="./assets/images/icons/Departure.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
                                           <span><strong>Departure </strong> <br> Latest</span>
                                       </p>
                                   </div>
                                   <div class="mob-sf-sort-by-items">
                                       <p>
-                                          <img src="./assets/images/icons/Arrival.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
                                           <span><strong>Arrival </strong> <br> Earliest</span>
                                       </p>
                                   </div>
                                   <div class="mob-sf-sort-by-items">
                                       <p>
-                                          <img src="./assets/images/icons/Arrival.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
                                           <span><strong>Arrival</strong> <br> Latest</span>
                                       </p>
                                   </div>
