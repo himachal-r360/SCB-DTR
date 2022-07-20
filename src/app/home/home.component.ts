@@ -410,13 +410,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
       localStorage.setItem('toAirportName', this.toAirpotName);
-      this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
-        // this.loader = false;
-        this.show = true;
-        this.flightList = res.response.onwardFlights;
-        this.oneWayDate = res.responseDateTime;
-        this._flightService.flightListData = this.flightList;
-        this._flightService.flightListDate = this.oneWayDate;
+      // this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
+      //   this.show = true;
+      //   this.flightList = res.response.onwardFlights;
+      //   this.oneWayDate = res.responseDateTime;
+      //   this._flightService.flightListData = this.flightList;
+      //   this._flightService.flightListDate = this.oneWayDate;
         let query:any = sessionStorage.getItem('searchVal');
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
           let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
@@ -429,7 +428,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         //this.router.navigate(['flight-list'],  { queryParams: { flights : decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)))}});
 
 
-      }, (error) => { console.log(error) });
+      // }, (error) => { console.log(error) });
 
     }
   }

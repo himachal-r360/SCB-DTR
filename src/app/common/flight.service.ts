@@ -20,6 +20,7 @@ export class FlightService {
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
   private travellerDetailsSubject = new BehaviorSubject<any>(null);
   travellerDetailsObservalble= this.travellerDetailsSubject.asObservable();
+  headerHideShow:any;
 
 
 
