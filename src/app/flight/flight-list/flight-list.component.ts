@@ -180,10 +180,8 @@ ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.loader = true;
     this.getQueryParamData(null);
-    // this.flightList = this._flightService.flightListData;
     this.headerHideShow(null)
     this.getCityList();
-    //this.getFlightIcon();
     this.getAirpotsList();
     this.setSearchFilterData();
     this.flightSearch();
@@ -258,12 +256,7 @@ ngOnInit(): void {
       });
   }
 
-  // Get flight Icons
-  getFlightIcon() {
-    this._flightService.getFlightIcon().subscribe((res: any) => {
-      this.flightIcons = res;
-    })
-  }
+
 
   // get airport list
   getAirpotsList() {

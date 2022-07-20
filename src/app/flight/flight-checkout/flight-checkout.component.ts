@@ -1307,7 +1307,6 @@ new_fare: number = 0;
       let baseFare=0; let taxFare=0; let totalFare=0;
          clearInterval(myInterval3);
          $('#infoprocess').modal('hide');
-      
       if(this.searchData.travel=='DOM'){
       if(res.statusCode ==200)
       {
@@ -1371,7 +1370,7 @@ new_fare: number = 0;
         this.Tax =taxFare;
         this.TotalFare =totalFare;
         
-       this.totalCollectibleAmount = Number(this.TotalFare) + Number(this.convenience_fee) ;
+       this.totalCollectibleAmount = Number(this.TotalFare) ;
        this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
 
         }
