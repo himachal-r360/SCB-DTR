@@ -2533,6 +2533,7 @@ textarea.error {
 .h-search{
     width: 50%;
     position: relative;
+    margin: auto;
 }
 
 .h-search input[type="text"] {
@@ -7455,8 +7456,15 @@ button.accordion-button .xlsheats{
     top: 0;
     z-index: 10;
     width: 100%;
-    background: #fff;
+    background: #404040;
     height: 100%;
+    display: none;
+}
+.mob-sf-box {
+    margin-top: 50px;
+    height: 100%;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
 }
 
 
@@ -7464,10 +7472,11 @@ button.accordion-button .xlsheats{
     text-align: center;
     margin-bottom: 20px;
 }
-.mob-sf-tabs ul {
+.mob-sf-tabs ul.nav {
     display: inline-flex;
     border: 1.28125px solid rgba(0, 0, 0, 0.1);
     border-radius: 7.6875px;
+    margin-bottom: 5px;
 }
 .mob-sf-tabs ul li a{
     font-style: normal;
@@ -7486,3 +7495,84 @@ button.accordion-button .xlsheats{
     border-radius: 7.6875px;
     color: #fff;
 }
+
+
+.mob-sf-sort-by {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    -ms-grid-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+    padding: 10px;
+}
+.mob-sf-sort-by-items {
+    padding: 10px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: rgba(29, 134, 255, 0.03);
+    border: 1px solid rgba(29, 134, 255, 0.07);
+    border-radius: 5px;
+}
+.mob-sf-sort-by-items p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    gap: 15px;
+}
+.mob-sf-sort-by-items.active{
+    background: rgba(29, 134, 255, 0.2);
+    border: 1px solid rgba(29, 134, 255, 0.25); 
+    border-radius: 7.6875px;
+    color: #fff;
+} 
+
+
+.mob-sf-sort, .mob-sf-accordion {
+    height: calc(100vh - 200px);
+    overflow: auto;
+}
+
+
+.mob-sf-btns {
+    padding: 0 10px;
+}
+.mob-sf-btns a {
+    background: #1D86FF;
+    box-shadow: 0px 5.125px 11.5312px rgb(29 134 255 / 25%);
+    border-radius: 7.6875px;
+    color: #fff;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px;
+}
+
+.mob-sf-accordion .accordion-button {
+    padding: 15px 10px;
+    font-size: 14px;
+}
+.mob-sf-accordion .accordion-button::after { 
+    background-size: 15px; 
+}
+.mob-sf-accordion .accordion-item {
+    margin-bottom: 0;
+    border: none;
+    border-bottom: 1px dashed rgb(36 54 89 / 20%);
+}
+.mob-sf-accordion .accordion-body {
+    padding: 0 10px 20px 10px;
+    text-align: left;
+}
+.mob-reset a{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px; 
+    text-align: right;
+    color: #1D86FF;
+}
+
