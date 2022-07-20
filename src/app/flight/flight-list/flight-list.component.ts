@@ -266,8 +266,15 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showmoreAirline() {
-    // let airlineSize = 2
-    // let modifyAirline = this.airlines.slice(0, airlineSize)
+    let airlineSize = 2
+    if(this.airlines.length > 2) {
+      let modifyAirline = this.airlines.slice(0, airlineSize)
+      console.log(this.airlines.length - modifyAirline.length);
+    }
+    // else  {
+
+    // }
+
 
   }
 
@@ -1260,9 +1267,4 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
           SelectedElement.style.display = 'block';
         }
   }
-
-
-
-
-
 }
