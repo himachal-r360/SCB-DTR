@@ -39,13 +39,13 @@
                                 <div class="travel-select-trip">
                                     <ul class="travel-select-trip-ul">
                                         <li>
-                                            <span class="selectway ">Round Trip</span>
+                                            <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null ? 'active':'' " >One Way</span>
                                         </li>
                                         <li>
-                                            <span class="selectway active">One Way</span>
+                                            <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip' ? 'active':'' ">Round Trip</span>
                                         </li>
                                         <li>
-                                            <span class="selectway">Multicity</span>
+                                            <span class="selectway" (click)="navBarLink('Multicity')" [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multicity</span>
                                         </li>
                                         <li>
                                             <div class="Travellers-dropdown ms-3" appDropdown>
@@ -387,15 +387,26 @@
 
                                                             </div>
                                                         </div>
-                                                        <div class="area-root-reutrn">
-                                                            <div class="select-root-reutrn">
+                                                        <div class="area-root-reutrn" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
+                                                            <div class="select-root-reutrn"  >
                                                                 <span class="select-roottitle">RETURN</span>
-                                                                <!-- <h5 class="">29 May</h5> -->
-                                                                <span class="select-roottitle d-block w-100">Tap to add
+                                                                <h5 class=" ">{{arrivalDate | date:'dd MMM' }}</h5>
+                                                                <!-- <span class="select-roottitle d-block w-100"
+                                                                    *ngIf="arrivalDate=='' ||arrivalDate==undefined">Tap
+                                                                    to add a <br> departure date</span> -->
+                                                                <span class="select-roottitle"
+                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined" >{{arrivalDate
+                                                                    | date:'EEEE' }}</span>
+                                                                <span class="select-roottitle d-block w-100" *ngIf="arrivalDate=='' || arrivalDate==undefined" >Tap to add
                                                                     a <br> return date</span>
                                                             </div>
                                                             <div class="select-root-date">
-                                                                <!-- <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i> -->
+                                                                <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
+                                                                <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                                    <input matInput [min]="flightData.value.departure" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker2 ></mat-datepicker>
+                                                             </mat-form-field>
                                                             </div>
 
                                                         </div>
