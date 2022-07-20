@@ -806,13 +806,13 @@
                                     </div>
                                 </div>
 
-                                <div class="flight-info-box">
-                                    <!-- <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> 
+                                    <!-- <div class="flight-info-box">
+                                <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> 
                                     <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>-->
                                     <!-- <p></p>
                                     <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
-                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a> -->
-                                </div>
+                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a> 
+                                </div>-->
                                 <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{i}}" >
                                   <div class="flight-options-box" id="FareDetails_{{i}}">
                                     <div class="flight-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
@@ -868,7 +868,7 @@
                                             </div>
                                         </div>
                                         <div class="flight-info-box ">
-                                            <ul class="extra-tabs-right-ul">
+                                           <ul class="extra-tabs-right-ul">
                                                 <li class="ms-0">
                                                     <p>
                                                         <img src="./assets/images/icons/details/1.png" alt="">
@@ -895,7 +895,7 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                            </ul>
+                                            </ul>-->
                                             <!-- <a href="javascript:void(0);" class="flight-details-click">Flight Details <img src="./assets/images/icons/down.png" class="ms-1"  alt=""></a> -->
                                             <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{i}}_{{j}}" (click)="HideShowCompareToFly(i,'flight-details',j)" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
                                             <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{i}}_{{j}}" (click)="hideFarebutton(i,'flight-details',j)" >Flight Details <img src="./assets/images/icons/down.png" alt=""></a>
@@ -962,7 +962,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                    <div class="tabs-depart-two" *ngIf="list.flights[i+1] && getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                       <!-- <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in Nagpur </p> -->
                                                                       <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
                                                                   </div>
