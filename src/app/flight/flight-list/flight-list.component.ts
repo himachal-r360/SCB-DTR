@@ -43,7 +43,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   adultsVal: any;
   childVal: any;
   infantsVal: any;
-
+  cdnUrl:any;
   sub?: Subscription;
   show = false;
   SearchCityName: any;
@@ -83,7 +83,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   foodAllowanceCount: number = 0;
   stopsFilterVal: string = ""
   DocKey: any;
-
+  isMobile:boolean= false
    loaderValue = 10;
    dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
@@ -164,20 +164,24 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'A_E', active: false, value: 'Arrival Earliest'},
     { name: 'A_L', active: false, value: 'Arrival Latest'},
   ]
-  cdnUrl: any;
-  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal)  {
-     this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+  
+  
+  constructor(public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal,private scroll: ViewportScroller ) {
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
   
        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
-       
   }
-  ngOnInit(): void {
+  @HostListener('window:resize', ['$event'])
+  
 
+  ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
     this.loader = true;
     this.getQueryParamData(null);
-    this.flightList = this._flightService.flightListData;
+    // this.flightList = this._flightService.flightListData;
+    this.headerHideShow(null)
     this.getCityList();
     //this.getFlightIcon();
     this.getAirpotsList();
@@ -270,9 +274,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showmoreAirline() {
-    // let airlineSize = 2
-    // let modifyAirline = this.airlines.slice(0, airlineSize)
-    
+    let airlineSize = 2
+    if(this.airlines.length > 2) {
+      let modifyAirline = this.airlines.slice(0, airlineSize)
+      console.log(this.airlines.length - modifyAirline.length);
+    }
+    // else  {
+
+    // }
+
+
   }
 
   increaseAdult() {
@@ -485,7 +496,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     if (popularItems.name == "non_stop") {
       this.stopsFilteritems.filter((item: any) => { if (item.name == "non_stop") { item.active = !item.active; return item; } })
     }
-    this.popularFilterFlightData();
+    if(!this.isMobile)
+    {
+      this.popularFilterFlightData();
+    }
+
   }
   // Flight Timings Filter
   FlightTimingsFilterFlightData(timingsItems: any) {
@@ -493,16 +508,25 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     if (timingsItems.name == "0_6") {
       this.flight_PopularItems.filter((item: any) => { if (item.name == "Morning_Departures") { item.active; return item; } })
     }
+    if(!this.isMobile)
+    {
     this.popularFilterFlightData();
+    }
   }
 
   flightAirlineFilterFlightData(airlineItem: any) {
     airlineItem.active = !airlineItem.active;
+    if(!this.isMobile)
+    {
     this.popularFilterFlightData();
+    }
   }
   flightLayoverFilterFlightData(layoverItem: any) {
     layoverItem.active = !layoverItem.active;
+    if(!this.isMobile)
+    {
     this.popularFilterFlightData();
+    }
   }
   /* Reset function Start*/
   //It is used for clear filters of Popular filter
@@ -552,7 +576,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   // Flight Stops Filter
   FlightStopsFilterFlightData(FlightStopitem: any) {
     FlightStopitem.active = !FlightStopitem.active;
-    this.popularFilterFlightData();
+    if(!this.isMobile)
+    {
+      this.popularFilterFlightData();
+    }
+
   }
 
   //It is used for searching flights with left side filters.
@@ -1175,24 +1203,40 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   onMinValueChange(event: any) {
     this.minPrice = event;
     if (this.minPrice != null) {
-      this.popularFilterFlightData();
+      if(!this.isMobile)
+      {
+        this.popularFilterFlightData();
+      }
+
     }
   }
   onMaxValueChange(event: any) {
     this.maxPrice = event;
     if (this.maxPrice != null) {
+      if(!this.isMobile)
+      {
       this.popularFilterFlightData();
+      }
     }
+    if(!this.isMobile)
+    {
     this.popularFilterFlightData();
+    }
   }
 
   onMinStopOverChange(event: any) {
     this.minStopOver = event;
+    if(!this.isMobile)
+    {
     this.popularFilterFlightData();
+    }
   }
   onMaxStopOverChange(event: any) {
     this.maxStopOver = event;
+    if(!this.isMobile)
+    {
     this.popularFilterFlightData();
+    }
   }
 
   GetMinAndMaxPriceForFilter() {
@@ -1262,10 +1306,47 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   gotoTop() {
    // this.scroll.scrollToPosition([0,0]);
   }
+  OpenPartner(i:number)
+  {
+        $(".mob-items-book-list").css('display','none')
+        var SelectedElement = document.getElementById('CompareToFly_'+i);
+        if(SelectedElement)
+        {
+          SelectedElement.style.display = 'block';
+        }
+  }
 
+  headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+      this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none"; 
+    }
+  }
+  openMobileFilterSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
 
+  }
 
-
-
+  CloseSortingSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+  onApplyFilter(){
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
 
 }

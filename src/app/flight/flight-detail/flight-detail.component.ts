@@ -1,4 +1,4 @@
-import { Component, DebugNode, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, DebugNode, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
@@ -35,16 +35,19 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
   timeLeft:any = 900;
   baggageInfo:any;
   flightDetailsArrVal:any;
-
-
+  isMobile:any
+  
+  
   constructor(private _flightService:FlightService, private route:ActivatedRoute ,private router:Router) { 
     this.startTimer();
   }
-
+  @HostListener('window:resize', ['$event'])
   ngOnInit(): void {
     this.getQueryParamData();
+    this.headerHideShow(null);
     this.getsearchVal = sessionStorage.getItem('searchVal');
     this.parseSearchVal = JSON.parse(this.getsearchVal);
+
     this.getFlightIcon();
     this.getAirpotsList();
     // setTimeout(() => {
@@ -222,4 +225,13 @@ export class FlightDetailComponent implements OnInit ,OnDestroy {
     return result;
   }
 
+  headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+      this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none"; 
+    }
+  }
+
+
 }
+
