@@ -544,14 +544,13 @@
                                                     <label class="custom-control material-checkbox">
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
-                                                        <span
-                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                        <span class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5 ">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div >
+                                                     <div  class="mt-3" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -627,8 +626,8 @@
                                                 
                                                 
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -789,8 +788,8 @@
                                                     </label>
                                                 </div>
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -866,8 +865,8 @@
                                                 
                                                 
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -1027,8 +1026,8 @@
                                                     </label>
                                                 </div>
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -1104,8 +1103,8 @@
                                                 
                                                 
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -1332,33 +1331,43 @@
                         </div>
                         <div class="modal-body">
                         <div class="col-lg-12 col-md-6 col-12">
-                        <p> <label class="checkbox" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">{{data.gstName}}
-                        <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
-                        <span class="checkmark"></span>
-                        </label>
-                        </p>
+                            
+                        <div> 
+                            <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                <input class="form-check-input" type="radio"  name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
+                                <label class="form-check-label" for="gst{{GSTIndex}}">
+                                    {{data.gstName}}
+                                </label>
+                            </div>
+                        </div>
                         <ng-container *ngIf="isGstExpanded">
-                        <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
-                        <p *ngIf="i > 5">
-                        <label class="checkbox">{{gstexpandedItem.gstName}}
-                        <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
-                        <span class="checkmark"></span>
-                        </label>
-                        </p>
+                            <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
+                                <div *ngIf="i > 5">
+                                    <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                        <input class="form-check-input" type="radio"  name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                        <label class="form-check-label" for="gstL{{GSTIndex}}">
+                                            {{gstexpandedItem.gstName}}
+                                        </label>
+                                    </div>
+                                <!--  <label class="checkbox">{{gstexpandedItem.gstName}}
+                                    <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                    <span class="checkmark"></span>
+                                    </label> -->
+                                </div>
+                            </ng-container>
                         </ng-container>
-                        </ng-container>
-                        <p *ngIf="GSTList.length > 5">
-                        <label class="checkbox pl-0">
-                        <a (click)="gstExpandItems()">
-                        {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
-                        </a>
-                        </label>
-                        </p>
+                            <p *ngIf="GSTList.length > 5">
+                                <label class="checkbox pl-0">
+                                    <a (click)="gstExpandItems()">
+                                    {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
+                                    </a>
+                                </label>
+                            </p>
                         </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn-c btn-primary" (click)="gstReset()">Reset</button>
-                        <button type="button" class="btn-c btn-primary" (click)="modal.close()">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="gstReset()">Reset</button>
+                        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
                         </div>
                         </ng-template>
 
@@ -1397,7 +1406,7 @@
                           </mat-form-field>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-6">
-                                            <mat-form-field appearance="outline">
+                                            <mat-form-field appearance="outline" class="w-100">
                                              <mat-label>Pincode</mat-label>
                                                 <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)" (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
                                                 <mat-error *ngIf="passengerForm.hasError('required','gstPincode')">Please enter pincode.</mat-error>
@@ -1407,8 +1416,8 @@
                                         </div>
                                         </div>
                                         <div class="row" *ngIf="gstSelected">  
-                                        <div class="col-lg-3 col-md-3 col-6">
-                                            <mat-form-field appearance="outline">
+                                        <div class="col-lg-4 col-md-4 col-6">
+                                            <mat-form-field appearance="outline" class="w-100">
                                              <mat-label>City / Town</mat-label>
                                                  <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"  autocomplete="nope">
                                                 <mat-error *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.</mat-error>
@@ -1417,8 +1426,8 @@
                           </mat-form-field>
                                         </div>
 
-                                        <div class="col-lg-3 col-md-3 col-6">
-                                            <mat-form-field appearance="outline">
+                                        <div class="col-lg-4 col-md-4 col-6">
+                                            <mat-form-field appearance="outline" class="w-100">
                                              <mat-label>State</mat-label>
                                                 <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value={{state}}>
                                                 <mat-error *ngIf="passengerForm.hasError('required','gstState')">Please enter state name.</mat-error>
@@ -2498,11 +2507,21 @@
                            <div class="bookingprocess-title text-center mb-30">
                                 <h5><strong>Fare has changed</strong></h5>
                             </div>
-                            <div class="bookingprocess-content">
+                            <div class="bookingprocess-content p-20 border-0 m-0">
                                <p>The fare of the itinerary you have chosen has changed</p>
                                <div><b>Old Price</b> : ₹ {{old_fare}}</div>
                                <hr>
-                               <div><b>New Price</b> : ₹ {{new_fare}}</div>
+                               
+                               <div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <b>New Price</b>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <b class="new_fare_flight">₹ {{new_fare}}</b> 
+                                        </div>
+                                    </div>
+                               </div>
                             </div>
                             <div class="refresh-text text-center pt-2">
                                <button type="button" class="btn btn-primary" (click)="continueWithNewFare()">Continue with New Fare</button>

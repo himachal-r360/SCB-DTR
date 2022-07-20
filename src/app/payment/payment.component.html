@@ -84,98 +84,93 @@
   </div>
    <!-- New Payment Code pahse 3 -->
 
-        <div class="  payment_cnt">
-            
-            <div class="partner_info">
-                <div class="row">
-                    <div class="col-7">
-                        <div>
-                            <div>
-                                <p class="title">Paying</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-5 text-left">
-                        <div>
-                            <p class="title">Amount</p>
-                            <p class="title_value">₹{{payTotalFare| number:'1.2-2'}} 
-                                <!-- <a href="">Show Breakup</a> -->
-                            </p>
-                        </div>
-                    </div>
+    <div class="payment_cnt">
+        <div class="card_partner_info">
+            <div class="amount_sec">
+                <div>
+                    <p class="title">Paying</p>
                 </div>
-                <hr style="border-top-color: #e6e6e6;">
-                <div class="card_img_sec">
-                    <ul>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/pci.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/master.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/visa.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/rupay.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/american.png" alt="card_partner">
-                        </li>
-                    </ul>
+                <div class="text-end">
+                    <p class="title_sub">Amount</p>
+                    <p class="title_value">₹{{payTotalFare| number:'1.2-2'}} 
+                        <!-- <a href="">Show Breakup</a> -->
+                    </p>
                 </div>
             </div>
+            <hr style="border-top-color: #e6e6e6;">
+            <div class="card_img_sec">
+                <ul>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/pci.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/master.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/visa.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/rupay.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/american.png" alt="card_partner">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-            <div class="my-5">
-                <div class="payment_final_sec">
+        <div class="payment_cnt p-0">
+            <div class="">
+                <div class="payment_final_sec border-0">
                     <div class="row">
-                        <div class="col-5 pr-0">
-                            <div class=" d-flex">
+                        <div class="col-4 pe-0">
+                            <div class="">
                                 <ul id="tabs" class="nav nav-tabs py-3" role="tablist">
                                     <li class="nav-item" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                       <a id="tab-savedCards" href="#pane-savedCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="pl-2">Saved Methods</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Methods</span>
                                       </a>
                                     </li>
                             
                                     <li class="nav-item" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
                                       <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="pl-2">Debit / Credit Card</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsNETBANKING">
                                       <a id="tab-netBanking" href="#pane-netBanking" class="nav-link" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="pl-2">Net Banking</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">Net Banking</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsEMI && emiArray.length >0">
                                       <a id="tab-emi" href="#pane-emi" class="nav-link" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="pl-2">EMI</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsPAYZAPP"> 
                                         <a id="tab-payzapp" href="#pane-payzapp" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="pl-2">Payzapp</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
                                         </a>
                                       </li>
                                     <li class="nav-item" *ngIf="showRewardsBox">
                                       <a id="tab-rewardPoints" href="#pane-rewardPoints" class="nav-link" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="pl-2">Reward Points</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Reward Points</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
                                         <a id="tab-flexipay" href="#pane-flexipay" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="pl-2">Flexi Pay</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
                                         </a>
                                       </li>
                                             <li class="nav-item" *ngIf="pgSettingsUPI">
                                         <a id="tab-upi" href="#pane-upi" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/upi.svg" alt="icon"> <span class="pl-2">UPI</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/upi.svg" alt="icon"> <span class="ps-2">UPI</span>
                                         </a>
                                       </li>  
                                     <li class="nav-item" *ngIf="pgSettingsTESTPG">
                                         <a id="tab-testPg" href="#pane-testPg" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="pl-2">Test Pg</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Test Pg</span>
                                         </a>
                                       </li>
                              
@@ -183,13 +178,13 @@
                                 
                             </div>
                         </div>
-                        <div class="col-7 pl-0">
-                            <div id="content" class="tab-content payment-content pt-3 pr-3 pl-3" role="tablist">
+                        <div class="col-8 ps-0">
+                            <div id="content" class="tab-content payment-content p-3" role="tablist">
 
                                 <!-- Saved Card Section Starts -->
                                 <div id="pane-savedCards" class="card tab-pane fade show" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                     <div id="collapse-savedCards" class="collapse show" role="tabpanel" aria-labelledby="heading-savedCards">
-                                        <div class="card-body p-0">
+                                        <div class="card-body">
                                             <div>
                                                 <div class="common_title">
                                                     <span class="">Pay Using Saved Cards</span>
@@ -215,9 +210,9 @@
                                                             <label for="card_id{{cardIndex}}" class="radio">
                                         
                                         
-                                                <input type="hidden"  formControlName="cardRow"  id="cardRow{{cardIndex}}"   />
+                                                             <input type="hidden"  formControlName="cardRow"  id="cardRow{{cardIndex}}"   />
                                         
-                                                <input type="radio"  class="hidden" data-bs-toggle="collapse"  [attr.data-bs-target]="'#saveCardOne'+ cardIndex" [attr.aria-controls]="'saveCardOne'+ cardIndex"   name="card_id"  id="card_id{{cardIndex}}"  value="{{card.card_id}}"  [checked]="cardfirstRow"  (change)="onSavecardChange(card,cardIndex)" (click)='getPGvalues(5)' />
+                                                             <input type="radio"  class="hidden" data-bs-toggle="collapse"  [attr.data-bs-target]="'#saveCardOne'+ cardIndex" [attr.aria-controls]="'saveCardOne'+ cardIndex"   name="card_id"  id="card_id{{cardIndex}}"  value="{{card.card_id}}"  [checked]="cardfirstRow"  (change)="onSavecardChange(card,cardIndex)" (click)='getPGvalues(5)' />
                                         
                                                             <span class="label"></span>
                                                             {{card.type | titlecase}} card<br>
@@ -230,7 +225,7 @@
                                                                     <p class="save-card-num"> {{card.card_display_name}}</p>
                                                                 </div>
                                                                 <div class="contact-form">
-                                                                    <mat-form-field class=" matField_full_width cvv-w col-4 pl-0 pt-16" appearance="fill">
+                                                                    <mat-form-field class=" matField_full_width cvv-w col-4 ps-0 pt-16" appearance="fill">
                                                                         <mat-label>CVV</mat-label>
                                                                         <input matInput placeholder="" id="cvvnumber-{{card.id}}" formControlName="save_cvvnumber{{cardIndex}}" maxlength="3" autocomplete="new-password" type="password">
                                                           
@@ -248,16 +243,20 @@
                                                             </div>
                                     
                                                         </div>
-                                                        <p> <label class="checkbox xs-check-font ">I understand and agree to the rules and restrictions of
-                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                SmartBuy.
-                                                                        <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                        </p>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
+                                                            <label class="form-check-label xs-check-font" for="termscondition" >
+                                                                I understand and agree to the rules and restrictions of
+                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                SmartBuy.
+                                                            </label>
+                                                        </div>
+                                                          
                                                         <div *ngIf="submittedSaveCardForm && saveCardForm.controls.termscondition.errors" class="error">
                                                             <small *ngIf="saveCardForm.controls.termscondition.errors.required || saveCardForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                         </div>
-                                                        <button class="btn btn-c btn-paynow-{{domainName}}" (click)="checkNonSpcOfferforSaveCard()" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                        <button class="btn btn-paynow-{{domainName}}" (click)="checkNonSpcOfferforSaveCard()" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                     
                                                     </form>
                                     
@@ -304,13 +303,25 @@
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="new-card-footer ">
-                                                                <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
+                                                            <div class="my-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
+                                                                    <label class="form-check-label xs-check-font" for="termscondition" >
+                                                                        I understand and agree to the rules and restrictions of
+                                                                        this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                        understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                        SmartBuy.
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                                <!-- <p class="my-2"> 
+                                                                    <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
                                                                 this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
                                                                 understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
                                                                 SmartBuy.
                                                                   <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
                             
-                                                                </p>
+                                                                </p> -->
                                                                 <div *ngIf="submittedUpiForm && upiForm.controls.termscondition.errors" class="error">
                                                                     <small *ngIf="upiForm.controls.termscondition.errors.required || upiForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                 </div>
@@ -1107,7 +1118,7 @@
                                                                         <div>
                                                                             <div class="sign-section col-md-8" *ngIf="fpGuestsession && !showflexipaydefaultsection">
                                                                                 <!-- <button type="button" class="dc_close close" (click)="close()" >&times;</button> -->
-                                                                                <form [formGroup]="flexipayguestForm" name="flexipayguestForm" class="pl-2 pt-1 p-sm-1" (ngSubmit)="fpGuestmobile()">
+                                                                                <form [formGroup]="flexipayguestForm" name="flexipayguestForm" class="ps-2 pt-1 p-sm-1" (ngSubmit)="fpGuestmobile()">
                                                                                     <!-- <p class="my-3">Enter mobile number linked with your HDFC Bank Debit Card</p> -->
                                                                                     <mat-form-field class="d-none d-sm-block">
                                                                                         <input matInput placeholder="Enter your Mobile Number linked to your HDFC Bank Debit Card" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber"
@@ -1188,7 +1199,7 @@
                             
                                                                                     <div *ngIf="showflexipaydefaultsection && !fpGuestsession">
                                                                                         <h6 class="payTitle pt-28">Enter your HDFC Bank Debit Card Number</h6>
-                                                                                        <div class="col-md-12 col-12 pl-0 contact-form">
+                                                                                        <div class="col-md-12 col-12 ps-0 contact-form">
                                                                                             <mat-form-field class="matField_full_width" appearance="fill">
                                                                                                 <mat-label>Card Number</mat-label>
                                                                                                 <input (keypress)="numberInput($event)" (ngModelChange)="checkInputchanges()" matInput placeholder="" name="cardnumber" id="" minlength="14" maxlength="16" autocomplete="off" formControlName="cardnumber" onDrag="return false" onDrop="return false">
@@ -1210,7 +1221,7 @@
                                                                                             <div class="col-md-6">
                                                                                                 <div class="total-amt mrg_top_20">Total Amount</div>
                                                                                                 <div class="row my-3">
-                                                                                                    <div class="col-12 col-md-12 pr-0">
+                                                                                                    <div class="col-12 col-md-12 pe-0">
                                                                                                         <div>
                                                                                                             <span class="big-dark-text">Rs. {{payTotalFare| number:'1.2-2' }}</span>
                                                                                                             <span class="big-strike pl-3" *ngIf="selectedperiod==15">Rs. {{showFlexiValue | commaSeparator}}</span>
