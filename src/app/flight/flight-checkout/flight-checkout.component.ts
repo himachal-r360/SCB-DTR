@@ -37,33 +37,39 @@ valid: false
 
 function validateChildAge(c: FormControl) {
 let journery_date=$('#journery_date').val();
-let check_date=moment(new Date(journery_date)).subtract(12, 'years').calendar();
-let input_date= moment(c.value).format('YYYY-MM-DD');
-let to_date=moment(check_date).format('YYYY-MM-DD');
-if(moment(input_date).isAfter(to_date, 'year'))
-{
-return  {
-validateChildAge: {
-valid: false
-}
-};
-}	
+	let mndate=moment(new Date(journery_date)).subtract(12, 'years').calendar();
+	let mxdate=moment(new Date(journery_date)).subtract(2, 'years').calendar();
+	let mindate =moment(mndate).format('YYYY-MM-DD');
+	let maxdate =moment(mxdate).format('YYYY-MM-DD');
+	let input_date= moment(c.value).format('YYYY-MM-DD');
+	
+	if(moment(mindate).isAfter(input_date, 'year') && moment(maxdate).isAfter(input_date, 'year') )
+	{
+        return  {
+        validateChildAge: {
+        valid: false
+        }
+        };
+	}
+	
 }
 
 function validateInfantAge(c: FormControl) {
 let journery_date=$('#journery_date').val();
-console.log(journery_date);
-let check_date=moment(new Date(journery_date)).subtract(12, 'years').calendar();
-let input_date= moment(c.value).format('YYYY-MM-DD');
-let to_date=moment(check_date).format('YYYY-MM-DD');
-if(moment(input_date).isAfter(to_date, 'year'))
-{
-return  {
-validateInfantAge: {
-valid: false
-}
-};
-}	
+	
+	let mndate=moment(new Date(journery_date)).subtract(2, 'years').calendar();
+	let mindate =moment(mndate).format('YYYY-MM-DD');
+	let maxdate =moment().format('YYYY-MM-DD');	
+	let input_date= moment(c.value).format('YYYY-MM-DD');
+
+	if(moment(mindate).isAfter(input_date, 'year') && moment(maxdate).isAfter(input_date, 'year') )
+	{
+        return  {
+        validateInfantAge: {
+        valid: false
+        }
+        };
+	}	
 }
 
 declare let alertify: any;
