@@ -1199,9 +1199,7 @@ check_traveller_count(type) {
   
   
   displayTravel(type){
-    if(type==1)
     this.showFlightPassenger = true;
-    else
     this.showHotelPassenger = true;
   }
   

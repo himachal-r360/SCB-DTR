@@ -73,9 +73,10 @@ let urlToSplit =this.location.path();
   }
 
 
-
-
-
+findCity(param): Observable<any> {
+     return this.http.get('assets/data/city.json').pipe(map((response: any) => response));
+     
+}
 
 private handleError<T> (operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {

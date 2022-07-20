@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import './assets/sharedscss/color';
+@import './assets/shared_inner_scss/smartbuy_inner';
 @import "./assets/sharedscss/fonts";
 @import './assets/sharedscss/spacing';
 @import './assets/sharedscss/landscape';
@@ -795,6 +795,9 @@ a {
 
 
 /* Agular Material Override css */
+.mat-calendar-body-selected{
+    background-color: $primary-color;
+}
 @media only screen and (max-width: 997px){
     .mat-select-value, .mat-select, .mat-select-value-text{
         font-family: 'opensans-regular';
@@ -879,11 +882,11 @@ border-radius:4px;
 }
 
 *::-webkit-scrollbar-button {
-    background-color: #0088ff;
+    background-color: $primary-color;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #0088ff;
+    background-color: $primary-color;
 }
 
 /*================================================
@@ -894,7 +897,7 @@ border-radius:4px;
     bottom: 0;
     right: 30px;
     padding: 10px 6px;
-    background: #0088ff;
+    background: $primary-color;
     font-weight: 600;
     color: #ffffff;
     font-size: 12px;
@@ -1097,7 +1100,7 @@ border-radius:4px;
 }
 .travel-list-ul li .travel-list-a i {
     margin-right: 8px;
-    color: #0088ff;
+    color: $primary-color;
 }
 
 .travel-select-trip {
@@ -1131,7 +1134,7 @@ ul.travel-select-trip-ul {
 
 .travel-select-trip-ul .selectway.active {
     background: rgb(0 136 255 / 8%);
-    border-color: #0088ff;
+    border-color: $primary-color;
     color: #000000;
 }
 
@@ -1207,7 +1210,7 @@ ul.travel-select-trip-ul {
 }
 
 .searchbn {
-    background: #0088ff;
+    background: $primary-color;
     color: #fff;
     padding: 28px 40px;
     border-radius: 5px;
@@ -1443,14 +1446,14 @@ ul.travel-select-trip-ul {
 .datepicker table tr td.active:hover:hover,
 .datepicker table tr td.active:hover[disabled],
 .datepicker table tr td.active[disabled] {
-    background-color: #0088ff !important;
+    background-color: $primary-color !important;
     color: #ffffff;
     background-image: none;
 }
 
 .daterangepicker td.active,
 .daterangepicker td.active:hover, .daterangepicker td.in-range {
-    background-color: #0088ff !important;
+    background-color: $primary-color !important;
     color: #ffffff !important;
     background-image: none;
 }
@@ -1492,7 +1495,7 @@ ul.travel-select-trip-ul {
     font-weight: 600;
     font-size: 12px;
     line-height: 20px;
-    color: #0088ff;
+    color: $primary-color;
 }
 .bradcome-list span{
     color: #202020;
@@ -1560,7 +1563,7 @@ ul.travel-select-trip-ul {
     width: 20px;
 }
 .Modifybtn{
-    border: 1px solid #0088ff;
+    border: 1px solid $primary-color;
     padding: 34px 33px;
     border-radius: 5px;
     font-weight: 700;
@@ -1637,8 +1640,8 @@ ul.travel-select-trip-ul {
 }
 
 .custom-check-box .custom-control.material-checkbox .material-control-input:checked~.material-control-indicator {
-    background: #0088ff !important;
-    border-color: #0088ff !important;
+    background: $primary-color !important;
+    border-color: $primary-color !important;
 }
 
 .custom-check-box .custom-controls-stacked .description {
@@ -3076,7 +3079,7 @@ table.table-bordered.table-content {
 
 .table-content td {
     padding: 10px 15px;
-    width: 50%;
+    /*width: 50%;*/
     vertical-align: text-bottom;
 }
 .table-content tbody, .table-content td, .table-content tfoot, .table-content th, .table-content thead, .table-content tr {
@@ -3328,6 +3331,25 @@ table.table-bordered.table-content {
     right: 0;
     margin: auto;
 }
+
+.details-steps-ul .active1 .steps-icons{
+    background: green;
+}
+.details-steps-ul .active1 .steps-icons:after {
+    content: "";
+    height: 41px;
+    width: 41px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    border: 1px solid green;
+    top: 0px;
+    bottom: 0;
+    left: -3px;
+    right: 0;
+    margin: auto;
+}
+
 .details-steps-ul .active .steps-text{
     color: #000000;
     font-weight: 600;
@@ -3415,7 +3437,7 @@ table.table-bordered.table-content {
     color: #E31E24;
 }
 .continue-widget a {
-    background: #0088ff;
+    background: $primary-color;
     padding: 15px 0;
     font-style: normal;
     font-weight: 600;
@@ -3837,7 +3859,17 @@ table.table-bordered.table-content {
     display: inline-block;
     padding: 5px;
 }
-
+.refundable {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 15px;
+    color: green;
+    background: rgb(30 227 93 / 10%);
+    border-radius: 2px;
+    display: inline-block;
+    padding: 5px;
+}
 .booking-inner-title-left h6 {
     font-style: normal;
     font-weight: 700;
@@ -4251,7 +4283,7 @@ button.accordion-button .xlsheats{
 }
 
 .Remove-right .button-style {
-    background: #0088ff;
+    background: $primary-color;
     color: #fff;
     margin-left: 20px;
 }
@@ -4366,10 +4398,10 @@ button.accordion-button .xlsheats{
 .booking-offers-banner .offers-banner-btn {
     margin-top: 10px;
     font-size: 16px;
-    color: #0088ff;
+    color: $primary-color;
     line-height: 33px;
     background: #fff;
-    border: 1px solid #0088ff;
+    border: 1px solid $primary-color;
     padding: 2px 20px;
     display: inline-block;
     font-weight: 600;
@@ -4497,11 +4529,11 @@ button.accordion-button .xlsheats{
 }
 .add-card-form-btn a{
     margin-left: 30px;
-    color: #0088ff;
+    color: $primary-color;
 }
 
 .form-btn-add{
-    background: #0088ff;
+    background: $primary-color;
     padding: 15px 70px;
     font-style: normal;
     font-weight: 600;
@@ -4628,7 +4660,7 @@ button.accordion-button .xlsheats{
     margin-top: 25px;
 }
 .Get-btn a{
-    background: #0088ff;
+    background: $primary-color;
     padding: 15px 70px;
     font-style: normal;
     font-weight: 600;
@@ -4808,7 +4840,7 @@ button.accordion-button .xlsheats{
 
 
 .payment-pay-btn a {
-    background: #0088ff;
+    background: $primary-color;
     padding: 15px 70px;
     font-style: normal;
     font-weight: 600;
@@ -5373,7 +5405,7 @@ button.accordion-button .xlsheats{
 }
 
 .bookingprocess {
-    background: #7c7d80;
+   /* background: #7c7d80;*/
 }
 .bookingprocess .modal-content {
     border: none;
@@ -5391,3 +5423,167 @@ button.accordion-button .xlsheats{
 .ngx-slider {
   margin: 15px 0 5px !important;
 }
+
+ .checkbox {
+        display: block;
+        position: relative;
+        padding-left: 23px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: opensans-regular;
+        line-height: 1.25;
+        text-align: left;
+        color: $color-dark-gray;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    
+
+
+.mob-select-roottitle, .mob-search, .mob-Preferred-done, .form-hide, .to-hide {
+    display: none;
+}
+
+.mob-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    display: none;
+}
+
+.mob-title h3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17.3521px;
+    line-height: 24px;
+    color: #000000;
+}
+
+
+.mob-Preferred-done, .mob-Choose-done {
+    position: relative; 
+    width: 100%;
+    background: #fff;
+    padding: 15px;
+}
+.mob-Preferred-done a, .mob-Choose-done a {
+    background: #1D86FF;
+    border-radius: 8.28571px;
+    height: 43px;
+    display: inline-block;
+    width: 100%;
+    line-height: 43px;
+    text-align: center;
+    color: #fff;
+}
+
+
+
+.mob-travellers-class {
+    width: 100%;
+    position: relative;
+    display: none;
+}
+.mob-travellers-class-box-left > span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #A6A6A6;
+}
+.mob-travellers-class-box-left h5 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+}
+.mob-travellers-class-box-left h5 span{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+    opacity: 0.6;
+}
+.mob-travellers-class-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    border: 1px solid #d3d3d3;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 15px;
+    gap: 15px;
+    justify-content: space-between;
+}
+.mob-Choose-class h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+    opacity: 0.5;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.mob-filter-travellers {
+    position: fixed;
+    bottom: 0;
+    top: inherit;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    width: 100%;
+    height: calc(100vh - 0px);
+    border-radius: 0;
+    background: #b3b3b3;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: 100%;
+    display: none;
+    z-index: 9;
+}
+
+.mob-add-travels {
+    width: 100%;
+    background: #fff;
+    padding: 0 15px;
+}
+
+.mob-Choose-class ul li {
+    display: inline-block; 
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+.mob-Choose-class a {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 45px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    color: rgba(0, 0, 0, 0.5);
+    display: inline-block; 
+    padding: 0 15px;
+}
+.mob-Choose-class a.active {
+    background: #1D86FF;
+    color: #fff;
+    border: 1px solid #1D86FF;
+}    
+

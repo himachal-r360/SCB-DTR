@@ -8,7 +8,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  
+
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 declare var $: any;
 export const MY_DATE_FORMATS = {
   parse: {
@@ -78,6 +79,42 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   fromContryName:any;
   toContryName:any;
   minDate = new Date();
+  isMobile:boolean = false;
+  isClosed:boolean = true;
+  isFromorNot:boolean = false;
+  searchData:any;
+  flightClassVal:any;
+  showTravellerBlock = false;
+  windowItem = window;
+
+  customOptions: OwlOptions = {
+    loop: true,
+    autoplay:true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    // navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+    nav: false
+  }
+
+
+
   constructor(
   public _styleManager: StyleManagerService,
     public router: Router,
@@ -110,24 +147,32 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    console.log(window.innerWidth)
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     if(continueSearchValLs!=null){
-      this.continueSearchVal =JSON.parse(continueSearchValLs).reverse();
+      this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-    
 
+    this.setSearchFilterData()
+  
   }
   ngAfterViewInit(): void {
- 
+
   }
 
   currentPeriodClicked(datePicker:any){
     let date = datePicker.target.value
     if(date){
       setTimeout(() => {
-        let openTravellers = document.getElementById('openTravellers')
-        openTravellers?.click();  
+        if(this.isMobile == false) {
+          let openTravellers = document.getElementById('openTravellers')
+          openTravellers?.click();
+        }
+        else if(this.isMobile)  {
+          this.openTravellerBlock();
+        }
       }, 50);
     }
   }
@@ -146,10 +191,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     //   dep = e.format()
     //   this.selectDate = dep;
     //   // this.newDate = e.format()
-    //   // console.log(this.newDate ,"new date");
     //   // dep = e.format()
-
-    //    console.log(this.selectDate);
     // });
     // const a = this;
     // $('#' + control).daterangepicker(
@@ -220,7 +262,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectFromFlightList(para1: any) {
-    
+
     this.flightData.value.flightto = localStorage.getItem('toCityId');
     localStorage.setItem('fromCityId' ,para1.id);
     this.flightData.value.flightfrom = para1.id;
@@ -234,11 +276,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     removeClassToCity?.classList.remove('flight-from-hide');
     // this.toFlightList = true;
     setTimeout(() => {
-      let toCityDivElement=document.getElementById("toCityDiv");
-      toCityDivElement?.click();
-      this.toCityInput.nativeElement.focus();  
+      // if(!this.isMobile)
+      // {
+        let toCityDivElement=document.getElementById("toCityDiv");
+        toCityDivElement?.click();
+        this.toCityInput.nativeElement.focus();
+      // }
     }, 50);
-    
+
   }
 
   selectToFlightList(para2: any) {
@@ -258,35 +303,41 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 50);
   }
 
+  adultsVal:any
+  childVal:any
+  infantsVal:any
+  flightTimingfrom:any;
+  flightTimingto:any;
 
+  setSearchFilterData() {
+    this.searchData = sessionStorage.getItem('searchVal');
+    if(this.searchData != null || this.searchData != undefined){
+    let searchObj = JSON.parse(this.searchData);
+    this.fromCityName = searchObj.fromCity; 
+    this.toCityName = searchObj.toCity;
+    this.departureDate = new Date(searchObj.departure);
+    this.flightClassVal = searchObj.flightclass;
+    this.adultsVal = searchObj.adults;
+    this.childVal = searchObj.child;
+    this.infantsVal = searchObj.infants;
+    this.fromAirpotName = searchObj.fromAirportName;
+    this.toAirpotName = searchObj.toAirportName;
+    this.flightTimingfrom = searchObj.flightfrom
+    this.flightTimingto = searchObj.flightto
+    this.fromFlightId = searchObj.flightfrom;
+    this.toFlightId = searchObj.flightto;
+    this.flightData.get('flightfrom').setValue(searchObj.flightfrom)
+    this.flightData.get('flightto').setValue(searchObj.flightto)
+    this.flightData.get('departure').setValue(new Date(this.departureDate))
+    this.flightData.get('flightclass').setValue(this.flightClassVal);
+    this.flightData.get('adults').setValue(searchObj.adults);
+    this.flightData.get('child').setValue(this.childVal);
+    this.flightData.get('infants').setValue(this.infantsVal);
+    this.flightData.value.infants = this.infantsVal;
+    this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+    }
+  }
 
-  // isValidation:boolean=false;
-  // flightSearchValidation() {
-  //   
-  //   // if(this.flightData.value.flightfrom == "" || this.flightData.value.flightfrom == undefined || this.flightData.value.flightto == "" || this.flightData.value.flightto == undefined ||  this.flightData.value.departure == "" || this.flightData.value.departure == undefined ){
-  //   //   this.toCityValidation =  true;
-  //   //   this.fromCityValidation =  true;
-  //   //   this.departDateValidation = true;
-  //   //   this.isValidation=true;
-  //   //   //return
-  //   // }
-  //   // else
-  //   if(this.flightData.value.flightfrom == "" || this.flightData.value.flightfrom == undefined ){
-  //     this.fromCityValidation =  true;
-  //     this.isValidation=true;
-  //     //return
-  //   }
-  //  else if(this.flightData.value.flightto == "" || this.flightData.value.flightto == undefined ){
-  //     this.toCityValidation =  true;
-  //     this.isValidation=true;
-  //     //return
-  //   }
-  //   else if(this.flightData.value.departure == "" || this.flightData.value.departure == undefined ){
-  //     this.departDateValidation =  true;
-  //     this.isValidation=true;
-  //     //return
-  //   }
-  // }
   flightSearch() {
     this.submitted = true;
     this.flightData.value.flightto = this.toFlightId;
@@ -311,11 +362,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       let otherSearchValueObj={'fromAirportName':this.fromAirpotName,'toAirportName': this.toAirpotName,'toCity' :this.toCityName,'fromCity': this.fromCityName ,'fromContry':this.fromContryName,'toContry':this.toContryName}
 
       let searchValueAllobj=Object.assign(searchValue,otherSearchValueObj);
+
       let continueSearch:any=localStorage.getItem('continueSearch');
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
-      
+
       if(continueSearch!=null && continueSearch.length>0){
         this.continueSearchFlights=JSON.parse(continueSearch);
         this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
@@ -325,10 +377,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         })
       }
-      
-      
-      this.continueSearchFlights.push(searchValueAllobj);
-      
+      console.log(this.continueSearchFlights , "conti");
+      console.log(searchValueAllobj , "searchValueAllobj");
+      if(this.continueSearchFlights.length>3){
+        this.continueSearchFlights=this.continueSearchFlights.slice(0,3);  
+      }
+      this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
@@ -372,8 +427,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   continueSearch(param:any){
-    
-    // let query:any = localStorage.getItem('searchVal');
+    sessionStorage.setItem('searchVal', JSON.stringify(param));
+    this.setSearchFilterData()
     let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
     this.router.navigateByUrl(url);
   }
@@ -520,4 +575,34 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     localStorage.setItem('toCity' ,FromData.fromCityName);
 
   }
+
+  onClose(){
+    // var element = document.querySelector('.flight-from-data')
+    // element?.classList.add('form-hide');
+  }
+
+  onOpen()
+  {
+    if(this.isMobile)
+    {
+      var element = document.querySelector('.flight-from-data')
+      element?.classList.remove('form-hide');
+    }
+  }
+
+openTravellerBlock(){
+  this.showTravellerBlock =! this.showTravellerBlock;
+  // $(".mob-filter-travellers").toggleClass("preferred-airline-hide");
+}
+
+closeTravllerBlock(){
+  this.showTravellerBlock =! this.showTravellerBlock;
+
+}
+
+getClassVal(val:any){
+  this.flightData.value.flightclass =  val;
+  
+}
+
 }

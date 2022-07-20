@@ -44,10 +44,13 @@ export class CouponsComponent implements OnInit {
         @Input()  set passConvinenceFee(p: number){  
         this.convinenceFee=p;
         };
-
-        serviceId:string;
-        @Input() set passServiceId(p: string){  
-        this.serviceId=p;
+         partnerToken:any;serviceToken:any;   
+        @Input() set passServiceToken(p: string){  
+        this.serviceToken=p;
+        };
+        
+         @Input() set passPartnerToken(p: string){  
+        this.partnerToken=p;
         };
         isactualLogin:any;
 
@@ -60,7 +63,7 @@ export class CouponsComponent implements OnInit {
 
         @Input() customerInfo;
         
-        Partnertoken:any;ServiceToken:any;      
+         
         MAIN_SITE_URL:string;
        
         isLoggedIn:boolean=false;
@@ -91,33 +94,30 @@ export class CouponsComponent implements OnInit {
         @Input() remove_Coupon:any[];
         remove_Coupon_id:any;
         pointsPG: number = 0;
-		
-		
+	 siteKey: any;	
+	 serviceSettings:any;	
 	ngOnChanges(){
 
 		
 	}
 
 	
-	constructor(@Inject(APP_CONFIG) appConfig: any,public rest:RestapiService,private EncrDecr: EncrDecrService,public restApi:RestapiService,private http: HttpClient,private formBuilder: FormBuilder,public commonHelper: CommonHelper,public dialog: MatDialog,private sg: SimpleGlobal) { 
+	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,public restApi:RestapiService,private http: HttpClient,private formBuilder: FormBuilder,public commonHelper: CommonHelper,public dialog: MatDialog,private sg: SimpleGlobal,private appConfigService: AppConfigService) { 
 		this.assetPath=this.sg['assetPath']; 
-		this.appConfig = appConfig;
 		this.domainPath=this.sg['domainPath'];
 		this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-
+		 this.serviceSettings=this.appConfigService.getConfig();
+                this.siteKey = this.serviceSettings.SITEKEY;
 	}
 	
 	ngOnInit() {
 	
-                if(AppConfig.couponcontroll[this.serviceId] == 1){
                 this.showoffer = true;
                 this.promoForm = new FormGroup({
                 promoCode: new FormControl('',Validators.required),
                 couponCaptcha: new FormControl({value: '', disabled: true},[Validators.required])
                 });
                 this.getCoupons();
-                }
-                
                 
 	
 	}
@@ -126,10 +126,8 @@ export class CouponsComponent implements OnInit {
 	/***----- COUPON ------***/
 	
 	getCoupons(){
-		//console.log(this.serviceId);
 		var couponMinValCheckArr = [];
-			const urlParams = {'client_token': 'HDFC243','service_name':this.ServiceToken,'partner_name':this.Partnertoken};
-			//const urlParams = {'client_token': 'HDFC243','service_id':this.serviceId};
+			const urlParams = {'client_token': 'HDFC243','service_name':this.serviceToken,'partner_name':this.partnerToken};
 			var couponParam = {
 			postData:this.EncrDecr.set(JSON.stringify(urlParams))
 			};
@@ -160,8 +158,12 @@ export class CouponsComponent implements OnInit {
 					}
 				}
 				this.couponOptions=couponMinValCheckArr;
-        		//if(this.couponOptions[0])
-			//	this.validateCoupon(this.couponOptions[0]);
+				
+				
+				//console.log(this.couponOptions);
+				
+        		if(this.couponOptions[0])
+			this.validateCoupon(this.couponOptions[0]);
 		});
 		
 	}
@@ -233,7 +235,7 @@ export class CouponsComponent implements OnInit {
 
 		var urlParams = {
 			'client_token': 'HDFC243',
-			'service_name':this.ServiceToken,'partner_name':this.Partnertoken,
+			'service_name':this.serviceToken,'partner_name':this.partnerToken,
 			'order_amount': this.payActualFare,
 			'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),	
 			'coupon_code':couponArray.coupon_code,
@@ -288,7 +290,11 @@ export class CouponsComponent implements OnInit {
 					
 						couponUpdatedArray={type: 0, couponOptions:couponArray}; 
 						this.sendCouponEvent.emit(couponUpdatedArray);
-
+                                                $('#promo-'+this.coupon_code).attr('checked', true);
+                                                $('#promo_code').val(this.coupon_code);
+						//$('.couponcode-list-'+this.coupon_code).addClass('active');
+						//$('.couponcode-message-'+this.coupon_code).removeClass('hideHeader');
+						//$('.couponcode-remove-'+this.coupon_code).removeClass('hideHeader');
 						
 						//DISABLE CAPTCHA ON SUCCESS 
 						this.SHOWCAPTCHA=false;
@@ -322,7 +328,6 @@ export class CouponsComponent implements OnInit {
 	}
 	manualApplyCoupon(){
 	
-
 		this.selectedIndex = -1;
 	
 		this.submittedpromoCode=true;
@@ -339,8 +344,7 @@ export class CouponsComponent implements OnInit {
 			{
 				var vcouponParam = {
 					'client_token': 'HDFC243',
-					//'service_id':this.serviceId,
-					'service_name':this.ServiceToken,'partner_name':this.Partnertoken,
+					'service_name':this.serviceToken,'partner_name':this.partnerToken,
 					'order_amount':Math.round(this.payActualFare),
 					'coupon_code':couponCode,
 					'bookingRefNumber':sessionStorage.getItem(this.passSessionKey+'-clientTransactionId'),
@@ -413,8 +417,7 @@ export class CouponsComponent implements OnInit {
 					//INVALID COUPON
 					const urlParams = {
 						'client_token': 'HDFC243',
-						//'service_id':this.serviceId,
-						'service_name':this.ServiceToken,'partner_name':this.Partnertoken,
+						'service_name':this.serviceToken,'partner_name':this.partnerToken,
 						'order_amount': this.payActualFare,
 						'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),	
 						'coupon_code':couponCode.toUpperCase(),

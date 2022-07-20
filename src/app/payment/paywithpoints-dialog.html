@@ -1,0 +1,505 @@
+
+<p class="close-icon" *ngIf="showCloseBtn" (click)="closeDialog()">
+    <i class="material-icons">close</i>
+</p>
+
+<div class="container">
+<!----------------------REDEEM POINTS : SAVED CARD & ADD NEWCARD --------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------------------------------>
+<ng-container *ngIf="popup=='add_card'">
+    <!-- Saved Card & Add New Card Starts : Page 1 -->
+    <ng-container *ngIf="tab1">
+        <div class="accordion" id="new_redeem">
+            <div class="col-12 p-0">
+                <!-- SAVED CARD -->
+                <ng-container *ngIf="custCardsAvailable">
+                    <label class="radio" for="save_redeem" [attr.data-toggle]=collapseStatus2 [ngClass]="{ 'disabledbtnCls': !buttonContinue2 }" data-target="#saveCard_redeem" aria-expanded="true" aria-controls="saveCard_redeem" (click)="changeRadio()">
+                        <input type="radio" [checked]="radioSavedCard" [disabled]="!buttonContinue2" class="hidden" name="sav_new" id="save_redeem">
+                        <span  class="label"></span>
+                        <span class="payMethod-label-visa">Saved Cards</span>
+                    </label>
+                    <div id="saveCard_redeem" class="collapse show"  data-parent="#new_redeem">
+                        <div class="">
+                            <div class="savedCradDropdown" >
+                                <div class="dropdown card-drop-section col-md-12 redeem-savedCard p-x-0">
+                                    <!-- <button class="btn drop-card-btn" type="button" data-toggle="dropdown" *ngFor="let each of customercards"> 
+                                        <div class="row" *ngIf="each.id==selectedCust_id">
+                                            <div class="col-md-2 pad-left-none"><span class="cc-template"><img src="{{cdnUrl}}images/card-placeholder_hdfc.svg" width="50"></span></div>
+                                            <div class="col-md-8">
+                                            <div class="card-no topcard">{{each.card}} </div>
+                                            <div class="card-name">Credit Card</div>
+                                            </div>
+                                            <span class="col-md-2"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                        </div>
+                                    </button> -->
+                                    <button class="btn drop-card-btn" type="button" data-toggle="dropdown"> 
+                                        <div class="row">
+                                            <div class="col-md-2 pad-left-none col-1"><span class="cc-template"><img src="{{cdnUrl}}images/card-placeholder_hdfc.svg" width="50"></span></div>
+                                            <div class="col-md-8 col-9 p-0">
+                                            <div class="card-no topcard">{{selectedCardDetails.card}} </div>
+                                            <div class="card-name">Credit Card</div>
+                                            </div>
+                                            <span class="col-md-2 col-1 p-0"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                        </div>
+                                    </button>
+                                    
+                                    <ul class="dropdown-menu card-drop-menu">
+                                        <ng-container  *ngFor="let each of customercards">
+                                            <li class="col-md-12" (click)="selectedCard(each);">
+                                                <div class="row">
+                                                    <div class="col-md-2 pad-left-none col-1"><span class="cc-template"><img src="{{cdnUrl}}images/card-placeholder_hdfc.svg" width="50"></span></div>
+                                                    <div class="col-md-8 col-9 p-0">
+                                                        <div class="card-no topcard">{{each.card}} </div>
+                                                        <div class="card-name">Credit Card</div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ng-container>
+                                    </ul>
+                                </div>
+                            </div> 
+
+                            <div class="voucher-code-entry">
+                                <div class="redeem_error">
+                                    <small>{{errorMsg0}}</small>
+                                </div>
+                            </div> 
+                            
+                            
+                            <div class="pl-sm-4 py-3 xs-center">
+                                <div class="">
+                                    <button class="btn btn-b mr-sm-3" [disabled]="!buttonContinue1" [ngClass]="{ 'disabledbtnCls': !buttonContinue1 }" (click)="closeDialog()">Cancel</button>
+
+                                    <ng-container *ngIf="buttonContinue1; else loadingBtn1">
+                                        <button class="btn btn-primary btn-c mr-0" (click)="checkAvailablePointsforSavedCard()">Continue</button> 
+                                    </ng-container>
+                                    <ng-template #loadingBtn1>
+                                        <button class="btn btn-primary btn-c mr-0" disabled="true"><span class="spinner-border spinner-border-sm "></span> Loading</button>
+                                    </ng-template>
+
+                                    <!-- <button class="btn btn-primary btn-c mr-0" [disabled]="disabledbtn" [ngClass]="{ 'disabledbtnCls': disabledbtn }"(click)="checkAvailablePointsforSavedCard()">Continue</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- ADD NEW CARD -->
+                <label class="radio" for="save_redeem_newcard" [attr.data-toggle]=collapseStatus1 [ngClass]="{ 'disabledbtnCls': !buttonContinue1 }" data-target="#addNew_card_redeem" aria-expanded="true" aria-controls="addNew_card_redeem" (click)="changeRadio()">
+                    <input type="radio" [checked]="radioAddNewCard" [disabled]="!buttonContinue1" class="hidden" name="sav_new" id="save_redeem_newcard">
+                        <span  class="label"></span>
+                        <span class="payMethod-label-visa">Add new HDFC Credit Card</span>
+                </label>
+                <div id="addNew_card_redeem" class="collapse" [ngClass]="{ 'show': radioAddNewCard }" data-parent="#new_redeem">
+                <div class="">
+                    <ng-container>
+                        <form  [formGroup]="Form1" name="Form1">
+                            <div class="">
+                                <h6 class="">Enter below details to redeem points</h6>
+                                <div>
+                                    <div class="voucher-code-entry card-num-edit">
+                                        <div class="small-gray-text">First 9 and last 4 digits of your credit card</div>
+                                        <div class="col-12 two-inputs">
+                                            <div class="row">
+                                                <div class="col-md-4 col-5 p-0">
+                                                    <input class="cus-input" type="text" formControlName="first4digit" id="first4digit" placeholder="123456789" (keypress)="numberInput($event);AvoidSpace($event)" (keyup)="moveOnNext($event,'last4digit')" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autofocus="on" autocomplete="off" maxlength="9">
+                                                </div>
+                                                <div class="col-md-1 col-2 pl-0 py-2">
+                                                    <span class="crad_x">XXX</span>
+                                                </div>
+                                                <div class="col-md-3 col-5 p-0">
+                                                    <input class="cus-input" type="text" formControlName="last4digit" id="last4digit" placeholder="1234" (keypress)="numberInput($event);AvoidSpace($event)" (keyup)="moveOnNext($event,'mobile')" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off"  maxlength="4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="(submittedForm1 && Form1.controls.first4digit.errors) || (submittedForm1 && Form1.controls.last4digit.errors)" class="redeem_error">
+                                                <small *ngIf="Form1.hasError('required','first4digit') ||
+                                                Form1.hasError('required','last4digit') ||
+                                                Form1.hasError('minlength','first4digit') || 
+                                                Form1.hasError('minlength','last4digit')">Please enter first 9 Digits and last 4 digits.</small>     
+                                                <small *ngIf="Form1.hasError('pattern','first4digit') || Form1.hasError('pattern','last4digit')">Please enter valid card number.</small>     
+                                        </div>
+                                        <div *ngIf="submittedForm1 && Form1.get('first4digit').dirty" class="redeem_error">
+                                                <small *ngIf="Form1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program.<br/> Please contact the Bank for more details.</small>
+                                        </div>
+            
+                                    </div>
+                                    <div class="voucher-code-entry">
+                                        <div class="small-gray-text">Mobile Number <small style="color: #aaa;font-size: 10px;">Registered with HDFC bank</small></div>
+                                        <input type="text" autocomplete="off" id="mobile" formControlName="mobile" [(ngModel)]="customermobile" [value]="customermobile" (keypress)="numberInput($event);AvoidSpace($event)" (keyup)="moveOnNext($event,'dob')" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" maxlength="10">
+                                        <div *ngIf="submittedForm1 && Form1.controls['mobile']['errors']" class="redeem_error">
+                                                <small *ngIf="Form1.hasError('required','mobile')">Please enter the registered mobile number.</small>
+                                                <small *ngIf="Form1.hasError('pattern','mobile')">Please enter a valid 10 digits mobile number.</small>
+                                        </div>
+                                    </div>
+                                    <div class="voucher-code-entry date-section">
+                                        <div class="small-gray-text">Date of Birth</div>
+                                        <input matInput [matDatepicker]="picker" [max]="checkDate" id="dob" formControlName="dob" placeholder="DD/MM/YYYY" readonly="true" > 
+                                        <mat-datepicker-toggle matSuffix [for]="picker" id="dobicon" class="dobicon date-icon"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                
+                                        <div *ngIf="submittedForm1 && Form1.controls['dob']['errors']" class="redeem_error">
+                                            <small *ngIf="Form1.hasError('required','dob')">Please enter date of birth.</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                                <p class="mt-3">
+                                                    <label class="checkbox xs-check-font" *ngIf="saveCardShow">
+                                                        <span>
+                                                            <span class="check_saveCard">Save Card</span>
+                                                        </span>
+                                                        <input type="checkbox" formControlName="savecard" name="savecard" [(ngModel)]="saveCard" [checked]="saveCard">
+                                                        <span class="checkmark w-checkbox"></span>
+                                                    </label>
+                                                </p>
+                                        </div>
+                                    </div>
+                                    <div class="voucher-code-entry">
+                                        <div class="redeem_error">
+                                            <small>{{errorMsg}}</small>
+                                        </div>
+                                    </div>
+                                </div>         
+                                <div class="col-12 py-3 py-sm-1">
+                                    <button class="btn btn-b mr-sm-3"  [disabled]="!buttonContinue2" [ngClass]="{ 'disabledbtnCls': !buttonContinue2 }" (click)="closeDialog()">Cancel</button>
+
+                                    <ng-container *ngIf="buttonContinue2; else loadingBtn2">
+                                        <button class="btn btn-primary btn-c mr-0" (click)="checkAvailablePoints()">Continue</button> 
+                                    </ng-container>
+                                    <ng-template #loadingBtn2>
+                                        <button class="btn btn-primary btn-c mr-0" disabled="true"><span class="spinner-border spinner-border-sm "></span> Loading</button>
+                                    </ng-template>
+
+                                    <!-- <button class="btn btn-primary btn-c mr-0" (click)="checkAvailablePoints()">Continue</button> -->
+                                </div>
+                            </div>
+                        </form>
+                    </ng-container>
+                </div>
+                </div>
+            </div>
+            
+        </div>
+    </ng-container>
+
+    <!-- Add New Card : Page 2 -->
+    <ng-container *ngIf="tab2">
+        <form [formGroup]="Form2" name="Form2">
+            <div class="">
+                <div class="">
+                    <h6 class="w-80 my-3">Dear Customer</h6>
+                    <div>
+                    <div class="row">
+                        <div class="col-6">
+                        <p class="note">Available Points</p> 
+                        </div>
+                        <div class="col-6 text-right">
+                            <p class="master-text"><span>{{points_available}}</span> Pts</p>
+                        </div>
+                    </div>
+		     <div class="line"></div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="note">Total Amount</p> 
+                        </div>
+                        <div class="col-6 text-right">
+                            <p class="master-text">Rs.<span>{{payTotalFare | number:'1.2-2'}}</span></p>
+                            <!-- <p class="master-text">Rs.<span class="pl-2">9850</span></p> -->
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="note">Balance to be paid</p> 
+                        </div>
+                        <div class="col-6 text-right">
+                            <p class="master-text">Rs.<span>{{Balfare | number:'1.2-2'}}</span></p>
+                            <!-- <p class="master-text">Rs.<span class="pl-2">9850</span></p> -->
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                    
+                    <div class="row">
+			 <div class="col-md-6">
+                            <div class="voucher-code-entry date-section">
+                                <div class="redeem-title pb-2">Rs.</div>   
+                                <input class="mb-2" type="text" formControlName="conv_amount" name="conv_amount" [(ngModel)]="conv_amount" [value]='conv_amount' (keyup)="RsToPoints(conv_amount)" (keypress)="numberInput($event);noLeadingZero($event);AvoidSpace($event)" autocomplete="off" maxlength="20" autofocus="on" (paste)="onPaste($event)" onDrag="return false" onDrop="return false">
+                            </div>
+                            <div *ngIf="(submittedForm2 && Form2.controls.conv_amount.errors) || Form2.controls.conv_amount.touched" class="redeem_error">
+                                <small *ngIf="Form2.hasError('required','conv_amount')">Please enter Conversion amount.</small> 
+                                <small *ngIf="Form2.hasError('pattern','conv_amount')">Please enter valid amount.</small> 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="voucher-code-entry">
+                                <div class="redeem-title pb-2">Equivalent in Points</div>
+                                <input class="mb-1" type="text" formControlName="infiniaPts" name="infiniaPts" [(ngModel)]="infiniaPts" [value]='infiniaPts' autocomplete="off" readonly maxlength="20" style="cursor:not-allowed">
+                            </div>
+                            <!-- <div *ngIf="(submittedForm2 && Form2.controls.infiniaPts.errors) || Form2.controls.infiniaPts.touched" class="redeem_error">
+                                <small *ngIf="Form2.hasError('required','infiniaPts')">Please enter points.</small>  
+                            </div> -->
+                            
+                        </div>
+                    </div>
+                    <div *ngIf="Form2.get('infiniaPts').dirty || Form2.get('conv_amount').dirty" class="redeem_error">
+                            <small *ngIf="status['apply']==false">{{status['message']}}</small>
+                    </div>
+
+                    <!-- <span *ngIf="commonmessage != ''">
+                            <div class="row pt-3 pb-3">
+                                <div class="col-md-1" >
+                                    <i class="fa fa-exclamation-circle mt10" aria-hidden="true" style="color: #0e4abb;transform: rotate(180deg);">
+                                    </i>
+                                </div>
+                                <div class="col-md-11">
+                                    <p class="noteOne">{{commonmessage}}</p>
+                                </div>
+                            </div>
+                    </span> -->
+                    <div class="">
+                        <div class="row pt-3 pb-3">
+                            <div class="col-md-1 col-2" >
+                                <i class="fa fa-exclamation-circle mt10" aria-hidden="true" style="color: #0e4abb;transform: rotate(180deg);">
+                                </i>
+                            </div>
+                            <div class="col-10 col-md-11 pl-0">
+                                <p class="noteOne">1 Point is equal to Rs.{{points_percentage}}. Enter Rs to see the conversion.</p>
+                                <!-- <p class="noteOne">A {{VOUCHER_NAME}} will be sent to your registered mobile number.</p> -->
+                                <p class="noteOne">OTP will be sent to your HDFC bank registered mobile number.</p>
+                                <p class="noteOne" *ngIf="CcCharges && CcCharges > 0">A redemption fee of Rs. {{CcCharges}} + GST would be charged for every points redemption transaction.</p>
+                                <p class="noteOne" *ngIf="commonmessage!=''">{{commonmessage}}</p>
+                            </div>
+                        </div>
+                    </div>
+                            
+                    
+            
+                    <div class="row">
+                            <div class="col-12">
+                                <p><label class="checkbox xs-check-font">
+                                    <span class="check_redeem">By Redeeming points you agree to our <a href="https://smartbuyuat.reward360.us/corporate/terms_conditions" target="_blank">Terms and Conditions</a>
+                                    </span>
+                                    <input type="checkbox" formControlName="termsconditions" name="termsconditions">
+                                    <span class="checkmark w-checkbox"></span>
+                                </label>
+                                </p>
+                                <div *ngIf="(submittedForm2 && Form2.controls.termsconditions.errors) || Form2.controls.termsconditions.touched" class="redeem_error">
+                                    <small *ngIf="Form2.hasError('required','termsconditions') || Form2.hasError('pattern','termsconditions')">Please accept Terms and Conditions.</small>
+                                </div>
+                            </div>
+
+                            <div class="voucher-code-entry">
+                                <div class="redeem_error">
+                                    <small>{{errorMsg4}}</small>
+                                </div>
+                            </div>  
+                    </div>
+                </div>
+                    <div class="col-12 my-3">
+                        <!-- <button class="btn btn-primary" (click)="pointsRedemption()">PAY WITH POINTS</button> -->
+
+                        <ng-container *ngIf="buttonLoading; else loadingBtn">
+                            <button class="btn btn-primary" (click)="pointsRedemption()">PAY WITH POINTS</button> 
+                        </ng-container>
+                        <ng-template #loadingBtn>
+                            <button class="btn btn-primary" disabled="true"><span class="spinner-border spinner-border-sm "></span> Processing...</button>
+                        </ng-template>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+
+    <!-- Add New Card : Page 3 -->
+    <ng-container *ngIf="tab3">
+        <form [formGroup]="Form3" name="Form3">
+            <div class="redeem-verification-section">
+                <h5 class="">Verification</h5>
+                <!-- <p class="ver-info">{{VOUCHER_NAME}} has been generated successfully and sent to your HDFC Bank registered email ID / Mobile Number.</p> -->
+                <p class="ver-info">OTP has been generated successfully and sent to your HDFC Bank registered email ID / Mobile Number.</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="voucher-code-entry">
+                            <div class="pad_bottom_10 redeem-title">
+                                <span>Enter OTP</span>
+                                <span class="pull-right">
+                                    <ng-container *ngIf="resendBtnStatus;else resending">
+                                        <a href="javascript:" (click)="resendCode(cd1)" *ngIf="!ResendingConfirm">Resend Code</a>
+                                    
+                                        <span *ngIf="ResendingConfirm">Code send to your registered mobile number.</span>
+                                   
+                                    </ng-container>
+                                    <ng-template #resending>
+                                        <span>Resending...</span>
+                                    </ng-template>
+                                </span>
+                            </div>
+                            <input type="text" formControlName="redeemCode" name="redeemCode" autocomplete="off" placeholder="xxxxx" maxlength="6" (keyup)="clearErrMsg();" (keypress)="numberInput($event);AvoidSpace($event)" onPaste="return false" onDrag="return false" onDrop="return false">
+                            <div class="time-left pt-2">
+                                <p><span>
+                                    <countdown #cd1 [config]="{leftTime: 180}" (finished)="onFinishedTimer()" (event)="handleEvent($event,cd1)">$!m!:$!s!</countdown>
+                                </span> Minute(s) Left</p> 
+                            </div>
+                            <div *ngIf="(submittedForm3 && Form3.controls.redeemCode.errors) || Form3.controls.redeemCode.touched" class="redeem_error">
+                                    <!-- <small *ngIf="Form3.hasError('required','redeemCode')">Please enter the {{VOUCHER_NAME}}.</small>
+                                    <small *ngIf="Form3.hasError('pattern','redeemCode')">Please enter a valid {{VOUCHER_NAME}}.</small> -->
+                                    <small *ngIf="Form3.hasError('required','redeemCode')">Please enter OTP.</small>
+                                    <small *ngIf="Form3.hasError('pattern','redeemCode')">Please enter a valid OTP.</small>
+                            </div>
+                        </div>
+                        <div class="voucher-code-entry">
+                            <div class="redeem_error">
+                                <small>{{errorMsg2}}</small>
+                            </div>
+                        </div>  
+                      
+                        <!-- <p class="noteOne">Please call concierge {{verificationText}} if you haven't received the {{VOUCHER_NAME}}.</p> -->
+                        <p class="noteOne">Please call concierge {{verificationText}} if you haven't received OTP.</p>
+                       
+                    </div>
+                </div>
+                <div class="p-y-10 col-12 row">
+                    <div class="">
+                        <button class="btn btn-b mr-sm-3" (click)="closeDialog()">Cancel</button>
+                        <button class="btn btn-primary btn-c mr-0 nxt-redeem-success" (click)="codeVerification()" [disabled]="disabledbtnVerification" [ngClass]="{ 'disabledbtnCls': disabledbtnVerification }">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</ng-container>
+
+<!---------------------------------- APPLY VOUCHER POPUP ------------------------------------------------------------------------>
+<!--------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!-- Apply Voucher Popup Starts -->
+    <ng-container *ngIf="popup=='apply_voucher'">
+        <ng-container *ngIf="vouchertab1">
+            <form  [formGroup]="voucherForm1" name="voucherForm1">
+                <div class="my-3">
+                    <h6 class="w-80">Please provide below details to redeem points</h6>
+                        <div>
+                            <div class="voucher-code-entry card-num-edit">
+                                <div class="small-gray-text">First 9 and last 4 digits of your credit card</div>
+                                <div class="col-12 two-inputs">
+                                    <div class="row">
+                                        <div class="col-md-4 col-5 p-0">
+                                            <input class="cus-input" type="text" formControlName="first4digit" id="first4digit" placeholder="123456789" autocomplete="off" (keypress)="numberInput($event);AvoidSpace($event)" (keyup)="moveOnNext2($event,'last4digit')" name="first4digit" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" maxlength="9" autofocus="on">
+                                        </div>
+                                        <div class="col-md-1 col-2 pl-0 py-2">
+                                            <span class="crad_x">XXX</span>
+                                        </div>
+                                        <div class="col-md-2 col-5 p-0">
+                                            <input class="cus-input" type="text" formControlName="last4digit" id="last4digit" placeholder="1234" (keypress)="numberInput($event);AvoidSpace($event)" (keyup)="moveOnNext2($event,'applymobile')" name="last4digit" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off" maxlength="4">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="(submitted1 && voucherForm1.controls.first4digit.errors) || (submitted1 && voucherForm1.controls.last4digit.errors)" class="redeem_error">
+                                    <small *ngIf="voucherForm1.hasError('required','first4digit') || 
+                                    voucherForm1.hasError('required','last4digit')||
+                                    voucherForm1.hasError('minlength','first4digit') || 
+                                    voucherForm1.hasError('minlength','last4digit')">Please enter first 9 Digits and last 4 digits is required.</small>
+                                    <small *ngIf="voucherForm1.hasError('pattern','first4digit') || voucherForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
+                                </div>
+                                <div *ngIf="submitted1 && voucherForm1.get('first4digit').dirty" class="redeem_error">
+                                    <small *ngIf="voucherForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
+                                </div>
+                            </div>
+                            <div class="voucher-code-entry">
+                                <div class="small-gray-text">Mobile Number <small style="color: #aaa;font-size: 10px;">Registered with HDFC bank</small></div>
+                                <input type="text" formControlName="applymobile" id="applymobile" [(ngModel)]="customermobile" [value]="customermobile" (keypress)="numberInput($event);AvoidSpace($event)" (keyup)="moveOnNext2($event,'dob2')" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off" name="applymobile" maxlength="10">
+
+                                <div *ngIf="submitted1 && voucherForm1.controls['applymobile']['errors']" class="redeem_error">
+                                        <small *ngIf="voucherForm1.hasError('required','applymobile')">Please enter the registered mobile number.</small>
+                                        <small *ngIf="voucherForm1.hasError('pattern','applymobile')">Please enter a valid 10 digits mobile number.</small>
+                                </div>
+                            </div>
+                            <div class="voucher-code-entry date-section">
+                                <div class="small-gray-text">Date of Birth</div>
+                                    <!-- <input id="applydate1"  type="text" autocomplete="off" placeholder="dd/mm/yyyy" > -->
+                                    <input matInput [matDatepicker]="picker1" [max]="checkDate" formControlName="dob" id="dob2" placeholder="DD/MM/YYYY" readonly="true"> 
+                                    <mat-datepicker-toggle matSuffix [for]="picker1" class="date-icon"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    <div *ngIf="submitted1 && voucherForm1.controls['dob']['errors']" class="redeem_error">
+                                        <small *ngIf="voucherForm1.hasError('required','dob')">Please enter date of birth.</small>
+                                    </div>
+                            </div>
+                            <div class="voucher-code-entry">
+                                <div class="small-gray-text">{{VOUCHER_NAME}}</div>
+                                <input type="text" id="applyvouchercode" formControlName="applyvouchercode" autocomplete="off" placeholder="*********" (keypress)="numberInput($event);AvoidSpace($event)" (keyup)="convertToUpperCase($event)" onPaste="return false"  onDrag="return false" onDrop="return false" maxlength="30">
+                                <div *ngIf="submitted1 && voucherForm1.controls['applyvouchercode']['errors']" class="redeem_error">
+                                        <small *ngIf="voucherForm1.hasError('required','applyvouchercode')">Please enter {{VOUCHER_NAME}}.</small>
+                                        <small *ngIf="voucherForm1.hasError('pattern','applyvouchercode')">Please enter a valid {{VOUCHER_NAME}}.</small>
+                                </div>
+                            </div>
+                            <div class="voucher-code-entry">
+                                <div class="redeem_error">
+                                    <small>{{errorMsg3}}</small>
+                                </div>
+                            </div>      
+                        </div>  
+                       
+                        <button class="btn btn-primary my-3" (click)="voucherRedemption()">VALIDATE</button>
+                </div>
+            </form>
+        </ng-container>
+
+        <ng-container *ngIf="vouchertab2">
+            <div class="new-redeem-body">
+                <div class="availablePoints-section alreadyAvail">
+                    <div class="pt-2 pb-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="bal-title">Total Amount</p>
+                            </div>
+                            <div class="col-6 text-right">
+                                <p class="bal-value">Rs. {{ordertotalamount | number:'1.2-2'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2 pb-2">
+                        <div class="row">
+                            <div class="col-6 col-md-6">
+                                <p class="bal-title">{{VOUCHER_NAME}} Value ({{RedeemedPoints}} Pts)</p>
+                            </div>
+                            <div class="col-6 col-md-6 text-right">
+                                <p class="bal-value">Rs. {{AmountRedeemed | number:'1.2-2'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2 pb-2" *ngIf="RemaingAmount>0">
+                        <div class="row">
+                            <div class="col-6 col-md-6">
+                                <p class="bal-title">Balance to be paid</p>
+                            </div>
+                            <div class="col-6 col-md-6 text-right">
+                                <p class="bal-value">Rs. {{RemaingAmount | number:'1.2-2'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="noteOne py-1">You can pay the balance by other payment options after you have redeemed your points.</p>
+                    <!-- <p class="pad_top_10 m-by-redeem">
+                        <input class="magic-checkbox" type="checkbox" formControlName="termsconditions">
+                        <label for="redeemAlr" class="pl-3 pt-1">
+                            <span class="avai-check">
+                                <span>By Redeeming points you agree to our </span>
+                                <a href="javascript:">Terms and Conditions</a>
+                            </span>
+                        </label>
+                    </p> 
+
+                    <div *ngIf="(submittedvoucherForm2 && voucherForm2.controls.termsconditions.errors) || voucherForm2.controls.termsconditions.touched" class="redeem_error">
+                        <small *ngIf="voucherForm2.hasError('required','termsconditions') || Form2.hasError('pattern','termsconditions')">Please accept Terms and Conditions.</small>
+                    </div>-->
+
+                    <div class="row py-1">
+                        <div class="col-md-4 pt-md-2 text-center text-md-left">
+                            <button (click)='submitVoucher()' class="btn btn-primary btn-c nxtSucess-redeemalready m-0">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

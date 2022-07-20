@@ -11,10 +11,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.component';
 import { CouponsModule } from 'src/app/coupons/coupons.module';
-
-
-
-
+import { InputMaskModule } from '@ngneat/input-mask';
+import { PaymentModule } from 'src/app/payment/payment.module';
 
 const routes: Routes = [
   {
@@ -38,15 +36,16 @@ const routes: Routes = [
 
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot(routes),
-  MaterialModule,
-  DirectiveModule,
-  NgxSliderModule,
-  NgxSkeletonLoaderModule,
-  CouponsModule
+        CommonModule,
+        FormsModule,
+        InputMaskModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        DirectiveModule,
+        NgxSliderModule,
+        NgxSkeletonLoaderModule,
+        CouponsModule,PaymentModule,
+          RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
   providers: [ ]

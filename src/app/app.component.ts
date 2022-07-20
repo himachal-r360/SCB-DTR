@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
                 panelClass: 'alert_Timer',
                 disableClose: true,
                 id: 'messageforSessionDialog1',
-		width: '310px',
+		            width: '310px',
                 height: 'auto',
 		data: {beforeExpiry: true,afterExpiry:false}
 		});
@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
 	switch (unification[1]) {
 	case ('diners'):
 	this.assetPath="diners/";
-         this.domainPath="diners/";
+        this.domainPath="diners/";
         this.domainName='DINERS';
         setTimeout(() => {
         $('link[href="smartbuy.css"]'). attr("href","diners.css");
@@ -101,6 +101,14 @@ export class AppComponent implements OnInit {
 	this.assetPath="regalia/";
         this.domainPath="regalia/";
         this.domainName='REGALIA';
+	break;
+  case ('regalia_gold'):
+	this.assetPath="regalia_gold/";
+        this.domainPath="regalia_gold/";
+        this.domainName='REGALIA_GOLD';
+        setTimeout(() => {
+          $('link[href="smartbuy.css"]'). attr("href","regalia_gold.css");
+          }, 1000);
 	break;
 	case ('corporate'):
 	this.assetPath="corporate/";
@@ -328,7 +336,13 @@ export class AppComponent implements OnInit {
       
     });
   }
-
+  scrollTop(){
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+  }
 }
 
 
