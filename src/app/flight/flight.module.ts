@@ -14,6 +14,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SeatsMealsComponent } from './seats-meals/seats-meals.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
+import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-roundtrip-list.component';
 
 
 
@@ -24,6 +25,9 @@ import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent
+  },
+  {
+    path:"flight-roundtrip" ,component:FlightRoundtripListComponent
   },
   {
     path:"flight-details" ,component:FlightDetailComponent
@@ -55,7 +59,8 @@ const routes: Routes = [
     FlightStepperNavComponent,
     FareSummaryComponent,
     SeatsMealsComponent,
-    MinuteSecondPipe
+    MinuteSecondPipe,
+    FlightRoundtripListComponent
 
 
   ],

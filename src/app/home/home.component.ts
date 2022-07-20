@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   toCityName:any ='To';
   toAirpotName:any = 'to airport';
   departureDate:any = "";
+  arrivalDate:any = "";
   returnDate:any;
   oneWayDate :any;
   SearchCityName:any;
@@ -84,7 +85,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   searchData:any;
   flightClassVal:any;
   showTravellerBlock = false;
+  isDisabled = false;
   windowItem = window;
+  navItemActive:any; 
+
 
   customOptions: OwlOptions = {
     loop: true,
@@ -113,7 +117,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-
   constructor(
     public router: Router,
     private _fb: FormBuilder,
@@ -137,7 +140,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    console.log(window.innerWidth)
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     if(continueSearchValLs!=null){
@@ -155,7 +157,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   currentPeriodClicked(datePicker:any){
     let date = datePicker.target.value
-    if(date){
+    if(date && this.navItemActive !== "Round Trip"){
       setTimeout(() => {
         if(this.isMobile == false) {
           let openTravellers = document.getElementById('openTravellers')
@@ -166,7 +168,34 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }, 50);
     }
+    if(date && this.navItemActive == "Round Trip"){
+      setTimeout(() => {
+        if(this.isMobile == false) {
+          let datePickerArrivalOpen=document.getElementById("datePickerArrival");
+          datePickerArrivalOpen?.click();
+        }
+        else if(this.isMobile)  {
+          this.openTravellerBlock();
+        }
+      }, 50);
+    }
+   
   }
+
+  currentPeriodArrivalClicked(datePicker:any) {
+    let date = datePicker.target.value
+  if(date && this.navItemActive == "Round Trip"){
+    setTimeout(() => {
+      if(this.isMobile == false) {
+        let openTravellers = document.getElementById('openTravellers')
+        openTravellers?.click();
+      }
+      else if(this.isMobile)  {
+        this.openTravellerBlock();
+      }
+    }, 50);
+  }
+}
 
   selectDate(control: string) {
     let dep;
@@ -341,11 +370,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     else{
       this.dateValidation=true;
     }
+    if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined){
+      this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
+    }
+    
     if(this.flightData.invalid || this.dateValidation==true){
       return
     }
     else {
-      this.loader = true;
+      // this.loader = true;
 
       //this.flightData.get('departure').setValue(this.departureDate.getFullYear()+'-' +(this.departureDate.getMonth()+ 1)+'-' +this.departureDate.getDate())
       let searchValue = this.flightData.value;
@@ -368,8 +401,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         })
       }
-      console.log(this.continueSearchFlights , "conti");
-      console.log(searchValueAllobj , "searchValueAllobj");
       if(this.continueSearchFlights.length>3){
         this.continueSearchFlights=this.continueSearchFlights.slice(0,3);  
       }
@@ -380,17 +411,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       localStorage.setItem('fromAirportName', this.fromAirpotName);
       localStorage.setItem('toAirportName', this.toAirpotName);
       this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
-        this.loader = false;
+        // this.loader = false;
         this.show = true;
         this.flightList = res.response.onwardFlights;
         this.oneWayDate = res.responseDateTime;
         this._flightService.flightListData = this.flightList;
         this._flightService.flightListDate = this.oneWayDate;
         let query:any = sessionStorage.getItem('searchVal');
-
-
-        let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
-        this.router.navigateByUrl(url);
+        if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
+          let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
+          this.router.navigateByUrl(url);
+        }
+        else{
+          let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
+          this.router.navigateByUrl(url);
+        }
         //this.router.navigate(['flight-list'],  { queryParams: { flights : decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)))}});
 
 
@@ -576,7 +611,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 openTravellerBlock(){
   this.showTravellerBlock =! this.showTravellerBlock;
-  // $(".mob-filter-travellers").toggleClass("preferred-airline-hide");
 }
 
 closeTravllerBlock(){
@@ -586,7 +620,10 @@ closeTravllerBlock(){
 
 getClassVal(val:any){
   this.flightData.value.flightclass =  val;
-  
+}
+
+navBarLink(navItem:any){
+this.navItemActive = navItem;
 }
 
 }
