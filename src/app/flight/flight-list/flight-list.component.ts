@@ -81,6 +81,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   stopsFilterVal: string = ""
   DocKey: any;
 
+  isMobile:boolean = false;
    loaderValue = 10;
    dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
@@ -169,7 +170,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit(): void {
-
+    this.isMobile = window.innerWidth < 991 ?  true : false;
     this.loader = true;
     this.getQueryParamData(null);
     this.flightList = this._flightService.flightListData;
@@ -267,7 +268,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   showmoreAirline() {
     // let airlineSize = 2
     // let modifyAirline = this.airlines.slice(0, airlineSize)
-    
+
   }
 
   increaseAdult() {
@@ -1250,7 +1251,15 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   gotoTop() {
     this.scroll.scrollToPosition([0,0]);
   }
-
+  OpenPartner(i:number)
+  {
+        $(".mob-items-book-list").css('display','none')
+        var SelectedElement = document.getElementById('CompareToFly_'+i);
+        if(SelectedElement)
+        {
+          SelectedElement.style.display = 'block';
+        }
+  }
 
 
 

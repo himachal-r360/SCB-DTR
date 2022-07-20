@@ -1,4 +1,4 @@
-<section class="flight-area mt-10">
+<section class="flight-area mt-10" *ngIf="!isMobile">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -1179,7 +1179,136 @@
     </div>
 </section>
 
+<section class="mob-flights-listing" *ngIf="isMobile">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12 p-0">
+              <div class="mob-listing-header">
+                  <div class="mob-listing-header-left">
+                      <a href="index.html" >
+                          <img src="./assets/images/icons/left.png" alt="" />
+                      </a>
+                  </div>
+                  <div class="mob-listing-header-center">
+                      <h6>{{fromCityName}} - {{toCityName}}</h6>
+                      <p>{{departureDate | date:'EEE, dd MMM' }} | {{totalPassenger}} Travellers | <span *ngIf="flightClassVal == 'B'">Business</span>
+                        <span *ngIf="flightClassVal == 'E'">Economy</span>
+                        <span *ngIf="flightClassVal == 'F'">First</span>
+                        <span *ngIf="flightClassVal == 'P'">Premium</span>
+                      </p>
+                  </div>
+                  <div class="mob-listing-header-right">
+                      <a href="index.html" >
+                          <img src="./assets/images/icons/edit.png" alt="" />
+                      </a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div class="mob-listing-fiters">
+                  <h6>{{flightList.length}} Flights Found</h6>
+                  <a href="">
+                      <img src="/assets/images/icons/filter.png" alt="">
+                      <span>Sort/Filters</span>
+                  </a>
+              </div>
+          </div>
 
+          <div class="col-md-12">
+              <div class="mob-all-flight">
+                  <ul>
+                      <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"  value="{{Items.value}}" >
+                          <a href="javascript:void(0)" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
+                              <span *ngIf="Items.name!='no_stops'">{{flightList.length}}</span>
+                              {{Items.value}}
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="col-md-12">
+              <div class="mob-list-area" (click)="OpenPartner(i)" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
+                  <div class="mob-list-items">
+                      <div class="mob-list-items-name">
+                          <div class="mob-list-items-name-top">
+                              <div class="mob-list-items-image">
+                                  <img src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                  <div class="mob-list-flight-name"  *ngIf="list.flights.length > 0">
+                                      <h6>{{list.flights[0].airlineName}}</h6>
+                                      <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
+                                  </div>
+                              </div>
+                              <div class="mob-list-items-price" *ngIf="list.priceSummary.length > 0">
+                                  <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
+                                  <p  *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</p>
+                              </div>
+                          </div>
+                          <div class="mob-list-items-name-bottom">
+                              <div class="name-bottom-top">
+                                  <div class="name-bottom-top-left">
+                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                      <p>{{list.flights[0].departureAirport}}</p>
+                                  </div>
+                                  <div class="name-bottom-top-center">
+                                      <p>{{ list.flights[0].duration | durationTime }}</p>
+                                      <img src="/assets/images/icons/mob-flight.png" alt="" />
+                                      <p>{{ list.flights[0].duration | durationTime }}</p>
+                                  </div>
+                                  <div class="name-bottom-top-right">
+                                      <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                      <p>{{list.flights[0].arrivalAirport}}</p>
+                                  </div>
+                              </div>
+                              <div class="name-bottom-bottom">
+                                  <p><img src="/assets/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="mob-items-book-list" id="CompareToFly_{{i}}">
+                          <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
+                              <div class="mob-book-list-top">
+                                  <div class="mob-booking-image">
+                                    {{item.partnerName}}
+                                      <!-- <img src="/assets/images/flights/1.png" alt="" /> -->
+                                  </div>
+                                  <div class="mob-booking-price">
+                                      <h6>₹ {{item.totalFare |number}}</h6>
+                                      <p *ngIf="item.totalFare > EMIAvailableLimit">EMI @ ₹ {{calculateEMI(item.totalFare)|number}}/month</p>
+                                  </div>
+                                  <div class="mob-booking">
+                                      <a href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item,list.flightKey)">
+                                          Book
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="mob-book-list-bottom">
+                                  <div class="mob-extra">
+                                      <ul>
+                                          <li>
+                                              <img src="/assets/images/icons/details/1.png" alt="" />
+                                          </li>
+                                          <li>
+                                              <img src="/assets/images/icons/details/2.png" alt="" />
+                                          </li>
+                                          <li>
+                                              <img src="/assets/images/icons/details/3.png" alt="" />
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <div class="mob-details">
+                                      <a href="">Flight Details <img src="/assets/images/icons/mob-down.png" alt="" /> </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>
         <!-- ------------------------------
             >>> Modal bookingprocess
         ---------------------------------->
