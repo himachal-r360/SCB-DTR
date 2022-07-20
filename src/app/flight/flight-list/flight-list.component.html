@@ -562,7 +562,7 @@
 
                                 <div class="flight-search-filters-right">
                                     <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterFlightData($event)">
-                                        <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.value}}</option>
+                                        <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
                                         <!-- <option value="P_H_L">Price High to Low</option>
                                         <option value="P_D_E">Depart Ealry</option>
                                         <option value="P_D_L">Depart Late</option> -->
@@ -721,7 +721,7 @@
                                     }"></ngx-skeleton-loader></span>
                               </div>
                           </div>
-                          </div>
+                        </div>
 
                         <div class="flight-listing-area">
                             <div class="flight-listing" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
@@ -1215,6 +1215,8 @@
               </div>
           </div>
 
+          
+
           <div class="col-md-12">
               <div class="mob-all-flight">
                   <ul>
@@ -1253,24 +1255,25 @@
                                   </div>
                                   <div class="name-bottom-top-center">
                                       <p>{{ list.flights[0].duration | durationTime }}</p>
-                                      <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                      <p>{{ list.flights[0].duration | durationTime }}</p>
+                                      <img src="/assets/images/icons/mob-flight.png" alt="" />
+                                      <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
+                                      <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                   </div>
                                   <div class="name-bottom-top-right">
                                       <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                       <p>{{list.flights[0].arrivalAirport}}</p>
                                   </div>
                               </div>
-                              <div class="name-bottom-bottom">
+                              <!--<div class="name-bottom-bottom">
                                   <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
-                              </div>
+                              </div>-->
                           </div>
                       </div>
                       <div class="mob-items-book-list" id="CompareToFly_{{i}}">
                           <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                               <div class="mob-book-list-top">
                                   <div class="mob-booking-image">
-                                    {{item.partnerName}}
+                                     <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" > 
                                       <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
                                   </div>
                                   <div class="mob-booking-price">
@@ -1286,7 +1289,7 @@
                               <div class="mob-book-list-bottom">
                                   <div class="mob-extra">
                                       <ul>
-                                          <li>
+                                        <!--  <li>
                                               <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
                                           </li>
                                           <li>
@@ -1294,7 +1297,7 @@
                                           </li>
                                           <li>
                                               <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
-                                          </li>
+                                          </li>-->
                                       </ul>
                                   </div>
                                   <div class="mob-details">
@@ -1307,6 +1310,8 @@
               </div>
           </div>
 
+          
+
       </div>
   </div>
 </section>
@@ -1315,6 +1320,7 @@
             >>> mobile Sort Filters
         ---------------------------------->
         <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
+           
           <div class="mob-sf-box">
               <div class="mob-title">
                   <h3>Sort & Filters</h3>
@@ -1335,58 +1341,16 @@
                       <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
                           <div class="mob-sf-sort">
                               <div class="mob-sf-sort-by">
-                                  <div class="mob-sf-sort-by-items active">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/price-l.png" alt="" />
-                                          <span><strong>Price</strong> <br> Low to High</span>
-                                      </p>
-                                  </div>
-                                  <div class="mob-sf-sort-by-items">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/price-h.png" alt="" />
-                                          <span><strong>Price</strong> <br> High to Low</span>
-                                      </p>
-                                  </div>
-                                  <div class="mob-sf-sort-by-items">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
-                                          <span><strong>Duration</strong> <br> Shortest</span>
-                                      </p>
-                                  </div>
-                                  <div class="mob-sf-sort-by-items">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
-                                          <span><strong>Duration</strong> <br> Longest</span>
-                                      </p>
-                                  </div>
-                                  <div class="mob-sf-sort-by-items">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
-                                          <span><strong>Departure </strong> <br> Earliest</span>
-                                      </p>
-                                  </div>
-                                  <div class="mob-sf-sort-by-items">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
-                                          <span><strong>Departure </strong> <br> Latest</span>
-                                      </p>
-                                  </div>
-                                  <div class="mob-sf-sort-by-items">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
-                                          <span><strong>Arrival </strong> <br> Earliest</span>
-                                      </p>
-                                  </div>
-                                  <div class="mob-sf-sort-by-items">
-                                      <p>
-                                          <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
-                                          <span><strong>Arrival</strong> <br> Latest</span>
+                                  <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
+                                      <p >
+                                          <img [src]="item.image" alt="" />
+                                          <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
                                       </p>
                                   </div>
                               </div>
                           </div>
                           <div class="mob-sf-btns">
-                              <a href="">Apply</a>
+                              <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
                           </div>
                       </div>
                       <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
