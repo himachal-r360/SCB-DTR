@@ -504,7 +504,53 @@ export class HeaderComponent implements OnInit {
 	 this.rest.trackEvents( track_body).subscribe(result => {});
    this.analyticsLogEvent('notification_click',id,toastUrls);
   }
-
+closeCookieConsent(value){
+  if(value==1){
+    this.Cookies.GA=true;
+    this.Cookies.AL=true;
+    this.Cookies.GTM=true;
+  }
+  else if(value==2){
+    this.Cookies.GA=false;
+    this.Cookies.AL=false;
+    this.Cookies.GTM=false;
+  }
+  else if(value==3){
+      var cookie_value=['SN'];
+      if(this.Cookies.GA==true){
+        cookie_value.push('GA');
+      }
+      if(this.Cookies.AL==true){
+        cookie_value.push('AL');
+      }
+      if(this.Cookies.GTM==true){
+        cookie_value.push('GTM');
+      }
+      value=cookie_value;
+  }
+	let urlParams = new HttpParams()
+	.set('name', 'accept-cookie')
+	.set('value',value);
+  
+	const body: string = urlParams.toString();
+	
+        this.rest.setCookieConsent( body).subscribe(result => {
+	 this.cookieConsent=false;
+   this.ShowCookiePopup=false;
+	});
+	}
+	
+   closeDisClimerConsent(value){
+          $('#disclamierPopup').modal('hide');
+        let urlParams = new HttpParams()
+        .set('name', 'accept-cookie')
+        .set('value',value)
+        .set('type','DISCLAIMER');
+        const body: string = urlParams.toString();
+        this.rest.setCookieConsent( body).subscribe();
+        return;
+     }	
+	
 
 
   enablePushBtn(){
@@ -628,53 +674,7 @@ export class HeaderComponent implements OnInit {
     this.AcceptAllBtn=true;
   }
 
-closeCookieConsent(value){
-  if(value==1){
-    this.Cookies.GA=true;
-    this.Cookies.AL=true;
-    this.Cookies.GTM=true;
-  }
-  else if(value==2){
-    this.Cookies.GA=false;
-    this.Cookies.AL=false;
-    this.Cookies.GTM=false;
-  }
-  else if(value==3){
-      var cookie_value=['SN'];
-      if(this.Cookies.GA==true){
-        cookie_value.push('GA');
-      }
-      if(this.Cookies.AL==true){
-        cookie_value.push('AL');
-      }
-      if(this.Cookies.GTM==true){
-        cookie_value.push('GTM');
-      }
-      value=cookie_value;
-  }
-	let urlParams = new HttpParams()
-	.set('name', 'accept-cookie')
-	.set('value',value);
-  
-	const body: string = urlParams.toString();
-	
-        this.rest.setCookieConsent( body).subscribe(result => {
-	 this.cookieConsent=false;
-   this.ShowCookiePopup=false;
-	});
-	}
-	
-        closeDisClimerConsent(value){
-        let urlParams = new HttpParams()
-        .set('name', 'accept-cookie')
-        .set('value',value)
-        .set('type','DISCLAIMER');
-        const body: string = urlParams.toString();
-        this.rest.setCookieConsent( body).subscribe(result => {
-        $('.close-popupd').trigger('click');
-        });
-        }	
-	
+
 	
   ShowCookiePopUp(value){
     this.cookieConsent=false;
@@ -1229,21 +1229,15 @@ this.customerLogin=true;*/
       if(!this.cookieService.get("push_status")){
           this.push_ids.push(id);
           this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
-          // console.log('here');
+          // console.log('if',this.push_ids);
       }else{
           this.push_ids = JSON.parse(this.cookieService.get("push_status"));
            if(!this.push_ids.includes(id)){
               this.push_ids.push(id);
+              // console.log('else',this.push_ids);
             }
-            // if (typeof this.push_ids === 'object' && this.push_ids !== null) {
-            //   console.log('am');
-              this.cookieService.set('push_status',this.push_ids, null, '/', null, null, null);
-            // }else{
-            //   this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
-            // }
-          
-          // $.cookie("push_status", JSON.stringify(push_ids));
-          // console.log(this.cookieService.get("push_status"));
+             this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
+            
       }
 
   }
