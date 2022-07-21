@@ -1346,8 +1346,12 @@ ngOnInit(): void {
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
     let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};
-    let randomFlightDetailKey = this.getRandomString(44);
+   // let randomFlightDetailKey = this.getRandomString(44);
+   
+    let randomFlightDetailKey = btoa(this.DocKey+flightKey);
+    
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
+    
     this._flightService.setFlightsDetails(flightDetailsArr);
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
         this.router.navigateByUrl(url);

@@ -203,6 +203,7 @@ new_fare: number = 0;
         selectedVendor:any;
         flightIcons:any;
         airportsNameJson:any;
+        airlinesNameJson:any;
         EMI_interest: number = 16;
         EMIAvailableLimit: number = 3000;
         totalDuration:number=0;
@@ -216,7 +217,7 @@ new_fare: number = 0;
         baggageInfo:any='';
         cancellationPolicy:any='';
         flightDetailsArrVal:any;
-        steps:any = 2;
+        steps:any = 1;
 
         travelerDetails:any={};
         checked:any= false;
@@ -238,6 +239,7 @@ new_fare: number = 0;
                 this.flightClasses = this.serviceSettings.flightClasses;
 
                 this.getAirpotsList();
+                this.getAirLineList();
 
 
           /*** SESSION */
@@ -1260,6 +1262,14 @@ new_fare: number = 0;
     })
   }
 
+  // get airline list
+  getAirLineList() {
+    this._flightService.getFlightIcon().subscribe((res:any)=>{
+      this.airlinesNameJson = res;
+    })
+  }
+
+
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
@@ -1470,7 +1480,7 @@ new_fare: number = 0;
 
    
   
-
+   paxInfo=[];
   
   continueTravellerDetails(){
         alertify.set('notifier','position', 'top-center');
@@ -1530,7 +1540,7 @@ new_fare: number = 0;
         
         
          
-         
+         let flightDetails=[];
          let itineraryType;
         if(this.searchData.travel=='INT') { //International
         if(this.searchData.flightdefault=='O') //international oneway
@@ -1566,11 +1576,11 @@ new_fare: number = 0;
               }
         }
       
-        let paxInfo=[]; var paxInfoCnt=1;
+         var paxInfoCnt=1;
  
         for(let i=1;i<(this.passengerAdultFormCount);i++){
         
-          paxInfo.push(       {
+          this.paxInfo.push(       {
                 "title": this.passengerForm.controls['adult_title'+i]['value'],
                 "firstName": this.passengerForm.controls['adult_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['adult_last_name'+i]['value'],
@@ -1585,7 +1595,7 @@ new_fare: number = 0;
         
         
                 for(let i=1;i<(this.passengerChildFormCount);i++){
-          paxInfo.push(       {
+          this.paxInfo.push(       {
                 "title": this.passengerForm.controls['child_title'+i]['value'],
                 "firstName": this.passengerForm.controls['child_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['child_last_name'+i]['value'],
@@ -1600,7 +1610,7 @@ new_fare: number = 0;
         
         
                 for(let i=1;i<(this.passengerInfantFormCount);i++){
-          paxInfo.push(       {
+          this.paxInfo.push(       {
                 "title": this.passengerForm.controls['infant_title'+i]['value'],
                 "firstName": this.passengerForm.controls['infant_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['infant_last_name'+i]['value'],
@@ -1615,8 +1625,7 @@ new_fare: number = 0;
         let fareDetails=[];
         fareDetails.push({ "amount": this.totalCollectibleAmountFromPartnerResponse,   "fareKey": this.flightInfo.fareKey, "flightKey": this.flightSessionData.flightKey });
         
-        
-        let flightDetails=[];
+     
         
         
         
@@ -1629,7 +1638,7 @@ new_fare: number = 0;
                       "airline": this.flightSessionData.flights[i]['airline'],
                       "operatingAirline": "",
                       "departureDate": moment(this.flightSessionData.flights[i]['departureDateTime']).format('YYYY-MM-DD'),
-                      "stops": 0,
+                      "stops": this.flightSessionData.flights[i]['stops'],
                       "segNum": "1",
                       "duration": this.flightSessionData.flights[i]['duration'],
                       "arrivalDateTime": moment(this.flightSessionData.flights[i]['arrivalDateTime']).format('HH:mm:ss'),
@@ -1676,7 +1685,7 @@ new_fare: number = 0;
                 }
               }
             ],
-            "paxInfoList": paxInfo,
+            "paxInfoList": this.paxInfo,
             "contactDetail": {
               "title": this.passengerForm.controls['adult_title1']['value'],
               "firstName": this.passengerForm.controls['adult_first_name1']['value'],
@@ -1719,7 +1728,6 @@ new_fare: number = 0;
         };
         this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
         
-        console.log(this.EncrDecr.get(response.result ));
         this.itinararyResponse= JSON.parse(this.EncrDecr.get(response.result ));
         //this.itinararyResponse=(response);
           if(this.itinararyResponse['response'] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']==200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"]==200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"]==200){
@@ -1758,7 +1766,8 @@ new_fare: number = 0;
 		 $('#infoprocess').modal('hide');
 		 $('#bookingprocessPriceChange').modal('show');
  		}else{
- 		 clearInterval(myInterval1);
+ 		 this.saveCheckout(myInterval1);
+ 		 /* clearInterval(myInterval1);
  		 $('#infoprocess').modal('hide');
                         if(this.enableVAS==1){
                         this.steps=3;
@@ -1766,7 +1775,7 @@ new_fare: number = 0;
                         }else{
                         this.steps=4;
                         this.completedSteps=4;
-                        }
+                        }*/
  		}
           
           }else{
@@ -1782,6 +1791,161 @@ new_fare: number = 0;
        
        }
   }
+  
+  saveCheckout(myInterval1){
+ // console.log(this.flightSessionData);
+ // console.log(this.flightInfo);
+ 
+    let fligths=[];
+ 
+      for(let i=0;i<(this.flightSessionData.flights.length);i++){ 
+     fligths.push({
+        "arr_tym":  this.flightSessionData.flights[i]['arrivalDateTime'],
+        "sourcity": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['city'],
+        "car_id":  this.flightSessionData.flights[i]['airline'],
+        "rowfirst_onward": "",
+        "airportname_countrysour": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['country'],
+        "img": this.flightSessionData.flights[i]['airline']+".gif",
+        "operating_airline": this.flightSessionData.flights[i]['operatingAirline'],
+        "airportname_citydesti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['city'],
+        "fnum": this.flightSessionData.flights[i]['flightNumber'],
+        "airportname_countrydesti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['country'],
+        "refund": this.selectedVendor.refundStatus==1 ? "Refundable" : "Non Refundable",
+        "friend_ddate": "",
+        "flight_id": "",
+        "show_price": "",
+        "dst_tym":  this.flightSessionData.flights[i]['departureDateTime'],
+        "desti":  this.flightSessionData.flights[i]['departureAirport'],
+        "friend_dst": moment(this.flightSessionData.flights[i]['departureDateTime']).format('HH:mm'),
+        "friend_arr": moment(this.flightSessionData.flights[i]['arrivalDateTime']).format('HH:mm'),
+        "sour": this.flightSessionData.flights[i]['departureAirport'],
+        "airportname_sour": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['airport_name'],
+        "desticity": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['city'],
+        "flyend": "",
+        "friend_adate": "",
+        "car_name": this.airlinesNameJson[this.flightSessionData.flights[i]['airline']]['name'],
+        "airportname_citysour": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['city'],
+        "operated_by":  this.flightSessionData.flights[i]['operatingAirline'],
+        "duration":moment.utc(this.flightSessionData.flights[i]['duration'] * 1000).format("H[h] mm[min]"),
+        "frcnt": "",
+        "flystart": "",
+        "airportname_desti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['airport_name'],
+        "flight_type":  this.flightSessionData.flights[i]['stops'] == 0 ? "Non-Stop" : this.flightSessionData.flights[i]['stops'] + " Stop" ,
+        "departureTerminal": this.flightSessionData.flights[i]['departureTerminal'],
+        "arrivalTerminal": this.flightSessionData.flights[i]['arrivalTerminal'],
+        "stopsDetails": []
+      });
+      
+      }
+ 
+   
+ 
+  let checkoutData={
+  "itineraryid": this.itineraryid,
+  "clientToken": "HDFC243",
+  "programName": "SMARTBUY",
+  "partnerToken": this.selectedVendor.partnerName,
+  "serviceToken": "Flight",
+  "contactDetails": {
+    "firstName": "Tamil",
+    "lastName": "Selvan",
+    "email": "tamilselvanmsc@gmail.com",
+    "mobile": "9788732219",
+    "whatsappFlag": 1,
+    "forex_check": 0
+  },
+  "flightDetails": {
+    "onwards": fligths,
+    "returns": [],
+    "baggage_information": {
+      "onward": "",
+      "return": ""
+    },
+    "passengerDetails": this.paxInfo,
+    
+    
+    "fare": {
+      "convenience_fee": 0,
+      "partnerConvFee": this.partnerConvFee,
+      "child": this.searchData.child,
+      "adults": this.searchData.adults,
+      "infants": this.searchData.infants,
+      "total": this.TotalFare ,
+      "others": this.Tax ,
+      "totalbf": this.BaseFare ,
+      "coupon_code": "",
+      "pass_break": {
+        "ADT": 1020,
+        "CHD": 0,
+        "INF": 0
+      },
+      "total_passengers": (this.maxAdults+this.maxChilds+this.maxInfants),
+      "markup_fee": 0,
+      "partner_amount": this.totalCollectibleAmountFromPartnerResponse,
+      "discount": this.coupon_amount,
+      "voucher_amount": 0,
+      "voucher_code": 0,
+      "couponcode": "",
+      "ticket_class": this.flightClasses[this.searchData.flightclass]
+    },
+    "onwardFareKey": this.flightInfo.fareKey,
+    "returnFareKey": "",
+    "inputs": {
+      "Default":  this.searchData.flightdefault,
+      "adults": this.searchData.adults,
+      "child": this.searchData.child,
+      "class": this.searchData.flightclass,
+      "fcode": this.searchData.flightfrom,
+      "flightdeparture": this.searchData.departure,
+      "flightfrom": this.searchData.fromCity,
+      "flightreturn": '',
+      "flightto": this.searchData.toCity,
+      "infants":this.searchData.infants,
+      "t": "ZWFybg==",
+      "tcode": this.searchData.flightto
+    }
+  },
+  "cancellationPolicy": "Resources are not available.",
+  "checkin": "{\"onward\":[{\"airline\":\"6E\",\"departureDateTime\":\"2022-07-30T11:10:00\"}]}",
+  "checkin_box": null,
+  "order_ref_num":this.itinararyResponse.response.orderId,
+  "amd_url": "http://new.reward360.us/amd/aWeklGmHhKaglWFwaWNoZm5lpJg%3D",
+  "redirect_url": "http://new.reward360.us/flights/search?Default=O&adults=1&child=0&class=E&fcode=BLR&flightdeparture=2022-07-30&flightfrom=Bangalore+%28BLR%29&flightreturn=&flightto=Chennai+%28MAA%29&infants=0&t=QkxSTUFBNkU2MjEyMjAyMi0wNy0zMDo6RWFzZW15dHJpcA==&tcode=MAA&ux=1",
+  "retry_url": "http://new.reward360.us/retry/aWeklGmHhKaglWFwaWNoZm5lpJg%3D"
+};
+  
+
+      var saveCheckoutData = {
+       orderReferenceNumber: this.itinararyResponse.response.orderId,
+       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
+      };
+
+      let trackUrlParams = new HttpParams()
+  .set('current_url', window.location.href)
+  .set('category', 'Flight')
+  .set('event', 'Save Checkout')
+  .set('metadata','{"save_checkout":"'+this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData)))+'"}');
+  
+   const track_body: string = trackUrlParams.toString();
+   this.rest.trackEvents( track_body).subscribe(result => {});
+
+    this.rest.saveCheckout(JSON.stringify(saveCheckoutData)).subscribe(rdata => {
+      
+        clearInterval(myInterval1);
+        if(this.enableVAS==1){
+        this.steps=3;
+        this.completedSteps=3;
+        }else{
+        this.steps=4;
+        this.completedSteps=4;
+        }
+    });
+
+
+  
+  }
+  
+  
   continueWithNewFare(){
   $('#bookingprocessPriceChange').modal('hide');
       if(this.enableVAS==1){
