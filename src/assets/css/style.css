@@ -7451,7 +7451,7 @@ button.accordion-button .xlsheats{
 }
 
 
-.mob-sf-area {
+.mob-sf-area, .mob-fd-area {
     position: fixed;
     top: 0;
     z-index: 10;
@@ -7460,7 +7460,7 @@ button.accordion-button .xlsheats{
     height: 100%;
     display: none;
 }
-.mob-sf-box {
+.mob-sf-box, .mob-fd-box {
     margin-top: 50px;
     height: 100%;
     background: #fff;
@@ -7532,14 +7532,20 @@ button.accordion-button .xlsheats{
 } 
 
 
-.mob-sf-sort, .mob-sf-accordion {
+.mob-sf-sort, .mob-sf-accordion{
     height: calc(100vh - 200px);
+    overflow: auto;
+}
+
+.mob-fd-accordion {
+    height: calc(100vh - 160px);
     overflow: auto;
 }
 
 
 .mob-sf-btns {
     padding: 0 10px;
+    text-align: center;
 }
 .mob-sf-btns a {
     background: #1D86FF;
@@ -7551,19 +7557,26 @@ button.accordion-button .xlsheats{
     padding: 10px 15px;
 }
 
-.mob-sf-accordion .accordion-button {
+.mob-sf-accordion .accordion-button, 
+.mob-fd-accordion .accordion-button {
     padding: 15px 10px;
-    font-size: 14px;
+    font-size: 16px;
+    border-radius: 0 !important;
+    font-weight: 600;
 }
-.mob-sf-accordion .accordion-button::after { 
+.mob-sf-accordion .accordion-button::after,
+.mob-fd-accordion .accordion-button::after { 
     background-size: 15px; 
 }
-.mob-sf-accordion .accordion-item {
+.mob-sf-accordion .accordion-item,
+.mob-fd-accordion .accordion-item {
     margin-bottom: 0;
     border: none;
+    border-radius: 0;
     border-bottom: 1px dashed rgb(36 54 89 / 20%);
 }
-.mob-sf-accordion .accordion-body {
+.mob-sf-accordion .accordion-body,
+.mob-fd-accordion .accordion-body {
     padding: 0 10px 20px 10px;
     text-align: left;
 }
@@ -7575,4 +7588,3 @@ button.accordion-button .xlsheats{
     text-align: right;
     color: #1D86FF;
 }
-
