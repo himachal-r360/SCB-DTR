@@ -208,7 +208,7 @@
                                     
                                                         <div class="row">
                                                             <div class="ps-3" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title">PG Charges Applicable</span>
-                                                                <span class="pg-subtitle ps-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/>For all Domestic HDFC BANK Debit Cards – NIL up to Rs. 1 Lakh</span></div>
+                                                                <span class="pg-subtitle ps-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/>For all Domestic HDFC BANK Debit Cards – NIL up to ₹1 Lakh</span></div>
                                                         </div>
                                     
                                                     </div>
@@ -250,8 +250,8 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-6 text-end">
-                                                                            <div class="secure_text"><p class="invalid"><span class="material-icons pe-2 ">warning</span> Secure now</p></div>
-                                                                            <!-- <div class="secure_text"><p class="valid"><span class="material-icons pe-2 ">lock</span> Secure now</p></div> -->
+                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0"><p class="invalid"><span class="material-icons pe-2 ">warning</span>  Tokenise and Save</p><input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)"> <span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i></span></div>
+                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==1"><p class="valid"><span class="material-icons pe-2 ">lock</span> Secure now</p><input type="checkbox" name="tokenization" id="tokenization{{cardIndex}}" checked value="1" style="display:none;"></div>
                                                                         </div>
                                                                     </div>
                                     
@@ -314,7 +314,7 @@
                                                                             <small *ngIf="upiForm.controls.virtual_address.errors.pattern">Please enter a valid email id</small>
                                                                         </div>
                                                                         <p class="bharat-total">Total Amount</p>
-                                                                        <p class="bharat-price"> Rs. {{payTotalFare| number:'1.2-2'}}</p>
+                                                                        <p class="bharat-price"> ₹{{payTotalFare| number:'1.2-2'}}</p>
                                                                     </div>
                                                                 </div>
                             
@@ -384,7 +384,7 @@
                                                                           </div>
                                                                           <div>
                                                                             <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId==25"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title"  >PG Charges Applicable</span>
-                                                                            <span class="pg-subtitle ps-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/> For all Domestic HDFC BANK Debit Cards – NIL up to Rs. 1 Lakh</span></span>
+                                                                            <span class="pg-subtitle ps-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/> For all Domestic HDFC BANK Debit Cards – NIL up to ₹1 Lakh</span></span>
                                                                           </div>
                                                                       
                                                                           <form [formGroup]="creditForm" id="creditForm" *ngIf="pgSettingsCYBER" class="mt-4">
@@ -469,20 +469,29 @@
                                                                                     </div>
                                                                                     <div class="new-card-footer mb-4">
                                                                                         
-                                                                                        <div *ngIf="pgSettingsCYBER && isLoggedIn">
+                                                                                        <div *ngIf="!pgSettingsCYBERToken && pgSettingsCYBER && isLoggedIn">
                                                                                             <div class="form-check">
-                                                                                                <input class="form-check-input" type="checkbox" formControlName="termscondition" name="savecard" id="savecard">
+                                                                                                <input class="form-check-input" type="checkbox"  name="savecard" id="savecard">
                                                                                                 <label class="form-check-label xs-check-font" for="savecard" >
                                                                                                     Save Card
                                                                                                 </label>
                                                                                             </div>
                                                                                             <span style="font-size:12px;margin-bottom:20px;display: block;">(To avoid re-entering card details for every transaction. Delete saved cards anytime from Manage A/c → Payments)</span>
                                                                                         </div>
-                                                                                       <!--  <p *ngIf="pgSettingsCYBER && isLoggedIn"> 
-                                                                                            <label class="checkbox xs-check-font pt-10">Save Card
-                                                                                                <input type="checkbox" type="checkbox" name="savecard" id="savecard" checked> <span class="checkmark"></span></label>
+                                                                                        
+                                                                                        
+                                                                                                      <div *ngIf="pgSettingsCYBER && pgSettingsCYBERToken && isLoggedIn">
+                                                                                            <div class="form-check">
+                                                                                            
+                                                                                                <input class="form-check-input" type="checkbox"  name="tokenization" id="tokenization"  value="1" (change)="checkInfo1($event)">
+                                                                                                <label class="form-check-label xs-check-font" for="tokenization" >
+                                                                                                    Tokenise and Save
+                                                                                                </label>
+                                                                                                 <span class="tokensaveard">&nbsp;<i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo('VISA / MASTER / DINERS')"></i></span>
+                                                                                            </div>
+                                                                                              <input type="hidden" name="savecard" id="savecard" >
                                                                                             <span style="font-size:12px;margin-bottom:20px;display: block;">(To avoid re-entering card details for every transaction. Delete saved cards anytime from Manage A/c → Payments)</span>
-                                                                                        </p> -->
+                                                                                        </div>
                                                                                         <div>
                                                                                             <div class="form-check">
                                                                                                 <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_newCard">
@@ -519,7 +528,7 @@
                                                                                     <div class="rupay-info">
                                                                                         <img src="{{cdnUrl}}images/logo-rupay.jpg" class="img-fluid">
                                                                                         <p class="rupay-total">Total Amount</p>
-                                                                                        <p class="rupay-price">Rs. {{payTotalFare| number:'1.2-2' }}</p>
+                                                                                        <p class="rupay-price">₹{{payTotalFare| number:'1.2-2' }}</p>
                                                                                     </div>
                                                                                     <div class="clearfix"></div>
                                                                                     <div class="new-card-footer ">
@@ -573,14 +582,14 @@
                                                           </div>
                                                         <div>
                                                             <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title" >PG Charges Applicable</span>
-                                                                <span class="pg-subtitle ps-4">For NetBanking – Rs. 10/- + GST</span></span>
+                                                                <span class="pg-subtitle ps-4">For NetBanking – ₹10/- + GST</span></span>
                                                         </div>
                                                     <form [formGroup]="netbankingForm">
                                                         <div id="hdfcNetBankOption" class="collapse" [ngClass]="{'show': !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && pgSettingsNETBANKING }" data-bs-parent="#allPayments" name="paymentModule">
                             
                                                             <div class="hdfcNetBank-info">
                                                                 <p class="netBank-total">Total Amount</p>
-                                                                <p class="netBank-price">Rs. {{payTotalFare | commaSeparator}}</p>
+                                                                <p class="netBank-price">₹{{payTotalFare | commaSeparator}}</p>
                             
                                                             </div>
                                                             <div class="new-card-footer ">
@@ -651,9 +660,9 @@
                                                                             <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow" />
                                                                             <span class="label"></span>
                                                                             <div class="sub-info">
-                                                                            <p class="emi-duration"> Rs. {{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
+                                                                            <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
                                                                                 Value</span></p>
-                                                                            <p class="emi-tenure"> {{emiInterst[emi.key]}}% interest (Rs. {{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }} paid as interest in complete EMI tenure) </p>
+                                                                            <p class="emi-tenure"> {{emiInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }} paid as interest in complete EMI tenure) </p>
                                                                             </div>
                                                                         </label>
                                                                                 </div>
@@ -718,9 +727,9 @@
                                                                     <input type="radio" name="payDebitemi-sub" id="payDebitemi-subOne{{emi.key}}" class="hidden dc_emi_option" value="{{emi.key}}"  [checked]="firstRow" />
                                                                     <span class="label"></span>
                                                                     <div class="sub-info">
-                                                                    <p class="emi-duration"> Rs. {{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
+                                                                    <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
                                                                         Value</span></p>
-                                                                    <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (Rs. {{(emi.value*emi.key-payTotalFare | commaSeparator)| number}} paid as interest in complete EMI tenure) </p>
+                                                                    <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare | commaSeparator)| number}} paid as interest in complete EMI tenure) </p>
                                                                     </div>
                                                                 </label>
                                                                                     </div>
@@ -813,12 +822,12 @@
                                                                                                             <div class="col-md-6 bor-right">
                                                                                                                 <div class="emi-show">
                                                                                                                     <p class="total-amount">Total Amount</p>
-                                                                                                                    <p class="total-price">Rs. {{dcemiOtpResponse.cumulativeInvoiceAmount | commaSeparator}}</p>
+                                                                                                                    <p class="total-price">₹{{dcemiOtpResponse.cumulativeInvoiceAmount | commaSeparator}}</p>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                             <div class="col-md-6">
                                                                                                                 <div class="emi-show">
-                                                                                                                    <p class="emi-price">Rs. {{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
+                                                                                                                    <p class="emi-price">₹{{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
                                                                                                                     <p class="emi-para">EMI plan for <span>{{dcemiOtpResponse.tenure}}</span> months<br/>at <span>{{emiDebitInterst[DCEMItenure]}}%</span> interest</p>
                                                                                                                 </div>
                                                                                                             </div>
@@ -909,12 +918,12 @@
                                                                                                             <div class="col-md-6 bor-right">
                                                                                                                 <div class="emi-show">
                                                                                                                     <p class="total-amount">Total Amount</p>
-                                                                                                                    <p class="total-price">Rs. {{payTotalFare | commaSeparator}}</p>
+                                                                                                                    <p class="total-price">₹{{payTotalFare | commaSeparator}}</p>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                             <div class="col-md-6">
                                                                                                                 <div class="emi-show">
-                                                                                                                    <p class="emi-price">Rs. {{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
+                                                                                                                    <p class="emi-price">₹{{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
                                                                                                                     <p class="emi-para">EMI plan for <span>{{DCEMItenure}}</span> months<br/>at <span>{{emiDebitInterst[DCEMItenure]}}%</span> interest</p>
                                                                                                                 </div>
                                                                                                             </div>
@@ -1030,7 +1039,7 @@
                                                             <div class="payzapp-info">
                                                                 <img src="{{cdnUrl}}images/logo-payzapp.jpg" class="img-fluid">
                                                                 <p class="payzapp-total">Total Amount</p>
-                                                                <p class="payzapp-price">Rs. {{payTotalFare| number:'1.2-2' }}</p>
+                                                                <p class="payzapp-price">₹{{payTotalFare| number:'1.2-2' }}</p>
                                                                 <!--<p class="payzapp-fee"><i class="fas fa-rupee-sign"></i> 1 Convenience Fee added</p>-->
                                                             </div>
                             
@@ -1279,7 +1288,7 @@
                                                         <p class="emi-duration"> {{installment.key}} days later</p>
                                                         <p class="emi-tenure" *ngIf="installment.key==15; else intrest">No extra cost</p>
                                                       </div>
-                                                      <ng-template #intrest><p class="emi-tenure">Interest = Rs. {{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
+                                                      <ng-template #intrest><p class="emi-tenure">Interest = ₹{{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
                                                   </label>
                                                                                         </div>
                                                                                     </div>
@@ -1297,7 +1306,7 @@
                                                                                         <div class="w-flexpay-price-text text-center">
                                                                                             <p>You have chosen to pay {{selectedperiod}} days later. <br/>
                                                                                                 <!-- <span *ngIf="selectedperiod==15;else intrest"><b>Congratulations! No extra cost</b></span>
-                                                    <ng-template  #intrest><b>Congratulations! Interest is Rs. {{intrstopay}}/- per month</b></ng-template> -->
+                                                    <ng-template  #intrest><b>Congratulations! Interest is ₹{{intrstopay}}/- per month</b></ng-template> -->
                                                                                             </p>
                                                                                         </div>
                                                                                     </div>
@@ -1341,8 +1350,8 @@
                                                                                                 <div class="row my-3">
                                                                                                     <div class="col-12 col-md-12 pe-0">
                                                                                                         <div>
-                                                                                                            <span class="big-dark-text">Rs. {{payTotalFare| number:'1.2-2' }}</span>
-                                                                                                            <span class="big-strike ps-3" *ngIf="selectedperiod==15">Rs. {{showFlexiValue | commaSeparator}}</span>
+                                                                                                            <span class="big-dark-text">₹{{payTotalFare| number:'1.2-2' }}</span>
+                                                                                                            <span class="big-strike ps-3" *ngIf="selectedperiod==15">₹{{showFlexiValue | commaSeparator}}</span>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <!-- <div class="col-4 col-md-5 p-0" *ngIf="selectedperiod==15">
@@ -1355,7 +1364,7 @@
                                                                                                         <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
                                                                                                     </div>
                                                                                                     <div class="col-10 col-md-11">
-                                                                                                        <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">Rs. {{intrstopay | commaSeparator}}</span> Applied!</small>
+                                                                                                        <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">₹{{intrstopay | commaSeparator}}</span> Applied!</small>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -1452,7 +1461,7 @@
                                                                                                 <div class="col-md-6 bor-right">
                                                                                                     <div class="emi-show">
                                                                                                         <p class="total-amount">FlexiPay Transaction Amount</p>
-                                                                                                        <p class="total-price">Rs. {{flexipayOtpResponse.cumulativeInvoiceAmount | number:'1.2-2' }}</p>
+                                                                                                        <p class="total-price">₹{{flexipayOtpResponse.cumulativeInvoiceAmount | number:'1.2-2' }}</p>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="col-md-6">
@@ -1550,7 +1559,7 @@
                                                         <div class="col-12">
                                                             <div class="payzapp-info">
                                                                 <p class="payzapp-total">Total Amount</p>
-                                                                <p class="payzapp-price">Rs. {{payTotalFare| number:'1.2-2' }}</p>
+                                                                <p class="payzapp-price">₹{{payTotalFare| number:'1.2-2' }}</p>
                                                                 <!-- <p class="payzapp-price"> <i class="fas fa-rupee-sign"></i> {{payTotalFare| number:'1.2-2'}}</p> -->
                                                             </div>
                             
@@ -1578,3 +1587,64 @@
             </div>
             
         </div>      
+        
+        
+        
+        
+        
+
+<button class=" payinfo_popup hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo" ></button>
+   <button class=" payinfo_popup1 hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo1"></button>
+
+
+
+
+<div class="modal fade pop_code" id="payinfo" tabindex="-1" role="dialog" aria-labelledby="payinfo"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-2 pr-0">
+                <button type="button" class="btn-close close-popupd" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-10">
+ <div  align="center" id="faredata-error">Are you sure? If you do not tokenise your card prior to 30th September, you will have to re-enter the full card details while paying.</div>
+<div class="selectd-book-btn" style="text-align:center;">
+<div class="row mt-4"> 
+       <div class="col-6"> <button type="button" class="btn-normal btn-animated btnyes" (click)="securemycard()" >Tokenise and Save</button> </div>
+       <div class="col-4"> <button type="button" class="btn btn-animated btnno"   (click)="nothanks()" >NO THANKS</button> </div>
+</div>
+<input type="hidden" id="payinfoid" value="" />
+</div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade pop_code" id="payinfo1" tabindex="-1" role="dialog" aria-labelledby="payinfo1"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-2 pr-0">
+                <button type="button" class="btn-close close-popupd" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-10">
+                 <div class="text-center">
+        <img src="" alt="" class="img-fluid secure_img infocardimg" width="50%"> 
+        <p class="title_visa pb-10">Please Tokenise & Save <span class="infocardtype"></span> card.</p>
+        <p class="desc_visa">As per RBI guidelines, We will securely save your card through Tokenisation.</p>
+      </div>
+      <div class="text_points">
+        <p>How will this help?</p>
+        <ul>
+          <li>Prevents your card from unauthorized use</li>
+          <li class="infocardtext"></li>
+        </ul>
+      </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+   

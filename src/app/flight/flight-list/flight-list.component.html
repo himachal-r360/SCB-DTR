@@ -1238,7 +1238,11 @@
           </div>
 
           <div class="col-md-12">
-              <div class="mob-list-area" (click)="OpenPartner(i)" *ngFor="let list of flightList; let i = index" id="flight_list_{{list.flightKey}}">
+            <ng-container #itemsContainer></ng-container>
+            
+                <ng-template #item let-item="item">  
+                <div  *ngFor="let list of item; let i = index" >
+              <div class="mob-list-area" (click)="OpenPartner(i)" id="flight_list_{{list.flightKey}}">
                   <div class="mob-list-items">
                       <div class="mob-list-items-name">
                           <div class="mob-list-items-name-top">
@@ -1254,6 +1258,8 @@
                                   <p  *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</p>
                               </div>
                           </div>
+                          
+                          
                           <div class="mob-list-items-name-bottom">
                               <div class="name-bottom-top">
                                   <div class="name-bottom-top-left">
@@ -1276,6 +1282,8 @@
                               </div>-->
                           </div>
                       </div>
+                      
+                      
                       <div class="mob-items-book-list" id="CompareToFly_{{list.flightKey}}">
                           <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                               <div class="mob-book-list-top">
@@ -1315,8 +1323,11 @@
                       </div>
                   </div>
               </div>
+              </div>
+               <div id="endOfPage" (click)="loadData()"></div>
+            </ng-template>  
+              
           </div>
-
           
 
       </div>

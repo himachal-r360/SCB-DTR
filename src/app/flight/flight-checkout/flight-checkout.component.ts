@@ -216,7 +216,7 @@ new_fare: number = 0;
         baggageInfo:any='';
         cancellationPolicy:any='';
         flightDetailsArrVal:any;
-        steps:any = 1;
+        steps:any = 2;
 
         travelerDetails:any={};
         checked:any= false;
@@ -571,6 +571,7 @@ new_fare: number = 0;
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
              $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             
              }
         } else {
          if(checkboxIndex !=-1){

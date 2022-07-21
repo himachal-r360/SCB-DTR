@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
 
-                                <div class="Booking-Flight-passanger" *ngIf="baggageInfo"  >
+                                <div class="Booking-Flight-passanger" *ngIf="baggageInfo[i]"  >
                                     <div class="row">
                                         <div class="col-md-2">
                                             <h6>Airline</h6>
@@ -436,7 +436,7 @@
                                                 </div>
                                                 
                                                    <div >
-                                                     <div  class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div  class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -513,7 +513,7 @@
                                                 
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -579,7 +579,7 @@
                                             </li>
                                      </ng-container> 
                                         </ul>
- <p class="view_more_btn" *ngIf="!isAdultExpanded && adultTravellerList && adultTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsAdult()">View More</a></p>
+ <p class="view_more_btn othertraveller" *ngIf="!isAdultExpanded && adultTravellerList && adultTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsAdult()">View More</a></p>
                              
                                  <div class="add_new_traveler p-20" *ngIf="adultsArrayM.length>0 " >
                                 <div *ngIf="adultsArrayM.length>0">
@@ -677,7 +677,7 @@
                                                 </div>
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -755,7 +755,7 @@
                                                 
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -821,7 +821,7 @@
                                             </li>
                                      </ng-container> 
                                         </ul>
-                                           <p class="view_more_btn" *ngIf="!isChildExpanded && childTravellerList && childTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsChild()">View More</a></p>
+                                           <p class="view_more_btn othertraveller" *ngIf="!isChildExpanded && childTravellerList && childTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsChild()">View More</a></p>
                                         
                                  <div class="add_new_traveler p-20" *ngIf="childArrayM.length>0 " >
                                 <div *ngIf="childArrayM.length>0">
@@ -918,7 +918,7 @@
                                                 </div>
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -996,7 +996,7 @@
                                                 
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -1062,7 +1062,7 @@
                                             </li>
                                      </ng-container> 
                                         </ul>
-                                                <p class="view_more_btn" *ngIf="!isInfantExpanded && infantTravellerList && infantTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsInfant()">View More</a></p>
+                                                <p class="view_more_btn othertraveller" *ngIf="!isInfantExpanded && infantTravellerList && infantTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsInfant()">View More</a></p>
                                
                              <div class="add_new_traveler p-20" *ngIf="infantArrayM.length>0 " >
                                 <div *ngIf="infantArrayM.length>0">
