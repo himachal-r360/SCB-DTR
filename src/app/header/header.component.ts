@@ -23,7 +23,7 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
-
+import { FlightService } from '../common/flight.service';
 declare var $: any;
 declare var jQuery: any;
 declare const annyang: any;
@@ -160,7 +160,7 @@ export class HeaderComponent implements OnInit {
   delta:any;
         payzrestriction:boolean=false;
  @ViewChild("content") modalContent: TemplateRef<any>;
-  constructor(private ngZone: NgZone,private modalService: NgbModal,
+  constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
 
   
@@ -339,7 +339,7 @@ export class HeaderComponent implements OnInit {
           }else{
             
             htmltoast = this.toast(this.pushid[index],index);
-            this.pushids.push(this.pushid[index]['id']);
+            this.pushids.push(this.pushid[index]['private _flightService:FlightServiceid']);
             break;
           }
         }
@@ -725,11 +725,11 @@ closeCookieConsent(value){
   }
   
   ngOnInit() {
-  
+    this._flightService.headerHideShow = document.getElementById('headerHide');
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
-    
+   
    
        
        this.router.events.subscribe((event: any) => {

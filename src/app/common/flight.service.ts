@@ -20,6 +20,7 @@ export class FlightService {
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
   private travellerDetailsSubject = new BehaviorSubject<any>(null);
   travellerDetailsObservalble= this.travellerDetailsSubject.asObservable();
+  headerHideShow:any;
 
 
 
@@ -29,7 +30,11 @@ export class FlightService {
   flightList(para: any) {
     let body = JSON.stringify(para);
      if(LOCALJSON=='true'){
+      if(para.flightdefault=='O'){
       return this.http.get('assets/data/flight-onward.json');
+      }else{
+      return this.http.get('assets/data/flight-return.json');
+      }
     }else{
     
     return this.http.post(this.flight, body, { headers: this.header })

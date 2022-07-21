@@ -25,7 +25,7 @@ let journery_date=$('#journery_date').val();
 let check_date=moment(new Date(journery_date)).subtract(12, 'years').calendar();
 let input_date= moment(c.value).format('YYYY-MM-DD');
 let to_date=moment(check_date).format('YYYY-MM-DD');
-if(moment(input_date).isAfter(to_date, 'year'))
+if(moment(input_date).isAfter(to_date))
 {
 return  {
 validateAdultAge: {
@@ -37,33 +37,39 @@ valid: false
 
 function validateChildAge(c: FormControl) {
 let journery_date=$('#journery_date').val();
-let check_date=moment(new Date(journery_date)).subtract(12, 'years').calendar();
-let input_date= moment(c.value).format('YYYY-MM-DD');
-let to_date=moment(check_date).format('YYYY-MM-DD');
-if(moment(input_date).isAfter(to_date, 'year'))
-{
-return  {
-validateChildAge: {
-valid: false
-}
-};
-}	
+	let mndate=moment(new Date(journery_date)).subtract(12, 'years').calendar();
+	let mxdate=moment(new Date(journery_date)).subtract(2, 'years').calendar();
+	let mindate =moment(mndate).format('YYYY-MM-DD');
+	let maxdate =moment(mxdate).format('YYYY-MM-DD');
+	let input_date= moment(c.value).format('YYYY-MM-DD');
+	
+	if(moment(mindate).isAfter(input_date) && moment(maxdate).isAfter(input_date) )
+	{
+        return  {
+        validateChildAge: {
+        valid: false
+        }
+        };
+	}
+	
 }
 
 function validateInfantAge(c: FormControl) {
 let journery_date=$('#journery_date').val();
-console.log(journery_date);
-let check_date=moment(new Date(journery_date)).subtract(12, 'years').calendar();
-let input_date= moment(c.value).format('YYYY-MM-DD');
-let to_date=moment(check_date).format('YYYY-MM-DD');
-if(moment(input_date).isAfter(to_date, 'year'))
-{
-return  {
-validateInfantAge: {
-valid: false
-}
-};
-}	
+	
+	let mndate=moment(new Date(journery_date)).subtract(2, 'years').calendar();
+	let current_date =moment(new Date()).format('YYYY-MM-DD');
+	let mindate =moment(mndate).format('YYYY-MM-DD');
+	let maxdate =moment().format('YYYY-MM-DD');	
+	let input_date= moment(c.value).format('YYYY-MM-DD');
+	
+	if(moment(input_date).isAfter(mindate) && moment(input_date).isBefore(maxdate)&& moment(input_date).isBefore(current_date)){}else{
+        return  {
+        validateInfantAge: {
+        valid: false
+        }
+        };
+	}	
 }
 
 declare let alertify: any;
@@ -1307,7 +1313,6 @@ new_fare: number = 0;
       let baseFare=0; let taxFare=0; let totalFare=0;
          clearInterval(myInterval3);
          $('#infoprocess').modal('hide');
-      
       if(this.searchData.travel=='DOM'){
       if(res.statusCode ==200)
       {
@@ -1371,7 +1376,7 @@ new_fare: number = 0;
         this.Tax =taxFare;
         this.TotalFare =totalFare;
         
-       this.totalCollectibleAmount = Number(this.TotalFare) + Number(this.convenience_fee) ;
+       this.totalCollectibleAmount = Number(this.TotalFare) ;
        this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
 
         }
