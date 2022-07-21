@@ -85,7 +85,7 @@ declare var $: any;
 @Component({
   selector: 'app-flight-checkout',
   templateUrl: './flight-checkout.component.html',
-  styleUrls: ['./flight-checkout.component.css'],
+  styleUrls: ['./flight-checkout.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]

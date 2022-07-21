@@ -436,7 +436,7 @@
                                                 </div>
                                                 
                                                    <div >
-                                                     <div  class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div  class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -513,7 +513,7 @@
                                                 
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -677,7 +677,7 @@
                                                 </div>
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -755,7 +755,7 @@
                                                 
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -918,7 +918,7 @@
                                                 </div>
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -996,7 +996,7 @@
                                                 
                                                 
                                                    <div  >
-                                                     <div class="mt-3" id="passengerBox_{{passenger.id}}" >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -2161,59 +2161,474 @@
                 <!--Steps 4-->
                 <div class="col-md-8" *ngIf="steps==4">
                 <div class="booking-process-content" *ngIf="flightDetails" >
-                <div class="booking-title-box">
-                <h4>Review Booking</h4>
-                </div>
-                <div class="booking-inner-box from-to-box">
-                            <div class="booking-inner-title">
+                    <div class="booking-title-box">
+                        <h4>Review Booking</h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box pb-0">
+                        <div class="web_code d-none d-sm-block">
+                            <div class="booking-inner-title ">
                                 <div class="booking-inner-title-left" *ngIf="searchData">
-                                    <h6>
-                                        {{searchData.fromCity}}
-                                        <img src="{{cdnUrl}}/images/icons/flight-right.png" class="ms-2 me-2" alt="">
-                                        {{searchData.toCity}}
-                                    </h6>
-                                    <p> {{searchData.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
-                                </div>
-                                <div class="booking-inner-title-right" *ngIf="selectedVendor" >
-                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
-                                    <p class="refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
-                                </div>
-                            </div>
-
-                            <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
-                                <div class="Booking-Flight-name" >
-                                    <div class="Booking-Flight-name-left">
-                                        <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
-                                        <span class="fw_7  mr-10">{{flights.airlineName}}</span>
-                                        <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
-                                    </div>
-                                    <div class="Booking-Flight-name-right">
-                                        <p>{{flightClasses[searchData.flightclass]}}</p>
+                                    <div class="head_info">
+                                        <div class="float-start">
+                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">
+                                        </div>
+                                        <h6>
+                                            <span class="city_text">{{searchData.fromCity}}</span>
+                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
+                                            <span class="city_text">{{searchData.toCity}}</span>
+                                            <p class="flight_details mb-0 pt-1"> Indigo 6E-956, Indigo 6E-413 | Economy  | Non refundable</p>
+                                        </h6>
                                     </div>
                                 </div>
-                                <div class="Booking-Flight-time">
-                                    <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
-                                    <span class="round round-line"></span>
-                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                        <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
-                                        <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
-                                        <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                <div>
+                                    <div class="head_info">
+                                    <div>
+                                            <p class="time_text">08:55</p>
+                                            <p class="date_text">11 jul</p>
+                                    </div>
+                                    <div>
+                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
+                                    </div>
+                                    <div>
+                                            <p class="time_text">08:55</p>
+                                            <p class="date_text">11 jul</p>
+                                    </div>
                                     </div>
                                 </div>
-
-                                <div class="Booking-Flight-time">
-                                    <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
-                                    <span class="round"></span>
-                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                        <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
-                                        <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                <div>
+                                    <div>
+                                        <p class="duration_flight">6hr 10min</p>
+                                        <p class="date_text">1 stop</p>
                                     </div>
+                                </div>
+                                <div class="booking-inner-title-right">
+                                    <p class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse" role="button" aria-expanded="false"> <span class=""><!--<i class="fas fa-angle-down rotate-icon"></i>--></span></p>
                                 </div>
                             </div>
                         </div>
+                        <div class="web_code d-block d-sm-none">
+                            <div class="booking-inner-title mlite_code d-block d-sm-none">
+                                <div class="booking-inner-title-left" *ngIf="searchData">
+
+                                    <div class="head_info mb-20">
+                                        <div class="float-start">
+                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">
+                                        </div>
+                                        <h6>
+                                            <span class="city_text">{{searchData.fromCity}}</span>
+                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
+                                            <span class="city_text">{{searchData.toCity}}</span>
+                                            <p class="flight_details mb-0 pt-1"> Indigo 6E-956, Indigo 6E-413 | Economy  | Non refundable</p>
+                                        </h6>
+                                        <div class="booking-inner-title-right">
+                                            <p class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse" role="button" aria-expanded="false"> <span class=""><!--<i class="fas fa-angle-down rotate-icon"></i>--></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-evenly">
+                                    <div class="head_info">
+                                        <div>
+                                            <p class="time_text">08:55</p>
+                                            <p class="date_text">11 jul</p>
+                                        </div>
+                                        <div>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="time_text">08:55</p>
+                                            <p class="date_text">11 jul</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <p class="duration_flight">6hr 10min</p>
+                                            <p class="date_text">1 stop</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                                
+
+                                <div class="collapse" id="flight_review_collapse">
+                                    <div class="Flight-One flight_detail_review" *ngFor="let flights of flightDetails;let i = index" >
+                                        <div class="Booking-Flight-name" >
+                                            <div class="Booking-Flight-name-left">
+                                                <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
+                                                <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                                                <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                            </div>
+                                            <div class="Booking-Flight-name-right">
+                                                <p>{{flightClasses[searchData.flightclass]}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                                            <span class="round round-line"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                                <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                            </div>
+                                        </div>
+        
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                                            <span class="round"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                            </div>
+                                        </div>
+        
+                                    <div class="Booking-Flight-passanger" *ngIf="baggageInfo"  >
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <h6>Airline</h6>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h6>Check-in Baggage</h6>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h6>Cabin Baggage</h6>
+                                            </div>
+                                            <!--<div class="col-md-4">
+                                                <h6>Flight Extras</h6>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                            </div>-->
+                                        </div>
+                                        <div class="row"  >
+                                            <div class="col-md-2">
+                                                <p>{{baggageInfo[i].flightName}}<br>{{baggageInfo[i].flightNo}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p *ngIf="baggageInfo[i].checkIn;then checkIn_content else checkIn_blank"></p>
+                                                <ng-template #checkIn_content>{{baggageInfo[i].checkIn}}</ng-template>
+                                                <ng-template #checkIn_blank>NA</ng-template>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p *ngIf="baggageInfo[i].cabin ;then cabin_content else cabin_blank"></p>
+                                            <ng-template #cabin_content>{{baggageInfo[i].cabin}}</ng-template>
+                                                <ng-template #cabin_blank>NA</ng-template>
+                                            </div>
+                                    
+                                        </div> 
+                                        
+                                    </div>
+                                    <!-- <div class="change-planes" *ngIf="getLayoverHour(flightDetails[i],flightDetails[i+1]) && airportsNameJson">
+                                        <h6>Change of planes・{{getLayoverHour(flightDetails[i],flightDetails[i+1]) | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                    </div> -->
+                                    <div class="change-planes" *ngIf="dateHour && airportsNameJson && flightDetails[i+1]">
+                                        <h6>Change of planes・{{dateHour | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                    </div>
+                                    </div>
+                                    <div class="layover_break">
+                                        <p>Change of planes・3h 0m Layover in Nagpur</p>
+                                    </div>
+                                    <div class="Flight-One flight_detail_review" *ngFor="let flights of flightDetails;let i = index" >
+                                        <div class="Booking-Flight-name" >
+                                            <div class="Booking-Flight-name-left">
+                                                <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
+                                                <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                                                <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                            </div>
+                                            <div class="Booking-Flight-name-right">
+                                                <p>{{flightClasses[searchData.flightclass]}} > <b>SAVER</b> <span class="material-icons fa-1x ps-2">error</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                                            <span class="round round-line"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                                <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                            </div>
+                                        </div>
+        
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                                            <span class="round"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                            </div>
+                                        </div>
+        
+                                    <div class="Booking-Flight-passanger" *ngIf="baggageInfo"  >
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <h6>Airline</h6>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h6>Check-in Baggage</h6>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h6>Cabin Baggage</h6>
+                                            </div>
+                                            <!--<div class="col-md-4">
+                                                <h6>Flight Extras</h6>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                            </div>-->
+                                        </div>
+                                        <div class="row"  >
+                                            <div class="col-md-2">
+                                                <p>{{baggageInfo[i].flightName}}<br>{{baggageInfo[i].flightNo}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p *ngIf="baggageInfo[i].checkIn;then checkIn_content else checkIn_blank"></p>
+                                                <ng-template #checkIn_content>{{baggageInfo[i].checkIn}}</ng-template>
+                                                <ng-template #checkIn_blank>NA</ng-template>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p *ngIf="baggageInfo[i].cabin ;then cabin_content else cabin_blank"></p>
+                                            <ng-template #cabin_content>{{baggageInfo[i].cabin}}</ng-template>
+                                                <ng-template #cabin_blank>NA</ng-template>
+                                            </div>
+                                    
+                                        </div> 
+                                        
+                                    </div>
+                                    <!-- <div class="change-planes" *ngIf="getLayoverHour(flightDetails[i],flightDetails[i+1]) && airportsNameJson">
+                                        <h6>Change of planes・{{getLayoverHour(flightDetails[i],flightDetails[i+1]) | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                    </div> -->
+                                    <div class="change-planes" *ngIf="dateHour && airportsNameJson && flightDetails[i+1]">
+                                        <h6>Change of planes・{{dateHour | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                    </div>
+                                    </div>
+                                </div>
+
+
+                            <div class="edit_baggage">
+                                <div class="luggage-box-edit">
+                                    <div class="luggage-text">
+                                        <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
+                                        <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                    </div>
+                </div>
+                <div class="booking-process-content contact_review">
+                    <div class="booking-title-box mb-0">
+                        <h4 class="heading_text">Contact Details <p class="sub_head_text ps-3">(for all communication) <span class="ps-1"> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box">
+                        <div class="">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <p class="label_text">Email</p>
+                                        <p class="label_value">abhay.rege@gmail.com</p>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <p class="label_text">Mobile Number</p>
+                                        <p class="label_value">9876543210</p>
+                                    </div>
+                                </div>
+
+                            <div class="contact-whatsapp">
+                                <div class="contact-whatsapp-info me-2">
+                                    <span>Send my booking information through</span>
+                                    <img src="{{cdnUrl}}/images/icons/whatsapp.png" class="ms-2" alt="">
+                                    <span class="fw_7">WhatsApp</span>
+                                </div>
+                                <div class="form-check form-switch m-0 ">
+                                    <input class="form-check-input" type="checkbox" role="switch" formControlName="whatsappFlag" name="whatsappFlag" id="whatsappFlag" 
+                                        [checked]="whatsAppCheck" />
+                                </div>
+                            </div>
+                        </div>
+                                
+                    </div>
 
                 </div>
-                </div>    
+                <div class="booking-process-content traveller_review">
+                    <div class="booking-title-box mb-0">
+                        <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3">2 Adults, 1 Child, 1 Infant <span class="ps-1"> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box">
+                        <div class="p-2">
+                             <div>
+                                <h6>2 Adults</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Amit Kumar</td>
+                                        <td>24/09/1998<span class="age_data">24 years</span></td>
+                                        <td>Male</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amit Kumar</td>
+                                        <td>24/09/1998<span class="age_data">24 years</span></td>
+                                        <td>Male</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                             </div>
+                             <div>
+                                <h6>2 Child</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Amit Kumar</td>
+                                        <td>24/09/1998<span class="age_data">24 years</span></td>
+                                        <td>Male</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amit Kumar</td>
+                                        <td>24/09/1998<span class="age_data">24 years</span></td>
+                                        <td>Male</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                             </div>
+                             <div>
+                                <h6>2 Infant</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Amit Kumar</td>
+                                        <td>24/09/1998<span class="age_data">24 years</span></td>
+                                        <td>Male</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amit Kumar</td>
+                                        <td>24/09/1998<span class="age_data">24 years</span></td>
+                                        <td>Male</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                             </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="booking-process-content seats_review">
+                    <div class="booking-title-box mb-0">
+                        <h4 class="heading_text">Seats and Meals <p class="ps-1"> <span class=""> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box">
+                        <div class="">
+                            <ul class="nav nav-pills mb-3 seats_tabs nav-justified" id="pills-tab-seats-review" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link active" id="flight_one" data-bs-toggle="pill" data-bs-target="#pills-flight-one" type="button" role="tab" aria-controls="pills-flight-one" aria-selected="true">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" alt="" class="me-2">
+                                        </div>
+                                        <div class="">
+                                            <h6 class="mb-0">
+                                                <span class="city_text">Mumbai</span>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-3">
+                                                <span class="city_text">Nagpur</span>
+                                            </h6> 
+                                        </div>
+                                    </div>
+                                  </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="flight_two" data-bs-toggle="pill" data-bs-target="#pills-flight-two" type="button" role="tab" aria-controls="pills-flight-two" aria-selected="false">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" alt="" class="me-2">
+                                        </div>
+                                        <div class="">
+                                            <h6 class="mb-0">
+                                                <span class="city_text">Mumbai</span>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-3">
+                                                <span class="city_text">Nagpur</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                  </button>
+                                </li>
+                                
+                              </ul>
+                              <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-flight-one" role="tabpanel" aria-labelledby="flight_one">
+                                    <div>
+                                        <table class="table  traveller_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Seat</th>
+                                                    <th scope="col">Meal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Amit Kumar</td>
+                                                <td>3A</td>
+                                                <td>Not Selected</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Amit Kumar</td>
+                                                <td>10A</td>
+                                                <td>Non-veg</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                     </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-flight-two" role="tabpanel" aria-labelledby="flight_two">
+                                    <div>
+                                        <table class="table  traveller_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Seat</th>
+                                                    <th scope="col">Meal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td> Kumar</td>
+                                                <td>Not Selected</td>
+                                                <td>Wine</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Kumar</td>
+                                                <td>Not Selected</td>
+                                                <td>Burger</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                     </div>
+                                </div>
+                              </div>
+                        </div>
+                                
+                    </div>
+
+                </div>
+            </div>    
                 <!--Step4 Ends-->   
                 
                  <!--Steps 5-->

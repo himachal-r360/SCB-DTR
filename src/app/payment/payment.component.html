@@ -132,6 +132,7 @@
     </div>
 
         <div class="payment_cnt p-0">
+            
             <div class="">
                 <div class="payment_final_sec border-0">
                     <div class="row">
@@ -562,6 +563,13 @@
 
                                 <!-- Net Banking Section Starts -->
                                 <div id="pane-netBanking" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-netBanking" *ngIf="pgSettingsNETBANKING">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsNETBANKING">
+                                            <a id="tab-netBanking" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" href="#collapse-netBanking" aria-expanded="false" aria-controls="collapse-netBanking">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">Net Banking</span>
+                                            </a>
+                                          </div>
+                                    </div>
                                     <div id="collapse-netBanking" class="collapse" role="tabpanel" aria-labelledby="heading-netBanking">
                                         <div class="card-body p-1">
                                             <div>
@@ -576,7 +584,7 @@
                                                                 <span class="pg-subtitle ps-4">For NetBanking – Rs. 10/- + GST</span></span>
                                                         </div>
                                                     <form [formGroup]="netbankingForm">
-                                                        <div id="hdfcNetBankOption" class="collapse" [ngClass]="{'show': !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && pgSettingsNETBANKING }" data-bs-parent="#allPayments" name="paymentModule">
+                                                        <div id="hdfcNetBankOption" [ngClass]="{'show': !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && pgSettingsNETBANKING }" data-bs-parent="#allPayments" name="paymentModule">
                             
                                                             <div class="hdfcNetBank-info">
                                                                 <p class="netBank-total">Total Amount</p>
