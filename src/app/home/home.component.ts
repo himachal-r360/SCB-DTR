@@ -98,19 +98,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     pullDrag: false,
     dots: false,
     navSpeed: 700,
+    margin: 10,
     // navText: ['', ''],
     responsive: {
       0: {
-        items: 1
+        items: 1.2
       },
       400: {
-        items: 1
+        items: 1.2
       },
       740: {
-        items: 1
+        items: 1.2
       },
       940: {
-        items: 1
+        items: 1.2
       }
     },
     nav: false
