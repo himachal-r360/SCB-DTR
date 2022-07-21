@@ -1360,7 +1360,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   
   openFlightDetailMobile(i:any,title:any){
-    console.log(i , title);
       let flightDetail = document.getElementById('flightDetailMobile_' + i);
       let cancellation:any = document.getElementById('collapseTwo-fd_'+ i);
       let baggage:any = document.getElementById('collapseThree-fd_'+ i);
