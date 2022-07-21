@@ -1766,8 +1766,8 @@ new_fare: number = 0;
 		 $('#infoprocess').modal('hide');
 		 $('#bookingprocessPriceChange').modal('show');
  		}else{
- 		 this.saveCheckout(myInterval1);
- 		 /* clearInterval(myInterval1);
+ 		 //this.saveCheckout(myInterval1);
+ 		  clearInterval(myInterval1);
  		 $('#infoprocess').modal('hide');
                         if(this.enableVAS==1){
                         this.steps=3;
@@ -1775,7 +1775,7 @@ new_fare: number = 0;
                         }else{
                         this.steps=4;
                         this.completedSteps=4;
-                        }*/
+                        }
  		}
           
           }else{
