@@ -128,6 +128,9 @@ export class HeaderComponent implements OnInit {
         enablePushTitle:boolean=false;
         notificationContainer:boolean=false;
         disableContainer:boolean=false;
+        enableContextBox:boolean = false;
+        viewMoreBox:boolean = true;
+        viewLessBox:boolean = false;
         prefere:any=[];
         toastPush:boolean=false;
         pushPopup:any;
@@ -469,7 +472,17 @@ export class HeaderComponent implements OnInit {
       this.notifyOpacity = true;
       $('.myaccount-drop').removeClass('show');
   }
-  
+  enableMoreClick() {
+    
+    this.enableContextBox = true;
+    this.viewMoreBox = false;
+    this.viewLessBox = true;
+  }
+  enableLessClick() {
+    this.enableContextBox = false;
+    this.viewMoreBox = true;
+    this.viewLessBox = false;
+  }
 
   
   toastClose(pushpopid){

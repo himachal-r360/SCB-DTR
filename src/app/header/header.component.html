@@ -31,7 +31,7 @@
     </div>
 </div>
 
- <div id="headerHide" class="header-sticky fixed-top bg-header " >
+<div class="header-sticky fixed-top bg-header " *ngIf="showmHeader">
     <div class="row marquee-row-new" *ngIf="importantMessage">
         <div class="container-fluid">
             <div class="col-md-2 message">Important Message:</div>
@@ -878,9 +878,12 @@
             <div class="m_disclaimer">
                 <p class="title">Disclaimer:</p>
                 <p>
-                    HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers. HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC
+                    HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers.
+                    <span id="show-more" (click)="enableMoreClick()" *ngIf="viewMoreBox">View More</span>
+                    <span id="show-content" *ngIf="enableContextBox"> HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC
                     Bank is merely facilitating the payment to its Customers by providing the Payment Gateway Services. HDFC Bank is neither guaranteeing nor making any representation. HDFC Bank is not responsible for Sale/Quality/Features of the Products/Services
-                    under the offers.
+                    under the offers. <span id="show-less" (click)="enableLessClick()" *ngIf="viewLessBox"> View less</span>
+                    </span>
                 </p>
             </div>
 
@@ -930,7 +933,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/flight.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/flight_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Flights</h6>
@@ -941,7 +944,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.TRAIN==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/train.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/train_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Trains</h6>
@@ -953,7 +956,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.BUS==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/bus.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/bus_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Bus</h6>
@@ -964,7 +967,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/hotel.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/stay_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Hotel Stays</h6>
