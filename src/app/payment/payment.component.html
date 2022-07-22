@@ -1664,13 +1664,15 @@
         
         
         
-        
+          <form [formGroup]="payForm" action="{{MAIN_SITE_URL}}checkout" name="payForm" method="POST" id="payForm">
+        <input type="hidden" formControlName="orderReferenceNumber" name="orderReferenceNumber" id="orderReferenceNumber">
+        <input type="hidden" formControlName="_token" name="_token" id="_token">
+        <input type="hidden" formControlName="ctype" name="ctype" id="ctype">
+    </form>
         
 
 <button class=" payinfo_popup hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo" ></button>
    <button class=" payinfo_popup1 hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo1"></button>
-
-
 
 
 <div class="modal fade pop_code" id="payinfo" tabindex="-1" role="dialog" aria-labelledby="payinfo"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

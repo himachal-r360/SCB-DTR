@@ -1258,7 +1258,6 @@ payNow(ptype){
 	
 
 		let fareD= JSON.parse(atob(this.passFareData));
-		delete fareD["avlDayList"];
 		// console.log(fareD)
 		// let df_fareData = this.EncrDecr.set(JSON.stringify(fareD))
 
