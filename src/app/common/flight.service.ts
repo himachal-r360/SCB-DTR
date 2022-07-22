@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
+const LOCALJSON = environment.LOCALJSON;
 @Injectable({
   providedIn: 'root'
 })
@@ -28,8 +28,17 @@ export class FlightService {
   constructor(private http: HttpClient) { }
 
   flightList(para: any) {
-    let body = JSON.stringify(para)
+    let body = JSON.stringify(para);
+     if(LOCALJSON=='true'){
+      if(para.flightdefault=='O'){
+      return this.http.get('assets/data/flight-onward.json');
+      }else{
+      return this.http.get('assets/data/flight-return.json');
+      }
+    }else{
+    
     return this.http.post(this.flight, body, { headers: this.header })
+    }
   }
 
   getCityList(queryText: any) {
@@ -64,7 +73,12 @@ export class FlightService {
 
   getFlightInfo(param:any)
   {
+     if(LOCALJSON=='true'){
+      return this.http.get('assets/data/flightInfo.json');
+    }else{
+    
     return this.http.post(this.flightInfo, param, { headers: this.header })
+    }
   }
 
 }

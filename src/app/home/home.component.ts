@@ -15,6 +15,7 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
+import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -119,11 +120,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   constructor(
+  public _styleManager: StyleManagerService,
     public router: Router,
     private _fb: FormBuilder,
     private _flightService: FlightService
+    
+  ) {
 
-  ) {}
+    setTimeout(() => {
+      this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+      this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+      this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+      this._styleManager.setScript('custom', `assets/js/custom.js`);
+   }, 10);
+
+  }
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
     flightto: ['',[Validators.required]],
@@ -153,9 +164,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
 
   }
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-  }
+
   currentPeriodClicked(datePicker:any){
     let date = datePicker.target.value
     if(date && this.navItemActive !== "Round Trip"){
@@ -443,7 +452,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     return str.join("&");
   }
-
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+    
+        this._styleManager.removeStyle('bootstrap-select');
+        this._styleManager.removeStyle('daterangepicker');
+        this._styleManager.removeScript('bootstrap-select');
+        this._styleManager.removeScript('custom');
+  }
 
   continueSearch(param:any){
     sessionStorage.setItem('searchVal', JSON.stringify(param));
