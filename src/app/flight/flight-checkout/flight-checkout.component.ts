@@ -1537,8 +1537,6 @@ new_fare: number = 0;
         return;
         } else {
         
-        
-        
          
          let flightDetails=[];
          let itineraryType;
@@ -1590,8 +1588,12 @@ new_fare: number = 0;
                 "frequentFlyerNumbers": [],
                 "paxID": paxInfoCnt
               });
+              
+
+              
         paxInfoCnt++;
         }
+        
         
         
                 for(let i=1;i<(this.passengerChildFormCount);i++){
@@ -1622,6 +1624,11 @@ new_fare: number = 0;
               });
         paxInfoCnt++;
         }
+        
+        
+        console.log(this.paxInfo);
+         
+        
         let fareDetails=[];
         fareDetails.push({ "amount": this.totalCollectibleAmountFromPartnerResponse,   "fareKey": this.flightInfo.fareKey, "flightKey": this.flightSessionData.flightKey });
         

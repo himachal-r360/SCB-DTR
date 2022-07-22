@@ -928,9 +928,8 @@
                                                         <mat-label>Title</mat-label>
                                                         <mat-select formControlName="infant_title{{saveInfantTravellerId[passenger.id]}}">
                                                          <mat-option value=""> Select </mat-option>
-                                                        <mat-option value="Mr"> Mr </mat-option>
-                                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                                        <mat-option value="Ms">Ms</mat-option>
+                                                        <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                                         </mat-select>
                                                         
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">Please enter title</mat-error>
@@ -1006,9 +1005,8 @@
                                                         <mat-label>Title</mat-label>
                                                         <mat-select formControlName="infant_title{{saveInfantTravellerId[passenger.id]}}">
                                                          <mat-option value=""> Select </mat-option>
-                                                        <mat-option value="Mr"> Mr </mat-option>
-                                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                                        <mat-option value="Ms">Ms</mat-option>
+                                                             <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                                         </mat-select>
                                                         
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">Please enter title</mat-error>
@@ -1080,9 +1078,8 @@
                                         <mat-label>Title</mat-label>
                                         <mat-select formControlName="infant_title{{traveller}}">
                                         <mat-option value=""> Select </mat-option>
-                                        <mat-option value="Mr"> Mr </mat-option>
-                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                        <mat-option value="Ms">Ms</mat-option>
+                                              <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+traveller)">Please enter title</mat-error>
                                         </mat-form-field>
@@ -2404,7 +2401,7 @@
                                 </div>
 
 
-                            <div class="edit_baggage">
+                            <div class="edit_baggage"  *ngIf="enableVAS==1">
                                 <div class="luggage-box-edit">
                                     <div class="luggage-text">
                                         <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
@@ -2439,7 +2436,7 @@
                                     <span class="fw_7">WhatsApp</span>
                                 </div>
                                 <div class="form-check form-switch m-0 ">
-                                    <input class="form-check-input" type="checkbox" role="switch" formControlName="whatsappFlag" name="whatsappFlag" id="whatsappFlag" 
+                                    <input class="form-check-input" type="checkbox" role="switch"  name="whatsappFlag" id="whatsappFlag" 
                                         [checked]="whatsAppCheck" />
                                 </div>
                             </div>
@@ -2450,12 +2447,14 @@
                 </div>
                 <div class="booking-process-content traveller_review">
                     <div class="booking-title-box mb-0">
-                        <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3">2 Adults, 1 Child, 1 Infant <span class="ps-1"> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    
+                  
+                        <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}} Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span>   <span *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> <span class="ps-1"> <a href="javascript:void(0)"  (click)="moveTab(2)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
                     </div>
                     <div class="booking-inner-box from-to-box">
                         <div class="p-2">
                              <div>
-                                <h6>2 Adults</h6>
+                                <h6>{{travelerDetails.adults}} Adults</h6>
                                 <table class="table  traveller_table">
                                     <thead>
                                         <tr>
@@ -2465,21 +2464,51 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
+                                     <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                    <tr *ngIf="adult.type=='ADT'" >
+                                        <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>
+                                <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                 <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
+                                    </ng-container>
+                                  </tbody>
+                                </table>
+                             </div>
+                             <div *ngIf="travelerDetails.child > 0" >
+                                <h6>{{travelerDetails.child}} Child</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                          <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                    <tr *ngIf="adult.type=='CHD'" >
+                                        <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>              <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                 <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div></td>
                                     </tr>
+                                    </ng-container>
                                     </tbody>
                                 </table>
                              </div>
-                             <div>
-                                <h6>2 Child</h6>
+                             <div  *ngIf="travelerDetails.infants > 0">
+                                <h6>{{travelerDetails.infants}} Infant</h6>
                                 <table class="table  traveller_table">
                                     <thead>
                                         <tr>
@@ -2489,40 +2518,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
+                                         <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                    <tr *ngIf="adult.type=='INF'" >
+                                        <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>              <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div></td>
                                     </tr>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                             </div>
-                             <div>
-                                <h6>2 Infant</h6>
-                                <table class="table  traveller_table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date of Birth</th>
-                                            <th scope="col">Gender</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
-                                    </tr>
+                                    </ng-container>
                                     </tbody>
                                 </table>
                              </div>
@@ -2530,7 +2536,7 @@
                     </div>
 
                 </div>
-                <div class="booking-process-content seats_review">
+                <div class="booking-process-content seats_review" *ngIf="enableVAS==1">
                     <div class="booking-title-box mb-0">
                         <h4 class="heading_text">Seats and Meals <p class="ps-1"> <span class=""> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
                     </div>
