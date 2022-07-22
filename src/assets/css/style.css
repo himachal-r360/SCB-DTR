@@ -3746,8 +3746,14 @@ border: none;
     background: #ffffff;
     -webkit-box-shadow: 2px 0 70px hsl(0deg 0% 13% / 15%);
     box-shadow: 2px 0 70px hsl(0deg 0% 13% / 15%);
-    padding: 10px 0;
+    padding: 6px 0;
     z-index: 8;
+}
+
+.flight-fixed-btn .button-style {
+    padding: 8px 22px;
+    background: #1D86FF;
+    color: #fff;
 }
 
 .flight-fixed{
@@ -3760,35 +3766,89 @@ border: none;
     width: 100%;
     position: relative;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    -ms-grid-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    -ms-grid-columns: repeat(2, 1fr);
     grid-gap: 0;
 }
-.flight-fixed-right{
-    width: calc(100% - 60%);
+.flight-fixed-right{ 
+    width: calc(100% - 68%);
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+.round-ff-left {
+    display: flex; 
+    gap: 20px;
+    width: 44%;
+    
+}
+.round-ff-left .round-ff-image p{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+
+.round-ff-time img {
+    margin: 0 10px;
+}
+
+.round-ff-time h6{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px; 
+    color: #000000;
+}
+.round-ff-time p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+
+.round-ff-content {
+    display: flex; 
+    width: 100%;
+}
+
+.round-ff-right {
+    display: flex;
+    width: 50%;
+    border-right: 1px solid #C6C8CC;
+}
+
+.round-ff-price {
+    margin-left: 40px;
+}
+
+.round-ff-price h6{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px; 
+    color: #000000;
+}
+
+.round-ff-price p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+
+
 
 .flight-fixed-list {
     display: flex;
     gap: 8px;
     position: relative;
-}
-.flight-fixed-list:after {
-    content: "";
-    position: absolute;
-    background: url(../../assets/images/icons/right.png);
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    background-repeat: no-repeat;
-    right: 10px;
-    top: 10px;
-}
+} 
 .flight-fixed-list-content h6{
     font-style: normal;
     font-weight: 700;
@@ -3844,19 +3904,9 @@ border: none;
 }
 .fixedright-otherinfo {
     display: flex;
+    align-items: center;
 }
-
-.flight-fixed-left:after {
-    border-right: 1px solid #C6C8CC;
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 2px;
-    top: 0;
-    right: 20px;
-    bottom: 0;
-    margin: auto;
-}
+ 
 
 .bootstrap-select button.btn.dropdown-toggle.btn-light {
     width: auto;
@@ -4408,7 +4458,7 @@ button:focus, button:active {
     background: rgba(29, 134, 255, 0.07);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 6px;
-    display: flex;
+    display: inline-flex;
     min-width: 158px;
 }
 .flight-counts-list {
@@ -7606,4 +7656,341 @@ button.accordion-button .xlsheats{
     line-height: 19px; 
     text-align: right;
     color: #1D86FF;
+}
+
+
+
+
+
+
+
+/* Round Way */
+
+.round-benefits {
+    background: linear-gradient(90.55deg, #18589B 1.81%, #2B74BC 100%);
+    border-radius: 8px;
+    position: relative;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.benefits-card {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.round-benefits button.btn.dropdown-toggle.btn-light {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    padding: 5px 3px;
+    border-bottom: 1px solid;
+    border-radius: 0;
+    margin-bottom: 8px;
+}
+
+.benefits-Redeemable {
+    display: flex;
+    justify-content: space-around;
+}
+
+.benefits-Redeemable p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFFFFF;
+    opacity: 0.5;
+}
+
+.benefits-Redeemable h6{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #FFFFFF;
+}
+
+.benefits-btn-area {
+    text-align: end;
+}
+
+.benefits-btn {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+    border: 1px solid #fff;
+    padding: 8px 15px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+
+
+.round-flight-listing{
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 10%);
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.round-flight-info-box {
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed rgb(0 0 0 / 10%);
+}
+.round-flight-info-box p{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #12B150;
+}
+
+.round-content-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 50%;
+}
+.round-content-time h6 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    color: #000000;
+}
+.round-content-time p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+.round-flight-listing-content {
+    padding: 7px 15px;
+}
+
+.round-flight-listing-content, .round-content-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.round-content-right {
+    justify-content: space-between;
+    width: 50%;
+}
+
+.round-content-stops h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.round-content-stops p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+.round-content-image {
+    margin: 0 4px 0 0px;
+}
+.round-content-stops {
+    margin-left: 20px;
+}
+
+.round-content-price {
+    text-align: end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+.round-content-price h6 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+}
+.round-content-price .moreview {
+    width: 100%;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 10.7143px;
+    color: #1D86FF;
+}
+
+.round-content-time img {
+    margin: 0 8px;
+}
+.round-content-radio label.css-label {
+    height: 20px;
+}
+
+.round-from-box{
+    padding: 7px 15px;
+}
+.round-from, .round-from-filters .round-found{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.round-from h6 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #000000;
+}
+
+.round-from p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #555555;
+}
+.round-foundsflight p{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px; 
+    color: #888888;
+}
+.round-found{
+    margin-top: 15px;
+}
+.round-l-h button.btn.dropdown-toggle.btn-light {
+    font-style: normal;
+    border: none;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 18px;
+    color: #555555;
+    background: transparent;
+    padding: 4px 0;
+}
+
+.round-l-h .bootstrap-select .dropdown-toggle:focus, 
+.round-l-h .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
+    outline: thin dotted transparent !important;
+    outline: 0px auto -webkit-focus-ring-color!important;
+    outline-offset: 0;
+}
+
+.ff-Viewfaredetails:hover .hover-popover{
+    display: block;
+    top: -120px;
+    left: 0;
+}
+
+.round-options-box {
+    position: relative; 
+    display: none;
+}
+.round-options-box-list {
+    padding: 6px 15px;
+    border-top: 1px solid rgba(29, 134, 255, 0.1);
+    border-bottom: 1px solid rgba(29, 134, 255, 0.1);
+}
+.round-options-box-list:hover {
+    background: rgba(29, 134, 255, 0.05);
+}
+
+.round-options-list-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+}
+.round-options-list-bottom .round-flight-details-click {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #1D86FF;
+}
+
+
+.round-options-box-list {
+    padding: 6px 15px;
+}
+
+.round-options-list-top {
+    display: flex;
+    align-items: center;
+    padding: 4px 0 10px 0;
+}
+.round-list-image-box, .round-list-price {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.round-options-box .flight-options-text p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px; 
+    color: #E31E24;
+}
+
+.round-options-box .round-list-image, .round-options-box .flight-options-text, .round-options-box .flight-options-price , .round-options-box .round-list-btns{
+    width: 50%;
+}
+
+.round-options-box .flight-options-price {
+    text-align: end;
+    justify-content: end;
+}
+.round-options-box .round-list-btns {
+    text-align: end;
+}
+
+.round-options-box .flight-options-price > p {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+
+.ff-details {
+    border-top: 1px solid rgba(136, 136, 136, 0.5);
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.ff-details .extra-tabs-ara {
+    max-height: 30vh;
+    overflow: auto;
+}
+
+.ff-extra-tabs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ff-details .tabs-depart-total {
+    margin: 5px auto;
+}
+.ff-details .tabs-depart-left, .ff-details  .tabs-depart-right {
+    width: 100%;
 }
