@@ -252,18 +252,17 @@
     display: flex;
     justify-content: end;
     margin-top: 15px;
-    @mixin flex_14 {
+    p.invalid{
+      color: #EB001B;
       display: flex;
       align-items: end;
       font-size: 14px;
     }
-    p.invalid{
-      color: #EB001B;
-      @include flex_14;
-    }
     p.valid{
       color: #009817;
-      @include flex_14;
+      display: flex;
+      align-items: end;
+      font-size: 14px;
     }
 }
 .payPoints-section{
@@ -1988,6 +1987,12 @@ p{
   }
 }
 
+.card-body{
+  @media only screen and (max-width:600px) {
+    padding: 0px;
+  } 
+}
+
 //spc dialog
 .w-hurry {
   font-size:24px;
@@ -2370,6 +2375,8 @@ p{
 
 }
 
+
+
 .tab_btn_payments{
   .nav-justified {
     .nav-item{
@@ -2391,5 +2398,19 @@ p{
   }
 }
 
+.payment_final_sec{
+  .tab-pane{
+    border-radius: 0px;
+    .panel-heading{
+      padding: 10px;
+      @media only screen and (min-width:768.5px) {
+        display: none;
+      }
+      .accordion-button{
+        padding: 0px;
+      }
+    }
+  }
+}
 
 

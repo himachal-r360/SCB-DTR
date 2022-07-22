@@ -2545,9 +2545,9 @@
                                         </div>
                                         <div class="">
                                             <h6 class="mb-0">
-                                                <span class="city_text">Mumbai</span>
-                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-3">
-                                                <span class="city_text">Nagpur</span>
+                                                <span class="city_text">MOB</span>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-2">
+                                                <span class="city_text">XON</span>
                                             </h6> 
                                         </div>
                                     </div>
@@ -2561,9 +2561,9 @@
                                         </div>
                                         <div class="">
                                             <h6 class="mb-0">
-                                                <span class="city_text">Mumbai</span>
+                                                <span class="city_text">HDY</span>
                                                 <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-3">
-                                                <span class="city_text">Nagpur</span>
+                                                <span class="city_text">MNR</span>
                                             </h6>
                                         </div>
                                     </div>
@@ -2842,6 +2842,159 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mlite Footer Price Section  -->
+        <div class="d-block d-sm-none">
+            <div class="footer-sticky-mlite">
+                <div>
+                    <div class="apply_fare">
+                        <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+                        <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
+                    </div>
+                    <div class="price_sec">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="">
+                                    <h6 class="price">₹{{totalCollectibleAmount|number}}</h6>
+                                    <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <div>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="sendFlightDetails()" *ngIf="steps==1">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueSeatSelection()"  *ngIf="steps==3">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"  *ngIf="steps==5">Continue</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mlite Apply Coupon Popup -->
+        <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Coupon Code</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <app-coupons></app-coupons>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Mlite Fare Summary Popup -->
+        <div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header pb-0">
+                  <h5 class="modal-title">Fare Summary</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div>
+                        <img *ngIf="selectedVendor" src="{{cdnUrl}}images/flight_partners/{{selectedVendor.partnerName}}.png" alt="{{selectedVendor.partnerName}}"> 
+                    </div>
+                    <div class="widget-content">
+                        <ul class="widget-list clearfix">
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Base Fare
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{BaseFare|number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Taxes and Fees
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{Tax |number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            {{selectedVendor.partnerName}} ConvFee
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{partnerConvFee |number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Baggage/Seat/Meals
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{vas_amount}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Discounts
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-green">-&#8377;{{coupon_amount}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box pt-30">
+                                    <div class="fare-list-left">
+                                        <h6 class="fw_7">Grand Total</h6>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
+                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
         
     </main>
 
