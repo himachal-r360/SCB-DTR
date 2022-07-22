@@ -394,6 +394,8 @@ ngOnInit(): void {
     }
   }
 
+  
+
   decreaseChild() {
     if (parseInt(this.flightDataModify.value.child) > 0) {
       this.flightDataModify
@@ -1117,6 +1119,7 @@ ngOnInit(): void {
     this.popularFilterFlightData();
   }
 
+  flightFromVal:any;
   flightSearch() {
     this.loader = true;
     this.searchData = sessionStorage.getItem('searchVal');
@@ -1425,6 +1428,34 @@ ngOnInit(): void {
       filterDiv.style.display = 'none';
     }
     this.popularFilterFlightData();
+  }
+
+  
+  openFlightDetailMobile(i:any,title:any){
+      let flightDetail = document.getElementById('flightDetailMobile_' + i);
+      let cancellation:any = document.getElementById('collapseTwo-fd_'+ i);
+      let baggage:any = document.getElementById('collapseThree-fd_'+ i);
+      let fareRules:any = document.getElementById('collapsefour-fd_'+ i);
+      if(flightDetail && title == 'flightdetail') {
+        flightDetail.style.display = "block";
+      }
+      if(cancellation && title == 'cancellation'){
+        cancellation.classList.toggle("show");
+      }
+      if(baggage && title == 'baggagepolicy') {
+        baggage.classList.toggle("show");
+      }
+      if(fareRules && title == 'farerules'){
+        fareRules.classList.toggle("show");
+      }
+  }
+
+  closeFlightDetailMobile(i:any){
+    let element = document.getElementById('flightDetailMobile_' + i);
+    if(element) {
+      element.style.display = "none";
+    }
+    
   }
 
 }

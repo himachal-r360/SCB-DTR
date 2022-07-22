@@ -5453,7 +5453,7 @@ button.accordion-button .xlsheats{
 }
 
 .mob-title {
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
     padding: 15px;
     background: #fff;
@@ -5477,7 +5477,7 @@ button.accordion-button .xlsheats{
     padding: 15px;
 }
 .mob-Preferred-done a, .mob-Choose-done a {
-    background: $primary-color;
+    background: #1D86FF;
     border-radius: 8.28571px;
     height: 43px;
     display: inline-block;
@@ -5586,10 +5586,11 @@ button.accordion-button .xlsheats{
     padding: 0 15px;
 }
 .mob-Choose-class a.active {
-    background: $primary-color;
+    background: #1D86FF;
     color: #fff;
-    border: 1px solid $primary-color;
-}    
+    border: 1px solid #1D86FF;
+}
+
 
 
 
@@ -5668,6 +5669,13 @@ button.accordion-button .xlsheats{
     display: inline-flex; 
     border: 1.28125px solid rgba(0, 0, 0, 0.1);
     border-radius: 7.6875px; 
+    line-height: 0;
+    margin: 0;
+}
+.mob-all-flight ul li{
+    line-height: normal;
+    margin-top: 0;
+    margin-bottom: auto;
 }
 .mob-all-flight ul li a {
     font-style: normal;
@@ -5678,6 +5686,7 @@ button.accordion-button .xlsheats{
     padding: 12px 18px;
     display: inline-block;
     background: rgba(29, 134, 255, 0.07);
+    margin: 0;
 }
 .mob-all-flight ul li a.active {
     background: #1D86FF;
@@ -5687,7 +5696,8 @@ button.accordion-button .xlsheats{
 }
 .mob-all-flight ul li a.active span {
     background: #fff;
-    width: 17px;
+    width: auto;
+    min-width: 17px;
     height: 17px;
     color: #000;
     display: inline-block;
@@ -5695,6 +5705,10 @@ button.accordion-button .xlsheats{
     margin-right: 3px;
 }
 
+.name-bottom-top-center img {
+    position: relative;
+    top: 3px;
+}
 
 
 .mob-list-items-name-top {
@@ -5898,7 +5912,7 @@ button.accordion-button .xlsheats{
 }
 
 
-.mob-sf-area {
+.mob-sf-area, .mob-fd-area {
     position: fixed;
     top: 0;
     z-index: 10;
@@ -5907,7 +5921,7 @@ button.accordion-button .xlsheats{
     height: 100%;
     display: none;
 }
-.mob-sf-box {
+.mob-sf-box, .mob-fd-box {
     margin-top: 50px;
     height: 100%;
     background: #fff;
@@ -5925,6 +5939,11 @@ button.accordion-button .xlsheats{
     border-radius: 7.6875px;
     margin-bottom: 5px;
 }
+.mob-sf-tabs ul li{
+    margin: 0;
+    line-height: normal;
+
+}
 .mob-sf-tabs ul li a{
     font-style: normal;
     font-weight: 600;
@@ -5934,6 +5953,7 @@ button.accordion-button .xlsheats{
     padding: 10px 18px;
     display: inline-block;
     background: rgba(29, 134, 255, 0.07);
+    margin-bottom: 0;
 }
 
 .mob-sf-tabs ul li a.active{
@@ -5979,14 +5999,20 @@ button.accordion-button .xlsheats{
 } 
 
 
-.mob-sf-sort, .mob-sf-accordion {
+.mob-sf-sort, .mob-sf-accordion{
     height: calc(100vh - 200px);
+    overflow: auto;
+}
+
+.mob-fd-accordion {
+    height: calc(100vh - 160px);
     overflow: auto;
 }
 
 
 .mob-sf-btns {
     padding: 0 10px;
+    text-align: center;
 }
 .mob-sf-btns a {
     background: #1D86FF;
@@ -5998,19 +6024,26 @@ button.accordion-button .xlsheats{
     padding: 10px 15px;
 }
 
-.mob-sf-accordion .accordion-button {
+.mob-sf-accordion .accordion-button, 
+.mob-fd-accordion .accordion-button {
     padding: 15px 10px;
-    font-size: 14px;
+    font-size: 16px;
+    border-radius: 0 !important;
+    font-weight: 600;
 }
-.mob-sf-accordion .accordion-button::after { 
+.mob-sf-accordion .accordion-button::after,
+.mob-fd-accordion .accordion-button::after { 
     background-size: 15px; 
 }
-.mob-sf-accordion .accordion-item {
+.mob-sf-accordion .accordion-item,
+.mob-fd-accordion .accordion-item {
     margin-bottom: 0;
     border: none;
+    border-radius: 0;
     border-bottom: 1px dashed rgb(36 54 89 / 20%);
 }
-.mob-sf-accordion .accordion-body {
+.mob-sf-accordion .accordion-body,
+.mob-fd-accordion .accordion-body {
     padding: 0 10px 20px 10px;
     text-align: left;
 }
@@ -6022,4 +6055,3 @@ button.accordion-button .xlsheats{
     text-align: right;
     color: #1D86FF;
 }
-
