@@ -118,7 +118,7 @@ export class HeaderComponent implements OnInit {
         Cookies:any = {'GA':false,'GTM':false,'AL':false};
         AcceptAllBtn:boolean=false;
         SaveCloseBtn:boolean=true;
-        showHeader:boolean=true;  showMenu:boolean=true;
+        showHeader:any;  showMenu:boolean=true;
         enablePushBox:boolean=false;
         enableQuesBox:boolean=true;
         enableQuesBoxNew:boolean=true;
@@ -160,12 +160,13 @@ export class HeaderComponent implements OnInit {
   relative_to:any;
   push_ids:any;
   cdnnotifyUrl:any;
+    isMobile:boolean= false;
   delta:any;
         payzrestriction:boolean=false;
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
-
+        this.isMobile = window.innerWidth < 991 ?  true : false;
   
      setTimeout(() => {
     //Check Laravel Seesion
@@ -738,7 +739,6 @@ closeCookieConsent(value){
   }
   
   ngOnInit() {
-    this._flightService.headerHideShow = document.getElementById('headerHide');
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
@@ -860,6 +860,8 @@ this.customerLogin=true;*/
     
     showcartIcon:Boolean=true;
     ngOnChanges() {  
+    
+    this._flightService.currentHeader.subscribe((res) => this.showHeader=res);
       //show-hide menu list 
       this.communicate.receivedFilter4.subscribe((item: Boolean) => {
         this.showcartIcon=item; 

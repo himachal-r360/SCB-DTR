@@ -247,7 +247,8 @@ new_fare: number = 0;
 
                 this.getAirpotsList();
                 this.getAirLineList();
-
+   this._flightService.showHeader(true);
+   
 
           /*** SESSION */
         sessionStorage.removeItem("coupon_amount");

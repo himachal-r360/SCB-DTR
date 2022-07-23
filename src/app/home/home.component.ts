@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private _flightService: FlightService
     
   ) {
-
+     
     setTimeout(() => {
       this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
       this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
@@ -151,6 +151,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
+  
+   this._flightService.showHeader(true);
+   
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');

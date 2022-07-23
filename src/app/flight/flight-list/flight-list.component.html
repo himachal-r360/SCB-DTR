@@ -1187,13 +1187,15 @@
     </div>
 </section>
 
+<!--Mobile Screen starts-->
+
 <section class="mob-flights-listing" *ngIf="isMobile">
   <div class="container">
       <div class="row">
           <div class="col-md-12 p-0">
               <div class="mob-listing-header">
                   <div class="mob-listing-header-left">
-                      <a href="index.html" >
+                      <a href="javascript:;" routerLink="/" >
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>
@@ -1206,7 +1208,7 @@
                       </p>
                   </div>
                   <div class="mob-listing-header-right">
-                      <a href="index.html" >
+                      <a href="javascript:;" routerLink="/" >
                           <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                       </a>
                   </div>
@@ -1239,7 +1241,22 @@
 
           <div class="col-md-12">
             <ng-container #itemsContainer></ng-container>
-            
+                            <div class="filter-loaders animation-loader" *ngIf="loader">
+                      <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                          <div class="filter-loader-content ">
+                              <span class="filter-box-title mt-0 w-50"><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                [theme]="{
+                                  'border-radius': 0
+                                }"></ngx-skeleton-loader></span>
+                              <span class="filter-box-subtext "><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
+                                [theme]="{
+                                  'height':'8px',
+                                  'border-radius': '3px'
+                                }"></ngx-skeleton-loader></span>
+                          </div>
+                      </div>
+
+                  </div>
                 <ng-template #item let-item="item">  
                 <div  *ngFor="let list of item; let i = index" >
               <div class="mob-list-area" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
@@ -1664,10 +1681,6 @@
                       
                       
                       
-                      
-                      
-                      
-                      
                   </div>
               </div>
               </div>
@@ -1928,46 +1941,12 @@
               </div>
           </div>
       </div>
-        <!-- ------------------------------
-            >>> Modal bookingprocess
-        ---------------------------------->
-        <div class="modal bookingprocess" id="bookingprocess">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body " style="padding: 25px;">
-                        <div class="bookingprocess-items">
-                            <div class="bookingprocess-title text-center mb-30">
-                                <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
-                            </div>
-                            <div class="bookingprocess-content">
-                                <div class="bookingprocess-flight">
-                                    <h6>{{queryFlightData.fromCity}},{{queryFlightData.fromContry}} ({{queryFlightData.flightfrom}})</h6>
-                                    <p class="mt-10">{{queryFlightData.departure | date:'dd.MM.yyyy'}} - <span>{{queryFlightData.adults}} Adult,</span> <span *ngIf="queryFlightData.child != '0'">{{queryFlightData.child}} Child,</span> <span *ngIf="queryFlightData.infants != '0'">{{queryFlightData.infants}} Infants,</span> {{queryFlightData.flightclass == "B" ? "Business":null || queryFlightData.flightclass == "E" ? "Economy":null || queryFlightData.flightclass == "F" ? "First":null  || queryFlightData.flightclass == "P" ? "Premium":null}}</p>
-                                    <h6>{{queryFlightData.toCity}},{{queryFlightData.toContry}} ({{queryFlightData.flightto}})</h6>
-                                </div>
-                                <div class="bookingprocess-processbar">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0" aria-valuemax="100"  [ngStyle]="{'max-width':loaderValue +'%'}" >
-                                            <span class="title"> &nbsp; </span>
-                                        </div>
-                                      </div>
-                                </div>
-                            </div>
-                            <div class="refresh-text text-center pt-2">
-                                <p>Please don't click or refresh the page</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       </div>
+      </div>
+</section>
+<!--Mobile Screen ends-->
 
 
-<!-- loader -->
-
-<!-- <div class="loader-box" *ngIf="loader">
-    <div class="loader-round"></div>
-</div> -->
 
     <a href="javascript:void(0)"  (click)="gotoTop()"  class="scrollToTop" >
         <i class="far fa-dot-circle"></i>

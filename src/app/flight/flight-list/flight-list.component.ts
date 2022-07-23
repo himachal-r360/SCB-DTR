@@ -1385,7 +1385,11 @@ ngOnInit(): void {
 
 
   gotoTop() {
-   // this.scroll.scrollToPosition([0,0]);
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
   }
   OpenPartner(i:number)
   {
@@ -1400,7 +1404,9 @@ ngOnInit(): void {
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
-      this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none"; 
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
     }
   }
   openMobileFilterSection()
