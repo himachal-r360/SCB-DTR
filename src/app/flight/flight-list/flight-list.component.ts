@@ -197,7 +197,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
              this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
             
            }
-           this.gotoTop();
+        
            //$('.scrollToTop').trigger('click');
         }
         
@@ -210,7 +210,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
               
               this.container.createEmbeddedView(this.template, context);
             }
-           
+              this.gotoTop();
         }
         
   

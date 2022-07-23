@@ -1478,6 +1478,7 @@ new_fare: number = 0;
   }
 
   sendFlightDetails(){
+   this.gotoTop();
      this.completedSteps=2;
      this.steps=2;
   }
@@ -1959,6 +1960,7 @@ new_fare: number = 0;
       sessionStorage.setItem(this.randomFlightDetailKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
         clearInterval(myInterval1);
         $('#infoprocess').modal('hide');
+        this.gotoTop();
                if(this.enableVAS==1){
         this.steps=3;
         this.completedSteps=3;
@@ -1978,10 +1980,17 @@ new_fare: number = 0;
 
   
   }
-  
+   gotoTop() {
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+  } 
   
   continueWithNewFare(){
   $('#bookingprocessPriceChange').modal('hide');
+   this.gotoTop();
       if(this.enableVAS==1){
         this.steps=3;
         this.completedSteps=3;
@@ -1992,6 +2001,7 @@ new_fare: number = 0;
    }
    
         moveTab(page){
+         this.gotoTop();
         if(page <= this.completedSteps){
         this.steps=page;
         this.completedSteps=page;
@@ -1999,12 +2009,14 @@ new_fare: number = 0;
         }
 
         continueSeatSelection(){
+         this.gotoTop();
         this.steps=4;
         this.completedSteps=4;
         }
 
 
        continueReviewBooking(){
+        this.gotoTop();
         this.steps=5;
         this.completedSteps=5;
         }
