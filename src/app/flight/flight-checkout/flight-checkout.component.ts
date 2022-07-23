@@ -282,7 +282,7 @@ new_fare: number = 0;
 
                 this.flightSessionData=JSON.parse(this.flightDetailsArrVal);
                 this.searchData=(this.flightSessionData.queryFlightData);
-                //   console.log(  this.searchData);
+                   console.log(  this.searchData);
                 //console.log(this.flightSessionData);
                  setTimeout(() => {
                 $("#infoprocess").modal('show');
@@ -1591,6 +1591,7 @@ new_fare: number = 0;
         }
       
          var paxInfoCnt=1;
+         this.paxInfo=[];
  
         for(let i=1;i<(this.passengerAdultFormCount);i++){
         
@@ -1993,6 +1994,7 @@ new_fare: number = 0;
         moveTab(page){
         if(page <= this.completedSteps){
         this.steps=page;
+        this.completedSteps=page;
         }
         }
 
