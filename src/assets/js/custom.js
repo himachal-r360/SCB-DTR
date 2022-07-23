@@ -90,6 +90,9 @@ $(document).ready(function($) {
     });
 
 
+    
+
+
     var owlslider = jQuery(".carousel-search-date");
     if (owlslider.length > 0) {
         owlslider.each(function () {
@@ -192,4 +195,7 @@ $(document).ready(function($) {
     $(window).on("load",function(){
         $(".content").mCustomScrollbar();
     });
+
+    
 });
+

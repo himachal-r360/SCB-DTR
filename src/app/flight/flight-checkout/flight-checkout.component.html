@@ -1,5 +1,5 @@
 <main class="site-main" >
-    <section class="details-steps-area mt-40 mb-40">
+    <section class="details-steps-area mt-140 mb-40">
         <div class="container">
             <div class="row justify-content-center">
                 <div [ngClass]="{'col-md-7': enableVAS==1, 'col-md-6':enableVAS==0 }" >
@@ -42,6 +42,7 @@
         </div>
     </section>
   <section class="flight-details-area mt-10" >
+  <input *ngIf="searchData"  type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
         <div class="container">
             <div class="row">
             
@@ -53,7 +54,7 @@
                         </div>
            
                         <div class="booking-inner-box from-to-box">
-
+                        
                             <div class="booking-inner-title">
                                 <div class="booking-inner-title-left" *ngIf="searchData">
                                     <h6>
@@ -77,7 +78,8 @@
                                         <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
                                     </div>
                                     <div class="Booking-Flight-name-right">
-                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
+                                        <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>-->
+                                        <p>{{flightClasses[searchData.flightclass]}}</p>
                                     </div>
                                 </div>
                                 <div class="Booking-Flight-time">
@@ -99,7 +101,7 @@
                                     </div>
                                 </div>
 
-                                <div class="Booking-Flight-passanger" *ngIf="baggageInfo"  >
+                                <div class="Booking-Flight-passanger" *ngIf="baggageInfo[i]"  >
                                     <div class="row">
                                         <div class="col-md-2">
                                             <h6>Airline</h6>
@@ -116,15 +118,19 @@
                                             <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
                                         </div>-->
                                     </div>
-                                <div class="row"  *ngFor="let bag of baggageInfo">
+                                <div class="row"  >
                                         <div class="col-md-2">
-                                            <p>{{bag.flightName}}<br>{{bag.flightNo}}</p>
+                                            <p>{{baggageInfo[i].flightName}}<br>{{baggageInfo[i].flightNo}}</p>
                                         </div>
                                         <div class="col-md-3">
-                                            <p>{{bag.checkIn}}</p>
+                                            <p *ngIf="baggageInfo[i].checkIn;then checkIn_content else checkIn_blank"></p>
+                                            <ng-template #checkIn_content>{{baggageInfo[i].checkIn}}</ng-template>
+                                            <ng-template #checkIn_blank>NA</ng-template>
                                         </div>
                                         <div class="col-md-3">
-                                            <p>{{bag.cabin}}</p>
+                                            <p *ngIf="baggageInfo[i].cabin ;then cabin_content else cabin_blank"></p>
+                                           <ng-template #cabin_content>{{baggageInfo[i].cabin}}</ng-template>
+                                            <ng-template #cabin_blank>NA</ng-template>
                                         </div>
                                 
                                     </div> 
@@ -138,65 +144,6 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="Flight-One">
-                                <div class="Booking-Flight-name">
-                                    <div class="Booking-Flight-name-left">
-                                        <img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" alt="">
-                                        <span class="fw_7">IndiGo</span>
-                                        <span class="opacity_05">6E-956</span>
-                                    </div>
-                                    <div class="Booking-Flight-name-right">
-                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
-                                    </div>
-                                </div>
-                                <div class="Booking-Flight-time">
-                                    <h6>08:05</h6>
-                                    <span class="round round-line"></span>
-                                    <div class="Flight-time-name">
-                                        <h6>Mumbai</h6>
-                                        <p>Chhatrapati Shivaji International Airport T1, Vile Parle, Mumbai</p>
-                                        <span class="round-time mt-20 d-inline-block">1h 40m </span>
-                                    </div>
-                                </div>
-
-                                <div class="Booking-Flight-time">
-                                    <h6>08:05</h6>
-                                    <span class="round"></span>
-                                    <div class="Flight-time-name">
-                                        <h6>Nagpur</h6>
-                                        <p>Dr. Babasaheb Ambedkar International Airport</p>
-                                    </div>
-                                </div>
-
-                                <div class="Booking-Flight-passanger">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <h6>Baggage</h6>
-                                            <p>Adult</p>
-                                            <p>Child</p>
-                                            <p>Infant</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <h6>Check-in</h6>
-                                            <p>15 Kgs <span>(1 piece only)</span></p>
-                                            <p>15 Kgs <span>(1 piece only)</span></p>
-                                            <p>Cabin bag only</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <h6>Cabin</h6>
-                                            <p>7 Kgs <span>(1 plece only)</span></p>
-                                            <p>7 Kgs  <span>(1 plece only)</span></p>
-                                            <p>7 Kgs <span>(1 plece only)</span></p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h6>Flight Extras</h6>
-                                            <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
-                                            <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div> -->
 
                             <div class="luggage-box" *ngIf="enableVAS==1">
                                 <div class="luggage-text">
@@ -289,17 +236,17 @@
                             </div>
 
                         </div>
-                        <div class="booking-inner-box fare-rules-box">
+                        <div class="booking-inner-box fare-rules-box" *ngIf="baggageInfo || cancellationPolicy" >
                             <div class="fare-rules-title">
                                 <h6>Fare Rules</h6>
                             </div>
                             <div class="flight-extra-details">
-                                <ul class="list-unstyled flight-extra-tabs">
-                                    <li>
-                                        <a href="javascript:void(0);" class="flight-extra-tabs-active" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails">Fare Rules</a>
+                                <ul class="list-unstyled flight-extra-tabs"  >
+                                    <li *ngIf="cancellationPolicy">
+                                        <a href="javascript:void(0);" [ngClass]="{'flight-extra-tabs-active': cancellationPolicy  }" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails">Fare Rules</a>
                                     </li>
-                                    <li>
-                                        <a href="javascript:void(0);" data-bind="DateChange" (click)="changeFareRuleTab($event)">Baggage Policy</a>
+                                    <li *ngIf="baggageInfo">
+                                        <a href="javascript:void(0);" [ngClass]="{'flight-extra-tabs-active': !cancellationPolicy  }" data-bind="BaggageDetails" (click)="changeFareRuleTab($event)">Baggage Policy</a>
                                     </li>
                                   
                                 </ul>
@@ -316,177 +263,121 @@
                                             </h6>
                                         </div>
                                     </div>
-                                    <!-- <div class="rules-flight-items opacity_05">
-                                        <div class="rules-flight-thumbe">
-                                            <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
-                                        </div>
-                                        <div class="rules-flight-content">
-                                            <h6>
-                                                Hyderabad
-                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
-                                                Mumbai
-                                            </h6>
-                                        </div>
-                                    </div> -->
+                                   
                                 </div>
                                 <div class="extra-tabs-ara">
-                                    <div id="CancellationDetails" class="flight-extra-content extra-active">
+                                    <div id="CancellationDetails" class="flight-extra-content"  [ngClass]="{'extra-active': cancellationPolicy  }">
                                         <table class="table-bordered table-content w-100">
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <p class="fw_6 fs_13">Time Frame</p>
-                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                        <p class="fw_6 fs_13">Time Frame to cancel</p>
+                                                        <p class="opacity_05">Before scheduled departure time</p>
                                                     </td>
                                                     <td>
-                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                        <p class="fw_6 fs_13">Airline Fees</p>
+                                                        <p class="opacity_05">(Per passenger)</p>
+                                                    </td>
+                                                       <td>
+                                                        <p class="fw_6 fs_13">EMT Fees</p>
                                                         <p class="opacity_05">(Per passenger)</p>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr *ngFor="let can of cancellationPolicy.cancellation;let i = index" >
                                                     <td>
-                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                        <p class="opacity_05">{{can.data}}</p>
                                                     </td>
                                                     <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
+                                                        <p>₹{{can.airline_fee}}</p>
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p class="opacity_05">2 hours to 3 days*</p>
-                                                    </td>
-                                                    <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
+                                                       <td>
+                                                        <p>₹{{can.emt_fee}}</p>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p class="opacity_05">3 days to 365 days*</p>
-                                                    </td>
-                                                    <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
-                                                    </td>
-                                                </tr>
+                                              
                                             </tbody>
                                         </table>
-                                        <p class="oth-text mt-10">*From the date of Departure</p>
-                                    </div>
-                                    <div id="DateChange" class="flight-extra-content">
-                                        <table class="table-bordered table-content w-100">
+                                        
+                                   <table class="table-bordered table-content w-100 mt-15">
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <p class="fw_6 fs_13">Time Frame</p>
-                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                        <p class="fw_6 fs_13">Time Frame to reschedule</p>
+                                                        <p class="opacity_05">Before scheduled departure time</p>
                                                     </td>
                                                     <td>
-                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                        <p class="fw_6 fs_13">Airline Fees</p>
+                                                        <p class="opacity_05">(Per passenger)</p>
+                                                    </td>
+                                                       <td>
+                                                        <p class="fw_6 fs_13">EMT Fees</p>
                                                         <p class="opacity_05">(Per passenger)</p>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                     <tr *ngFor="let re of cancellationPolicy.reschedule;let i = index" >
                                                     <td>
-                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                        <p class="opacity_05">{{re.data}}</p>
                                                     </td>
                                                     <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
+                                                        <p>₹{{re.airline_fee}}</p>
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p class="opacity_05">2 hours to 3 days*</p>
-                                                    </td>
-                                                    <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
+                                                       <td>
+                                                        <p>₹{{re.emt_fee}}</p>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p class="opacity_05">3 days to 365 days*</p>
-                                                    </td>
-                                                    <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
-                                                    </td>
-                                                </tr>
+                                              
                                             </tbody>
                                         </table>
-                                        <p class="oth-text mt-10">*From the date of Departure</p>
-                                    </div>
-                                    <div id="Fare" class="flight-extra-content">
-                                        <table class="table-bordered table-content w-100">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <p class="fw_6 fs_13">Time Frame</p>
-                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="fw_6 fs_13">Airline Fee</p>
-                                                        <p class="opacity_05">(Per passenger)</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p class="opacity_05">0 hours to 2 hours*</p>
-                                                    </td>
-                                                    <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p class="opacity_05">2 hours to 3 days*</p>
-                                                    </td>
-                                                    <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p class="opacity_05">3 days to 365 days*</p>
-                                                    </td>
-                                                    <td>
-                                                        <p>Adult : Non refundable</p>
-                                                        <p>Child : Non refundable</p>
-                                                        <p>Infant : Non refundable</p>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <p class="oth-text mt-10">*From the date of Departure</p>
-                                    </div>
-                                    <div id="Cancellation" class="flight-extra-content">
-                                        <div class="extra-tabs-details Cancellation-box">
-                                            <div class="extra-tabs-details-bottom">
-                                                <ul class="m-0 tabs-list-data">
-                                                    <li><p>While Booking your flight ticket, select 'Cancellation Protection' option and pay a nominal cancellation premium and enjoy ZERO penalty in case you wish to cancel the booking.</p></li>
-                                                    <li><p>Cancellation Protection is applicable on select one way domestic flights and starts at only Rs.149</p></li>
-                                                    <li><p>Cancellation Protection is applicable on select one way domestic flights</p></li>
-                                                    <li><p>Tickets should be cancelled 25 hrs prior to scheduled departure of the flight to avail this feature.</p></li>
-                                                    <li><p>Cancellation should be done ONLY on airlines for the cancellation charges to be void.</p></li>
-                                                    <li><p>Waiver is valid only for FULL cancellations (cancellations of all flights of a particular passenger, booked in an itinerary) for any or all passengers in a booking.</p></li>
-                                                    <li><p>In case of partial cancellation (cancelation of only some flights booked in an itinerary), waiver will not be given & normal cancelation penalties will be charged.</p></li>
-                                                    <li><p>ZERO Cancellation service is valid only on complete cancellation of itinerary and not on date change of itinerary.</p></li>
-                                                </ul>
-                                            </div>
+                                        <div class="imp-Information mt-10">
+                                        <h6>Terms & Conditions</h6>
+                                        <div class="imp-Information-list">
+                                          <ul class="imp-Information-list">
+                                    <li *ngFor="let tnc of cancellationPolicy.tnc;let i = index">
+                                        <p>{{tnc}}</p>
+                                    </li>
+                                   
+                                </ul>
+                                        </div>
                                         </div>
                                     </div>
+                                    <div id="BaggageDetails" class="flight-extra-content"  [ngClass]="{'extra-active': !cancellationPolicy  }">
+                                    
+                                     <table class="table-bordered table-content w-100">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Airline</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                    </td>
+                                                       <td>
+                                                        <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngFor="let bag of baggageInfo;let i = index">
+                                                    <td>
+                                                        <p class="opacity_05">{{bag.flightName}}<br>{{baggageInfo[i].flightNo}}</p>
+                                                    </td>
+                                                        <td>
+                                                        <p *ngIf="bag.checkIn;then checkIn_content else checkIn_blank"></p>
+                                                        <ng-template #checkIn_content>{{bag.checkIn}}</ng-template>
+                                                        <ng-template #checkIn_blank>NA</ng-template>
+                                                        </td>
+                                                        <td>
+                                                        <p *ngIf="bag.cabin ;then cabin_content else cabin_blank"></p>
+                                                        <ng-template #cabin_content>{{bag.cabin}}</ng-template>
+                                                        <ng-template #cabin_blank>NA</ng-template>
+                                                        </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                      
+                             
+                                    </div>
+                                   
+                              
                                 </div>
                             </div>
 
@@ -509,7 +400,7 @@
                 <!--Steps 1 Ends-->
                 
                 <!--Steps 2 Starts-->
-                 <div class="col-md-8" *ngIf="steps==2">
+                 <div class="col-md-8" [ngClass]="{'showTab':steps==2 , 'hidden':steps !=2}">
                  <form [formGroup]="passengerForm" name="passengerForm" ngxScrollToFirstInvalid>
                     <div class="booking-process-content">
                         <div class="booking-title-box">
@@ -539,14 +430,13 @@
                                                     <label class="custom-control material-checkbox">
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
-                                                        <span
-                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                        <span class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5 ">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div >
+                                                     <div  class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -595,8 +485,8 @@
                                                         <input matInput [inputMask]="dateInputMask"  formControlName="adult_dob{{saveAdultTravellerId[passenger.id]}}" 
                                                         placeholder="Date Of Birth"
                                                         name="dateOfBirth" >
-                                                       
                                                         <mat-error *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">Please enter dob</mat-error>
+                                                         <mat-error *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">Adult age should be above 12 years.</mat-error>
                                                         </mat-form-field>
                                                         </div>
                                                         </div>
@@ -622,8 +512,8 @@
                                                 
                                                 
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -674,6 +564,7 @@
                                                         name="dateOfBirth" >
                                                        
                                                         <mat-error *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">Please enter dob</mat-error>
+                                                          <mat-error *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">Adult age should be above 12 years.</mat-error>
                                                         </mat-form-field>
                                                         </div>
                                                         </div>
@@ -688,7 +579,7 @@
                                             </li>
                                      </ng-container> 
                                         </ul>
- <p class="view_more_btn" *ngIf="!isAdultExpanded && adultTravellerList && adultTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsAdult()">View More</a></p>
+ <p class="view_more_btn othertraveller" *ngIf="!isAdultExpanded && adultTravellerList && adultTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsAdult()">View More</a></p>
                              
                                  <div class="add_new_traveler p-20" *ngIf="adultsArrayM.length>0 " >
                                 <div *ngIf="adultsArrayM.length>0">
@@ -746,6 +637,7 @@
                                         name="dateOfBirth" >
                                         
                                         <mat-error *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please enter dob</mat-error>
+                                          <mat-error *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">Adult age should be above 12 years.</mat-error>
                                         </mat-form-field>
                                         
                                         </div>
@@ -784,8 +676,8 @@
                                                     </label>
                                                 </div>
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -836,6 +728,7 @@
                                                         name="dateOfBirth" >
                                                    
                                                         <mat-error *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">Please enter dob</mat-error>
+                                                             <mat-error *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">Child age should be between 2 - 12 years.</mat-error>
                                                         </mat-form-field>
                                                         </div>
                                                         </div>
@@ -861,8 +754,8 @@
                                                 
                                                 
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveChildTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -913,6 +806,7 @@
                                                         name="dateOfBirth" >
                                                
                                                         <mat-error *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">Please enter dob</mat-error>
+                                                            <mat-error *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">Child age should be between 2 - 12 years.</mat-error>
                                                         </mat-form-field>
                                                         </div>
                                                         </div>
@@ -927,7 +821,7 @@
                                             </li>
                                      </ng-container> 
                                         </ul>
-                                           <p class="view_more_btn" *ngIf="!isChildExpanded && childTravellerList && childTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsChild()">View More</a></p>
+                                           <p class="view_more_btn othertraveller" *ngIf="!isChildExpanded && childTravellerList && childTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsChild()">View More</a></p>
                                         
                                  <div class="add_new_traveler p-20" *ngIf="childArrayM.length>0 " >
                                 <div *ngIf="childArrayM.length>0">
@@ -985,6 +879,7 @@
                                         name="dateOfBirth" >
                                        
                                         <mat-error *ngIf="passengerForm.hasError('required','child_dob'+traveller)">Please enter dob</mat-error>
+                                           <mat-error *ngIf="passengerForm.hasError('validateChildAge','child_dob'+traveller)">Child age should be between 2 - 12 years.</mat-error>
                                         </mat-form-field>
                                         </div>
                                         </div>
@@ -1022,8 +917,8 @@
                                                     </label>
                                                 </div>
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger &&  saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -1033,9 +928,8 @@
                                                         <mat-label>Title</mat-label>
                                                         <mat-select formControlName="infant_title{{saveInfantTravellerId[passenger.id]}}">
                                                          <mat-option value=""> Select </mat-option>
-                                                        <mat-option value="Mr"> Mr </mat-option>
-                                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                                        <mat-option value="Ms">Ms</mat-option>
+                                                        <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                                         </mat-select>
                                                         
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">Please enter title</mat-error>
@@ -1074,6 +968,7 @@
                                                         name="dateOfBirth" >
                                                        
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">Please enter dob</mat-error>
+                                                             <mat-error *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+saveChildTravellerId[passenger.id])">Infant age should be between 0 - 2 years.</mat-error>
                                                         </mat-form-field>
                                                         </div>
                                                         </div>
@@ -1099,8 +994,8 @@
                                                 
                                                 
                                                 
-                                                   <div class="mt-3" >
-                                                     <div  id="passengerBox_{{passenger.id}}" >
+                                                   <div  >
+                                                     <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}" >
                                                         <ng-container *ngIf="passenger && passenger.age > 12 && saveInfantTravellerId[passenger.id] > 0" >
                                                         <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                                         <div >
@@ -1110,9 +1005,8 @@
                                                         <mat-label>Title</mat-label>
                                                         <mat-select formControlName="infant_title{{saveInfantTravellerId[passenger.id]}}">
                                                          <mat-option value=""> Select </mat-option>
-                                                        <mat-option value="Mr"> Mr </mat-option>
-                                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                                        <mat-option value="Ms">Ms</mat-option>
+                                                             <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                                         </mat-select>
                                                         
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">Please enter title</mat-error>
@@ -1151,6 +1045,7 @@
                                                         name="dateOfBirth" >
                                                        
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">Please enter dob</mat-error>
+                                                             <mat-error *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+saveChildTravellerId[passenger.id])">Infant age should be between 0 - 2 years.</mat-error>
                                                         </mat-form-field>
                                                         </div>
                                                         </div>
@@ -1165,7 +1060,7 @@
                                             </li>
                                      </ng-container> 
                                         </ul>
-                                                <p class="view_more_btn" *ngIf="!isInfantExpanded && infantTravellerList && infantTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsInfant()">View More</a></p>
+                                                <p class="view_more_btn othertraveller" *ngIf="!isInfantExpanded && infantTravellerList && infantTravellerList.length >3 " ><a href="javascript:;" (click)="expandItemsInfant()">View More</a></p>
                                
                              <div class="add_new_traveler p-20" *ngIf="infantArrayM.length>0 " >
                                 <div *ngIf="infantArrayM.length>0">
@@ -1183,9 +1078,8 @@
                                         <mat-label>Title</mat-label>
                                         <mat-select formControlName="infant_title{{traveller}}">
                                         <mat-option value=""> Select </mat-option>
-                                        <mat-option value="Mr"> Mr </mat-option>
-                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                        <mat-option value="Ms">Ms</mat-option>
+                                              <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+traveller)">Please enter title</mat-error>
                                         </mat-form-field>
@@ -1224,6 +1118,7 @@
                                         name="dateOfBirth" >
                                        
                                         <mat-error *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">Please enter dob</mat-error>
+                                     <mat-error *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+traveller)">Infant age should be between 0 - 2 years.</mat-error>
                                         </mat-form-field>
                                         </div>
                                         </div>
@@ -1327,33 +1222,43 @@
                         </div>
                         <div class="modal-body">
                         <div class="col-lg-12 col-md-6 col-12">
-                        <p> <label class="checkbox" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">{{data.gstName}}
-                        <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
-                        <span class="checkmark"></span>
-                        </label>
-                        </p>
+                            
+                        <div> 
+                            <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                <input class="form-check-input" type="radio"  name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
+                                <label class="form-check-label" for="gst{{GSTIndex}}">
+                                    {{data.gstName}}
+                                </label>
+                            </div>
+                        </div>
                         <ng-container *ngIf="isGstExpanded">
-                        <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
-                        <p *ngIf="i > 5">
-                        <label class="checkbox">{{gstexpandedItem.gstName}}
-                        <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
-                        <span class="checkmark"></span>
-                        </label>
-                        </p>
+                            <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
+                                <div *ngIf="i > 5">
+                                    <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                        <input class="form-check-input" type="radio"  name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                        <label class="form-check-label" for="gstL{{GSTIndex}}">
+                                            {{gstexpandedItem.gstName}}
+                                        </label>
+                                    </div>
+                                <!--  <label class="checkbox">{{gstexpandedItem.gstName}}
+                                    <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                    <span class="checkmark"></span>
+                                    </label> -->
+                                </div>
+                            </ng-container>
                         </ng-container>
-                        </ng-container>
-                        <p *ngIf="GSTList.length > 5">
-                        <label class="checkbox pl-0">
-                        <a (click)="gstExpandItems()">
-                        {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
-                        </a>
-                        </label>
-                        </p>
+                            <p *ngIf="GSTList.length > 5">
+                                <label class="checkbox pl-0">
+                                    <a (click)="gstExpandItems()">
+                                    {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
+                                    </a>
+                                </label>
+                            </p>
                         </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn-c btn-primary" (click)="gstReset()">Reset</button>
-                        <button type="button" class="btn-c btn-primary" (click)="modal.close()">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="gstReset()">Reset</button>
+                        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
                         </div>
                         </ng-template>
 
@@ -1392,7 +1297,7 @@
                           </mat-form-field>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-6">
-                                            <mat-form-field appearance="outline">
+                                            <mat-form-field appearance="outline" class="w-100">
                                              <mat-label>Pincode</mat-label>
                                                 <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)" (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
                                                 <mat-error *ngIf="passengerForm.hasError('required','gstPincode')">Please enter pincode.</mat-error>
@@ -1402,8 +1307,8 @@
                                         </div>
                                         </div>
                                         <div class="row" *ngIf="gstSelected">  
-                                        <div class="col-lg-3 col-md-3 col-6">
-                                            <mat-form-field appearance="outline">
+                                        <div class="col-lg-4 col-md-4 col-6">
+                                            <mat-form-field appearance="outline" class="w-100">
                                              <mat-label>City / Town</mat-label>
                                                  <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"  autocomplete="nope">
                                                 <mat-error *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.</mat-error>
@@ -1412,8 +1317,8 @@
                           </mat-form-field>
                                         </div>
 
-                                        <div class="col-lg-3 col-md-3 col-6">
-                                            <mat-form-field appearance="outline">
+                                        <div class="col-lg-4 col-md-4 col-6">
+                                            <mat-form-field appearance="outline" class="w-100">
                                              <mat-label>State</mat-label>
                                                 <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value={{state}}>
                                                 <mat-error *ngIf="passengerForm.hasError('required','gstState')">Please enter state name.</mat-error>
@@ -2253,59 +2158,415 @@
                 <!--Steps 4-->
                 <div class="col-md-8" *ngIf="steps==4">
                 <div class="booking-process-content" *ngIf="flightDetails" >
-                <div class="booking-title-box">
-                <h4>Review Booking</h4>
-                </div>
-                <div class="booking-inner-box from-to-box">
-                            <div class="booking-inner-title">
+                    <div class="booking-title-box">
+                        <h4>Review Booking</h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box pb-0">
+                        <div class="web_code d-none d-sm-block">
+                            <div class="booking-inner-title ">
                                 <div class="booking-inner-title-left" *ngIf="searchData">
-                                    <h6>
-                                        {{searchData.fromCity}}
-                                        <img src="{{cdnUrl}}/images/icons/flight-right.png" class="ms-2 me-2" alt="">
-                                        {{searchData.toCity}}
-                                    </h6>
-                                    <p> {{searchData.departure | date:"EEE,dd MMM"}}  | {{flightDetails[0].stops}} Stop  | {{totalDuration + dateHour| durationTime}}</p>
-                                </div>
-                                <div class="booking-inner-title-right" *ngIf="selectedVendor" >
-                                    <p class="non-refundable" *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</p>
-                                    <p class="refundable" *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</p>
-                                </div>
-                            </div>
-
-                            <div class="Flight-One" *ngFor="let flights of flightDetails;let i = index">
-                                <div class="Booking-Flight-name" >
-                                    <div class="Booking-Flight-name-left">
-                                        <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
-                                        <span class="fw_7  mr-10">{{flights.airlineName}}</span>
-                                        <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
-                                    </div>
-                                    <div class="Booking-Flight-name-right">
-                                        <p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>
+                                    <div class="head_info">
+                                        <div class="float-start">
+                                            <!--<img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">-->
+                                        </div>
+                                        <h6>
+                                            <span class="city_text">{{searchData.fromCity}}</span>
+                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
+                                            <span class="city_text">{{searchData.toCity}}</span>
+                                            <p class="flight_details mb-0 pt-1">  
+                                            <ng-container *ngFor="let flights of flightDetails;let i = index;let last = last">
+                                            <span>{{flights.airlineName}}</span> <span> {{flights.airline}}-{{flights.flightNumber}}</span> <span *ngIf="!last">, </span>
+                                            </ng-container>
+                                            | {{flightClasses[searchData.flightclass]}}  | <span *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</span>              <span *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</span></p>
+                                        </h6>
                                     </div>
                                 </div>
-                                <div class="Booking-Flight-time">
-                                    <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
-                                    <span class="round round-line"></span>
-                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                        <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
-                                        <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
-                                        <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                <div>
+                                    <div class="head_info">
+                                    <div>
+                                            <p class="time_text">{{flightDetails[0].departureDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[0].departureDateTime| date:'dd MMM'}}</p>
+                                    </div>
+                                    <div>
+                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
+                                    </div>
+                                    <div>
+                                            <p class="time_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'dd MMM'}}</p>
+                                    </div>
                                     </div>
                                 </div>
-
-                                <div class="Booking-Flight-time">
-                                    <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
-                                    <span class="round"></span>
-                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                        <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
-                                        <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                <div>
+                                    <div>
+                                        <p class="duration_flight">{{totalDuration + dateHour| durationTime}}</p>
+                                        <p class="date_text">{{flightDetails[0].stops}} Stop</p>
                                     </div>
+                                </div>
+                                <div class="booking-inner-title-right">
+                                    <p class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse" role="button" aria-expanded="false"> <span class=""><!--<i class="fas fa-angle-down rotate-icon"></i>--></span></p>
                                 </div>
                             </div>
                         </div>
+                        <div class="web_code d-block d-sm-none">
+                            <div class="booking-inner-title mlite_code d-block d-sm-none">
+                                <div class="booking-inner-title-left" *ngIf="searchData">
+
+                                    <div class="head_info mb-20">
+                                        <div class="float-start">
+                                           <!-- <img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">-->
+                                        </div>
+                                        <h6>
+                                            <span class="city_text">{{searchData.fromCity}}</span>
+                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
+                                            <span class="city_text">{{searchData.toCity}}</span>
+                                            <p class="flight_details mb-0 pt-1"> <ng-container *ngFor="let flights of flightDetails;let i = index;let last = last">
+                                            <span>{{flights.airlineName}}</span> <span> {{flights.airline}}-{{flights.flightNumber}}</span> <span *ngIf="!last">, </span>
+                                            </ng-container>
+                                            | {{flightClasses[searchData.flightclass]}}  | <span *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</span>              <span *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</span></p>
+                                        </h6>
+                                        <div class="booking-inner-title-right">
+                                            <p class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse" role="button" aria-expanded="false"> <span class=""><!--<i class="fas fa-angle-down rotate-icon"></i>--></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-evenly">
+                                    <div class="head_info">
+                                        <div>
+                                             <p class="time_text">{{flightDetails[0].departureDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[0].departureDateTime| date:'dd MMM'}}</p>
+                                        </div>
+                                        <div>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
+                                        </div>
+                                        <div>
+                                           <p class="time_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'dd MMM'}}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <p class="duration_flight">{{totalDuration + dateHour| durationTime}}</p>
+                                        <p class="date_text">{{flightDetails[0].stops}} Stop</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                                
+
+                                <div class="collapse" id="flight_review_collapse">
+                                    <div class="Flight-One flight_detail_review" *ngFor="let flights of flightDetails;let i = index" >
+                                        <div class="Booking-Flight-name" >
+                                            <div class="Booking-Flight-name-left">
+                                                <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
+                                                <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                                                <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                            </div>
+                                            <div class="Booking-Flight-name-right">
+                                                <p>{{flightClasses[searchData.flightclass]}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                                            <span class="round round-line"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                                <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                            </div>
+                                        </div>
+        
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                                            <span class="round"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                            </div>
+                                        </div>
+        
+                                    <div class="Booking-Flight-passanger" *ngIf="baggageInfo[i]"  >
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <h6>Airline</h6>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h6>Check-in Baggage</h6>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h6>Cabin Baggage</h6>
+                                            </div>
+                                            <!--<div class="col-md-4">
+                                                <h6>Flight Extras</h6>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                            </div>-->
+                                        </div>
+                                        <div class="row"  >
+                                            <div class="col-md-2">
+                                                <p>{{baggageInfo[i].flightName}}<br>{{baggageInfo[i].flightNo}}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p *ngIf="baggageInfo[i].checkIn;then checkIn_content else checkIn_blank"></p>
+                                                <ng-template #checkIn_content>{{baggageInfo[i].checkIn}}</ng-template>
+                                                <ng-template #checkIn_blank>NA</ng-template>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p *ngIf="baggageInfo[i].cabin ;then cabin_content else cabin_blank"></p>
+                                            <ng-template #cabin_content>{{baggageInfo[i].cabin}}</ng-template>
+                                                <ng-template #cabin_blank>NA</ng-template>
+                                            </div>
+                                    
+                                        </div> 
+                                        
+                                    </div>
+                                    <!-- <div class="change-planes" *ngIf="getLayoverHour(flightDetails[i],flightDetails[i+1]) && airportsNameJson">
+                                        <h6>Change of planes・{{getLayoverHour(flightDetails[i],flightDetails[i+1]) | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                    </div> -->
+                                    <div class="change-planes" *ngIf="dateHour && airportsNameJson && flightDetails[i+1]">
+                                        <h6>Change of planes・{{dateHour | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+
+
+                            <div class="edit_baggage"  *ngIf="enableVAS==1">
+                                <div class="luggage-box-edit">
+                                    <div class="luggage-text">
+                                        <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
+                                        <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"  (click)="moveTab(3)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                    </div>
+                </div>
+                <div class="booking-process-content contact_review">
+                    <div class="booking-title-box mb-0">
+                        <h4 class="heading_text">Contact Details <p class="sub_head_text ps-3">(for all communication) <span class="ps-1"> <a  href="javascript:void(0)"  (click)="moveTab(2)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box">
+                        <div class="">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <p class="label_text">Email</p>
+                                        <p class="label_value">{{contactDatails.email}}</p>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <p class="label_text">Mobile Number</p>
+                                        <p class="label_value">{{contactDatails.mobile}}</p>
+                                    </div>
+                                </div>
+
+                            <div class="contact-whatsapp">
+                                <div class="contact-whatsapp-info me-2">
+                                    <span>Send my booking information through</span>
+                                    <img src="{{cdnUrl}}/images/icons/whatsapp.png" class="ms-2" alt="">
+                                    <span class="fw_7">WhatsApp</span>
+                                </div>
+                                <div class="form-check form-switch m-0 ">
+                                    <input class="form-check-input" type="checkbox" role="switch"  disabled    [checked]="whatsAppCheck" />
+                                </div>
+                            </div>
+                        </div>
+                                
+                    </div>
 
                 </div>
-                </div>    
+                <div class="booking-process-content traveller_review">
+                    <div class="booking-title-box mb-0">
+                    
+                  
+                        <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}} Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span>   <span *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> <span class="ps-1"> <a href="javascript:void(0)"  (click)="moveTab(2)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box">
+                        <div class="p-2">
+                             <div>
+                                <h6>{{travelerDetails.adults}} Adults</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"  class="col-6">Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                <tr *ngIf="adult.type=='ADT'" >
+                                <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                <td>
+                                <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div>
+                                </td>
+                                </tr>
+                                </ng-container>
+                                  </tbody>
+                                </table>
+                             </div>
+                             <div *ngIf="travelerDetails.child > 0" >
+                                <h6>{{travelerDetails.child}} Child</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="col-6" >Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                          <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                    <tr *ngIf="adult.type=='CHD'" >
+                                        <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>              <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                 <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div></td>
+                                    </tr>
+                                    </ng-container>
+                                    </tbody>
+                                </table>
+                             </div>
+                             <div  *ngIf="travelerDetails.infants > 0">
+                                <h6>{{travelerDetails.infants}} Infant</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"  class="col-6">Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                         <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                    <tr *ngIf="adult.type=='INF'" >
+                                        <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>              <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div></td>
+                                    </tr>
+                                    </ng-container>
+                                    </tbody>
+                                </table>
+                             </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="booking-process-content seats_review" *ngIf="enableVAS==1">
+                    <div class="booking-title-box mb-0">
+                        <h4 class="heading_text">Seats and Meals <p class="ps-1"> <span class=""> <a  href="javascript:void(0)"  (click)="moveTab(2)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    </div>
+                    <div class="booking-inner-box from-to-box">
+                        <div class="">
+                            <ul class="nav nav-pills mb-3 seats_tabs nav-justified" id="pills-tab-seats-review" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link active" id="flight_one" data-bs-toggle="pill" data-bs-target="#pills-flight-one" type="button" role="tab" aria-controls="pills-flight-one" aria-selected="true">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" alt="" class="me-2">
+                                        </div>
+                                        <div class="">
+                                            <h6 class="mb-0">
+                                                <span class="city_text">MOB</span>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-2">
+                                                <span class="city_text">XON</span>
+                                            </h6> 
+                                        </div>
+                                    </div>
+                                  </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="flight_two" data-bs-toggle="pill" data-bs-target="#pills-flight-two" type="button" role="tab" aria-controls="pills-flight-two" aria-selected="false">
+                                    <div class="d-flex">
+                                        <div class="">
+                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" alt="" class="me-2">
+                                        </div>
+                                        <div class="">
+                                            <h6 class="mb-0">
+                                                <span class="city_text">HDY</span>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-3">
+                                                <span class="city_text">MNR</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                  </button>
+                                </li>
+                                
+                              </ul>
+                              <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-flight-one" role="tabpanel" aria-labelledby="flight_one">
+                                    <div>
+                                        <table class="table  traveller_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Seat</th>
+                                                    <th scope="col">Meal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Amit Kumar</td>
+                                                <td>3A</td>
+                                                <td>Not Selected</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Amit Kumar</td>
+                                                <td>10A</td>
+                                                <td>Non-veg</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                     </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-flight-two" role="tabpanel" aria-labelledby="flight_two">
+                                    <div>
+                                        <table class="table  traveller_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Seat</th>
+                                                    <th scope="col">Meal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td> Kumar</td>
+                                                <td>Not Selected</td>
+                                                <td>Wine</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Kumar</td>
+                                                <td>Not Selected</td>
+                                                <td>Burger</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                     </div>
+                                </div>
+                              </div>
+                        </div>
+                                
+                    </div>
+
+                </div>
+            </div>    
                 <!--Step4 Ends-->   
                 
                  <!--Steps 5-->
@@ -2314,15 +2575,15 @@
                 <div class="booking-title-box">
                 <h4>Payment</h4>
                 </div>
-<app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchTrainKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
+<app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE"
-[passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)" >
+[passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)"     [passflexiFare] = "sendflexiFare">
 </app-payment>
                 </div>
                 </div>    
                 <!--Step5 Ends-->    
 
-                <div class="col-md-4">
+                <div class="col-md-4" *ngIf="totalCollectibleAmount" >
                 <!-- <app-fare-summary></app-fare-summary> -->
                 <div class="default-sidebar">
                     <div class="sidebar-widget session-expires-widget">
@@ -2422,7 +2683,7 @@
                          <a href="javascript:void(0);" class="button-style w-100"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
                           <a href="javascript:void(0);" class="button-style w-100" (click)="continuePayment()"  *ngIf="steps==5">Continue</a>
                     </div>
-                    <div *ngIf="steps==5">
+                    <div *ngIf="steps==5" class="d-none d-lg-block d-xl-none">
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
   (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
@@ -2437,7 +2698,7 @@
             <!-- ------------------------------
             >>> Modal bookingprocess
         ---------------------------------->
-        <div class="modal bookingprocess" id="bookingprocess" *ngIf="searchData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+        <div class="modal bookingprocess" id="infoprocess" *ngIf="searchData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body " style="padding: 25px;">
@@ -2493,11 +2754,20 @@
                            <div class="bookingprocess-title text-center mb-30">
                                 <h5><strong>Fare has changed</strong></h5>
                             </div>
-                            <div class="bookingprocess-content">
+                            <div class="bookingprocess-content p-20 border-0 m-0">
                                <p>The fare of the itinerary you have chosen has changed</p>
-                               <div><b>Old Price</b> : ₹ {{old_fare}}</div>
+                               <div><b>Old Price</b> : ₹{{old_fare}}</div>
                                <hr>
-                               <div><b>New Price</b> : ₹ {{new_fare}}</div>
+                               <div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <b>New Price</b>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <b class="new_fare_flight">₹ {{new_fare}}</b> 
+                                        </div>
+                                    </div>
+                               </div>
                             </div>
                             <div class="refresh-text text-center pt-2">
                                <button type="button" class="btn btn-primary" (click)="continueWithNewFare()">Continue with New Fare</button>
@@ -2510,6 +2780,163 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mlite Footer Price Section  -->
+        <div class="d-block d-sm-none">
+            <div class="footer-sticky-mlite">
+                <div>
+                    <div class="apply_fare">
+                        <p  *ngIf="steps==5"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+                        <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
+                    </div>
+                    <div class="price_sec">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="">
+                                    <h6 class="price">₹{{totalCollectibleAmount|number}}</h6>
+                                    <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <div>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="sendFlightDetails()" *ngIf="steps==1">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueSeatSelection()"  *ngIf="steps==3">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"  *ngIf="steps==5">Continue</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mlite Apply Coupon Popup -->
+        <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Coupon Code</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                 
+                    <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
+[passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
+  (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+</app-coupons>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Mlite Fare Summary Popup -->
+        <div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header pb-0">
+                  <h5 class="modal-title">Fare Summary</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div>
+                        <img *ngIf="selectedVendor" src="{{cdnUrl}}images/flight_partners/{{selectedVendor.partnerName}}.png" alt="{{selectedVendor.partnerName}}"> 
+                    </div>
+                    <div class="widget-content">
+                        <ul class="widget-list clearfix">
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Base Fare
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{BaseFare|number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Taxes and Fees
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{Tax |number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            {{selectedVendor.partnerName}} ConvFee
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{partnerConvFee |number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Baggage/Seat/Meals
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{vas_amount}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Discounts
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-green">-&#8377;{{coupon_amount}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box pt-30">
+                                    <div class="fare-list-left">
+                                        <h6 class="fw_7">Grand Total</h6>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
+                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
         
     </main>
 

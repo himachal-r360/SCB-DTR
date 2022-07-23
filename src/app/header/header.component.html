@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header pb-2 pr-0">
                 <h5 class="modal-title" id="disclamierPopupTitle">Disclaimer</h5>
-                <button type="button" class="btn-close" (click)="closeDisClimerConsent(1)" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close close-popupd" (click)="closeDisClimerConsent(1)" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div>
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<div class="header-sticky fixed-top bg-white " *ngIf="showmHeader">
+<div class="header-sticky fixed-top bg-header" *ngIf="showHeader">
     <div class="row marquee-row-new" *ngIf="importantMessage">
         <div class="container-fluid">
             <div class="col-md-2 message">Important Message:</div>
@@ -613,7 +613,7 @@
 
 <!-- mobile  -->
 <span class="d-block d-md-block d-lg-none" *ngIf="domainName=='SMARTBUY' && showHeader">
-        <nav class="navbar navbar-expand-lg navbar-white text-dark bg-white {{showmNav}}">
+        <nav class="navbar navbar-expand-lg navbar-white text-dark bg-header {{showmNav}}">
             <div class="sb-m-header">
                 <div class="nav-left">
                     <div class="sb-tab-menu">
@@ -878,9 +878,12 @@
             <div class="m_disclaimer">
                 <p class="title">Disclaimer:</p>
                 <p>
-                    HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers. HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC
+                    HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers.
+                    <span id="show-more" (click)="enableMoreClick()" *ngIf="viewMoreBox">View More</span>
+                    <span id="show-content" *ngIf="enableContextBox"> HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC
                     Bank is merely facilitating the payment to its Customers by providing the Payment Gateway Services. HDFC Bank is neither guaranteeing nor making any representation. HDFC Bank is not responsible for Sale/Quality/Features of the Products/Services
-                    under the offers.
+                    under the offers. <span id="show-less" (click)="enableLessClick()" *ngIf="viewLessBox"> View less</span>
+                    </span>
                 </p>
             </div>
 
@@ -930,7 +933,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/flight.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/flight_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Flights</h6>
@@ -941,7 +944,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.TRAIN==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/train.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/train_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Trains</h6>
@@ -953,7 +956,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.BUS==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/bus.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/bus_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Bus</h6>
@@ -964,7 +967,7 @@
                                 <li *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                     <div class="row">
                                         <div class="col-3 p-0">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/hotel.svg" alt="fl_icn">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/mobile/stay_m.svg" alt="fl_icn">
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Hotel Stays</h6>
@@ -1418,6 +1421,284 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="cookies_banner text-center js-cookie-consent cookie-consent" *ngIf="cookieConsent && cookieMessageType=='old'">
+    <button type="button" class="close js-cookie-consent-agree cookie-consent__agree" id="close_cookie" style="color:#000" (click)="closeCookieConsent(2)">&times;</button>
+    <div class="cookie-msg" innerHtml="{{cookieMessage}}"></div>
+    <div style="margin-top:10px;">
+        <button class="btn btn-success btn-cookie js-cookie-consent-agree cookie-consent__agree" id="accept-cookie" (click)="closeCookieConsent(1)">{{cookieAgree}}</button>
+    </div>
+</div>
+
+<div class="cookies_banner text-center js-cookie-consent cookie-consent" *ngIf="cookieConsent && cookieMessageType=='new'">
+    <button type="button" class="close js-cookie-consent-agree cookie-consent__agree" id="close_cookie" style="color:#000" (click)="closeCookieConsent(2)">&times;</button>
+    <div class="cookie-msg" innerHtml="{{cookieMessage}}"></div>
+    <div style="margin-top:10px;">
+        <button class="btn btn-success btn-cookie js-cookie-consent-agree cookie-consent__agree" id="accept-cookie" (click)="closeCookieConsent(1)">{{cookieAgree}}</button>
+        <button class="btn btn-success btn-cookie js-cookie-consent-agree cookie-consent__agree" id="manage_cookie" (click)="ShowCookiePopUp(true)">Manage Cookie</button>
+    </div>
+</div>
+
+<!-- New sb Cookie Code  -->
+
+<div class="cookie_box" *ngIf="cookieConsent && cookieMessageType=='updated'">
+    <div class="cookie_conatiner">
+        <div class="data_contain">
+            <div class="text-right">
+                <img src="{{cdnUrl}}images/smartbuy/icons/cookie_close.svg" alt="closeCookieConsent" (click)="closeCookieConsent(2)" class="close">
+            </div>
+            <div class="text-center mb-3">
+                <img src="{{cdnUrl}}images/smartbuy/icons/cookie.svg" alt="cookie">
+            </div>
+            <h5 class="mb-3">We Use Cookies :)</h5>
+            <p>By using this site you agree to SmartBuy's use of cookies to give you a personalised experience. For more please read the <a target="_blank" href="{{domainRedirect}}cookie_policy">cookie policy.</a></p>
+            <button class="btn btn-primary" (click)="closeCookieConsent(1)">Accept </button>
+        </div>
+    </div>
+</div>
+
+<div class="cookie-popup-overlay" [ngClass]="{'cookie-is-class': ShowCookieTab === true }" *ngIf="ShowCookiePopup">
+    <!--Creates the popup content-->
+    <div class="cookie-popup-content">
+        <button type="button" class="close cookie-close" (click)="CloseCookieMark()">&times;</button>
+        <p class="cookie-disc">
+            We Use Cookies to improve user experience.Choose what cookies you allow to use.you can read more about our
+            <span class="need-policy"><a target="_blank" href="{{domainRedirect}}cookie_policy">Cookie Policy</a></span> in our Privacy Policy.
+        </p>
+
+        <form class="form-popup" id="myform">
+            <div class="form-cookie">
+                <input type="checkbox" class="checkbox cookie-checkbox" id="manage-strict" checked="check" disabled />
+                <label class="label-cookie" for="manage-strict">Strictly Necessary</label>
+                <br />
+            </div>
+            <div class="form-cookie">
+                <input type="checkbox" class="checkbox cookie-checkbox" id="manage-func" [(ngModel)]="Cookies.AL" name="AL" (change)="checkCheckBoxCookievalue($event)" />
+                <label class="label-cookie" for="manage-func">Adobe Launch</label>
+                <br />
+            </div>
+            <div class="form-cookie">
+                <input type="checkbox" class="checkbox cookie-checkbox" id="manage-target" [(ngModel)]="Cookies.GA" name="GA" (change)="checkCheckBoxCookievalue($event)" />
+                <label class="label-cookie" for="manage-target">Google Analytics</label>
+                <br />
+            </div>
+            <div class="form-cookie">
+                <input type="checkbox" class="checkbox cookie-checkbox" id="manage-perform" [(ngModel)]="Cookies.GTM" name="GTM" (change)="checkCheckBoxCookievalue($event)" />
+                <label class="label-cookie" for="manage-perform">Google Tag Manager</label>
+                <br />
+            </div>
+            <div class="row">
+                <div class="col-sm-12 cookie-center">
+                    <input type="button" id="checkAll" class=" btn btn-animated btn-normal pull-left" (click)="closeCookieConsent(1)" value="Accept All" [hidden]="AcceptAllBtn" />
+                    <input type="button" id="save-close" class="btn btn-animated btn-normal pull-left" (click)="closeCookieConsent(3)" value="Save & Close" [hidden]="SaveCloseBtn" />
+                    <input type="button" id="uncheckAll" class=" btn btn-animated btn-normal pull-left" (click)="closeCookieConsent(2)" value="Reject All" />
+                </div>
+            </div>
+        </form>
+        <h5 id="show-details" [hidden]="ShowCookieTab" (click)="ShowCookieTabBtn(true)"><i class="fa fa-gear gear-show"></i>SHOW DETAILS</h5>
+        <h5 id="hide-details" [hidden]="!ShowCookieTab" (click)="ShowCookieTabBtn(false)"><i class="fa fa-gear gear-hide"></i>HIDE DETAILS</h5>
+
+        <div id="tabs-pill" ng-init="tab = 1;" *ngIf="ShowCookieTab">
+            <div class="tabbable boxed parentTabs">
+                <ul class="nav nav-tabs">
+                    <li ng-init="selectedTab = 1;"><a data-target="#set1" data-toggle="tab" class="active">COOKIE DECLARATION</a></li>
+                    <li><a data-target="#set2" data-toggle="tab">ABOUT COOKIES</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in show" id="set1">
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs">
+                                <li ng-class="{active: tab ==1}"><a data-target="#sub11" data-toggle="tab" ng-click="tab = 1;" class="active">Strictly Necessary</a></li>
+                                <li><a data-target="#sub12" data-toggle="tab">Adobe Launch</a></li>
+                                <li><a data-target="#sub13" data-toggle="tab">Google Analytics</a></li>
+                                <li><a data-target="#sub14" data-toggle="tab">Google Tag Manager</a></li>
+                            </ul>
+                            <div class="tab-content tab-cookiedata" ng-show="tab == 1">
+                                <div class="tab-pane fade active in show" id="sub11">
+                                    <table class="tab-table" role="table">
+                                        <thead role="rowgroup">
+                                            <tr role="row">
+                                                <th role="columnheader">Name</th>
+                                                <th role="columnheader">Domain</th>
+                                                <th role="columnheader">Expiration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody role="rowgroup">
+                                            <tr role="row">
+                                                <td role="cell">XSRF-TOKEN</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">AWSALB</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">AWSALBTG</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">AWSALBTGCORS</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">sess_map</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="sub12">
+
+                                    <table class="tab-table" role="table">
+                                        <thead role="rowgroup">
+                                            <tr role="row">
+                                                <th role="columnheader">Name</th>
+                                                <th role="columnheader">Domain</th>
+                                                <th role="columnheader">Expiration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody role="rowgroup">
+                                            <tr role="row">
+                                                <td role="cell">aam_uuid</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">gpv_Page</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">mbox</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">AMCVS</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">s_cc</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">s_nr30</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">at_check</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="sub13">
+                                    <table class="tab-table" role="table">
+                                        <thead role="rowgroup">
+                                            <tr role="row">
+                                                <th role="columnheader">Name</th>
+                                                <th role="columnheader">Domain</th>
+                                                <th role="columnheader">Expiration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody role="rowgroup">
+                                            <tr role="row">
+                                                <td role="cell">UULE</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">NID</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">1P_JAR</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">RUL</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">_ga</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">_gid</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">_gads</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">_gat</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td role="cell">IDE</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="sub14">
+                                    <table class="tab-table" role="table">
+                                        <thead role="rowgroup">
+                                            <tr role="row">
+                                                <th role="columnheader">Name</th>
+                                                <th role="columnheader">Domain</th>
+                                                <th role="columnheader">Expiration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody role="rowgroup">
+                                            <tr role="row">
+                                                <td role="cell">_dc_gtm</td>
+                                                <td role="cell">offers.reward360.in</td>
+                                                <td role="cell">1 Month</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="set2">
+                        <div class="tabbable">
+                            <div class="tab-content">
+                                <p class="cookie-border">
+                                    Cookies are usually small text files, given ID tags that are stored on your computer's browser directory. Cookies are created when you use your browser to visit a website that uses cookies to keep track of your movements within the site, help you resume
+                                    where you left off, theme selection, preferences, and other customization functions. The website stores a corresponding file (with same ID tag) to the one they set in your browser and in this file, they store information
+                                    on your movements within the site and allows the website to serve content/offers accordingly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"
