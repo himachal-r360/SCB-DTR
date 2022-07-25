@@ -300,4 +300,13 @@ flexipayvalidateOTP(param){
 return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe(map((response: any) => response));
   }
 }
+
+   saveCheckout (param): Observable<any> {
+    if(LOCALJSON=='true'){
+    return this.http.get('assets/data/saveCheckout.json');
+  }else{
+    return this.http.post(this.endpoint+'saveCheckoutFlight', param, config).pipe(map((response: any) => response));
+    }
+  }
+
 }

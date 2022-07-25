@@ -22,6 +22,7 @@ import {MaterialModule} from './material.module';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 export function appInitializerFn(appConfig: AppConfigService) {
@@ -52,7 +53,12 @@ export function appInitializerFn(appConfig: AppConfigService) {
       headerName: 'X-XSRF-TOKEN'
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
-    MaterialModule,DirectiveModule,PartnersModule
+    MaterialModule,DirectiveModule,PartnersModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    DirectiveModule,
+    CarouselModule
+    
   ],
   exports:[SearchComponent],
    providers: [
