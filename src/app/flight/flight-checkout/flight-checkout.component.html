@@ -400,7 +400,7 @@
                 <!--Steps 1 Ends-->
                 
                 <!--Steps 2 Starts-->
-                 <div class="col-md-8" *ngIf="steps==2">
+                 <div class="col-md-8" [ngClass]="{'showTab':steps==2 , 'hidden':steps !=2}">
                  <form [formGroup]="passengerForm" name="passengerForm" ngxScrollToFirstInvalid>
                     <div class="booking-process-content">
                         <div class="booking-title-box">
@@ -928,9 +928,8 @@
                                                         <mat-label>Title</mat-label>
                                                         <mat-select formControlName="infant_title{{saveInfantTravellerId[passenger.id]}}">
                                                          <mat-option value=""> Select </mat-option>
-                                                        <mat-option value="Mr"> Mr </mat-option>
-                                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                                        <mat-option value="Ms">Ms</mat-option>
+                                                        <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                                         </mat-select>
                                                         
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">Please enter title</mat-error>
@@ -1006,9 +1005,8 @@
                                                         <mat-label>Title</mat-label>
                                                         <mat-select formControlName="infant_title{{saveInfantTravellerId[passenger.id]}}">
                                                          <mat-option value=""> Select </mat-option>
-                                                        <mat-option value="Mr"> Mr </mat-option>
-                                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                                        <mat-option value="Ms">Ms</mat-option>
+                                                             <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                                         </mat-select>
                                                         
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">Please enter title</mat-error>
@@ -1080,9 +1078,8 @@
                                         <mat-label>Title</mat-label>
                                         <mat-select formControlName="infant_title{{traveller}}">
                                         <mat-option value=""> Select </mat-option>
-                                        <mat-option value="Mr"> Mr </mat-option>
-                                        <mat-option value="Mrs" >Mrs</mat-option>
-                                        <mat-option value="Ms">Ms</mat-option>
+                                              <mat-option value="Mstr"> Mstr </mat-option>
+                                                        <mat-option value="Miss" >Miss</mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','infant_title'+traveller)">Please enter title</mat-error>
                                         </mat-form-field>
@@ -2083,7 +2080,7 @@
                                               </div>
                                               <div class="luggage-add-items">
                                                   <div class="">
-                                                      <h6>₹ 70</h6>
+                                                      <h6>₹70</h6>
                                                   </div>
                                                   <div class="Travellers-qty ms-4">
                                                       <div class="quantity buttons_added">
@@ -2100,7 +2097,7 @@
                                               </div>
                                               <div class="luggage-add-items">
                                                   <div class="">
-                                                      <h6>₹ 250</h6>
+                                                      <h6>₹250</h6>
                                                   </div>
                                                   <div class="Travellers-qty ms-4">
                                                       <div class="quantity buttons_added">
@@ -2117,7 +2114,7 @@
                                               </div>
                                               <div class="luggage-add-items">
                                                   <div class="">
-                                                      <h6>₹ 250</h6>
+                                                      <h6>₹250</h6>
                                                   </div>
                                                   <div class="Travellers-qty ms-4">
                                                       <div class="quantity buttons_added">
@@ -2134,7 +2131,7 @@
                                               </div>
                                               <div class="luggage-add-items">
                                                   <div class="">
-                                                      <h6 class="fw_7 fs_18">₹ 600</h6>
+                                                      <h6 class="fw_7 fs_18">₹600</h6>
                                                   </div>
                                               </div>
                                           </div>
@@ -2170,35 +2167,39 @@
                                 <div class="booking-inner-title-left" *ngIf="searchData">
                                     <div class="head_info">
                                         <div class="float-start">
-                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">
+                                            <!--<img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">-->
                                         </div>
                                         <h6>
                                             <span class="city_text">{{searchData.fromCity}}</span>
                                             <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
                                             <span class="city_text">{{searchData.toCity}}</span>
-                                            <p class="flight_details mb-0 pt-1"> Indigo 6E-956, Indigo 6E-413 | Economy  | Non refundable</p>
+                                            <p class="flight_details mb-0 pt-1">  
+                                            <ng-container *ngFor="let flights of flightDetails;let i = index;let last = last">
+                                            <span>{{flights.airlineName}}</span> <span> {{flights.airline}}-{{flights.flightNumber}}</span> <span *ngIf="!last">, </span>
+                                            </ng-container>
+                                            | {{flightClasses[searchData.flightclass]}}  | <span *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</span>              <span *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</span></p>
                                         </h6>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="head_info">
                                     <div>
-                                            <p class="time_text">08:55</p>
-                                            <p class="date_text">11 jul</p>
+                                            <p class="time_text">{{flightDetails[0].departureDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[0].departureDateTime| date:'dd MMM'}}</p>
                                     </div>
                                     <div>
                                             <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
                                     </div>
                                     <div>
-                                            <p class="time_text">08:55</p>
-                                            <p class="date_text">11 jul</p>
+                                            <p class="time_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'dd MMM'}}</p>
                                     </div>
                                     </div>
                                 </div>
                                 <div>
                                     <div>
-                                        <p class="duration_flight">6hr 10min</p>
-                                        <p class="date_text">1 stop</p>
+                                        <p class="duration_flight">{{totalDuration + dateHour| durationTime}}</p>
+                                        <p class="date_text">{{flightDetails[0].stops}} Stop</p>
                                     </div>
                                 </div>
                                 <div class="booking-inner-title-right">
@@ -2212,13 +2213,16 @@
 
                                     <div class="head_info mb-20">
                                         <div class="float-start">
-                                            <img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">
+                                           <!-- <img src="{{cdnUrl}}/images/airlines/SG.gif" width="40px" class="mx-2" alt="">-->
                                         </div>
                                         <h6>
                                             <span class="city_text">{{searchData.fromCity}}</span>
                                             <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
                                             <span class="city_text">{{searchData.toCity}}</span>
-                                            <p class="flight_details mb-0 pt-1"> Indigo 6E-956, Indigo 6E-413 | Economy  | Non refundable</p>
+                                            <p class="flight_details mb-0 pt-1"> <ng-container *ngFor="let flights of flightDetails;let i = index;let last = last">
+                                            <span>{{flights.airlineName}}</span> <span> {{flights.airline}}-{{flights.flightNumber}}</span> <span *ngIf="!last">, </span>
+                                            </ng-container>
+                                            | {{flightClasses[searchData.flightclass]}}  | <span *ngIf="selectedVendor.refundStatus != 1">NON-REFUNDABLE</span>              <span *ngIf="selectedVendor.refundStatus == 1">REFUNDABLE</span></p>
                                         </h6>
                                         <div class="booking-inner-title-right">
                                             <p class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse" role="button" aria-expanded="false"> <span class=""><!--<i class="fas fa-angle-down rotate-icon"></i>--></span></p>
@@ -2229,21 +2233,21 @@
                                 <div class="d-flex justify-content-evenly">
                                     <div class="head_info">
                                         <div>
-                                            <p class="time_text">08:55</p>
-                                            <p class="date_text">11 jul</p>
+                                             <p class="time_text">{{flightDetails[0].departureDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[0].departureDateTime| date:'dd MMM'}}</p>
                                         </div>
                                         <div>
                                                 <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
                                         </div>
                                         <div>
-                                            <p class="time_text">08:55</p>
-                                            <p class="date_text">11 jul</p>
+                                           <p class="time_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'HH:mm'}}</p>
+                                            <p class="date_text">{{flightDetails[flightDetails.length -1].arrivalDateTime| date:'dd MMM'}}</p>
                                         </div>
                                     </div>
                                     <div>
                                         <div>
-                                            <p class="duration_flight">6hr 10min</p>
-                                            <p class="date_text">1 stop</p>
+                                            <p class="duration_flight">{{totalDuration + dateHour| durationTime}}</p>
+                                        <p class="date_text">{{flightDetails[0].stops}} Stop</p>
                                         </div>
                                     </div>
                                 </div>
@@ -2326,89 +2330,15 @@
                                         <h6>Change of planes・{{dateHour | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                                     </div>
                                     </div>
-                                    <div class="layover_break">
-                                        <p>Change of planes・3h 0m Layover in Nagpur</p>
-                                    </div>
-                                    <div class="Flight-One flight_detail_review" *ngFor="let flights of flightDetails;let i = index" >
-                                        <div class="Booking-Flight-name" >
-                                            <div class="Booking-Flight-name-left">
-                                                <img  src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}" class="flight-image mr-10">
-                                                <span class="fw_7  mr-10">{{flights.airlineName}}</span>
-                                                <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
-                                            </div>
-                                            <div class="Booking-Flight-name-right">
-                                                <p>{{flightClasses[searchData.flightclass]}} > <b>SAVER</b> <span class="material-icons fa-1x ps-2">error</span></p>
-                                            </div>
-                                        </div>
-                                        <div class="Booking-Flight-time">
-                                            <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
-                                            <span class="round round-line"></span>
-                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                                <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
-                                                <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
-                                                <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
-                                            </div>
-                                        </div>
-        
-                                        <div class="Booking-Flight-time">
-                                            <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
-                                            <span class="round"></span>
-                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                                <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
-                                                <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
-                                            </div>
-                                        </div>
-        
-                                    <div class="Booking-Flight-passanger" *ngIf="baggageInfo[i]"  >
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <h6>Airline</h6>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <h6>Check-in Baggage</h6>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <h6>Cabin Baggage</h6>
-                                            </div>
-                                            <!--<div class="col-md-4">
-                                                <h6>Flight Extras</h6>
-                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
-                                                <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
-                                            </div>-->
-                                        </div>
-                                        <div class="row"  >
-                                            <div class="col-md-2">
-                                                <p>{{baggageInfo[i].flightName}}<br>{{baggageInfo[i].flightNo}}</p>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p *ngIf="baggageInfo[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                <ng-template #checkIn_content>{{baggageInfo[i].checkIn}}</ng-template>
-                                                <ng-template #checkIn_blank>NA</ng-template>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p *ngIf="baggageInfo[i].cabin ;then cabin_content else cabin_blank"></p>
-                                            <ng-template #cabin_content>{{baggageInfo[i].cabin}}</ng-template>
-                                                <ng-template #cabin_blank>NA</ng-template>
-                                            </div>
                                     
-                                        </div> 
-                                        
-                                    </div>
-                                    <!-- <div class="change-planes" *ngIf="getLayoverHour(flightDetails[i],flightDetails[i+1]) && airportsNameJson">
-                                        <h6>Change of planes・{{getLayoverHour(flightDetails[i],flightDetails[i+1]) | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
-                                    </div> -->
-                                    <div class="change-planes" *ngIf="dateHour && airportsNameJson && flightDetails[i+1]">
-                                        <h6>Change of planes・{{dateHour | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
-                                    </div>
-                                    </div>
                                 </div>
 
 
-                            <div class="edit_baggage">
+                            <div class="edit_baggage"  *ngIf="enableVAS==1">
                                 <div class="luggage-box-edit">
                                     <div class="luggage-text">
                                         <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
-                                        <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                                        <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"  (click)="moveTab(3)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -2417,18 +2347,18 @@
                 </div>
                 <div class="booking-process-content contact_review">
                     <div class="booking-title-box mb-0">
-                        <h4 class="heading_text">Contact Details <p class="sub_head_text ps-3">(for all communication) <span class="ps-1"> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                        <h4 class="heading_text">Contact Details <p class="sub_head_text ps-3">(for all communication) <span class="ps-1"> <a  href="javascript:void(0)"  (click)="moveTab(2)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
                     </div>
                     <div class="booking-inner-box from-to-box">
                         <div class="">
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-6 col-md-6">
                                         <p class="label_text">Email</p>
-                                        <p class="label_value">abhay.rege@gmail.com</p>
+                                        <p class="label_value">{{contactDatails.email}}</p>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6">
                                         <p class="label_text">Mobile Number</p>
-                                        <p class="label_value">9876543210</p>
+                                        <p class="label_value">{{contactDatails.mobile}}</p>
                                     </div>
                                 </div>
 
@@ -2439,8 +2369,7 @@
                                     <span class="fw_7">WhatsApp</span>
                                 </div>
                                 <div class="form-check form-switch m-0 ">
-                                    <input class="form-check-input" type="checkbox" role="switch" formControlName="whatsappFlag" name="whatsappFlag" id="whatsappFlag" 
-                                        [checked]="whatsAppCheck" />
+                                    <input class="form-check-input" type="checkbox" role="switch"  disabled    [checked]="whatsAppCheck" />
                                 </div>
                             </div>
                         </div>
@@ -2450,79 +2379,88 @@
                 </div>
                 <div class="booking-process-content traveller_review">
                     <div class="booking-title-box mb-0">
-                        <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3">2 Adults, 1 Child, 1 Infant <span class="ps-1"> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                    
+                  
+                        <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}} Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span>   <span *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> <span class="ps-1"> <a href="javascript:void(0)"  (click)="moveTab(2)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
                     </div>
                     <div class="booking-inner-box from-to-box">
                         <div class="p-2">
                              <div>
-                                <h6>2 Adults</h6>
+                                <h6>{{travelerDetails.adults}} Adults</h6>
                                 <table class="table  traveller_table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Name</th>
+                                            <th scope="col"  class="col-6">Name</th>
                                             <th scope="col">Date of Birth</th>
                                             <th scope="col">Gender</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
+                                <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                <tr *ngIf="adult.type=='ADT'" >
+                                <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                <td>
+                                <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div>
+                                </td>
+                                </tr>
+                                </ng-container>
+                                  </tbody>
+                                </table>
+                             </div>
+                             <div *ngIf="travelerDetails.child > 0" >
+                                <h6>{{travelerDetails.child}} Child</h6>
+                                <table class="table  traveller_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="col-6" >Name</th>
+                                            <th scope="col">Date of Birth</th>
+                                            <th scope="col">Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                          <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                    <tr *ngIf="adult.type=='CHD'" >
+                                        <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>              <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                 <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div></td>
                                     </tr>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
-                                    </tr>
+                                    </ng-container>
                                     </tbody>
                                 </table>
                              </div>
-                             <div>
-                                <h6>2 Child</h6>
+                             <div  *ngIf="travelerDetails.infants > 0">
+                                <h6>{{travelerDetails.infants}} Infant</h6>
                                 <table class="table  traveller_table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Name</th>
+                                            <th scope="col"  class="col-6">Name</th>
                                             <th scope="col">Date of Birth</th>
                                             <th scope="col">Gender</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
+                                         <ng-container *ngFor="let adult of paxInfo;let i = index" >
+                                    <tr *ngIf="adult.type=='INF'" >
+                                        <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
+                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>              <div [ngSwitch]="adult.title">
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </div></td>
                                     </tr>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                             </div>
-                             <div>
-                                <h6>2 Infant</h6>
-                                <table class="table  traveller_table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date of Birth</th>
-                                            <th scope="col">Gender</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Amit Kumar</td>
-                                        <td>24/09/1998<span class="age_data">24 years</span></td>
-                                        <td>Male</td>
-                                    </tr>
+                                    </ng-container>
                                     </tbody>
                                 </table>
                              </div>
@@ -2530,9 +2468,9 @@
                     </div>
 
                 </div>
-                <div class="booking-process-content seats_review">
+                <div class="booking-process-content seats_review" *ngIf="enableVAS==1">
                     <div class="booking-title-box mb-0">
-                        <h4 class="heading_text">Seats and Meals <p class="ps-1"> <span class=""> <a href="#" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
+                        <h4 class="heading_text">Seats and Meals <p class="ps-1"> <span class=""> <a  href="javascript:void(0)"  (click)="moveTab(2)" ><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p></h4>
                     </div>
                     <div class="booking-inner-box from-to-box">
                         <div class="">
@@ -2545,9 +2483,9 @@
                                         </div>
                                         <div class="">
                                             <h6 class="mb-0">
-                                                <span class="city_text">Mumbai</span>
-                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-3">
-                                                <span class="city_text">Nagpur</span>
+                                                <span class="city_text">MOB</span>
+                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-2">
+                                                <span class="city_text">XON</span>
                                             </h6> 
                                         </div>
                                     </div>
@@ -2561,9 +2499,9 @@
                                         </div>
                                         <div class="">
                                             <h6 class="mb-0">
-                                                <span class="city_text">Mumbai</span>
+                                                <span class="city_text">HDY</span>
                                                 <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="" class="mx-3">
-                                                <span class="city_text">Nagpur</span>
+                                                <span class="city_text">MNR</span>
                                             </h6>
                                         </div>
                                     </div>
@@ -2637,9 +2575,9 @@
                 <div class="booking-title-box">
                 <h4>Payment</h4>
                 </div>
-<app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchTrainKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
+<app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE"
-[passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)" >
+[passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)"     [passflexiFare] = "sendflexiFare">
 </app-payment>
                 </div>
                 </div>    
@@ -2743,9 +2681,8 @@
                         <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
                         <a href="javascript:void(0);" class="button-style w-100" (click)="continueSeatSelection()"  *ngIf="steps==3">Continue</a>
                          <a href="javascript:void(0);" class="button-style w-100"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
-                          <a href="javascript:void(0);" class="button-style w-100" (click)="continuePayment()"  *ngIf="steps==5">Continue</a>
                     </div>
-                    <div *ngIf="steps==5">
+                    <div *ngIf="steps==5" class="d-none d-lg-block d-xl-none">
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
   (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
@@ -2826,7 +2763,7 @@
                                             <b>New Price</b>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <b class="new_fare_flight">₹ {{new_fare}}</b> 
+                                            <b class="new_fare_flight">₹{{new_fare}}</b> 
                                         </div>
                                     </div>
                                </div>
@@ -2842,6 +2779,163 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mlite Footer Price Section  -->
+        <div class="d-block d-sm-none">
+            <div class="footer-sticky-mlite">
+                <div>
+                    <div class="apply_fare">
+                        <p  *ngIf="steps==5"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+                        <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
+                    </div>
+                    <div class="price_sec">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="">
+                                    <h6 class="price">₹{{totalCollectibleAmount|number}}</h6>
+                                    <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <div>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="sendFlightDetails()" *ngIf="steps==1">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueSeatSelection()"  *ngIf="steps==3">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
+                                    <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"  *ngIf="steps==5">Continue</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mlite Apply Coupon Popup -->
+        <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Coupon Code</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                 
+                    <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
+[passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
+  (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+</app-coupons>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Mlite Fare Summary Popup -->
+        <div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header pb-0">
+                  <h5 class="modal-title">Fare Summary</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div>
+                        <img *ngIf="selectedVendor" src="{{cdnUrl}}images/flight_partners/{{selectedVendor.partnerName}}.png" alt="{{selectedVendor.partnerName}}"> 
+                    </div>
+                    <div class="widget-content">
+                        <ul class="widget-list clearfix">
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Base Fare
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{BaseFare|number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Taxes and Fees
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{Tax |number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            {{selectedVendor.partnerName}} ConvFee
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{partnerConvFee |number}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Baggage/Seat/Meals
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p>&#8377;{{vas_amount}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p>
+                                            <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                            Discounts
+                                        </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-green">-&#8377;{{coupon_amount}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item">
+                                <div class="fare-list-box pt-30">
+                                    <div class="fare-list-left">
+                                        <h6 class="fw_7">Grand Total</h6>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
+                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
         
     </main>
 

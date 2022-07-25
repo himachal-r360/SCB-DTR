@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private _flightService: FlightService
     
   ) {
-
+     
     setTimeout(() => {
       this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
       this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
@@ -151,6 +151,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
+  
+   this._flightService.showHeader(true);
+   
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
@@ -340,35 +343,39 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   flightTimingto:any;
 
   setSearchFilterData() {
-    this.searchData = sessionStorage.getItem('searchVal');
-    if(this.searchData != null || this.searchData != undefined){
-    let searchObj = JSON.parse(this.searchData);
-    this.fromCityName = searchObj.fromCity; 
-    this.toCityName = searchObj.toCity;
-    this.departureDate = new Date(searchObj.departure);
-    this.flightClassVal = searchObj.flightclass;
-    this.adultsVal = searchObj.adults;
-    this.childVal = searchObj.child;
-    this.infantsVal = searchObj.infants;
-    this.fromAirpotName = searchObj.fromAirportName;
-    this.toAirpotName = searchObj.toAirportName;
-    this.flightTimingfrom = searchObj.flightfrom
-    this.flightTimingto = searchObj.flightto
-    this.fromFlightId = searchObj.flightfrom;
-    this.toFlightId = searchObj.flightto;
-    this.flightData.get('flightfrom').setValue(searchObj.flightfrom)
-    this.flightData.get('flightto').setValue(searchObj.flightto)
-    this.flightData.get('departure').setValue(new Date(this.departureDate))
-    this.flightData.get('flightclass').setValue(this.flightClassVal);
-    this.flightData.get('adults').setValue(searchObj.adults);
-    this.flightData.get('child').setValue(this.childVal);
-    this.flightData.get('infants').setValue(this.infantsVal);
-    this.flightData.value.infants = this.infantsVal;
-    this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+      this.searchData = sessionStorage.getItem('searchVal');
+      if(this.searchData != null || this.searchData != undefined){
+      let searchObj = JSON.parse(this.searchData);
+      this.fromCityName = searchObj.fromCity; 
+      this.toCityName = searchObj.toCity;
+      this.departureDate = new Date(searchObj.departure);
+      this.arrivalDate = new Date(searchObj.arrival);
+      this.flightClassVal = searchObj.flightclass;
+      this.adultsVal = searchObj.adults;
+      this.childVal = searchObj.child;
+      this.infantsVal = searchObj.infants;
+      this.fromAirpotName = searchObj.fromAirportName;
+      this.toAirpotName = searchObj.toAirportName;
+      this.flightTimingfrom = searchObj.flightfrom
+      this.flightTimingto = searchObj.flightto
+      this.fromFlightId = searchObj.flightfrom;
+      this.toFlightId = searchObj.flightto;
+      this.flightData.get('flightfrom').setValue(searchObj.flightfrom)
+      this.flightData.get('flightto').setValue(searchObj.flightto)
+      this.flightData.get('arrival').setValue(new Date(this.arrivalDate))
+      this.flightData.get('departure').setValue(new Date(this.departureDate))
+      this.flightData.get('flightclass').setValue(this.flightClassVal);
+      this.flightData.get('adults').setValue(searchObj.adults);
+      this.flightData.get('child').setValue(this.childVal);
+      this.flightData.get('infants').setValue(this.infantsVal);
+      this.flightData.value.infants = this.infantsVal;
+      this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
     }
+
   }
 
   flightSearch() {
+    debugger;
     this.submitted = true;
     this.flightData.value.flightto = this.toFlightId;
     this.flightData.value.flightfrom = this.fromFlightId;
@@ -380,7 +387,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     else{
       this.dateValidation=true;
     }
-    if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined){
+    if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined && this.flightData.value.arrival!=null ){
       this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
     }
     
@@ -464,8 +471,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   continueSearch(param:any){
     sessionStorage.setItem('searchVal', JSON.stringify(param));
     this.setSearchFilterData()
-    let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
-    this.router.navigateByUrl(url);
+    if(param.arrival == "" || param.arrival == undefined || param.arrival == null ){
+      let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+      this.router.navigateByUrl(url);
+    }
+    else {
+      let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+      this.router.navigateByUrl(url);
+    }
   }
 
   increaseAdult() {

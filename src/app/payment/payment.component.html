@@ -136,12 +136,12 @@
             <div class="">
                 <div class="payment_final_sec border-0">
                     <div class="row">
-                        <div class="col-4 pe-0">
+                        <div class="col-md-4 pe-md-0">
                             <div class="">
                                 <ul id="tabs" class="nav nav-tabs py-3" role="tablist">
                                     <li class="nav-item" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                       <a id="tab-savedCards" href="#pane-savedCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Methods</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Cards</span>
                                       </a>
                                     </li>
                             
@@ -175,7 +175,7 @@
                                             <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
                                         </a>
                                       </li>
-                                            <li class="nav-item" *ngIf="pgSettingsUPI">
+                                    <li class="nav-item" *ngIf="pgSettingsUPI">
                                         <a id="tab-upi" href="#pane-upi" class="nav-link" data-bs-toggle="tab" role="tab">
                                             <img src="{{cdnUrl}}images/smartbuy/icons/payment/upi.svg" alt="icon"> <span class="ps-2">UPI</span>
                                         </a>
@@ -190,22 +190,30 @@
                                 
                             </div>
                         </div>
-                        <div class="col-8 ps-0">
+                        <div class="col-md-8 col-12 ps-md-0">
                             <div id="content" class="tab-content payment-content p-3" role="tablist">
 
                                 <!-- Saved Card Section Starts -->
                                 <div id="pane-savedCards" class="card tab-pane fade show" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
-                                    <div id="collapse-savedCards" class="collapse show" role="tabpanel" aria-labelledby="heading-savedCards">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
+                                            <a id="tab-netBanking" class="accordion-button" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-savedCards" aria-expanded="true" aria-controls="collapse-savedCards">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Cards</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-savedCards" class="accordion-collapse collapse show" role="tabpanel" aria-labelledby="heading-savedCards" data-bs-parent="#content">
                                         <div class="card-body">
                                             <div>
-                                                <div class="common_title">
+                                               <!--  <div class="common_title">
                                                     <span class="">Pay Using Saved Cards</span>
-                                                </div>
+                                                </div> -->
                                                 <div class="saved-cards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                                     <div class="pay-card-title">
                                                         <!-- <h6><b>Pay using</b></h6> -->
                                                         <p>Your Saved Cards</p>
-                                    
                                     
                                                         <div class="row">
                                                             <div class="ps-3" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title">PG Charges Applicable</span>
@@ -290,7 +298,16 @@
 
                                 <!-- UPI Section Starts -->
                                 <div id="pane-upi" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-upi" *ngIf="pgSettingsUPI">
-                                    <div id="collapse-upi" class="collapse" role="tabpanel" aria-labelledby="heading-upi">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsUPI">
+                                            <a id="tab-upi" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-upi" aria-expanded="false" aria-controls="collapse-upi">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/upi.svg" alt="icon"> <span class="ps-2">UPI</span>
+                                                
+                                            </a>
+                                        </div>  
+                                    </div>
+                                    <div id="collapse-upi" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-upi" data-bs-parent="#content">
                                         <div class="card-body">
                                             <div>
                                                 <div class="bharatQrSection">
@@ -363,7 +380,15 @@
 
                                 <!-- Credt/Debit Card Section Starts -->
                                 <div id="pane-ccdcCards" class="card tab-pane fade" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="tabpanel" aria-labelledby="tab-ccdcCards" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                    <div id="collapse-ccdcCards" class="collapse" role="tabpanel" aria-labelledby="heading-ccdcCards">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
+                                            <a id="tab-ccdcCards"  class="accordion-button collapsed" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
+                                            </a>
+                                        </div>  
+                                    </div>
+                                    <div id="collapse-ccdcCards" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-ccdcCards" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
                                                 <div class="newCardsAddSection" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
@@ -574,12 +599,13 @@
                                 <div id="pane-netBanking" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-netBanking" *ngIf="pgSettingsNETBANKING">
                                     <div class="panel-heading">
                                         <div class="" *ngIf="pgSettingsNETBANKING">
-                                            <a id="tab-netBanking" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" href="#collapse-netBanking" aria-expanded="false" aria-controls="collapse-netBanking">
+                                            <a id="tab-netBanking" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-netBanking" aria-expanded="false" aria-controls="collapse-netBanking">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">Net Banking</span>
+                                                
                                             </a>
-                                          </div>
+                                        </div>
                                     </div>
-                                    <div id="collapse-netBanking" class="collapse" role="tabpanel" aria-labelledby="heading-netBanking">
+                                    <div id="collapse-netBanking" class="collapse" role="tabpanel" aria-labelledby="heading-netBanking" data-bs-parent="#content">
                                         <div class="card-body p-1">
                                             <div>
                                                 <div class="hdfcNetBankingSection" >
@@ -633,7 +659,15 @@
 
                                 <!-- EMI Section Starts -->
                                 <div id="pane-emi" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-emi" *ngIf="pgSettingsEMI && emiArray.length >0">
-                                    <div id="collapse-emi" class="collapse" role="tabpanel" aria-labelledby="heading-emi">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsEMI && emiArray.length >0">
+                                            <a id="tab-emi" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-emi" aria-expanded="false" aria-controls="collapse-emi">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-emi" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-emi" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div class="tab_btn_payments" >
                                                 <ul class="mb-3 nav nav-justified nav-pills" id="pills-tab" role="tablist">
@@ -1028,7 +1062,15 @@
 
                                 <!-- payzapp Section Starts -->
                                 <div id="pane-payzapp" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP">
-                                    <div id="collapse-payzapp" class="collapse" role="tabpanel" aria-labelledby="heading-payzapp">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsPAYZAPP">
+                                            <a id="tab-payzapp" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-payzapp" aria-expanded="false" aria-controls="collapse-payzapp">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-payzapp" class="accordion-collpase collapse" role="tabpanel" aria-labelledby="heading-payzapp" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
                                                 <div class="payzappCardSection" >
@@ -1042,7 +1084,7 @@
                                                             <span class="pg-subtitle ps-4">Additional PG Charges : 1.8% + GST</span></span>
                                                           </div>
                                                     <form [formGroup]="payzappForm">
-                                                        <div id="payzappOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && pgSettingsPAYZAPP }" data-bs-parent="#allPayments" name="paymentModule">
+                                                        <div id="payzappOption"  [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && pgSettingsPAYZAPP }" data-bs-parent="#allPayments" name="paymentModule">
                             
                                                             <div class="payzapp-info">
                                                                 <img src="{{cdnUrl}}images/logo-payzapp.jpg" class="img-fluid">
@@ -1089,7 +1131,15 @@
 
                                 <!-- Reward Points Section Starts -->
                                 <div id="pane-rewardPoints" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-rewardPoints" *ngIf="showRewardsBox">
-                                    <div id="collapse-rewardPoints" class="collapse" role="tabpanel" aria-labelledby="heading-rewardPoints">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="showRewardsBox">
+                                            <a id="tab-rewardPoints" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-rewardPoints" aria-expanded="false" aria-controls="collapse-rewardPoints">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Reward Points</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-rewardPoints" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-rewardPoints" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
                                                 <ng-container >
@@ -1199,7 +1249,15 @@
 
                                 <!-- Flexipay Section Starts -->
                                 <div id="pane-flexipay" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-flexipay" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
-                                    <div id="collapse-flexipay" class="collapse" role="tabpanel" aria-labelledby="heading-flexipay">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
+                                            <a id="tab-flexipay" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-flexipay" aria-expanded="false" aria-controls="collapse-flexipay">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-flexipay" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-flexipay" data-bs-parent="#content">
                                         <div class="card-body p-1">
                                             <div>
                                                 <div class="newCardsAddSection" >
@@ -1210,7 +1268,7 @@
                                                       </div>
                                                     <div id="pay-flexipay-info">
                             
-                                                        <div id="flexiSection" class="collapse" data-bs-parent="#allPayments" name="paymentModule" [ngClass]="{'show':  cardData.length == 0 && pgSettingFlexipayEMI}">
+                                                        <div id="flexiSection" data-bs-parent="#allPayments" name="paymentModule" [ngClass]="{'show':  cardData.length == 0 && pgSettingFlexipayEMI}">
                             
                             
                                                             <div class="accordion" id="VisaRupaySection1">
@@ -1551,7 +1609,15 @@
 
                                 <!-- Test Pg Section Starts -->
                                 <div id="pane-testPg" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-testPg">
-                                    <div id="collapse-testPg" class="collapse" role="tabpanel" aria-labelledby="heading-testPg">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsTESTPG">
+                                            <a id="tab-testPg" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-testPg" aria-expanded="false" aria-controls="collapse-testPg">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Test Pg</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-testPg" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-testPg" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                         <div>
                                             <div class="testPGCardSection" *ngIf="pgSettingsTESTPG">
@@ -1561,7 +1627,7 @@
                                                         <span class="">Pay Using Test Pg</span>
                                                       </div>
                                                 <form [formGroup]="payzappForm">
-                                                    <div id="testPgOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG && 
+                                                    <div id="testPgOption"  [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG && 
                                     !pgSettingsEMI && !pgSettingsNETBANKING && !pgSettingsPAYZAPP && pgSettingsTESTPG }" data-bs-parent="#allPayments" name="paymentModule">
                         
                                                         <div class="col-12">
@@ -1598,13 +1664,15 @@
         
         
         
-        
+          <form [formGroup]="payForm" action="{{MAIN_SITE_URL}}checkout" name="payForm" method="POST" id="payForm">
+        <input type="hidden" formControlName="orderReferenceNumber" name="orderReferenceNumber" id="orderReferenceNumber">
+        <input type="hidden" formControlName="_token" name="_token" id="_token">
+        <input type="hidden" formControlName="ctype" name="ctype" id="ctype">
+    </form>
         
 
 <button class=" payinfo_popup hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo" ></button>
    <button class=" payinfo_popup1 hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo1"></button>
-
-
 
 
 <div class="modal fade pop_code" id="payinfo" tabindex="-1" role="dialog" aria-labelledby="payinfo"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -1616,7 +1684,7 @@
             <div class="modal-body p-10">
  <div  align="center" id="faredata-error">Are you sure? If you do not tokenise your card prior to 30th September, you will have to re-enter the full card details while paying.</div>
 <div class="selectd-book-btn" style="text-align:center;">
-<div class="row mt-4"> 
+<div class="container row mt-4"> 
        <div class="col-6"> <button type="button" class="btn-normal btn-animated btnyes" (click)="securemycard()" >Tokenise and Save</button> </div>
        <div class="col-4"> <button type="button" class="btn btn-animated btnno"   (click)="nothanks()" >NO THANKS</button> </div>
 </div>
@@ -1655,4 +1723,3 @@
 </div>
 
 
-   
