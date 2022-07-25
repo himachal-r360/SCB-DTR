@@ -17,6 +17,61 @@ import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import alertifyjs from 'alertifyjs';
 import * as moment from 'moment';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+      
+
+
+function validateAdultAge(c: FormControl) {
+let journery_date=$('#journery_date').val();
+let check_date=moment(new Date(journery_date)).subtract(12, 'years').calendar();
+let input_date= moment(c.value).format('YYYY-MM-DD');
+let to_date=moment(check_date).format('YYYY-MM-DD');
+if(moment(input_date).isAfter(to_date))
+{
+return  {
+validateAdultAge: {
+valid: false
+}
+};
+}	
+}
+
+function validateChildAge(c: FormControl) {
+let journery_date=$('#journery_date').val();
+	let mndate=moment(new Date(journery_date)).subtract(12, 'years').calendar();
+	let mxdate=moment(new Date(journery_date)).subtract(2, 'years').calendar();
+	let mindate =moment(mndate).format('YYYY-MM-DD');
+	let maxdate =moment(mxdate).format('YYYY-MM-DD');
+	let input_date= moment(c.value).format('YYYY-MM-DD');
+	
+	if(moment(mindate).isAfter(input_date) && moment(maxdate).isAfter(input_date) )
+	{
+        return  {
+        validateChildAge: {
+        valid: false
+        }
+        };
+	}
+	
+}
+
+function validateInfantAge(c: FormControl) {
+let journery_date=$('#journery_date').val();
+	
+	let mndate=moment(new Date(journery_date)).subtract(2, 'years').calendar();
+	let current_date =moment(new Date()).format('YYYY-MM-DD');
+	let mindate =moment(mndate).format('YYYY-MM-DD');
+	let maxdate =moment().format('YYYY-MM-DD');	
+	let input_date= moment(c.value).format('YYYY-MM-DD');
+	
+	if(moment(input_date).isAfter(mindate) && moment(input_date).isBefore(maxdate)&& moment(input_date).isBefore(current_date)){}else{
+        return  {
+        validateInfantAge: {
+        valid: false
+        }
+        };
+	}	
+}
+
 declare let alertify: any;
 export const MY_DATE_FORMATS = {
   parse: {
@@ -36,7 +91,7 @@ declare var $: any;
 @Component({
   selector: 'app-flight-checkout',
   templateUrl: './flight-checkout.component.html',
-  styleUrls: ['./flight-checkout.component.css'],
+  styleUrls: ['./flight-checkout.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
@@ -46,6 +101,11 @@ export class FlightCheckoutComponent implements OnInit ,OnDestroy {
        XSRFTOKEN: string;
            IsDcemiEligibleFlag: boolean = false;  
                isFlexipayEligibleFlag:boolean = false;
+                 sendflexiFare:any;
+                  flexiIntrest:any;
+      showFlexipay:any;
+ flexipaysummry:any;
+ flexiDiscount:any;
 priceSummaryResponse:any;
 pricingId:any;
 itineraryid:any;
@@ -90,6 +150,7 @@ new_fare: number = 0;
         gstSelected: boolean = false;
         cdnUrl: any;
         serviceSettings:any;
+        flightClasses:any;
         whatsappFeature: number = 0;
         customerInfo: any;
         coupon_id: any;
@@ -147,6 +208,7 @@ new_fare: number = 0;
         selectedVendor:any;
         flightIcons:any;
         airportsNameJson:any;
+        airlinesNameJson:any;
         EMI_interest: number = 16;
         EMIAvailableLimit: number = 3000;
         totalDuration:number=0;
@@ -155,11 +217,15 @@ new_fare: number = 0;
         BaseFare:any;
         Tax:any;
         TotalFare:any;
+        AdtFare:number=0;
+        ChildFare:number=0;
+        InfantTotalFare:number=0;
         sessionTimer:any = 3;
         timeLeft:any = 900;
         baggageInfo:any='';
+        cancellationPolicy:any='';
         flightDetailsArrVal:any;
-        steps:any = 5;
+        steps:any = 1;
 
         travelerDetails:any={};
         checked:any= false;
@@ -172,15 +238,17 @@ new_fare: number = 0;
 
   constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal, @Inject(DOCUMENT) private document: any) { 
 
-
                 this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
                 this.serviceSettings=this.appConfigService.getConfig();
                 this.whatsappFeature =this.serviceSettings.whatsappFeature;
                 this.enableGST = this.serviceSettings.enableSavedGST;
                 this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
+                this.flightClasses = this.serviceSettings.flightClasses;
 
                 this.getAirpotsList();
-
+                this.getAirLineList();
+   this._flightService.showHeader(true);
+   
 
           /*** SESSION */
         sessionStorage.removeItem("coupon_amount");
@@ -188,17 +256,16 @@ new_fare: number = 0;
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
           this.customerInfo=this.sg['customerInfo'];
-		if(sessionStorage.getItem("channel")=="payzapp"){
+	  if(sessionStorage.getItem("channel")=="payzapp"){
 		var customerInfo = this.sg['customerInfo'];  
 		this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
 		this.REWARD_CUSTOMERID = '0000';
 		this.REWARD_EMAILID = '';
 		this.REWARD_MOBILE = '';
 		this.REWARD_CUSTOMERNAME = '';
-
-             
-		}else{
-		 var customerInfo = this.sg['customerInfo'];
+	  }else{
+	   var customerInfo = this.sg['customerInfo'];
+		 
             if(customerInfo["org_session"]==1){
              
             // console.log(customerInfo)
@@ -215,10 +282,11 @@ new_fare: number = 0;
 
                 this.flightSessionData=JSON.parse(this.flightDetailsArrVal);
                 this.searchData=(this.flightSessionData.queryFlightData);
-                //   console.log(  this.searchData);
-                console.log(this.flightSessionData);
-                $("#bookingprocess").modal('show');
-
+                   console.log(  this.searchData);
+                //console.log(this.flightSessionData);
+                 setTimeout(() => {
+                $("#infoprocess").modal('show');
+                }, 10);
                 this.maxAdults=Number(this.searchData.adults);
                 this.maxChilds=Number(this.searchData.child);
                 this.maxInfants=Number(this.searchData.infants);
@@ -310,8 +378,12 @@ new_fare: number = 0;
                  postData: this.EncrDecr.set(JSON.stringify(eligibleparam))
              };
              this.rest.isFlexiPayEligible(postEligibleParam).subscribe(results => {
-                 let resp = JSON.parse(this.EncrDecr.get(results.result));
-                 this.isFlexipayEligibleFlag = resp.status;
+
+                let resp = JSON.parse(this.EncrDecr.get(results.result));
+                if(resp == null || resp == undefined || resp == false){
+                this.isFlexipayEligibleFlag = false;
+                }else
+                this.isFlexipayEligibleFlag = resp.status;
                 
              })
             }
@@ -322,12 +394,7 @@ new_fare: number = 0;
                 this.getCustomerGstDetails();
               }
               
-              
-              
-              
              }
-     
-             
                
             } else {
                 this.REWARD_CUSTOMERID = '0000';
@@ -389,6 +456,7 @@ new_fare: number = 0;
 
 
   getFlightDetails(param){
+
       if(param!=null){
          var onwardFlightFareKey = (param.priceSummary.clearTripFareKey != undefined && param.priceSummary.clearTripFareKey != null  ? param.priceSummary.clearTripFareKey : "");
         var body = {
@@ -446,6 +514,9 @@ new_fare: number = 0;
         this.addInfant(-1,-1);
        }
        
+
+
+       
        
       addAdult(passenger,checkboxIndex) {
            if ((this.adultsArray.length ) < (this.maxAdults)) {
@@ -484,7 +555,7 @@ new_fare: number = 0;
              this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
              this.passengerForm.addControl('adult_last_name' + i, new FormControl(adult_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
             
-             this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob, [Validators.required]));
+             this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob, [Validators.required,validateAdultAge]));
             
             
 
@@ -509,6 +580,7 @@ new_fare: number = 0;
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
              $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             
              }
         } else {
          if(checkboxIndex !=-1){
@@ -599,7 +671,7 @@ new_fare: number = 0;
              this.passengerForm.addControl('child_first_name' + i, new FormControl(child_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
              this.passengerForm.addControl('child_last_name' + i, new FormControl(child_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
             
-             this.passengerForm.addControl('child_dob' + i, new FormControl(child_dob, [Validators.required]));
+             this.passengerForm.addControl('child_dob' + i, new FormControl(child_dob, [Validators.required,validateChildAge]));
 
                 this.passengerForm.controls['child_title' + i].updateValueAndValidity();
                 this.passengerForm.controls['child_first_name' + i].updateValueAndValidity();
@@ -702,7 +774,7 @@ new_fare: number = 0;
              this.passengerForm.addControl('infant_first_name' + i, new FormControl(infant_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
              this.passengerForm.addControl('infant_last_name' + i, new FormControl(infant_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
             
-             this.passengerForm.addControl('infant_dob' + i, new FormControl(infant_dob, [Validators.required]));
+             this.passengerForm.addControl('infant_dob' + i, new FormControl(infant_dob, [Validators.required,validateInfantAge]));
 
            this.passengerForm.controls['infant_title' + i].updateValueAndValidity();
             this.passengerForm.controls['infant_first_name' + i].updateValueAndValidity();
@@ -835,8 +907,6 @@ new_fare: number = 0;
 		return tra.age > 12;
 		});
 		
-		console.log(this.adultTravellerList);
-		
 		this.childTravellerList =  this.filterTravellerList.filter(function(tra) {
 		return tra.age > 2 && tra.age < 5 ;
 		});
@@ -885,7 +955,7 @@ new_fare: number = 0;
     gstNumberCheck(event) {
         let inputVal: string = event.target.value;
         var characterReg = /^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$/;
-        console.log(characterReg.test(inputVal));
+       // console.log(characterReg.test(inputVal));
         if(characterReg.test(inputVal)) {
         this.gstshow=true;
         this.gstSelected=true;
@@ -1199,12 +1269,20 @@ new_fare: number = 0;
     })
   }
 
+  // get airline list
+  getAirLineList() {
+    this._flightService.getFlightIcon().subscribe((res:any)=>{
+      this.airlinesNameJson = res;
+    })
+  }
+
+
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
 
-  dateHour:any;
+  dateHour:number=0;
   getLayoverHour(obj1:any, obj2:any)
   {
     if(obj2!=null || obj2!=undefined)
@@ -1236,70 +1314,84 @@ new_fare: number = 0;
 
   getFlightInfo(param:any,partner:any)
   {
-  
-  const myInterval =setInterval(()=>{
+  this.loaderValue=10;
+  const myInterval3 =setInterval(()=>{
       this.loaderValue = this.loaderValue + 10;
+    
       if(this.loaderValue == 110)
       {
       this.loaderValue=10;
       }
-    },700) ; 
+    },600) ; 
+  
   
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
+        
                 
       let baseFare=0; let taxFare=0; let totalFare=0;
-         clearInterval(myInterval);
-         $('#bookingprocess').modal('hide');
-      
+         clearInterval(myInterval3);
+         $('#infoprocess').modal('hide');
       if(this.searchData.travel=='DOM'){
       if(res.statusCode ==200)
       {
        
-       if(res.response && res.response.onwardFlightDetails){
+       if(res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.fareKey){
        this.flightInfo=res.response.onwardFlightDetails;
+      
+      //console.log(this.flightInfo);
+      
       
        if(partner=='Yatra'){
       if(res.response.onwardFlightDetails.fare.O){
         if(res.response.onwardFlightDetails.fare.O.ADT){
         baseFare+=Number(res.response.onwardFlightDetails.fare.O.ADT.bf * res.response.onwardFlightDetails.fare.O.ADT.qt );
         totalFare+=Number(res.response.onwardFlightDetails.fare.O.ADT.tf * res.response.onwardFlightDetails.fare.O.ADT.qt ) ;
+        this.AdtFare+=Number(res.response.onwardFlightDetails.fare.O.ADT.tf * res.response.onwardFlightDetails.fare.O.ADT.qt ) ;
         }
 
         if(res.response.onwardFlightDetails.fare.O.CHD){
         baseFare+=Number(res.response.onwardFlightDetails.fare.O.CHD.bf * res.response.onwardFlightDetails.fare.O.CHD.qt );
         totalFare+=Number(res.response.onwardFlightDetails.fare.O.CHD.tf * res.response.onwardFlightDetails.fare.O.CHD.qt );
+          this.ChildFare+=Number(res.response.onwardFlightDetails.fare.O.CHD.tf * res.response.onwardFlightDetails.fare.O.CHD.qt ) ;
         }
 
         if(res.response.onwardFlightDetails.fare.O.INF){
         baseFare+=Number(res.response.onwardFlightDetails.fare.O.INF.bf * res.response.onwardFlightDetails.fare.O.INF.qt );
         totalFare+=Number(res.response.onwardFlightDetails.fare.O.INF.tf * res.response.onwardFlightDetails.fare.O.INF.qt );
+        this.InfantTotalFare+=Number(res.response.onwardFlightDetails.fare.O.INF.tf * res.response.onwardFlightDetails.fare.O.INF.qt ) ;
         } 
         }
         }else{
         
-        /*
+        
         if(res.response.onwardFlightDetails.fare){
         if(res.response.onwardFlightDetails.fare.ADT){
-        baseFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt );
-        totalFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt )+ Number(res.response.onwardFlightDetails.fare.ADT.TX) ;
+       //baseFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt );
+       // totalFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt )+ Number(res.response.onwardFlightDetails.fare.ADT.TX) ;
+          this.AdtFare+=Number(res.response.onwardFlightDetails.fare.ADT.bf * res.response.onwardFlightDetails.fare.ADT.qt )+ Number(res.response.onwardFlightDetails.fare.ADT.TX) ;
         }
 
         if(res.response.onwardFlightDetails.fare.CHD){
-        baseFare+=Number(res.response.onwardFlightDetails.fare.CHD.bf * res.response.onwardFlightDetails.fare.CHD.qt );
-        totalFare+=Number(res.response.onwardFlightDetails.fare.CHD.bf * res.response.onwardFlightDetails.fare.CHD.qt )+ Number(res.response.onwardFlightDetails.fare.CHD.TX) ;
+        //baseFare+=Number(res.response.onwardFlightDetails.fare.CHD.bf * res.response.onwardFlightDetails.fare.CHD.qt );
+       // totalFare+=Number(res.response.onwardFlightDetails.fare.CHD.bf * res.response.onwardFlightDetails.fare.CHD.qt )+ Number(res.response.onwardFlightDetails.fare.CHD.TX) ;
+        this.ChildFare+=Number(res.response.onwardFlightDetails.fare.CHD.bf * res.response.onwardFlightDetails.fare.CHD.qt )+ Number(res.response.onwardFlightDetails.fare.CHD.TX) ;
         }
 
         if(res.response.onwardFlightDetails.fare.INF){
-        baseFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt );
-        totalFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt )+ Number(res.response.onwardFlightDetails.fare.INF.TX) ;
+       // baseFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt );
+       // totalFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt )+ Number(res.response.onwardFlightDetails.fare.INF.TX) ;
+        this.InfantTotalFare+=Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt )+ Number(res.response.onwardFlightDetails.fare.INF.TX) ;
         } 
-        }*/
-        totalFare+=Number(res.response.comboFare.onwardTotalFare);
+        }
+         totalFare+=Number(res.response.comboFare.onwardTotalFare);
          baseFare+=Number(res.response.comboFare.onwardBaseFare);
         
        } 
        if(res.response && res.response.onwardFlightDetails.bg.length >0) 
        this.baggageInfo = res.response.onwardFlightDetails.bg;
+       
+        if(partner=='Easemytrip')
+       this.cancellationPolicy= this.emt_cancellationPolicy (res.response.onwardFlightDetails.cancellationPolicy);
        
        }else{
             $('#bookingprocessFailed').modal('show');           
@@ -1311,16 +1403,50 @@ new_fare: number = 0;
         this.Tax =taxFare;
         this.TotalFare =totalFare;
         
-       this.totalCollectibleAmount = Number(this.TotalFare) + Number(this.convenience_fee) ;
+       this.totalCollectibleAmount = Number(this.TotalFare) ;
        this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
 
         }
-    }, (error) => { ;
+    }, (error) => { 
     
-        clearInterval(myInterval);
-         $('#bookingprocess').modal('hide');
+        clearInterval(myInterval3);
+        $('#infoprocess').modal('hide');
        $('#bookingprocessFailed').modal('show');  
      });
+  }
+  
+  emt_cancellationPolicy(data){
+  
+   let cancellation_data = data.Cancellation.split('|');
+   let reschedule_data = data.Reschedule.split('|');
+   let emt_charges =data.EMTFee;
+   
+   let cancellation_updated_data=[];
+   let reschedule_data_data=[];
+   let tnc_data=[];
+   for (let i = 0; i < cancellation_data.length; i++) {
+   if(cancellation_data[i]){
+    let sp_data = cancellation_data[i].split('Rs.');
+     let rd_data = reschedule_data[i].split('Rs.');
+   cancellation_updated_data.push({'data':sp_data[0],'airline_fee':sp_data[1],'emt_fee':emt_charges});
+   reschedule_data_data.push({'data':rd_data[0],'airline_fee':rd_data[1],'emt_fee':emt_charges});
+   }
+   }
+   
+   
+        $.each(data.Tnc,function(key,value){
+        tnc_data.push(value);
+        });
+   
+   
+   return {
+            "cancellation":cancellation_updated_data,
+            "reschedule":reschedule_data_data,
+            "tnc":tnc_data
+         }
+        ;
+   
+  
   }
   
   triggerBack(){
@@ -1336,7 +1462,7 @@ new_fare: number = 0;
     'onok': function(){ 
     
      // let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
-          console.log("0000000");
+         // console.log("0000000");
         //
     
     
@@ -1352,6 +1478,7 @@ new_fare: number = 0;
   }
 
   sendFlightDetails(){
+   this.gotoTop();
      this.completedSteps=2;
      this.steps=2;
   }
@@ -1370,8 +1497,8 @@ new_fare: number = 0;
 
    
   
-
-  
+   paxInfo=[];fareData:any;itineraryRequest:any;
+  contactDatails: any;
   continueTravellerDetails(){
         alertify.set('notifier','position', 'top-center');
         if(this.adultsArray.length <  this.maxAdults){
@@ -1427,10 +1554,8 @@ new_fare: number = 0;
         return;
         } else {
         
-        
-        
          
-         
+         let flightDetails=[]; 
          let itineraryType;
         if(this.searchData.travel=='INT') { //International
         if(this.searchData.flightdefault=='O') //international oneway
@@ -1466,11 +1591,12 @@ new_fare: number = 0;
               }
         }
       
-        let paxInfo=[]; var paxInfoCnt=1;
+         var paxInfoCnt=1;
+         this.paxInfo=[];
  
         for(let i=1;i<(this.passengerAdultFormCount);i++){
         
-          paxInfo.push(       {
+          this.paxInfo.push(       {
                 "title": this.passengerForm.controls['adult_title'+i]['value'],
                 "firstName": this.passengerForm.controls['adult_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['adult_last_name'+i]['value'],
@@ -1480,12 +1606,16 @@ new_fare: number = 0;
                 "frequentFlyerNumbers": [],
                 "paxID": paxInfoCnt
               });
+              
+
+              
         paxInfoCnt++;
         }
         
         
+        
                 for(let i=1;i<(this.passengerChildFormCount);i++){
-          paxInfo.push(       {
+          this.paxInfo.push(       {
                 "title": this.passengerForm.controls['child_title'+i]['value'],
                 "firstName": this.passengerForm.controls['child_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['child_last_name'+i]['value'],
@@ -1500,7 +1630,7 @@ new_fare: number = 0;
         
         
                 for(let i=1;i<(this.passengerInfantFormCount);i++){
-          paxInfo.push(       {
+          this.paxInfo.push(       {
                 "title": this.passengerForm.controls['infant_title'+i]['value'],
                 "firstName": this.passengerForm.controls['infant_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['infant_last_name'+i]['value'],
@@ -1512,15 +1642,16 @@ new_fare: number = 0;
               });
         paxInfoCnt++;
         }
-        console.log(this.flightSessionData.flightKey);
+        
+        
+         
+        
         let fareDetails=[];
         fareDetails.push({ "amount": this.totalCollectibleAmountFromPartnerResponse,   "fareKey": this.flightInfo.fareKey, "flightKey": this.flightSessionData.flightKey });
         
+     
         
-        let flightDetails=[];
         
-        
-        console.log(this.flightSessionData);
         
         for(let i=0;i<(this.flightSessionData.flights.length);i++){ 
         flightDetails.push({
@@ -1531,7 +1662,7 @@ new_fare: number = 0;
                       "airline": this.flightSessionData.flights[i]['airline'],
                       "operatingAirline": "",
                       "departureDate": moment(this.flightSessionData.flights[i]['departureDateTime']).format('YYYY-MM-DD'),
-                      "stops": 0,
+                      "stops": this.flightSessionData.flights[i]['stops'],
                       "segNum": "1",
                       "duration": this.flightSessionData.flights[i]['duration'],
                       "arrivalDateTime": moment(this.flightSessionData.flights[i]['arrivalDateTime']).format('HH:mm:ss'),
@@ -1541,9 +1672,52 @@ new_fare: number = 0;
                     });
         }
         
+        this.contactDatails={
+              "title": this.passengerForm.controls['adult_title1']['value'],
+              "firstName": this.passengerForm.controls['adult_first_name1']['value'],
+              "lastName": this.passengerForm.controls['adult_last_name1']['value'],
+              "email": this.passengerForm.controls['passengerEmail']['value'],
+              "address": "Lavelle Road",
+              "mobile":  this.passengerForm.controls['passengerMobile']['value'],
+              "mobileIsdCode": "91",
+              "landline": "000",
+              "cityName": "Bangalore",
+              "stateName": "Karnataka",
+              "countryName": "India",
+              "pinCode": "560001",
+              "additionalContact": {
+                "email": this.passengerForm.controls['passengerEmail']['value'],
+                "mobile":this.passengerForm.controls['passengerMobile']['value'],
+                "mobileIsdCode": "91"
+              }};
+              
+          this.fareData={
+      "convenience_fee": 0,
+      "partnerConvFee": this.partnerConvFee,
+      "child": this.searchData.child,
+      "adults": this.searchData.adults,
+      "infants": this.searchData.infants,
+      "total": this.totalCollectibleAmount ,
+      "others": this.Tax ,
+      "totalbf": this.BaseFare ,
+      "coupon_code": "",
+      "pass_break": {
+        "ADT": this.AdtFare,
+        "CHD":this.ChildFare,
+        "INF": this.InfantTotalFare,
+      },
+      "total_passengers": (this.maxAdults+this.maxChilds+this.maxInfants),
+      "markup_fee": 0,
+      "partner_amount": this.totalCollectibleAmountFromPartnerResponse,
+      "discount": this.coupon_amount,
+      "voucher_amount": 0,
+      "voucher_code": 0,
+      "couponcode": "",
+      "ticket_class": this.flightClasses[this.searchData.flightclass]
+    };    
+   
         
-        
-        let itineraryRequest={
+        this.itineraryRequest={
           "serviceName": "Flight",
           "clientName": "HDFC243",
           "partnerName":   this.partnerToken,
@@ -1578,26 +1752,8 @@ new_fare: number = 0;
                 }
               }
             ],
-            "paxInfoList": paxInfo,
-            "contactDetail": {
-              "title": this.passengerForm.controls['adult_title1']['value'],
-              "firstName": this.passengerForm.controls['adult_first_name1']['value'],
-              "lastName": this.passengerForm.controls['adult_last_name1']['value'],
-              "email": this.passengerForm.controls['passengerEmail']['value'],
-              "address": "Lavelle Road",
-              "mobile":  this.passengerForm.controls['passengerMobile']['value'],
-              "mobileIsdCode": "91",
-              "landline": "000",
-              "cityName": "Bangalore",
-              "stateName": "Karnataka",
-              "countryName": "India",
-              "pinCode": "560001",
-              "additionalContact": {
-                "email": this.passengerForm.controls['passengerEmail']['value'],
-                "mobile":this.passengerForm.controls['passengerMobile']['value'],
-                "mobileIsdCode": "91"
-              }
-            },
+            "paxInfoList": this.paxInfo,
+            "contactDetail": this.contactDatails,
             "paymentDetail": {
               "paymentType": "",
               "depositAccountId": ""
@@ -1605,7 +1761,7 @@ new_fare: number = 0;
             "cabinType": this.searchData.flightclass
           }
         };
-            $('#bookingprocess').modal('show');       
+            $('#infoprocess').modal('show');       
       this.loaderValue=10;
         const myInterval1 =setInterval(()=>{
         this.loaderValue = this.loaderValue + 10;
@@ -1617,11 +1773,10 @@ new_fare: number = 0;
      
      
         var requestParamsEncrpt = {
-        postData:this.EncrDecr.set(JSON.stringify(itineraryRequest)) 
+        postData:this.EncrDecr.set(JSON.stringify(this.itineraryRequest)) 
         };
         this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
         
-        console.log(this.EncrDecr.get(response.result ));
         this.itinararyResponse= JSON.parse(this.EncrDecr.get(response.result ));
         //this.itinararyResponse=(response);
           if(this.itinararyResponse['response'] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']==200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"]==200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"]==200){
@@ -1655,37 +1810,199 @@ new_fare: number = 0;
                 
                this.totalCollectibleAmount = Number(setOrderAmount) ;
                this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
+               
+               
 		if(this.new_fare != this.old_fare){
 		 clearInterval(myInterval1);
-		 $('#bookingprocess').modal('hide');
+		 $('#infoprocess').modal('hide');
 		 $('#bookingprocessPriceChange').modal('show');
  		}else{
- 		 clearInterval(myInterval1);
- 		 $('#bookingprocess').modal('hide');
-                        if(this.enableVAS==1){
-                        this.steps=3;
-                        this.completedSteps=3;
-                        }else{
-                        this.steps=4;
-                        this.completedSteps=4;
-                        }
+ 		   this.saveCheckout(myInterval1);
  		}
           
           }else{
            clearInterval(myInterval1);
-            $('#bookingprocess').modal('hide');
+            $('#infoprocess').modal('hide');
             $('#bookingprocessFailed').modal('show');
           }
          }),(err:HttpErrorResponse)=>{
          clearInterval(myInterval1);
-              $('#bookingprocess').modal('hide');
+              $('#infoprocess').modal('hide');
               $('#bookingprocessFailed').modal('show');
          }
        
        }
   }
+  
+  saveCheckout(myInterval1){
+ // console.log(this.flightSessionData);
+ // console.log(this.flightInfo);
+ 
+    let fligths=[];
+ 
+      for(let i=0;i<(this.flightSessionData.flights.length);i++){ 
+     fligths.push({
+        "arr_tym":  this.flightSessionData.flights[i]['arrivalDateTime'],
+        "sourcity": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['city'],
+        "car_id":  this.flightSessionData.flights[i]['airline'],
+        "rowfirst_onward": "",
+        "airportname_countrysour": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['country'],
+        "img": this.flightSessionData.flights[i]['airline']+".gif",
+        "operating_airline": this.flightSessionData.flights[i]['operatingAirline'],
+        "airportname_citydesti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['city'],
+        "fnum": this.flightSessionData.flights[i]['flightNumber'],
+        "airportname_countrydesti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['country'],
+        "refund": this.selectedVendor.refundStatus==1 ? "Refundable" : "Non Refundable",
+        "friend_ddate": "",
+        "flight_id": "",
+        "show_price": "",
+        "dst_tym":  this.flightSessionData.flights[i]['departureDateTime'],
+        "desti":  this.flightSessionData.flights[i]['departureAirport'],
+        "friend_dst": moment(this.flightSessionData.flights[i]['departureDateTime']).format('HH:mm'),
+        "friend_arr": moment(this.flightSessionData.flights[i]['arrivalDateTime']).format('HH:mm'),
+        "sour": this.flightSessionData.flights[i]['departureAirport'],
+        "airportname_sour": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['airport_name'],
+        "desticity": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['city'],
+        "flyend": "",
+        "friend_adate": "",
+        "car_name": this.airlinesNameJson[this.flightSessionData.flights[i]['airline']]['name'],
+        "airportname_citysour": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['city'],
+        "operated_by":  this.flightSessionData.flights[i]['operatingAirline'],
+        "duration":moment.utc(this.flightSessionData.flights[i]['duration'] * 1000).format("H[h] mm[min]"),
+        "frcnt": "",
+        "flystart": "",
+        "airportname_desti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['airport_name'],
+        "flight_type":  this.flightSessionData.flights[i]['stops'] == 0 ? "Non-Stop" : this.flightSessionData.flights[i]['stops'] + " Stop" ,
+        "departureTerminal": this.flightSessionData.flights[i]['departureTerminal'],
+        "arrivalTerminal": this.flightSessionData.flights[i]['arrivalTerminal'],
+        "stopsDetails": []
+      });
+      
+      }
+ 
+      var whatsappFlag;
+   if(this.whatsappFeature==1)
+   whatsappFlag=this.passengerForm.controls['whatsappFlag']['value'];
+   else
+   whatsappFlag=0;
+ 
+  let checkoutData={
+  "itineraryid": this.itineraryid,
+  "clientToken": "HDFC243",
+  "programName": "SMARTBUY",
+  "partnerToken": this.selectedVendor.partnerName,
+  "serviceToken": "Flight",
+  "contactDetails": {
+    "firstName": this.contactDatails.firstName,
+    "lastName": this.contactDatails.lastName,
+    "email": this.contactDatails.email,
+    "mobile": this.contactDatails.mobile,
+    "whatsappFlag": whatsappFlag,
+    "forex_check": 0
+  },
+  "flightDetails": {
+    "onwards": fligths,
+    "returns": [],
+    "baggage_information": {
+      "onward": "",
+      "return": ""
+    },
+    "passengerDetails": this.paxInfo,
+    "fare": this.fareData ,
+    "onwardFareKey": this.flightInfo.fareKey,
+    "returnFareKey": "",
+    "inputs": {
+      "Default":  this.searchData.flightdefault,
+      "adults": this.searchData.adults,
+      "child": this.searchData.child,
+      "class": this.searchData.flightclass,
+      "fcode": this.searchData.flightfrom,
+      "flightdeparture": this.searchData.departure,
+      "flightfrom": this.searchData.fromCity,
+      "flightreturn": '',
+      "flightto": this.searchData.toCity,
+      "infants":this.searchData.infants,
+      "t": "ZWFybg==",
+      "tcode": this.searchData.flightto
+    }
+  },
+  "cancellationPolicy": "Resources are not available.",
+  "checkin": "{\"onward\":[{\"airline\":\"6E\",\"departureDateTime\":\"2022-07-30T11:10:00\"}]}",
+  "checkin_box": null,
+  "order_ref_num":this.itinararyResponse.response.orderId,
+  "amd_url": "http://new.reward360.us/amd/aWeklGmHhKaglWFwaWNoZm5lpJg%3D",
+  "redirect_url": "http://new.reward360.us/flights/search?Default=O&adults=1&child=0&class=E&fcode=BLR&flightdeparture=2022-07-30&flightfrom=Bangalore+%28BLR%29&flightreturn=&flightto=Chennai+%28MAA%29&infants=0&t=QkxSTUFBNkU2MjEyMjAyMi0wNy0zMDo6RWFzZW15dHJpcA==&tcode=MAA&ux=1",
+  "retry_url": "http://new.reward360.us/retry/aWeklGmHhKaglWFwaWNoZm5lpJg%3D"
+};
+  
+
+      var saveCheckoutData = {
+       orderReferenceNumber: this.itinararyResponse.response.orderId,
+       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
+      };
+
+      let trackUrlParams = new HttpParams()
+  .set('current_url', window.location.href)
+  .set('category', 'Flight')
+  .set('event', 'Save Checkout')
+  .set('metadata','{"save_checkout":"'+this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData)))+'"}');
+  
+   const track_body: string = trackUrlParams.toString();
+   this.rest.trackEvents( track_body).subscribe(result => {});
+
+    this.rest.saveCheckout(JSON.stringify(saveCheckoutData)).subscribe(rdata => {
+      if(rdata==1){
+      sessionStorage.setItem(this.randomFlightDetailKey + '-clientTransactionId', this.itinararyResponse.response.itineraryResponseDetails.itineraryId);
+      sessionStorage.setItem(this.randomFlightDetailKey + '-orderReferenceNumber', this.itinararyResponse.response.orderId);
+      sessionStorage.setItem(this.randomFlightDetailKey + '-ctype', 'flights');
+      sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
+      sessionStorage.setItem(this.randomFlightDetailKey + '-passData', this.EncrDecr.set(JSON.stringify(this.itineraryRequest)));
+      sessionStorage.setItem(this.randomFlightDetailKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
+        clearInterval(myInterval1);
+        $('#infoprocess').modal('hide');
+        this.gotoTop();
+               if(this.enableVAS==1){
+        this.steps=3;
+        this.completedSteps=3;
+        }else{
+        this.steps=4;
+        this.completedSteps=4;
+        }
+      
+      }else{
+        clearInterval(myInterval1);
+         $('#infoprocess').modal('hide');
+          $('#bookingprocessFailed').modal('show');
+      }
+    
+      
+    });
+
+  
+  }
+   gotoTop() {
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+  } 
+  gstReset(){
+   $("input[type=radio][name=GSTList]").prop('checked', false);
+      for(let i=0;i<this.GSTListLength;i++){
+            this.isCheckedGST[i]=false;
+          }
+ 
+              this.passengerForm['controls']['gstNumber'].setValue('');
+              this.passengerForm['controls']['gstBusinessName'].setValue('');
+              this.passengerForm['controls']['gstAddress'].setValue('');
+              this.passengerForm['controls']['gstPincode'].setValue('');
+              this.passengerForm['controls']['gstCity'].setValue('');
+              this.passengerForm['controls']['gstState'].setValue('');
+ }
   continueWithNewFare(){
   $('#bookingprocessPriceChange').modal('hide');
+   this.gotoTop();
       if(this.enableVAS==1){
         this.steps=3;
         this.completedSteps=3;
@@ -1696,18 +2013,22 @@ new_fare: number = 0;
    }
    
         moveTab(page){
+         this.gotoTop();
         if(page <= this.completedSteps){
         this.steps=page;
+        this.completedSteps=page;
         }
         }
 
         continueSeatSelection(){
+         this.gotoTop();
         this.steps=4;
         this.completedSteps=4;
         }
 
 
        continueReviewBooking(){
+        this.gotoTop();
         this.steps=5;
         this.completedSteps=5;
         }
@@ -1716,7 +2037,32 @@ new_fare: number = 0;
         
         }
 
-                       
+ reciveflexiAmount(values){
+  this.showFlexipay = true;
+  if(values[0].key == 15){
+  this.flexipaysummry=true;
+  this.flexiDiscount = Number(values[0].value);
+  this.totalCollectibleAmount =  (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount)-Number(this.flexiDiscount);
+  this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      // console.log(this.sendflexiFare)
+      //sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
+  }else if(values[0].key !== 15){
+      this.flexipaysummry = false;
+      this.flexiDiscount = 0;
+      this.flexiIntrest=Number(values[0].value);
+      this.flexiDiscount = 0;
+      this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      this.sendflexiFare = this.totalCollectibleAmount;
+      //sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
+}
+}
+
+ recivetotalFare($event){
+    this.flexipaysummry=false;
+    this.flexiDiscount = 0;
+    this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+   
+}                 
 
     /***----- APPLY COUPON (--parent--) ------***/
     receiveCouponDetails($event) {
@@ -1727,6 +2073,7 @@ new_fare: number = 0;
             this.coupon_code = this.indexCoupon.coupon_code;
             this.coupon_amount = this.indexCoupon.coupon_amount;
             this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee) - (Number(this.coupon_amount));
+            this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
             sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
         } else {
             this.coupon_id = '';
@@ -1734,6 +2081,7 @@ new_fare: number = 0;
             this.coupon_code = '';
             this.coupon_amount = 0;
             this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee) - (Number(this.coupon_amount));
+             this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
             sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
         }
     }
@@ -1748,6 +2096,7 @@ new_fare: number = 0;
         this.coupon_code = '';
         this.coupon_amount = 0;
         this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee) - Number(this.coupon_amount);
+         this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
         sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
     }
 

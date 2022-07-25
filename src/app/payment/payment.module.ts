@@ -18,6 +18,8 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsM
 import { CommonfunctionModule } from 'src/app/common.module';
 import { MaterialModule } from '../material.module'
 import { CreditCardDirectivesModule } from 'angular-cc-library'; 
+import { PaywithpointsModule } from 'src/app/paywithpoints/paywithpoints.module';
+
 @NgModule({
   declarations: [
     PaymentComponent,dcemiDialog,PaywithpointsDialog,spcDialog,invalidpgdialog
@@ -32,7 +34,7 @@ import { CreditCardDirectivesModule } from 'angular-cc-library';
     MatButtonModule, MatDialogModule,NgxCleaveDirectiveModule,MatSelectModule,MatRadioModule,CountdownModule,
     MatDatepickerModule,NgxSpinnerModule,
     RecaptchaModule,
-    RecaptchaFormsModule,
+    RecaptchaFormsModule,PaywithpointsModule,
     CommonfunctionModule,CreditCardDirectivesModule,
   ],
   providers: [],

@@ -246,7 +246,7 @@ export class PaymentComponent implements OnInit {
 		payActualFare;
 		passData;
 		passFareData;
-
+pgSettingsCYBERToken:number=0;
 		showRewardsBox:boolean=false;
 		couponApplied:boolean=false;
 		couponShow:boolean=false;
@@ -518,40 +518,25 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			
 	ngOnInit() {
 	this.siteKey=this.serviceSettings.SITEKEY;
-	if(this.serviceId == 'RedBus'){
-		this.Partnertoken = "RedBus";
+		this.Partnertoken = "Flight";
 		this.ServiceToken = "BUS";
-		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['BUS'] == 1) {
+		
+		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['Flight'] == 1) {
 			this.showRewardsBox=true;
 		}else{
 			this.showRewardsBox=false;
 		}
-	}else if(this.serviceId == 'IRCTC'){
-		this.Partnertoken = "IRCTC";
-		this.ServiceToken = "Train";
-		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['TRAIN'] == 1) {
-			this.showRewardsBox=true;
-		}else{
-			this.showRewardsBox=false;
-		}
-	}else if(this.serviceId == 'Freshmenu'){
-		this.Partnertoken = "Freshmenu";
-		this.ServiceToken = "Shopping";
-		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['FRESHMENU'] == 1) {
-			this.showRewardsBox=true;
-		}else{
-			this.showRewardsBox=false;
-		}
-	}
 
-	this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
+console.log(this.serviceId);
+
+	         this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
 
 
 			this.domainName=this.sg['domainName'];
 
 		
 			this.pgSettingsHDFCPG=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].HDFCPG;
-			
+			  this.pgSettingsCYBERToken=this.serviceSettings.PAYSETTINGS.enableTokenization;
 			this.pgSettingsCYBER=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].CYBER;
 			this.pgSettingsNETBANKING=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].NETBANKING;
 			this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
@@ -561,10 +546,7 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			this.pgSettingsUPI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].UPI;
 			this.pgSettingFlexipayEMI = this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY;
 			
-			if(this.activatedRoute.snapshot.queryParamMap.get('channel')=='payzapp' || sessionStorage.getItem("channel")=="payzapp"){
-				this.pgSettingsHDFCPG=0;
-				this.pgSettingsCYBER=0;
-			}
+		
 					
 			this.monthArray=Array.from(new Array(Number(12)),(val,index)=>index);
 			this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
@@ -766,6 +748,54 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 				};
 		}
 	}
+	
+	
+openInfo(type){
+  $('.infocardtype').html(type);
+  if(type=='VISA / MASTER / DINERS'){
+   $('.infocardimg').attr("src",this.cdnUrl+"images/VISA_MASTERCARD_DINERS.svg");
+   $('.infocardtext').html('Avoids re-entering your card every time you transact with us');
+  }else{
+  $('.infocardimg').attr("src",this.cdnUrl+'images/'+type+".svg");
+  $('.infocardtext').html('Continues to provide you benefit of using saved card on SmartBuy');
+  }
+     $('.payinfo_popup1').trigger('click');
+}
+
+checkInfo(event,id){
+
+  $('#payinfoid').val(id);
+  if(!event.target.checked){
+    $('#tokenization'+ id).val(0);
+   $('.payinfo_popup').trigger('click');
+   }else{
+     $('#tokenization'+ id).val(1);
+   }  
+}
+
+
+checkInfo1(event){
+  if(!event.target.checked){
+    $('#tokenization').val(0);
+   }else{
+     $('#tokenization').val(1);
+   }  
+}
+
+
+securemycard() {
+ $('#tokenization'+ $('#payinfoid').val()).prop('checked',true);
+  $('#tokenization'+ $('#payinfoid').val()).val(1);
+  $('.visa_close').trigger('click');
+    this.checkNonSpcOfferforSaveCard();
+}
+
+nothanks() {
+  $('#tokenization'+ $('#payinfoid').val()).val(0);
+    $('.visa_close').trigger('click');
+    this.checkNonSpcOfferforSaveCard();
+}
+	
 	checkInputchanges(){
 		this.flexipayEligibleError = false;
 		this.flexiOTPerror =false;
@@ -1047,6 +1077,7 @@ onSavecardChange(cards,cardIndex){
 	jobGroup.addControl('save_cvvnumber'+i, new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
 	else
 	jobGroup.addControl('save_cvvnumber'+i, new FormControl('', [Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
+	jobGroup.addControl('tokenization'+i, new FormControl('', [Validators.pattern("^[0-9]*$"),Validators.minLength(1)]));
 	}
 	jobGroup.addControl('termscondition', new FormControl('', [Validators.required,Validators.pattern('true')]));
 	this.saveCardForm = jobGroup;
@@ -1103,7 +1134,7 @@ payNow(ptype){
 	}
 	var savedcard,newcard;
 	savedcard=0;
-	newcard=0;
+	newcard=0;var tokenization;
 
 		switch(passpgtype) { 
 			case 1: { 
@@ -1156,6 +1187,7 @@ payNow(ptype){
 			var cardRow=this.saveCardForm.controls.cardRow.value;
 				newcard=0;
 			savedcard=1;
+			  tokenization=$("#tokenization"+cardRow).val();
 			break; 
 			} 
 			case 6: { 
@@ -1172,6 +1204,8 @@ payNow(ptype){
 				// return;
 				// }
 
+                        tokenization=$("#tokenization").val();
+
 				var arr=[];
 				arr.push('cardnumber='+this.creditForm.controls['cardnumber'].value);  
 				arr.push('expiryMonth='+this.creditForm.controls['expiryMonth'].value); 
@@ -1180,6 +1214,7 @@ payNow(ptype){
 
 				arr.push('nameoncard='+this.creditForm.controls['nameoncard'].value);   
 				arr.push('savecard='+$('#savecard').val());   
+				arr.push('tokenization='+tokenization);   
 				arr.push('termscondition='+this.creditForm.controls['termscondition'].value);   
 				var postVal=arr.join('&');    
 
@@ -1223,7 +1258,6 @@ payNow(ptype){
 	
 
 		let fareD= JSON.parse(atob(this.passFareData));
-		delete fareD["avlDayList"];
 		// console.log(fareD)
 		// let df_fareData = this.EncrDecr.set(JSON.stringify(fareD))
 
@@ -1282,6 +1316,7 @@ payNow(ptype){
 				'cvvnumber':cvvnumber,
 				'jCryption':encrypted,
 				'savedcard':savedcard,
+				'tokenization':tokenization,
 				'applicationId':this.DCEMIapplicationId,
 				'ctype':this.ctype,
 				'ptype':ptype,
@@ -1336,6 +1371,7 @@ payNow(ptype){
 					'cvvnumber':'',
 					'jCryption':'',
 					'savedcard':'',
+					'tokenization':0,
 					'applicationId':'',
 					'ctype':this.ctype,
 					'ptype':ptype,
@@ -1982,6 +2018,17 @@ checkNonSpcOfferforSaveCard(){
 	if (this.saveCardForm.status !='VALID') {
 	return;
 	}
+	
+		if(this.pgSettingsCYBERToken){
+        var selectedValue = cardRow;
+        $('#payinfoid').val(selectedValue);
+        if ($('#tokenization'+selectedValue).is(":checked")) {
+        }else{
+        $('.payinfo_popup').trigger('click');
+        return;
+        }
+	}
+	
 	this.paynowBtnDisabled_5=true;
 	if(this.enableNONSPC==1){
 		//var cardRow=this.saveCardForm.controls.cardRow.value;
@@ -2437,7 +2484,7 @@ export class PaywithpointsDialog {
 	verificationText:any;
 	noLeadingZeroPattern=/^(?!0)[0-9]*$/;
 	VOUCHER_NAME:any="Voucher Code";
-	constructor(@Inject(APP_CONFIG) appConfig: any,public dialogPaywithpoints: MatDialogRef < PaywithpointsDialog >,@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,private sg: SimpleGlobal,public rest:RestapiService,private EncrDecr: EncrDecrService,private pay: PayService,private bnIdle: BnNgIdleService,private communicate: CommunicationService,private appConfigService:AppConfigService) {
+	constructor(public dialogPaywithpoints: MatDialogRef < PaywithpointsDialog >,@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,private sg: SimpleGlobal,public rest:RestapiService,private EncrDecr: EncrDecrService,private pay: PayService,private bnIdle: BnNgIdleService,private communicate: CommunicationService,private appConfigService:AppConfigService) {
 			this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
 			this.popup=data.popup;
 			this.passSessionKey=data.passSessionKey;

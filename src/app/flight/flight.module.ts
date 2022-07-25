@@ -12,9 +12,9 @@ import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.component';
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
-import {NgxScrollToFirstInvalidModule} from '@ismaestro/ngx-scroll-to-first-invalid';
 import { PaymentModule } from 'src/app/payment/payment.module';
-
+import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-roundtrip-list.component';
+import { AgePipe } from 'src/app/pipes/age.pipe';
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent
@@ -22,6 +22,9 @@ const routes: Routes = [
   
    {
     path:"flight-checkout" ,component:FlightCheckoutComponent
+  },
+  {
+    path:"flight-roundtrip" ,component:FlightRoundtripListComponent
   }
   
 
@@ -32,8 +35,8 @@ const routes: Routes = [
     FlightListComponent,
     DurationTimePipe,
     FlightCheckoutComponent,
-    MinuteSecondPipe
-
+    MinuteSecondPipe,
+    FlightRoundtripListComponent,AgePipe
 
   ],
   imports: [
@@ -46,7 +49,6 @@ const routes: Routes = [
         NgxSliderModule,
         NgxSkeletonLoaderModule,
         CouponsModule,PaymentModule,
-        NgxScrollToFirstInvalidModule,
           RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
