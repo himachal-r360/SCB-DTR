@@ -343,6 +343,10 @@ export class AppComponent implements OnInit {
       behavior: 'smooth'
 });
   }
+
+
+  
+  
 }
 
 

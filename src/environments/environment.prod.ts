@@ -6,7 +6,7 @@ export const environment = {
     production: true,
   COOKIE_DOMAIN:null,
   LOCALJSON:'false',
-  localInstance:1,
+  localInstance:0,
   // url:"https://smartbuyadminuat.reward360.in/"
   url:"https://smartbuydev.reward360.in/",
    cdnUrl: 'assets/',
