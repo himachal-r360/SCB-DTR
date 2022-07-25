@@ -1,4 +1,4 @@
-<main class="site-main" >
+<main class="site-main" *ngIf="partnerToken">
     <section class="details-steps-area mt-140 mb-40">
         <div class="container">
             <div class="row justify-content-center">
@@ -2575,6 +2575,7 @@
                 <div class="booking-title-box">
                 <h4>Payment</h4>
                 </div>
+                
 <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE"
 [passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)"     [passflexiFare] = "sendflexiFare">
@@ -2772,7 +2773,7 @@
                                <button type="button" class="btn btn-primary" (click)="continueWithNewFare()">Continue with New Fare</button>
                             </div>
                              <div class="refresh-text text-center pt-2">
-                               <button type="button" class="btn" (click)="triggerBack()">Choose Different Itinerary</button>
+                               <button type="button" class="btn" (click)="triggerBack(continueWithNewFareInterval)">Choose Different Itinerary</button>
                             </div>
                         </div>
                     </div>
@@ -2820,7 +2821,7 @@
                   <h5 class="modal-title">Coupon Code</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" *ngIf="steps==5" >
                  
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
@@ -2876,7 +2877,7 @@
                                 </div>
                             </li>
                             
-                            <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                            <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 2 ">
                                 <div class="fare-list-box">
                                     <div class="fare-list-left">
                                         <p>
@@ -2920,10 +2921,16 @@
                                     <div class="fare-list-left">
                                         <h6 class="fw_7">Grand Total</h6>
                                     </div>
-                                    <div class="fare-list-right">
+                                    <div class="fare-list-right" *ngIf="steps < 3" >
+                                        <h6 class="fw_7">₹{{totalCollectibleAmount-partnerConvFee|number}}</h6>
+                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number: '.2'}}/month</p>
+                                    </div>
+                                    
+                                     <div class="fare-list-right" *ngIf="steps > 2">
                                         <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
                                         <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
                                     </div>
+                                    
                                 </div>
                             </li>
                         </ul>

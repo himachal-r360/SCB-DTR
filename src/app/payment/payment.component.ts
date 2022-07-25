@@ -527,7 +527,6 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			this.showRewardsBox=false;
 		}
 
-console.log(this.serviceId);
 
 	         this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
 
@@ -1252,13 +1251,10 @@ payNow(ptype){
 	
 		passData=this.passData;
 		
-	
-		passData=this.passData;
-
-	
+		console.log(atob(this.passFareData));
 
 		let fareD= JSON.parse(atob(this.passFareData));
-		// console.log(fareD)
+		 console.log(fareD)
 		// let df_fareData = this.EncrDecr.set(JSON.stringify(fareD))
 
 		this.submittedPayForm=true;
@@ -1336,7 +1332,6 @@ payNow(ptype){
 				'dcemi_interestRate':this.dcemi_interestRate,
 				'dcemi_tenure':this.dcemi_tenure,
 			};
-			// console.log(validatePGParams)
 			var postPgvalidateParams = {
 			orderReferenceNumber:this.orderReferenceNumber,
 			postData:this.EncrDecr.set(JSON.stringify(validatePGParams))

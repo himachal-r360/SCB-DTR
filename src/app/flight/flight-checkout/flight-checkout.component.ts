@@ -331,6 +331,7 @@ new_fare: number = 0;
 
                 this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
                     if (results.result) {
+                    
                         let result = JSON.parse(this.EncrDecr.get(results.result));
                         this.IsDcemiEligibleFlag = result.eligible; 
                     }
@@ -932,6 +933,8 @@ new_fare: number = 0;
 		
 		
                 for(let i=0;i<this.travellerlist.length;i++){
+                
+                if(this.filterTravellerList[i]){
                 if(this.filterTravellerList[i].age > 12)
                 this.saveAdultTravellerId[this.filterTravellerList[i].id]=-1
                 
@@ -940,7 +943,7 @@ new_fare: number = 0;
                 
                 else
                 this.saveChildTravellerId[this.filterTravellerList[i].id]=-1
-                
+                }
                 }
                 
 	                
@@ -1499,6 +1502,9 @@ new_fare: number = 0;
   
    paxInfo=[];fareData:any;itineraryRequest:any;
   contactDatails: any;
+  continueWithNewFareInterval:any;
+  
+  
   continueTravellerDetails(){
         alertify.set('notifier','position', 'top-center');
         if(this.adultsArray.length <  this.maxAdults){
@@ -1692,6 +1698,7 @@ new_fare: number = 0;
               }};
               
           this.fareData={
+            totalFare: Number(this.totalCollectibleAmount)+Number(this.partnerConvFee),
       "convenience_fee": 0,
       "partnerConvFee": this.partnerConvFee,
       "child": this.searchData.child,
@@ -1812,9 +1819,38 @@ new_fare: number = 0;
                this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
                
                
+               
+                this.fareData={
+                totalFare: Number(this.totalCollectibleAmount)+Number(this.partnerConvFee),
+                "convenience_fee": 0,
+                "partnerConvFee": this.partnerConvFee,
+                "child": this.searchData.child,
+                "adults": this.searchData.adults,
+                "infants": this.searchData.infants,
+                "total": this.totalCollectibleAmount ,
+                "others": this.Tax ,
+                "totalbf": this.BaseFare ,
+                "coupon_code": "",
+                "pass_break": {
+                "ADT": this.AdtFare,
+                "CHD":this.ChildFare,
+                "INF": this.InfantTotalFare,
+                },
+                "total_passengers": (this.maxAdults+this.maxChilds+this.maxInfants),
+                "markup_fee": 0,
+                "partner_amount": this.totalCollectibleAmountFromPartnerResponse,
+                "discount": this.coupon_amount,
+                "voucher_amount": 0,
+                "voucher_code": 0,
+                "couponcode": "",
+                "ticket_class": this.flightClasses[this.searchData.flightclass]
+                };    
+               
+               
 		if(this.new_fare != this.old_fare){
 		 clearInterval(myInterval1);
 		 $('#infoprocess').modal('hide');
+		 this.continueWithNewFareInterval=myInterval1;
 		 $('#bookingprocessPriceChange').modal('show');
  		}else{
  		   this.saveCheckout(myInterval1);
@@ -1952,11 +1988,13 @@ new_fare: number = 0;
 
     this.rest.saveCheckout(JSON.stringify(saveCheckoutData)).subscribe(rdata => {
       if(rdata==1){
+      
+      
       sessionStorage.setItem(this.randomFlightDetailKey + '-clientTransactionId', this.itinararyResponse.response.itineraryResponseDetails.itineraryId);
       sessionStorage.setItem(this.randomFlightDetailKey + '-orderReferenceNumber', this.itinararyResponse.response.orderId);
       sessionStorage.setItem(this.randomFlightDetailKey + '-ctype', 'flights');
       sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
-      sessionStorage.setItem(this.randomFlightDetailKey + '-passData', this.EncrDecr.set(JSON.stringify(this.itineraryRequest)));
+      sessionStorage.setItem(this.randomFlightDetailKey + '-passData', this.EncrDecr.set(JSON.stringify(checkoutData)));
       sessionStorage.setItem(this.randomFlightDetailKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
         clearInterval(myInterval1);
         $('#infoprocess').modal('hide');
@@ -2000,16 +2038,17 @@ new_fare: number = 0;
               this.passengerForm['controls']['gstCity'].setValue('');
               this.passengerForm['controls']['gstState'].setValue('');
  }
-  continueWithNewFare(){
+  continueWithNewFare(myInterval1){
   $('#bookingprocessPriceChange').modal('hide');
-   this.gotoTop();
+   this.saveCheckout(myInterval1);
+  /* this.gotoTop();
       if(this.enableVAS==1){
         this.steps=3;
         this.completedSteps=3;
         }else{
         this.steps=4;
         this.completedSteps=4;
-        }
+        }*/
    }
    
         moveTab(page){
