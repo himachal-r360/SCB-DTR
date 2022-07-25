@@ -39,10 +39,10 @@
                                 <div class="travel-select-trip">
                                     <ul class="travel-select-trip-ul">
                                         <li>
-                                            <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null ? 'active':'' " >One Way</span>
+                                            <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null  ? 'active':'' " >One Way</span>
                                         </li>
                                         <li>
-                                            <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip' ? 'active':'' ">Round Trip</span>
+                                            <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round Trip</span>
                                         </li>
                                         <li>
                                             <span class="selectway" (click)="navBarLink('Multicity')" [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multicity</span>
@@ -416,13 +416,13 @@
                                                                 <span class="select-roottitle"
                                                                     *ngIf="arrivalDate!='' ||arrivalDate!=undefined" >{{arrivalDate
                                                                     | date:'EEEE' }}</span>
-                                                                <span class="select-roottitle d-block w-100" *ngIf="arrivalDate=='' || arrivalDate==undefined" >Tap to add
+                                                                <span class="select-roottitle d-block w-100" *ngIf="arrivalDate=='' || arrivalDate==undefined " >Tap to add
                                                                     a <br> return date</span>
                                                             </div>
                                                             <div class="select-root-date">
                                                                 <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
                                                                 <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                                    <input matInput [min]="flightData.value.departure" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
+                                                                    <input matInput [min]="departureDate" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
                                                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                                                     <mat-datepicker #picker2 ></mat-datepicker>
                                                              </mat-form-field>
@@ -728,15 +728,17 @@
                                         <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
                                 </div>
                                 <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/next-active.png" alt="">
+                                    <img *ngIf="!continue.arrival" src="./assets/images/icons/next-active.png" alt="">
+                                    <img *ngIf="continue.arrival" src="./assets/images/icons/round.png" alt="">
                                 </div>
                                 <div class="Continuesearch-name">
                                     <h6>{{continue.toCity}}</h6>
-                                    <!-- <p>{{continue.arrival|date:"EEE ,dd MMM"}}</p> -->
+                                    <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
                                 </div>
                             </div>
                             <div class="Continuesearch-items-actions">
                                 <img src="./assets/images/icons/next.png" alt="">
+                                
                             </div>
                         </div>
                     </a>
@@ -755,10 +757,12 @@
                                                     <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
                                             </div>
                                             <div class="Continuesearch-image">
-                                                <img src="./assets/images/icons/next-active.png" alt="">
+                                                <img *ngIf="!continue.arrival" src="./assets/images/icons/next-active.png" alt="">
+                                                <img *ngIf="continue.arrival" src="./assets/images/icons/round.png" alt="">
                                             </div>
                                             <div class="Continuesearch-name">
                                                 <h6>{{continue.toCity}}</h6>
+                                                <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
                                             </div>
                                         </div>
                                         <div class="Continuesearch-items-actions">

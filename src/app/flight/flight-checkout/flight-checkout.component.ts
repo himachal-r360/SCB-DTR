@@ -1987,7 +1987,19 @@ new_fare: number = 0;
       behavior: 'smooth'
 });
   } 
-  
+  gstReset(){
+   $("input[type=radio][name=GSTList]").prop('checked', false);
+      for(let i=0;i<this.GSTListLength;i++){
+            this.isCheckedGST[i]=false;
+          }
+ 
+              this.passengerForm['controls']['gstNumber'].setValue('');
+              this.passengerForm['controls']['gstBusinessName'].setValue('');
+              this.passengerForm['controls']['gstAddress'].setValue('');
+              this.passengerForm['controls']['gstPincode'].setValue('');
+              this.passengerForm['controls']['gstCity'].setValue('');
+              this.passengerForm['controls']['gstState'].setValue('');
+ }
   continueWithNewFare(){
   $('#bookingprocessPriceChange').modal('hide');
    this.gotoTop();
