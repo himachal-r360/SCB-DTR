@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { MY_DATE_FORMATS } from '../flight-list/flight-list.component';
-
+import { SimpleGlobal } from 'ng2-simple-global';
+import {environment} from '../../../environments/environment';
 @Component({
   selector: 'app-flight-roundtrip-list',
   templateUrl: './flight-roundtrip-list.component.html',
@@ -16,7 +17,7 @@ import { MY_DATE_FORMATS } from '../flight-list/flight-list.component';
   ]
 })
 export class FlightRoundtripListComponent implements OnInit {
-
+  cdnUrl: any;
   flightList: any = [];
   ReturnflightList: any = [];
   flightIcons: any;
@@ -53,7 +54,10 @@ export class FlightRoundtripListComponent implements OnInit {
     travel: ['DOM'],
   });
 
-  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router ) { }
+  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router,private sg: SimpleGlobal ) { 
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+  
+  }
 
   ngOnInit(): void {
     this.loader = true;
