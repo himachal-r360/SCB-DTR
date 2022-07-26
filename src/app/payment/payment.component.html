@@ -175,11 +175,7 @@
                                             <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
                                         </a>
                                       </li>
-                                    <li class="nav-item" *ngIf="pgSettingsUPI">
-                                        <a id="tab-upi" href="#pane-upi" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/upi.svg" alt="icon"> <span class="ps-2">UPI</span>
-                                        </a>
-                                      </li>  
+                       
                                     <li class="nav-item" *ngIf="pgSettingsTESTPG">
                                         <a id="tab-testPg" href="#pane-testPg" class="nav-link" data-bs-toggle="tab" role="tab">
                                             <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Test Pg</span>
@@ -194,11 +190,11 @@
                             <div id="content" class="tab-content payment-content p-3" role="tablist">
 
                                 <!-- Saved Card Section Starts -->
-                                <div id="pane-savedCards" class="card tab-pane fade show" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
+                                <div id="pane-savedCards" class="card tab-pane fade show" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                     
                                     <div class="panel-heading">
                                         <div class="" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
-                                            <a id="tab-netBanking" class="accordion-button" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-savedCards" aria-expanded="true" aria-controls="collapse-savedCards">
+                                            <a id="tab-netBanking" class="accordion-button" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-savedCards" aria-expanded="true" aria-controls="collapse-savedCards">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Cards</span>
                                             </a>
                                         </div>
@@ -296,94 +292,15 @@
                                 <!-- Saved Card Section Ends -->
 
 
-                                <!-- UPI Section Starts -->
-                                <div id="pane-upi" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-upi" *ngIf="pgSettingsUPI">
-                                    
-                                    <div class="panel-heading">
-                                        <div class="" *ngIf="pgSettingsUPI">
-                                            <a id="tab-upi" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-upi" aria-expanded="false" aria-controls="collapse-upi">
-                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/upi.svg" alt="icon"> <span class="ps-2">UPI</span>
-                                                
-                                            </a>
-                                        </div>  
-                                    </div>
-                                    <div id="collapse-upi" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-upi" data-bs-parent="#content">
-                                        <div class="card-body">
-                                            <div>
-                                                <div class="bharatQrSection">
-                            
-                                                          <div class="common_title">
-                                                            <span class="">Pay Using UPI</span>
-                                                        </div>
-                                                    <form [formGroup]="upiForm">
-                                                        <div id="upiOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && !pgSettingsPAYZAPP && pgSettingsUPI }" data-bs-parent="#allPayments" name="paymentModule">
-                            
-                                                            <div class="bharatqr-info">
-                                                                <div>
-                                                                    <img src="" class="img-fluid">
-                            
-                                                                    <div class="bharatqr-price-section">
-                            
-                                                                        <mat-form-field appearance="outline">
-                                                                            <input matInput placeholder="VPA" formControlName="virtual_address" autocomplete="off">
-                                                                        </mat-form-field>
-                                                                        <div *ngIf="submittedUpiForm && upiForm.controls.virtual_address.errors" class="error">
-                                                                            <small *ngIf="upiForm.controls.virtual_address.errors.required">VPA is required</small>
-                                                                            <small *ngIf="upiForm.controls.virtual_address.errors.pattern">Please enter a valid email id</small>
-                                                                        </div>
-                                                                        <p class="bharat-total">Total Amount</p>
-                                                                        <p class="bharat-price"> ₹{{payTotalFare| number:'1.2-2'}}</p>
-                                                                    </div>
-                                                                </div>
-                            
-                            
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                            <div class="new-card-footer ">
-                                                            <div class="my-2">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_upi">
-                                                                    <label class="form-check-label xs-check-font" for="termscondition_upi" >
-                                                                        I understand and agree to the rules and restrictions of
-                                                                        this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                        understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                        SmartBuy.
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                                <!-- <p class="my-2"> 
-                                                                    <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                SmartBuy.
-                                                                  <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                            
-                                                                </p> -->
-                                                                <div *ngIf="submittedUpiForm && upiForm.controls.termscondition.errors" class="error_tc">
-                                                                    <small *ngIf="upiForm.controls.termscondition.errors.required || upiForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
-                                                                </div>
-                                                                <div class="my-3 xs-center">
-                                                                    <button class="btn btn-paynow" (click)="payNow(6)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
-                                                                </div>
-                            
-                                                            </div>
-                            
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- UPI Section Ends -->
+                              
 
 
                                 <!-- Credt/Debit Card Section Starts -->
-                                <div id="pane-ccdcCards" class="card tab-pane fade" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="tabpanel" aria-labelledby="tab-ccdcCards" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
+                                <div id="pane-ccdcCards" class="card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="tabpanel" aria-labelledby="tab-ccdcCards" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
                                     
                                     <div class="panel-heading">
                                         <div class="" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                            <a id="tab-ccdcCards"  class="accordion-button collapsed" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards">
+                                            <a id="tab-ccdcCards"  class="accordion-button collapsed" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                             </a>
                                         </div>  
@@ -423,7 +340,7 @@
                                                                                                 <div class="col-12 p-0">
                                                                                                     <mat-form-field appearance="outline" class="w-100">
                                                                                                         <mat-label>Card Number</mat-label>
-                                                                                                        <input matInput placeholder="" formControlName="cardnumber" name="cardnumber" id="cardnumber" maxlength="19" [cleave]="{creditCard: true,delimiter:'-'}" autocomplete="off" ccNumber type="tel">
+                                                                                                        <input matInput placeholder="" formControlName="cardnumber" name="cardnumber" id="cardnumber" maxlength="19" [cleave]="{creditCard: true,delimiter:'-'}" autocomplete="off"  type="tel">
                                                                                                     </mat-form-field>
                                         
                                                                                                     <div *ngIf="submittedCreditForm && creditForm.controls.cardnumber.errors" class="error">
