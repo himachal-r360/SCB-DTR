@@ -242,19 +242,19 @@
                                                                 </div>
                                                                 <div class="contact-form mt-15">
                                                                     <div class="row">
-                                                                        <div class="col-6">
+                                                                        <div class="col-sm-6 col-8">
                                                                             <mat-form-field class=" cvv-w w-75 ps-0 pt-16" appearance="outline">
                                                                                 <mat-label>CVV</mat-label>
                                                                                 <input matInput placeholder="" id="cvvnumber-{{card.id}}" formControlName="save_cvvnumber{{cardIndex}}" maxlength="3" autocomplete="new-password" type="password">
                                                                   
                                                                             </mat-form-field>
-                                                                            <div *ngIf="submittedSaveCardForm && saveCardForm.controls['save_cvvnumber'+cardIndex]['errors']" class="error1">
+                                                                            <div *ngIf="submittedSaveCardForm && saveCardForm.controls['save_cvvnumber'+cardIndex]['errors']" class="error1 cvv-w">
                                                                                 <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].required">CVV is required</small>
                                                                                 <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].pattern">Please enter a valid data</small>
                                                                                 <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].minlength">Please enter maximum 3 Digits</small>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-6 text-end">
+                                                                        <div class="col-sm-6 col-12 text-end">
                                                                             <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0"><p class="invalid"><span class="material-icons pe-2 ">warning</span>  Tokenise and Save</p><input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)"> <span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i></span></div>
                                                                             <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==1"><p class="valid"><span class="material-icons pe-2 ">lock</span> Secure now</p><input type="checkbox" name="tokenization" id="tokenization{{cardIndex}}" checked value="1" style="display:none;"></div>
                                                                         </div>
@@ -280,7 +280,7 @@
                                                         <div *ngIf="submittedSaveCardForm && saveCardForm.controls.termscondition.errors" class="error_tc">
                                                             <small *ngIf="saveCardForm.controls.termscondition.errors.required || saveCardForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                         </div>
-                                                        <button class="btn btn-paynow-{{domainName}}" (click)="checkNonSpcOfferforSaveCard()" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                        <button class="btn btn-paynow-{{domainName}} my-3" (click)="checkNonSpcOfferforSaveCard()" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                     
                                                     </form>
                                     
@@ -1525,7 +1525,7 @@
                                 <!-- Flexipay Section Ends -->
 
                                 <!-- Test Pg Section Starts -->
-                                <div id="pane-testPg" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-testPg">
+                                <div id="pane-testPg" class="card tab-pane fade border-0" role="tabpanel" aria-labelledby="tab-testPg">
                                     <div class="panel-heading">
                                         <div class="" *ngIf="pgSettingsTESTPG">
                                             <a id="tab-testPg" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-testPg" aria-expanded="false" aria-controls="collapse-testPg">

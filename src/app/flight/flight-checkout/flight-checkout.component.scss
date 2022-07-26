@@ -25,10 +25,12 @@ input::placeholder {
 .hidden {
  display: none;
 }
-      .view_more_btn{
-      font-size: 14px;
-      font-weight: 600;
-      text-align: center;
+    .view_more_btn{
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        width: 50%;
+        margin: 10px auto;
     }          
     
 .heading_text{
@@ -40,6 +42,17 @@ input::placeholder {
     }
     @media screen and (max-width:320px) {
         font-size: 14px;
+    }
+}
+
+.add-traveller-title{
+    @media only screen and (max-width:600px){
+       display: block;
+       .traveller-person-right{
+        p{
+            font-size: 12px;
+        }
+       }
     }
 }
 
@@ -55,7 +68,7 @@ input::placeholder {
     } */
     .arrow{
         &::after{
-            content: "\f106";
+            content: "\f107";
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
             @media screen and (max-width:600px) {
@@ -63,10 +76,13 @@ input::placeholder {
             }
         }
     }
-    .collapsed{
+    /* .collapsed{
         &::after{
             content: "\f107";
         }
+    } */
+    .arrow[aria-expanded="true"]:after{
+        content: "\f106";
     }
 
     .head_info{
