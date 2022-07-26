@@ -22,6 +22,7 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="travel-box mb-20">
+                    <form [formGroup]="flightDataModify" (ngSubmit)="flightSearch()">
                       <div class="travel-select-data-area">
                           <div class="travel-select-trip mt-0">
                               <ul class="travel-select-trip-ul">
@@ -35,11 +36,11 @@
                                       <span class="selectway">Multi-City</span>
                                   </li>
                                   <li>
-                                      <div class="Travellers-dropdown ms-3">
+                                      <div class="Travellers-dropdown ms-3" appDropdown>
                                           <div class="Travellers-dropdown-title">
-                                              <h5>03 Passengers <i class="fas fa-caret-down"></i></h5>
+                                              <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i></h5>
                                           </div>
-                                          <ul class="Travellers-dropdown-data Travellershide">
+                                          <ul class="Travellers-dropdown-data flight-from-hide dropdown">
                                               <li>
                                                   <p class="t-title">Travellers</p>
                                               </li>
@@ -51,9 +52,9 @@
                                                       </div>
                                                       <div class="Travellers-qty">
                                                           <div class="quantity buttons_added">
-                                                              <input type="button" value="-" class="qty-buttons minus">
-                                                              <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                              <input type="button" value="+" class="qty-buttons plus">
+                                                            <input type="button" (click)="decreaseAdult()"  value="-" class="qty-buttons minus" >
+                                                            <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" [(ngModel)]="adultsVal" formControlName="adults" size="4" pattern="" inputmode="">
+                                                            <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent"  class="qty-buttons plus">
                                                           </div>
                                                       </div>
                                                   </div>
@@ -66,9 +67,9 @@
                                                       </div>
                                                       <div class="Travellers-qty">
                                                           <div class="quantity buttons_added">
-                                                              <input type="button" value="-" class="qty-buttons minus">
-                                                              <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                              <input type="button" value="+" class="qty-buttons plus">
+                                                            <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus" >
+                                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode=""  [(ngModel)]="childVal" formControlName="child">
+                                                            <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
                                                           </div>
                                                       </div>
                                                   </div>
@@ -81,9 +82,9 @@
                                                       </div>
                                                       <div class="Travellers-qty">
                                                           <div class="quantity buttons_added">
-                                                              <input type="button" value="-" class="qty-buttons minus">
-                                                              <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                              <input type="button" value="+" class="qty-buttons plus">
+                                                            <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus" >
+                                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" [(ngModel)]="infantsVal" formControlName="infants" inputmode="">
+                                                            <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus">
                                                           </div>
                                                       </div>
                                                   </div>
@@ -93,12 +94,12 @@
 
                                   </li>
                                   <li>
-                                      <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
-                                          <option selected="selected">Business Class</option>
-                                          <option>Economy Class</option>
-                                          <option>First Class</option>
-                                          <option>Premium Economy</option>
-                                      </select>
+                                    <mat-select class=" ms-4" [(ngModel)]="flightClassVal" formControlName="flightclass">
+                                      <mat-option value="B">Business Class</mat-option>
+                                      <mat-option value="E">Economy Class</mat-option>
+                                      <mat-option value="F">First Class</mat-option>
+                                      <mat-option value="P">Premium Economy</mat-option>
+                                    </mat-select>
                                   </li>
                               </ul>
                           </div>
@@ -106,147 +107,59 @@
                               <div class="row g-2">
                                   <div class="col-lg-6">
                                       <div class="select-root-area">
-                                          <div class="select-root-left">
+                                          <div class="select-root-left" appDropdown>
                                               <span class="select-roottitle">FROM</span>
-                                              <h5 class="">Gujarat</h5>
-                                              <span class="select-roottitle">Bangalore Internationl Airport</span>
-                                              <div class="flight-from-data flight-from-hide">
+                                              <h5 class="">{{fromCityName}}</h5>
+                                              <span class="select-roottitle">{{fromAirpotName}}</span>
+                                              <div class="flight-from-data flight-from-hide dropdown" >
                                                   <div class="flight-from-data-search">
-                                                      <input type="text" name="" class="w-100" id="" placeholder="Search City">
+                                                      <input type="text" name="" class="w-100" id="fromCitySearch"   placeholder="Search City" (keyup)="fromList($event)">
                                                   </div>
-                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark" *ngIf="fromFlightList">
                                                       <li class="flight-from-ul-li">
                                                           <p class="flight-Results-text">Results</p>
                                                       </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Mumbai, India</h6>
-                                                                  <p>Chhatrapati Shivaji International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BOM</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Pune, India</h6>
-                                                                  <p>Pune Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>PNQ</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Bengaluru, India</h6>
-                                                                  <p>Bengaluru International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BLR</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>New Delhi, India</h6>
-                                                                  <p>Indira Gandhi International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>DLE</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Chennai, India</h6>
-                                                                  <p>Chennai International Airport  </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>MAA</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
+                                                      <li class="flight-from-ul-li" *ngFor="let fromCity of cityList">
+                                                        <a  class="flight-from-ul-li-a"  (click)="selectFromFlightList(fromCity._source)" >
+                                                            <div class="flight-from-name"   >
+                                                                <h6>{{fromCity._source.city}}, {{fromCity._source.country}}</h6>
+                                                                <p>{{fromCity._source.airport_name}} </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname" >
+                                                                <h6>{{fromCity._source.airport_code}}</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
                                                   </ul>
                                               </div>
                                           </div>
-                                          <div class="select-root-icons">
-                                              <img src="./assets/images/icons/twoway.png" alt="">
+                                          <div class="select-root-icons" (click)="swap()">
+                                              <img src="./assets/images/icons/twoway.png" alt="" >
                                           </div>
-                                          <div class="select-root-right">
+                                          <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
                                               <span class="select-roottitle">TO</span>
-                                              <h5 class="">Pune</h5>
-                                              <span class="select-roottitle">Pune Internationl Airport</span>
+                                              <h5 class="">{{toCityName}}</h5>
+                                              <span class="select-roottitle">{{toAirpotName}}</span>
 
-                                              <div class="flight-to-data flight-from-hide">
+                                              <div class="flight-to-data flight-from-hide dropdown">
                                                   <div class="flight-from-data-search">
-                                                      <input type="text" name="" class="w-100" id="" placeholder="Search City">
+                                                      <input type="text" name="" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
                                                   </div>
-                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark" *ngIf="toFlightList">
                                                       <li class="flight-from-ul-li">
                                                           <p class="flight-Results-text">Results</p>
                                                       </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Mumbai, India</h6>
-                                                                  <p>Chhatrapati Shivaji International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BOM</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Pune, India</h6>
-                                                                  <p>Pune Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>PNQ</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Bengaluru, India</h6>
-                                                                  <p>Bengaluru International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BLR</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>New Delhi, India</h6>
-                                                                  <p>Indira Gandhi International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>DLE</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Chennai, India</h6>
-                                                                  <p>Chennai International Airport  </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>MAA</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
+                                                      <li class="flight-from-ul-li" *ngFor="let toCity of cityList">
+                                                        <a  class="flight-from-ul-li-a" (click)="selectToFlightList(toCity._source)"  >
+                                                            <div class="flight-from-name"  >
+                                                                <h6>{{toCity._source.city}}, {{toCity._source.country}}</h6>
+                                                                <p>{{toCity._source.airport_name}} </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname"  >
+                                                                <h6>{{toCity._source.airport_code}}</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
                                                   </ul>
                                               </div>
                                           </div>
@@ -256,24 +169,38 @@
                                       <div class="root-date">
                                           <div class="select-root-area">
                                               <div class="select-dep-ret">
-                                                  <div class="area-root-departure">
+                                                  <div class="area-root-departure"  (click)="picker.open()" id="datePickerOpen" >
                                                       <div class="select-root-departure">
                                                           <span class="select-roottitle">DEPARTURE</span>
-                                                          <h5 class=" ">23 May</h5>
-                                                          <span class="select-roottitle">Friday</span>
+                                                          <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                                          <span class="select-roottitle">{{departureDate | date:'EEEE' }}</span>
                                                       </div>
-                                                      <div class="select-root-date">
+                                                      <div class="select-root-date" style="position: relative; left: 0;">
                                                           <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                          <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                            <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClicked($event)">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker ></mat-datepicker>
+                                                     </mat-form-field>
                                                       </div>
                                                   </div>
-                                                  <div class="area-root-reutrn">
+                                                  <div class="area-root-reutrn area-root-departure disableDiv" (click)="picker2.open()" id="datePickerArrival" >
                                                       <div class="select-root-reutrn">
                                                           <span class="select-roottitle">RETURN</span>
-                                                          <h5 class="">29 May</h5>
-                                                          <span class="select-roottitle d-block w-100">Select Return</span>
+                                                          <h5 class="">{{returnDate | date:'dd MMM' }}</h5>
+                                                          <span class="select-roottitle"
+                                                          *ngIf="returnDate!='' ||returnDate!=undefined" >{{returnDate
+                                                          | date:'EEEE' }}</span>
+                                                      <span class="select-roottitle d-block w-100" *ngIf="returnDate=='' || returnDate==undefined " >Tap to add
+                                                          a <br> return date</span>
                                                       </div>
                                                       <div class="select-root-date">
                                                           <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                          <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                            <input matInput [min]="departureDate" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="returnDate" >
+                                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker2 ></mat-datepicker>
+                                                     </mat-form-field>
                                                       </div>
 
                                                   </div>
@@ -282,7 +209,7 @@
 
                                           </div>
                                           <div class="root-search">
-                                              <a href="flight_listing.html" class="searchbn">Search</a>
+                                              <button type="submit" class="searchbn">Search</button>
                                           </div>
                                       </div>
                                   </div>
@@ -327,6 +254,7 @@
                               </div>
                           </div>
                       </div>
+                    </form>
                   </div>
               </div>
 
@@ -679,8 +607,8 @@
                                           </div>
                                       </div>
                                       <div>
-                                      <div class="round-flight-listing round-click" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
-                                          <div class="round-flight-listing-content">
+                                      <div class="round-flight-listing round-click"  appToggleDetail *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
+                                          <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
@@ -715,11 +643,11 @@
                                           <div class="round-flight-info-box">
                                               <p><img src="/assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
-                                          <div class="round-options-box" id="CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
-                                                          <div class="round-list-image">
+                                                          <div class="round-list-image" >
                                                             {{item.partnerName}}
                                                               <!-- <img src="./assets/images/flights/1.png" alt=""> -->
                                                           </div>
@@ -827,7 +755,7 @@
                                           </div>
                                       </div>
 
-                                      <div class="round-flight-listing round-click" *ngFor="let list of ReturnflightList; let i = index" id="return_flight_list_{{i}}">
+                                      <div class="round-flight-listing round-click" appToggleDetail *ngFor="let list of ReturnflightList; let i = index" id="return_flight_list_{{i}}">
                                           <div class="round-flight-listing-content">
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
@@ -861,7 +789,7 @@
                                           <div class="round-flight-info-box">
                                               <p><img src="./assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
-                                          <div class="round-options-box" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
+                                          <div class="round-options-box dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
