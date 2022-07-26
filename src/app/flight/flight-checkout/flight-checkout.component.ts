@@ -1997,7 +1997,7 @@ new_fare: number = 0;
       sessionStorage.setItem(this.randomFlightDetailKey + '-passData', this.EncrDecr.set(JSON.stringify(checkoutData)));
       sessionStorage.setItem(this.randomFlightDetailKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
         clearInterval(myInterval1);
-        $('#infoprocess').modal('hide');
+        
         this.gotoTop();
                if(this.enableVAS==1){
         this.steps=3;
@@ -2006,7 +2006,7 @@ new_fare: number = 0;
         this.steps=4;
         this.completedSteps=4;
         }
-      
+      $('#infoprocess').modal('hide');
       }else{
         clearInterval(myInterval1);
          $('#infoprocess').modal('hide');
