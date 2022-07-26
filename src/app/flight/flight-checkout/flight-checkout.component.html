@@ -42,6 +42,12 @@
         </div>
     </section>
   <section class="flight-details-area mt-10" >
+    <!-- Mlite Sesssion Timer Code -->
+    <div class="d-block d-sm-none">
+        <div class="sidebar-widget session-expires-widget">
+            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
+        </div>
+    </div>
   <input *ngIf="searchData"  type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
         <div class="container">
             <div class="row">
@@ -2582,106 +2588,108 @@
 </app-payment>
                 </div>
                 </div>    
-                <!--Step5 Ends-->    
+                <!--Step5 Ends-->   
 
                 <div class="col-md-4" *ngIf="totalCollectibleAmount" >
                 <!-- <app-fare-summary></app-fare-summary> -->
                 <div class="default-sidebar">
-                    <div class="sidebar-widget session-expires-widget">
-                        <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
-                    </div>
-                    <div class="sidebar-widget fare-summary-widget">
-                        <div class="widget-title" >
-                            <h4>Fare Summary</h4>
-                            <img *ngIf="selectedVendor" src="{{cdnUrl}}images/flight_partners/{{selectedVendor.partnerName}}.png" alt="{{selectedVendor.partnerName}}"> 
+                    <div class="d-none d-sm-block">
+                        <div class="sidebar-widget session-expires-widget">
+                            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
                         </div>
-                        <div class="widget-content">
-                            <ul class="widget-list clearfix">
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                                                Base Fare
-                                            </p>
+                        <div class="sidebar-widget fare-summary-widget">
+                            <div class="widget-title" >
+                                <h4>Fare Summary</h4>
+                                <img *ngIf="selectedVendor" src="{{cdnUrl}}images/flight_partners/{{selectedVendor.partnerName}}.png" alt="{{selectedVendor.partnerName}}"> 
+                            </div>
+                            <div class="widget-content">
+                                <ul class="widget-list clearfix">
+                                    <li class="fare-list-item">
+                                        <div class="fare-list-box">
+                                            <div class="fare-list-left">
+                                                <p>
+                                                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                    Base Fare
+                                                </p>
+                                            </div>
+                                            <div class="fare-list-right">
+                                                <p>&#8377;{{BaseFare|number}}</p>
+                                            </div>
                                         </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;{{BaseFare|number}}</p>
+                                    </li>
+                                    <li class="fare-list-item">
+                                        <div class="fare-list-box">
+                                            <div class="fare-list-left">
+                                                <p>
+                                                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                    Taxes and Fees
+                                                </p>
+                                            </div>
+                                            <div class="fare-list-right">
+                                                <p>&#8377;{{Tax |number}}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                                                Taxes and Fees
-                                            </p>
+                                    </li>
+                                    
+                                                        <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                                        <div class="fare-list-box">
+                                            <div class="fare-list-left">
+                                                <p>
+                                                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                    {{selectedVendor.partnerName}} ConvFee
+                                                </p>
+                                            </div>
+                                            <div class="fare-list-right">
+                                                <p>&#8377;{{partnerConvFee |number}}</p>
+                                            </div>
                                         </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;{{Tax |number}}</p>
+                                    </li>
+                                    <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
+                                        <div class="fare-list-box">
+                                            <div class="fare-list-left">
+                                                <p>
+                                                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                    Baggage/Seat/Meals
+                                                </p>
+                                            </div>
+                                            <div class="fare-list-right">
+                                                <p>&#8377;{{vas_amount}}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                
-                                                    <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                                                {{selectedVendor.partnerName}} ConvFee
-                                            </p>
+                                    </li>
+                                    <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                        <div class="fare-list-box">
+                                            <div class="fare-list-left">
+                                                <p>
+                                                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                                                    Discounts
+                                                </p>
+                                            </div>
+                                            <div class="fare-list-right">
+                                                <p class="text-green">-&#8377;{{coupon_amount}}</p>
+                                            </div>
                                         </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;{{partnerConvFee |number}}</p>
+                                    </li>
+                                    <li class="fare-list-item">
+                                        <div class="fare-list-box pt-30">
+                                            <div class="fare-list-left">
+                                                <h6 class="fw_7">Grand Total</h6>
+                                            </div>
+                                            <div class="fare-list-right">
+                                                <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
+                                                <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                                                Baggage/Seat/Meals
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p>&#8377;{{vas_amount}}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item" *ngIf="coupon_amount>0.00">
-                                    <div class="fare-list-box">
-                                        <div class="fare-list-left">
-                                            <p>
-                                                <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                                                Discounts
-                                            </p>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <p class="text-green">-&#8377;{{coupon_amount}}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="fare-list-item">
-                                    <div class="fare-list-box pt-30">
-                                        <div class="fare-list-left">
-                                            <h6 class="fw_7">Grand Total</h6>
-                                        </div>
-                                        <div class="fare-list-right">
-                                            <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
-                                            <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="continue-widget mb-20" >
-                        <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()" *ngIf="steps==1">Continue</a>
-                        <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
-                        <a href="javascript:void(0);" class="button-style w-100" (click)="continueSeatSelection()"  *ngIf="steps==3">Continue</a>
-                         <a href="javascript:void(0);" class="button-style w-100"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
+                        <div class="continue-widget mb-20" >
+                            <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()" *ngIf="steps==1">Continue</a>
+                            <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()" *ngIf="steps==2">Continue</a>
+                            <a href="javascript:void(0);" class="button-style w-100" (click)="continueSeatSelection()"  *ngIf="steps==3">Continue</a>
+                             <a href="javascript:void(0);" class="button-style w-100"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
+                        </div>
                     </div>
                     <div *ngIf="steps==5" class="d-none d-lg-block d-xl-none">
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
