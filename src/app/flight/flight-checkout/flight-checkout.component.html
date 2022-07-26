@@ -655,9 +655,11 @@
                                 </div>
                                 </div>
                                   <div class="add-traveller-btn" *ngIf="adultsArray.length < travelerDetails.adults">
-                                            <a href="javascript:void(0);" class="Addnew-Adult-btn"
+                                            <a href="javascript:void(0);" class="Addnew-Adult-btn d-none d-sm-block"
                                                 (click)="manualAdultTraveller(1)">+ Add New Adult</a>
-                                        </div>
+                                                <a href="javascript:void(0);" class="Addnew-Adult-btn d-block d-sm-none"
+                                             data-bs-toggle="modal" data-bs-target="#addTraveller_mlite">+ Add New Adult</a>
+                                   </div>
                             </div>
                                    </div>
                                 </div>
@@ -2948,6 +2950,99 @@
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   <button type="button" class="btn btn-primary">Save changes</button>
                 </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Mlite Add Traveller Popup -->
+        <div class="modal coupon_mlite_popup" id="addTraveller_mlite" tabindex="-1" aria-labelledby="addTraveller_mlite" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content" *ngIf="adultsArray.length < travelerDetails.adults">
+                <div class="modal-header pb-0">
+                  <h5 class="modal-title">Add New Adult</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>First Name</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter First Name</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter Last Name</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Date of Birth</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter DOB</mat-error>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+                   
+                </div>
+              </div>
+              <div class="modal-content" *ngIf="childArray.length < travelerDetails.child">
+                <div class="modal-header pb-0">
+                  <h5 class="modal-title">Add New Child</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>First Name</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter First Name</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter Last Name</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Date of Birth</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter DOB</mat-error>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+                   
+                </div>
+              </div>
+              <div class="modal-content" *ngIf="infantArray.length < travelerDetails.infants">
+                <div class="modal-header pb-0">
+                  <h5 class="modal-title">Add New Infants</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>First Name</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter First Name</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter Last Name</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Date of Birth</mat-label>
+                                <input matInput  placeholder="" type="text" formControlName="" name="" id="" >
+                                  <mat-error>Please Enter DOB</mat-error>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+                   
+                </div>
               </div>
             </div>
           </div>
