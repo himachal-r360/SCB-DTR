@@ -1,4 +1,16 @@
 <main class="site-main" *ngIf="partnerToken">
+    <div class="route-details row">
+        <div class="col-2">
+            <span class="material-icons">arrow_back_ios</span>
+        </div>
+        <div class=" col-8 text-center">
+            <p class="city_name"><span>Mumbai</span> - <span>Hyderabad</span></p>
+            <p class="journey_details">Wed, 15jul | 4 Travellers | Economy</p>
+        </div>
+        <div class="col-2">
+           
+        </div>
+    </div>
     <section class="details-steps-area mt-140 mb-40">
         <div class="container">
             <div class="row justify-content-center">
@@ -45,7 +57,7 @@
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
         <div class="sidebar-widget session-expires-widget">
-            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
+            <p class="pb-0"><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
         </div>
     </div>
   <input *ngIf="searchData"  type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />

@@ -203,9 +203,9 @@
                                     <div id="collapse-savedCards" class="accordion-collapse collapse show" role="tabpanel" aria-labelledby="heading-savedCards" data-bs-parent="#content">
                                         <div class="card-body">
                                             <div>
-                                               <!--  <div class="common_title">
+                                                <div class="common_title">
                                                     <span class="">Pay Using Saved Cards</span>
-                                                </div> -->
+                                                </div>
                                                 <div class="saved-cards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                                     <div class="pay-card-title">
                                                         <!-- <h6><b>Pay using</b></h6> -->
@@ -308,10 +308,13 @@
                                     <div id="collapse-ccdcCards" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-ccdcCards" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
+                                                <div class="common_title">
+                                                    <span class="">Pay Using Debit/Credit Cards</span>
+                                                </div>
                                                 <div class="newCardsAddSection" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
                                                   
                                                           <div class="tab_btn_payments">
-                                                            <ul class="mb-3 nav nav-justified nav-pills" id="pills-tab" role="tablist">
+                                                            <ul class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
                                                                 <li class="nav-item">
                                                                   <a class="nav-link active" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true">Visa / MasterCard / Diners</a>
                                                                 </li>
@@ -319,7 +322,7 @@
                                                                   <a class="nav-link" id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false">Rupay</a>
                                                                 </li>
                                                               </ul>
-                                                              <div class="tab-content" id="pills-tabContent">
+                                                              <div class="tab-content pt-0" id="pills-tabContent">
                                                                 <div class="tab-pane fade show active" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
                                                                     <div>
                                                                         <div class="common_title">
@@ -331,7 +334,7 @@
                                                                           </div>
                                                                       
                                                                           <form [formGroup]="creditForm" id="creditForm" *ngIf="pgSettingsCYBER" class="mt-4">
-                                                                            <div id="VisaMasterSection" class="collapse " [ngClass]="{'show':  pgSettingsCYBER }" data-bs-parent="#VisaRupaySection">
+                                                                            <div id="VisaMasterSection"  [ngClass]="{'show':  pgSettingsCYBER }" >
                                         
                                                                                 <div class="contact-form">
                                                                                     <div class="new-card-info-2 xs-mti-50">
@@ -466,7 +469,7 @@
                                                                             <span class="">Rupay Card</span>
                                                                           </div>
                                                                           <form [formGroup]="hdfcPgForm" *ngIf="pgSettingsHDFCPG">
-                                                                            <div id="RupaySectionPath" class="collapse" data-bs-parent="#VisaRupaySection" [ngClass]="{'show':  !pgSettingsCYBER && pgSettingsHDFCPG }">
+                                                                            <div id="RupaySectionPath" [ngClass]="{'show':  !pgSettingsCYBER && pgSettingsHDFCPG }" >
                                                                                 <div class="RupayCardSection">
                                                                                     <div class="rupay-info">
                                                                                         <img src="{{cdnUrl}}images/logo-rupay.jpg" class="img-fluid">
@@ -587,7 +590,7 @@
                                     <div id="collapse-emi" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-emi" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div class="tab_btn_payments" >
-                                                <ul class="mb-3 nav nav-justified nav-pills" id="pills-tab" role="tablist">
+                                                <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
                                                     <li class="nav-item" >
                                                       <a class="nav-link active" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="true">Credit Card EMI</a>
                                                     </li>
