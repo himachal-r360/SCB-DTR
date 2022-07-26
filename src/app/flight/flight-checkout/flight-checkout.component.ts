@@ -234,7 +234,7 @@ new_fare: number = 0;
         mobileNumber:any;
         showLoader:number=1;
  serviceId:string='Flight';
-
+  isMobile:boolean= true;
 
   constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal, @Inject(DOCUMENT) private document: any) { 
 
@@ -247,7 +247,13 @@ new_fare: number = 0;
 
                 this.getAirpotsList();
                 this.getAirLineList();
-   this._flightService.showHeader(true);
+
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
+    }
    
 
           /*** SESSION */
@@ -477,7 +483,6 @@ new_fare: number = 0;
 
   }
   
-       
 
         clickPassenger($event,passenger,checkboxIndex) {
         if($event.target.checked){
@@ -506,6 +511,67 @@ new_fare: number = 0;
        manualAdultTraveller(type){
         this.addAdult(-1,-1);
        }
+       
+       manualMobileAdultTraveller(type){
+        this.addAdult(-1,-1);
+        $('#addTraveller_mlite').modal('show');
+       }
+       
+       manualMobileChildTraveller(type){
+        this.addChild(-1,-1);
+        $('#childTraveller_mlite').modal('show');
+       }
+       
+           manualMobileInfantTraveller(type){
+        this.addInfant(-1,-1);
+        $('#infantTraveller_mlite').modal('show');
+       }
+       
+       
+       validateMliteForm(type,traveller){
+       this.passengerForm.markAllAsTouched();
+       
+       if(type=='adult'){
+       
+        if(this.passengerForm.controls['adult_title'+traveller]['status'] =='VALID' && this.passengerForm.controls['adult_first_name'+traveller]['status'] =='VALID' && this.passengerForm.controls['adult_last_name'+traveller]['status']  =='VALID' && this.passengerForm.controls['adult_dob'+traveller]['status'] =='VALID'){
+         $('#addTraveller_mlite').modal('hide');
+        }
+       }
+       
+       
+              if(type=='child'){
+       
+        if(this.passengerForm.controls['child_title'+traveller]['status'] =='VALID' && this.passengerForm.controls['child_first_name'+traveller]['status'] =='VALID' && this.passengerForm.controls['child_last_name'+traveller]['status']  =='VALID' && this.passengerForm.controls['child_dob'+traveller]['status'] =='VALID'){
+         $('#childTraveller_mlite').modal('hide');
+        }
+       }
+       
+       
+              if(type=='infant'){
+       
+        if(this.passengerForm.controls['infant_title'+traveller]['status'] =='VALID' && this.passengerForm.controls['infant_first_name'+traveller]['status'] =='VALID' && this.passengerForm.controls['infant_last_name'+traveller]['status']  =='VALID' && this.passengerForm.controls['infant_dob'+traveller]['status'] =='VALID'){
+         $('#infantTraveller_mlite').modal('hide');
+        }
+       }
+     
+       
+       }
+       
+       removeMobileAdult(val,checkboxIndex) {
+        this.removeAdult(val,checkboxIndex);
+        $('#addTraveller_mlite').modal('hide');
+       }
+           removeMobileChild(val,checkboxIndex) {
+        this.removeChild(val,checkboxIndex);
+        $('#childTraveller_mlite').modal('hide');
+       }
+       
+           removeMobileInfant(val,checkboxIndex) {
+        this.removeInfant(val,checkboxIndex);
+        $('#infantTraveller_mlite').modal('hide');
+       }
+       
+       
        
       manualChildTraveller(type){
         this.addChild(-1,-1);
@@ -918,7 +984,7 @@ new_fare: number = 0;
 		});
 		
 		
-		for(let i=0;i<(this.maxAdults-this.adultTravellerList);i++){
+		/*for(let i=0;i<(this.maxAdults-this.adultTravellerList);i++){
 		this.manualAdultTraveller(1);
 		}
 		
@@ -930,7 +996,7 @@ new_fare: number = 0;
 		for(let i=0;i<(this.maxInfants-this.infantTravellerList);i++){
 		this.manualInfantTraveller(1);
 		}
-		
+		*/
 		
                 for(let i=0;i<this.travellerlist.length;i++){
                 
@@ -1326,14 +1392,16 @@ new_fare: number = 0;
       this.loaderValue=10;
       }
     },600) ; 
-  
+
   
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
         
                 
       let baseFare=0; let taxFare=0; let totalFare=0;
          clearInterval(myInterval3);
-         $('#infoprocess').modal('hide');
+           setTimeout(() => {
+                $("#infoprocess").modal('hide');
+                }, 10);
       if(this.searchData.travel=='DOM'){
       if(res.statusCode ==200)
       {
@@ -1413,8 +1481,12 @@ new_fare: number = 0;
     }, (error) => { 
     
         clearInterval(myInterval3);
+        
+        setTimeout(() => {
         $('#infoprocess').modal('hide');
-       $('#bookingprocessFailed').modal('show');  
+        $('#bookingprocessFailed').modal('show');  
+        }, 10);
+       
      });
   }
   
@@ -1849,22 +1921,33 @@ new_fare: number = 0;
                
 		if(this.new_fare != this.old_fare){
 		 clearInterval(myInterval1);
-		 $('#infoprocess').modal('hide');
+		         
+        setTimeout(() => {
+      		 $('#infoprocess').modal('hide');
 		 this.continueWithNewFareInterval=myInterval1;
-		 $('#bookingprocessPriceChange').modal('show');
+		 $('#bookingprocessPriceChange').modal('show'); 
+        }, 10);
+		 
+
  		}else{
  		   this.saveCheckout(myInterval1);
  		}
           
           }else{
            clearInterval(myInterval1);
-            $('#infoprocess').modal('hide');
-            $('#bookingprocessFailed').modal('show');
+           
+                setTimeout(() => {
+                $('#infoprocess').modal('hide');
+                $('#bookingprocessFailed').modal('show');
+                }, 10);
+
           }
          }),(err:HttpErrorResponse)=>{
          clearInterval(myInterval1);
-              $('#infoprocess').modal('hide');
-              $('#bookingprocessFailed').modal('show');
+                 setTimeout(() => {
+                $('#infoprocess').modal('hide');
+                $('#bookingprocessFailed').modal('show');
+                }, 10);
          }
        
        }
@@ -2006,11 +2089,15 @@ new_fare: number = 0;
         this.steps=4;
         this.completedSteps=4;
         }
-      $('#infoprocess').modal('hide');
+          setTimeout(() => {
+                $('#infoprocess').modal('hide');
+                }, 10);
       }else{
         clearInterval(myInterval1);
-         $('#infoprocess').modal('hide');
-          $('#bookingprocessFailed').modal('show');
+            setTimeout(() => {
+                $('#infoprocess').modal('hide');
+                $('#bookingprocessFailed').modal('show');
+                }, 10);
       }
     
       
