@@ -336,6 +336,7 @@ pgSettingsCYBERToken:number=0;
 		showFlexiValue:any;
 		flexipayPGvalue:any;
 		dfBookingDetails:any;
+		   payzrestriction:boolean=false;
 	@ViewChild('flexipanelsection') public panel:ElementRef;
 	
 
@@ -539,13 +540,19 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			this.pgSettingsCYBER=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].CYBER;
 			this.pgSettingsNETBANKING=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].NETBANKING;
 			this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
-			this.pgSettingsPAYZAPP=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].PAYZAPP;
+			
 			this.pgSettingsTESTPG=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].TESTPG;
 			this.pgSettingsDEBITEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].DEBIT_EMI;
 			this.pgSettingsUPI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].UPI;
 			this.pgSettingFlexipayEMI = this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY;
 			
-		
+			 const cookieExistPay: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+			
+			if(cookieExistPay)
+			this.pgSettingsPAYZAPP=1;
+			else
+			this.pgSettingsPAYZAPP=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].PAYZAPP;
+			
 					
 			this.monthArray=Array.from(new Array(Number(12)),(val,index)=>index);
 			this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
@@ -665,6 +672,15 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 				promoCode: new FormControl('',Validators.required),
 				couponCaptcha: new FormControl({value: '', disabled: true},[Validators.required])
 			});
+			
+			       const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+                if(cookieExistsp){  
+                  this.payzrestriction=true;
+                setTimeout(()=>{
+                   $('#payzappCard').trigger('click');
+                    $('html,body').animate({ scrollTop: 9999 }, 'slow');
+                  });	
+        }
 
 	}
 	@Output() sendflexiAmount = new EventEmitter<any>();

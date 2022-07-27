@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false,
+    production: true,
     LOCALLOGIN:'true',
   COOKIE_DOMAIN:null,
-  LOCALJSON:'true',
+  LOCALJSON:'false',
   localInstance:1,
   // url:"https://smartbuyadminuat.reward360.in/"
   url:"http://new.reward360.us/",

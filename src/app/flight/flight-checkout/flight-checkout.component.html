@@ -67,8 +67,8 @@
   <section class="flight-details-area mt-10" >
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
-        <div class="sidebar-widget session-expires-widget">
-            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
+        <div class="sidebar-widget session-expires-widget text-center">
+            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong><countdown [config]="{ leftTime: 900, format: 'mm:ss'}"  (event)="bookingSessionExpires($event)"></countdown> min</strong></p>
         </div>
     </div>
   <input *ngIf="searchData"  type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
@@ -459,7 +459,7 @@
                                                     <label class="custom-control material-checkbox">
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
-                                                        <span class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                        <span class="description fs_14 text-black fw_7 mr-10"><span *ngIf="passenger.title">{{passenger.title}}.</span> {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5 ">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -534,7 +534,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10"><span *ngIf="passenger.title">{{passenger.title}}.</span> {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -810,7 +810,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10"><span *ngIf="passenger.title">{{passenger.title}}.</span> {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -886,7 +886,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10"><span *ngIf="passenger.title">{{passenger.title}}.</span> {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -1172,7 +1172,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10"><span *ngIf="passenger.title">{{passenger.title}}.</span> {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -1247,7 +1247,7 @@
                                                         <input type="checkbox" class="material-control-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                         <span class="material-control-indicator"></span>
                                                         <span
-                                                            class="description fs_14 text-black fw_7 mr-10">{{passenger.title}}. {{passenger.firstName}} {{passenger.lastName}}  </span>
+                                                            class="description fs_14 text-black fw_7 mr-10"><span *ngIf="passenger.title">{{passenger.title}}.</span> {{passenger.firstName}} {{passenger.lastName}}  </span>
                                                         <span class="description fw_5">  {{passenger.gender}}</span>
                                                     </label>
                                                 </div>
@@ -1479,15 +1479,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                 <ng-container  *ngFor="let traveller of adultsArrayM;" >
+                                 <ng-container  *ngFor="let traveller of infantArrayM;" >
                                 <tr  >
                                 <td>{{passengerForm.value['infant_title' + traveller]}} {{passengerForm.value['infant_first_name' + traveller]}} {{passengerForm.value['infant_last_name' + traveller]}}</td>
                                 <td>{{passengerForm.value['infant_dob' + traveller] | date:'dd-MM-YYYY'}}</td>
                                 <td>
                                 <div [ngSwitch]="passengerForm.value['infant_title' + traveller]">
-                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
-                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
-                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mstr'">Mstr</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Miss</ng-template>
                                 <ng-template ngSwitchDefault></ng-template>
                                 </div>
                                 <span ><button type="button" class="btn-close"  (click)="removeMobileInfant(traveller,-1)"></button></span>
@@ -2964,7 +2963,7 @@
                 <div class="default-sidebar">
                     <div class="d-none d-sm-block">
                         <div class="sidebar-widget session-expires-widget">
-                            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Session Expires in: <strong>{{timeLeft | minuteSecond}}</strong></p>
+                            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong><countdown [config]="{ leftTime: 900, format: 'mm:ss'}"  (event)="bookingSessionExpires($event)"></countdown> min</strong></p>
                         </div>
                         <div class="sidebar-widget fare-summary-widget">
                             <div class="widget-title" >
@@ -3150,7 +3149,7 @@
                                <button type="button" class="btn btn-primary" (click)="continueWithNewFare()">Continue with New Fare</button>
                             </div>
                              <div class="refresh-text text-center pt-2">
-                               <button type="button" class="btn" (click)="triggerBack(continueWithNewFareInterval)">Choose Different Itinerary</button>
+                               <button type="button" class="btn" (click)="triggerBack()">Choose Different Itinerary</button>
                             </div>
                         </div>
                     </div>
@@ -3322,9 +3321,37 @@
             </div>
           </div>
 
+
+                <div class="modal fade bookingprocess" id="bookingprocessExpires"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body " style="padding: 25px;">
+                        <div class="bookingprocess-items">
+                           <div class="" id="after-expiry" >
+                                <div class="" >
+                                <div class="text-center ">
+                                <div ><img src="{{cdnUrl}}images/alert.png" /></div>
+                                </div>
+                                <div class="session-title text-center ">
+                                <h2>Sorry!</h2></div>
+                                <div class="alert-box-msg  plr50"> This session has expired due to inactivity</div>
+                                </div>
+                                <div class="">
+                                <div class="continue-btn-div">
+                                <button type="button" data-bs-dismiss="modal" class="btn btn-normal btn-animated btn-session-expired" (click)="triggerBack()"><span>Start over</span></button>
+                                </div>
+                                </div>
+                                </div>
+ 
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         
-        
-        
+
         
     </main>
 

@@ -168,15 +168,15 @@
                                                                 <div class="mob-search-list">
                                                                     <label for="">From</label>
                                                                     <input type="text" autocomplete="off" class="w-100"
-                                                                     placeholder="Search City" formControlName="flightfrom"
-                                                                    (keyup)="fromList($event)" (focus)="isFromorNot= true;fromList($event)" [(ngModel)]="fromCityName">
+                                                                     placeholder="Search City" formControlName="flightfrom" 
+                                                                    (keyup)="fromList($event)" (focus)="isFromorNot= true;fromList($event)" [(ngModel)]="flightData.value.flightfrom">
 
                                                                 </div>
                                                                 <div class="mob-search-list">
                                                                     <label for="">To</label>
                                                                     <input type="text" autocomplete="off" class="w-100"
                                                              placeholder="Search City" formControlName="flightto"
-                                                                (keyup)="toList($event)"  (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                                (keyup)="toList($event)"  (focus)="isFromorNot= false;toList($event)" [(ngModel)]="flightData.value.flightto">
                                                             <input type="text"  name="flightto" style="display:none"
                                                             id="toCitySearch" >
                                                                 </div>
@@ -262,14 +262,15 @@
                                                                     <label for="">From</label>
                                                                     <input type="text" autocomplete="off" (focus)="isFromorNot= true;fromList($event)" class="w-100"
                                                                      placeholder="Search City" formControlName="flightfrom"
-                                                                    (keyup)="fromList($event)" [(ngModel)]="fromCityName">
-
+                                                                    (keyup)="fromList($event)" [(ngModel)]="flightData.value.flightfrom" id="fromCitySearch">
+                                                                    <input type="text"  name="flightfrom" style="display:none"
+                                                                     >    
                                                                 </div>
                                                                 <div class="mob-search-list">
                                                                     <label for="">To</label>
                                                                     <input type="text" autocomplete="off" class="w-100"
                                                              placeholder="Search City" formControlName="flightto"
-                                                                (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                                (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)" [(ngModel)]="flightData.value.flightto">
                                                             <input type="text"  name="flightto" style="display:none"
                                                             id="toCitySearch" >
                                                                 </div>
