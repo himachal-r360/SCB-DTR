@@ -25,7 +25,6 @@ import { PartnersModule } from './partners/partners.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MulticityHomeComponent } from './home/multicity/multicity.component';
 
-
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }

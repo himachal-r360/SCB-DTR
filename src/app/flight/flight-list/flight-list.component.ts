@@ -210,7 +210,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
               
               this.container.createEmbeddedView(this.template, context);
             }
-              this.gotoTop();
+            //  this.gotoTop();
         }
         
   

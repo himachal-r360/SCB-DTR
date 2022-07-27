@@ -252,6 +252,10 @@
     display: flex;
     justify-content: end;
     margin-top: 15px;
+    @media only screen and (max-width:600px) {
+      justify-content: start;
+      margin: 0px 0px 10px;
+    }
     p.invalid{
       color: #EB001B;
       display: flex;
@@ -920,6 +924,9 @@ input[type="radio"]:checked + .label:after {
       height: auto;
     }
   }
+}
+.payTitle{
+  font-size: 12px;
 }
 .payMethod-label{
   font-weight: normal;
@@ -1755,6 +1762,7 @@ p{
 .xs-check-font{
   @media screen and (max-width: 425px) and (min-width: 320px){
       font-size: 10px;
+      text-align: left;
   }
 }
 
@@ -2174,7 +2182,7 @@ p{
 }
 .flexiOTPNote{
   font-size: 14px;
-  font-style: italic;
+  /* font-style: italic; */
   font-weight: bold;
   color: #2AB9AC;
 }
@@ -2408,6 +2416,11 @@ p{
       }
       .accordion-button{
         padding: 0px;
+      }
+      .accordion-button:not(.collapsed){
+        img{
+          filter: invert(1%) sepia(379%) saturate(8482%) hue-rotate(198deg) brightness(140%) contrast(103%);
+        }
       }
     }
   }

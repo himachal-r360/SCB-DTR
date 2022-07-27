@@ -128,6 +128,7 @@ export class CouponsComponent implements OnInit {
 	getCoupons(){
 		var couponMinValCheckArr = [];
 			const urlParams = {'client_token': 'HDFC243','service_name':this.serviceToken,'partner_name':this.partnerToken};
+			
 			var couponParam = {
 			postData:this.EncrDecr.set(JSON.stringify(urlParams))
 			};
