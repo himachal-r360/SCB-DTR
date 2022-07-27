@@ -612,8 +612,8 @@
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input name="roundlist" id="roundlist-{{i}}" class="" type="radio">
-                                                          <label for="roundlist-1" class="css-label"></label>
+                                                          <input id="onwardlist_{{i}}" name="onwardRadio" class=""  (change)="onwardRadioChange(i,$event)" type="radio">
+                                                          <label for="onwardlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image">
@@ -687,7 +687,7 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Select</a>
+                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flights,item,$event)">Select</a>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -760,8 +760,8 @@
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input name="roundlist-right-01" id="return_roundlist-{{i}}" class="" type="radio">
-                                                          <label for="roundlist-01" class="css-label"></label>
+                                                          <input name="return_roundlist" id="return_roundlist_{{i}}" class="" (change)="onReturnRadioChange(i,$event)" type="radio">
+                                                          <label for="return_roundlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image">
@@ -769,7 +769,10 @@
                                                   </div>
                                                   <div class="round-content-time">
                                                       <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
-                                                      <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}   |  Non-refundable</p>
+                                                      <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}   |
+                                                        <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
+                                                        <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
+                                                      </p>
                                                   </div>
                                               </div>
                                               <div class="round-content-right">
@@ -789,7 +792,7 @@
                                           <div class="round-flight-info-box">
                                               <p><img src="./assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
-                                          <div class="round-options-box dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
@@ -833,7 +836,7 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Select</a>
+                                                              <a href="javascript:void(0)" class="button-style returnButtons"  id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flights,item,$event)" >Select</a>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -1897,5 +1900,584 @@
   </div>
 </div>
 
-
+ <!-- ------------------------------
+        >>> flight fixed
+        ---------------------------------->
+        <div class="flight-fixed-area" *ngIf="isDisplayDetail">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="flight-fixed" *ngIf="isFlightsSelected">
+                          <div class="flight-fixed-left">
+                              <div class="flight-fixed-list">
+                                  <div class="round-ff-content">
+                                      <div class="round-ff-left">
+                                          <div class="round-ff-image">
+                                              <img src="assets/images/flights/flight-1.png" alt="">
+                                              <p>6E 956</p>
+                                          </div>
+                                          <div class="round-ff-time">
+                                              <h6>08:55 <img src="./assets/images/icons/flight-right.png" alt=""> 10:00</h6>
+                                              <p>6E 956  |  Non-refundable</p>
+                                          </div>
+                                      </div>
+                                      <div class="round-ff-right">
+                                          <div class="round-content-stops">
+                                              <h6>1hr 10 min</h6>
+                                              <p>non stop</p>
+                                          </div>
+                                          <div class="round-ff-price">
+                                              <h6>₹ 4,892</h6>
+                                              <p>per person</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="flight-fixed-list">
+                                  <div class="round-ff-content">
+                                      <div class="round-ff-left">
+                                          <div class="round-ff-image">
+                                              <img src="assets/images/flights/flight-1.png" alt="">
+                                              <p>6E 956</p>
+                                          </div>
+                                          <div class="round-ff-time">
+                                              <h6>08:55 <img src="./assets/images/icons/flight-right.png" alt=""> 10:00</h6>
+                                              <p>6E 956  |  Non-refundable</p>
+                                          </div>
+                                      </div>
+                                      <div class="round-ff-right">
+                                          <div class="round-content-stops">
+                                              <h6>1hr 10 min</h6>
+                                              <p>non stop</p>
+                                          </div>
+                                          <div class="round-ff-price">
+                                              <h6>₹ 4,892</h6>
+                                              <p>per person</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="flight-fixed-right">
+                              <div class="fixedright-content">
+                                  <div class="fixedright-image">
+                                      <img src="./assets/images/flights/1.png" alt="" width="52px">
+                                  </div>
+                                  <div class="fixedright-price">
+                                      <h6>
+                                          ₹ 4,892
+                                          <span>EMI @234/month</span>
+                                      </h6>
+                                  </div>
+                                  <div class="fixedright-otherinfo">
+                                      <span class="mainprice">₹ 5,000</span>
+                                      <span class="price-off">10% off</span>
+                                      <div class="ff-Viewfaredetails">
+                                          <a href="#" class="rr-Viewfare">View Fare Details</a>
+                                          <div class="hover-popover">
+                                              <div class="hover-popover-title">
+                                                  <h6>Price Breakdown</h6>
+                                              </div>
+                                              <div class="hover-popover-content">
+                                                  <div class="hover-popover-content-list">
+                                                      <p>Base Fare</p>
+                                                      <p>₹4,892</p>
+                                                  </div>
+                                                  <div class="hover-popover-content-list">
+                                                      <p>Base Fare</p>
+                                                      <p>₹4,892</p>
+                                                  </div>
+                                                  <hr class="m-0">
+                                                  <div class="hover-popover-content-list popover-total">
+                                                      <p>Total</p>
+                                                      <p>₹4,892</p>
+                                                  </div>
+                                              </div>
+                                              <div class="hover-popover-footer">
+                                                  <p>*Partner Convenience Fee is applicable</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="flight-fixed-btn">
+                                  <a href="javascript:void(0)" class="button-style ms-2" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="ff-details" *ngIf="isDetailsShow">
+                          <div class="flight-extra-details">
+                              <div class="ff-extra-tabs">
+                                  <ul class="list-unstyled flight-extra-tabs">
+                                      <li>
+                                          <a href="javascript:void(0); " class="flight-extra-tabs-active" data-bind="FlightDetails">Flight Details</a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:void(0);" data-bind="CancellationDetails"> Cancellation Details</a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:void(0);" data-bind="DateChange"> Baggage Policy</a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:void(0);" data-bind="Fare"> Fare Rules </a>
+                                      </li>
+                                  </ul>
+                                  <div class="ff-close-box">
+                                      <a href="javascript:void(0);" class="ff-close">
+                                          <img src="./assets/images/icons/close_01.png" alt="" />
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="extra-tabs-ara">
+                                  <div id="FlightDetails" class="flight-extra-content extra-active">
+                                      <div class="extra-tabs-details FlightDetails-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p>Mumbai to Hyderabad, 11 Jul</p>
+                                                  </div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <div class="tabs-depart-box">
+                                                      <div class="tabs-depart-one">
+                                                          <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                                          <div class="tabs-depart-left">
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">08:05</h5>
+                                                                  <p>Mon, Jul 11</p>
+                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                              </div>
+                                                              <div class="tabs-depart-total">
+                                                                  <p>01h 30m</p>
+                                                              </div>
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">08:05</h5>
+                                                                  <p>Mon, Jul 11</p>
+                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                              </div>
+                                                          </div>
+                                                          <div class="tabs-depart-right">
+                                                              <div class="Baggage">
+                                                                  <h5>Baggage</h5>
+                                                                  <p>Adult</p>
+                                                              </div>
+                                                              <div class="departCheck">
+                                                                  <h5>Check-in</h5>
+                                                                  <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                              </div>
+                                                              <div class="Cabin">
+                                                                  <h5>Cabin</h5>
+                                                                  <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p>Hyderabad to Mumbai , 13Jul</p>
+                                                  </div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <div class="tabs-depart-box">
+                                                      <div class="tabs-depart-three">
+                                                          <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                                          <div class="tabs-depart-left">
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">08:05</h5>
+                                                                  <p>Mon, Jul 11</p>
+                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                              </div>
+                                                              <div class="tabs-depart-total">
+                                                                  <p>01h 30m</p>
+                                                              </div>
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">08:05</h5>
+                                                                  <p>Mon, Jul 11</p>
+                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                              </div>
+                                                          </div>
+                                                          <div class="tabs-depart-right">
+                                                              <div class="Baggage">
+                                                                  <h5>Baggage</h5>
+                                                                  <p>Adult</p>
+                                                              </div>
+                                                              <div class="departCheck">
+                                                                  <h5>Check-in</h5>
+                                                                  <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                              </div>
+                                                              <div class="Cabin">
+                                                                  <h5>Cabin</h5>
+                                                                  <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="CancellationDetails" class="flight-extra-content">
+                                      <div class="extra-tabs-details CancellationDetails-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="DateChange" class="flight-extra-content">
+                                      <div class="extra-tabs-details DateChange-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Baggage</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Adult</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br /> (1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Child</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Infant</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Cabin bag only</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Baggage</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Adult</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br /> (1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Child</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Infant</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Cabin bag only</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="Fare" class="flight-extra-content">
+                                      <div class="extra-tabs-details Fare-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 
