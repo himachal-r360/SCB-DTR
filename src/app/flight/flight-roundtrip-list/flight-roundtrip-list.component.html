@@ -2031,10 +2031,10 @@
                               <div class="extra-tabs-ara">
                                   <div id="FlightDetails" class="flight-extra-content extra-active">
                                       <div class="extra-tabs-details FlightDetails-box ff-extra-grid">
-                                          <div class="ff-extra-grid-list">
+                                          <div class="ff-extra-grid-list" *ngIf="onwardSelectedFlight">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p>Mumbai to Hyderabad, 11 Jul</p>
+                                                      <p>{{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                               </div>
                                               <div class="extra-tabs-details-bottom">
@@ -2074,10 +2074,10 @@
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="ff-extra-grid-list">
+                                          <div class="ff-extra-grid-list" *ngIf="returnSelectedFlight">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p>Hyderabad to Mumbai , 13Jul</p>
+                                                      <p>{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                               </div>
                                               <div class="extra-tabs-details-bottom">
