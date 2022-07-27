@@ -331,23 +331,6 @@
                                           <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
-                                          <!-- <div class="flighttiming-content flight-departing">
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/1.png" alt="">
-                                                  <p>Before 6AM</p>
-                                              </div>
-                                              <div class="flighttiming-list active">
-                                                  <img src="assets/images/icons/timings/2.png" alt="">
-                                                  <p>6AM - 12 PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/4.png" alt="">
-                                                  <p>12 PM - 6PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/3.png" alt="">
-                                                  <p>After 6 PM</p>
-                                              </div> -->
                                               <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
                                               <div class="flighttiming-content flight-departing">
                                                   <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
@@ -357,24 +340,13 @@
                                                 </div>            
                                           </div>
 
-                                          <p class="flighttimings-text">Returning flight (HYD-BOM)</p>
+                                          <p class="flighttimings-text">Returning flight ({{flightTimingto}}-{{flightTimingfrom}})</p>
                                           <div class="flighttiming-content flight-departing">
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/1.png" alt="">
-                                                  <p>Before 6AM</p>
-                                              </div>
-                                              <div class="flighttiming-list active">
-                                                  <img src="assets/images/icons/timings/2.png" alt="">
-                                                  <p>6AM - 12 PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/4.png" alt="">
-                                                  <p>12 PM - 6PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/3.png" alt="">
-                                                  <p>After 6 PM</p>
-                                              </div>
+                                            <div class="flighttiming-list" *ngFor="let timingsItems of flight_return_Timingsitems" [ngClass]="{'active': timingsItems.active}"
+                                            (click)="FlightTimingsRetrunFilterFlightData(timingsItems)">
+                                                <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <p [innerHTML]="timingsItems.value"></p>
+                                          </div>   
                                           </div>
                                       </div>
                                   </div>
@@ -428,66 +400,6 @@
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <!-- <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Indigo (84)</span>
-                                                      </label>
-                                                      <p>&#8377;5,252</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" checked="checked" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">SpiceJet (23)</span>
-                                                      </label>
-                                                      <p>&#8377;6,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Air India (66)</span>
-                                                      </label>
-                                                      <p>&#8377;7,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Go First (12)</span>
-                                                      </label>
-                                                      <p>&#8377;9,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Vistara (34)</span>
-                                                      </label>
-                                                      <p>&#8377;9,525</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Air Asia (24)</span>
-                                                      </label>
-                                                      <p>&#8377;10,110</p>
-                                                  </div>
-                                              </li> -->
                                               <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                 <div class="custom-controls-stacked">
                                                     <label class="custom-control material-checkbox" >
@@ -499,14 +411,14 @@
                                                 </div>
                                             </li>
                                           </ul>
-                                          <a href="#" class="widget-content-more ml-20">+2 more</a>
+                                          <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget stopover-widget">
                                       <div class="widget-title">
                                           <h6 class="">Stopover</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetStopOverFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content mt-20 mb-20">
                                     <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver"
@@ -578,12 +490,10 @@
                           <div class="position-relative">
                               <div class="flight-search-filters-counts text-center mb-20">
                                   <ul class="flight-counts">
-                                      <li class="flight-counts-list">
-                                          <p>All Flights</p>
-                                      </li>
-                                      <li class="flight-counts-list active">
-                                          <p class=""> <span>8</span> Non-Stop</p>
-                                      </li>
+                                    <li class="flight-counts-list" id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"
+                                    value="{{Items.value}}" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
+                                        <p> <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span> {{Items.value}}</p>
+                                    </li>
                                   </ul>
                               </div>
                           </div>
@@ -748,12 +658,9 @@
                                                     <p *ngIf="ReturnflightList">{{ReturnflightList.length}} flights found</p>
                                                   </div>
                                                   <div class="round-l-h">
-                                                      <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
-                                                          <option selected="selected">Price Low to High</option>
-                                                          <option>Price High to Low</option>
-                                                          <option>Depart Ealry</option>
-                                                          <option>Depart Late</option>
-                                                      </select>
+                                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterReturnFlightData($event)">
+                                                        <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
+                                                    </select>
                                                   </div>
                                               </div>
                                           </div>
@@ -1632,14 +1539,15 @@
                                       <div class="accordion-body">
                                           <div class="default-sidebar">
                                               <ul class="category-list clearfix mt-2">
-                                                  <li class="custom-check-box">
+                                                  <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                       <div class="custom-controls-stacked">
                                                           <label class="custom-control material-checkbox">
-                                                              <input type="checkbox" class="material-control-input">
+                                                            <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
+                                                            (change)="flightAirlineFilterFlightData(airlineItem)">
                                                               <span class="material-control-indicator"></span>
-                                                              <span class="description">Indigo (84)</span>
+                                                              <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
                                                           </label>
-                                                          <p>₹5,252</p>
+                                                          <p>₹{{airlineItem.price}}</p>
                                                       </div>
                                                   </li>
                                                   <li class="custom-check-box">
