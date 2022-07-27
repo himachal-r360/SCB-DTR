@@ -264,18 +264,18 @@
                           <div class="">
                               <div class="Filterslayout d-flex justify-content-between align-items-center">
                                   <h6 class="fs_16">Filters</h6>
-                                  <a href="" class="fs_13 text-color">Reset all</a>
+                                  <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
                               </div>
                               <hr>
                               <div class="default-sidebar flight-sidebar">
                                   <div class="sidebar-widget search-widget">
                                       <div class="widget-title">
                                           <h6 class="">Populat Filters</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <li class="custom-check-box">
+                                              <!-- <li class="custom-check-box">
                                                   <div class="custom-controls-stacked">
                                                       <label class="custom-control material-checkbox">
                                                           <input type="checkbox" class="material-control-input" />
@@ -310,7 +310,17 @@
                                                           <span class="description">Meals Included</span>
                                                       </label>
                                                   </div>
-                                              </li>
+                                              </li> -->
+                                              <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                        <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
                                           </ul>
                                       </div>
                                   </div>
@@ -318,11 +328,10 @@
                                   <div class="sidebar-widget flighttimings-widget">
                                       <div class="widget-title">
                                           <h6 class="">Flight Timings</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
-                                          <p class="flighttimings-text">Departing flight (BOM-HYD)</p>
-                                          <div class="flighttiming-content flight-departing">
+                                          <!-- <div class="flighttiming-content flight-departing">
                                               <div class="flighttiming-list">
                                                   <img src="assets/images/icons/timings/1.png" alt="">
                                                   <p>Before 6AM</p>
@@ -338,7 +347,14 @@
                                               <div class="flighttiming-list">
                                                   <img src="assets/images/icons/timings/3.png" alt="">
                                                   <p>After 6 PM</p>
-                                              </div>
+                                              </div> -->
+                                              <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
+                                              <div class="flighttiming-content flight-departing">
+                                                  <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
+                                                  (click)="FlightTimingsFilterFlightData(timingsItems)">
+                                                      <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                      <p [innerHTML]="timingsItems.value"></p>
+                                                </div>            
                                           </div>
 
                                           <p class="flighttimings-text">Returning flight (HYD-BOM)</p>
@@ -366,26 +382,30 @@
                                   <div class="sidebar-widget Price-widget">
                                       <div class="widget-title">
                                           <h6 class="">Price</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content mt-10 mb-30 price-widget-content">
                                           <div style="margin:0 0 20px 0">
-                                              <input type="number" min="0" max="9900" oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
-                                              <span class="ms-3 me-3">-</span>
-                                              <input type="number" min="0" max="10000" oninput="validity.valid||(value='10000');" id="max_price" class="price-range-field" />
+                                            <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice"  id="min_price" class="price-range-field"/>
+                                            <span class="ms-3 me-3">-</span>
+                                            <input type="number" min="0"  [(ngModel)]="maxPrice" [max]="resetMaxPrice"  id="max_price" class="price-range-field"/>
                                           </div>
-                                          <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+                                          <!-- <div id="slider-range" class="price-filter-range" name="rangeInput"></div> -->
+                                          <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"
+                                          (valueChange)="onMinValueChange($event)"
+                                            (highValueChange)="onMaxValueChange($event)"
+                                          ></ngx-slider>
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget stops-widget">
                                       <div class="widget-title">
                                           <h6 class="">Stops</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetFlightStopsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <div class="Stops-content">
-                                              <div class="Stops-list">
+                                              <!-- <div class="Stops-list">
                                                   <p>No <br> stops</p>
                                               </div>
                                               <div class="Stops-list active">
@@ -393,19 +413,22 @@
                                               </div>
                                               <div class="Stops-list">
                                                   <p>2+ <br> stops</p>
-                                              </div>
+                                              </div> -->
+                                              <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
+                                        [innerHTML]="FlightStopitem.value">
                                           </div>
+                                        </div>
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget Airlines-widget">
                                       <div class="widget-title">
                                           <h6 class="">Airlines</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetAirlineFlightsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <li class="custom-check-box">
+                                              <!-- <li class="custom-check-box">
                                                   <div class="custom-controls-stacked">
                                                       <label class="custom-control material-checkbox">
                                                           <input type="checkbox" class="material-control-input" />
@@ -464,7 +487,17 @@
                                                       </label>
                                                       <p>&#8377;10,110</p>
                                                   </div>
-                                              </li>
+                                              </li> -->
+                                              <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox" >
+                                                        <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                    </label>
+                                                    <p>&#8377;{{airlineItem.price}}</p>
+                                                </div>
+                                            </li>
                                           </ul>
                                           <a href="#" class="widget-content-more ml-20">+2 more</a>
                                       </div>
@@ -476,61 +509,35 @@
                                           <a href="">Reset</a>
                                       </div>
                                       <div class="widget-content mt-20 mb-20">
-                                          <div class="price-slider"></div>
-                                          <div class="Stopover-value">
-                                              <p class="price-value"></p>
-                                              <p class="price-value2"></p>
-                                          </div>
+                                    <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver"
+                                    [options]="optionsStopOver"
+                                    (valueChange)="onMinStopOverChange($event)"
+                                    (highValueChange)="onMaxStopOverChange($event)"
+                                   ></ngx-slider>
+                                   <div class="Stopover-value">
+                                       <p class="price-value" >{{minStopOver}} hrs</p>
+                                       <p class="price-value2">{{maxStopOver}} hrs</p>
+                                   </div>
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget layover-airports-widget">
                                       <div class="widget-title">
                                           <h6 class="">Layover Airports</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Chennai Airport</span>
-                                                      </label>
-                                                      <p>&#8377;5,252</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" checked="checked" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Kempegowda Internat</span>
-                                                      </label>
-                                                      <p>&#8377;6,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Jabalpur</span>
-                                                      </label>
-                                                      <p>&#8377;7,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Chatrapati Shivaji</span>
-                                                      </label>
-                                                      <p>&#8377;9,356</p>
-                                                  </div>
-                                              </li>
+                                            <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr ; let i = index " [ngClass]="{'active': layoverItem.active}">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                    </label>
+                                                    <p>&#8377;{{layoverItem.price}}</p>
+                                                </div>
+                                            </li>
                                           </ul>
                                       </div>
                                   </div>
@@ -596,12 +603,9 @@
                                                     <p *ngIf="flightList">{{flightList.length}} flights found</p>
                                                   </div>
                                                   <div class="round-l-h">
-                                                      <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
-                                                          <option selected="selected">Price Low to High</option>
-                                                          <option>Price High to Low</option>
-                                                          <option>Depart Ealry</option>
-                                                          <option>Depart Late</option>
-                                                      </select>
+                                                        <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterFlightData($event)">
+                                                            <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
+                                                        </select>
                                                   </div>
                                               </div>
                                           </div>
@@ -1046,76 +1050,7 @@
           </div>
       </div>
   </section>
-
-  <footer class="footer-area">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-9">
-                  <div class="footer-desc">
-                      <p>Disclaimer: HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers. HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC Bank is merely facilitating the payment to its Customers by providing the Payment Gateway Services. HDFC Bank is neither guaranteeing nor making any representation. HDFC Bank is not responsible for Sale/Quality/Features of the Products/Services under the offers.</p>
-                  </div>
-                  <div class="footer-nav">
-                      <ul>
-                          <li>
-                              <a href="">About Us</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">FAQ's</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">Terms & Conditions</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">Privacy Policy</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">Customer Support</a>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                  <div class="footer-call-area">
-                      <div class="footer-call">
-                          <p class="footer-title">Call</p>
-                          <p>1860 425 1188 / 9986896688</p>
-                          <span>(9 to 21 hrs, Mon to Sat Only)</span>
-                      </div>
-                      <div class="footer-mail">
-                          <p class="footer-title">Mail</p>
-                          <a href="mailto:support@smartbuyoffers.co">support@smartbuyoffers.co</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-lg-12 col-md-12">
-                  <!-- Copyright Start-->
-                  <div class="copyright-bottom-info">
-                      <div class="copyright">
-                          <p class="m-0">© 2022 SmartBuy</p>
-                      </div>
-                      <div class="footer-Powered">
-                          <span>Powered by <img src="./assets/images/Powered_by.png" class="ms-2" alt=""></span>
-                      </div>
-                  </div>
-                  <!-- Copyright End-->
-              </div>
-          </div>
-      </div>
-  </footer>
+ 
 </main>
 
 

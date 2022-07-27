@@ -5,6 +5,7 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  NgZone,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -121,9 +122,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public router: Router,
     private _fb: FormBuilder,
-    private _flightService: FlightService
+    private _flightService: FlightService,
+    private ngZone:NgZone
 
-  ) {}
+  ) {
+    window.onresize = (e) =>
+    {
+        //ngZone.run will help to run change detection
+        this.ngZone.run(() => {
+          this.isMobile = window.innerWidth < 991 ?  true : false;
+        });
+    }
+  }
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
     flightto: ['',[Validators.required]],
@@ -146,7 +156,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-
     this.setSearchFilterData()
   
   }
@@ -258,14 +267,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   fromList(evt: any) {
     this.toFlightList = false;
     this.fromFlightList = true;
-    // this.SearchCityName = evt.target.value.trim().toLowerCase();
-    // this.flightData.flightfrom=this.SearchCityName;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
-
-    // if(evt.target.value.trim().toLowerCase().length>3){
-    //   //this.flightData.flightfrom=evt.target.value.trim().toLowerCase();
-    //   this.getCityList(evt.target.value.trim().toLowerCase());
-    // }
     this.getCityList(evt.target.value.trim().toLowerCase());
   }
 
@@ -273,12 +275,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromFlightList = false;
     this.toFlightList = true;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
-
-    //this.flightData.flightto=this.SearchCityName;
-    // if(evt.target.value.trim().toLowerCase().length>3){
-    //   //this.flightData.flightfrom=evt.target.value.trim().toLowerCase();
-    //   this.getCityList(evt.target.value.trim().toLowerCase());
-    // }
     this.getCityList(evt.target.value.trim().toLowerCase());
   }
 
@@ -329,8 +325,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   infantsVal:any
   flightTimingfrom:any;
   flightTimingto:any;
-
   searchObj:any;
+  
   setSearchFilterData() {
       this.searchData = sessionStorage.getItem('searchVal');
       if(this.searchData != null || this.searchData != undefined){
@@ -364,14 +360,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(this.searchObj.arrival != null && this.searchObj.arrival != undefined && this.searchObj.arrival != ""){
         this.navItemActive = "Round Trip"
       }
-      
     }
-
-   
   }
 
   flightSearch() {
-    debugger;
     this.submitted = true;
     this.flightData.value.flightto = this.toFlightId;
     this.flightData.value.flightfrom = this.fromFlightId;
