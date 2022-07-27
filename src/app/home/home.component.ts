@@ -17,6 +17,8 @@ import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { MulticityHomeComponent } from './multicity/multicity.component';
+
 declare var $: any;
 export const MY_DATE_FORMATS = {
   parse: {
@@ -46,6 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('toCityInput') toCityInput!: ElementRef;
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
+  @ViewChild(MulticityHomeComponent) MulticityHomeComponentchild!: MulticityHomeComponent;
 
   sub?: Subscription;
   loader = false;
@@ -88,8 +91,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   showTravellerBlock = false;
   isDisabled = false;
   windowItem = window;
-  navItemActive:any; 
-
+  navItemActive:any;
+  isShownMulticityTab: boolean = false ;
+  isShownOneRoundway: boolean = true ;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -124,9 +128,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     public router: Router,
     private _fb: FormBuilder,
     private _flightService: FlightService
-    
+
   ) {
-     
+
     setTimeout(() => {
       this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
       this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
@@ -151,9 +155,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
-  
+
    this._flightService.showHeader(true);
-   
+
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
@@ -162,7 +166,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.setSearchFilterData()
-  
+
   }
   ngAfterViewInit(): void {
 
@@ -192,7 +196,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }, 50);
     }
-   
+
   }
 
   currentPeriodArrivalClicked(datePicker:any) {
@@ -346,7 +350,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.searchData = sessionStorage.getItem('searchVal');
       if(this.searchData != null || this.searchData != undefined){
       let searchObj = JSON.parse(this.searchData);
-      this.fromCityName = searchObj.fromCity; 
+      this.fromCityName = searchObj.fromCity;
       this.toCityName = searchObj.toCity;
       this.departureDate = new Date(searchObj.departure);
       this.arrivalDate = new Date(searchObj.arrival);
@@ -390,7 +394,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined && this.flightData.value.arrival!=null ){
       this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
     }
-    
+
     if(this.flightData.invalid || this.dateValidation==true){
       return
     }
@@ -419,7 +423,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       }
       if(this.continueSearchFlights.length>3){
-        this.continueSearchFlights=this.continueSearchFlights.slice(0,3);  
+        this.continueSearchFlights=this.continueSearchFlights.slice(0,3);
       }
       this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
 
@@ -461,7 +465,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
-    
+
         this._styleManager.removeStyle('bootstrap-select');
         this._styleManager.removeStyle('daterangepicker');
         this._styleManager.removeScript('bootstrap-select');
@@ -651,8 +655,22 @@ getClassVal(val:any){
   this.flightData.value.flightclass =  val;
 }
 
-navBarLink(navItem:any){
-this.navItemActive = navItem;
+navBarLink(navItem: any) {
+  this.navItemActive = navItem;
+
+  if (this.navItemActive == 'Multicity') {
+
+      this.isShownMulticityTab = true;
+      this.isShownOneRoundway = false;
+
+  }  else {
+
+      this.isShownMulticityTab = false;
+      this.isShownOneRoundway = true;
+
+  }
+
 }
+
 
 }

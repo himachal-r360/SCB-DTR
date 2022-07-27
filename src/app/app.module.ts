@@ -23,6 +23,7 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MulticityHomeComponent } from './home/multicity/multicity.component';
 
 
 export function appInitializerFn(appConfig: AppConfigService) {
@@ -38,7 +39,8 @@ export function appInitializerFn(appConfig: AppConfigService) {
     HomeComponent,
     SearchComponent,
     AlertDialogComponent,
-    
+    MulticityHomeComponent
+
   ],
   imports: [
  BrowserModule,
@@ -58,7 +60,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     MaterialModule,
     DirectiveModule,
     CarouselModule
-    
+
   ],
   exports:[SearchComponent],
    providers: [
@@ -72,7 +74,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
       deps: [AppConfigService]
     },
 SimpleGlobal,CommonHelper,CommunicationService,MatBottomSheet
-  
+
   ],
      entryComponents: [AlertDialogComponent],
   bootstrap: [AppComponent],

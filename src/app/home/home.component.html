@@ -34,15 +34,15 @@
                                 </ul>
                             </div>
                         </div>
-                        <form [formGroup]="flightData" (ngSubmit)="flightSearch()">
-                            <div class="travel-select-data-area">
+                        <form [formGroup]="flightData" (ngSubmit)="flightSearch()" *ngIf="isShownOneRoundway">
+                            <div class="travel-select-data-area" >
                                 <div class="travel-select-trip">
                                     <ul class="travel-select-trip-ul">
                                         <li>
-                                            <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null  ? 'active':'' " >One Way</span>
+                                            <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null ? 'active':'' " >One Way</span>
                                         </li>
                                         <li>
-                                            <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round Trip</span>
+                                            <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip' ? 'active':'' ">Round Trip</span>
                                         </li>
                                         <li>
                                             <span class="selectway" (click)="navBarLink('Multicity')" [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multicity</span>
@@ -405,7 +405,7 @@
                                                              </mat-form-field>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div class="area-root-reutrn" *ngIf="!isMobile" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
                                                             <div class="select-root-reutrn"  >
                                                                 <span class="select-roottitle">RETURN</span>
@@ -416,13 +416,13 @@
                                                                 <span class="select-roottitle"
                                                                     *ngIf="arrivalDate!='' ||arrivalDate!=undefined" >{{arrivalDate
                                                                     | date:'EEEE' }}</span>
-                                                                <span class="select-roottitle d-block w-100" *ngIf="arrivalDate=='' || arrivalDate==undefined " >Tap to add
+                                                                <span class="select-roottitle d-block w-100" *ngIf="arrivalDate=='' || arrivalDate==undefined" >Tap to add
                                                                     a <br> return date</span>
                                                             </div>
                                                             <div class="select-root-date">
                                                                 <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
                                                                 <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                                    <input matInput [min]="departureDate" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
+                                                                    <input matInput [min]="flightData.value.departure" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
                                                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                                                     <mat-datepicker #picker2 ></mat-datepicker>
                                                              </mat-form-field>
@@ -476,9 +476,9 @@
                                                             <a href="#" class="mob-close mob-preferred-airline-close"  (click)="closeTravllerBlock()">
                                                                 <img src="./assets/images/icons/close.png" alt="" >
                                                             </a>
-                                                        </div>  
+                                                        </div>
                                                         <div class="mob-add-travels">
-                                                            <ul class="Travellers-dropdown-data"> 
+                                                            <ul class="Travellers-dropdown-data">
                                                                 <li>
                                                                     <div class="Travellers-passengers-data">
                                                                         <div class="Travellers-name">
@@ -486,7 +486,7 @@
                                                                             <p>12 years &amp; above</p>
                                                                         </div>
                                                                         <div class="Travellers-qty">
-                                                                        
+
                                                                             <div class="quantity buttons_added">
                                                                                 <input type="button" (click)="decreaseAdult()"
                                                                                 value="-" class="qty-buttons minus">
@@ -560,7 +560,7 @@
                                                             </ul>
                                                             <div class="mob-Choose-class">
                                                                 <h6>Choose Cabin Class</h6>
-                                                                <ul class="" > 
+                                                                <ul class="" >
                                                                     <li>
                                                                         <a href="javascript:void(0)" class="" value="E" (click)="getClassVal('E')" [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium Economy</a>
                                                                     </li>
@@ -581,7 +581,7 @@
                                                                     Done
                                                                 </a>
                                                             </div>
-                                                        </div>                                                          
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="root-search">
@@ -597,8 +597,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-
 
                                 <div class="add-search-area">
                                     <!-- <div class="add-search-content">
@@ -688,6 +686,8 @@
                                 </div>
                             </div>
                         </form>
+
+                        <app-multicity *ngIf="isShownMulticityTab" (ShownOneRoundway)="navBarLink($event)"></app-multicity>
                         <!-- <div class="text-center">
                             <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger">
                                 <span> Select departure city from drop down</span>
@@ -728,17 +728,15 @@
                                         <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
                                 </div>
                                 <div class="Continuesearch-image">
-                                    <img *ngIf="!continue.arrival" src="./assets/images/icons/next-active.png" alt="">
-                                    <img *ngIf="continue.arrival" src="./assets/images/icons/round.png" alt="">
+                                    <img src="./assets/images/icons/next-active.png" alt="">
                                 </div>
                                 <div class="Continuesearch-name">
                                     <h6>{{continue.toCity}}</h6>
-                                    <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
+                                    <!-- <p>{{continue.arrival|date:"EEE ,dd MMM"}}</p> -->
                                 </div>
                             </div>
                             <div class="Continuesearch-items-actions">
                                 <img src="./assets/images/icons/next.png" alt="">
-                                
                             </div>
                         </div>
                     </a>
@@ -757,12 +755,10 @@
                                                     <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
                                             </div>
                                             <div class="Continuesearch-image">
-                                                <img *ngIf="!continue.arrival" src="./assets/images/icons/next-active.png" alt="">
-                                                <img *ngIf="continue.arrival" src="./assets/images/icons/round.png" alt="">
+                                                <img src="./assets/images/icons/next-active.png" alt="">
                                             </div>
                                             <div class="Continuesearch-name">
                                                 <h6>{{continue.toCity}}</h6>
-                                                <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
                                             </div>
                                         </div>
                                         <div class="Continuesearch-items-actions">
@@ -773,7 +769,7 @@
                             </ng-template>
                     </ng-container>
                 </owl-carousel-o>
-                </div> 
+                </div>
             </div>
         </div>
     </section>
