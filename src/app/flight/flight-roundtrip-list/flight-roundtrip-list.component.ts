@@ -1,4 +1,4 @@
-import { ViewportScroller } from '@angular/common';
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { MY_DATE_FORMATS } from '../flight-list/flight-list.component';
+import { Location, ViewportScroller } from '@angular/common';
+
+declare var $: any;
 
 @Component({
   selector: 'app-flight-roundtrip-list',
@@ -52,6 +55,14 @@ export class FlightRoundtripListComponent implements OnInit {
   cityName: any;
   minDate = new Date();
 
+  isFlightsSelected: boolean = false;
+  isDisplayDetail :boolean = false;
+  isOnwardSelected: boolean = false;
+  isReturnSelected: boolean = false;
+  isDetailsShow: boolean = false;
+  onwardSelectedFlight :any;
+  returnSelectedFlight:any;
+
   flightDataModify: any = this._fb.group({
     flightfrom: [],
     flightto: [],
@@ -65,7 +76,7 @@ export class FlightRoundtripListComponent implements OnInit {
     travel: ['DOM'],
   });
 
-  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router ) { }
+  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location  ) { }
 
   ngOnInit(): void {
     this.loader = true;
@@ -171,8 +182,21 @@ export class FlightRoundtripListComponent implements OnInit {
       console.log(this.flightList)
       this.ReturnflightList = this.ascPriceSummaryFlighs(res.response.returnFlights);
       this._flightService.flightListData = this.flightList;
+      let query: any = sessionStorage.getItem('searchVal');
+      let url = "flight-roundtrip?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
+      this.location.replaceState(url);
+      this.getQueryParamData(JSON.parse(query));
 
     }, (error) => { console.log(error) });
+  }
+
+  ConvertObjToQueryString(obj: any) {
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
   }
 
   ascPriceSummaryFlighs(flightsData:any)
@@ -399,5 +423,89 @@ export class FlightRoundtripListComponent implements OnInit {
         openTravellers?.click();
       }, 50);
     }
+  }
+
+  onwardRadioChange(i:number,event:any)
+  {
+    var div = document.getElementById('CompareToFly_'+i);
+    if(div)
+    {
+      if(event.target.checked)
+      {
+        div.classList.remove('flight-from-hide');
+      }
+      else{
+        div.classList.add('flight-from-hide');
+      }
+    }
+  }
+  CheckOnwardRedio(i:number){
+    var div = document.getElementById('CompareToFly_'+i);
+    if(div)
+    {
+      if(!div.classList.contains('flight-from-hide'))
+      {
+        $('#onwardlist_'+i).prop('checked',false)
+      }
+      else{
+        $('#onwardlist_'+i).prop('checked',true)
+      }
+    }
+  }
+
+  onReturnRadioChange(i:number,event:any)
+  {
+    var div = document.getElementById('Return_CompareToFly_'+i);
+    if(div)
+    {
+      if(event.target.checked)
+      {
+        div.classList.remove('flight-from-hide');
+      }
+      else{
+        div.classList.add('flight-from-hide');
+      }
+    }
+  }
+  CheckreturnRedio(i:number){
+    var div = document.getElementById('Return_CompareToFly_'+i);
+    if(div)
+    {
+    if(!div.classList.contains('flight-from-hide'))
+    {
+      $('#return_roundlist_'+i).prop('checked',false)
+    }
+    else{
+      $('#return_roundlist_'+i).prop('checked',true)
+    }
+  }
+  }
+
+  onSelectOnword(flights:any,item:any,event:any)
+  {
+    var onwardSelectedFlight = {flights:flights,priceSummery:item};
+    this.onwardSelectedFlight = onwardSelectedFlight;
+    $(".onwardbuttons").removeClass('button-selected-style');
+    $(".onwardbuttons").html('Select');
+      var selected = event.target as HTMLElement
+      if(selected)
+      {
+        selected.classList.add('button-selected-style')
+        selected.innerHTML = 'Selected'
+      }
+  }
+
+  onSelectReturn(flights:any,item:any,event:any)
+  {
+    var returnSelectedFlight = {flights:flights,priceSummery:item}
+    this.returnSelectedFlight = returnSelectedFlight;
+    $(".returnButtons").removeClass('button-selected-style');
+    $(".returnButtons").html('Select');
+      var selected = event.target as HTMLElement
+      if(selected)
+      {
+        selected.classList.add('button-selected-style')
+        selected.innerHTML = 'Selected'
+      }
   }
 }
