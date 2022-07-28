@@ -346,7 +346,7 @@
                                             (click)="FlightTimingsRetrunFilterFlightData(timingsItems)">
                                                 <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
                                                 <p [innerHTML]="timingsItems.value"></p>
-                                          </div>   
+                                          </div>
                                           </div>
                                       </div>
                                   </div>
@@ -747,7 +747,7 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="javascript:void(0)" class="button-style returnButtons"  id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flights,item,$event)" >Select</a>
+                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flights,item,$event)" >Select</button>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -1754,7 +1754,7 @@
                           <div class="flight-fixed-left">
                               <div class="flight-fixed-list">
                                   <div class="round-ff-content">
-                                      <div class="round-ff-left">
+                                      <div class="round-ff-left" [hidden]="!isOnwardSelected" >
                                           <div class="round-ff-image">
                                               <img [src]="this.flightIcons[onwardSelectedFlight.flights[0].airline].logo" alt="">
                                               <p> {{onwardSelectedFlight.flights[0].airline}}  {{onwardSelectedFlight.flights[0].flightNumber}}</p>
@@ -1767,7 +1767,7 @@
                                                 </p>
                                           </div>
                                       </div>
-                                      <div class="round-ff-right">
+                                      <div class="round-ff-right" >
                                           <div class="round-content-stops">
                                               <h6> {{onwardSelectedFlight.flights[0].duration | durationTime}}</h6>
                                               <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops==0">non stop</p>
@@ -1780,7 +1780,7 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="flight-fixed-list">
+                              <div class="flight-fixed-list"  [hidden]="!isReturnSelected">
                                   <div class="round-ff-content">
                                       <div class="round-ff-left">
                                           <div class="round-ff-image">
@@ -1809,8 +1809,8 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="flight-fixed-right">
-                              <div class="fixedright-content">
+                          <div class="flight-fixed-right" *ngIf="isReturnSelected">
+                              <div class="fixedright-content"  >
                                   <div class="fixedright-image">
                                       <img src="./assets/images/flights/1.png" alt="" width="52px">
                                   </div>
@@ -1852,7 +1852,7 @@
                                   </div>
                               </div>
                               <div class="flight-fixed-btn">
-                                  <a href="javascript:void(0)" class="button-style ms-2" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
+                                  <button href="javascript:void(0)" class="button-style ms-2"  data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</button>
                               </div>
                           </div>
                       </div>
