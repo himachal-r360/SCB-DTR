@@ -23,6 +23,7 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -56,7 +57,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
-    CarouselModule
+    CarouselModule,RegaliaGoldModule
     
   ],
   exports:[SearchComponent],
