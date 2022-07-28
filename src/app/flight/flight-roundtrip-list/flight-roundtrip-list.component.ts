@@ -286,9 +286,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       this.ReturnflightList = this.ascPriceSummaryFlighs(res.response.returnFlights);
+      this.ReturnflightList.forEach((z:any)=>{
+        z.disabled = false
+      });
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
       this.flightReturnListWithOutFilter = this.ReturnflightList;
+
+
         //It is used for getting min and max price.
         if (this.flightList.length > 0) {
           this.minPrice = this.flightList[0].priceSummary[0].totalFare;
@@ -1483,28 +1488,39 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   onSelectOnword(flights:any,item:any,event:any)
   {
-    var onwardSelectedFlight = {flights:flights,priceSummery:item};
-    this.onwardSelectedFlight = onwardSelectedFlight;
+
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".onwardbuttons").html('Select');
       var selected = event.target as HTMLElement
       if(selected)
       {
         this.isOnwardSelected = true;
+        this.isDisplayDetail = true;
+        this.isFlightsSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
       }
-      if(this.isReturnSelected == true)
-      {
-        this.isDisplayDetail = true;
-        this.isFlightsSelected = true;
-      }
+      var onwardSelectedFlight = {flights:flights,priceSummery:item};
+    this.onwardSelectedFlight = onwardSelectedFlight;
+    var partner = item.partnerName;
+    this.ReturnflightList.forEach((z:any)=>{
+        z.priceSummary.forEach((a:any)=>{
+          if(a.partnerName == partner)
+          {
+            a.disabled = false;
+          }
+          else{
+            a.disabled = true;
+          }
+        });
+    });
+
   }
 
   onSelectReturn(flights:any,item:any,event:any)
   {
-    var returnSelectedFlight = {flights:flights,priceSummery:item}
-    this.returnSelectedFlight = returnSelectedFlight;
+  if(this.isOnwardSelected == true)
+      {
     $(".returnButtons").removeClass('button-selected-style');
     $(".returnButtons").html('Select');
       var selected = event.target as HTMLElement
@@ -1515,10 +1531,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         selected.innerHTML = 'Selected'
       }
 
-      if(this.isOnwardSelected == true)
-      {
         this.isDisplayDetail = true;
         this.isFlightsSelected = true;
+
+      var returnSelectedFlight = {flights:flights,priceSummery:item}
+      this.returnSelectedFlight = returnSelectedFlight;
+      }
+      else{
+        alert('Please choose onward flight.')
       }
   }
   calculateEMI(amount: number) {
