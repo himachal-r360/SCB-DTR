@@ -354,7 +354,7 @@
                                                   (click)="FlightTimingsFilterFlightData(timingsItems)">
                                                       <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
                                                       <p [innerHTML]="timingsItems.value"></p>
-                                                </div>            
+                                                </div>
                                           </div>
 
                                           <p class="flighttimings-text">Returning flight (HYD-BOM)</p>
@@ -616,7 +616,7 @@
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input id="onwardlist_{{i}}" name="onwardRadio" class=""  (change)="onwardRadioChange(i,$event)" type="radio">
+                                                          <input id="onwardlist_{{i}}" name="onwardRadio" class="RadioClass"   type="radio">
                                                           <label for="onwardlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
@@ -726,7 +726,7 @@
                                                               </li>
                                                           </ul>
                                                       </div>
-                                                      <a href="javascript:void(0);" class="round-flight-details-click">
+                                                      <a href="javascript:void(0);" (click)="DisplayDetail()" class="round-flight-details-click">
                                                           Flight Details
                                                           <img src="./assets/images/icons/down.png" class="ms-1" alt="">
                                                       </a>
@@ -764,7 +764,7 @@
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input name="return_roundlist" id="return_roundlist_{{i}}" class="" (change)="onReturnRadioChange(i,$event)" type="radio">
+                                                          <input name="return_roundlist" id="return_roundlist_{{i}}" class="RadioClass"  (change)="onReturnRadioChange(i,$event)" type="radio">
                                                           <label for="return_roundlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
@@ -875,9 +875,9 @@
                                                               </li>
                                                           </ul>
                                                       </div>
-                                                      <a href="javascript:void(0);" class="round-flight-details-click">
+                                                      <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail()">
                                                           Flight Details
-                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="">
+                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="" >
                                                       </a>
                                                   </div>
                                               </div>
@@ -1053,7 +1053,7 @@
           </div>
       </div>
   </section>
- 
+
 </main>
 
 
@@ -1848,21 +1848,25 @@
                                   <div class="round-ff-content">
                                       <div class="round-ff-left">
                                           <div class="round-ff-image">
-                                              <img src="assets/images/flights/flight-1.png" alt="">
-                                              <p>6E 956</p>
+                                              <img [src]="this.flightIcons[onwardSelectedFlight.flights[0].airline].logo" alt="">
+                                              <p> {{onwardSelectedFlight.flights[0].airline}}  {{onwardSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
-                                              <h6>08:55 <img src="./assets/images/icons/flight-right.png" alt=""> 10:00</h6>
-                                              <p>6E 956  |  Non-refundable</p>
+                                              <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <p>{{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}}
+                                                  |  <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
+                                                  <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
+                                                </p>
                                           </div>
                                       </div>
                                       <div class="round-ff-right">
                                           <div class="round-content-stops">
-                                              <h6>1hr 10 min</h6>
-                                              <p>non stop</p>
+                                              <h6> {{onwardSelectedFlight.flights[0].duration | durationTime}}</h6>
+                                              <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops==0">non stop</p>
+                                              <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops!=0">{{onwardSelectedFlight.flights[0].stops}} stop</p>
                                           </div>
                                           <div class="round-ff-price">
-                                              <h6>₹ 4,892</h6>
+                                              <h6>₹ {{(onwardSelectedFlight.priceSummery.totalFare /totalPassenger) |number}}</h6>
                                               <p>per person</p>
                                           </div>
                                       </div>
@@ -1872,21 +1876,25 @@
                                   <div class="round-ff-content">
                                       <div class="round-ff-left">
                                           <div class="round-ff-image">
-                                              <img src="assets/images/flights/flight-1.png" alt="">
-                                              <p>6E 956</p>
+                                              <img [src]="this.flightIcons[returnSelectedFlight.flights[0].airline].logo" alt="">
+                                              <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
-                                              <h6>08:55 <img src="./assets/images/icons/flight-right.png" alt=""> 10:00</h6>
-                                              <p>6E 956  |  Non-refundable</p>
+                                              <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="./assets/images/icons/flight-right.png" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}  |
+                                                <span *ngIf="returnSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
+                                                  <span *ngIf="returnSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
+                                              </p>
                                           </div>
                                       </div>
                                       <div class="round-ff-right">
                                           <div class="round-content-stops">
-                                              <h6>1hr 10 min</h6>
-                                              <p>non stop</p>
+                                              <h6>{{returnSelectedFlight.flights[0].duration | durationTime}}</h6>
+                                              <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops==0">non stop</p>
+                                              <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops!=0">{{returnSelectedFlight.flights[0].stops}} stop</p>
                                           </div>
                                           <div class="round-ff-price">
-                                              <h6>₹ 4,892</h6>
+                                              <h6>₹ {{(returnSelectedFlight.priceSummery.totalFare/totalPassenger) |number}}</h6>
                                               <p>per person</p>
                                           </div>
                                       </div>
@@ -1900,8 +1908,8 @@
                                   </div>
                                   <div class="fixedright-price">
                                       <h6>
-                                          ₹ 4,892
-                                          <span>EMI @234/month</span>
+                                          ₹ {{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}
+                                          <span>EMI @{{calculateEMI(onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare) | number}}/month</span>
                                       </h6>
                                   </div>
                                   <div class="fixedright-otherinfo">
@@ -1916,16 +1924,16 @@
                                               <div class="hover-popover-content">
                                                   <div class="hover-popover-content-list">
                                                       <p>Base Fare</p>
-                                                      <p>₹4,892</p>
+                                                      <p>₹{{ (onwardSelectedFlight.priceSummery.baseFare +returnSelectedFlight.priceSummery.baseFare) |number}}</p>
                                                   </div>
                                                   <div class="hover-popover-content-list">
-                                                      <p>Base Fare</p>
-                                                      <p>₹4,892</p>
+                                                      <p>Charges</p>
+                                                      <p>₹{{ ((onwardSelectedFlight.priceSummery.totalFare - onwardSelectedFlight.priceSummery.baseFare) +(returnSelectedFlight.priceSummery.totalFare -returnSelectedFlight.priceSummery.baseFare)) |number}}</p>
                                                   </div>
                                                   <hr class="m-0">
                                                   <div class="hover-popover-content-list popover-total">
                                                       <p>Total</p>
-                                                      <p>₹4,892</p>
+                                                      <p>₹{{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}</p>
                                                   </div>
                                               </div>
                                               <div class="hover-popover-footer">
@@ -1945,20 +1953,20 @@
                               <div class="ff-extra-tabs">
                                   <ul class="list-unstyled flight-extra-tabs">
                                       <li>
-                                          <a href="javascript:void(0); " class="flight-extra-tabs-active" data-bind="FlightDetails">Flight Details</a>
+                                          <a href="javascript:void(0); " (click)="changeFareRuleTab($event)" class="flight-extra-tabs-active" data-bind="FlightDetails">Flight Details</a>
                                       </li>
                                       <li>
-                                          <a href="javascript:void(0);" data-bind="CancellationDetails"> Cancellation Details</a>
+                                          <a href="javascript:void(0);" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Details</a>
                                       </li>
                                       <li>
-                                          <a href="javascript:void(0);" data-bind="DateChange"> Baggage Policy</a>
+                                          <a href="javascript:void(0);" (click)="changeFareRuleTab($event)" data-bind="DateChange"> Baggage Policy</a>
                                       </li>
                                       <li>
-                                          <a href="javascript:void(0);" data-bind="Fare"> Fare Rules </a>
+                                          <a href="javascript:void(0);" (click)="changeFareRuleTab($event)" data-bind="Fare"> Fare Rules </a>
                                       </li>
                                   </ul>
                                   <div class="ff-close-box">
-                                      <a href="javascript:void(0);" class="ff-close">
+                                      <a href="javascript:void(0);" class="ff-close" (click)="CloseDetail()">
                                           <img src="./assets/images/icons/close_01.png" alt="" />
                                       </a>
                                   </div>
@@ -1974,21 +1982,21 @@
                                               </div>
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
-                                                      <div class="tabs-depart-one">
-                                                          <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                                      <div class="tabs-depart-one" *ngFor="let flights of onwardSelectedFlight.flights;let i = index">
+                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
                                                           <div class="tabs-depart-left">
                                                               <div class="tabs-depart-times">
-                                                                  <h5 class="mb-1 fw_7">08:05</h5>
-                                                                  <p>Mon, Jul 11</p>
-                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                                  <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.departureDateTime| date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.departureAirport].airport_name}}</p>
                                                               </div>
                                                               <div class="tabs-depart-total">
-                                                                  <p>01h 30m</p>
+                                                                  <p>{{flights.duration | durationTime}}</p>
                                                               </div>
                                                               <div class="tabs-depart-times">
-                                                                  <h5 class="mb-1 fw_7">08:05</h5>
-                                                                  <p>Mon, Jul 11</p>
-                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                                  <h5 class="mb-1 fw_7">{{flights.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.arrivalDateTime | date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                                                               </div>
                                                           </div>
                                                           <div class="tabs-depart-right">
@@ -2017,21 +2025,21 @@
                                               </div>
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
-                                                      <div class="tabs-depart-three">
-                                                          <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                                      <div class="tabs-depart-three" *ngFor="let flights of returnSelectedFlight.flights;let i = index">
+                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
                                                           <div class="tabs-depart-left">
                                                               <div class="tabs-depart-times">
-                                                                  <h5 class="mb-1 fw_7">08:05</h5>
-                                                                  <p>Mon, Jul 11</p>
-                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                                  <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.departureDateTime| date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.departureAirport].airport_name}}</p>
                                                               </div>
                                                               <div class="tabs-depart-total">
-                                                                  <p>01h 30m</p>
+                                                                  <p>{{flights.duration | durationTime}}</p>
                                                               </div>
                                                               <div class="tabs-depart-times">
-                                                                  <h5 class="mb-1 fw_7">08:05</h5>
-                                                                  <p>Mon, Jul 11</p>
-                                                                  <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
+                                                                  <h5 class="mb-1 fw_7">{{flights.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.arrivalDateTime | date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                                                               </div>
                                                           </div>
                                                           <div class="tabs-depart-right">
@@ -2059,7 +2067,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2114,7 +2122,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2173,7 +2181,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2234,7 +2242,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2299,7 +2307,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2354,7 +2362,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> Mumbai to Hyderabad, 11 Jul</p>
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
