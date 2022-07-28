@@ -74,6 +74,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   layOverFilterArr: any;
   isMobile:boolean= false
   math = Math;
+  EMI_interest: number = 16;
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -139,7 +140,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
     { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
   ]
-  
+
 
   isFlightsSelected: boolean = false;
   isDisplayDetail :boolean = false;
@@ -195,11 +196,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     }
   }
 
-  //Hide show header 
+  //Hide show header
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
-      this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none"; 
+      this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none";
     }
   }
 
@@ -294,7 +295,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
-        
+
         let query: any = sessionStorage.getItem('searchVal');
         let url = "flight-roundtrip?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
         this.getAirlinelist();
@@ -609,7 +610,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       {
         this.popularFilterFlightData();
       }
-  
+
     }
 
       /* Reset function Start*/
@@ -658,44 +659,44 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
     //It is used for searching flights with left side filters.
     popularFilterFlightData() {
-      
+
       let updatedflightList: any = [];
       let returnUpdatedFlightList:any = [];
       let flightListWithOutFilter = this.flightListWithOutFilter;
       let flightReturnListWithOutFilter = this.flightReturnListWithOutFilter;
       const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
       const flightListReturnConst = flightReturnListWithOutFilter.map((b:any) =>({...b}));
-      
+
       this.flightList = flightListConst;
       this.ReturnflightList = flightListReturnConst;
-  
+
       var current_date = new Date(this.departureDate),
         current_year = current_date.getFullYear(),
         current_mnth = current_date.getMonth(),
         current_day = current_date.getDate();
-  
+
       var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
       var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-  
+
       //Popular Filter Search Data
       updatedflightList = this.popularFilterFlights(this.flightList);
       returnUpdatedFlightList = this.popularFilterFlights(this.ReturnflightList);
       // returnUpdatedFlightList = this.popularFilterReturnFlights(this.ReturnflightList);
-  
+
       //Departing Timing Filter Data
       updatedflightList = this.timingFilterFlights(updatedflightList);
-      
+
       //Return Departing timing filter Data
       returnUpdatedFlightList = this.timingFilterReturnFlights(returnUpdatedFlightList);
-      
-  
+
+
       //Flight Stops Filter
       updatedflightList = this.stopsFilterFlights(updatedflightList);
       returnUpdatedFlightList = this.stopsFilterFlights(returnUpdatedFlightList);
-  
+
       this.flightList = updatedflightList;
       this.ReturnflightList = returnUpdatedFlightList;
-  
+
       //it is used for getting values of count.
       this.RefundableFaresCount = 0;
       this.nonStopCount = 0;
@@ -726,14 +727,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           if (flights.length > 0) {
             this.foodAllowanceCount += 1;
           }
-  
+
           var flights = e.flights.filter((d: any) => {
-  
+
             if ((this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { return item; } }).length > 0) && new Date(d.departureDateTime) > date1 && new Date(d.departureDateTime) < date2) {
               return e;
             }
           }) // Meals Included Count
-  
+
           if (flights.length > 0) {
             this.morningDearptureCount += 1;
             this.flight_PopularItems.filter((item: any) => {
@@ -743,7 +744,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
             })
           }
         })
-  
+
         //Ascending Descending Order
         this.priceSortingFilteritems.filter((item: any) => {
           if (item.name == 'P_L_H' && item.active == true) {
@@ -799,7 +800,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
             this.ReturnflightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
           }
         })
-              
+
       }
       // Airlines Filter
       this.flightList = this.airlineFilterFlights(this.flightList);
@@ -842,7 +843,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         });
         this.ReturnflightList = filteredStopOver;
       }
-  
+
       //PriceFilter
       if (this.flightList.length > 0) {
         var min_price = this.minPrice;
@@ -872,11 +873,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
        });
        this.ReturnflightList = filteredPrice;
      }
-  
+
       //Airline Filter
       this.flightList = this.airlineFilterFlights(this.flightList);
       this.ReturnflightList = this.airlineFilterFlights(this.ReturnflightList);
-  
+
       // Layover Filter Flights
       this.flightList = this.layoverFilterFlights(this.flightList);
       this.ReturnflightList = this.layoverFilterFlights(this.ReturnflightList);
@@ -888,7 +889,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       var $that = this;
       $that.sliderRange($that, $that.minPrice, $that.maxPrice);
     }
-  
+
     sliderRange($that: this, minPrice: number, maxPrice: number) {
       $that.options = {
         floor: minPrice,
@@ -963,7 +964,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       let isfilterRefundableFares: any = false;
       let isfilterNonStop: any = false;
       let isfilterMealsIncluded: any = false;
-  
+
       this.flight_PopularItems.filter((item: any) => {
         if (item.active == true && item.name == "Refundable_Fares") { isfilterRefundableFares = true }
         if (item.active == true && item.name == "non_stop") { isfilterNonStop = true }
@@ -972,11 +973,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       for (let i = 0; i < returnFlightList.length; i++) {
         let singleFlightList = [];
         singleFlightList = returnFlightList[i].flights;
-  
+
         let isNonStop = false;
         let isRefundableFares = false;
         let isMealsInclude = false;
-  
+
         if (singleFlightList != null && singleFlightList != undefined) {
           if (isfilterNonStop == true || isfilterRefundableFares == true || isfilterMealsIncluded == true) {
             if (isfilterNonStop == true) {
@@ -1020,13 +1021,13 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         current_year = current_date.getFullYear(),
         current_mnth = current_date.getMonth(),
         current_day = current_date.getDate();
-  
+
       var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
       var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
       var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
       var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
       var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
-  
+
       this.flight_PopularItems.filter((item) => {
         if (item.name == "Morning_Departures" && item.active == true) {
           isfilterMorningDepartures = true;
@@ -1075,7 +1076,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       return updatedflightList;
     }
 
-    // Return timing flight 
+    // Return timing flight
     timingFilterReturnFlights(returnFlightList: any) {
       this.ReturnflightList = returnFlightList;
       let updatedflightList: any = [];
@@ -1085,13 +1086,13 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         current_year = current_date.getFullYear(),
         current_mnth = current_date.getMonth(),
         current_day = current_date.getDate();
-  
+
       var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
       var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
       var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
       var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
       var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
-  
+
       this.flight_PopularItems.filter((item) => {
         if (item.name == "Morning_Departures" && item.active == true) {
           isfilterMorningDepartures = true;
@@ -1140,7 +1141,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       return updatedflightList;
     }
 
-     
+
 
   //layover airport filter
   layoverFilterFlights(flightList: any) {
@@ -1208,7 +1209,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       if(!this.isMobile)
       {
       this.popularFilterFlightData();
-      
+
       }
     }
 
@@ -1227,7 +1228,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       this.popularFilterFlightData();
       }
     }
-  
+
 
   // get airlines list and lowest price
   getAirlinelist() {
@@ -1331,7 +1332,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         {
           this.popularFilterFlightData();
         }
-  
+
       }
     }
     onMaxValueChange(event: any) {
@@ -1347,7 +1348,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       this.popularFilterFlightData();
       }
     }
-  
+
     onMinStopOverChange(event: any) {
       this.minStopOver = event;
       if(!this.isMobile)
@@ -1362,7 +1363,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       this.popularFilterFlightData();
       }
     }
-  
+
 
     searchNonStop(item: any) {
       this.toggleStopsFilteritems.filter((itemp: any) => {
@@ -1386,8 +1387,8 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       }
       this.popularFilterFlightData();
     }
-  
-  
+
+
 
   flightAcsDescFilterFlightData(event: any) {
     let selectedVal = event.target.value;
@@ -1489,8 +1490,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       var selected = event.target as HTMLElement
       if(selected)
       {
+        this.isOnwardSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
+      }
+      if(this.isReturnSelected == true)
+      {
+        this.isDisplayDetail = true;
+        this.isFlightsSelected = true;
       }
   }
 
@@ -1503,8 +1510,38 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       var selected = event.target as HTMLElement
       if(selected)
       {
+        this.isReturnSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
       }
+
+      if(this.isOnwardSelected == true)
+      {
+        this.isDisplayDetail = true;
+        this.isFlightsSelected = true;
+      }
+  }
+  calculateEMI(amount: number) {
+    return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
+  }
+
+  DisplayDetail()
+  {
+    if(this.isOnwardSelected == true && this.isReturnSelected == true)
+    {
+      this.isDetailsShow = true;
+    }
+  }
+
+  changeFareRuleTab(event:any){
+    $('.flight-extra-content').hide();
+    $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+    var Element = document.getElementById(event.target.dataset['bind']);
+    Element!.style.display = 'block';
+    event.target.classList.add('flight-extra-tabs-active');
+  }
+  CloseDetail()
+  {
+    this.isDetailsShow = false;
   }
 }
