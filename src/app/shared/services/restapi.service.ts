@@ -289,7 +289,7 @@ createItinerary(param){
      if(LOCALJSON=='true'){
            return this.http.get('assets/data/validatePGData.json');
      }else{
-     return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
+     return this.http.post( this.endpoint+'validatePGDataFlight',param, config).pipe(map((response: any) => response));
      } 
      //return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
   }

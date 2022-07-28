@@ -1355,7 +1355,12 @@ payNow(ptype){
 
 			this.rest.validatePGData(postPgvalidateParams).subscribe(results => { 
 				if(results.result==true){
-				form.submit();
+				
+                                setTimeout(() => {
+                               form.submit();
+                                }, 100);
+				
+				
 				}else{
 				this.paynowBtnDisabled_5=false;
 				this.spinnerService.hide();
@@ -1409,7 +1414,9 @@ payNow(ptype){
 				};
 				this.rest.validatePGData(postPgvalidateParams).subscribe(results => {
 					if(results.result==true){
-					form.submit();
+					         setTimeout(() => {
+                               form.submit();
+                                }, 100);
 					}else{
 				this.paynowBtnDisabled_5=false;
 					this.spinnerService.hide();

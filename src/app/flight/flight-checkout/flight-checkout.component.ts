@@ -286,10 +286,11 @@ new_fare: number = 0;
                 this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
 
                 this.flightSessionData=JSON.parse(this.flightDetailsArrVal);
-                if(!this.flightSessionData){
-                //this.triggerBack();
-                //return;
-                }
+                if(!this.flightSessionData){  
+                setTimeout(() => {
+                 $("#bookingprocessFailed1").modal('show');
+                }, 10);  
+                }else{
                 this.searchData=(this.flightSessionData.queryFlightData);
                    console.log(  this.searchData);
                 //console.log(this.flightSessionData);
@@ -308,8 +309,7 @@ new_fare: number = 0;
                 //console.log(this.enableVAS);
 
                 this.getFlightDetails(this.flightSessionData);
-             
-             
+                }
                 this.REWARD_CUSTOMERID = customerInfo["id"];
                 this.REWARD_EMAILID = customerInfo["email"];
                 this.REWARD_MOBILE = customerInfo["mobile"];
@@ -1536,21 +1536,14 @@ new_fare: number = 0;
    $('#bookingprocessFailed').modal('hide');  
   let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
   this.router.navigateByUrl(url);
+  
+  }
+  
+    
+  goBack(){
+   $('#bookingprocessFailed1').modal('hide');  
+  this.router.navigateByUrl('/');
 
-   
-     /*  alertify.alert('').setHeader('<b>Fetching flight details</b>').set('closable', false)   
-        .setting({
-    'label':'<b>Retry</b>',
-    'message': 'An Error occurred during fetching flight details. Do Not Worry! <br> Click on Retry' ,
-    'onok': function(){ 
-    
-     // let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
-         // console.log("0000000");
-        //
-    
-    
-    }
-  }).show();*/
   
   }
 
