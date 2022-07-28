@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CountdownModule } from 'ngx-countdown';
+import { CountdownConfig, CountdownEvent } from 'ngx-countdown'; 
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse , HttpParams} from '@angular/common/http';
  import { DeviceDetectorService } from 'ngx-device-detector';
@@ -388,7 +389,7 @@ export class AlertDialogComponent {
   startOverContinue(): void {
     this.dialogRef.close(true);
   }
-  onFinishedTimerSeesion(): void {
+  onFinishedTimerSeesion(e: CountdownEvent): void {
     sessionStorage.clear();
     this.beforeExpiry=false;
     this.afterExpiry=true;

@@ -22,6 +22,7 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="travel-box mb-20">
+                    <form [formGroup]="flightDataModify" (ngSubmit)="flightSearch()">
                       <div class="travel-select-data-area">
                           <div class="travel-select-trip mt-0">
                               <ul class="travel-select-trip-ul">
@@ -35,11 +36,11 @@
                                       <span class="selectway">Multi-City</span>
                                   </li>
                                   <li>
-                                      <div class="Travellers-dropdown ms-3">
+                                      <div class="Travellers-dropdown ms-3" appDropdown>
                                           <div class="Travellers-dropdown-title">
-                                              <h5>03 Passengers <i class="fas fa-caret-down"></i></h5>
+                                              <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i></h5>
                                           </div>
-                                          <ul class="Travellers-dropdown-data Travellershide">
+                                          <ul class="Travellers-dropdown-data flight-from-hide dropdown">
                                               <li>
                                                   <p class="t-title">Travellers</p>
                                               </li>
@@ -51,9 +52,9 @@
                                                       </div>
                                                       <div class="Travellers-qty">
                                                           <div class="quantity buttons_added">
-                                                              <input type="button" value="-" class="qty-buttons minus">
-                                                              <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                              <input type="button" value="+" class="qty-buttons plus">
+                                                            <input type="button" (click)="decreaseAdult()"  value="-" class="qty-buttons minus" >
+                                                            <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" [(ngModel)]="adultsVal" formControlName="adults" size="4" pattern="" inputmode="">
+                                                            <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent"  class="qty-buttons plus">
                                                           </div>
                                                       </div>
                                                   </div>
@@ -66,9 +67,9 @@
                                                       </div>
                                                       <div class="Travellers-qty">
                                                           <div class="quantity buttons_added">
-                                                              <input type="button" value="-" class="qty-buttons minus">
-                                                              <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                              <input type="button" value="+" class="qty-buttons plus">
+                                                            <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus" >
+                                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode=""  [(ngModel)]="childVal" formControlName="child">
+                                                            <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
                                                           </div>
                                                       </div>
                                                   </div>
@@ -81,9 +82,9 @@
                                                       </div>
                                                       <div class="Travellers-qty">
                                                           <div class="quantity buttons_added">
-                                                              <input type="button" value="-" class="qty-buttons minus">
-                                                              <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                              <input type="button" value="+" class="qty-buttons plus">
+                                                            <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus" >
+                                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" [(ngModel)]="infantsVal" formControlName="infants" inputmode="">
+                                                            <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus">
                                                           </div>
                                                       </div>
                                                   </div>
@@ -93,12 +94,12 @@
 
                                   </li>
                                   <li>
-                                      <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
-                                          <option selected="selected">Business Class</option>
-                                          <option>Economy Class</option>
-                                          <option>First Class</option>
-                                          <option>Premium Economy</option>
-                                      </select>
+                                    <mat-select class=" ms-4" [(ngModel)]="flightClassVal" formControlName="flightclass">
+                                      <mat-option value="B">Business Class</mat-option>
+                                      <mat-option value="E">Economy Class</mat-option>
+                                      <mat-option value="F">First Class</mat-option>
+                                      <mat-option value="P">Premium Economy</mat-option>
+                                    </mat-select>
                                   </li>
                               </ul>
                           </div>
@@ -106,147 +107,59 @@
                               <div class="row g-2">
                                   <div class="col-lg-6">
                                       <div class="select-root-area">
-                                          <div class="select-root-left">
+                                          <div class="select-root-left" appDropdown>
                                               <span class="select-roottitle">FROM</span>
-                                              <h5 class="">Gujarat</h5>
-                                              <span class="select-roottitle">Bangalore Internationl Airport</span>
-                                              <div class="flight-from-data flight-from-hide">
+                                              <h5 class="">{{fromCityName}}</h5>
+                                              <span class="select-roottitle">{{fromAirpotName}}</span>
+                                              <div class="flight-from-data flight-from-hide dropdown" >
                                                   <div class="flight-from-data-search">
-                                                      <input type="text" name="" class="w-100" id="" placeholder="Search City">
+                                                      <input type="text" name="" class="w-100" id="fromCitySearch"   placeholder="Search City" (keyup)="fromList($event)">
                                                   </div>
-                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark" *ngIf="fromFlightList">
                                                       <li class="flight-from-ul-li">
                                                           <p class="flight-Results-text">Results</p>
                                                       </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Mumbai, India</h6>
-                                                                  <p>Chhatrapati Shivaji International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BOM</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Pune, India</h6>
-                                                                  <p>Pune Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>PNQ</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Bengaluru, India</h6>
-                                                                  <p>Bengaluru International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BLR</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>New Delhi, India</h6>
-                                                                  <p>Indira Gandhi International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>DLE</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Chennai, India</h6>
-                                                                  <p>Chennai International Airport  </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>MAA</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
+                                                      <li class="flight-from-ul-li" *ngFor="let fromCity of cityList">
+                                                        <a  class="flight-from-ul-li-a"  (click)="selectFromFlightList(fromCity._source)" >
+                                                            <div class="flight-from-name"   >
+                                                                <h6>{{fromCity._source.city}}, {{fromCity._source.country}}</h6>
+                                                                <p>{{fromCity._source.airport_name}} </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname" >
+                                                                <h6>{{fromCity._source.airport_code}}</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
                                                   </ul>
                                               </div>
                                           </div>
-                                          <div class="select-root-icons">
-                                              <img src="./assets/images/icons/twoway.png" alt="">
+                                          <div class="select-root-icons" (click)="swap()">
+                                              <img src="./assets/images/icons/twoway.png" alt="" >
                                           </div>
-                                          <div class="select-root-right">
+                                          <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
                                               <span class="select-roottitle">TO</span>
-                                              <h5 class="">Pune</h5>
-                                              <span class="select-roottitle">Pune Internationl Airport</span>
+                                              <h5 class="">{{toCityName}}</h5>
+                                              <span class="select-roottitle">{{toAirpotName}}</span>
 
-                                              <div class="flight-to-data flight-from-hide">
+                                              <div class="flight-to-data flight-from-hide dropdown">
                                                   <div class="flight-from-data-search">
-                                                      <input type="text" name="" class="w-100" id="" placeholder="Search City">
+                                                      <input type="text" name="" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
                                                   </div>
-                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark" *ngIf="toFlightList">
                                                       <li class="flight-from-ul-li">
                                                           <p class="flight-Results-text">Results</p>
                                                       </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Mumbai, India</h6>
-                                                                  <p>Chhatrapati Shivaji International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BOM</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Pune, India</h6>
-                                                                  <p>Pune Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>PNQ</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Bengaluru, India</h6>
-                                                                  <p>Bengaluru International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>BLR</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>New Delhi, India</h6>
-                                                                  <p>Indira Gandhi International Airport </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>DLE</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
-                                                      <li class="flight-from-ul-li">
-                                                          <a href="#" class="flight-from-ul-li-a">
-                                                              <div class="flight-from-name">
-                                                                  <h6>Chennai, India</h6>
-                                                                  <p>Chennai International Airport  </p>
-                                                              </div>
-                                                              <div class="flight-from-shortname">
-                                                                  <h6>MAA</h6>
-                                                              </div>
-                                                          </a>
-                                                      </li>
+                                                      <li class="flight-from-ul-li" *ngFor="let toCity of cityList">
+                                                        <a  class="flight-from-ul-li-a" (click)="selectToFlightList(toCity._source)"  >
+                                                            <div class="flight-from-name"  >
+                                                                <h6>{{toCity._source.city}}, {{toCity._source.country}}</h6>
+                                                                <p>{{toCity._source.airport_name}} </p>
+                                                            </div>
+                                                            <div class="flight-from-shortname"  >
+                                                                <h6>{{toCity._source.airport_code}}</h6>
+                                                            </div>
+                                                        </a>
+                                                    </li>
                                                   </ul>
                                               </div>
                                           </div>
@@ -256,24 +169,38 @@
                                       <div class="root-date">
                                           <div class="select-root-area">
                                               <div class="select-dep-ret">
-                                                  <div class="area-root-departure">
+                                                  <div class="area-root-departure"  (click)="picker.open()" id="datePickerOpen" >
                                                       <div class="select-root-departure">
                                                           <span class="select-roottitle">DEPARTURE</span>
-                                                          <h5 class=" ">23 May</h5>
-                                                          <span class="select-roottitle">Friday</span>
+                                                          <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                                          <span class="select-roottitle">{{departureDate | date:'EEEE' }}</span>
                                                       </div>
-                                                      <div class="select-root-date">
+                                                      <div class="select-root-date" style="position: relative; left: 0;">
                                                           <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                          <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                            <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClicked($event)">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker ></mat-datepicker>
+                                                     </mat-form-field>
                                                       </div>
                                                   </div>
-                                                  <div class="area-root-reutrn">
+                                                  <div class="area-root-reutrn area-root-departure disableDiv" (click)="picker2.open()" id="datePickerArrival" >
                                                       <div class="select-root-reutrn">
                                                           <span class="select-roottitle">RETURN</span>
-                                                          <h5 class="">29 May</h5>
-                                                          <span class="select-roottitle d-block w-100">Select Return</span>
+                                                          <h5 class="">{{returnDate | date:'dd MMM' }}</h5>
+                                                          <span class="select-roottitle"
+                                                          *ngIf="returnDate!='' ||returnDate!=undefined" >{{returnDate
+                                                          | date:'EEEE' }}</span>
+                                                      <span class="select-roottitle d-block w-100" *ngIf="returnDate=='' || returnDate==undefined " >Tap to add
+                                                          a <br> return date</span>
                                                       </div>
                                                       <div class="select-root-date">
                                                           <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                          <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                            <input matInput [min]="departureDate" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="returnDate" >
+                                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker2 ></mat-datepicker>
+                                                     </mat-form-field>
                                                       </div>
 
                                                   </div>
@@ -282,7 +209,7 @@
 
                                           </div>
                                           <div class="root-search">
-                                              <a href="flight_listing.html" class="searchbn">Search</a>
+                                              <button type="submit" class="searchbn">Search</button>
                                           </div>
                                       </div>
                                   </div>
@@ -327,6 +254,7 @@
                               </div>
                           </div>
                       </div>
+                    </form>
                   </div>
               </div>
 
@@ -336,18 +264,18 @@
                           <div class="">
                               <div class="Filterslayout d-flex justify-content-between align-items-center">
                                   <h6 class="fs_16">Filters</h6>
-                                  <a href="" class="fs_13 text-color">Reset all</a>
+                                  <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
                               </div>
                               <hr>
                               <div class="default-sidebar flight-sidebar">
                                   <div class="sidebar-widget search-widget">
                                       <div class="widget-title">
                                           <h6 class="">Populat Filters</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <li class="custom-check-box">
+                                              <!-- <li class="custom-check-box">
                                                   <div class="custom-controls-stacked">
                                                       <label class="custom-control material-checkbox">
                                                           <input type="checkbox" class="material-control-input" />
@@ -382,7 +310,17 @@
                                                           <span class="description">Meals Included</span>
                                                       </label>
                                                   </div>
-                                              </li>
+                                              </li> -->
+                                              <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                        <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
                                           </ul>
                                       </div>
                                   </div>
@@ -390,47 +328,25 @@
                                   <div class="sidebar-widget flighttimings-widget">
                                       <div class="widget-title">
                                           <h6 class="">Flight Timings</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
-                                          <p class="flighttimings-text">Departing flight (BOM-HYD)</p>
-                                          <div class="flighttiming-content flight-departing">
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/1.png" alt="">
-                                                  <p>Before 6AM</p>
-                                              </div>
-                                              <div class="flighttiming-list active">
-                                                  <img src="assets/images/icons/timings/2.png" alt="">
-                                                  <p>6AM - 12 PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/4.png" alt="">
-                                                  <p>12 PM - 6PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/3.png" alt="">
-                                                  <p>After 6 PM</p>
-                                              </div>
+                                              <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
+                                              <div class="flighttiming-content flight-departing">
+                                                  <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
+                                                  (click)="FlightTimingsFilterFlightData(timingsItems)">
+                                                      <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                      <p [innerHTML]="timingsItems.value"></p>
+                                                </div>
                                           </div>
 
-                                          <p class="flighttimings-text">Returning flight (HYD-BOM)</p>
+                                          <p class="flighttimings-text">Returning flight ({{flightTimingto}}-{{flightTimingfrom}})</p>
                                           <div class="flighttiming-content flight-departing">
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/1.png" alt="">
-                                                  <p>Before 6AM</p>
-                                              </div>
-                                              <div class="flighttiming-list active">
-                                                  <img src="assets/images/icons/timings/2.png" alt="">
-                                                  <p>6AM - 12 PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/4.png" alt="">
-                                                  <p>12 PM - 6PM</p>
-                                              </div>
-                                              <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/3.png" alt="">
-                                                  <p>After 6 PM</p>
-                                              </div>
+                                            <div class="flighttiming-list" *ngFor="let timingsItems of flight_return_Timingsitems" [ngClass]="{'active': timingsItems.active}"
+                                            (click)="FlightTimingsRetrunFilterFlightData(timingsItems)">
+                                                <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <p [innerHTML]="timingsItems.value"></p>
+                                          </div>
                                           </div>
                                       </div>
                                   </div>
@@ -438,26 +354,30 @@
                                   <div class="sidebar-widget Price-widget">
                                       <div class="widget-title">
                                           <h6 class="">Price</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content mt-10 mb-30 price-widget-content">
                                           <div style="margin:0 0 20px 0">
-                                              <input type="number" min="0" max="9900" oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
-                                              <span class="ms-3 me-3">-</span>
-                                              <input type="number" min="0" max="10000" oninput="validity.valid||(value='10000');" id="max_price" class="price-range-field" />
+                                            <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice"  id="min_price" class="price-range-field"/>
+                                            <span class="ms-3 me-3">-</span>
+                                            <input type="number" min="0"  [(ngModel)]="maxPrice" [max]="resetMaxPrice"  id="max_price" class="price-range-field"/>
                                           </div>
-                                          <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+                                          <!-- <div id="slider-range" class="price-filter-range" name="rangeInput"></div> -->
+                                          <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"
+                                          (valueChange)="onMinValueChange($event)"
+                                            (highValueChange)="onMaxValueChange($event)"
+                                          ></ngx-slider>
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget stops-widget">
                                       <div class="widget-title">
                                           <h6 class="">Stops</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetFlightStopsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <div class="Stops-content">
-                                              <div class="Stops-list">
+                                              <!-- <div class="Stops-list">
                                                   <p>No <br> stops</p>
                                               </div>
                                               <div class="Stops-list active">
@@ -465,144 +385,71 @@
                                               </div>
                                               <div class="Stops-list">
                                                   <p>2+ <br> stops</p>
-                                              </div>
+                                              </div> -->
+                                              <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
+                                        [innerHTML]="FlightStopitem.value">
                                           </div>
+                                        </div>
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget Airlines-widget">
                                       <div class="widget-title">
                                           <h6 class="">Airlines</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetAirlineFlightsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Indigo (84)</span>
-                                                      </label>
-                                                      <p>&#8377;5,252</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" checked="checked" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">SpiceJet (23)</span>
-                                                      </label>
-                                                      <p>&#8377;6,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Air India (66)</span>
-                                                      </label>
-                                                      <p>&#8377;7,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Go First (12)</span>
-                                                      </label>
-                                                      <p>&#8377;9,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Vistara (34)</span>
-                                                      </label>
-                                                      <p>&#8377;9,525</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Air Asia (24)</span>
-                                                      </label>
-                                                      <p>&#8377;10,110</p>
-                                                  </div>
-                                              </li>
+                                              <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox" >
+                                                        <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                    </label>
+                                                    <p>&#8377;{{airlineItem.price}}</p>
+                                                </div>
+                                            </li>
                                           </ul>
-                                          <a href="#" class="widget-content-more ml-20">+2 more</a>
+                                          <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget stopover-widget">
                                       <div class="widget-title">
                                           <h6 class="">Stopover</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetStopOverFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content mt-20 mb-20">
-                                          <div class="price-slider"></div>
-                                          <div class="Stopover-value">
-                                              <p class="price-value"></p>
-                                              <p class="price-value2"></p>
-                                          </div>
+                                    <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver"
+                                    [options]="optionsStopOver"
+                                    (valueChange)="onMinStopOverChange($event)"
+                                    (highValueChange)="onMaxStopOverChange($event)"
+                                   ></ngx-slider>
+                                   <div class="Stopover-value">
+                                       <p class="price-value" >{{minStopOver}} hrs</p>
+                                       <p class="price-value2">{{maxStopOver}} hrs</p>
+                                   </div>
                                       </div>
                                   </div>
                                   <hr>
                                   <div class="sidebar-widget layover-airports-widget">
                                       <div class="widget-title">
                                           <h6 class="">Layover Airports</h6>
-                                          <a href="">Reset</a>
+                                          <a href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Chennai Airport</span>
-                                                      </label>
-                                                      <p>&#8377;5,252</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" checked="checked" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Kempegowda Internat</span>
-                                                      </label>
-                                                      <p>&#8377;6,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Jabalpur</span>
-                                                      </label>
-                                                      <p>&#8377;7,356</p>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Chatrapati Shivaji</span>
-                                                      </label>
-                                                      <p>&#8377;9,356</p>
-                                                  </div>
-                                              </li>
+                                            <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr ; let i = index " [ngClass]="{'active': layoverItem.active}">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control material-checkbox">
+                                                        <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
+                                                        <span class="material-control-indicator"></span>
+                                                        <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                    </label>
+                                                    <p>&#8377;{{layoverItem.price}}</p>
+                                                </div>
+                                            </li>
                                           </ul>
                                       </div>
                                   </div>
@@ -643,12 +490,10 @@
                           <div class="position-relative">
                               <div class="flight-search-filters-counts text-center mb-20">
                                   <ul class="flight-counts">
-                                      <li class="flight-counts-list">
-                                          <p>All Flights</p>
-                                      </li>
-                                      <li class="flight-counts-list active">
-                                          <p class=""> <span>8</span> Non-Stop</p>
-                                      </li>
+                                    <li class="flight-counts-list" id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"
+                                    value="{{Items.value}}" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
+                                        <p> <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span> {{Items.value}}</p>
+                                    </li>
                                   </ul>
                               </div>
                           </div>
@@ -668,24 +513,21 @@
                                                     <p *ngIf="flightList">{{flightList.length}} flights found</p>
                                                   </div>
                                                   <div class="round-l-h">
-                                                      <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
-                                                          <option selected="selected">Price Low to High</option>
-                                                          <option>Price High to Low</option>
-                                                          <option>Depart Ealry</option>
-                                                          <option>Depart Late</option>
-                                                      </select>
+                                                        <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterFlightData($event)">
+                                                            <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
+                                                        </select>
                                                   </div>
                                               </div>
                                           </div>
                                       </div>
                                       <div>
-                                      <div class="round-flight-listing round-click" *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
-                                          <div class="round-flight-listing-content">
+                                      <div class="round-flight-listing round-click"  appToggleDetail *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
+                                          <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input name="roundlist" id="roundlist-{{i}}" class="" type="radio">
-                                                          <label for="roundlist-1" class="css-label"></label>
+                                                          <input id="onwardlist_{{i}}" name="onwardRadio" class="RadioClass"   type="radio">
+                                                          <label for="onwardlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image">
@@ -715,7 +557,7 @@
                                           <div class="round-flight-info-box">
                                               <p><img src="/assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
-                                          <div class="round-options-box" id="CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
@@ -759,7 +601,7 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Select</a>
+                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flights,item,$event)">Select</a>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -794,7 +636,7 @@
                                                               </li>
                                                           </ul>
                                                       </div>
-                                                      <a href="javascript:void(0);" class="round-flight-details-click">
+                                                      <a href="javascript:void(0);" (click)="DisplayDetail()" class="round-flight-details-click">
                                                           Flight Details
                                                           <img src="./assets/images/icons/down.png" class="ms-1" alt="">
                                                       </a>
@@ -816,24 +658,21 @@
                                                     <p *ngIf="ReturnflightList">{{ReturnflightList.length}} flights found</p>
                                                   </div>
                                                   <div class="round-l-h">
-                                                      <select name="" class="liothers selectpicker ms-4" aria-label="Default select example">
-                                                          <option selected="selected">Price Low to High</option>
-                                                          <option>Price High to Low</option>
-                                                          <option>Depart Ealry</option>
-                                                          <option>Depart Late</option>
-                                                      </select>
+                                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterReturnFlightData($event)">
+                                                        <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
+                                                    </select>
                                                   </div>
                                               </div>
                                           </div>
                                       </div>
 
-                                      <div class="round-flight-listing round-click" *ngFor="let list of ReturnflightList; let i = index" id="return_flight_list_{{i}}">
+                                      <div class="round-flight-listing round-click" appToggleDetail *ngFor="let list of ReturnflightList; let i = index" id="return_flight_list_{{i}}">
                                           <div class="round-flight-listing-content">
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input name="roundlist-right-01" id="return_roundlist-{{i}}" class="" type="radio">
-                                                          <label for="roundlist-01" class="css-label"></label>
+                                                          <input name="return_roundlist" id="return_roundlist_{{i}}" class="RadioClass"  (change)="onReturnRadioChange(i,$event)" type="radio">
+                                                          <label for="return_roundlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image">
@@ -841,7 +680,10 @@
                                                   </div>
                                                   <div class="round-content-time">
                                                       <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
-                                                      <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}   |  Non-refundable</p>
+                                                      <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}   |
+                                                        <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
+                                                        <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
+                                                      </p>
                                                   </div>
                                               </div>
                                               <div class="round-content-right">
@@ -861,7 +703,7 @@
                                           <div class="round-flight-info-box">
                                               <p><img src="./assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
-                                          <div class="round-options-box" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
@@ -905,7 +747,7 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Select</a>
+                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flights,item,$event)" >Select</button>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -940,9 +782,9 @@
                                                               </li>
                                                           </ul>
                                                       </div>
-                                                      <a href="javascript:void(0);" class="round-flight-details-click">
+                                                      <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail()">
                                                           Flight Details
-                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="">
+                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="" >
                                                       </a>
                                                   </div>
                                               </div>
@@ -1119,75 +961,6 @@
       </div>
   </section>
 
-  <footer class="footer-area">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-9">
-                  <div class="footer-desc">
-                      <p>Disclaimer: HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers. HDFC Bank is only communicating the offers extended by Merchants to its Customers and not Selling/Rendering any of these Products/Services. HDFC Bank is merely facilitating the payment to its Customers by providing the Payment Gateway Services. HDFC Bank is neither guaranteeing nor making any representation. HDFC Bank is not responsible for Sale/Quality/Features of the Products/Services under the offers.</p>
-                  </div>
-                  <div class="footer-nav">
-                      <ul>
-                          <li>
-                              <a href="">About Us</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">FAQ's</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">Terms & Conditions</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">Privacy Policy</a>
-                          </li>
-                          <li>
-                              <span>|</span>
-                          </li>
-                          <li>
-                              <a href="">Customer Support</a>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                  <div class="footer-call-area">
-                      <div class="footer-call">
-                          <p class="footer-title">Call</p>
-                          <p>1860 425 1188 / 9986896688</p>
-                          <span>(9 to 21 hrs, Mon to Sat Only)</span>
-                      </div>
-                      <div class="footer-mail">
-                          <p class="footer-title">Mail</p>
-                          <a href="mailto:support@smartbuyoffers.co">support@smartbuyoffers.co</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-lg-12 col-md-12">
-                  <!-- Copyright Start-->
-                  <div class="copyright-bottom-info">
-                      <div class="copyright">
-                          <p class="m-0">© 2022 SmartBuy</p>
-                      </div>
-                      <div class="footer-Powered">
-                          <span>Powered by <img src="./assets/images/Powered_by.png" class="ms-2" alt=""></span>
-                      </div>
-                  </div>
-                  <!-- Copyright End-->
-              </div>
-          </div>
-      </div>
-  </footer>
 </main>
 
 
@@ -1766,14 +1539,15 @@
                                       <div class="accordion-body">
                                           <div class="default-sidebar">
                                               <ul class="category-list clearfix mt-2">
-                                                  <li class="custom-check-box">
+                                                  <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                       <div class="custom-controls-stacked">
                                                           <label class="custom-control material-checkbox">
-                                                              <input type="checkbox" class="material-control-input">
+                                                            <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
+                                                            (change)="flightAirlineFilterFlightData(airlineItem)">
                                                               <span class="material-control-indicator"></span>
-                                                              <span class="description">Indigo (84)</span>
+                                                              <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
                                                           </label>
-                                                          <p>₹5,252</p>
+                                                          <p>₹{{airlineItem.price}}</p>
                                                       </div>
                                                   </li>
                                                   <li class="custom-check-box">
@@ -1969,5 +1743,592 @@
   </div>
 </div>
 
-
+ <!-- ------------------------------
+        >>> flight fixed
+        ---------------------------------->
+        <div class="flight-fixed-area" *ngIf="isDisplayDetail">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="flight-fixed" *ngIf="isFlightsSelected">
+                          <div class="flight-fixed-left">
+                              <div class="flight-fixed-list">
+                                  <div class="round-ff-content">
+                                      <div class="round-ff-left" [hidden]="!isOnwardSelected" >
+                                          <div class="round-ff-image">
+                                              <img [src]="this.flightIcons[onwardSelectedFlight.flights[0].airline].logo" alt="">
+                                              <p> {{onwardSelectedFlight.flights[0].airline}}  {{onwardSelectedFlight.flights[0].flightNumber}}</p>
+                                          </div>
+                                          <div class="round-ff-time">
+                                              <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <p>{{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}}
+                                                  |  <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
+                                                  <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
+                                                </p>
+                                          </div>
+                                      </div>
+                                      <div class="round-ff-right" >
+                                          <div class="round-content-stops">
+                                              <h6> {{onwardSelectedFlight.flights[0].duration | durationTime}}</h6>
+                                              <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops==0">non stop</p>
+                                              <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops!=0">{{onwardSelectedFlight.flights[0].stops}} stop</p>
+                                          </div>
+                                          <div class="round-ff-price">
+                                              <h6>₹ {{(onwardSelectedFlight.priceSummery.totalFare /totalPassenger) |number}}</h6>
+                                              <p>per person</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="flight-fixed-list"  [hidden]="!isReturnSelected">
+                                  <div class="round-ff-content">
+                                      <div class="round-ff-left">
+                                          <div class="round-ff-image">
+                                              <img [src]="this.flightIcons[returnSelectedFlight.flights[0].airline].logo" alt="">
+                                              <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
+                                          </div>
+                                          <div class="round-ff-time">
+                                              <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="./assets/images/icons/flight-right.png" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}  |
+                                                <span *ngIf="returnSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
+                                                  <span *ngIf="returnSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
+                                              </p>
+                                          </div>
+                                      </div>
+                                      <div class="round-ff-right">
+                                          <div class="round-content-stops">
+                                              <h6>{{returnSelectedFlight.flights[0].duration | durationTime}}</h6>
+                                              <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops==0">non stop</p>
+                                              <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops!=0">{{returnSelectedFlight.flights[0].stops}} stop</p>
+                                          </div>
+                                          <div class="round-ff-price">
+                                              <h6>₹ {{(returnSelectedFlight.priceSummery.totalFare/totalPassenger) |number}}</h6>
+                                              <p>per person</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="flight-fixed-right" *ngIf="isReturnSelected">
+                              <div class="fixedright-content"  >
+                                  <div class="fixedright-image">
+                                      <img src="./assets/images/flights/1.png" alt="" width="52px">
+                                  </div>
+                                  <div class="fixedright-price">
+                                      <h6>
+                                          ₹ {{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}
+                                          <span>EMI @{{calculateEMI(onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare) | number}}/month</span>
+                                      </h6>
+                                  </div>
+                                  <div class="fixedright-otherinfo">
+                                      <span class="mainprice">₹ 5,000</span>
+                                      <span class="price-off">10% off</span>
+                                      <div class="ff-Viewfaredetails">
+                                          <a href="#" class="rr-Viewfare">View Fare Details</a>
+                                          <div class="hover-popover">
+                                              <div class="hover-popover-title">
+                                                  <h6>Price Breakdown</h6>
+                                              </div>
+                                              <div class="hover-popover-content">
+                                                  <div class="hover-popover-content-list">
+                                                      <p>Base Fare</p>
+                                                      <p>₹{{ (onwardSelectedFlight.priceSummery.baseFare +returnSelectedFlight.priceSummery.baseFare) |number}}</p>
+                                                  </div>
+                                                  <div class="hover-popover-content-list">
+                                                      <p>Charges</p>
+                                                      <p>₹{{ ((onwardSelectedFlight.priceSummery.totalFare - onwardSelectedFlight.priceSummery.baseFare) +(returnSelectedFlight.priceSummery.totalFare -returnSelectedFlight.priceSummery.baseFare)) |number}}</p>
+                                                  </div>
+                                                  <hr class="m-0">
+                                                  <div class="hover-popover-content-list popover-total">
+                                                      <p>Total</p>
+                                                      <p>₹{{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}</p>
+                                                  </div>
+                                              </div>
+                                              <div class="hover-popover-footer">
+                                                  <p>*Partner Convenience Fee is applicable</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="flight-fixed-btn">
+                                  <button href="javascript:void(0)" class="button-style ms-2"  data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</button>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="ff-details" *ngIf="isDetailsShow">
+                          <div class="flight-extra-details">
+                              <div class="ff-extra-tabs">
+                                  <ul class="list-unstyled flight-extra-tabs">
+                                      <li>
+                                          <a href="javascript:void(0); " (click)="changeFareRuleTab($event)" class="flight-extra-tabs-active" data-bind="FlightDetails">Flight Details</a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:void(0);" (click)="changeFareRuleTab($event)" data-bind="CancellationDetails"> Cancellation Details</a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:void(0);" (click)="changeFareRuleTab($event)" data-bind="DateChange"> Baggage Policy</a>
+                                      </li>
+                                      <li>
+                                          <a href="javascript:void(0);" (click)="changeFareRuleTab($event)" data-bind="Fare"> Fare Rules </a>
+                                      </li>
+                                  </ul>
+                                  <div class="ff-close-box">
+                                      <a href="javascript:void(0);" class="ff-close" (click)="CloseDetail()">
+                                          <img src="./assets/images/icons/close_01.png" alt="" />
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="extra-tabs-ara">
+                                  <div id="FlightDetails" class="flight-extra-content extra-active">
+                                      <div class="extra-tabs-details FlightDetails-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list" *ngIf="onwardSelectedFlight">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p>{{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <div class="tabs-depart-box">
+                                                      <div class="tabs-depart-one" *ngFor="let flights of onwardSelectedFlight.flights;let i = index">
+                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <div class="tabs-depart-left">
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.departureDateTime| date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                                              </div>
+                                                              <div class="tabs-depart-total">
+                                                                  <p>{{flights.duration | durationTime}}</p>
+                                                              </div>
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">{{flights.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.arrivalDateTime | date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                                              </div>
+                                                          </div>
+                                                          <div class="tabs-depart-right">
+                                                              <div class="Baggage">
+                                                                  <h5>Baggage</h5>
+                                                                  <p>Adult</p>
+                                                              </div>
+                                                              <div class="departCheck">
+                                                                  <h5>Check-in</h5>
+                                                                  <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                              </div>
+                                                              <div class="Cabin">
+                                                                  <h5>Cabin</h5>
+                                                                  <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list" *ngIf="returnSelectedFlight">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p>{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <div class="tabs-depart-box">
+                                                      <div class="tabs-depart-three" *ngFor="let flights of returnSelectedFlight.flights;let i = index">
+                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <div class="tabs-depart-left">
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.departureDateTime| date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                                              </div>
+                                                              <div class="tabs-depart-total">
+                                                                  <p>{{flights.duration | durationTime}}</p>
+                                                              </div>
+                                                              <div class="tabs-depart-times">
+                                                                  <h5 class="mb-1 fw_7">{{flights.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                  <p>{{flights.arrivalDateTime | date:'EEE, MMM dd'}}</p>
+                                                                  <p class="mt-1 opacity_05">{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                                              </div>
+                                                          </div>
+                                                          <div class="tabs-depart-right">
+                                                              <div class="Baggage">
+                                                                  <h5>Baggage</h5>
+                                                                  <p>Adult</p>
+                                                              </div>
+                                                              <div class="departCheck">
+                                                                  <h5>Check-in</h5>
+                                                                  <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                              </div>
+                                                              <div class="Cabin">
+                                                                  <h5>Cabin</h5>
+                                                                  <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="CancellationDetails" class="flight-extra-content">
+                                      <div class="extra-tabs-details CancellationDetails-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="DateChange" class="flight-extra-content">
+                                      <div class="extra-tabs-details DateChange-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Baggage</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Adult</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br /> (1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Child</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Infant</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Cabin bag only</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Baggage</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Adult</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br /> (1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Child</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>15 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">Infant</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Cabin bag only</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>7 Kgs <br />(1 piece only)</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="Fare" class="flight-extra-content">
+                                      <div class="extra-tabs-details Fare-box ff-extra-grid">
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                          <div class="ff-extra-grid-list">
+                                              <div class="extra-tabs-details-top">
+                                                  <div class="extra-tabs-left">
+                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                  </div>
+                                                  <div class="extra-tabs-right"></div>
+                                              </div>
+                                              <div class="extra-tabs-details-bottom">
+                                                  <table class="table-bordered table-content w-100">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Time Frame</p>
+                                                                  <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="fw_6 fs_13">Airline Fee</p>
+                                                                  <p class="opacity_05">(Per passenger)</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">0 hours to 2 hours*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">2 hours to 3 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <p class="opacity_05">3 days to 365 days*</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p>Adult : Non refundable</p>
+                                                                  <p>Child : Non refundable</p>
+                                                                  <p>Infant : Non refundable</p>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                                  <p class="oth-text mt-10">*From the date of Departure</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 

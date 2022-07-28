@@ -5,6 +5,7 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  NgZone,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -119,22 +120,31 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  constructor(
-  public _styleManager: StyleManagerService,
-    public router: Router,
-    private _fb: FormBuilder,
-    private _flightService: FlightService
-    
-  ) {
-     
-    setTimeout(() => {
-      this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-      this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
-      this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
-      this._styleManager.setScript('custom', `assets/js/custom.js`);
-   }, 10);
 
-  }
+  constructor(
+    public _styleManager: StyleManagerService,
+      public router: Router,
+      private _fb: FormBuilder,
+      private _flightService: FlightService,private ngZone:NgZone
+      
+    ) {
+      window.onresize = (e) =>
+      {
+          //ngZone.run will help to run change detection
+          this.ngZone.run(() => {
+            this.isMobile = window.innerWidth < 991 ?  true : false;
+          });
+      }
+      setTimeout(() => {
+        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+     }, 10);
+  
+    }
+
+
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
     flightto: ['',[Validators.required]],
@@ -155,12 +165,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
    this._flightService.showHeader(true);
    
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    this.selectDate('DepartureDate');
+    // this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-
     this.setSearchFilterData()
   
   }
@@ -270,14 +279,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   fromList(evt: any) {
     this.toFlightList = false;
     this.fromFlightList = true;
-    // this.SearchCityName = evt.target.value.trim().toLowerCase();
-    // this.flightData.flightfrom=this.SearchCityName;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
-
-    // if(evt.target.value.trim().toLowerCase().length>3){
-    //   //this.flightData.flightfrom=evt.target.value.trim().toLowerCase();
-    //   this.getCityList(evt.target.value.trim().toLowerCase());
-    // }
     this.getCityList(evt.target.value.trim().toLowerCase());
   }
 
@@ -285,12 +287,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromFlightList = false;
     this.toFlightList = true;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
-
-    //this.flightData.flightto=this.SearchCityName;
-    // if(evt.target.value.trim().toLowerCase().length>3){
-    //   //this.flightData.flightfrom=evt.target.value.trim().toLowerCase();
-    //   this.getCityList(evt.target.value.trim().toLowerCase());
-    // }
     this.getCityList(evt.target.value.trim().toLowerCase());
   }
 
@@ -341,41 +337,45 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   infantsVal:any
   flightTimingfrom:any;
   flightTimingto:any;
-
+  searchObj:any;
+  
   setSearchFilterData() {
       this.searchData = sessionStorage.getItem('searchVal');
       if(this.searchData != null || this.searchData != undefined){
-      let searchObj = JSON.parse(this.searchData);
-      this.fromCityName = searchObj.fromCity; 
-      this.toCityName = searchObj.toCity;
-      this.departureDate = new Date(searchObj.departure);
-      this.arrivalDate = new Date(searchObj.arrival);
-      this.flightClassVal = searchObj.flightclass;
-      this.adultsVal = searchObj.adults;
-      this.childVal = searchObj.child;
-      this.infantsVal = searchObj.infants;
-      this.fromAirpotName = searchObj.fromAirportName;
-      this.toAirpotName = searchObj.toAirportName;
-      this.flightTimingfrom = searchObj.flightfrom
-      this.flightTimingto = searchObj.flightto
-      this.fromFlightId = searchObj.flightfrom;
-      this.toFlightId = searchObj.flightto;
-      this.flightData.get('flightfrom').setValue(searchObj.flightfrom)
-      this.flightData.get('flightto').setValue(searchObj.flightto)
-      this.flightData.get('arrival').setValue(new Date(this.arrivalDate))
+      this.searchObj = JSON.parse(this.searchData);
+      this.fromCityName = this.searchObj.fromCity; 
+      this.toCityName = this.searchObj.toCity;
+      this.departureDate = new Date(this.searchObj.departure);
+      if(this.searchObj.arrival != '' && this.searchObj.arrival != undefined && this.searchObj.arrival != null) {
+        this.arrivalDate = new Date(this.searchObj.arrival);
+      }
+      this.flightClassVal = this.searchObj.flightclass;
+      this.adultsVal = this.searchObj.adults;
+      this.childVal = this.searchObj.child;
+      this.infantsVal = this.searchObj.infants;
+      this.fromAirpotName = this.searchObj.fromAirportName;
+      this.toAirpotName = this.searchObj.toAirportName;
+      this.flightTimingfrom = this.searchObj.flightfrom
+      this.flightTimingto = this.searchObj.flightto
+      this.fromFlightId = this.searchObj.flightfrom;
+      this.toFlightId = this.searchObj.flightto;
+      this.flightData.get('flightfrom').setValue(this.searchObj.flightfrom)
+      this.flightData.get('flightto').setValue(this.searchObj.flightto)
       this.flightData.get('departure').setValue(new Date(this.departureDate))
+      this.flightData.get('arrival').setValue(new Date(this.arrivalDate))
       this.flightData.get('flightclass').setValue(this.flightClassVal);
-      this.flightData.get('adults').setValue(searchObj.adults);
+      this.flightData.get('adults').setValue(this.searchObj.adults);
       this.flightData.get('child').setValue(this.childVal);
       this.flightData.get('infants').setValue(this.infantsVal);
       this.flightData.value.infants = this.infantsVal;
       this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+      if(this.searchObj.arrival != null && this.searchObj.arrival != undefined && this.searchObj.arrival != ""){
+        this.navItemActive = "Round Trip"
+      }
     }
-
   }
 
   flightSearch() {
-    debugger;
     this.submitted = true;
     this.flightData.value.flightto = this.toFlightId;
     this.flightData.value.flightfrom = this.fromFlightId;
@@ -387,7 +387,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     else{
       this.dateValidation=true;
     }
-    if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined && this.flightData.value.arrival!=null ){
+    if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
       this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
     }
     
@@ -644,7 +644,6 @@ openTravellerBlock(){
 
 closeTravllerBlock(){
   this.showTravellerBlock =! this.showTravellerBlock;
-
 }
 
 getClassVal(val:any){
@@ -652,7 +651,7 @@ getClassVal(val:any){
 }
 
 navBarLink(navItem:any){
-this.navItemActive = navItem;
+  this.navItemActive = navItem;
 }
 
 }
