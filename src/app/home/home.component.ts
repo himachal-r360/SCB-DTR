@@ -131,6 +131,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         //ngZone.run will help to run change detection
         this.ngZone.run(() => {
           this.isMobile = window.innerWidth < 991 ?  true : false;
+          // if(this.isMobile == true || this.navItemActive == "One Way") {
+          //   let datePickerArrival:any = document.getElementById('datePickerArrival');
+          //   datePickerArrival = datePickerArrival.display = 'none';
+          // }
+          
         });
     }
   }
@@ -160,6 +165,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
   }
   ngAfterViewInit(): void {
+    
 
   }
   ngOnDestroy(): void {
@@ -193,7 +199,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   currentPeriodArrivalClicked(datePicker:any) {
-    let date = datePicker.target.value
+  let date = datePicker.target.value
   if(date && this.navItemActive == "Round Trip"){
     setTimeout(() => {
       if(this.isMobile == false) {
