@@ -16,7 +16,7 @@ import { MatBottomSheet, MatBottomSheetRef, MatBottomSheetConfig } from '@angula
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
-
+import { FlightService } from '../common/flight.service';
 
 declare var $: any;
 @Component({
@@ -84,7 +84,9 @@ public modeselectTrending= 'All';
   bannerSlide:number=1;
   poweredByPartners:[];
 
-  constructor(public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService) {
+     this._flightService.showHeader(true);
+   
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl;
     this.cdnDealUrl = environment.cdnDealUrl;

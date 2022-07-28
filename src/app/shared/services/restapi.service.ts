@@ -6,6 +6,8 @@ import {environment} from '../../../environments/environment';
 import { Location } from '@angular/common';
 const MAIN_SITE_URL = environment.MAIN_SITE_URL; 
 const LOCALJSON = environment.LOCALJSON;
+const LOCALLOGIN = environment.LOCALLOGIN;
+
 import { SimpleGlobal } from 'ng2-simple-global';
 
 const config = {
@@ -65,11 +67,16 @@ export class RestapiService {
  } 
 
   checkCsrfAuth (param:any):Observable<any> {
+  
+  if(LOCALLOGIN=='true'){
+   return this.http.get('assets/data/checckcsrf.json');
+  }else{
     if(LOCALJSON=='true'){
       return this.http.get('assets/data/checckcsrf.json');
     }else{
 
 	return this.http.post(MAIN_SITE_URL+this.domainPath+'check-csrf-with-auth',param, config).pipe(map((response: any) => response));
+    }
     }
   }
   getDealsOffers ():Observable<any> {
@@ -275,7 +282,7 @@ createItinerary(param){
      if(LOCALJSON=='true'){
            return this.http.get('assets/data/validatePGData.json');
      }else{
-     return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
+     return this.http.post( this.endpoint+'validatePGDataFlight',param, config).pipe(map((response: any) => response));
      } 
      //return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
   }
@@ -302,7 +309,11 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
 }
 
    saveCheckout (param): Observable<any> {
+    if(LOCALJSON=='true'){
+    return this.http.get('assets/data/saveCheckout.json');
+  }else{
     return this.http.post(this.endpoint+'saveCheckoutFlight', param, config).pipe(map((response: any) => response));
+    }
   }
 
 }

@@ -1,8 +1,8 @@
 /*
 --------------------------------------------------------------------------------------------------------
-* Project    :  Reward 360                                                                                          *
+*  Project    :  Reward 360                                                                                         *
 * Author     : Vikas Mishra | Shachi Mehta                                                       *
-* Support    :                                                             *
+* Support    :                                                               *
 *-------------------------------------------------------------------------------------------------------
 NOTE: This file contains all scripts for the actual Template.
 */

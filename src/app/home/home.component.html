@@ -39,10 +39,10 @@
                                 <div class="travel-select-trip">
                                     <ul class="travel-select-trip-ul">
                                         <li>
-                                            <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null ? 'active':'' " >One Way</span>
+                                            <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null   ? 'active':'' " >One Way</span>
                                         </li>
                                         <li>
-                                            <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip' ? 'active':'' ">Round Trip</span>
+                                            <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round Trip</span>
                                         </li>
                                         <li>
                                             <span class="selectway" (click)="navBarLink('Multicity')" [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multicity</span>
@@ -168,15 +168,15 @@
                                                                 <div class="mob-search-list">
                                                                     <label for="">From</label>
                                                                     <input type="text" autocomplete="off" class="w-100"
-                                                                     placeholder="Search City" formControlName="flightfrom"
-                                                                    (keyup)="fromList($event)" (focus)="isFromorNot= true;fromList($event)" [(ngModel)]="fromCityName">
+                                                                     placeholder="Search City" formControlName="flightfrom" 
+                                                                    (keyup)="fromList($event)" (focus)="isFromorNot= true;fromList($event)" [(ngModel)]="flightData.value.flightfrom">
 
                                                                 </div>
                                                                 <div class="mob-search-list">
                                                                     <label for="">To</label>
                                                                     <input type="text" autocomplete="off" class="w-100"
                                                              placeholder="Search City" formControlName="flightto"
-                                                                (keyup)="toList($event)"  (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                                (keyup)="toList($event)"  (focus)="isFromorNot= false;toList($event)" [(ngModel)]="flightData.value.flightto">
                                                             <input type="text"  name="flightto" style="display:none"
                                                             id="toCitySearch" >
                                                                 </div>
@@ -262,14 +262,15 @@
                                                                     <label for="">From</label>
                                                                     <input type="text" autocomplete="off" (focus)="isFromorNot= true;fromList($event)" class="w-100"
                                                                      placeholder="Search City" formControlName="flightfrom"
-                                                                    (keyup)="fromList($event)" [(ngModel)]="fromCityName">
-
+                                                                    (keyup)="fromList($event)" [(ngModel)]="flightData.value.flightfrom" id="fromCitySearch">
+                                                                    <input type="text"  name="flightfrom" style="display:none"
+                                                                     >    
                                                                 </div>
                                                                 <div class="mob-search-list">
                                                                     <label for="">To</label>
                                                                     <input type="text" autocomplete="off" class="w-100"
                                                              placeholder="Search City" formControlName="flightto"
-                                                                (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)" [(ngModel)]="toCityName">
+                                                                (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)" [(ngModel)]="flightData.value.flightto">
                                                             <input type="text"  name="flightto" style="display:none"
                                                             id="toCitySearch" >
                                                                 </div>
@@ -364,9 +365,30 @@
                                                                     value="{{departureDate}}" formControlName="departure">
                                                             </div>
                                                         </div> -->
-                                                        <div class="area-root-departure" (click)="picker.open()" id="datePickerOpen">
+                                                        <div class="area-root-departure" (click)="picker.open()" id="datePickerOpen" *ngIf="!isMobile">
                                                             <div class="select-root-departure departure-date" >
                                                                 <span class="select-roottitle">DEPARTURE</span>
+                                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                                                <span class="select-roottitle d-block w-100"
+                                                                    *ngIf="departureDate=='' ||departureDate==undefined">Tap
+                                                                    to add a <br> departure date</span>
+                                                                <span class="select-roottitle"
+                                                                    *ngIf="departureDate!='' ||departureDate!=undefined" >{{departureDate|date:'EEEE' }}</span>
+                                                                    
+                                                            </div>
+                                                            <div class="select-root-date" style="position: relative; left: 0;">
+                                                                <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
+                                                                  <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                                    <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClicked($event)"  >
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker ></mat-datepicker>
+                                                             </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                        <!--Mobile Picker-->
+                                                    <div class="area-root-departure" (click)="picker.open()" id="datePickerOpen" *ngIf="isMobile">
+                                                            <div class="select-root-departure departure-date" >
+                                                                <span class="select-roottitle">DEPARTURE--{{isMobile}}</span>
                                                                 <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
                                                                 <span class="select-roottitle d-block w-100"
                                                                     *ngIf="departureDate=='' ||departureDate==undefined">Tap
@@ -377,17 +399,37 @@
                                                             </div>
                                                             <div class="select-root-date" style="position: relative; left: 0;">
                                                                 <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
-
                                                                   <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                                     <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClicked($event)"  >
                                                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                                                    <mat-datepicker #picker ></mat-datepicker>
+                                                                    <mat-datepicker touchUi panelClass="bottomDatePicker" #picker ></mat-datepicker>
                                                              </mat-form-field>
-
-
                                                             </div>
                                                         </div>
-                                                        <div class="area-root-reutrn" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
+                                                        
+                                                        <div class="area-root-reutrn" *ngIf="!isMobile" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
+                                                            <div class="select-root-reutrn"  >
+                                                                <span class="select-roottitle">RETURN</span>
+                                                                <h5 class=" " *ngIf="arrivalDate!='' ||arrivalDate!=undefined">{{arrivalDate | date:'dd MMM' }}</h5>
+                                                                <span class="select-roottitle d-block w-100" *ngIf="arrivalDate=='' || arrivalDate==undefined" >Tap to add
+                                                                    a <br> return date</span>
+                                                                <span class="select-roottitle"
+                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined" >{{arrivalDate  | date:'EEEE' }}</span>
+                                                                  
+                                                            </div>
+                                                            <div class="select-root-date" >
+                                                                <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
+                                                                <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;" >
+                                                                    <input matInput [min]="departureDate" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker2 ></mat-datepicker>
+                                                             </mat-form-field>
+                                                            </div>
+
+                                                        </div>
+
+                                        <!--Mobile Picker-->
+                                                        <div class="area-root-reutrn" *ngIf="isMobile" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
                                                             <div class="select-root-reutrn"  >
                                                                 <span class="select-roottitle">RETURN</span>
                                                                 <h5 class=" ">{{arrivalDate | date:'dd MMM' }}</h5>
@@ -405,11 +447,13 @@
                                                                 <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                                     <input matInput [min]="flightData.value.departure" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
                                                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                                                    <mat-datepicker #picker2 ></mat-datepicker>
+                                                                    <mat-datepicker #picker2 touchUi panelClass="bottomDatePicker"></mat-datepicker>
                                                              </mat-form-field>
                                                             </div>
 
                                                         </div>
+
+
 
                                                     </div>
                                                 </div>
@@ -596,7 +640,7 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                    <div class="add-search-content ms-3">
+                                    <!--<div class="add-search-content ms-3">
                                         <div class="Preferred-area" appDropdown>
                                             <h5 class="Preferred-title">Preferred Airline <img
                                                     src="./assets/images/icons/down.png" class="ms-1" alt=""></h5>
@@ -638,7 +682,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </form>
@@ -682,15 +726,17 @@
                                         <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
                                 </div>
                                 <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/next-active.png" alt="">
+                                    <img *ngIf="!continue.arrival" src="./assets/images/icons/next-active.png" alt="">
+                                    <img *ngIf="continue.arrival" src="./assets/images/icons/round.png" alt="">
                                 </div>
                                 <div class="Continuesearch-name">
                                     <h6>{{continue.toCity}}</h6>
-                                    <!-- <p>{{continue.arrival|date:"EEE ,dd MMM"}}</p> -->
+                                    <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
                                 </div>
                             </div>
                             <div class="Continuesearch-items-actions">
                                 <img src="./assets/images/icons/next.png" alt="">
+                                
                             </div>
                         </div>
                     </a>
@@ -709,10 +755,12 @@
                                                     <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
                                             </div>
                                             <div class="Continuesearch-image">
-                                                <img src="./assets/images/icons/next-active.png" alt="">
+                                                <img *ngIf="!continue.arrival" src="./assets/images/icons/next-active.png" alt="">
+                                                <img *ngIf="continue.arrival" src="./assets/images/icons/round.png" alt="">
                                             </div>
                                             <div class="Continuesearch-name">
                                                 <h6>{{continue.toCity}}</h6>
+                                                <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
                                             </div>
                                         </div>
                                         <div class="Continuesearch-items-actions">

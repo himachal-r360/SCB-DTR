@@ -14,6 +14,8 @@ import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
 import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-roundtrip-list.component';
+import { AgePipe } from 'src/app/pipes/age.pipe';
+import { CountdownModule } from 'ngx-countdown';
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent
@@ -35,7 +37,7 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent
+    FlightRoundtripListComponent,AgePipe
 
   ],
   imports: [
@@ -47,7 +49,7 @@ const routes: Routes = [
         DirectiveModule,
         NgxSliderModule,
         NgxSkeletonLoaderModule,
-        CouponsModule,PaymentModule,
+        CouponsModule,PaymentModule,CountdownModule,
           RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],

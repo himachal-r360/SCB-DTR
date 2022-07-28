@@ -24,7 +24,6 @@ import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
-
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
