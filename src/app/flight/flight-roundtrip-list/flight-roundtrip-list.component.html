@@ -27,13 +27,13 @@
                           <div class="travel-select-trip mt-0">
                               <ul class="travel-select-trip-ul">
                                   <li>
-                                      <span class="selectway ">One Way</span>
+                                      <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':''  ? 'active':'' ">One Way</span>
                                   </li>
                                   <li>
-                                      <span class="selectway active">Round Way</span>
+                                      <span class="selectway active" (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round Way</span>
                                   </li>
                                   <li>
-                                      <span class="selectway">Multi-City</span>
+                                      <span class="selectway" (click)="navBarLink('Multicity')" [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multi-City</span>
                                   </li>
                                   <li>
                                       <div class="Travellers-dropdown ms-3" appDropdown>

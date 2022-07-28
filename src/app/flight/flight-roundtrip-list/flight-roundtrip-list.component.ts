@@ -75,6 +75,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   isMobile:boolean= false
   math = Math;
   EMI_interest: number = 16;
+  navItemActive:any;
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -1544,4 +1545,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   {
     this.isDetailsShow = false;
   }
+
+  navBarLink(navItem:any){
+    this.navItemActive = navItem;
+  }
+  
 }

@@ -131,11 +131,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         //ngZone.run will help to run change detection
         this.ngZone.run(() => {
           this.isMobile = window.innerWidth < 991 ?  true : false;
-          // if(this.isMobile == true || this.navItemActive == "One Way") {
+          // if(this.isMobile || this.navItemActive == "One Way") {
           //   let datePickerArrival:any = document.getElementById('datePickerArrival');
           //   datePickerArrival = datePickerArrival.display = 'none';
           // }
-          
         });
     }
   }
