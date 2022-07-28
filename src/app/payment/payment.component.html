@@ -1,5 +1,5 @@
-<div class="  payment_cnt">
-<ng-container *ngIf="showRewardsBox">
+<div class="  payment_cnt" *ngIf="showRewardsBox">
+<ng-container >
         <div class="payPoints-section ">
             <h5 class="point-title"><b>Pay using Points</b></h5>
             <div class="row">
@@ -255,7 +255,7 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6 col-12 text-end">
-                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0"><p class="invalid"><span class="material-icons pe-2 ">warning</span>  Tokenise and Save</p><input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)"> <span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i></span></div>
+                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0"><input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)"> <p class="invalid"><span class="material-icons pe-2 ">warning</span>  Tokenise and Save</p><span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i></span></div>
                                                                             <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==1"><p class="valid"><span class="material-icons pe-2 ">lock</span> Secure now</p><input type="checkbox" name="tokenization" id="tokenization{{cardIndex}}" checked value="1" style="display:none;"></div>
                                                                         </div>
                                                                     </div>

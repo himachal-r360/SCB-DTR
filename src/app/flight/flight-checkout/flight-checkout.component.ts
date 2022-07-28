@@ -17,7 +17,7 @@ import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import alertifyjs from 'alertifyjs';
 import * as moment from 'moment';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
-      
+import { CountdownConfig, CountdownEvent } from 'ngx-countdown'; 
 
 
 function validateAdultAge(c: FormControl) {
@@ -221,7 +221,6 @@ new_fare: number = 0;
         ChildFare:number=0;
         InfantTotalFare:number=0;
         sessionTimer:any = 3;
-        timeLeft:any = 900;
         baggageInfo:any='';
         cancellationPolicy:any='';
         flightDetailsArrVal:any;
@@ -287,6 +286,10 @@ new_fare: number = 0;
                 this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
 
                 this.flightSessionData=JSON.parse(this.flightDetailsArrVal);
+                if(!this.flightSessionData){
+                //this.triggerBack();
+                //return;
+                }
                 this.searchData=(this.flightSessionData.queryFlightData);
                    console.log(  this.searchData);
                 //console.log(this.flightSessionData);
@@ -443,7 +446,6 @@ new_fare: number = 0;
         jobGroup.addControl('gstPincode', new FormControl());
         jobGroup.addControl('gstState', new FormControl());
         jobGroup.addControl('saveGST', new FormControl('1'));
-    this.startTimer();
 
   }
 
@@ -1313,8 +1315,14 @@ new_fare: number = 0;
     }
 
 
-    startTimer() {
-      this.sessionTimer = setInterval(() => {
+    bookingSessionExpires(e: CountdownEvent) {
+    
+     if(e.action == 'done'){
+     
+     $('#bookingprocessExpires').modal('show');
+     }
+    
+      /*this.sessionTimer = setInterval(() => {
         if(this.timeLeft > 0) {
           this.timeLeft--;
         
@@ -1325,7 +1333,7 @@ new_fare: number = 0;
             this.router.navigateByUrl(url);
           //  });
         }
-      },1000)
+      },1000)*/
     
     }
     

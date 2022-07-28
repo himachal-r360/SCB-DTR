@@ -11,11 +11,9 @@ export class ToggleDetailDirective{
     // }
     @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
       var element = event?.target as HTMLElement
-
         //this.isOpen = this.elRef.nativeElement.contains(event.target) ? !this.isOpen : false;
         if(this.elRef.nativeElement.contains(event.target) && !element.closest('.not-close'))
         {
-
           this.elRef.nativeElement
           .querySelector('.dropdown')
           .classList.toggle('flight-from-hide')
