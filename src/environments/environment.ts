@@ -8,8 +8,9 @@ export const environment = {
   COOKIE_DOMAIN:null,
   LOCALJSON:'true',
   localInstance:1,
-  // url:"https://smartbuyadminuat.reward360.in/"
-  url:"http://new.reward360.us/",
+   //url:"https://smartbuyadminuat.reward360.in/",
+  //url:"http://new.reward360.us/",
+  url:"https://smartbuydev.reward360.in/",
    cdnUrl: 'assets/',
    cdnnotifyUrl: 'https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/notification/',
   cdnDealUrl: 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/',
@@ -30,8 +31,8 @@ API_URL:{
     recaptcha: {
     siteKey: '6Lf7UL0cAAAAAIt_m-d24WG4mA1XFPHE8yVckc5S',
   },
-  
-  
+
+
   BUS_SITE_URL:{
  'SMARTBUY': 'http://new.reward360.us/lite/',
  'DINERS': 'http://new.reward360.us/lite/diners/',
@@ -48,7 +49,7 @@ API_URL:{
  'CORPORATE': 'http://new.reward360.us/lite/corporate/train/',
   'BUSINESS': 'http://new.reward360.us/lite/business/train/',
   },
-  
+
   FRESHMENU_SITE_URL  :{
  'SMARTBUY': 'http://new.reward360.us/lite/freshmenu/',
  'DINERS': 'http://new.reward360.us/lite/diners/freshmenu/',
@@ -57,7 +58,7 @@ API_URL:{
  'CORPORATE': 'http://new.reward360.us/lite/corporate/freshmenu/',
   'BUSINESS': 'http://new.reward360.us/lite/business/freshmenu/',
   },
- 
+
   GOLF_SITE_URL:{
     'SMARTBUY': 'http://new.reward360.us/lite/',
     'DINERS': 'http://new.reward360.us/lite/diners/',
@@ -85,7 +86,7 @@ API_URL:{
     'DINERS': 'http://new.reward360.us/diners/api/natgeo/',
     'INFINIA'  : 'http://new.reward360.us/infinia/api/natgeo/',
   },
-  
+
     RD_SITE_URL:{
     'SMARTBUY': '//smartbuyuat.reward360.us/ecommerce/rdstore/',
     'DINERS': '//smartbuyuat.reward360.us/diners/ecommerce/rdstore/',
@@ -94,7 +95,7 @@ API_URL:{
     'CORPORATE': '//smartbuyuat.reward360.us/corporate/ecommerce/rdstore/',
     'BUSINESS': '//smartbuyuat.reward360.us/business/ecommerce/rdstore/',
   },
-  
+
   SHOPTIMIZE_SITE_URL:{
     'SMARTBUY': '//smartbuyuat.reward360.us/ecommerce/shoptimize/',
     'DINERS': '//smartbuyuat.reward360.us/diners/ecommerce/shoptimize/',
@@ -108,17 +109,17 @@ API_URL:{
     'DINERS': 'http://new.reward360.us/lite/diners/',
     'INFINIA' : 'http://new.reward360.us/lite/infinia/',
     'REGALIA': 'http://new.reward360.us/lite/regalia/',
-  } , 
+  } ,
   "ENTRY_POINT":{
     "SMARTBUY":"bus",
     "DINERS":"diners/checknatgeo",
     "INFINIA":"infinia/checknatgeo" ,
     "REGALIA":"regalia/bus",
     "CORPORATE":"corporate/bus",
-    "BUSINESS":"business/bus"        
+    "BUSINESS":"business/bus"
   }
-  
-  
+
+
 };
 
 /*
