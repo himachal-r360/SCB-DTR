@@ -1,5 +1,5 @@
-<main class="site-main mob-main">
-  <section class="bradcome-area mt-20 mb-10">
+<main class="site-main mob-main" >
+  <section class="bradcome-area mt-20 mb-10" *ngIf="!isMobile">
       <div class="container">
           <div class="row">
               <div class="col-md-12">
@@ -17,7 +17,7 @@
       </div>
   </section>
 
-  <section class="flight-listing-area mt-10">
+  <section class="flight-listing-area mt-10" *ngIf="!isMobile">
       <div class="container">
           <div class="row">
               <div class="col-lg-12">
@@ -756,23 +756,28 @@
   </section>
 
   <!-- Mobile -->
-  <section class="mob-flights-listing">
+  <section class="mob-flights-listing mob-fr-listing" *ngIf="isMobile">
       <div class="container">
           <div class="row">
               <div class="col-md-12 p-0">
                   <div class="mob-listing-header">
                       <div class="mob-listing-header-left">
-                          <a href="index.html" >
-                              <img src="./assets/images/icons/left.png" alt="" />
+                          <a href="javascript:;" routerLink="/" >
+                              <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                           </a>
                       </div>
                       <div class="mob-listing-header-center">
-                          <h6>Mumbai - Hyderabad</h6>
-                          <p>Wed, 15 Jul | 4 Travellers | Economy</p>
+                          <h6>{{fromCityName}} - {{toCityName}}</h6>
+                          <p>Wed, {{departureDate | date:'dd MMM' }}  | {{totalPassenger}} Travellers |
+                            <span *ngIf="flightClassVal == 'B'">Business</span>
+                        <span *ngIf="flightClassVal == 'E'">Economy</span>
+                        <span *ngIf="flightClassVal == 'F'">First</span>
+                        <span *ngIf="flightClassVal == 'P'">Premium</span>
+                          </p>
                       </div>
                       <div class="mob-listing-header-right">
-                          <a href="index.html" >
-                              <img src="./assets/images/icons/edit.png" alt="" />
+                          <a  href="javascript:;" routerLink="/" >
+                              <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                           </a>
                       </div>
                   </div>
@@ -803,112 +808,159 @@
                       </ul>
                   </div>
               </div>
-
               <div class="col-md-12">
-                  <div class="mob-list-area">
-                      <div class="mob-list-items">
-                          <div class="mob-list-items-name">
-                              <div class="mob-list-items-name-top">
-                                  <div class="mob-list-items-image">
-                                      <img src="./assets/images/flights/flight-1.png" alt="">
-                                      <div class="mob-list-flight-name">
-                                          <h6>IndiGo, Vistara</h6>
-                                          <p>6E 5334, 6E 7137</p>
-                                      </div>
-                                  </div>
-                                  <div class="mob-list-items-price">
-                                      <h6>₹ 4,892</h6>
-                                      <p href="">+1 more</p>
-                                  </div>
+                  <div class="mob-list-area mob-fr-list-area">
+                      <div class="row g-0">
+                          <div class="col-6" appToggleDetail *ngFor="let list of flightList; let i = index">
+                              <div class="mob-fr-list-title">
+                                  <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{fromCityName}} To {{toCityName}}</h6>
                               </div>
-                              <div class="mob-list-items-name-bottom">
-                                  <div class="name-bottom-top">
-                                      <div class="name-bottom-top-left">
-                                          <h6>22:30</h6>
-                                          <p>BOM</p>
+                              <div class="mob-list-items">
+                                  <div class="mob-list-items-name">
+                                      <div class="mob-list-items-name-top">
+                                          <div class="mob-list-items-image">
+                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                              <div class="mob-list-flight-name">
+                                                  <h6>{{list.flights[0].airline}}</h6>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div class="name-bottom-top-center">
-                                          <p>2h 45m</p>
-                                          <img src="./assets/images/icons/mob-flight.png" alt="" />
-                                          <p>2h 45m</p>
-                                      </div>
-                                      <div class="name-bottom-top-right">
-                                          <h6>22:30</h6>
-                                          <p>BOM</p>
+                                      <div class="mob-list-items-name-bottom">
+                                          <div class="name-bottom-top">
+                                              <div class="name-bottom-top-left">
+                                                  <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                                  <p>{{list.flights[0].departureAirport}}</p>
+                                              </div>
+                                              <div class="name-bottom-top-center">
+                                                  <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
+                                              </div>
+                                              <div class="name-bottom-top-right">
+                                                  <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}} </h6>
+                                                  <p>{{list.flights[0].arrivalAirport}}</p>
+                                              </div>
+                                          </div>
+                                          <div class="mob-fr-time">
+                                              <p>{{ list.flights[0].duration | durationTime }}  |
+                                                <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
+                                              <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
+                                            </p>
+                                          </div>
+                                          <div class="name-bottom-bottom">
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                                          </div>
                                       </div>
                                   </div>
-                                  <div class="name-bottom-bottom">
-                                      <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
+                                  <div class="mob-items-book-list dropdown not-close" >
+                                      <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
+                                          <div class="mob-book-list-top">
+                                              <div class="mob-booking-image">
+                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
+                                              </div>
+                                              <div class="mob-booking-price">
+                                                  <h6>₹ {{item.totalFare |number}}</h6>
+                                              </div>
+                                              <div class="mob-booking">
+                                                  <a href="#" class="button-style">Selected</a>
+                                              </div>
+                                          </div>
+                                          <div class="mob-book-list-bottom">
+                                              <div class="mob-extra">
+                                                  <ul>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
+                                                      </li>
+                                                  </ul>
+                                              </div>
+                                              <div class="mob-details">
+                                                  <a href="#" class="mob-fd-show">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                              </div>
+                                          </div>
+                                      </div>
                                   </div>
                               </div>
                           </div>
-                          <div class="mob-items-book-list">
-                              <div class="mob-items-book-list-items">
-                                  <div class="mob-book-list-top">
-                                      <div class="mob-booking-image">
-                                          <img src="./assets/images/flights/1.png" alt="" />
-                                      </div>
-                                      <div class="mob-booking-price">
-                                          <h6>₹ 4,892</h6>
-                                          <p>EMI @ ₹ 1699/month</p>
-                                      </div>
-                                      <div class="mob-booking">
-                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
-                                      </div>
-                                  </div>
-                                  <div class="mob-book-list-bottom">
-                                      <div class="mob-extra">
-                                          <ul>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/1.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/2.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/3.png" alt="" />
-                                              </li>
-                                          </ul>
-                                      </div>
-                                      <div class="mob-details">
-                                          <a href="#" class="mob-fd-show">Flight Details <img src="./assets/images/icons/mob-down.png" alt="" /> </a>
-                                      </div>
-                                  </div>
+                          <div class="col-6" appToggleDetail *ngFor="let list of ReturnflightList; let i = index">
+                              <div class="mob-fr-list-title">
+                                  <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{toCityName}} To {{fromCityName}}</h6>
                               </div>
-                              <div class="mob-items-book-list-items">
-                                  <div class="mob-book-list-top">
-                                      <div class="mob-booking-image">
-                                          <img src="./assets/images/flights/2.png" alt="" />
+                              <div class="mob-list-items">
+                                  <div class="mob-list-items-name">
+                                      <div class="mob-list-items-name-top">
+                                          <div class="mob-list-items-image">
+                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
+                                              <div class="mob-list-flight-name">
+                                                  <h6>{{list.flights[0].airline}}</h6>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div class="mob-booking-price">
-                                          <h6>₹ 4,892</h6>
-                                          <p>EMI @ ₹ 1699/month</p>
-                                      </div>
-                                      <div class="mob-booking">
-                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
+                                      <div class="mob-list-items-name-bottom">
+                                          <div class="name-bottom-top">
+                                              <div class="name-bottom-top-left">
+                                                  <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                                  <p>{{list.flights[0].departureAirport}}</p>
+                                              </div>
+                                              <div class="name-bottom-top-center">
+                                                  <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
+                                              </div>
+                                              <div class="name-bottom-top-right">
+                                                  <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                  <p>{{list.flights[0].arrivalAirport}}</p>
+                                              </div>
+                                          </div>
+                                          <div class="mob-fr-time">
+                                              <p>{{ list.flights[0].duration | durationTime }}  |
+                                                <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
+                                              <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
+                                              </p>
+                                          </div>
+                                          <div class="name-bottom-bottom">
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                                          </div>
                                       </div>
                                   </div>
-                                  <div class="mob-book-list-bottom">
-                                      <div class="mob-extra">
-                                          <ul>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/1.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/2.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/3.png" alt="" />
-                                              </li>
-                                          </ul>
-                                      </div>
-                                      <div class="mob-details">
-                                          <a href="">Flight Details <img src="./assets/images/icons/mob-down.png" alt="" /> </a>
+                                  <div class="mob-items-book-list dropdown not-close">
+                                      <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
+                                          <div class="mob-book-list-top">
+                                              <div class="mob-booking-image">
+                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
+                                              </div>
+                                              <div class="mob-booking-price">
+                                                  <h6>₹{{item.totalFare |number}}</h6>
+                                              </div>
+                                              <div class="mob-booking">
+                                                  <a href="#" class="button-style">Selected</a>
+                                              </div>
+                                          </div>
+                                          <div class="mob-book-list-bottom">
+                                              <div class="mob-extra">
+                                                  <ul>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
+                                                      </li>
+                                                  </ul>
+                                              </div>
+                                              <div class="mob-details">
+                                                  <a href="#" class="mob-fd-show">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                              </div>
+                                          </div>
                                       </div>
                                   </div>
                               </div>
                           </div>
                       </div>
+
                   </div>
               </div>
 
