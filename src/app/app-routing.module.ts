@@ -37,7 +37,7 @@ const routes: Routes = [
   /* {
     path: 'regalia_gold/foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
-  }, */
+  }, 
   {
     path: 'infinia',
     loadChildren: () => import('./infinia/infinia.module').then(m => m.InfiniaModule)
@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: 'regalia_gold',
     loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule)
-  }
+  }*/
 ];
 
 @NgModule({
