@@ -1369,15 +1369,28 @@ new_fare: number = 0;
       this.dateHour=(obj2Date.valueOf()-obj1Date.valueOf())/1000;
     }
   }
-
+ totalStops_data:any;
   durationCalc(){
+    let totalStops=-1;
     this.totalDuration=0;
     for(let i = 0;i<this.flightDetails.length;i++){
       this.totalDuration+=this.flightDetails[i].duration;
       if(this.flightDetails[i+1]!=null && this.flightDetails[i+1]!=undefined){
         this.getLayoverHour(this.flightDetails[i],this.flightDetails[i+1]);
       }
+        totalStops++;
     }
+    
+     
+   if(totalStops==0){
+   if(this.flightSessionData.flights[0]['stops']==0)
+   this.totalStops_data="Non-Stop";
+   else
+   this.totalStops_data=totalStops+ " Stop";
+   }else{
+   this.totalStops_data=totalStops+ " Stop";
+   }
+    
   }
 
   changeFareRuleTab(event:any){
@@ -1862,6 +1875,7 @@ new_fare: number = 0;
         this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
         
         this.itinararyResponse= JSON.parse(this.EncrDecr.get(response.result ));
+        console.log(this.itinararyResponse);
         //this.itinararyResponse=(response);
           if(this.itinararyResponse['response'] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']==200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"]==200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"]==200){
           
@@ -1963,7 +1977,6 @@ new_fare: number = 0;
  // console.log(this.flightInfo);
  
     let fligths=[];
- 
       for(let i=0;i<(this.flightSessionData.flights.length);i++){ 
      fligths.push({
         "arr_tym":  this.flightSessionData.flights[i]['arrivalDateTime'],
@@ -1992,7 +2005,7 @@ new_fare: number = 0;
         "car_name": this.airlinesNameJson[this.flightSessionData.flights[i]['airline']]['name'],
         "airportname_citysour": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['city'],
         "operated_by":  this.flightSessionData.flights[i]['operatingAirline'],
-        "duration":moment.utc(this.flightSessionData.flights[i]['duration'] * 1000).format("H[h] mm[min]"),
+        "duration":moment.utc(this.flightSessionData.flights[i]['duration'] * 1000).format("H [h] mm [min]"),
         "frcnt": "",
         "flystart": "",
         "airportname_desti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['airport_name'],
@@ -2001,8 +2014,9 @@ new_fare: number = 0;
         "arrivalTerminal": this.flightSessionData.flights[i]['arrivalTerminal'],
         "stopsDetails": []
       });
-      
       }
+ 
+
  
       var whatsappFlag;
    if(this.whatsappFeature==1)
@@ -2026,7 +2040,13 @@ new_fare: number = 0;
   },
   "flightDetails": {
     "onwards": fligths,
+    "onward_refund":this.selectedVendor.refundStatus,
+    "onward_duration":moment.utc(this.totalDuration * 1000).format("H [h] mm [min]"),
+    "onward_stops":this.totalStops_data,
     "returns": [],
+    "return_refund":"",
+      "return_duration":'',
+       "return_stops":'',
     "baggage_information": {
       "onward": "",
       "return": ""
@@ -2053,13 +2073,13 @@ new_fare: number = 0;
        "travel": "DOM"
     }
   },
-  "cancellationPolicy": "Resources are not available.",
-  "checkin": "{\"onward\":[{\"airline\":\"6E\",\"departureDateTime\":\"2022-07-30T11:10:00\"}]}",
+  "cancellationPolicy": "",
+  "checkin": "",
   "checkin_box": null,
   "order_ref_num":this.itinararyResponse.response.orderId,
-  "amd_url": "http://new.reward360.us/amd/aWeklGmHhKaglWFwaWNoZm5lpJg%3D",
-  "redirect_url": "http://new.reward360.us/flights/search?Default=O&adults=1&child=0&class=E&fcode=BLR&flightdeparture=2022-07-30&flightfrom=Bangalore+%28BLR%29&flightreturn=&flightto=Chennai+%28MAA%29&infants=0&t=QkxSTUFBNkU2MjEyMjAyMi0wNy0zMDo6RWFzZW15dHJpcA==&tcode=MAA&ux=1",
-  "retry_url": "http://new.reward360.us/retry/aWeklGmHhKaglWFwaWNoZm5lpJg%3D"
+  "amd_url": "",
+  "redirect_url": "",
+  "retry_url": ""
 };
   
 
