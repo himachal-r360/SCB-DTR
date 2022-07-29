@@ -4,10 +4,10 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
 import { HomeComponent } from './home/home.component';
 import { ForyouTabComponent } from './foryou-tab/foryou-tab.component';
 import {PartnersComponent} from './partners/partners.component';
-import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
+/*import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { DinersModule } from './diners/diners.module';
 import { InfiniaModule } from './infinia/infinia.module';
-
+*/
 const routes: Routes = [
   {
     path:"" , component:HomeComponent
@@ -54,9 +54,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RegaliaGoldModule,
-    InfiniaModule,
-    DinersModule,
+    //RegaliaGoldModule,
+    //InfiniaModule,
+    //DinersModule,
     RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
