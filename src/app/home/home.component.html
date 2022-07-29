@@ -1,5 +1,5 @@
-<main class="site-main">
-    <section class="travel-area mtb-80">
+<main class="site-main mt-180">
+    <section class="travel-area mtb-100">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -413,7 +413,7 @@
                                                                     }}</span>
 
                                                             </div>
-                        
+
                                                             <div class="select-root-date"
                                                                 style="position: relative; left: 0;">
                                                                 <i
@@ -468,6 +468,31 @@
                                                             </div>
 
                                                         </div>
+
+                                        <!--Mobile Picker-->
+                                                        <!-- <div class="area-root-reutrn" *ngIf="isMobile" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
+                                                            <div class="select-root-reutrn"  >
+                                                                <span class="select-roottitle">RETURN</span>
+                                                                <h5 class=" ">{{arrivalDate | date:'dd MMM' }}</h5>
+
+                                                                <span class="select-roottitle"
+                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined" >{{arrivalDate
+                                                                    | date:'EEEE' }}</span>
+                                                                <span class="select-roottitle d-block w-100" *ngIf="arrivalDate=='' || arrivalDate==undefined" >Tap to add
+                                                                    a <br> return date</span>
+                                                            </div>
+                                                            <div class="select-root-date">
+                                                                <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
+                                                                <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                                    <input matInput [min]="flightData.value.departure" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="arrivalDate" (dateChange)="currentPeriodArrivalClicked($event)"  >
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker2 touchUi panelClass="bottomDatePicker"></mat-datepicker>
+                                                             </mat-form-field>
+                                                            </div>
+
+                                                        </div> -->
+
+
 
                                                     </div>
                                                 </div>
@@ -688,7 +713,7 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                    <div class="add-search-content ms-3">
+                                    <!--<div class="add-search-content ms-3">
                                         <div class="Preferred-area" appDropdown>
                                             <h5 class="Preferred-title">Preferred Airline <img
                                                     src="./assets/images/icons/down.png" class="ms-1" alt=""></h5>
@@ -731,7 +756,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </form>

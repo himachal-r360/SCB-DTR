@@ -1,0 +1,36 @@
+
+<div class="sign-section">
+    <!-- <button type="button" class="dc_close close" (click)="closeDialog()" >&times;</button> -->
+
+    <p class="text-center my-3 w-hurry"><b>Congrats!!</b></p>
+    <p class="text-center my-4 w-eligible">{{message}}</p>
+
+    <div class="row">
+        <div class="col-md-6 col-6">
+            <p class="non_head_title"><b>Total Amount</b></p>
+        </div>
+        <div class="col-6 col-md-6">
+            <div class="w-price-strike">
+                <span class="w-price">Rs. {{newOrderAmtWithFee| number:'1.2-2'}}</span>
+                <span class="price-strike">Rs. {{oldOrderAmtWithFee| number:'1.2-2'}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="greenfont pt-3 pb-4">You will save <b>Rs. {{couponAmount| number:'1.2-2'}}</b> on this booking.</div>
+        </div>
+    </div>
+
+    <div class="pb-2 row">
+        <div class="col-12 col-md-6 mt-sm-3 order-sm-first">
+            <div class="w-offer">
+                <a class="m-font ml-3" href="javascript:;" (click)="closeDialog()">No, Continue without offer</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mt-3 order-first">
+            <button type="submit" class="btn btn-primary m-font nxt-redeem-success" (click)="applyNonSpcOffer()">Continue</button>
+        </div>
+    </div>
+</div>

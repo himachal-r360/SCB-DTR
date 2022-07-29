@@ -1,0 +1,38 @@
+<div class="modal-content session-modal-content ">
+    <div class="modal-body session-body">
+
+  <div class="" id="before-expiry" *ngIf="beforeExpiry">
+            <div class="" >
+                <div class="text-center ">
+                    <div ><img src="{{cdnUrl}}images/alert.png" /></div>
+                </div>
+                <div class="session-title text-center ">
+                    <h2>Your session is about to expire in</h2></div>
+                <div class="timer-div"><span class="timer-txt" id="time"> <countdown [config]="{leftTime: 10}" (event)="onFinishedTimerSeesion($event)">$!m! min $!s! sec</countdown></span> </div>
+                                        <div class="alert-box-msg  ">The session expires due to inactivity. Click on Continue to stay on the current page. </div>
+            </div>
+            <div class="">
+                <div class="continue-btn-div">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-normal btn-animated btn-session-expired"  (click)="startOverContinue()"><span>Continue</span></button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="" id="after-expiry" *ngIf="afterExpiry">
+            <div class="" >
+                <div class="text-center ">
+                    <div ><img src="{{cdnUrl}}images/alert.png" /></div>
+                </div>
+                <div class="session-title text-center ">
+                    <h2>Sorry!</h2></div>
+                <div class="alert-box-msg  plr50"> This session has expired due to inactivity</div>
+            </div>
+            <div class="">
+                <div class="continue-btn-div">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-normal btn-animated btn-session-expired"  (click)="startOver()"><span>Start over</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

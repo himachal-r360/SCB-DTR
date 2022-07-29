@@ -1,0 +1,18 @@
+
+<div class="sign-section">
+        <button type="button" class="dc_close close" (click)="close()" >&times;</button>
+    <form [formGroup]="Form1" name="Form1" class="p-3" (ngSubmit)="dialogClose()">
+        <p class="text-center my-3">Enter mobile number linked with your HDFC Bank Debit Card</p>
+
+        <input type="text" class="input-field mb-3 w-100 p-2 w-input" placeholder="Enter Mobile Number" autocomplete="off" (keypress)="numberInput($event);AvoidSpace($event)"
+        value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNo" maxlength="10" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
+
+        <div class="error" *ngIf="(submitted && Form1.controls.mobileNo.errors) || (Form1.controls.mobileNo.touched)">
+                <small *ngIf="Form1.hasError('required','mobileNo')">Please enter mobile number.</small>
+                <small *ngIf="Form1.hasError('pattern','mobileNo')">Please enter a valid 10 digits mobile number.</small>
+        </div>
+
+        <button type="submit" class="btn btn-ctn sign-continue w-100 btn-normal mt-4">CONTINUE</button>
+    </form>
+</div>
+    

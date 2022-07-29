@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { MY_DATE_FORMATS } from '../flight-list/flight-list.component';
+import { SimpleGlobal } from 'ng2-simple-global';
+import {environment} from '../../../environments/environment';
 import { Options } from '@angular-slider/ngx-slider';
 import { Location, ViewportScroller } from '@angular/common';
 
@@ -19,7 +21,7 @@ declare var $: any;
   ]
 })
 export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDestroy {
-
+  cdnUrl: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
 
   flightList: any = [];
@@ -155,7 +157,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     flightfrom: [],
     flightto: [],
     flightclass: [],
-    flightdefault: ['O'],
+    flightdefault: ['R'],
     departure: [],
     arrival: [''],
     adults: [],
@@ -164,7 +166,10 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     travel: ['DOM'],
   });
 
-  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location  ) { }
+  constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+
+   }
 
   ngOnInit(): void {
     this.loader = true;
@@ -201,7 +206,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
-      this._flightService.headerHideShow = this._flightService.headerHideShow.style.display = "none";
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
     }
   }
 
@@ -489,7 +496,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.Initslider();
-      $('.selectpicker').selectpicker();
+     // $('.selectpicker').selectpicker();
     }, 200);
   }
 

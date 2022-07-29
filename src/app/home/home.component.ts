@@ -16,6 +16,7 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
+import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -88,7 +89,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   showTravellerBlock = false;
   isDisabled = false;
   windowItem = window;
-  navItemActive:any; 
+  navItemActive:any;
   customOptions: OwlOptions = {
     loop: true,
     autoplay:true,
@@ -117,21 +118,31 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  constructor(
-    public router: Router,
-    private _fb: FormBuilder,
-    private _flightService: FlightService,
-    private ngZone:NgZone
 
-  ) {
-    window.onresize = (e) =>
-    {
-        //ngZone.run will help to run change detection
-        this.ngZone.run(() => {
-          this.isMobile = window.innerWidth < 991 ?  true : false;
-        });
+  constructor(
+    public _styleManager: StyleManagerService,
+      public router: Router,
+      private _fb: FormBuilder,
+      private _flightService: FlightService,private ngZone:NgZone
+
+    ) {
+      window.onresize = (e) =>
+      {
+          //ngZone.run will help to run change detection
+          this.ngZone.run(() => {
+            this.isMobile = window.innerWidth < 991 ?  true : false;
+          });
+      }
+      setTimeout(() => {
+        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+     }, 10);
+
     }
-  }
+
+
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
     flightto: ['',[Validators.required]],
@@ -148,6 +159,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
+
+   this._flightService.showHeader(true);
+
     this.isMobile = window.innerWidth < 991 ?  true : false;
     // this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
@@ -155,15 +169,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
     this.setSearchFilterData()
-  
-  }
-  ngAfterViewInit(): void {
-    
 
   }
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+  ngAfterViewInit(): void {
+
+
   }
+
   currentPeriodClicked(datePicker:any){
     let date = datePicker.target.value
     if(date && this.navItemActive !== "Round Trip"){
@@ -188,7 +200,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }, 50);
     }
-   
+
   }
 
   currentPeriodArrivalClicked(datePicker:any) {
@@ -324,12 +336,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   flightTimingfrom:any;
   flightTimingto:any;
   searchObj:any;
-  
+
   setSearchFilterData() {
       this.searchData = sessionStorage.getItem('searchVal');
       if(this.searchData != null || this.searchData != undefined){
       this.searchObj = JSON.parse(this.searchData);
-      this.fromCityName = this.searchObj.fromCity; 
+      this.fromCityName = this.searchObj.fromCity;
       this.toCityName = this.searchObj.toCity;
       this.departureDate = new Date(this.searchObj.departure);
        if(this.searchObj.arrival != '' && this.searchObj.arrival != undefined && this.searchObj.arrival != null) {
@@ -379,14 +391,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       }
       if(this.continueSearchFlights.length>3){
-        this.continueSearchFlights=this.continueSearchFlights.slice(0,3);  
+        this.continueSearchFlights=this.continueSearchFlights.slice(0,3);
       }
       this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
       localStorage.setItem('toAirportName', this.toAirpotName);
-      
+
   }
 
 
@@ -406,7 +418,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
       this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
     }
-    
+
     if(this.flightData.invalid || this.dateValidation==true){
       return
     }
@@ -442,6 +454,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     return str.join("&");
   }
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+
+        this._styleManager.removeStyle('bootstrap-select');
+        this._styleManager.removeStyle('daterangepicker');
+        this._styleManager.removeScript('bootstrap-select');
+        this._styleManager.removeScript('custom');
+  }
 
   continueSearch(param:any){
     // sessionStorage.setItem('searchVal', JSON.stringify(param));
@@ -455,7 +475,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigateByUrl(url);
     }
     // this.setSearchFilterData()
-    
+
   }
 
   increaseAdult() {
