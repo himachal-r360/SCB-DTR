@@ -156,7 +156,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     flightfrom: [],
     flightto: [],
     flightclass: [],
-    flightdefault: ['O'],
+    flightdefault: ['R'],
     departure: [],
     arrival: [''],
     adults: [],
@@ -166,7 +166,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   });
 
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
-    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
 
    }
 
