@@ -164,11 +164,11 @@
                                             <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
                                         </a>
                                       </li>
-                                    <li class="nav-item" *ngIf="showRewardsBox">
+                                    <!--<li class="nav-item" *ngIf="showRewardsBox">
                                       <a id="tab-rewardPoints" href="#pane-rewardPoints" class="nav-link" data-bs-toggle="tab" role="tab">
                                           <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Reward Points</span>
                                       </a>
-                                    </li>
+                                    </li>-->
                                     <li class="nav-item" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
                                         <a id="tab-flexipay" href="#pane-flexipay" class="nav-link" data-bs-toggle="tab" role="tab">
                                             <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
@@ -1049,7 +1049,7 @@
                                 <!-- payzapp Section Ends -->
 
                                 <!-- Reward Points Section Starts -->
-                                <div id="pane-rewardPoints" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-rewardPoints" *ngIf="showRewardsBox">
+                                <!--<div id="pane-rewardPoints" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-rewardPoints" *ngIf="showRewardsBox">
                                     <div class="panel-heading">
                                         <div class="" *ngIf="showRewardsBox">
                                             <a id="tab-rewardPoints" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-rewardPoints" aria-expanded="false" aria-controls="collapse-rewardPoints">
@@ -1066,7 +1066,6 @@
                                                         <div class="common_title">
                                                             <span class="">Pay Using Points</span>
                                                           </div>
-                                                        <!-- <h6 class="point-title"><b>Pay using Points</b></h6> -->
                                                         <div class="row">
                                                             <div class="col-sm-12 col-12">
                                                                 <div class="redeem-section">
@@ -1103,13 +1102,11 @@
                                             
                                                 <ng-container *ngIf="showProceedPayment">
                                                     <ng-container *ngIf="PayNoAmtStatus;else proceedPayment">
-                                                        <!-- PAY NO AMOUNT , GO TO CHECKOUT SECTION -->
                                                         <div class="payPoints-section">
                                                             <div class="payment-section col-md-12">
                                                                 <form [formGroup]="PayNoAmtForm">
                                                                     <div class="success-redeem"></div>
                                                                     <div class="">
-                                                                        <!-- <span><b>{{redeemtext}}</b></span> -->
                                                                         <p class="success_msg" [innerHtml]="redeemtext"></p>
                                                                     </div>
                                                                     <div class="col-md-12 mt-3">
@@ -1124,13 +1121,7 @@
                                                                                 </label>
                                                                             </div>
                                                                         </div>
-                                                                        <!-- <p> 
-                                                                            <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                                SmartBuy.
-                                                                                <input type="checkbox" formControlName="termscondition" name="termscondition"> <span class="checkmark"></span></label>
-                                                                        </p> -->
+                                                              
                                                                         <div *ngIf="submittedPayNoAmtForm && PayNoAmtForm.controls.termscondition.errors" class="error_tc">
                                                                             <small *ngIf="PayNoAmtForm.controls.termscondition.errors.required || PayNoAmtForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                         </div>
@@ -1142,13 +1133,11 @@
                                                     </ng-container>
                                             
                                                     <ng-template #proceedPayment>
-                                                        <!-- PAY REMAINING AMOUNT -->
                                                         <div>
                                                             <div class="payPointsSuccess-section">
                                                                 <div class="payment-section">
                                                                     <div class="success-redeem"></div>
                                                                     <div class="">
-                                                                        <!-- <p class="success_msg">{{redeemtext}}</p> -->
                                                                         <p class="success_msg" [innerHtml]="redeemtext"></p>
                                                                     </div>
                                                                 </div>
@@ -1162,7 +1151,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <!-- Reward Points Section Ends -->
 
 

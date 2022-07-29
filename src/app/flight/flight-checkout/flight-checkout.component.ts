@@ -1680,7 +1680,7 @@ new_fare: number = 0;
                 "firstName": this.passengerForm.controls['adult_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['adult_last_name'+i]['value'],
                 "type": "ADT",
-                "dateOfBirth": moment(this.passengerForm.controls['adult_dob'+i]['value']).format('YYYY-MM-DD') ,
+                "dob": moment(this.passengerForm.controls['adult_dob'+i]['value']).format('YYYY-MM-DD') ,
                 "paxNationality": "IN",
                 "frequentFlyerNumbers": [],
                 "paxID": paxInfoCnt
@@ -1699,7 +1699,7 @@ new_fare: number = 0;
                 "firstName": this.passengerForm.controls['child_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['child_last_name'+i]['value'],
                 "type": "CHD",
-                "dateOfBirth": moment(this.passengerForm.controls['child_dob'+i]['value']).format('YYYY-MM-DD') ,
+                "dob": moment(this.passengerForm.controls['child_dob'+i]['value']).format('YYYY-MM-DD') ,
                 "paxNationality": "IN",
                 "frequentFlyerNumbers": [],
                 "paxID": paxInfoCnt
@@ -1714,10 +1714,14 @@ new_fare: number = 0;
                 "firstName": this.passengerForm.controls['infant_first_name'+i]['value'],
                 "lastName": this.passengerForm.controls['infant_last_name'+i]['value'],
                 "type": "INF",
-                "dateOfBirth": moment(this.passengerForm.controls['infant_dob'+i]['value']).format('YYYY-MM-DD') ,
+                "dob": moment(this.passengerForm.controls['infant_dob'+i]['value']).format('YYYY-MM-DD') ,
                 "paxNationality": "IN",
                 "frequentFlyerNumbers": [],
                 "paxID": paxInfoCnt
+               /* 'Passport' : "",
+                'PlaceOfIssue' : "",
+                'VisaType'  : "",
+                'passportDateOfExpiry'  : ""*/
               });
         paxInfoCnt++;
         }
