@@ -30,11 +30,11 @@ const routes: Routes = [
     path: 'foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   },
-   {
+    /* {
     path: 'diners/foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   },
-  /* {
+ {
     path: 'regalia_gold/foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   }, 
