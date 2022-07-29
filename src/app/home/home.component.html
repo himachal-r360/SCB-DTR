@@ -381,7 +381,7 @@
                                         <div class="col-lg-6">
                                             <div class="root-date">
                                                 <div class="select-root-area">
-                                                    <div class="select-dep-ret mob-select-dep-ret">
+                                                    <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
                                                         <!-- <div class="area-root-departure" id="DepartureDate">
                                                             <div class="select-root-departure departure-date">
                                                                 <span class="select-roottitle">DEPARTURE</span>
@@ -440,14 +440,14 @@
                                                             <div class="select-root-reutrn ">
                                                                 <span class="select-roottitle">RETURN</span>
                                                                 <h5 class=" "
-                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined">
+                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
                                                                     {{arrivalDate | date:'dd MMM' }}</h5>
                                                                 <span class="select-roottitle d-block w-100"
-                                                                    *ngIf="arrivalDate=='' || arrivalDate==undefined">Tap
+                                                                    *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">Tap
                                                                     to add
                                                                     a <br> return date</span>
                                                                 <span class="select-roottitle"
-                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined">{{arrivalDate
+                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
                                                                     | date:'EEEE' }}</span>
 
                                                             </div>
