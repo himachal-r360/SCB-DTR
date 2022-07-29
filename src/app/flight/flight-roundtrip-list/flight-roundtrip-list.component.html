@@ -27,13 +27,13 @@
                           <div class="travel-select-trip mt-0">
                               <ul class="travel-select-trip-ul">
                                   <li>
-                                      <span class="selectway ">One Way</span>
+                                      <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':''  ? 'active':'' ">One Way</span>
                                   </li>
                                   <li>
-                                      <span class="selectway active">Round Way</span>
+                                      <span class="selectway active" (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round Way</span>
                                   </li>
                                   <li>
-                                      <span class="selectway">Multi-City</span>
+                                      <span class="selectway" (click)="navBarLink('Multicity')" [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multi-City</span>
                                   </li>
                                   <li>
                                       <div class="Travellers-dropdown ms-3" appDropdown>
@@ -275,42 +275,6 @@
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <!-- <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Refundable Fares (84)</span>
-                                                      </label>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" checked="checked" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Non-stop (23)</span>
-                                                      </label>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Morning Departures (66)</span>
-                                                      </label>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Meals Included</span>
-                                                      </label>
-                                                  </div>
-                                              </li> -->
                                               <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
                                                 <div class="custom-controls-stacked">
                                                     <label class="custom-control material-checkbox">
@@ -377,15 +341,6 @@
                                       </div>
                                       <div class="widget-content">
                                           <div class="Stops-content">
-                                              <!-- <div class="Stops-list">
-                                                  <p>No <br> stops</p>
-                                              </div>
-                                              <div class="Stops-list active">
-                                                  <p>1 <br> stops</p>
-                                              </div>
-                                              <div class="Stops-list">
-                                                  <p>2+ <br> stops</p>
-                                              </div> -->
                                               <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
                                         [innerHTML]="FlightStopitem.value">
                                           </div>
