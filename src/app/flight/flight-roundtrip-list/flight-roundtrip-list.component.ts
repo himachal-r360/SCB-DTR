@@ -77,6 +77,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   isMobile:boolean= false
   math = Math;
   EMI_interest: number = 16;
+  navItemActive:any;
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -156,7 +157,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     flightfrom: [],
     flightto: [],
     flightclass: [],
-    flightdefault: ['O'],
+    flightdefault: ['R'],
     departure: [],
     arrival: [''],
     adults: [],
@@ -166,7 +167,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   });
 
   constructor(private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
-    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
 
    }
 
@@ -1571,4 +1572,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   {
     this.isDetailsShow = false;
   }
+
+  navBarLink(navItem:any){
+    this.navItemActive = navItem;
+  }
+  
 }
