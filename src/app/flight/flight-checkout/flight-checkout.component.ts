@@ -2047,7 +2047,10 @@ new_fare: number = 0;
       "flightto": this.searchData.toCity,
       "infants":this.searchData.infants,
       "t": "ZWFybg==",
-      "tcode": this.searchData.flightto
+      "tcode": this.searchData.flightto,
+      "post_partner":this.selectedVendor.partnerName,
+      "post_default":this.searchData.flightdefault,
+       "travel": "DOM"
     }
   },
   "cancellationPolicy": "Resources are not available.",
