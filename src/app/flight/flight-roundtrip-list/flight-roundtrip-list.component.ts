@@ -176,7 +176,6 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.getQueryParamData(null);
     this.headerHideShow(null)
     this.getCityList();
-    this.getFlightIcon();
     this.getAirpotsList();
     this.setSearchFilterData();
     this.flightSearch();
@@ -333,12 +332,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     return flightsData;
   }
 
-  // Get flight Icons
-  getFlightIcon() {
-    this._flightService.getFlightIcon().subscribe((res: any) => {
-      this.flightIcons = res;
-    })
-  }
+
 
   increaseAdult() {
     if (parseInt(this.flightDataModify.value.adults) < 9) {
@@ -1494,7 +1488,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
   }
 
-  onSelectOnword(flights:any,item:any,event:any)
+  onSelectOnword(flightKey:any,flights:any,item:any,event:any)
   {
 
     $(".onwardbuttons").removeClass('button-selected-style');
@@ -1508,7 +1502,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
       }
-      var onwardSelectedFlight = {flights:flights,priceSummery:item};
+      var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
     var partner = item.partnerName;
     this.ReturnflightList.forEach((z:any)=>{
@@ -1525,7 +1519,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   }
 
-  onSelectReturn(flights:any,item:any,event:any)
+  onSelectReturn(flightKey:any,flights:any,item:any,event:any)
   {
   if(this.isOnwardSelected == true)
       {
@@ -1542,7 +1536,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.isDisplayDetail = true;
         this.isFlightsSelected = true;
 
-      var returnSelectedFlight = {flights:flights,priceSummery:item}
+      var returnSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
       this.returnSelectedFlight = returnSelectedFlight;
       }
       else{
@@ -1575,6 +1569,32 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   navBarLink(navItem:any){
     this.navItemActive = navItem;
+  }
+  
+  
+  bookingSummary(onwardSelectedFlight: any, returnSelectedFlight: any) {
+        let flightDetailsArr: any = { 
+        "travel":"DOM",
+        "travel_type":"R",
+        "docKey": this.DocKey,
+        "onwardFlightKey": onwardSelectedFlight.flightKey,
+        "returnFlightKey": returnSelectedFlight.flightKey,
+        "onwardFlights": onwardSelectedFlight.flights,
+        "returnFlights": returnSelectedFlight.flights,
+        "onwardPriceSummary": onwardSelectedFlight.priceSummery, 
+        "returnPriceSummary": returnSelectedFlight.priceSummery, 
+        "queryFlightData":this.queryFlightData
+        };
+    
+    let randomFlightDetailKey = btoa(this.DocKey+onwardSelectedFlight.flightKey+returnSelectedFlight.flightKey+onwardSelectedFlight.priceSummery.partnerName+returnSelectedFlight.priceSummery.partnerName);
+    sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
+    //this._flightService.setFlightsDetails(flightDetailsArr);
+    let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
+   
+    setTimeout(() => {
+        this.router.navigateByUrl(url);
+        }, 10);  
+        
   }
   
 }

@@ -120,7 +120,12 @@ export class RestapiService {
    return this.http.post( this.endpoint+'getnotification','', config).pipe(map((response: any) => response));
  }
  getNotificationPopup (): Observable<any> {
-   return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/getnotificationPopup.json');
+   }else{
+	return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+    }
+   
  }
 
   arr=[];

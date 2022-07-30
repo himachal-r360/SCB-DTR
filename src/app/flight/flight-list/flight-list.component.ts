@@ -10,6 +10,7 @@ import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
+import { AppConfigService } from '../../app-config.service';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -177,7 +178,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         nextIndex=0;
         
         private loadData() {
-       
              if (this.pageIndex >= this.flightList.length) {
              return false;
               }else{
@@ -210,14 +210,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
               
               this.container.createEmbeddedView(this.template, context);
             }
+            //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
             //  this.gotoTop();
         }
-        
+   serviceSettings:any;     
+  enableFlightServices:any;
   
-  
-  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
-  
+      this.serviceSettings=this.appConfigService.getConfig();
+      this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
@@ -227,7 +229,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#endOfPage').trigger('click');
         }
         });
-       
   }
   
 @HostListener('window:resize', ['$event'])
@@ -323,17 +324,14 @@ ngOnInit(): void {
 
     })
   }
-
+  show_airline_more:number=0;
   showmoreAirline() {
-    let airlineSize = 2
-    if(this.airlines.length > 2) {
-      let modifyAirline = this.airlines.slice(0, airlineSize)
-    }
-    // else  {
-
-    // }
-
-
+   this.show_airline_more=1;
+  }
+  
+    show_layover_more:number=0;
+  showmoreLayover() {
+   this.show_layover_more=1;
   }
 
   increaseAdult() {
@@ -802,11 +800,9 @@ ngOnInit(): void {
     // Layover Filter Flights
     this.flightList = this.layoverFilterFlights(this.flightList);
 
-
      this.container.clear();
      this.intialData();
 
-  $('.scrollToTop').trigger('click');
   }
 
   //Popular Filter Flights
@@ -985,6 +981,7 @@ ngOnInit(): void {
           return item;
         }
       })
+     
       var filteredAirlines: any[] = [];
       if (airlineArr.length > 0) {
         flightList.forEach((e: any) => {
@@ -998,10 +995,12 @@ ngOnInit(): void {
             filteredAirlines.push(e);
           }
         });
-        if (filteredAirlines.length > 0) {
+       // if (filteredAirlines.length > 0) {
           flightList = filteredAirlines;
-        }
+       // }
       }
+      
+     
 
       //Get AirLines Count
       if (this.airlines.length > 0) {
@@ -1348,40 +1347,33 @@ ngOnInit(): void {
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};
-   // let randomFlightDetailKey = this.getRandomString(44);
-   
-    let randomFlightDetailKey = btoa(this.DocKey+flightKey);
+    /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
     
+       let flightDetailsArr: any = { 
+        "travel":"DOM",
+        "travel_type":"O",
+        "docKey": this.DocKey,
+        "onwardFlightKey": flightKey,
+        "returnFlightKey": '',
+        "onwardFlights": flights,
+        "returnFlights":'' ,
+        "onwardPriceSummary": selected, 
+        "returnPriceSummary": '', 
+        "queryFlightData":this.queryFlightData
+        };
+    
+    
+    let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
-    
-    this._flightService.setFlightsDetails(flightDetailsArr);
+    //this._flightService.setFlightsDetails(flightDetailsArr);
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-        this.router.navigateByUrl(url);
-    /*
-    const myInterval =setInterval(()=>{
-      this.loaderValue = this.loaderValue + 10;
-      if(this.loaderValue == 110)
-      {
-        clearInterval(myInterval);
-        $('#bookingprocess').modal('hide');
-        let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-        this.router.navigateByUrl(url);
-      }
-    },10)*/
+   
+        setTimeout(() => {
+                this.router.navigateByUrl(url);
+                }, 10);  
+
   }
 
-
-// get rendom string value
-  getRandomString(length: any) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random()*charactersLength));
-    }
-    return result;
-  }
 
 
   gotoTop() {

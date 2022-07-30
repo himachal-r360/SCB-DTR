@@ -134,7 +134,7 @@
                                               </div>
                                           </div>
                                           <div class="select-root-icons" (click)="swap()">
-                                              <img src="./assets/images/icons/twoway.png" alt="" >
+                                              <img src="{{cdnUrl}}/images/icons/twoway.png" alt="" >
                                           </div>
                                           <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
                                               <span class="select-roottitle">TO</span>
@@ -219,7 +219,7 @@
                           <div class="add-search-area">
                                <div class="add-search-content">
                                   <div class="Preferred-area">
-                                      <h5 class="Preferred-title">Preferred Airline <img src="./assets/images/icons/down.png" class="ms-1" alt=""></h5>
+                                      <h5 class="Preferred-title">Preferred Airline <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
                                       <div class="Preferred-data Preferred-hide">
                                           <div class="Preferred-search">
                                               <input type="text" name="" class="w-100" id="" placeholder="Search Airline">
@@ -503,7 +503,7 @@
                                                   </div>
                                                   <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
-                                                       <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}" width="40" >
+                                                       <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
                                                       <!-- <img src="assets/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                   </div>
@@ -518,7 +518,7 @@
                                                       <div class="round-list-image-box">
                                                           <div class="round-list-image">
                                                              <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" >
-                                                              <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                                                              <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                           </div>
                                                           <div class="flight-options-text">
                                                             <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -556,16 +556,16 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flights,item,$event)">Select</a>
+                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
                                                           </div>
                                                       </div>
                                                   </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
-                                                          <ul class="extra-tabs-right-ul">
+                                                          <!--<ul class="extra-tabs-right-ul">
                                                               <li class="ms-0">
                                                                   <p>
-                                                                      <img src="./assets/images/icons/details/1.png" alt="">
+                                                                      <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
                                                                   </p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
@@ -574,7 +574,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/2.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Meals Selection</p>
@@ -582,18 +582,18 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/3.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Seats Selection</p>
                                                                       </div>
                                                                   </div>
                                                               </li>
-                                                          </ul>
+                                                          </ul>-->
                                                       </div>
                                                       <a href="javascript:void(0);" (click)="DisplayDetail()" class="round-flight-details-click">
                                                           Flight Details
-                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
                                                       </a>
                                                   </div>
                                               </div>
@@ -634,7 +634,7 @@
                                                                 <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                                   </div>
                                                   <div class="round-content-time">
-                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                                       <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}   |
                                                         <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
                                                         <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
@@ -649,14 +649,14 @@
                                                   </div>
                                                   <div class="round-content-price"  *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
-                                                        <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
+                                                        <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
                                                       <!-- <img src="assets/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                   </div>
                                               </div>
                                           </div>
                                           <div class="round-flight-info-box">
-                                              <p><img src="./assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
@@ -664,7 +664,7 @@
                                                       <div class="round-list-image-box">
                                                           <div class="round-list-image">
                                                               <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" >
-                                                              <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                                                              <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                           </div>
                                                           <div class="flight-options-text">
                                                             <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -702,16 +702,16 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flights,item,$event)" >Select</button>
+                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)" >Select</button>
                                                           </div>
                                                       </div>
                                                   </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
-                                                          <ul class="extra-tabs-right-ul">
+                                                          <!--<ul class="extra-tabs-right-ul">
                                                               <li class="ms-0">
                                                                   <p>
-                                                                      <img src="./assets/images/icons/details/1.png" alt="">
+                                                                      <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
                                                                   </p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
@@ -720,7 +720,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/2.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Meals Selection</p>
@@ -728,18 +728,18 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/3.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Seats Selection</p>
                                                                       </div>
                                                                   </div>
                                                               </li>
-                                                          </ul>
+                                                          </ul>-->
                                                       </div>
                                                       <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail()">
                                                           Flight Details
-                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="" >
+                                                          <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="" >
                                                       </a>
                                                   </div>
                                               </div>
@@ -786,7 +786,7 @@
                   <div class="mob-listing-fiters">
                       <h6>12 Flights Found</h6>
                       <a href="#" class="showfilters">
-                          <img src="./assets/images/icons/filter.png" alt="">
+                          <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
                           <span>Sort/Filters</span>
                       </a>
                   </div>
@@ -893,7 +893,7 @@
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
-                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
+                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                               <div class="mob-list-flight-name">
                                                   <h6>{{list.flights[0].airline}}</h6>
                                               </div>
@@ -979,7 +979,7 @@
       <div class="mob-title">
           <h3>Flight Details</h3>
           <a href="#" class="mob-close mob-ff-from-close">
-              <img src="./assets/images/icons/close.png" alt="">
+              <img src="{{cdnUrl}}/images/icons/close.png" alt="">
           </a>
       </div>
       <div class="mob-fd-filters">
@@ -1004,7 +1004,7 @@
                                   <div class="extra-tabs-details-bottom p-0">
                                       <div class="tabs-depart-box">
                                           <div class="tabs-depart-one">
-                                              <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                              <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
                                               <div class="tabs-depart-left">
                                                   <div class="tabs-depart-times">
                                                       <h5 class="mb-1 fw_7">08:05</h5>
@@ -1039,7 +1039,7 @@
                                               <p>Change of planes・3h 0m Layover in Nagpur</p>
                                           </div>
                                           <div class="tabs-depart-three">
-                                              <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                              <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
                                               <div class="tabs-depart-left">
                                                   <div class="tabs-depart-times">
                                                       <h5 class="mb-1 fw_7">08:05</h5>
@@ -1152,24 +1152,24 @@
                                   <div class="rules-flight">
                                       <div class="rules-flight-items">
                                           <div class="rules-flight-thumbe">
-                                              <img src="./assets/images/flights/flight-1.png" alt="">
+                                              <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                           </div>
                                           <div class="rules-flight-content">
                                               <h6>
                                                   BOM
-                                                  <img src="./assets/images/icons/flight-right.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                   NAG
                                               </h6>
                                           </div>
                                       </div>
                                       <div class="rules-flight-items opacity_05">
                                           <div class="rules-flight-thumbe">
-                                              <img src="./assets/images/flights/flight-1.png" alt="">
+                                              <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                           </div>
                                           <div class="rules-flight-content">
                                               <h6>
                                                   NAG
-                                                  <img src="./assets/images/icons/flight-right.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                   HYD
                                               </h6>
                                           </div>
@@ -1317,7 +1317,7 @@
       <div class="mob-title">
           <h3>Sort & Filters</h3>
           <a href="#" class="mob-close mob-ff-from-close">
-              <img src="./assets/images/icons/close.png" alt="">
+              <img src="{{cdnUrl}}/images/icons/close.png" alt="">
           </a>
       </div>
       <div class="mob-sf-tabs">
@@ -1335,49 +1335,49 @@
                       <div class="mob-sf-sort-by">
                           <div class="mob-sf-sort-by-items active">
                               <p>
-                                  <img src="./assets/images/icons/price-l.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/price-l.png" alt="" />
                                   <span><strong>Price</strong> <br> Low to High</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/price-h.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/price-h.png" alt="" />
                                   <span><strong>Price</strong> <br> High to Low</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/clock.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
                                   <span><strong>Duration</strong> <br> Shortest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/clock.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
                                   <span><strong>Duration</strong> <br> Longest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Departure.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
                                   <span><strong>Departure </strong> <br> Earliest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Departure.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
                                   <span><strong>Departure </strong> <br> Latest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Arrival.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
                                   <span><strong>Arrival </strong> <br> Earliest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Arrival.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
                                   <span><strong>Arrival</strong> <br> Latest</span>
                               </p>
                           </div>
@@ -1763,11 +1763,11 @@
                                   <div class="round-ff-content">
                                       <div class="round-ff-left" [hidden]="!isOnwardSelected" >
                                           <div class="round-ff-image">
-                                              <img [src]="this.flightIcons[onwardSelectedFlight.flights[0].airline].logo" alt="" width="50px">
+                                              <img src="{{cdnUrl}}/images/airlines/{{onwardSelectedFlight.flights[0].airline}}.gif" alt="{{onwardSelectedFlight.flights[0].airline}}">
                                               <p> {{onwardSelectedFlight.flights[0].airline}}  {{onwardSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
-                                              <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
                                               <p>{{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}}
                                                   |  <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
                                                   <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
@@ -1787,15 +1787,15 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="flight-fixed-list"  [hidden]="!isReturnSelected">
+                              <div class="flight-fixed-list"  [hidden]="!isReturnSelected" *ngIf="returnSelectedFlight">
                                   <div class="round-ff-content">
                                       <div class="round-ff-left">
-                                          <div class="round-ff-image">
-                                              <img [src]="this.flightIcons[returnSelectedFlight.flights[0].airline].logo" alt="" width="50px">
+                                          <div class="round-ff-image" >
+                                              <img src="{{cdnUrl}}/images/airlines/{{returnSelectedFlight.flights[0].airline}}.gif" alt="{{returnSelectedFlight.flights[0].airline}}" >
                                               <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
-                                              <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="./assets/images/icons/flight-right.png" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
                                               <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}  |
                                                 <span *ngIf="returnSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
                                                   <span *ngIf="returnSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
@@ -1819,7 +1819,7 @@
                           <div class="flight-fixed-right" *ngIf="isReturnSelected">
                               <div class="fixedright-content"  >
                                   <div class="fixedright-image">
-                                      <img src="./assets/images/flights/1.png" alt="" width="52px">
+                                      <img src="{{cdnUrl}}/images/flights/1.png" alt="" width="52px">
                                   </div>
                                   <div class="fixedright-price">
                                       <h6>
@@ -1859,7 +1859,7 @@
                                   </div>
                               </div>
                               <div class="flight-fixed-btn">
-                                  <button href="javascript:void(0)" class="button-style ms-2"  data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</button>
+                                  <button href="javascript:void(0)" class="button-style ms-2" (click)="bookingSummary(onwardSelectedFlight,returnSelectedFlight)">Book</button>
                               </div>
                           </div>
                       </div>
@@ -1882,7 +1882,7 @@
                                   </ul>
                                   <div class="ff-close-box">
                                       <a href="javascript:void(0);" class="ff-close" (click)="CloseDetail()">
-                                          <img src="./assets/images/icons/close_01.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/close_01.png" alt="" />
                                       </a>
                                   </div>
                               </div>
@@ -1898,7 +1898,7 @@
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
                                                       <div class="tabs-depart-one" *ngFor="let flights of onwardSelectedFlight.flights;let i = index">
-                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" class="me-2" alt="{{flights.airline}}">{{flights.airline}} {{flights.flightNumber}}</p>
                                                           <div class="tabs-depart-left">
                                                               <div class="tabs-depart-times">
                                                                   <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
@@ -1941,7 +1941,7 @@
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
                                                       <div class="tabs-depart-three" *ngFor="let flights of returnSelectedFlight.flights;let i = index">
-                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
                                                           <div class="tabs-depart-left">
                                                               <div class="tabs-depart-times">
                                                                   <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>

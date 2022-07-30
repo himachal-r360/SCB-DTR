@@ -77,12 +77,7 @@
 
                                     </li>
                                     <li>
-                                        <!-- <select name="" class="liothers class-select ms-4" value="B" [(ngModel)]="flightClassVal" aria-label="Default select example" formControlName="flightclass">
-                                            <option selected="selected" value="B">Business Class</option>
-                                            <option value="E">Economy Class</option>
-                                            <option value="F">First Class</option>
-                                            <option value="P">Premium Economy</option>
-                                        </select> -->
+                             
                                         <mat-select class=" ms-4" [(ngModel)]="flightClassVal" formControlName="flightclass">
                                           <mat-option value="B">Business Class</mat-option>
                                           <mat-option value="E">Economy Class</mat-option>
@@ -223,15 +218,10 @@
                   <div class="flight-partners">
                       <p>Compare &amp; Fly with our flight partners</p>
                       <ul class="list-inline ms-3">
-                          <li class="list-inline-item">
-                              <img src="{{cdnUrl}}/images/flight_partners/Cleartrip.png" alt="Cleartrip">
+                          <li class="list-inline-item" *ngFor="let service of enableFlightServices" >
+                              <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.png" alt="{{service.name}}">
                           </li>
-                          <li class="list-inline-item">
-                              <img src="{{cdnUrl}}/images/flight_partners/Yatra.png" alt="Yatra">
-                          </li>
-                          <li class="list-inline-item">
-                              <img src="{{cdnUrl}}/images/flight_partners/Easemytrip.png" alt="Easemytrip">
-                          </li>
+                         
                       </ul>
                   </div>
               </div>
@@ -277,15 +267,6 @@
                                 <div class="widget-content">
                                     <ul class="category-list clearfix mt-2" id="popular-filters">
 
-                                        <!-- <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">{{popularItems.value}} ({{RefundableFaresCount}})</span>
-                                                </label>
-                                            </div>
-                                        </li> -->
                                         <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
@@ -296,42 +277,7 @@
                                                 </label>
                                             </div>
                                         </li>
-                                        <!-- <li class="custom-check-box" >
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" value="Refundable-Fares" (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">Refundable Fares ({{RefundableFaresCount}})</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" value="non-stop" (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">Non-stop ({{nonStopCount}})</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" value="Morning-Departures"  (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">Morning Departures ({{morningDearptureCount}})</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" value="Meals-Included"  (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">Meals Included</span>
-                                                </label>
-                                            </div>
-                                        </li> -->
+                                       
                                     </ul>
                                 </div>
                             </div>
@@ -346,27 +292,10 @@
                                     <div class="flighttiming-content flight-departing">
                                         <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
                                         (click)="FlightTimingsFilterFlightData(timingsItems)">
-                                            <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                            <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
                                             <p [innerHTML]="timingsItems.value"></p>
                                         </div>
-                                        <!-- <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" [innerHTML]="FlightStopitem.value">
-                                        </div> -->
-                                        <!-- <div class="flighttiming-list" value="0_6" (click)="FlightTimingsFilterFlightData('0_6')">
-                                            <img src="assets/images/icons/timings/1.png" alt="">
-                                            <p>00-06</p>
-                                        </div>
-                                        <div class="flighttiming-list " value="6_12" (click)="FlightTimingsFilterFlightData('6_12')">
-                                            <img src="assets/images/icons/timings/2.png" alt="">
-                                            <p>06-12</p>
-                                        </div>
-                                        <div class="flighttiming-list" value="12_18" (click)="FlightTimingsFilterFlightData('12_18')">
-                                            <img src="assets/images/icons/timings/3.png" alt="">
-                                            <p>12-18</p>
-                                        </div>
-                                        <div class="flighttiming-list" value="18_0" (click)="FlightTimingsFilterFlightData('18_0')">
-                                            <img src="assets/images/icons/timings/4.png" alt="">
-                                            <p>18-00</p>
-                                        </div> -->
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -382,8 +311,6 @@
                                         <span class="ms-3 me-3">-</span>
                                         <input type="number" min="0"  [(ngModel)]="maxPrice" [max]="resetMaxPrice"  id="max_price" class="price-range-field" />
                                     </div>
-                                    <!-- <div id="slider-range" class="price-filter-range" name="rangeInput"></div> -->
-                                    <!-- <mat-slider min="1" max="100" step="1" value="50"></mat-slider> -->
                                     <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"
                                     (valueChange)="onMinValueChange($event)"
                                       (highValueChange)="onMaxValueChange($event)"
@@ -413,17 +340,8 @@
                                 </div>
                                 <div class="widget-content" id="airline_list">
                                     <ul class="category-list clearfix mt-2" >
-                                        <!-- <li class="custom-check-box" *ngFor="let airline of airlines ; let i = index ">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox" >
-                                                    <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
-                                                </label>
-                                                <p>&#8377;{{airline.price|number}}</p>
-                                            </div>
-                                        </li> -->
-                                        <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                        
+                                        <li class="custom-check-box" *ngFor="let airlineItem of airlines | slice:0:5; let i = index " [ngClass]="{'active': airlineItem.active}">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox" >
                                                     <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
@@ -433,19 +351,20 @@
                                                 <p>&#8377;{{airlineItem.price}}</p>
                                             </div>
                                         </li>
-                                        <!-- <li class="custom-check-box" >
-                                            <div class="custom-controls-stacked" >
+                                        <ng-container *ngIf="show_airline_more">
+                                        <li  class="custom-check-box" *ngFor="let airlineItem of airlines | slice:5; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                            <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox" >
-                                                    <input type="checkbox" class="material-control-input" value="{{airline.airlineName}}"  (change)="popularFilterFlightData()"/>
+                                                    <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">{{airline.airlineName}} ({{airline.flighCount}})</span>
+                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
                                                 </label>
-                                                <p>&#8377;{{airline.price}}</p>
+                                                <p>&#8377;{{airlineItem.price}}</p>
                                             </div>
-                                        </li> -->
+                                        </li>
+                                        </ng-container>
                                     </ul>
-                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()">+2 more</a>
-                                    <a href="javascript:void(0)" class="widget-content-more ml-20" ></a>
+                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a>
                                 </div>
                             </div>
                             <hr>
@@ -478,17 +397,8 @@
                                 </div>
                                 <div class="widget-content" id="layover_airport">
                                     <ul class="category-list clearfix mt-2" >
-                                        <!-- <li class="custom-check-box"  *ngFor="let layover of layOverFilterArr ; let i = index ">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">{{layover.arrivalAirport}}</span>
-                                                </label>
-                                                <p>&#8377;{{layover.price|number}}</p>
-                                            </div>
-                                        </li> -->
-                                        <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr ; let i = index " [ngClass]="{'active': layoverItem.active}">
+                             
+                                        <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr | slice:0:5; let i = index " [ngClass]="{'active': layoverItem.active}">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
@@ -498,46 +408,21 @@
                                                 <p>&#8377;{{layoverItem.price}}</p>
                                             </div>
                                         </li>
-                                        <!-- <li class="custom-check-box" *ngIf="showMoreLayover">
-                                            <div class="custom-controls-stacked" >
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" value="{{layover.arrivalAirportCode}}"  (change)="popularFilterFlightData()"/>
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">{{layover.arrivalAirport}}</span>
-                                                </label>
-                                                <p>&#8377;{{layover.price}}</p>
-                                            </div>
-                                        </li> -->
-                                        <!-- <li class="custom-check-box">
+                                        <ng-container *ngIf="show_layover_more">
+                                               <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr | slice:5; let i = index " [ngClass]="{'active': layoverItem.active}">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" checked="checked" />
+                                                    <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">Kempegowda Internat</span>
+                                                    <span class="description">{{layoverItem.arrivalAirport}}</span>
                                                 </label>
-                                                <p>&#8377;6,356</p>
-                                            </div> -->
-                                        <!-- </li>
-                                        <li class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" />
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">Jabalpur</span>
-                                                </label>
-                                                <p>&#8377;7,356</p>
+                                                <p>&#8377;{{layoverItem.price}}</p>
                                             </div>
                                         </li>
-                                        <li class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" />
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">Chatrapati Shivaji</span>
-                                                </label>
-                                                <p>&#8377;9,356</p>
-                                            </div>
-                                        </li> -->
+                                        </ng-container>
+                                        
+                                         <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
+
                                     </ul>
                                 </div>
                             </div>
@@ -554,7 +439,7 @@
                         <div class="flightsfound" [hidden]="loader">
                             <div class="flight-tosearch">
                                 <h6>
-                                    <img src="assets/images/icons/flight-listing.png" alt="">
+                                    <img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">
                                     {{fromCityName}} to {{toCityName}}
                                     <!-- <small>Thu, 12 Mar</small> -->
                                     <small>{{departureDate | date:"EEE ,dd MMM"}}</small>
@@ -571,19 +456,7 @@
                                             value="{{Items.value}}" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
                                                 <p> <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span> {{Items.value}}</p>
                                             </li>
-                                            <!-- <li class="flight-counts-list " id="non_stop_Upper_filter" value="{{popularItems.value}}" (click)="searchNonStop('no_stops')">
-                                                <p class=""> <span>{{nonStopCount}}</span> Non-Stop</p>
-                                            </li> -->
-                                            <!-- <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                                                        <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
-                                                        <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
-                                                    </label>
-                                                </div>
-                                            </li> -->
+                         
                                         </ul>
                                     </div>
                                 </div>
@@ -593,77 +466,7 @@
                                     <p *ngIf="flightList">{{flightList.length}} flights found</p>
                                 </div>
                             </div>
-                            <!-- <div class="search-date-slider">
-                                <div class="owl-carousel carousel-search-date" data-nav-arrow="false" data-items="7" data-md-items="6" data-sm-items="5" data-xs-items="3" data-xx-items="2" data-space="0" data-autoheight="true">
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items active">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="search-date-items">
-                                            <p>Fri, Jul 08</p>
-                                            <h6>&#8377; 6,474</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
+                           </div>
                         <div class="tabletitle-area" [hidden]="loader">
                             <div class="row">
                                 <div class="col-md-2">
@@ -770,8 +573,8 @@
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                     <span class="information-icon">
-                                                     <h6>&#8377; {{list.priceSummary[0].totalFare}} <img src="assets/images/icons/info.png" class="ms-2" alt=""></h6>
-                                                        <!-- <img src="assets/images/icons/info.png" class="ms-2" alt=""> -->
+                                                     <h6>&#8377; {{list.priceSummary[0].totalFare}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                        <!-- <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""> -->
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
                                                                 <h6>Price Breakdown</h6>
@@ -836,7 +639,7 @@
                                                 <div class="flight-options-price d-flex align-items-center">
                                                     <p>&#8377;{{item.totalFare |number}}</p>
                                                     <span class="information-icon">
-                                                        <img src="assets/images/icons/info.png" class="ms-2" alt="">
+                                                        <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
                                                                 <h6>Price Breakdown</h6>
@@ -933,7 +736,7 @@
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one" >
                                                                         <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">IndiGo {{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
-                                                                        <div class="tabs-depart-left">
+                                                                        <div class="tabs-depart-left float-none">
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
@@ -948,7 +751,7 @@
                                                                                 <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="tabs-depart-right">
+                                                                        <!--<div class="tabs-depart-right">
                                                                             <div class="Baggage">
                                                                                 <h5>Baggage</h5>
                                                                                 <p>Adult</p>
@@ -961,7 +764,7 @@
                                                                                 <h5>Cabin</h5>
                                                                                 <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
                                                                             </div>
-                                                                        </div>
+                                                                        </div>-->
                                                                     </div>
                                                                     <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.flights[i]  && list.flights[i+1] && getLayoverHour(list.flights[i],list.flights[i+1])">
  <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
@@ -1282,7 +1085,7 @@
                                   </div>
                                   <div class="name-bottom-top-center">
                                       <p>{{ list.flights[0].duration | durationTime }}</p>
-                                      <img src="/assets/images/icons/mob-flight.png" alt="" />
+                                      <img src="/{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
                                       <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
                                       <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                   </div>
@@ -1310,7 +1113,7 @@
                                       <p *ngIf="item.totalFare > EMIAvailableLimit">EMI @ ₹ {{calculateEMI(item.totalFare)|number}}/month</p>
                                   </div>
                                   <div class="mob-booking">
-                                      <a href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item,list.flightKey)">
+                                      <a href="javascript:void(0)"  (click)="bookingSummary(list.flights,item,list.flightKey)">
                                           Book
                                       </a>
                                   </div>
@@ -1336,27 +1139,30 @@
                           </div>
                       </div>
                       
-                      
-                      
-                                      <!-- flight detail for mobile  -->
+                  </div>
+              </div>
+              
+              
+              
+               <!-- flight detail for mobile  -->
                         <div class="mob-fd-area"  id="flightDetailMobile_{{list.flightKey}}">
                             <div class="mob-fd-box"> 
                                 <div class="mob-title">
                                     <h3>Flight Details</h3>
                                     <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
-                                        <img src="./assets/images/icons/close.png" alt="">
+                                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                     </a>
                                 </div> 
                                 <div class="mob-fd-filters d-block">
                                     <div class="mob-fd-accordion">
                                         <div class="accordion" id="accordionExample">
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="headingOne-fd">
+                                                <!--<h2 class="accordion-header" id="headingOne-fd">
                                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-fd"
                                                         aria-expanded="true" aria-controls="collapseOne-fd" >
                                                         Flight Details
                                                     </button>
-                                                </h2>
+                                                </h2>-->
                                                 <div id="collapseOne-fd" class="accordion-collapse collapse show" aria-labelledby="headingOne-fd"
                                                     data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
@@ -1370,8 +1176,8 @@
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one">
                                                                         <p class="depart-one-image" *ngIf="flightIcons"><img src="{{this.flightIcons[list.flights[0].airline].logo}}" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
-                                                                        <!-- <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
-                                                                        <div class="tabs-depart-left">
+                                                                        <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
+                                                                        <div class="tabs-depart-left float-none">
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
@@ -1386,7 +1192,7 @@
                                                                                 <p class="mt-1 opacity_05"  *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="tabs-depart-right">
+                                                                        <!--<div class="tabs-depart-right">
                                                                             <div class="Baggage">
                                                                                 <h5>Baggage</h5>
                                                                                 <p>Adult</p>
@@ -1399,51 +1205,20 @@
                                                                                 <h5>Cabin</h5>
                                                                                 <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
                                                                             </div>
-                                                                        </div>
+                                                                        </div>-->
                                                                     </div>
                                                                     <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                         <!-- <p>Change of planes・3h 0m Layover in Nagpur</p> -->
                                                                         <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
                                                                     </div> 
-                                                                    <!-- <div class="tabs-depart-three">
-                                                                        <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
-                                                                        <div class="tabs-depart-left">
-                                                                            <div class="tabs-depart-times">
-                                                                                <h5 class="mb-1 fw_7">08:05</h5>
-                                                                                <p>Mon, Jul 11</p>
-                                                                                <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
-                                                                            </div>
-                                                                            <div class="tabs-depart-total">
-                                                                                <p>01h 30m</p>
-                                                                            </div>
-                                                                            <div class="tabs-depart-times">
-                                                                                <h5 class="mb-1 fw_7">08:05</h5>
-                                                                                <p>Mon, Jul 11</p>
-                                                                                <p class="mt-1 opacity_05">Mumbai Chhatrapati <br> Shivaji Intl (BOM)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="tabs-depart-right">
-                                                                            <div class="Baggage">
-                                                                                <h5>Baggage</h5>
-                                                                                <p>Adult</p>
-                                                                            </div>
-                                                                            <div class="departCheck">
-                                                                                <h5>Check-in</h5>
-                                                                                <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
-                                                                            </div>
-                                                                            <div class="Cabin">
-                                                                                <h5>Cabin</h5>
-                                                                                <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> -->
+                                                             
                                                                 </div>                                 
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="accordion-item">
+                                           <!-- <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingTwo-fd">
                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                                          aria-expanded="false" aria-controls="collapseTwo-fd" (click)="openFlightDetailMobile(list.flightKey,'cancellation')">
@@ -1524,7 +1299,7 @@
                                                                     <div class="rules-flight-content" >
                                                                         <h6 >
                                                                             {{flightItem.departureAirport}}
-                                                                            <img src="./assets/images/icons/flight-right.png" alt="">    
+                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">    
                                                                             {{flightItem.arrivalAirport}}
                                                                         </h6>
                                                                     </div>                                                
@@ -1536,12 +1311,12 @@
                                                                     <div class="rules-flight-content">
                                                                         <h6>
                                                                             NAG
-                                                                            <img src="./assets/images/icons/flight-right.png" alt="">    
+                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">    
                                                                             HYD
                                                                         </h6>
                                                                     </div>                                                
                                                                 </div> -->
-                                                            </div>
+                                                            <!--</div>
                                                         </div>
                                                         <div class="extra-tabs-details-bottom p-0">
                                                             <table class="table-bordered table-content w-100"> 
@@ -1603,7 +1378,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
+                                            
+                                           <!-- 
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingfour-fd">
                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1665,7 +1442,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="mob-sf-btns">
@@ -1674,12 +1451,9 @@
                                 </div> 
                             </div>
                           </div> 
-
-                      
-                      
-                      
-                  </div>
-              </div>
+              
+              
+              
               </div>
               
             </ng-template>  
@@ -1771,7 +1545,7 @@
                                                   <div class="flighttiming-content flight-departing">
                                                       <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
                                                       (click)="FlightTimingsFilterFlightData(timingsItems)" >
-                                                          <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
                                                           <p [innerHTML]="timingsItems.value"></p>
                                                       </div>
                                                   </div>
@@ -1844,7 +1618,8 @@
                                               <div class="accordion-body">
                                                   <div class="default-sidebar">
                                                       <ul class="category-list clearfix mt-2">
-                                                          <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                      
+                                                          <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:0:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                               <div class="custom-controls-stacked">
                                                                   <label class="custom-control material-checkbox">
                                                                       <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
@@ -1855,10 +1630,24 @@
                                                                   <p>₹{{airlineItem.price}}</p>
                                                               </div>
                                                           </li>
+                                                         
+                                                              <ng-container *ngIf="show_airline_more" >
+                                                                          <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                              <div class="custom-controls-stacked">
+                                                                  <label class="custom-control material-checkbox">
+                                                                      <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
+                                                                      (change)="flightAirlineFilterFlightData(airlineItem)">
+                                                                      <span class="material-control-indicator"></span>
+                                                                      <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                                  </label>
+                                                                  <p>₹{{airlineItem.price}}</p>
+                                                              </div>
+                                                          </li> 
+                                                          </ng-container>
                                                       </ul>
 
                                                       <div class="d-flex justify-content-between mt-2">
-                                                          <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()">+2 more</a>
+                                                           <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a>
                                                           <a href="javascript:void(0)" class="widget-content-more"  (click)="resetAirlineFlightsFilter()">Reset</a>
                                                       </div>
                                                   </div>
@@ -1904,7 +1693,7 @@
                                               <div class="accordion-body">
                                                   <div class="default-sidebar">
                                                       <ul class="category-list clearfix mt-2">
-                                                          <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr ; let i = index " [ngClass]="{'active': layoverItem.active}"
+                                                          <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr| slice:0:5 ; let i = index " [ngClass]="{'active': layoverItem.active}"
                                                           (change)="flightLayoverFilterFlightData(layoverItem)">
                                                               <div class="custom-controls-stacked">
                                                                   <label class="custom-control material-checkbox">
@@ -1915,9 +1704,24 @@
                                                                   <p>₹{{layoverItem.price}}</p>
                                                               </div>
                                                           </li>
+                                                          <ng-container *ngIf="show_layover_more" >
+                                                                      <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr| slice:5; let i = index " [ngClass]="{'active': layoverItem.active}"
+                                                          (change)="flightLayoverFilterFlightData(layoverItem)">
+                                                              <div class="custom-controls-stacked">
+                                                                  <label class="custom-control material-checkbox">
+                                                                      <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active" >
+                                                                      <span class="material-control-indicator"></span>
+                                                                      <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                                  </label>
+                                                                  <p>₹{{layoverItem.price}}</p>
+                                                              </div>
+                                                          </li>
+                                                          </ng-container>
+                                                          
                                                       </ul>
 
                                                       <div class="d-flex justify-content-between mt-2">
+                                                       <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
                                                           <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
                                                           <a  class="widget-content-more" href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
                                                       </div>
