@@ -2786,7 +2786,7 @@
                                 <ng-container *ngFor="let adult of paxInfo;let i = index" >
                                 <tr *ngIf="adult.type=='ADT'" >
                                 <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
-                                <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                <td>{{adult.dob | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dob|age}}</span></td>
                                 <td>
                                 <div [ngSwitch]="adult.title">
                                 <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
@@ -2814,7 +2814,7 @@
                                           <ng-container *ngFor="let adult of paxInfo;let i = index" >
                                     <tr *ngIf="adult.type=='CHD'" >
                                         <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
-                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>{{adult.dob | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dob|age}}</span></td>
                                         <td>              <div [ngSwitch]="adult.title">
                                 <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
                                 <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
@@ -2840,7 +2840,7 @@
                                          <ng-container *ngFor="let adult of paxInfo;let i = index" >
                                     <tr *ngIf="adult.type=='INF'" >
                                         <td>{{adult.title}} {{adult.firstName}} {{adult.lastName}}</td>
-                                        <td>{{adult.dateOfBirth | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dateOfBirth|age}}</span></td>
+                                        <td>{{adult.dob | date:'dd-MM-YYYY'}}<span class="age_data">{{adult.dob|age}}</span></td>
                                         <td>              <div [ngSwitch]="adult.title">
                                 <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
                                 <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>

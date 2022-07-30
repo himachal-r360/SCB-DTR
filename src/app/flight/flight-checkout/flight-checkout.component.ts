@@ -1976,8 +1976,20 @@ new_fare: number = 0;
  // console.log(this.flightSessionData);
  // console.log(this.flightInfo);
  
-    let fligths=[];
+    let fligths=[];let departureTerminal:any;let arrivalTerminal:any;
       for(let i=0;i<(this.flightSessionData.flights.length);i++){ 
+      
+      if(this.flightSessionData.flights[i]['departureTerminal'])
+      departureTerminal=this.flightSessionData.flights[i]['departureTerminal'];
+      else
+      departureTerminal='';
+      
+      if(this.flightSessionData.flights[i]['arrivalTerminal'])
+      arrivalTerminal=this.flightSessionData.flights[i]['arrivalTerminal'];
+      else
+      arrivalTerminal='';
+      
+      
      fligths.push({
         "arr_tym":  this.flightSessionData.flights[i]['arrivalDateTime'],
         "sourcity": this.airportsNameJson[this.flightSessionData.flights[i]['departureAirport']]['city'],
@@ -2010,13 +2022,12 @@ new_fare: number = 0;
         "flystart": "",
         "airportname_desti": this.airportsNameJson[this.flightSessionData.flights[i]['arrivalAirport']]['airport_name'],
         "flight_type":  this.flightSessionData.flights[i]['stops'] == 0 ? "Non-Stop" : this.flightSessionData.flights[i]['stops'] + " Stop" ,
-        "departureTerminal": this.flightSessionData.flights[i]['departureTerminal'],
-        "arrivalTerminal": this.flightSessionData.flights[i]['arrivalTerminal'],
+        "departureTerminal": departureTerminal,
+        "arrivalTerminal": arrivalTerminal,
         "stopsDetails": []
       });
       }
  
-
  
       var whatsappFlag;
    if(this.whatsappFeature==1)
@@ -2063,8 +2074,14 @@ new_fare: number = 0;
       "fcode": this.searchData.flightfrom,
       "flightdeparture": this.searchData.departure,
       "flightfrom": this.searchData.fromCity,
+      "flightfromCity": this.airportsNameJson[this.searchData.flightfrom].city,
+      "flightfromCountry": this.airportsNameJson[this.searchData.flightfrom].country,
+      "flightfromCountryCode": this.airportsNameJson[this.searchData.flightfrom].country_code,
       "flightreturn": '',
       "flightto": this.searchData.toCity,
+      "flighttoCity": this.airportsNameJson[this.searchData.flightto].city,
+      "flighttoCountry": this.airportsNameJson[this.searchData.flightto].country,
+      "flighttoCountryCode": this.airportsNameJson[this.searchData.flightto].country_code,
       "infants":this.searchData.infants,
       "t": "ZWFybg==",
       "tcode": this.searchData.flightto,
@@ -2079,7 +2096,8 @@ new_fare: number = 0;
   "order_ref_num":this.itinararyResponse.response.orderId,
   "amd_url": "",
   "redirect_url": "",
-  "retry_url": ""
+  "retry_url": "",
+  "itineraryRequest":this.itineraryRequest
 };
   
 
