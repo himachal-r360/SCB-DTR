@@ -67,7 +67,7 @@
                                               <div class="flighttiming-content flight-departing">
                                                   <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
                                                   (click)="FlightTimingsFilterFlightData(timingsItems)">
-                                                      <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
                                                       <p [innerHTML]="timingsItems.value"></p>
                                                 </div>
                                           </div>
@@ -76,7 +76,7 @@
                                           <div class="flighttiming-content flight-departing">
                                             <div class="flighttiming-list" *ngFor="let timingsItems of flight_return_Timingsitems" [ngClass]="{'active': timingsItems.active}"
                                             (click)="FlightTimingsRetrunFilterFlightData(timingsItems)">
-                                                <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
                                                 <p [innerHTML]="timingsItems.value"></p>
                                           </div>
                                           </div>
@@ -227,7 +227,7 @@
                                   <div class="col-md-6">
                                       <div class="round-flight-listing round-from-box">
                                           <div class="round-from">
-                                              <h6><img src="assets/images/icons/flight-listing.png" alt=""> {{fromCityName}} to {{toCityName}}</h6>
+                                              <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{fromCityName}} to {{toCityName}}</h6>
                                               <p>{{departureDate | date:"EEE ,dd MMM" }}</p>
                                           </div>
                                           <div class="round-from-filters">
@@ -257,7 +257,7 @@
                                                                  <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                                   </div>
                                                   <div class="round-content-time">
-                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="/assets/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                                       <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}  |
                                                         <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
                                                         <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span></p>
@@ -272,13 +272,13 @@
                                                   <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
                                                        <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
-                                                      <!-- <img src="assets/images/flights/1.png" alt=""> -->
+                                                      <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                   </div>
                                               </div>
                                           </div>
                                           <div class="round-flight-info-box">
-                                              <p><img src="/assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
@@ -297,7 +297,7 @@
                                                           <div class="flight-options-price d-flex align-items-center">
                                                               <p>&#8377;{{item.totalFare |number}}</p>
                                                               <span class="information-icon">
-                                                                  <img src="assets/images/icons/info.png" class="ms-2" alt="">
+                                                                  <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-title">
                                                                           <h6>Price Breakdown</h6>
@@ -372,7 +372,7 @@
                                   <div class="col-md-6">
                                       <div class="round-flight-listing round-from-box">
                                           <div class="round-from">
-                                              <h6><img src="assets/images/icons/flight-listing.png" alt=""> {{toCityName}} to {{fromCityName}} </h6>
+                                              <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{toCityName}} to {{fromCityName}} </h6>
                                               <p>{{returnDate | date:"EEE ,dd MMM" }}</p>
                                           </div>
                                           <div class="round-from-filters">
@@ -418,7 +418,7 @@
                                                   <div class="round-content-price"  *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
                                                         <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
-                                                      <!-- <img src="assets/images/flights/1.png" alt=""> -->
+                                                      <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                   </div>
                                               </div>
@@ -443,7 +443,7 @@
                                                           <div class="flight-options-price d-flex align-items-center">
                                                               <p>&#8377;{{item.totalFare |number}}</p>
                                                               <span class="information-icon">
-                                                                  <img src="assets/images/icons/info.png" class="ms-2" alt="">
+                                                                  <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-title">
                                                                           <h6>Price Breakdown</h6>
@@ -1226,19 +1226,19 @@
                                           <p class="flighttimings-text">Departing flight (BOM-HYD)</p>
                                           <div class="flighttiming-content flight-departing">
                                               <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/1.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/1.png" alt="">
                                                   <p>Before 6AM</p>
                                               </div>
                                               <div class="flighttiming-list active">
-                                                  <img src="assets/images/icons/timings/2.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/2.png" alt="">
                                                   <p>6AM - 12 PM</p>
                                               </div>
                                               <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/3.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/3.png" alt="">
                                                   <p>12 PM - 6PM</p>
                                               </div>
                                               <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/4.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/4.png" alt="">
                                                   <p>After 6PM</p>
                                               </div>
                                           </div>
@@ -1750,7 +1750,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -1805,7 +1805,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -1864,7 +1864,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -1925,7 +1925,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -1990,7 +1990,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2045,7 +2045,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>

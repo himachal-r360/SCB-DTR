@@ -17,7 +17,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { SimpleGlobal } from 'ng2-simple-global';
+import {environment} from '../../environments/environment';
 import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -49,6 +50,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
  @Input() modifySearch;
+   cdnUrl: any;
   sub?: Subscription;
   loader = false;
   show = false;
@@ -87,42 +89,16 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   isDisabled = false;
   windowItem = window;
   navItemActive:any;
-  customOptions: OwlOptions = {
-    loop: true,
-    autoplay:true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    margin: 10,
-    // navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1.2
-      },
-      400: {
-        items: 1.2
-      },
-      740: {
-        items: 1.2
-      },
-      940: {
-        items: 1.2
-      }
-    },
-    nav: false
-  }
-
 
 
   constructor(
     public _styleManager: StyleManagerService,
       public router: Router,
       private _fb: FormBuilder,
-      private _flightService: FlightService,private ngZone:NgZone
+      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal
 
     ) {
+      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       window.onresize = (e) =>
       {
           //ngZone.run will help to run change detection

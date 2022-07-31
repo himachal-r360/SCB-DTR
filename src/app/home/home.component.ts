@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 import { FlightService } from '../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import * as moment from 'moment';
+import { SimpleGlobal } from 'ng2-simple-global';
+import {environment} from '../../environments/environment';
 declare var $: any;
 
 
@@ -27,6 +28,7 @@ declare var $: any;
 
 
 export class HomeComponent implements OnInit {
+  cdnUrl: any;
   continueSearchVal:any;
   windowItem = window;
   isMobile:boolean = false;
@@ -62,9 +64,10 @@ export class HomeComponent implements OnInit {
   constructor(
     public _styleManager: StyleManagerService,
       public router: Router,
-      private _flightService: FlightService,private ngZone:NgZone
+      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal
 
     ) {
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       window.onresize = (e) =>
       {
           //ngZone.run will help to run change detection
