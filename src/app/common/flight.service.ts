@@ -34,7 +34,6 @@ export class FlightService {
 
         flightList(para: any) {
         let body = JSON.stringify(para);
-        console.log(para.flightdefault);
         if(LOCALJSON=='true'){
         if(para.travel=='INT'){
         if(para.flightdefault=='O'){
