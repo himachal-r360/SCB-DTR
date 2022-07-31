@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostListener,  OnDestroy, OnInit, ViewChild,ViewContainerRef,TemplateRef } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
@@ -10,6 +11,7 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { AppConfigService } from '../../app-config.service';
+
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -25,14 +27,14 @@ export const MY_DATE_FORMATS = {
 declare var $: any;
 
 @Component({
-  selector: 'app-flight-list',
-  templateUrl: './flight-list.component.html',
-  styleUrls: ['./flight-list.component.css'],
+  selector: 'app-flight-int-list',
+  templateUrl: './flight-int-list.component.html',
+  styleUrls: ['./flight-int-list.component.css'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
 })
-export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy {
  enableVAS: number = 0;
   flightList: any = [];
   newDate = Date();
@@ -204,7 +206,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
    serviceSettings:any;     
   enableFlightServices:any;
   
-  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
@@ -240,7 +242,6 @@ ngOnInit(): void {
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
           
-          
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
@@ -270,10 +271,10 @@ ngOnInit(): void {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.Initslider();
+      //$('.selectpicker').selectpicker();
     }, 200);
   }
-
-
+  
 
 
   // get airport list
@@ -292,8 +293,6 @@ ngOnInit(): void {
   showmoreLayover() {
    this.show_layover_more=1;
   }
-
-
 
 
 
@@ -439,6 +438,8 @@ ngOnInit(): void {
     let flightListWithOutFilter = this.flightListWithOutFilter;
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = flightListConst;
+    
+    
 
     var current_date = new Date(this.departureDate),
       current_year = current_date.getFullYear(),
@@ -464,18 +465,12 @@ ngOnInit(): void {
     this.nonStopCount = 0;
     this.foodAllowanceCount = 0;
     this.morningDearptureCount = 0;
+    
+  
     if (this.flightList.length > 0) {
       this.flightList.filter((e: any) => {
-        var flights = e.flights.filter((d: any, indx: number) => { if (d.stops == 0 && indx == 0) { return d; } }); // Non-Stop count
-        if (flights.length > 0) {
-          this.nonStopCount += 1;
-          this.flight_PopularItems.filter((item: any) => {
-            if (item.name == "non_stop") {
-              item.count = this.nonStopCount
-            }
-          })
-        }
-        var flights = e.priceSummary.filter((d: any) => { if (d.refundStatus == 1) { return d; } }); // Refundable Fares Count
+      
+     var flights = e.priceSummary.filter((d: any) => { if (d.refundStatus == 1) { return d; } }); // Refundable Fares Count
         if (flights.length > 0) {
           this.RefundableFaresCount += 1;
           this.flight_PopularItems.filter((item: any) => {
@@ -484,13 +479,33 @@ ngOnInit(): void {
             }
           })
         }
+        
         var flights = e.priceSummary.filter((d: any) => { if (d.foodAllowance != null) { return d; } });// Meals Included Count
         if (flights.length > 0) {
           this.foodAllowanceCount += 1;
         }
+      
+        var flights = e.onwardflights.filter((d: any, indx: number) => { if (d.stops == 0 && indx == 0) { return d; } }); // Non-Stop count
+        if (flights.length > 0) {
+          this.nonStopCount += 1;
+          this.flight_PopularItems.filter((item: any) => {
+            if (item.name == "non_stop") {
+              item.count = this.nonStopCount
+            }
+          })
+        }
+        
+      var flights = e.returnflights.filter((d: any, indx: number) => { if (d.stops == 0 && indx == 0) { return d; } }); // Non-Stop count
+        if (flights.length > 0) {
+          this.nonStopCount += 1;
+          this.flight_PopularItems.filter((item: any) => {
+            if (item.name == "non_stop") {
+              item.count = this.nonStopCount
+            }
+          })
+        }
 
-        var flights = e.flights.filter((d: any) => {
-
+        var flights = e.onwardflights.filter((d: any) => {
           if ((this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { return item; } }).length > 0) && new Date(d.departureDateTime) > date1 && new Date(d.departureDateTime) < date2) {
             return e;
           }
@@ -504,6 +519,22 @@ ngOnInit(): void {
             }
           })
         }
+         var flights = e.returnflights.filter((d: any) => {
+          if ((this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { return item; } }).length > 0) && new Date(d.departureDateTime) > date1 && new Date(d.departureDateTime) < date2) {
+            return e;
+          }
+        }) // Meals Included Count
+
+        if (flights.length > 0) {
+          this.morningDearptureCount += 1;
+          this.flight_PopularItems.filter((item: any) => {
+            if (item.name == "Morning_Departures") {
+              item.count = this.morningDearptureCount
+            }
+          })
+        }
+        
+        
       })
 
       //Ascending Descending Order
@@ -535,6 +566,7 @@ ngOnInit(): void {
 
       })
     }
+    
 
     // Airlines Filter
     this.flightList = this.airlineFilterFlights(this.flightList);
@@ -546,7 +578,7 @@ ngOnInit(): void {
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = [];
-        e.flights.forEach((d: any) => {
+        e.onwardflights.forEach((d: any) => {
           if ((d.duration / 60) / 60 >= start && (d.duration / 60 / 60) <= end) {
             flights.push(d);
           }
@@ -555,6 +587,19 @@ ngOnInit(): void {
           filteredStopOver.push(e);
         }
       });
+      
+           this.flightList.forEach((e: any) => {
+        var flights = [];
+        e.returnflights.forEach((d: any) => {
+          if ((d.duration / 60) / 60 >= start && (d.duration / 60 / 60) <= end) {
+            flights.push(d);
+          }
+        })
+        if (flights.length > 0) {
+          filteredStopOver.push(e);
+        }
+      }); 
+      
       this.flightList = filteredStopOver;
     }
 
@@ -600,12 +645,11 @@ ngOnInit(): void {
     })
     for (let i = 0; i < this.flightList.length; i++) {
       let singleFlightList = [];
-      singleFlightList = this.flightList[i].flights;
-
-      let isNonStop = false;
+           let isNonStop = false;
       let isRefundableFares = false;
-      let isMealsInclude = false;
-
+      let isMealsInclude = false; 
+      
+      singleFlightList = this.flightList[i].onwardflights;
       if (singleFlightList != null && singleFlightList != undefined) {
         if (isfilterNonStop == true || isfilterRefundableFares == true || isfilterMealsIncluded == true) {
           if (isfilterNonStop == true) {
@@ -635,7 +679,46 @@ ngOnInit(): void {
           updatedflightList.push(this.flightList[i]);
         }
       }
+      
+      
+      if(this.flightList[i].returnflights.length>0){
+            singleFlightList = this.flightList[i].returnflights;
+      if (singleFlightList != null && singleFlightList != undefined) {
+        if (isfilterNonStop == true || isfilterRefundableFares == true || isfilterMealsIncluded == true) {
+          if (isfilterNonStop == true) {
+            if (singleFlightList[0].stops == 0) {
+              isNonStop = true;
+            }
+          }
+          if (isfilterRefundableFares == true) {
+            if (this.flightList[i].priceSummary.filter(function (e: any) { if (e.refundStatus == 1) { return e } }).length > 0) {
+              isRefundableFares = true;
+            }
+          }
+          if (isfilterMealsIncluded == true) {
+            let singleFlightPriceSummaryMeal = []
+            singleFlightPriceSummaryMeal = this.flightList[i].priceSummary.filter(function (e: any) { if (e.foodAllowance != "null") { return e } });
+            if (singleFlightPriceSummaryMeal.length > 0) {
+              this.flightList[i].priceSummary = [];
+              this.flightList[i].priceSummary = singleFlightPriceSummaryMeal;
+              isMealsInclude = true;
+            }
+          }
+          if (isNonStop == true || isRefundableFares == true || isMealsInclude == true) {
+            updatedflightList.push(this.flightList[i]);
+          }
+        }
+        else {
+          updatedflightList.push(this.flightList[i]);
+        }
+      }
+     } 
+      
     }
+    
+    
+    
+    
     return updatedflightList;
   }
 
@@ -721,7 +804,8 @@ ngOnInit(): void {
       if (flightList.length > 0) {
         flightList.filter((d: any) => {
           let singleFlightStops = [];
-          singleFlightStops = d.flights.filter(function (e: any, indx: number) {
+          
+          singleFlightStops = d.onwardflights.filter(function (e: any, indx: number) {
             if (indx == 0) {
               //0 - no_stops
               if ((isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "no_stops") { return item; } }).length > 0) && e.stops == 0) {
@@ -737,6 +821,27 @@ ngOnInit(): void {
               }
             }
           });
+          
+          if(d.returnflights.length>0){
+          singleFlightStops = d.returnflights.filter(function (e: any, indx: number) {
+            if (indx == 0) {
+              //0 - no_stops
+              if ((isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "no_stops") { return item; } }).length > 0) && e.stops == 0) {
+                return e;
+              }
+              //0 - no_stops
+              if ((isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "1_stops") { return item; } }).length > 0) && e.stops == 1) {
+                return e;
+              }
+              //0 - no_stops
+              if ((isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "2plus_stops") { return item; } }).length > 0) && e.stops > 1) {
+                return e;
+              }
+            }
+          });
+          }
+          
+          
           if (singleFlightStops.length > 0) {
             filteredStopsArr.push(d);
           }
@@ -752,6 +857,7 @@ ngOnInit(): void {
 
   // Airline Filter Flights
   airlineFilterFlights(flightList: any) {
+ 
     if (flightList.length > 0) {
       let airlineArr: any = [];
       airlineArr = [];
@@ -765,11 +871,21 @@ ngOnInit(): void {
       if (airlineArr.length > 0) {
         flightList.forEach((e: any) => {
           var flights = [];
-          e.flights.filter((d: any) => {
+          
+          
+          e.onwardflights.filter((d: any) => {
             if (airlineArr.map(function (x: any) { return x.airlineName; }).indexOf(d.airlineName) > -1) {
               flights.push(d);
             }
           })
+          
+               
+          e.returnflights.filter((d: any) => {
+            if (airlineArr.map(function (x: any) { return x.airlineName; }).indexOf(d.airlineName) > -1) {
+              flights.push(d);
+            }
+          }) 
+          
           if (flights.length > 0) {
             filteredAirlines.push(e);
           }
@@ -786,19 +902,34 @@ ngOnInit(): void {
         this.airlines.filter(function (e: any) { e.flighCount = 0; return e; })
         for (let j = 0; j < this.airlines.length; j++) {
           flightList.forEach((e: any) => {
-            e.flights.forEach((d: any, indx: number) => {
+          
+          
+            e.onwardflights.forEach((d: any, indx: number) => {
               if (this.airlines[j].airlineName == d.airlineName && indx == 0) {
                 this.airlines[j].flighCount += 1;
               }
             })
+            
+            e.returnflights.forEach((d: any, indx: number) => {
+              if (this.airlines[j].airlineName == d.airlineName && indx == 0) {
+                this.airlines[j].flighCount += 1;
+              }
+            }) 
+            
+            
           });
         }
       }
+      
+      
     }
+   
     return flightList;
+    
   }
   //layover airport filter
   layoverFilterFlights(flightList: any) {
+
 
 
     if (flightList.length > 0) {
@@ -831,11 +962,16 @@ ngOnInit(): void {
   getAirlinelist() {
     let airlineNameArr = [];
     let layOverArr = [];
+    
+    
     for (let j = 0; j < this.flightList.length; j++) {
       let singleFlightList = [];
-      singleFlightList = this.flightList[j].flights;
+         
       let priceSummaryList = this.flightList[j].priceSummary;
       let priceSummary;
+      
+     /***Onward**/      
+     singleFlightList = this.flightList[j].onwardflights;
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
@@ -868,6 +1004,47 @@ ngOnInit(): void {
           }
         }
       }
+      
+      
+            
+     /***Return**/     
+     if(this.flightList[j].returnflights.length > 0 ){ 
+     singleFlightList = this.flightList[j].returnflights;
+      for (let h = 0; h < singleFlightList.length; h++) {
+        let airlineName = singleFlightList[h].airlineName
+        let arrivalAirportCode = singleFlightList[h].arrivalAirport
+
+        if (h < singleFlightList.length) {
+          if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
+            if (this.airportsNameJson != null) {
+              let layOverFilterObj = {
+                "arrivalAirportCode": arrivalAirportCode,
+                "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
+                "price": priceSummaryList[0].totalFare,
+                "active": false
+              };
+              layOverArr.push(layOverFilterObj);
+            }
+          }
+        }
+        for (let p = 0; p < priceSummaryList.length; p++) {
+          priceSummary = priceSummaryList[p].totalFare
+          if (airlineNameArr.filter((d: any) => { if (d.airlineName == airlineName) { return d; } }).length < 1) {
+            if (airlineNameArr.filter((d: any) => { if (d.priceSummary) { return d; } }).length < 1) {
+              let airlineNameObj = {
+                "airlineName": airlineName,
+                "price": priceSummary,
+                "flighCount": 0,
+                "active": false
+              };
+              airlineNameArr.push(airlineNameObj);
+            }
+          }
+        }
+      }
+      }
+      
+      
     }
     this.airlines = airlineNameArr;
     this.layOverFilterArr = layOverArr;
@@ -897,20 +1074,19 @@ ngOnInit(): void {
     this.popularFilterFlightData();
   }
 
- flightFromVal:any;
+  flightFromVal:any;
   flightSearch() {
-    
     this.loader = true;
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.loader = false;
       this.DocKey = res.response.docKey;
-      // this.flightList = res.response.onwardFlights;
-      this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
+      
+      this.flightList = this.ascPriceSummaryFlighs(res.response.flights);
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
-      this.flightListFullData =   res.response.onwardFlights;
+      this.flightListFullData =   res.response.flights;
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
         this.minPrice = this.flightList[0].priceSummary[0].totalFare;
@@ -921,13 +1097,10 @@ ngOnInit(): void {
       this.popularFilterFlightData();
 
     }, (error) => { console.log(error) });
-    
   }
-
   ascPriceSummaryFlighs(flightsData:any)
   {
     flightsData.filter((flightItem:any,indx:number)=>{
-
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
         priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
@@ -996,11 +1169,8 @@ ngOnInit(): void {
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
-
-  
   
 
-  
   Initslider() {
     var $that = this;
     $that.sliderRange($that, $that.minPrice, $that.maxPrice);
@@ -1088,23 +1258,23 @@ ngOnInit(): void {
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
+    console.log(this.queryFlightData);return;
     
-       let flightDetailsArr: any = { 
-        "travel":"DOM",
-        "travel_type":"O",
+      let flightDetailsArr: any = { 
+        "travel":"INT",
+        "travel_type":'',
         "docKey": this.DocKey,
         "onwardFlightKey": flightKey,
         "returnFlightKey": '',
-        "onwardFlights": flights,
-        "returnFlights":'' ,
+        "onwardFlights": flights.onwardflights,
+        "returnFlights":flights.returnflights ,
         "onwardPriceSummary": selected, 
         "returnPriceSummary": '', 
         "queryFlightData":this.queryFlightData
         };
-    
-    
     let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
+    sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
+    //this._flightService.setFlightsDetails(flightDetailsArr);
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
    
         setTimeout(() => {

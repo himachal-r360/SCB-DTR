@@ -322,6 +322,16 @@ new_fare: number = 0;
                 this.flightReturnDetails=this.flightSessionData.returnFlights;
                 else
                 this.flightReturnDetails=[];
+                }else{
+                                
+                this.flightOnwardDetails = this.flightSessionData.onwardFlights;
+                this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
+                this.selectedReturnVendor = [];
+                
+                if(this.flightSessionData.returnFlights)
+                this.flightReturnDetails=this.flightSessionData.returnFlights;
+                else
+                this.flightReturnDetails=[];
                 
                 }
                 
@@ -490,7 +500,6 @@ new_fare: number = 0;
   getFlightDetails(param){
 
     if(param!=null){
-     if(param.travel=='DOM'){
       
       let flightKeys=[];
       flightKeys.push(param.onwardFlightKey);
@@ -498,7 +507,6 @@ new_fare: number = 0;
       if(param.returnFlightKey)
       flightKeys.push(param.returnFlightKey);
      
-      /**Domestic Onward**/
         var onwardFlightFareKey = (param.onwardPriceSummary.clearTripFareKey != undefined && param.onwardPriceSummary.clearTripFareKey != null  ? param.onwardPriceSummary.clearTripFareKey : "");
         var returnFlightFareKey = (param.returnPriceSummary.clearTripFareKey != undefined && param.returnPriceSummary.clearTripFareKey != null  ? param.returnPriceSummary.clearTripFareKey : "");
         var body = {
@@ -509,9 +517,6 @@ new_fare: number = 0;
           "returnFlightFareKey": returnFlightFareKey,
           "splrtFlight": this.selectedOnwardVendor.splrtFareFlight
         }
-     
-     
-     }
         
         this.getFlightInfo(body,this.selectedOnwardVendor.partnerName);
         this.durationCalc();
@@ -1534,6 +1539,7 @@ new_fare: number = 0;
       }
     },600) ; 
 
+console.log(param);
   
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
                 

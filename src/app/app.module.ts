@@ -7,7 +7,8 @@ import { FlightModule } from './flight/flight.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { CountdownModule } from 'ngx-countdown';
-import { HomeComponent } from './home/home.component';
+import { HomeModule } from './home/home.module';
+import { FlightSearchModule } from './flight-search/flight-search.module';
 import { HttpClientModule,HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './core/search/search.component';
@@ -35,7 +36,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     SearchComponent,
     AlertDialogComponent,
     
@@ -53,7 +53,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
       headerName: 'X-XSRF-TOKEN'
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
-    MaterialModule,DirectiveModule,PartnersModule,
+    MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
