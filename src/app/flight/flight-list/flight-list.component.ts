@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostListener,  OnDestroy, OnInit, ViewChild,ViewContainerRef,TemplateRef } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
@@ -10,6 +9,7 @@ import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
+import { AppConfigService } from '../../app-config.service';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -91,18 +91,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('bookingprocess') bookingprocess: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
 
-  flightDataModify: any = this._fb.group({
-    flightfrom: [],
-    flightto: [],
-    flightclass: [],
-    flightdefault: ['O'],
-    departure: [],
-    arrival: [''],
-    adults: [],
-    child: [],
-    infants: [],
-    travel: ['DOM'],
-  });
+
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
   flightListFullData: any = [];
@@ -177,7 +166,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         nextIndex=0;
         
         private loadData() {
-       
              if (this.pageIndex >= this.flightList.length) {
              return false;
               }else{
@@ -210,14 +198,16 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
               
               this.container.createEmbeddedView(this.template, context);
             }
+            //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
             //  this.gotoTop();
         }
-        
+   serviceSettings:any;     
+  enableFlightServices:any;
   
-  
-  constructor(  public _styleManager: StyleManagerService,private _flightService: FlightService, private _fb: FormBuilder, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
-  
+      this.serviceSettings=this.appConfigService.getConfig();
+      this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
@@ -227,7 +217,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#endOfPage').trigger('click');
         }
         });
-       
   }
   
 @HostListener('window:resize', ['$event'])
@@ -236,32 +225,39 @@ ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.loader = true;
     this.getQueryParamData(null);
-    // this.flightList = this._flightService.flightListData;
     this.headerHideShow(null)
-    this.getCityList();
-    //this.getFlightIcon();
     this.getAirpotsList();
-    this.setSearchFilterData();
     this.flightSearch();
 
   }
 
   getQueryParamData(paramObj: any) {
-    if (paramObj != null && paramObj != undefined) {
-      this.queryFlightData = paramObj;
-      this.fromContryName = this.queryFlightData.fromContry;
-      this.toContryName = this.queryFlightData.toContry;
-      sessionStorage.setItem('searchVal', JSON.stringify(paramObj));
-    }
-    else {
+
       this.route.queryParams
         .subscribe((params: any) => {
           this.queryFlightData = params;
+            this.searchData = params;
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
-          sessionStorage.setItem('searchVal', JSON.stringify(params));
+          
+          
+        this.fromCityName = this.queryFlightData.fromCity; 
+        this.toCityName = this.queryFlightData.toCity;
+        this.departureDate = new Date(this.queryFlightData.departure);
+        this.flightClassVal = this.queryFlightData.flightclass;
+        this.adultsVal = this.queryFlightData.adults;
+        this.childVal = this.queryFlightData.child;
+        this.infantsVal = this.queryFlightData.infants;
+        this.fromAirpotName = this.queryFlightData.fromAirportName;
+        this.toAirpotName = this.queryFlightData.toAirportName;
+        this.flightTimingfrom = this.queryFlightData.flightfrom
+        this.flightTimingto = this.queryFlightData.flightto
+        this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
+    
+          
         });
-    }
+    
+
   }
 
   flightDetailsTab(obj: any, value: string, indx: number) {
@@ -274,45 +270,9 @@ ngOnInit(): void {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.Initslider();
-      //$('.selectpicker').selectpicker();
     }, 200);
   }
-  setSearchFilterData() {
-    this.searchData = sessionStorage.getItem('searchVal');
-    let searchObj = JSON.parse(this.searchData);
-    this.fromCityName = searchObj.fromCity; //searchObj.flightfrom;
-    this.toCityName = searchObj.toCity;//localStorage.getItem('toCity');
-    this.departureDate = new Date(searchObj.departure);
 
-    this.flightClassVal = searchObj.flightclass;
-    this.adultsVal = searchObj.adults;
-    this.childVal = searchObj.child;
-    this.infantsVal = searchObj.infants;
-    this.fromAirpotName = searchObj.fromAirportName;//localStorage.getItem('fromAirportName');
-    this.toAirpotName = searchObj.toAirportName;//localStorage.getItem('toAirportName');
-    this.flightTimingfrom = searchObj.flightfrom
-    this.flightTimingto = searchObj.flightto
-
-    this.flightDataModify.value.flightfrom = searchObj.flightfrom;
-    this.flightDataModify.value.flightto = searchObj.flightto;
-    this.flightDataModify.value.departure = new Date(this.departureDate);
-    this.flightDataModify.value.flightclass = this.flightClassVal;
-    this.flightDataModify.value.adults = searchObj.adults;
-    this.flightDataModify.value.child = this.childVal;
-    this.flightDataModify.value.infants = this.infantsVal;
-    this.totalPassenger =
-      parseInt(this.adultsVal) +
-      parseInt(this.childVal) +
-      parseInt(this.infantsVal);
-  }
-
-  getCityList() {
-    this.sub = this._flightService
-      .getCityList(this.SearchCityName)
-      .subscribe((res: any) => {
-        this.cityList = res.hits.hits;
-      });
-  }
 
 
 
@@ -323,201 +283,18 @@ ngOnInit(): void {
 
     })
   }
-
+  show_airline_more:number=0;
   showmoreAirline() {
-    let airlineSize = 2
-    if(this.airlines.length > 2) {
-      let modifyAirline = this.airlines.slice(0, airlineSize)
-    }
-    // else  {
-
-    // }
-
-
+   this.show_airline_more=1;
   }
-
-  increaseAdult() {
-    if (parseInt(this.flightDataModify.value.adults) < 9) {
-      this.flightDataModify
-        .get('adults')
-        .setValue(parseInt(this.flightDataModify.value.adults) + 1);
-      this.totalPassenger =
-        parseInt(this.flightDataModify.value.adults) +
-        parseInt(this.flightDataModify.value.child) +
-        parseInt(this.flightDataModify.value.infants);
-      if (this.totalPassenger == 9) {
-        this.disableParent = true;
-        this.disablechildren = true;
-        this.disableinfants = true;
-      }
-    }
-  }
-
-  decreaseAdult() {
-    if (parseInt(this.flightDataModify.value.adults) > 1) {
-      this.flightDataModify
-        .get('adults')
-        .setValue(parseInt(this.flightDataModify.value.adults) - 1);
-      this.totalPassenger =
-        parseInt(this.flightDataModify.value.adults) +
-        parseInt(this.flightDataModify.value.child) +
-        parseInt(this.flightDataModify.value.infants);
-      if (this.totalPassenger < 9) {
-        this.disableParent = false;
-        this.disablechildren = false;
-        if (
-          parseInt(this.flightDataModify.value.infants) ==
-          parseInt(this.flightDataModify.value.adults)
-        ) {
-          this.disableinfants = true;
-        } else {
-          this.disableinfants = false;
-        }
-      }
-    }
-  }
-
-  increaseChild() {
-    if (parseInt(this.flightDataModify.value.child) < 9) {
-      this.flightDataModify
-        .get('child')
-        .setValue(parseInt(this.flightDataModify.value.child) + 1);
-      this.totalPassenger =
-        parseInt(this.flightDataModify.value.adults) +
-        parseInt(this.flightDataModify.value.child) +
-        parseInt(this.flightDataModify.value.infants);
-      if (this.totalPassenger == 9) {
-        this.disableParent = true;
-        this.disablechildren = true;
-        this.disableinfants = true;
-      }
-    }
-  }
-
   
-
-  decreaseChild() {
-    if (parseInt(this.flightDataModify.value.child) > 0) {
-      this.flightDataModify
-        .get('child')
-        .setValue(parseInt(this.flightDataModify.value.child) - 1);
-      this.totalPassenger =
-        parseInt(this.flightDataModify.value.adults) +
-        parseInt(this.flightDataModify.value.child) +
-        parseInt(this.flightDataModify.value.infants);
-      if (this.totalPassenger < 9) {
-        this.disableParent = false;
-        this.disablechildren = false;
-        if (
-          parseInt(this.flightDataModify.value.infants) ==
-          parseInt(this.flightDataModify.value.adults)
-        ) {
-          this.disableinfants = true;
-        } else {
-          this.disableinfants = false;
-        }
-      }
-    }
+    show_layover_more:number=0;
+  showmoreLayover() {
+   this.show_layover_more=1;
   }
 
-  increaseInfant() {
-    if (
-      parseInt(this.flightDataModify.value.infants) <
-      parseInt(this.flightDataModify.value.adults)
-    ) {
-      if (parseInt(this.flightDataModify.value.infants) < 9) {
-        this.flightDataModify
-          .get('infants')
-          .setValue(parseInt(this.flightDataModify.value.infants) + 1);
-        this.totalPassenger =
-          parseInt(this.flightDataModify.value.adults) +
-          parseInt(this.flightDataModify.value.child) +
-          parseInt(this.flightDataModify.value.infants);
-        if (this.totalPassenger == 9) {
-          this.disableParent = true;
-          this.disablechildren = true;
-          this.disableinfants = true;
-        } else {
-          if (
-            parseInt(this.flightDataModify.value.infants) ==
-            parseInt(this.flightDataModify.value.adults)
-          ) {
-            this.disableinfants = true;
-          } else {
-            this.disableinfants = false;
-          }
-        }
-      }
-    }
-  }
 
-  decreaseInfant() {
-    if (parseInt(this.flightDataModify.value.infants) > 0) {
-      this.flightDataModify
-        .get('infants')
-        .setValue(parseInt(this.flightDataModify.value.infants) - 1);
-      this.totalPassenger =
-        parseInt(this.flightDataModify.value.adults) +
-        parseInt(this.flightDataModify.value.child) +
-        parseInt(this.flightDataModify.value.infants);
-      if (this.totalPassenger < 9) {
-        this.disableParent = false;
-        this.disablechildren = false;
-        this.disableinfants = false;
-      }
-    }
-  }
 
-  fromList(evt: any) {
-    this.toFlightList = false;
-    this.fromFlightList = true;
-    this.SearchCityName = evt.target.value.trim().toLowerCase();
-    this.getCityList();
-  }
-
-  toList(evt: any) {
-    this.fromFlightList = false;
-    this.toFlightList = true;
-    this.SearchCityName = evt.target.value.trim().toLowerCase();
-    this.getCityList();
-  }
-
-  selectFromFlightList(para1: any) {
-    this.flightDataModify.value.flightfrom = para1.id;
-    this.fromAirpotName = para1.airport_name;
-    this.fromCityName = para1.city;
-    this.fromContryName = para1.country;
-    this.fromFlightList = false;
-    setTimeout(() => {
-      let toCityDivElement = document.getElementById("toCityDiv");
-      toCityDivElement?.click();
-      this.toCityInput.nativeElement.focus();
-    }, 50);
-  }
-
-  selectToFlightList(para2: any) {
-    this.flightDataModify.value.flightto = para2.id;
-    this.cityName = para2.city;
-    this.toAirpotName = para2.airport_name;
-    this.toCityName = para2.city;
-    this.toContryName = para2.country;
-    this.toFlightList = false;
-    setTimeout(() => {
-      let datePickerOpen = document.getElementById("datePickerOpen");
-      datePickerOpen?.click();
-    }, 50);
-  }
-
-  //mat date picker
-  currentPeriodClicked(datePicker: any) {
-    let date = datePicker.target.value
-    if (date) {
-      setTimeout(() => {
-        let openTravellers = document.getElementById('openTravellers')
-        openTravellers?.click();
-      }, 50);
-    }
-  }
 
 
   convertDate(str: any) {
@@ -802,11 +579,9 @@ ngOnInit(): void {
     // Layover Filter Flights
     this.flightList = this.layoverFilterFlights(this.flightList);
 
-
      this.container.clear();
      this.intialData();
 
-  $('.scrollToTop').trigger('click');
   }
 
   //Popular Filter Flights
@@ -985,6 +760,7 @@ ngOnInit(): void {
           return item;
         }
       })
+     
       var filteredAirlines: any[] = [];
       if (airlineArr.length > 0) {
         flightList.forEach((e: any) => {
@@ -998,10 +774,12 @@ ngOnInit(): void {
             filteredAirlines.push(e);
           }
         });
-        if (filteredAirlines.length > 0) {
+       // if (filteredAirlines.length > 0) {
           flightList = filteredAirlines;
-        }
+       // }
       }
+      
+     
 
       //Get AirLines Count
       if (this.airlines.length > 0) {
@@ -1119,38 +897,12 @@ ngOnInit(): void {
     this.popularFilterFlightData();
   }
 
-  flightFromVal:any;
+ flightFromVal:any;
   flightSearch() {
+    
     this.loader = true;
-    this.searchData = sessionStorage.getItem('searchVal');
-    let searchObj = JSON.parse(this.searchData);
-    if (
-      this.flightDataModify.value.flightfrom == null ||
-      this.flightDataModify.value.flightfrom == undefined
-    ) {
-      this.flightDataModify.value.flightfrom = searchObj.flightfrom;
-    }
-    if (
-      this.flightDataModify.value.flightto == null ||
-      this.flightDataModify.value.flightto == undefined
-    ) {
-      this.flightDataModify.value.flightto = searchObj.flightto;
-    }
-    if (
-      this.flightDataModify.value.departure == null ||
-      this.flightDataModify.value.departure == undefined
-    ) {
-      this.flightDataModify.value.departure = searchObj.departure;
-    }
-
-    let searchValue = this.flightDataModify.value;
-    this.flightDataModify.value.departure = this.flightDataModify.value.departure.getFullYear() + '-' + (this.flightDataModify.value.departure.getMonth() + 1) + '-' + this.flightDataModify.value.departure.getDate();
-
-    let otherSearchValueObj = { 'fromAirportName': this.fromAirpotName, 'toAirportName': this.toAirpotName, 'toCity': this.toCityName, 'fromCity': this.fromCityName, 'fromContry': this.fromContryName, 'toContry': this.toContryName }
-
-    let searchValueAllobj = Object.assign(searchValue, otherSearchValueObj);
-    sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
-    this.sub = this._flightService.flightList(this.flightDataModify.value).subscribe((res: any) => {
+    let searchObj = (this.searchData);
+    this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.loader = false;
       this.DocKey = res.response.docKey;
       // this.flightList = res.response.onwardFlights;
@@ -1165,15 +917,13 @@ ngOnInit(): void {
         this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
-      let query: any = sessionStorage.getItem('searchVal');
-      let url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
       this.getAirlinelist();
       this.popularFilterFlightData();
-      this.location.replaceState(url);
-      this.getQueryParamData(JSON.parse(query));
 
     }, (error) => { console.log(error) });
+    
   }
+
   ascPriceSummaryFlighs(flightsData:any)
   {
     flightsData.filter((flightItem:any,indx:number)=>{
@@ -1246,21 +996,11 @@ ngOnInit(): void {
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
-  swap() {
-    var FromData = {
-      flightFrom: this.flightDataModify.value.flightfrom,
-      fromAirpotName: this.fromAirpotName,
-      fromCityName: this.fromCityName,
-    };
-    this.flightDataModify.value.flightfrom = this.flightDataModify.value.flightto;
-    this.fromAirpotName = this.toAirpotName;
-    this.fromCityName = this.toCityName;
-    localStorage.setItem('fromCity', this.toCityName);
-    this.flightDataModify.value.flightto = FromData.flightFrom;
-    this.toAirpotName = FromData.fromAirpotName;
-    this.toCityName = FromData.fromCityName;
-    localStorage.setItem('toCity', FromData.fromCityName);
-  }
+
+  
+  
+
+  
   Initslider() {
     var $that = this;
     $that.sliderRange($that, $that.minPrice, $that.maxPrice);
@@ -1348,40 +1088,31 @@ ngOnInit(): void {
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};
-   // let randomFlightDetailKey = this.getRandomString(44);
-   
-    let randomFlightDetailKey = btoa(this.DocKey+flightKey);
+    /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
     
-    sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
+       let flightDetailsArr: any = { 
+        "travel":"DOM",
+        "travel_type":"O",
+        "docKey": this.DocKey,
+        "onwardFlightKey": flightKey,
+        "returnFlightKey": '',
+        "onwardFlights": flights,
+        "returnFlights":'' ,
+        "onwardPriceSummary": selected, 
+        "returnPriceSummary": '', 
+        "queryFlightData":this.queryFlightData
+        };
     
-    this._flightService.setFlightsDetails(flightDetailsArr);
+    
+    let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-        this.router.navigateByUrl(url);
-    /*
-    const myInterval =setInterval(()=>{
-      this.loaderValue = this.loaderValue + 10;
-      if(this.loaderValue == 110)
-      {
-        clearInterval(myInterval);
-        $('#bookingprocess').modal('hide');
-        let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-        this.router.navigateByUrl(url);
-      }
-    },10)*/
+   
+        setTimeout(() => {
+                this.router.navigateByUrl(url);
+                }, 10);  
+
   }
 
-
-// get rendom string value
-  getRandomString(length: any) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random()*charactersLength));
-    }
-    return result;
-  }
 
 
   gotoTop() {

@@ -21,6 +21,9 @@ headers : {
   providedIn: 'root'
 })
 export class RestapiService {
+  get() {
+    throw new Error('Method not implemented.');
+  }
   endpoint:any;domainName:any;domainPath:any;
   constructor(private http: HttpClient,private location:Location,private sg: SimpleGlobal) { 
   	let urlToSplit =this.location.path();
@@ -90,6 +93,10 @@ export class RestapiService {
   getVouchersList ():Observable<any> {
       return this.http.get('assets/data/voucherslist.json');
   }
+
+  getRegaliaGoldList ():Observable<any> {
+    return this.http.get('assets/data/regalia_gold.json');
+  }
   
     verifyDomain ():Observable<any> {
           
@@ -113,7 +120,12 @@ export class RestapiService {
    return this.http.post( this.endpoint+'getnotification','', config).pipe(map((response: any) => response));
  }
  getNotificationPopup (): Observable<any> {
-   return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/getnotificationPopup.json');
+   }else{
+	return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+    }
+   
  }
 
   arr=[];
