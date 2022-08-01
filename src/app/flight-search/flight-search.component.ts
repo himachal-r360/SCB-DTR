@@ -127,12 +127,12 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     toAirportName: ['',[Validators.required]],
     flightclass: ['E'],
     flightdefault: [],
-    departure:[''],
-    arrival: [''],
-    adults: ['1'],
+    departure:['',[Validators.required]],
+    arrival: ['',],
+    adults: ['1',[Validators.required]],
     child: ['0'],
     infants: ['0'],
-    travel: []
+    travel: ['',[Validators.required]]
   });
   public Error = (controlName: string, errorName: string) => {
     return this.flightData.controls[controlName].hasError(errorName);
@@ -266,8 +266,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
-        this.flightData.get('arrival').setValue(lastSearch.arrival);
-        this.flightData.get('departure').setValue(lastSearch.departure);
+        
+               
         this.flightData.get('flightclass').setValue(lastSearch.flightclass );
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
         this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
@@ -288,7 +288,17 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         
-        this.departureDate = new Date(lastSearch.departure);
+        /*
+         if(lastSearch.departure)
+        this.flightData.get('departure').setValue(moment(lastSearch.departure).format('YYYY-MM-DD'));
+       
+        if(lastSearch.arrival)
+        this.flightData.get('arrival').setValue(moment(lastSearch.arrival).format('YYYY-MM-DD'));
+        */
+        
+ 
+           
+       this.departureDate = new Date(lastSearch.departure);
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
         this.arrivalDate = new Date(lastSearch.arrival);
        }
@@ -337,13 +347,13 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
       this.dateValidation=false;
-      this.flightData.value.departure=moment(this.flightData.controls['departure']['value']).format('YYYY-MM-DD');
+     this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
     }
     else{
       this.dateValidation=true;
     }
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
-      this.flightData.value.arrival=moment(this.flightData.controls['arrival']['value']).format('YYYY-MM-DD');
+       this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
       this.flightData.get('flightdefault').setValue('R');
     }else{
     this.flightData.get('flightdefault').setValue('O');
@@ -355,7 +365,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
          this.flightData.get('travel').setValue('INT');
         }
 
-    console.log(this.flightData);
+  //  console.log(this.flightData);return;
 
     if(this.flightData.invalid || this.dateValidation==true){
       return
@@ -366,6 +376,13 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.flightSearchCallBack(searchValue);
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
+      
+      searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
+      
+      if(searchValue.arrival)
+       searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
+      
+      //console.log(searchValue);return;
 
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {

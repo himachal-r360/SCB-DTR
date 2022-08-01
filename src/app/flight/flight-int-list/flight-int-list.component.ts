@@ -218,6 +218,11 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
         $('#endOfPage').trigger('click');
         }
+        
+        this.router.routeReuseStrategy.shouldReuseRoute = function() {
+	return false;
+	};
+        
         });
   }
   

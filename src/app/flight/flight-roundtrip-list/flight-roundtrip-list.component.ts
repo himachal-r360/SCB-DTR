@@ -157,6 +157,10 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    
+        this.router.routeReuseStrategy.shouldReuseRoute = function() {
+	return false;
+	};
 
    }
 

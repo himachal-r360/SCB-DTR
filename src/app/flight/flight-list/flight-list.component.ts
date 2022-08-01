@@ -217,6 +217,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#endOfPage').trigger('click');
         }
         });
+            this.router.routeReuseStrategy.shouldReuseRoute = function() {
+	return false;
+	};
   }
   
 @HostListener('window:resize', ['$event'])
