@@ -184,7 +184,7 @@
                                                                             formControlName="flightfrom"
                                                                             (keyup)="fromList($event)"
                                                                             (focus)="isFromorNot= true;fromList($event)"
-                                                                            [(ngModel)]="flightData.value.flightfrom">
+                                                                            [(ngModel)]="flightData.value.flightfrom" >
 
                                                                     </div>
                                                                     <div class="mob-search-list">
@@ -344,7 +344,7 @@
                                                             </li>
                                                             <li class="flight-from-ul-li"
                                                                 *ngFor="let fromCity of cityList">
-                                                                <a href="#" class="flight-from-ul-li-a"
+                                                                <a href="javascript:void(0)" class="flight-from-ul-li-a"
                                                                     (click)="isFromorNot == true ?selectFromFlightList(fromCity._source) : selectToFlightList(fromCity._source)">
                                                                     <div class="flight-from-name">
                                                                         <h6>{{fromCity._source.city}},
