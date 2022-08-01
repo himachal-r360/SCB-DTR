@@ -258,12 +258,12 @@ new_fare: number = 0;
                 this.getAirpotsList();
                 this.getAirLineList();
 
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-    if(this.isMobile){
-     this._flightService.showHeader(false);
-    }else{
-    this._flightService.showHeader(true);
-    }
+                this.isMobile = window.innerWidth < 991 ?  true : false;
+                if(this.isMobile){
+                this._flightService.showHeader(false);
+                }else{
+                this._flightService.showHeader(true);
+                }
    
 
           /*** SESSION */
@@ -295,6 +295,7 @@ new_fare: number = 0;
              }else{
                 this.getQueryParamData();
                 this.flightDetailsArrVal=sessionStorage.getItem(this.randomFlightDetailKey);
+                console.log(this.flightDetailsArrVal);
 
                 this.flightSessionData=JSON.parse(this.flightDetailsArrVal);
                 if(!this.flightSessionData){  

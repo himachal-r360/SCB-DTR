@@ -10,10 +10,10 @@ import { InfiniaModule } from './infinia/infinia.module';
 */
 const routes: Routes = [
   {
-    path:"" , component:HomeComponent
+    path:"" ,   component:HomeComponent 
   },
   {
-    path:"home" , component:HomeComponent 
+    path:"compare-fly" , component:HomeComponent 
   },
   
     {

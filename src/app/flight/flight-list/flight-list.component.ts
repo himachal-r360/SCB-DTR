@@ -1100,6 +1100,7 @@ ngOnInit(): void {
     
     
     let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
+    sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
    
         setTimeout(() => {

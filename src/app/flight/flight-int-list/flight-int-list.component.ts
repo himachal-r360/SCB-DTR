@@ -1253,11 +1253,11 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    console.log(this.queryFlightData);return;
+    //console.log(this.searchData);return;
     
       let flightDetailsArr: any = { 
         "travel":"INT",
-        "travel_type":'',
+        "travel_type":this.searchData.flightdefault,
         "docKey": this.DocKey,
         "onwardFlightKey": flightKey,
         "returnFlightKey": '',

@@ -369,11 +369,11 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       this.flightSearchCallBack(searchValue);
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
       
-     /* searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
+      searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
       
       if(searchValue.arrival)
        searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
-      */
+      
         let url;
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
