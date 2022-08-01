@@ -552,7 +552,7 @@
               </div>
               <div class="col-md-12">
                   <div class="mob-listing-fiters">
-                      <h6>12 Flights Found</h6>
+                      <h6>{{ flightList.length + ReturnflightList.length}} Flights Found</h6>
                       <a href="#" class="showfilters">
                           <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
                           <span>Sort/Filters</span>
@@ -562,28 +562,23 @@
               <div class="col-md-12">
                   <div class="mob-all-flight">
                       <ul>
-                          <li>
-                              <a href="" class="active">
-                                  <span>8</span>
-                                  All Flights
-                              </a>
-                          </li>
-                          <li>
-                              <a href="">
-                                  Non-Stop
-                              </a>
-                          </li>
+                        <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"  value="{{Items.value}}" >
+                          <a href="javascript:void(0)" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
+                              <span *ngIf="Items.name!='no_stops'">{{nonStopCount}}</span>
+                              {{Items.value}}
+                          </a>
+                      </li>
                       </ul>
                   </div>
               </div>
               <div class="col-md-12">
                   <div class="mob-list-area mob-fr-list-area">
                       <div class="row g-0">
-                          <div class="col-6" appToggleDetail *ngFor="let list of flightList; let i = index">
+                          <div class="col-6" >
                               <div class="mob-fr-list-title">
                                   <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{fromCityName}} To {{toCityName}}</h6>
                               </div>
-                              <div class="mob-list-items">
+                              <div class="mob-list-items" appToggleDetail *ngFor="let list of flightList; let i = index" id="MobileOnward_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -618,7 +613,7 @@
                                           </div>
                                       </div>
                                   </div>
-                                  <div class="mob-items-book-list dropdown not-close" >
+                                  <div class="mob-items-book-list flight-from-hide dropdown not-close" >
                                       <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                                           <div class="mob-book-list-top">
                                               <div class="mob-booking-image">
@@ -628,7 +623,7 @@
                                                   <h6>₹ {{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking">
-                                                  <a href="#" class="button-style">Selected</a>
+                                                  <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom">
@@ -646,18 +641,319 @@
                                                   </ul>
                                               </div>
                                               <div class="mob-details">
-                                                  <a href="#" class="mob-fd-show">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                                  <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
                                               </div>
                                           </div>
                                       </div>
                                   </div>
+                                  <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
+                                    <div class="mob-fd-box">
+                                        <div class="mob-title">
+                                            <h3>Flight Details</h3>
+                                            <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
+                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="mob-fd-filters">
+                                            <div class="mob-fd-accordion">
+                                                <div class="accordion" id="accordionExample">
+                                                    <div class="accordion-item">
+                                                        <!-- <h2 class="accordion-header" id="headingOne-fd">
+                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-fd"
+                                                                aria-expanded="true" aria-controls="collapseOne-fd">
+                                                                Flight Details
+                                                            </button>
+                                                        </h2> -->
+                                                        <div id="collapseOne-fd" class="accordion-collapse collapse show" aria-labelledby="headingOne-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <div class="extra-tabs-details FlightDetails-box">
+                                                                    <div class="extra-tabs-details-top">
+                                                                        <div class="extra-tabs-left">
+                                                                          <p>{{fromCityName}} to {{toCityName}} <br> Depart</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                        <div class="tabs-depart-box"  *ngFor="let details of list.flights;let i=index;">
+                                                                            <div class="tabs-depart-one">
+                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                <div class="tabs-depart-left">
+                                                                                    <div class="tabs-depart-times">
+                                                                                        <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                        <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                    </div>
+                                                                                    <div class="tabs-depart-total">
+                                                                                        <p>{{details.duration | durationTime}}</p>
+                                                                                    </div>
+                                                                                    <div class="tabs-depart-times">
+                                                                                        <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                        <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- <div class="tabs-depart-right">
+                                                                                    <div class="Baggage">
+                                                                                        <h5>Baggage</h5>
+                                                                                        <p>Adult</p>
+                                                                                    </div>
+                                                                                    <div class="departCheck">
+                                                                                        <h5>Check-in</h5>
+                                                                                        <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                                                    </div>
+                                                                                    <div class="Cabin">
+                                                                                        <h5>Cabin</h5>
+                                                                                        <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                                                    </div>
+                                                                                </div> -->
+                                                                            </div>
+                                                                            <div class="tabs-depart-two"  *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                                <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingTwo-fd">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseTwo-fd" aria-expanded="false" aria-controls="collapseTwo-fd">
+                                                                Cancellation Details
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseTwo-fd" class="accordion-collapse collapse" aria-labelledby="headingTwo-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <div class="extra-tabs-details Fare-box">
+                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                        <table class="table-bordered table-content w-100">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                        <p class="opacity_05">(Per passenger)</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingThree-fd">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseThree-fd" aria-expanded="false" aria-controls="collapseThree-fd">
+                                                                Baggage Policy
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseThree-fd" class="accordion-collapse collapse" aria-labelledby="headingThree-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <div class="">
+                                                                    <div class="rules-flight">
+                                                                        <div class="rules-flight-items">
+                                                                            <div class="rules-flight-thumbe">
+                                                                                <img src="./assets/images/flights/flight-1.png" alt="">
+                                                                            </div>
+                                                                            <div class="rules-flight-content">
+                                                                                <h6>
+                                                                                    BOM
+                                                                                    <img src="./assets/images/icons/flight-right.png" alt="">
+                                                                                    NAG
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="rules-flight-items opacity_05">
+                                                                            <div class="rules-flight-thumbe">
+                                                                                <img src="./assets/images/flights/flight-1.png" alt="">
+                                                                            </div>
+                                                                            <div class="rules-flight-content">
+                                                                                <h6>
+                                                                                    NAG
+                                                                                    <img src="./assets/images/icons/flight-right.png" alt="">
+                                                                                    HYD
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="extra-tabs-details-bottom p-0">
+                                                                    <table class="table-bordered table-content w-100">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Baggage</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                                                    <p class="opacity_05">(Per passenger)</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                                                    <p class="opacity_05">(Per passenger)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class=" ">Adult</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">15 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">7 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class=" ">Child</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">15 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">7 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class=" ">Infant</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Cabin bag only</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">7 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <p class="oth-text mt-10">*From the date of Departure</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingfour-fd">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapsefour-fd" aria-expanded="false" aria-controls="collapsefour-fd">
+                                                                Fare Rules
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapsefour-fd" class="accordion-collapse collapse" aria-labelledby="headingfour-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body stops-widget">
+                                                                <div class="extra-tabs-details Fare-box">
+                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                        <table class="table-bordered table-content w-100">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                        <p class="opacity_05">(Per passenger)</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>  -->
+                                                </div>
+                                            </div>
+                                            <!-- <div class="mob-sf-btns">
+                                                <a href="">Apply</a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
                               </div>
                           </div>
-                          <div class="col-6" appToggleDetail *ngFor="let list of ReturnflightList; let i = index">
+                          <div class="col-6" >
                               <div class="mob-fr-list-title">
                                   <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{toCityName}} To {{fromCityName}}</h6>
                               </div>
-                              <div class="mob-list-items">
+                              <div class="mob-list-items" appToggleDetail *ngFor="let list of ReturnflightList; let i = index" id="MobileReturn_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -692,7 +988,7 @@
                                           </div>
                                       </div>
                                   </div>
-                                  <div class="mob-items-book-list dropdown not-close">
+                                  <div class="mob-items-book-list flight-from-hide dropdown not-close">
                                       <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                                           <div class="mob-book-list-top">
                                               <div class="mob-booking-image">
@@ -702,7 +998,7 @@
                                                   <h6>₹{{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking">
-                                                  <a href="#" class="button-style">Selected</a>
+                                                  <button class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom">
@@ -720,11 +1016,312 @@
                                                   </ul>
                                               </div>
                                               <div class="mob-details">
-                                                  <a href="#" class="mob-fd-show">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                                  <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
                                               </div>
                                           </div>
                                       </div>
                                   </div>
+                                  <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
+                                    <div class="mob-fd-box">
+                                        <div class="mob-title">
+                                            <h3>Flight Details</h3>
+                                            <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
+                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="mob-fd-filters">
+                                            <div class="mob-fd-accordion">
+                                                <div class="accordion" id="accordionExample">
+                                                    <div class="accordion-item">
+                                                        <!-- <h2 class="accordion-header" id="headingOne-fd">
+                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-fd"
+                                                                aria-expanded="true" aria-controls="collapseOne-fd">
+                                                                Flight Details
+                                                            </button>
+                                                        </h2> -->
+                                                        <div id="collapseOne-fd" class="accordion-collapse collapse show" aria-labelledby="headingOne-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <div class="extra-tabs-details FlightDetails-box">
+                                                                    <div class="extra-tabs-details-top">
+                                                                        <div class="extra-tabs-left">
+                                                                          <p>{{toCityName}} to {{fromCityName}} <br> Depart</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                        <div class="tabs-depart-box"  *ngFor="let details of list.flights;let i=index;">
+                                                                            <div class="tabs-depart-one">
+                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                <div class="tabs-depart-left">
+                                                                                    <div class="tabs-depart-times">
+                                                                                        <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                        <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                    </div>
+                                                                                    <div class="tabs-depart-total">
+                                                                                        <p>{{details.duration | durationTime}}</p>
+                                                                                    </div>
+                                                                                    <div class="tabs-depart-times">
+                                                                                        <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                        <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- <div class="tabs-depart-right">
+                                                                                    <div class="Baggage">
+                                                                                        <h5>Baggage</h5>
+                                                                                        <p>Adult</p>
+                                                                                    </div>
+                                                                                    <div class="departCheck">
+                                                                                        <h5>Check-in</h5>
+                                                                                        <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                                                    </div>
+                                                                                    <div class="Cabin">
+                                                                                        <h5>Cabin</h5>
+                                                                                        <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                                                    </div>
+                                                                                </div> -->
+                                                                            </div>
+                                                                            <div class="tabs-depart-two"  *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                                <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingTwo-fd">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseTwo-fd" aria-expanded="false" aria-controls="collapseTwo-fd">
+                                                                Cancellation Details
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseTwo-fd" class="accordion-collapse collapse" aria-labelledby="headingTwo-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <div class="extra-tabs-details Fare-box">
+                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                        <table class="table-bordered table-content w-100">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                        <p class="opacity_05">(Per passenger)</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingThree-fd">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseThree-fd" aria-expanded="false" aria-controls="collapseThree-fd">
+                                                                Baggage Policy
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseThree-fd" class="accordion-collapse collapse" aria-labelledby="headingThree-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <div class="">
+                                                                    <div class="rules-flight">
+                                                                        <div class="rules-flight-items">
+                                                                            <div class="rules-flight-thumbe">
+                                                                                <img src="./assets/images/flights/flight-1.png" alt="">
+                                                                            </div>
+                                                                            <div class="rules-flight-content">
+                                                                                <h6>
+                                                                                    BOM
+                                                                                    <img src="./assets/images/icons/flight-right.png" alt="">
+                                                                                    NAG
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="rules-flight-items opacity_05">
+                                                                            <div class="rules-flight-thumbe">
+                                                                                <img src="./assets/images/flights/flight-1.png" alt="">
+                                                                            </div>
+                                                                            <div class="rules-flight-content">
+                                                                                <h6>
+                                                                                    NAG
+                                                                                    <img src="./assets/images/icons/flight-right.png" alt="">
+                                                                                    HYD
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="extra-tabs-details-bottom p-0">
+                                                                    <table class="table-bordered table-content w-100">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Baggage</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                                                    <p class="opacity_05">(Per passenger)</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                                                    <p class="opacity_05">(Per passenger)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class=" ">Adult</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">15 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">7 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class=" ">Child</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">15 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">7 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p class=" ">Infant</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">Cabin bag only</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="fw_6 fs_13">7 Kgs</p>
+                                                                                    <p class="opacity_05">(1 piece only)</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <p class="oth-text mt-10">*From the date of Departure</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingfour-fd">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapsefour-fd" aria-expanded="false" aria-controls="collapsefour-fd">
+                                                                Fare Rules
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapsefour-fd" class="accordion-collapse collapse" aria-labelledby="headingfour-fd"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body stops-widget">
+                                                                <div class="extra-tabs-details Fare-box">
+                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                        <table class="table-bordered table-content w-100">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Time Frame</p>
+                                                                                        <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                        <p class="opacity_05">(Per passenger)</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">2 hours to 3 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p class="opacity_05">3 days to 365 days*</p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>Adult : Non refundable</p>
+                                                                                        <p>Child : Non refundable</p>
+                                                                                        <p>Infant : Non refundable</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <p class="oth-text mt-10">*From the date of Departure</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>  -->
+                                                </div>
+                                            </div>
+                                            <!-- <div class="mob-sf-btns">
+                                                <a href="">Apply</a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
                               </div>
                           </div>
                       </div>
@@ -1521,7 +2118,7 @@
  <!-- ------------------------------
         >>> flight fixed
         ---------------------------------->
-        <div class="flight-fixed-area" *ngIf="isDisplayDetail">
+        <div class="flight-fixed-area" *ngIf="isDisplayDetail && !isMobile">
           <div class="container">
               <div class="row">
                   <div class="col-lg-12">
@@ -2099,6 +2696,37 @@
                                           </div>
                                       </div>
                                   </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+       <!-- ------------------------------
+        >>> Mobile flight fixed
+        ---------------------------------->
+        <div class="fr-flight-fixed-area" *ngIf="isDisplayDetail  && isMobile">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="fr-flight-fixed-box">
+                          <div class="fr-flight-fixed-top">
+                              <div class="fr-applycoupon">
+                                  <a href="javascript:void(0)">Apply Coupon</a>
+                              </div>
+                              <div class="fr-faresummary">
+                                  <a href="javascript:void(0)">Fare Summary</a>
+                              </div>
+                          </div>
+                          <div class="fr-flight-fixed-bottom">
+                              <div class="fr-fixed-price">
+                                  <h6>₹ {{(onwardSelectedFlight.priceSummery.totalFare  + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) | number}}</h6>
+                                  <p>EMI @ {{calculateEMI(onwardSelectedFlight.priceSummery.totalFare +(returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) | number}}/month</p>
+                              </div>
+                              <div class="fr-fixed-btn">
+                                  <a href="javascript:void(0)" (click)="isReturnSelected  ? bookingSummary(onwardSelectedFlight,returnSelectedFlight) : 0 " class="button-style" [ngClass]="{'disable-partner':!isReturnSelected}">Continue</a>
                               </div>
                           </div>
                       </div>

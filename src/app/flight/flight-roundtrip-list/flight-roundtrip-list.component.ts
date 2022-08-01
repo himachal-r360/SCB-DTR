@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -152,7 +152,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   isDetailsShow: boolean = false;
   onwardSelectedFlight :any;
   returnSelectedFlight:any;
-
+  MobileTotalDare:any;
 
 
   constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
@@ -160,6 +160,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
    }
 
+   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+  }
   ngOnInit(): void {
     this.loader = true;
     this.getQueryParamData(null);
@@ -167,8 +170,8 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.getAirpotsList();
     this.flightSearch();
   }
-  
-  
+
+
     getQueryParamData(paramObj: any) {
 
       this.route.queryParams
@@ -177,9 +180,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
             this.searchData = params;
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
-          
-          
-        this.fromCityName = this.queryFlightData.fromCity; 
+
+
+        this.fromCityName = this.queryFlightData.fromCity;
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
         this.flightClassVal = this.queryFlightData.flightclass;
@@ -194,7 +197,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         });
 
   }
-  
+
 
 
   //Hide show header
@@ -221,9 +224,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
-    
-     
-    
+
+
+
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
@@ -1293,10 +1296,10 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   navBarLink(navItem:any){
     this.navItemActive = navItem;
   }
-  
-  
+
+
   bookingSummary(onwardSelectedFlight: any, returnSelectedFlight: any) {
-        let flightDetailsArr: any = { 
+        let flightDetailsArr: any = {
         "travel":"DOM",
         "travel_type":"R",
         "docKey": this.DocKey,
@@ -1304,20 +1307,55 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         "returnFlightKey": returnSelectedFlight.flightKey,
         "onwardFlights": onwardSelectedFlight.flights,
         "returnFlights": returnSelectedFlight.flights,
-        "onwardPriceSummary": onwardSelectedFlight.priceSummery, 
-        "returnPriceSummary": returnSelectedFlight.priceSummery, 
+        "onwardPriceSummary": onwardSelectedFlight.priceSummery,
+        "returnPriceSummary": returnSelectedFlight.priceSummery,
         "queryFlightData":this.queryFlightData
         };
-    
+
     let randomFlightDetailKey = btoa(this.DocKey+onwardSelectedFlight.flightKey+returnSelectedFlight.flightKey+onwardSelectedFlight.priceSummery.partnerName+returnSelectedFlight.priceSummery.partnerName);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     //this._flightService.setFlightsDetails(flightDetailsArr);
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-   
+
     setTimeout(() => {
         this.router.navigateByUrl(url);
-        }, 10);  
-        
+        }, 10);
+
   }
-  
+
+  openFlightDetailMobile(i:any,title:any){
+    let flightDetail = document.getElementById('flightDetailMobile_' + i);
+    let cancellation:any = document.getElementById('collapseTwo-fd_'+ i);
+    let baggage:any = document.getElementById('collapseThree-fd_'+ i);
+    let fareRules:any = document.getElementById('collapsefour-fd_'+ i);
+    if(flightDetail && title == 'flightdetail') {
+      flightDetail.style.display = "block";
+    }
+    if(cancellation && title == 'cancellation'){
+      cancellation.classList.toggle("show");
+    }
+    if(baggage && title == 'baggagepolicy') {
+      baggage.classList.toggle("show");
+    }
+    if(fareRules && title == 'farerules'){
+      fareRules.classList.toggle("show");
+    }
+}
+
+closeFlightDetailMobile(i:any){
+  let element = document.getElementById('flightDetailMobile_' + i);
+  if(element) {
+    element.style.display = "none";
+  }
+
+}
+getLayoverHour(obj1: any, obj2: any) {
+  let dateHour: any;
+  if (obj2 != null || obj2 != undefined) {
+    let obj2Date = new Date(obj2.departureDateTime);
+    let obj1Date = new Date(obj1.arrivalDateTime);
+    dateHour = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+  }
+  return dateHour;
+}
 }
