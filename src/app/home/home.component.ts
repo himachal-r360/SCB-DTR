@@ -160,7 +160,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   ngOnInit(): void {
 
-   this._flightService.showHeader(true);
+    this._flightService.showHeader(true);  
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
     // this.selectDate('DepartureDate');
@@ -303,12 +303,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     removeClassToCity?.classList.remove('flight-from-hide');
     // this.toFlightList = true;
     setTimeout(() => {
-      // if(!this.isMobile)
-      // {
+      if(this.isMobile == false) {
         let toCityDivElement=document.getElementById("toCityDiv");
         toCityDivElement?.click();
         this.toCityInput.nativeElement.focus();
-      // }
+      }
+      else{
+        let toCitySearch = document.getElementById('toCitySearch');
+        toCitySearch?.click();
+      }
     }, 50);
 
   }
@@ -373,8 +376,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  flightSearchCallBack(param:any){
-      param = this.flightData.value;
+  flightSearchCallBack(param:any,callFrom:string){
+      // if(callFrom==''){
+      //   param = this.flightData.value;
+      // }
+      //param = this.flightData.value;
+      // let otherSearchValueObj={'fromAirportName':this.fromAirpotName,'toAirportName': this.toAirpotName,'toCity' :this.toCityName,'fromCity': this.fromCityName ,'fromContry':this.fromContryName,'toContry':this.toContryName}
+      if(callFrom!=''){
+        this.fromAirpotName=param.fromAirportName;
+        this.toAirpotName=param.toAirportName;
+        this.fromCityName=param.fromCity;
+        this.toCityName=param.toCity;
+        this.fromContryName=param.fromContry;
+        this.toContryName=param.toContry;
+      }
       let otherSearchValueObj={'fromAirportName':this.fromAirpotName,'toAirportName': this.toAirpotName,'toCity' :this.toCityName,'fromCity': this.fromCityName ,'fromContry':this.fromContryName,'toContry':this.toContryName}
       let searchValueAllobj=Object.assign(param,otherSearchValueObj);
       let continueSearch:any=localStorage.getItem('continueSearch');
@@ -384,7 +399,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(continueSearch!=null && continueSearch.length>0){
         this.continueSearchFlights=JSON.parse(continueSearch);
         this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
-          if(item.flightfrom!=searchValueAllobj.flightfrom || item.flightto!=searchValueAllobj.flightto)
+          if(!(item.flightfrom==searchValueAllobj.flightfrom && item.flightto==searchValueAllobj.flightto))
+          // if(item.flightfrom==searchValueAllobj.flightfrom || item.flightto==searchValueAllobj.flightto)
           {
               return item;
           }
@@ -393,12 +409,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       if(this.continueSearchFlights.length>3){
         this.continueSearchFlights=this.continueSearchFlights.slice(0,3);
       }
+     
       this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
       localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
       sessionStorage.setItem('searchVal', JSON.stringify(searchValueAllobj));
       localStorage.setItem('fromAirportName', this.fromAirpotName);
       localStorage.setItem('toAirportName', this.toAirpotName);
-
   }
 
 
@@ -424,7 +440,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else {
       let searchValue = this.flightData.value
-      this.flightSearchCallBack(searchValue);
+      this.flightSearchCallBack(searchValue,'');
       // this.sub = this._flightService.flightList(this.flightData.value).subscribe((res: any) => {
       //   this.show = true;
       //   this.flightList = res.response.onwardFlights;
@@ -432,7 +448,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   this._flightService.flightListData = this.flightList;
       //   this._flightService.flightListDate = this.oneWayDate;
         let query:any = sessionStorage.getItem('searchVal');
-        if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
+          if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
           let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(JSON.parse(query)));
           this.router.navigateByUrl(url);
         }
@@ -465,7 +481,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   continueSearch(param:any){
     // sessionStorage.setItem('searchVal', JSON.stringify(param));
-    this.flightSearchCallBack(param);
+    this.flightSearchCallBack(param,'continueSearch');
     if(param.arrival == "" || param.arrival == undefined || param.arrival == null ){
       let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
