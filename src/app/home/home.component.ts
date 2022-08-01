@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-   this._flightService.showHeader(true);
+    this._flightService.showHeader(true);
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
