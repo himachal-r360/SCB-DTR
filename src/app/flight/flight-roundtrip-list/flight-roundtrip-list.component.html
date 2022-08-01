@@ -1,5 +1,5 @@
-<main class="site-main mob-main">
-  <section class="bradcome-area mt-20 mb-10">
+<main class="site-main mob-main" >
+  <section class="bradcome-area mt-20 mb-10" *ngIf="!isMobile">
       <div class="container">
           <div class="row">
               <div class="col-md-12">
@@ -17,244 +17,12 @@
       </div>
   </section>
 
-  <section class="flight-listing-area mt-10">
+  <section class="flight-listing-area mt-10" *ngIf="!isMobile">
       <div class="container">
           <div class="row">
               <div class="col-lg-12">
                   <div class="travel-box mb-20">
-                    <form [formGroup]="flightDataModify" (ngSubmit)="flightSearch()">
-                      <div class="travel-select-data-area">
-                          <div class="travel-select-trip mt-0">
-                              <ul class="travel-select-trip-ul">
-                                  <li>
-                                      <span class="selectway ">One Way</span>
-                                  </li>
-                                  <li>
-                                      <span class="selectway active">Round Way</span>
-                                  </li>
-                                  <li>
-                                      <span class="selectway">Multi-City</span>
-                                  </li>
-                                  <li>
-                                      <div class="Travellers-dropdown ms-3" appDropdown>
-                                          <div class="Travellers-dropdown-title">
-                                              <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i></h5>
-                                          </div>
-                                          <ul class="Travellers-dropdown-data flight-from-hide dropdown">
-                                              <li>
-                                                  <p class="t-title">Travellers</p>
-                                              </li>
-                                              <li>
-                                                  <div class="Travellers-passengers-data">
-                                                      <div class="Travellers-name">
-                                                          <h6>Adult</h6>
-                                                          <p>12 years & above</p>
-                                                      </div>
-                                                      <div class="Travellers-qty">
-                                                          <div class="quantity buttons_added">
-                                                            <input type="button" (click)="decreaseAdult()"  value="-" class="qty-buttons minus" >
-                                                            <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" [(ngModel)]="adultsVal" formControlName="adults" size="4" pattern="" inputmode="">
-                                                            <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent"  class="qty-buttons plus">
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </li>
-                                              <li>
-                                                  <div class="Travellers-passengers-data">
-                                                      <div class="Travellers-name">
-                                                          <h6>Child</h6>
-                                                          <p>2 - 11 years</p>
-                                                      </div>
-                                                      <div class="Travellers-qty">
-                                                          <div class="quantity buttons_added">
-                                                            <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus" >
-                                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode=""  [(ngModel)]="childVal" formControlName="child">
-                                                            <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </li>
-                                              <li>
-                                                  <div class="Travellers-passengers-data">
-                                                      <div class="Travellers-name">
-                                                          <h6>Infant</h6>
-                                                          <p>Under 2 years</p>
-                                                      </div>
-                                                      <div class="Travellers-qty">
-                                                          <div class="quantity buttons_added">
-                                                            <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus" >
-                                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" [(ngModel)]="infantsVal" formControlName="infants" inputmode="">
-                                                            <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus">
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </li>
-                                          </ul>
-                                      </div>
-
-                                  </li>
-                                  <li>
-                                    <mat-select class=" ms-4" [(ngModel)]="flightClassVal" formControlName="flightclass">
-                                      <mat-option value="B">Business Class</mat-option>
-                                      <mat-option value="E">Economy Class</mat-option>
-                                      <mat-option value="F">First Class</mat-option>
-                                      <mat-option value="P">Premium Economy</mat-option>
-                                    </mat-select>
-                                  </li>
-                              </ul>
-                          </div>
-                          <div class="travel-data">
-                              <div class="row g-2">
-                                  <div class="col-lg-6">
-                                      <div class="select-root-area">
-                                          <div class="select-root-left" appDropdown>
-                                              <span class="select-roottitle">FROM</span>
-                                              <h5 class="">{{fromCityName}}</h5>
-                                              <span class="select-roottitle">{{fromAirpotName}}</span>
-                                              <div class="flight-from-data flight-from-hide dropdown" >
-                                                  <div class="flight-from-data-search">
-                                                      <input type="text" name="" class="w-100" id="fromCitySearch"   placeholder="Search City" (keyup)="fromList($event)">
-                                                  </div>
-                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark" *ngIf="fromFlightList">
-                                                      <li class="flight-from-ul-li">
-                                                          <p class="flight-Results-text">Results</p>
-                                                      </li>
-                                                      <li class="flight-from-ul-li" *ngFor="let fromCity of cityList">
-                                                        <a  class="flight-from-ul-li-a"  (click)="selectFromFlightList(fromCity._source)" >
-                                                            <div class="flight-from-name"   >
-                                                                <h6>{{fromCity._source.city}}, {{fromCity._source.country}}</h6>
-                                                                <p>{{fromCity._source.airport_name}} </p>
-                                                            </div>
-                                                            <div class="flight-from-shortname" >
-                                                                <h6>{{fromCity._source.airport_code}}</h6>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                  </ul>
-                                              </div>
-                                          </div>
-                                          <div class="select-root-icons" (click)="swap()">
-                                              <img src="./assets/images/icons/twoway.png" alt="" >
-                                          </div>
-                                          <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
-                                              <span class="select-roottitle">TO</span>
-                                              <h5 class="">{{toCityName}}</h5>
-                                              <span class="select-roottitle">{{toAirpotName}}</span>
-
-                                              <div class="flight-to-data flight-from-hide dropdown">
-                                                  <div class="flight-from-data-search">
-                                                      <input type="text" name="" class="w-100" id="toCitySearch" placeholder="Search City"  (keyup)="toList($event)">
-                                                  </div>
-                                                  <ul class="flight-from-data-ul mCustomScrollbar" data-mcs-theme="dark" *ngIf="toFlightList">
-                                                      <li class="flight-from-ul-li">
-                                                          <p class="flight-Results-text">Results</p>
-                                                      </li>
-                                                      <li class="flight-from-ul-li" *ngFor="let toCity of cityList">
-                                                        <a  class="flight-from-ul-li-a" (click)="selectToFlightList(toCity._source)"  >
-                                                            <div class="flight-from-name"  >
-                                                                <h6>{{toCity._source.city}}, {{toCity._source.country}}</h6>
-                                                                <p>{{toCity._source.airport_name}} </p>
-                                                            </div>
-                                                            <div class="flight-from-shortname"  >
-                                                                <h6>{{toCity._source.airport_code}}</h6>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                  </ul>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-lg-6">
-                                      <div class="root-date">
-                                          <div class="select-root-area">
-                                              <div class="select-dep-ret">
-                                                  <div class="area-root-departure"  (click)="picker.open()" id="datePickerOpen" >
-                                                      <div class="select-root-departure">
-                                                          <span class="select-roottitle">DEPARTURE</span>
-                                                          <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-                                                          <span class="select-roottitle">{{departureDate | date:'EEEE' }}</span>
-                                                      </div>
-                                                      <div class="select-root-date" style="position: relative; left: 0;">
-                                                          <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
-                                                          <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                            <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClicked($event)">
-                                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                                            <mat-datepicker #picker ></mat-datepicker>
-                                                     </mat-form-field>
-                                                      </div>
-                                                  </div>
-                                                  <div class="area-root-reutrn area-root-departure disableDiv" (click)="picker2.open()" id="datePickerArrival" >
-                                                      <div class="select-root-reutrn">
-                                                          <span class="select-roottitle">RETURN</span>
-                                                          <h5 class="">{{returnDate | date:'dd MMM' }}</h5>
-                                                          <span class="select-roottitle"
-                                                          *ngIf="returnDate!='' ||returnDate!=undefined" >{{returnDate
-                                                          | date:'EEEE' }}</span>
-                                                      <span class="select-roottitle d-block w-100" *ngIf="returnDate=='' || returnDate==undefined " >Tap to add
-                                                          a <br> return date</span>
-                                                      </div>
-                                                      <div class="select-root-date">
-                                                          <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
-                                                          <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                            <input matInput [min]="departureDate" [matDatepicker]="picker2"  formControlName="arrival" [(ngModel)]="returnDate" >
-                                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                                            <mat-datepicker #picker2 ></mat-datepicker>
-                                                     </mat-form-field>
-                                                      </div>
-
-                                                  </div>
-
-                                              </div>
-
-                                          </div>
-                                          <div class="root-search">
-                                              <button type="submit" class="searchbn">Search</button>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="add-search-area">
-                               <div class="add-search-content">
-                                  <div class="Preferred-area">
-                                      <h5 class="Preferred-title">Preferred Airline <img src="./assets/images/icons/down.png" class="ms-1" alt=""></h5>
-                                      <div class="Preferred-data Preferred-hide">
-                                          <div class="Preferred-search">
-                                              <input type="text" name="" class="w-100" id="" placeholder="Search Airline">
-                                          </div>
-                                          <ul class="Preferred-items mCustomScrollbar" data-mcs-theme="dark">
-                                              <li class="Preferred-list">
-                                                  <p class="">Results</p>
-                                              </li>
-                                              <li class="Preferred-list">
-                                                  <a href="#" class="">
-                                                      IndiGo (6E)
-                                                  </a>
-                                              </li>
-                                              <li class="Preferred-list">
-                                                  <a href="#" class="">
-                                                      SpiceJet (SG)
-                                                  </a>
-                                              </li>
-                                              <li class="Preferred-list">
-                                                  <a href="#" class="">
-                                                      Vistara (UK)
-                                                  </a>
-                                              </li>
-                                              <li class="Preferred-list">
-                                                  <a href="#" class="">
-                                                      Go First (G8)
-                                                  </a>
-                                              </li>
-                                          </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                    </form>
+                    <app-flight-search modifySearch="true" ></app-flight-search>
                   </div>
               </div>
 
@@ -275,42 +43,6 @@
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                              <!-- <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Refundable Fares (84)</span>
-                                                      </label>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" checked="checked" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Non-stop (23)</span>
-                                                      </label>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Morning Departures (66)</span>
-                                                      </label>
-                                                  </div>
-                                              </li>
-                                              <li class="custom-check-box">
-                                                  <div class="custom-controls-stacked">
-                                                      <label class="custom-control material-checkbox">
-                                                          <input type="checkbox" class="material-control-input" />
-                                                          <span class="material-control-indicator"></span>
-                                                          <span class="description">Meals Included</span>
-                                                      </label>
-                                                  </div>
-                                              </li> -->
                                               <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
                                                 <div class="custom-controls-stacked">
                                                     <label class="custom-control material-checkbox">
@@ -335,7 +67,7 @@
                                               <div class="flighttiming-content flight-departing">
                                                   <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
                                                   (click)="FlightTimingsFilterFlightData(timingsItems)">
-                                                      <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                      <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
                                                       <p [innerHTML]="timingsItems.value"></p>
                                                 </div>
                                           </div>
@@ -344,7 +76,7 @@
                                           <div class="flighttiming-content flight-departing">
                                             <div class="flighttiming-list" *ngFor="let timingsItems of flight_return_Timingsitems" [ngClass]="{'active': timingsItems.active}"
                                             (click)="FlightTimingsRetrunFilterFlightData(timingsItems)">
-                                                <img src="assets/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
                                                 <p [innerHTML]="timingsItems.value"></p>
                                           </div>
                                           </div>
@@ -377,15 +109,6 @@
                                       </div>
                                       <div class="widget-content">
                                           <div class="Stops-content">
-                                              <!-- <div class="Stops-list">
-                                                  <p>No <br> stops</p>
-                                              </div>
-                                              <div class="Stops-list active">
-                                                  <p>1 <br> stops</p>
-                                              </div>
-                                              <div class="Stops-list">
-                                                  <p>2+ <br> stops</p>
-                                              </div> -->
                                               <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
                                         [innerHTML]="FlightStopitem.value">
                                           </div>
@@ -504,7 +227,7 @@
                                   <div class="col-md-6">
                                       <div class="round-flight-listing round-from-box">
                                           <div class="round-from">
-                                              <h6><img src="assets/images/icons/flight-listing.png" alt=""> {{fromCityName}} to {{toCityName}}</h6>
+                                              <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{fromCityName}} to {{toCityName}}</h6>
                                               <p>{{departureDate | date:"EEE ,dd MMM" }}</p>
                                           </div>
                                           <div class="round-from-filters">
@@ -534,7 +257,7 @@
                                                                  <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                                   </div>
                                                   <div class="round-content-time">
-                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="/assets/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                                       <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}  |
                                                         <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
                                                         <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span></p>
@@ -548,22 +271,22 @@
                                                   </div>
                                                   <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
-                                                       <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}" width="40" > 
-                                                      <!-- <img src="assets/images/flights/1.png" alt=""> -->
+                                                       <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
+                                                      <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                   </div>
                                               </div>
                                           </div>
                                           <div class="round-flight-info-box">
-                                              <p><img src="/assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
                                                           <div class="round-list-image">
-                                                             <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" > 
-                                                              <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                                                             <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" >
+                                                              <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                           </div>
                                                           <div class="flight-options-text">
                                                             <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -574,7 +297,7 @@
                                                           <div class="flight-options-price d-flex align-items-center">
                                                               <p>&#8377;{{item.totalFare |number}}</p>
                                                               <span class="information-icon">
-                                                                  <img src="assets/images/icons/info.png" class="ms-2" alt="">
+                                                                  <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-title">
                                                                           <h6>Price Breakdown</h6>
@@ -601,16 +324,16 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flights,item,$event)">Select</a>
+                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
                                                           </div>
                                                       </div>
                                                   </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
-                                                          <ul class="extra-tabs-right-ul">
+                                                          <!--<ul class="extra-tabs-right-ul">
                                                               <li class="ms-0">
                                                                   <p>
-                                                                      <img src="./assets/images/icons/details/1.png" alt="">
+                                                                      <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
                                                                   </p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
@@ -619,7 +342,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/2.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Meals Selection</p>
@@ -627,18 +350,18 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/3.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Seats Selection</p>
                                                                       </div>
                                                                   </div>
                                                               </li>
-                                                          </ul>
+                                                          </ul>-->
                                                       </div>
                                                       <a href="javascript:void(0);" (click)="DisplayDetail()" class="round-flight-details-click">
                                                           Flight Details
-                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="">
+                                                          <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
                                                       </a>
                                                   </div>
                                               </div>
@@ -649,7 +372,7 @@
                                   <div class="col-md-6">
                                       <div class="round-flight-listing round-from-box">
                                           <div class="round-from">
-                                              <h6><img src="assets/images/icons/flight-listing.png" alt=""> {{toCityName}} to {{fromCityName}} </h6>
+                                              <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{toCityName}} to {{fromCityName}} </h6>
                                               <p>{{returnDate | date:"EEE ,dd MMM" }}</p>
                                           </div>
                                           <div class="round-from-filters">
@@ -679,7 +402,7 @@
                                                                 <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                                   </div>
                                                   <div class="round-content-time">
-                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                      <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                                       <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}   |
                                                         <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
                                                         <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
@@ -694,22 +417,22 @@
                                                   </div>
                                                   <div class="round-content-price"  *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
-                                                        <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" > 
-                                                      <!-- <img src="assets/images/flights/1.png" alt=""> -->
+                                                        <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
+                                                      <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                   </div>
                                               </div>
                                           </div>
                                           <div class="round-flight-info-box">
-                                              <p><img src="./assets/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
                                                           <div class="round-list-image">
-                                                              <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" > 
-                                                              <!-- <img src="./assets/images/flights/1.png" alt=""> -->
+                                                              <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" >
+                                                              <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                           </div>
                                                           <div class="flight-options-text">
                                                             <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -720,7 +443,7 @@
                                                           <div class="flight-options-price d-flex align-items-center">
                                                               <p>&#8377;{{item.totalFare |number}}</p>
                                                               <span class="information-icon">
-                                                                  <img src="assets/images/icons/info.png" class="ms-2" alt="">
+                                                                  <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-title">
                                                                           <h6>Price Breakdown</h6>
@@ -747,16 +470,16 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flights,item,$event)" >Select</button>
+                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)" >Select</button>
                                                           </div>
                                                       </div>
                                                   </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
-                                                          <ul class="extra-tabs-right-ul">
+                                                          <!--<ul class="extra-tabs-right-ul">
                                                               <li class="ms-0">
                                                                   <p>
-                                                                      <img src="./assets/images/icons/details/1.png" alt="">
+                                                                      <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
                                                                   </p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
@@ -765,7 +488,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/2.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Meals Selection</p>
@@ -773,18 +496,18 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="./assets/images/icons/details/3.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Seats Selection</p>
                                                                       </div>
                                                                   </div>
                                                               </li>
-                                                          </ul>
+                                                          </ul>-->
                                                       </div>
                                                       <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail()">
                                                           Flight Details
-                                                          <img src="./assets/images/icons/down.png" class="ms-1" alt="" >
+                                                          <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="" >
                                                       </a>
                                                   </div>
                                               </div>
@@ -801,23 +524,28 @@
   </section>
 
   <!-- Mobile -->
-  <section class="mob-flights-listing">
+  <section class="mob-flights-listing mob-fr-listing" *ngIf="isMobile">
       <div class="container">
           <div class="row">
               <div class="col-md-12 p-0">
                   <div class="mob-listing-header">
                       <div class="mob-listing-header-left">
-                          <a href="index.html" >
-                              <img src="./assets/images/icons/left.png" alt="" />
+                          <a href="javascript:;" routerLink="/" >
+                              <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                           </a>
                       </div>
                       <div class="mob-listing-header-center">
-                          <h6>Mumbai - Hyderabad</h6>
-                          <p>Wed, 15 Jul | 4 Travellers | Economy</p>
+                          <h6>{{fromCityName}} - {{toCityName}}</h6>
+                          <p>Wed, {{departureDate | date:'dd MMM' }}  | {{totalPassenger}} Travellers |
+                            <span *ngIf="flightClassVal == 'B'">Business</span>
+                        <span *ngIf="flightClassVal == 'E'">Economy</span>
+                        <span *ngIf="flightClassVal == 'F'">First</span>
+                        <span *ngIf="flightClassVal == 'P'">Premium</span>
+                          </p>
                       </div>
                       <div class="mob-listing-header-right">
-                          <a href="index.html" >
-                              <img src="./assets/images/icons/edit.png" alt="" />
+                          <a  href="javascript:;" routerLink="/" >
+                              <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                           </a>
                       </div>
                   </div>
@@ -826,7 +554,7 @@
                   <div class="mob-listing-fiters">
                       <h6>12 Flights Found</h6>
                       <a href="#" class="showfilters">
-                          <img src="./assets/images/icons/filter.png" alt="">
+                          <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
                           <span>Sort/Filters</span>
                       </a>
                   </div>
@@ -848,112 +576,159 @@
                       </ul>
                   </div>
               </div>
-
               <div class="col-md-12">
-                  <div class="mob-list-area">
-                      <div class="mob-list-items">
-                          <div class="mob-list-items-name">
-                              <div class="mob-list-items-name-top">
-                                  <div class="mob-list-items-image">
-                                      <img src="./assets/images/flights/flight-1.png" alt="">
-                                      <div class="mob-list-flight-name">
-                                          <h6>IndiGo, Vistara</h6>
-                                          <p>6E 5334, 6E 7137</p>
-                                      </div>
-                                  </div>
-                                  <div class="mob-list-items-price">
-                                      <h6>₹ 4,892</h6>
-                                      <p href="">+1 more</p>
-                                  </div>
+                  <div class="mob-list-area mob-fr-list-area">
+                      <div class="row g-0">
+                          <div class="col-6" appToggleDetail *ngFor="let list of flightList; let i = index">
+                              <div class="mob-fr-list-title">
+                                  <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{fromCityName}} To {{toCityName}}</h6>
                               </div>
-                              <div class="mob-list-items-name-bottom">
-                                  <div class="name-bottom-top">
-                                      <div class="name-bottom-top-left">
-                                          <h6>22:30</h6>
-                                          <p>BOM</p>
+                              <div class="mob-list-items">
+                                  <div class="mob-list-items-name">
+                                      <div class="mob-list-items-name-top">
+                                          <div class="mob-list-items-image">
+                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                              <div class="mob-list-flight-name">
+                                                  <h6>{{list.flights[0].airline}}</h6>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div class="name-bottom-top-center">
-                                          <p>2h 45m</p>
-                                          <img src="./assets/images/icons/mob-flight.png" alt="" />
-                                          <p>2h 45m</p>
-                                      </div>
-                                      <div class="name-bottom-top-right">
-                                          <h6>22:30</h6>
-                                          <p>BOM</p>
+                                      <div class="mob-list-items-name-bottom">
+                                          <div class="name-bottom-top">
+                                              <div class="name-bottom-top-left">
+                                                  <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                                  <p>{{list.flights[0].departureAirport}}</p>
+                                              </div>
+                                              <div class="name-bottom-top-center">
+                                                  <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
+                                              </div>
+                                              <div class="name-bottom-top-right">
+                                                  <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}} </h6>
+                                                  <p>{{list.flights[0].arrivalAirport}}</p>
+                                              </div>
+                                          </div>
+                                          <div class="mob-fr-time">
+                                              <p>{{ list.flights[0].duration | durationTime }}  |
+                                                <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
+                                              <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
+                                            </p>
+                                          </div>
+                                          <div class="name-bottom-bottom">
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                                          </div>
                                       </div>
                                   </div>
-                                  <div class="name-bottom-bottom">
-                                      <p><img src="./assets/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
+                                  <div class="mob-items-book-list dropdown not-close" >
+                                      <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
+                                          <div class="mob-book-list-top">
+                                              <div class="mob-booking-image">
+                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
+                                              </div>
+                                              <div class="mob-booking-price">
+                                                  <h6>₹ {{item.totalFare |number}}</h6>
+                                              </div>
+                                              <div class="mob-booking">
+                                                  <a href="#" class="button-style">Selected</a>
+                                              </div>
+                                          </div>
+                                          <div class="mob-book-list-bottom">
+                                              <div class="mob-extra">
+                                                  <ul>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
+                                                      </li>
+                                                  </ul>
+                                              </div>
+                                              <div class="mob-details">
+                                                  <a href="#" class="mob-fd-show">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                              </div>
+                                          </div>
+                                      </div>
                                   </div>
                               </div>
                           </div>
-                          <div class="mob-items-book-list">
-                              <div class="mob-items-book-list-items">
-                                  <div class="mob-book-list-top">
-                                      <div class="mob-booking-image">
-                                          <img src="./assets/images/flights/1.png" alt="" />
-                                      </div>
-                                      <div class="mob-booking-price">
-                                          <h6>₹ 4,892</h6>
-                                          <p>EMI @ ₹ 1699/month</p>
-                                      </div>
-                                      <div class="mob-booking">
-                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
-                                      </div>
-                                  </div>
-                                  <div class="mob-book-list-bottom">
-                                      <div class="mob-extra">
-                                          <ul>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/1.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/2.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/3.png" alt="" />
-                                              </li>
-                                          </ul>
-                                      </div>
-                                      <div class="mob-details">
-                                          <a href="#" class="mob-fd-show">Flight Details <img src="./assets/images/icons/mob-down.png" alt="" /> </a>
-                                      </div>
-                                  </div>
+                          <div class="col-6" appToggleDetail *ngFor="let list of ReturnflightList; let i = index">
+                              <div class="mob-fr-list-title">
+                                  <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{toCityName}} To {{fromCityName}}</h6>
                               </div>
-                              <div class="mob-items-book-list-items">
-                                  <div class="mob-book-list-top">
-                                      <div class="mob-booking-image">
-                                          <img src="./assets/images/flights/2.png" alt="" />
+                              <div class="mob-list-items">
+                                  <div class="mob-list-items-name">
+                                      <div class="mob-list-items-name-top">
+                                          <div class="mob-list-items-image">
+                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                              <div class="mob-list-flight-name">
+                                                  <h6>{{list.flights[0].airline}}</h6>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div class="mob-booking-price">
-                                          <h6>₹ 4,892</h6>
-                                          <p>EMI @ ₹ 1699/month</p>
-                                      </div>
-                                      <div class="mob-booking">
-                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</a>
+                                      <div class="mob-list-items-name-bottom">
+                                          <div class="name-bottom-top">
+                                              <div class="name-bottom-top-left">
+                                                  <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                                  <p>{{list.flights[0].departureAirport}}</p>
+                                              </div>
+                                              <div class="name-bottom-top-center">
+                                                  <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
+                                              </div>
+                                              <div class="name-bottom-top-right">
+                                                  <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                  <p>{{list.flights[0].arrivalAirport}}</p>
+                                              </div>
+                                          </div>
+                                          <div class="mob-fr-time">
+                                              <p>{{ list.flights[0].duration | durationTime }}  |
+                                                <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
+                                              <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
+                                              </p>
+                                          </div>
+                                          <div class="name-bottom-bottom">
+                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                                          </div>
                                       </div>
                                   </div>
-                                  <div class="mob-book-list-bottom">
-                                      <div class="mob-extra">
-                                          <ul>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/1.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/2.png" alt="" />
-                                              </li>
-                                              <li>
-                                                  <img src="./assets/images/icons/details/3.png" alt="" />
-                                              </li>
-                                          </ul>
-                                      </div>
-                                      <div class="mob-details">
-                                          <a href="">Flight Details <img src="./assets/images/icons/mob-down.png" alt="" /> </a>
+                                  <div class="mob-items-book-list dropdown not-close">
+                                      <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
+                                          <div class="mob-book-list-top">
+                                              <div class="mob-booking-image">
+                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
+                                              </div>
+                                              <div class="mob-booking-price">
+                                                  <h6>₹{{item.totalFare |number}}</h6>
+                                              </div>
+                                              <div class="mob-booking">
+                                                  <a href="#" class="button-style">Selected</a>
+                                              </div>
+                                          </div>
+                                          <div class="mob-book-list-bottom">
+                                              <div class="mob-extra">
+                                                  <ul>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
+                                                      </li>
+                                                      <li>
+                                                          <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
+                                                      </li>
+                                                  </ul>
+                                              </div>
+                                              <div class="mob-details">
+                                                  <a href="#" class="mob-fd-show">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                              </div>
+                                          </div>
                                       </div>
                                   </div>
                               </div>
                           </div>
                       </div>
+
                   </div>
               </div>
 
@@ -972,7 +747,7 @@
       <div class="mob-title">
           <h3>Flight Details</h3>
           <a href="#" class="mob-close mob-ff-from-close">
-              <img src="./assets/images/icons/close.png" alt="">
+              <img src="{{cdnUrl}}/images/icons/close.png" alt="">
           </a>
       </div>
       <div class="mob-fd-filters">
@@ -997,7 +772,7 @@
                                   <div class="extra-tabs-details-bottom p-0">
                                       <div class="tabs-depart-box">
                                           <div class="tabs-depart-one">
-                                              <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                              <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
                                               <div class="tabs-depart-left">
                                                   <div class="tabs-depart-times">
                                                       <h5 class="mb-1 fw_7">08:05</h5>
@@ -1032,7 +807,7 @@
                                               <p>Change of planes・3h 0m Layover in Nagpur</p>
                                           </div>
                                           <div class="tabs-depart-three">
-                                              <p class="depart-one-image"><img src="./assets/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                              <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
                                               <div class="tabs-depart-left">
                                                   <div class="tabs-depart-times">
                                                       <h5 class="mb-1 fw_7">08:05</h5>
@@ -1145,24 +920,24 @@
                                   <div class="rules-flight">
                                       <div class="rules-flight-items">
                                           <div class="rules-flight-thumbe">
-                                              <img src="./assets/images/flights/flight-1.png" alt="">
+                                              <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                           </div>
                                           <div class="rules-flight-content">
                                               <h6>
                                                   BOM
-                                                  <img src="./assets/images/icons/flight-right.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                   NAG
                                               </h6>
                                           </div>
                                       </div>
                                       <div class="rules-flight-items opacity_05">
                                           <div class="rules-flight-thumbe">
-                                              <img src="./assets/images/flights/flight-1.png" alt="">
+                                              <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
                                           </div>
                                           <div class="rules-flight-content">
                                               <h6>
                                                   NAG
-                                                  <img src="./assets/images/icons/flight-right.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                   HYD
                                               </h6>
                                           </div>
@@ -1310,7 +1085,7 @@
       <div class="mob-title">
           <h3>Sort & Filters</h3>
           <a href="#" class="mob-close mob-ff-from-close">
-              <img src="./assets/images/icons/close.png" alt="">
+              <img src="{{cdnUrl}}/images/icons/close.png" alt="">
           </a>
       </div>
       <div class="mob-sf-tabs">
@@ -1328,49 +1103,49 @@
                       <div class="mob-sf-sort-by">
                           <div class="mob-sf-sort-by-items active">
                               <p>
-                                  <img src="./assets/images/icons/price-l.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/price-l.png" alt="" />
                                   <span><strong>Price</strong> <br> Low to High</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/price-h.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/price-h.png" alt="" />
                                   <span><strong>Price</strong> <br> High to Low</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/clock.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
                                   <span><strong>Duration</strong> <br> Shortest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/clock.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/clock.png" alt="" />
                                   <span><strong>Duration</strong> <br> Longest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Departure.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
                                   <span><strong>Departure </strong> <br> Earliest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Departure.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Departure.png" alt="" />
                                   <span><strong>Departure </strong> <br> Latest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Arrival.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
                                   <span><strong>Arrival </strong> <br> Earliest</span>
                               </p>
                           </div>
                           <div class="mob-sf-sort-by-items">
                               <p>
-                                  <img src="./assets/images/icons/Arrival.png" alt="" />
+                                  <img src="{{cdnUrl}}/images/icons/Arrival.png" alt="" />
                                   <span><strong>Arrival</strong> <br> Latest</span>
                               </p>
                           </div>
@@ -1451,19 +1226,19 @@
                                           <p class="flighttimings-text">Departing flight (BOM-HYD)</p>
                                           <div class="flighttiming-content flight-departing">
                                               <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/1.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/1.png" alt="">
                                                   <p>Before 6AM</p>
                                               </div>
                                               <div class="flighttiming-list active">
-                                                  <img src="assets/images/icons/timings/2.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/2.png" alt="">
                                                   <p>6AM - 12 PM</p>
                                               </div>
                                               <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/3.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/3.png" alt="">
                                                   <p>12 PM - 6PM</p>
                                               </div>
                                               <div class="flighttiming-list">
-                                                  <img src="assets/images/icons/timings/4.png" alt="">
+                                                  <img src="{{cdnUrl}}/images/icons/timings/4.png" alt="">
                                                   <p>After 6PM</p>
                                               </div>
                                           </div>
@@ -1756,11 +1531,11 @@
                                   <div class="round-ff-content">
                                       <div class="round-ff-left" [hidden]="!isOnwardSelected" >
                                           <div class="round-ff-image">
-                                              <img [src]="this.flightIcons[onwardSelectedFlight.flights[0].airline].logo" alt="">
+                                              <img src="{{cdnUrl}}/images/airlines/{{onwardSelectedFlight.flights[0].airline}}.gif" alt="{{onwardSelectedFlight.flights[0].airline}}">
                                               <p> {{onwardSelectedFlight.flights[0].airline}}  {{onwardSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
-                                              <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="./assets/images/icons/flight-right.png" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
                                               <p>{{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}}
                                                   |  <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
                                                   <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
@@ -1780,15 +1555,15 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="flight-fixed-list"  [hidden]="!isReturnSelected">
+                              <div class="flight-fixed-list"  [hidden]="!isReturnSelected" *ngIf="returnSelectedFlight">
                                   <div class="round-ff-content">
                                       <div class="round-ff-left">
-                                          <div class="round-ff-image">
-                                              <img [src]="this.flightIcons[returnSelectedFlight.flights[0].airline].logo" alt="">
+                                          <div class="round-ff-image" >
+                                              <img src="{{cdnUrl}}/images/airlines/{{returnSelectedFlight.flights[0].airline}}.gif" alt="{{returnSelectedFlight.flights[0].airline}}" >
                                               <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
-                                              <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="./assets/images/icons/flight-right.png" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                              <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
                                               <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}  |
                                                 <span *ngIf="returnSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
                                                   <span *ngIf="returnSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
@@ -1812,7 +1587,7 @@
                           <div class="flight-fixed-right" *ngIf="isReturnSelected">
                               <div class="fixedright-content"  >
                                   <div class="fixedright-image">
-                                      <img src="./assets/images/flights/1.png" alt="" width="52px">
+                                      <img src="{{cdnUrl}}/images/flights/1.png" alt="" width="52px">
                                   </div>
                                   <div class="fixedright-price">
                                       <h6>
@@ -1852,7 +1627,7 @@
                                   </div>
                               </div>
                               <div class="flight-fixed-btn">
-                                  <button href="javascript:void(0)" class="button-style ms-2"  data-bs-toggle="modal" data-bs-target="#bookingprocess">Book</button>
+                                  <button href="javascript:void(0)" class="button-style ms-2" (click)="bookingSummary(onwardSelectedFlight,returnSelectedFlight)">Book</button>
                               </div>
                           </div>
                       </div>
@@ -1875,7 +1650,7 @@
                                   </ul>
                                   <div class="ff-close-box">
                                       <a href="javascript:void(0);" class="ff-close" (click)="CloseDetail()">
-                                          <img src="./assets/images/icons/close_01.png" alt="" />
+                                          <img src="{{cdnUrl}}/images/icons/close_01.png" alt="" />
                                       </a>
                                   </div>
                               </div>
@@ -1891,7 +1666,7 @@
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
                                                       <div class="tabs-depart-one" *ngFor="let flights of onwardSelectedFlight.flights;let i = index">
-                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" class="me-2" alt="{{flights.airline}}">{{flights.airline}} {{flights.flightNumber}}</p>
                                                           <div class="tabs-depart-left">
                                                               <div class="tabs-depart-times">
                                                                   <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
@@ -1934,7 +1709,7 @@
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
                                                       <div class="tabs-depart-three" *ngFor="let flights of returnSelectedFlight.flights;let i = index">
-                                                          <p class="depart-one-image"><img src="{{flightIcons[flights.airline].logo}}" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
                                                           <div class="tabs-depart-left">
                                                               <div class="tabs-depart-times">
                                                                   <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
@@ -1975,7 +1750,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2030,7 +1805,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2089,7 +1864,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2150,7 +1925,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2215,7 +1990,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2270,7 +2045,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="assets/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
