@@ -18,11 +18,12 @@ import { FlightSearchModule } from '../flight-search/flight-search.module';
 
 import { AgePipe } from 'src/app/pipes/age.pipe';
 import { CountdownModule } from 'ngx-countdown';
+import { DirectiveModule } from '../directives/directive.module';
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent
   },
-  
+
    {
     path:"flight-checkout" ,component:FlightCheckoutComponent
   },
@@ -32,7 +33,7 @@ const routes: Routes = [
   {
     path:"flight-int" ,component:FlightIntListComponent
   }
-  
+
 
 ];
 
@@ -54,7 +55,8 @@ const routes: Routes = [
         NgxSliderModule,
         NgxSkeletonLoaderModule,FlightSearchModule,
         CouponsModule,PaymentModule,CountdownModule,
-          RouterModule.forRoot(routes)
+          RouterModule.forRoot(routes),
+          DirectiveModule
   ],
   exports: [RouterModule],
   providers: [ ]
