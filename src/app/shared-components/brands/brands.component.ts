@@ -16,6 +16,7 @@ export class BrandsComponent implements OnInit {
   
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl;
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.cdnDealUrl = environment.cdnDealUrl;
     this.siteUrl = environment.MAIN_SITE_URL;
     
@@ -28,6 +29,36 @@ export class BrandsComponent implements OnInit {
    siteUrl: any;
 
   ngOnInit(): void {
+
   }
+
+  brandOptions: any = {
+    loop: false,
+    autoplay: true,
+    autoplayTimeout: 8000,
+    autoplayHoverPause: true,
+    margin: 30,
+
+    responsiveClass: true,
+    responsive: {
+      0: {
+        items: 2.5,
+        nav: false,
+        dots: false
+      },
+      600: {
+        items: 5,
+        nav: false,
+        dots: false
+      },
+      1000: {
+        items: 6,
+        nav: false,
+        dots: false
+      }
+    }
+  }
+
+  
 
 }
