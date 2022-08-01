@@ -23,7 +23,7 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
-
+import { FlightService } from '../common/flight.service';
 declare var $: any;
 declare var jQuery: any;
 declare const annyang: any;
@@ -118,7 +118,7 @@ export class HeaderComponent implements OnInit {
         Cookies:any = {'GA':false,'GTM':false,'AL':false};
         AcceptAllBtn:boolean=false;
         SaveCloseBtn:boolean=true;
-        showHeader:boolean=true;  showMenu:boolean=true;
+        showHeader:any;  showMenu:boolean=true;
         enablePushBox:boolean=false;
         enableQuesBox:boolean=true;
         enableQuesBoxNew:boolean=true;
@@ -128,6 +128,9 @@ export class HeaderComponent implements OnInit {
         enablePushTitle:boolean=false;
         notificationContainer:boolean=false;
         disableContainer:boolean=false;
+        enableContextBox:boolean = false;
+        viewMoreBox:boolean = true;
+        viewLessBox:boolean = false;
         prefere:any=[];
         toastPush:boolean=false;
         pushPopup:any;
@@ -156,12 +159,14 @@ export class HeaderComponent implements OnInit {
   parsed_date:any;
   relative_to:any;
   push_ids:any;
+  cdnnotifyUrl:any;
+    isMobile:boolean= false;
   delta:any;
         payzrestriction:boolean=false;
  @ViewChild("content") modalContent: TemplateRef<any>;
-  constructor(private ngZone: NgZone,private modalService: NgbModal,
+  constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
-
+        this.isMobile = window.innerWidth < 991 ?  true : false;
   
      setTimeout(() => {
     //Check Laravel Seesion
@@ -268,6 +273,7 @@ export class HeaderComponent implements OnInit {
 
     this.is_main=environment.IS_MAIN;
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.cdnnotifyUrl = environment.cdnnotifyUrl+this.sg['assetPath'];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.trainUrl = environment.TRAIN_SITE_URL[this.sg['domainName']];
     this.showCart=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['FRESHMENU'];
@@ -337,7 +343,7 @@ export class HeaderComponent implements OnInit {
           }else{
             
             htmltoast = this.toast(this.pushid[index],index);
-            this.pushids.push(this.pushid[index]['id']);
+            this.pushids.push(this.pushid[index]['private _flightService:FlightServiceid']);
             break;
           }
         }
@@ -363,35 +369,38 @@ export class HeaderComponent implements OnInit {
                         '</button><div class="toast-wrap" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <a href="'+val['redirect_url']+'">  <img src="'+this.cdnUrl+'images/push-icon.svg" class="img-fluid push-image-placeholder" alt="..."  ><div class="text-truncate"><h6 class="toast-font" style="-webkit-box-orient: vertical;">'+val['title']+'</h6><p class="toast-para" style="-webkit-box-orient: vertical;">'+val['text']+'</p></div></div></a></div>'+
                                                 '</div></div>';
               break;
-              case 'TEXT_LOGO':
-                var subimage_url = '';
-                if(val['serviceToken'] !=null ){
-                   
-                   subimage_url=val['serviceToken'];
-               }else if(val['tag'] !=null){
-                   
-                   subimage_url=val['tag'].toLowerCase();
-               }else{
-                   
-                   subimage_url='';
-               }
-               subimage_url = this.cdnUrl+'images/'+subimage_url+'-notify.png';
-               var image_url = ''
-               if(val['image_url'] != null && val['image_url'] != ''){
-                   image_url=val['image_url'];
-               }else if(val['logo_url'] !=null && val['logo_url'] !=''){
-                   image_url=val['logo_url'];
-               }else{
-                   image_url='';
-               }
-                 html ='<a href="'+val['redirect_url']+'"><div class="toast_push " id="toast_'+index+'"  >'+
-                                                 '<div class="toast-body" > <div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')">  <div class="row"><div class="col-2 push-wrapper-new"><img src="'+image_url+'" class="" alt="..."  ><img class="notify-pos-abs" src="'+subimage_url+'" alt=""/></div><div class="text-truncate col-10">'+
+              
+                case 'TEXT_LOGO':
+                  var subimage_url = '';
+                  if(val['serviceToken'] !=null ){
+  
+                     subimage_url=val['serviceToken'].toLowerCase();
+                 }else if(val['tag'] !=null){
+  
+                     subimage_url=val['tag'].toLowerCase();
+                 }else{
+  
+                     subimage_url='';
+                 }
+                 subimage_url = this.cdnnotifyUrl+'services/'+subimage_url+'.png';
+                 var image_url = ''
+                 if(val['image_url'] != null && val['image_url'] != ''){
+                    image_url=val['image_url'];
+                  }else if(val['logo_url'] !=null && val['logo_url'] !=''){
+                    image_url=val['logo_url'];
+                  }else if(val['partner_token'] != null && val['partner_token'] != ''){
+                    image_url=this.cdnnotifyUrl+'partner/'+val['partner_token'].toLowerCase()+'.png';
+                  }else{
+                    image_url='';
+                  }
+                 html ='<div class="toast_push " id="toast_'+index+'"  >'+
+                                                 '<div class="toast-body" ><div class="toast-wrapper"> <button type="button" class="ml-2  close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
+                                                 '<span class="toast-close" aria-hidden="true" >&times;</span>'+
+                                               '</button></div> <div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')"><a href="'+val['redirect_url']+'">  <div class="row"><div class="col-2 "><div class="push-wrapper-new"><img src="'+image_url+'" class="" alt="..."  ><img class="notify-pos-abs" src="'+subimage_url+'" alt=""/></div></div><div class="text-truncate-new col-10">'+
                         '<h4 style="-webkit-box-orient: vertical;">'+val['title']+' </h4>'+
                                           '<h5 style="-webkit-box-orient: vertical;">'+val['text']+' </h5>'+
                                           '<p style="-webkit-box-orient: vertical;"> '+this.converttime(val['created_at'])+'</p></div></div></div>'+
-                                                '</div></div><div class="toast-wrapper"> <button type="button" class="ml-2 mb-1 close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
-                                                '<span class="toast-close" aria-hidden="true" >&times;</span>'+
-                                              '</button></div></a>';
+                                                '</div></div></a>';
               break;
               case 'TEXT_IMAGE':
                  html ='<div class="toast_push " id="toast_'+index+'"  >'+
@@ -464,7 +473,17 @@ export class HeaderComponent implements OnInit {
       this.notifyOpacity = true;
       $('.myaccount-drop').removeClass('show');
   }
-  
+  enableMoreClick() {
+    
+    this.enableContextBox = true;
+    this.viewMoreBox = false;
+    this.viewLessBox = true;
+  }
+  enableLessClick() {
+    this.enableContextBox = false;
+    this.viewMoreBox = true;
+    this.viewLessBox = false;
+  }
 
   
   toastClose(pushpopid){
@@ -499,7 +518,53 @@ export class HeaderComponent implements OnInit {
 	 this.rest.trackEvents( track_body).subscribe(result => {});
    this.analyticsLogEvent('notification_click',id,toastUrls);
   }
-
+closeCookieConsent(value){
+  if(value==1){
+    this.Cookies.GA=true;
+    this.Cookies.AL=true;
+    this.Cookies.GTM=true;
+  }
+  else if(value==2){
+    this.Cookies.GA=false;
+    this.Cookies.AL=false;
+    this.Cookies.GTM=false;
+  }
+  else if(value==3){
+      var cookie_value=['SN'];
+      if(this.Cookies.GA==true){
+        cookie_value.push('GA');
+      }
+      if(this.Cookies.AL==true){
+        cookie_value.push('AL');
+      }
+      if(this.Cookies.GTM==true){
+        cookie_value.push('GTM');
+      }
+      value=cookie_value;
+  }
+	let urlParams = new HttpParams()
+	.set('name', 'accept-cookie')
+	.set('value',value);
+  
+	const body: string = urlParams.toString();
+	
+        this.rest.setCookieConsent( body).subscribe(result => {
+	 this.cookieConsent=false;
+   this.ShowCookiePopup=false;
+	});
+	}
+	
+   closeDisClimerConsent(value){
+          $('#disclamierPopup').modal('hide');
+        let urlParams = new HttpParams()
+        .set('name', 'accept-cookie')
+        .set('value',value)
+        .set('type','DISCLAIMER');
+        const body: string = urlParams.toString();
+        this.rest.setCookieConsent( body).subscribe();
+        return;
+     }	
+	
 
 
   enablePushBtn(){
@@ -623,53 +688,7 @@ export class HeaderComponent implements OnInit {
     this.AcceptAllBtn=true;
   }
 
-closeCookieConsent(value){
-  if(value==1){
-    this.Cookies.GA=true;
-    this.Cookies.AL=true;
-    this.Cookies.GTM=true;
-  }
-  else if(value==2){
-    this.Cookies.GA=false;
-    this.Cookies.AL=false;
-    this.Cookies.GTM=false;
-  }
-  else if(value==3){
-      var cookie_value=['SN'];
-      if(this.Cookies.GA==true){
-        cookie_value.push('GA');
-      }
-      if(this.Cookies.AL==true){
-        cookie_value.push('AL');
-      }
-      if(this.Cookies.GTM==true){
-        cookie_value.push('GTM');
-      }
-      value=cookie_value;
-  }
-	let urlParams = new HttpParams()
-	.set('name', 'accept-cookie')
-	.set('value',value);
-  
-	const body: string = urlParams.toString();
-	
-        this.rest.setCookieConsent( body).subscribe(result => {
-	 this.cookieConsent=false;
-   this.ShowCookiePopup=false;
-	});
-	}
-	
-        closeDisClimerConsent(value){
-        let urlParams = new HttpParams()
-        .set('name', 'accept-cookie')
-        .set('value',value)
-        .set('type','DISCLAIMER');
-        const body: string = urlParams.toString();
-        this.rest.setCookieConsent( body).subscribe(result => {
-        $('.close-popupd').trigger('click');
-        });
-        }	
-	
+
 	
   ShowCookiePopUp(value){
     this.cookieConsent=false;
@@ -720,11 +739,10 @@ closeCookieConsent(value){
   }
   
   ngOnInit() {
-  
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
-    
+   
    
        
        this.router.events.subscribe((event: any) => {
@@ -842,6 +860,8 @@ this.customerLogin=true;*/
     
     showcartIcon:Boolean=true;
     ngOnChanges() {  
+    
+    this._flightService.currentHeader.subscribe((res) => this.showHeader=res);
       //show-hide menu list 
       this.communicate.receivedFilter4.subscribe((item: Boolean) => {
         this.showcartIcon=item; 
@@ -1224,21 +1244,15 @@ this.customerLogin=true;*/
       if(!this.cookieService.get("push_status")){
           this.push_ids.push(id);
           this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
-          // console.log('here');
+          // console.log('if',this.push_ids);
       }else{
           this.push_ids = JSON.parse(this.cookieService.get("push_status"));
-           if(!this.push_ids.includes(this.push_ids)){
-              this.push_ids.push(this.push_ids);
+           if(!this.push_ids.includes(id)){
+              this.push_ids.push(id);
+              // console.log('else',this.push_ids);
             }
-            // if (typeof this.push_ids === 'object' && this.push_ids !== null) {
-            //   console.log('am');
-              this.cookieService.set('push_status',this.push_ids, null, '/', null, null, null);
-            // }else{
-            //   this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
-            // }
-          
-          // $.cookie("push_status", JSON.stringify(push_ids));
-          // console.log(this.cookieService.get("push_status"));
+             this.cookieService.set('push_status',JSON.stringify(this.push_ids), null, '/', null, null, null);
+            
       }
 
   }

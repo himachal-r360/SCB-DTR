@@ -1,52 +1,71 @@
-                       <div *ngIf="showoffer">
-                    <div class="sidebar-widget coupon-code-widget" >
-                        <div class="widget-title">
-                            <h4>Coupon Code</h4>
-                        </div>
-                        <div class="widget-content">
-                          <form action="coupon-code-form" [formGroup]="promoForm">
-                              <div class="coupon-input">
-                                  <input type="text" value=""  (keyup)="convertToUpperCase($event);" formControlName="promoCode" id="promo_code">
-                                  <a *ngIf="!couponApplied" (click)="manualApplyCoupon()" >Apply</a>
-                                   <a *ngIf="couponApplied" (click)="removeCoupon(1)" >Remove</a>
-                              </div>
-                          </form>
-                                          <div class="row">
-                    <div class="promo-msg">
-                       <p class="text-green"> <img src="{{cdnUrl}}images/icons/couponsuccess.svg" *ngIf="!couponError && coupon_amount >0">
-                        <span *ngIf="!couponError && coupon_amount >0"> Congratulations! Promo discount of Rs. {{coupon_amount | number : '1.2-2'}} applied successfully.</span></p>
-                        <span *ngIf="(submittedpromoCode && promoForm.controls.promoCode.errors)" class="promo-error">
-                      <span *ngIf="promoForm.controls.promoCode.errors.required" class="promo-error">Please enter Promo Code.</span>
-                        </span>
-                        <span class="promo-error pl-2 pl-md-0" *ngIf="couponError!='' || autoApplyError==1"> {{couponError}}</span>
-                    </div>
-                </div>
-
-                <ng-container *ngIf="SHOWCAPTCHA">
-                    <div class="row">
-                        <div class="col-md-7 col-7 text-center pr-0">
-                            <re-captcha #recaptchaRef="reCaptcha" [siteKey]="siteKey" (resolved)="resolved($event)" formControlName="couponCaptcha">
-                            </re-captcha>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                           <div class="promo-msg mt-1">
-                            <span *ngIf="submittedpromoCode && promoForm.hasError('required','couponCaptcha')" class="promo-error">You can't leave captcha as empty.</span>
-                        </div>
-                    </div>
-                </ng-container>
-                                 
-                          <div class="couponcode-box">
-                            <div  *ngFor="let coupon of couponOptions;let i = index" >
-                              <div class="couponcode-list couponcode-list-{{coupon.coupon_code}}">
-                                <input type="radio" name="promo" id="promo-{{coupon.coupon_code}}"   (change)="applyCoupon(coupon)"/>
-                                  <h6>{{coupon.coupon_code}}</h6>
-                                  <p>{{coupon.coupon_description}} </p>
-                              </div>
-                             </div> 
-                           </div>
-                      </div>
-                    </div>          
+<div class="">
+  <div *ngIf="showoffer">
+    <div class="sidebar-widget coupon-code-widget" >
+       <div class="widget-title">
+          <h4>Coupon Code</h4>
+       </div>
+       <div class="widget-content">
+          <form action="coupon-code-form" [formGroup]="promoForm">
+             <div class="coupon-input">
+                <input type="text" value=""  (keyup)="convertToUpperCase($event);" formControlName="promoCode" id="promo_code">
+                <a *ngIf="!couponApplied" (click)="manualApplyCoupon()" >Apply</a>
+                <a *ngIf="couponApplied" (click)="removeCoupon(1)" >Remove</a>
+             </div>
+          </form>
+          <div class="row">
+             <div class="promo-msg">
+                <span *ngIf="(submittedpromoCode && promoForm.controls.promoCode.errors)" class="promo-error">
+                <span *ngIf="promoForm.controls.promoCode.errors.required" class="promo-error">Please enter Promo Code.</span>
+                </span>
+                <span class="promo-error pl-2 pl-md-0" *ngIf="couponError!='' || autoApplyError==1"> {{couponError}}</span>
+                <p class="text-green"> <img src="{{cdnUrl}}images/icons/couponsuccess.svg" *ngIf="!couponError && coupon_amount >0">
+                   <span *ngIf="!couponError && coupon_amount >0"> Congratulations! Promo discount of <br/> ₹{{coupon_amount | number : '1.2-2'}} applied successfully.</span>
+                </p>
+             </div>
           </div>
-          
+          <ng-container *ngIf="SHOWCAPTCHA">
+             <div class="row">
+                <div class="col-md-7 col-7 text-center pr-0">
+                   <re-captcha #recaptchaRef="reCaptcha" [siteKey]="siteKey" (resolved)="resolved($event)" formControlName="couponCaptcha">
+                   </re-captcha>
+                </div>
+             </div>
+             <div class="row">
+                <div class="promo-msg mt-1">
+                   <span *ngIf="submittedpromoCode && promoForm.hasError('required','couponCaptcha')" class="promo-error">You can't leave captcha as empty.</span>
+                </div>
+             </div>
+          </ng-container>
+          <div class="couponcode-box">
+             <!-- <div  *ngFor="let coupon of couponOptions;let i = index" >
+                <div class="couponcode-list couponcode-list-{{coupon.coupon_code}}">
+                  <input type="radio" name="promo" id="promo-{{coupon.coupon_code}}"   (change)="applyCoupon(coupon)"/>
+                    <h6>{{coupon.coupon_code}}</h6>
+                    <p>{{coupon.coupon_description}} </p>
+                </div>
+                </div>  -->
+             <div *ngFor="let coupon of couponOptions;let i = index">
+                <div class="form-check couponcode-list couponcode-list-{{coupon.coupon_code}}">
+                   <input class="form-check-input" type="radio" name="promo" id="promo-{{coupon.coupon_code}}"   (change)="applyCoupon(coupon)">
+                   <label class="form-check-label" for="promo-{{coupon.coupon_code}}">
+                      <h6>{{coupon.coupon_code}}</h6>
+                      <!-- <div class="row">
+                         <div class="promo-msg">
+                             <p class="text-green"> <img src="{{cdnUrl}}images/icons/couponsuccess.svg" *ngIf="!couponError && coupon_amount >0">
+                               <span *ngIf="!couponError && coupon_amount >0"> Congratulations! Promo discount of ₹{{coupon_amount | number : '1.2-2'}} applied successfully.</span></p>
+                               <span *ngIf="(submittedpromoCode && promoForm.controls.promoCode.errors)" class="promo-error">
+                             <span *ngIf="promoForm.controls.promoCode.errors.required" class="promo-error">Please enter Promo Code.</span>
+                               </span>
+                               <span class="promo-error pl-2 pl-md-0" *ngIf="couponError!='' || autoApplyError==1"> {{couponError}}</span>
+                           </div>
+                         </div> -->
+                      <p>{{coupon.coupon_description}} </p>
+                   </label>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</div>
+

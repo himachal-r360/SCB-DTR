@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable ,EventEmitter} from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
+const LOCALJSON = environment.LOCALJSON;
 @Injectable({
   providedIn: 'root'
 })
@@ -18,18 +18,40 @@ export class FlightService {
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
-  private travellerDetailsSubject = new BehaviorSubject<any>(null);
-  travellerDetailsObservalble= this.travellerDetailsSubject.asObservable();
 
 
+  headerHideShow = new BehaviorSubject<Boolean>(true);
+  currentHeader = this.headerHideShow.asObservable();
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
-  constructor(private http: HttpClient) { }
-
-  flightList(para: any) {
-    let body = JSON.stringify(para)
-    return this.http.post(this.flight, body, { headers: this.header })
+  constructor(private http: HttpClient) {
   }
+
+   showHeader(value: boolean) {
+        this.headerHideShow.next(value);
+    }
+
+
+        flightList(para: any) {
+        let body = JSON.stringify(para);
+        if(LOCALJSON=='true'){
+        if(para.travel=='INT'){
+        if(para.flightdefault=='O'){
+        return this.http.get('assets/data/flight-int-onward.json');
+        }else{
+        return this.http.get('assets/data/flight-int-return.json');
+        }
+        }else{
+        if(para.flightdefault=='O'){
+        return this.http.get('assets/data/flight-onward.json');
+        }else{
+        return this.http.get('assets/data/flight-return.json');
+        }
+        } 
+        }else{
+        return this.http.post(this.flight, body, { headers: this.header })
+        }
+        }
 
   getCityList(queryText: any) {
     return this.http.post(`${this.city}&queryText=${queryText}`, null)
@@ -53,17 +75,16 @@ export class FlightService {
     return this.flightDetailsSubject.asObservable();
   }
 
-  // setTravellerDetails(para:any){
-  //   this.travellerDetailsSubject.next(para);
-  // }
 
-  // getTravellerDetailsVal(): Observable<any> {
-  //   return this.travellerDetailsSubject.asObservable();
-  // }
 
   getFlightInfo(param:any)
   {
+     if(LOCALJSON=='true'){
+      return this.http.get('assets/data/flightInfo.json');
+    }else{
+
     return this.http.post(this.flightInfo, param, { headers: this.header })
+    }
   }
 
 }

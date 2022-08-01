@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CountdownModule } from 'ngx-countdown';
+import { CountdownConfig, CountdownEvent } from 'ngx-countdown'; 
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse , HttpParams} from '@angular/common/http';
  import { DeviceDetectorService } from 'ngx-device-detector';
@@ -69,7 +70,7 @@ export class AppComponent implements OnInit {
                 panelClass: 'alert_Timer',
                 disableClose: true,
                 id: 'messageforSessionDialog1',
-		width: '310px',
+		            width: '310px',
                 height: 'auto',
 		data: {beforeExpiry: true,afterExpiry:false}
 		});
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit {
 	switch (unification[1]) {
 	case ('diners'):
 	this.assetPath="diners/";
-         this.domainPath="diners/";
+        this.domainPath="diners/";
         this.domainName='DINERS';
         setTimeout(() => {
         $('link[href="smartbuy.css"]'). attr("href","diners.css");
@@ -107,7 +108,7 @@ export class AppComponent implements OnInit {
         this.domainPath="regalia_gold/";
         this.domainName='REGALIA_GOLD';
         setTimeout(() => {
-          $('link[href="smartbuy-styles.scss"]'). attr("href","regalia_gold-styles.scss");
+          $('link[href="smartbuy.css"]'). attr("href","regalia_gold.css");
           }, 1000);
 	break;
 	case ('corporate'):
@@ -343,6 +344,10 @@ export class AppComponent implements OnInit {
       behavior: 'smooth'
 });
   }
+
+
+  
+  
 }
 
 
@@ -384,7 +389,7 @@ export class AlertDialogComponent {
   startOverContinue(): void {
     this.dialogRef.close(true);
   }
-  onFinishedTimerSeesion(): void {
+  onFinishedTimerSeesion(e: CountdownEvent): void {
     sessionStorage.clear();
     this.beforeExpiry=false;
     this.afterExpiry=true;

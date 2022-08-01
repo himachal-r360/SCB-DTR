@@ -71,10 +71,11 @@
   border-radius: 3px;
   text-transform: uppercase;
   color: $color-white;
-  display: inherit;
+  /* display: inherit; */
   font-size: 14.6px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   background-color: $color-vivid-blue;
+  font-weight: 600;
   @media screen and (max-width: $break-mob-small) {
     width: 100%
     
@@ -240,6 +241,33 @@
   a, .redeem-title{
     font-size: 12px;
   }
+}
+.saveCard_radio{
+  background-color: #FBFBFB;
+  border-radius: 8px;
+  padding: 0px 20px;
+  margin: 20px 0px 15px;
+}
+.secure_text{
+    display: flex;
+    justify-content: end;
+    margin-top: 15px;
+    @media only screen and (max-width:600px) {
+      justify-content: start;
+      margin: 0px 0px 10px;
+    }
+    p.invalid{
+      color: #EB001B;
+      display: flex;
+      align-items: end;
+      font-size: 14px;
+    }
+    p.valid{
+      color: #009817;
+      display: flex;
+      align-items: end;
+      font-size: 14px;
+    }
 }
 .payPoints-section{
   // border-radius: 8px;
@@ -753,7 +781,8 @@ $small: 40em;
   cursor: pointer;
   line-height: 20px;
   padding: 0px;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   margin: 20px 0px 5px;
   // font-weight: bold;
   color: #000;
@@ -762,6 +791,7 @@ $small: 40em;
 }
 .radio .label {
   position: relative;
+  top: 2px;
   display: block;
   float: left;
   margin-right: 10px;
@@ -770,6 +800,7 @@ $small: 40em;
   border: 2px solid #c8ccd4;
   border-radius: 100%;
   -webkit-tap-highlight-color: transparent;
+
 }
 .radio .label:after {
   content: '';
@@ -823,6 +854,8 @@ input[type="radio"]:checked + .label:after {
       margin-left: 10px;
     }
     .save-card-num{
+      font-size: 14px;
+      color: #888888;
       @media screen and (max-width: $break-mob-x2small) {
           font-weight: normal;      
         }
@@ -892,6 +925,9 @@ input[type="radio"]:checked + .label:after {
     }
   }
 }
+.payTitle{
+  font-size: 12px;
+}
 .payMethod-label{
   font-weight: normal;
     font-size: 16px;
@@ -902,8 +938,12 @@ input[type="radio"]:checked + .label:after {
   }
 .xs-check-font{
   font-size: 11px;
+  line-height: normal;
   @media screen and (max-width: $break-mob-small) {
     font-size: 10px;
+  }
+  a{
+    color: $primary-color;
   }
 }
 .mat-form-field{
@@ -1072,18 +1112,21 @@ input[type="radio"]:checked + .label:after {
 }
 
 .error{
-  color: $color-red;
-  padding: 0px 0px;
+    color: $color-red;
+    padding: 0px 0px;
     margin-top: -14px;
     margin-bottom: 10px;
     font-size: 12px;
 }
 .error1{
   color: $color-red;
+   font-size: 10px;
+}
+.error_tc{
+  color: $color-red;
   padding: 0px 0px;
-    margin-top: -14px;
-    margin-bottom: 10px; 
-   margin-left:45px;
+  margin-bottom: 10px;
+  font-size: 12px;
 }
 .redeem_error, .redeem_error small{
   color: #ff0000;
@@ -1528,11 +1571,12 @@ input[type="radio"]:checked + .label:after {
   color: $color-red;
   font-size: 12px;
 }
-.flexi_Error span{
+.flexi_Error{
   color: $color-red;
   padding: 0px 0px;
   margin-top: -14px;
   font-size: 12px;
+  margin-bottom: 15px;
 }
 .flexi_points li{
   font-size: 12px;
@@ -1718,6 +1762,7 @@ p{
 .xs-check-font{
   @media screen and (max-width: 425px) and (min-width: 320px){
       font-size: 10px;
+      text-align: left;
   }
 }
 
@@ -1950,6 +1995,12 @@ p{
   }
 }
 
+.card-body{
+  @media only screen and (max-width:600px) {
+    padding: 0px;
+  } 
+}
+
 //spc dialog
 .w-hurry {
   font-size:24px;
@@ -2131,7 +2182,7 @@ p{
 }
 .flexiOTPNote{
   font-size: 14px;
-  font-style: italic;
+  /* font-style: italic; */
   font-weight: bold;
   color: #2AB9AC;
 }
@@ -2154,11 +2205,18 @@ p{
 // Pyament sec css 
 
 .payment_cnt{
-  .partner_info{
-    border-radius: 8px;
-    border: solid 1px #e6e6e6;
-    background-color: #fff;
-    padding: 20px;
+  border: solid 1px #e6e6e6;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  .card_partner_info{
+    .amount_sec{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+    }
     .partner_name{
       font-size: 14px;
       font-weight: 600;
@@ -2175,14 +2233,21 @@ p{
       border: 1px solid #ccc;
     }
     .title{
-      color: #888;
-      font-size: 12px;
+      color: #000000;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .title_sub{
+      color: #8F8888;
+      font-size: 16px;
+      font-weight: bold;
       margin-bottom: 8px;
     }
     .title_value{
-      font-size: 16px;
+      font-size: 20px;
       font-weight: bold;
-      color: #000;
+      color: #000000;
       a{
         font-size: 12px;
         font-weight: 600;
@@ -2269,6 +2334,7 @@ p{
           font-weight: 600;
           border-left: 3px solid #1d86ff;
           border-radius: 0px;
+          color: #000000;
           img{
             filter: invert(1%) sepia(379%) saturate(8482%) hue-rotate(198deg) brightness(140%) contrast(103%);;
             // filter: invert(1%) sepia(69%) saturate(6482%) hue-rotate(198deg) brightness(100%) contrast(103%);
@@ -2292,30 +2358,36 @@ p{
       }
 
       @media (max-width: 767px) {
-        .tab-content{
-          border-radius: 8px;
-          border: solid 1px #e6e6e6;
-          background-color: #fff;
-          padding: 10px 0px;
-        }
-        .tab-pane {
-          display: block !important;
-          opacity: 1;
-          border: none;
-          border-bottom: 1px solid #e6e6e6;
-          h6{
-            a{
-              font-size: 16px;
-              font-weight: 600;
-              color: #000;
+        .payment-content{
+
+          .tab-content{
+            border-radius: 8px;
+            border: solid 0px #e6e6e6;
+            background-color: #fff;
+            padding: 10px 0px;
+          }
+          .card.tab-pane {
+            display: block !important;
+            opacity: 1;
+            border: none;
+            border-bottom: 1px dashed #e6e6e6;
+            h6{
+              a{
+                font-size: 16px;
+                font-weight: 600;
+                color: #000;
+              }
             }
           }
         }
+        
       }
 
   }
 
 }
+
+
 
 .tab_btn_payments{
   .nav-justified {
@@ -2325,11 +2397,13 @@ p{
       padding: 10px 15px 10px 0px;
       font-size: 14px;
       font-weight: 600;
+      margin-bottom: 0px;
       a{
         padding: 10px 15px;
         border: 1px solid #e6e6e6;
         color: #555;
         font-size: 14px;
+        margin-bottom: 0px;
       }
     }
   }
@@ -2337,3 +2411,25 @@ p{
     color: #ffffff;
   }
 }
+
+.payment_final_sec{
+  .tab-pane{
+    border-radius: 0px;
+    .panel-heading{
+      padding: 10px;
+      @media only screen and (min-width:768.5px) {
+        display: none;
+      }
+      .accordion-button{
+        padding: 0px;
+      }
+      .accordion-button:not(.collapsed){
+        img{
+          filter: invert(1%) sepia(379%) saturate(8482%) hue-rotate(198deg) brightness(140%) contrast(103%);
+        }
+      }
+    }
+  }
+}
+
+
