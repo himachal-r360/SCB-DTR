@@ -1,4 +1,4 @@
-                        <form [formGroup]="flightData" (ngSubmit)="flightSearch()">
+                        <form [formGroup]="flightData">
                             <div class="travel-select-data-area">
                                 <div class="travel-select-trip">
                                     <ul class="travel-select-trip-ul">
@@ -200,7 +200,7 @@
                                                             </li>
                                                             <li class="flight-from-ul-li"
                                                                 *ngFor="let fromCity of cityList">
-                                                                <a href="javascript:;" class="flight-from-ul-li-a"
+                                                                <a class="flight-from-ul-li-a"
                                                                     (click)="selectFromFlightList(fromCity._source)">
                                                                     <div class="flight-from-name">
                                                                         <h6>{{fromCity._source.city}},
@@ -219,7 +219,7 @@
                                                             </li>
                                                             <li class="flight-from-ul-li"
                                                                 *ngFor="let toCity of cityList">
-                                                                <a href="javascript:;" class="flight-from-ul-li-a"
+                                                                <a  class="flight-from-ul-li-a"
                                                                     (click)="isFromorNot == true ?selectFromFlightList(toCity._source) : selectToFlightList(toCity._source) ">
                                                                     <div class="flight-from-name">
                                                                         <h6>{{toCity._source.city}},
@@ -307,7 +307,7 @@
                                                             </li>
                                                             <li class="flight-from-ul-li"
                                                                 *ngFor="let toCity of cityList">
-                                                                <a href="javascript:;" class="flight-from-ul-li-a"
+                                                                <a  class="flight-from-ul-li-a"
                                                                     (click)="selectToFlightList(toCity._source)">
                                                                     <div class="flight-from-name">
                                                                         <h6>{{toCity._source.city}},
@@ -327,7 +327,7 @@
                                                             </li>
                                                             <li class="flight-from-ul-li"
                                                                 *ngFor="let fromCity of cityList">
-                                                                <a href="javascript:;" class="flight-from-ul-li-a"
+                                                                <a  class="flight-from-ul-li-a"
                                                                     (click)="isFromorNot == true ?selectFromFlightList(fromCity._source) : selectToFlightList(fromCity._source)">
                                                                     <div class="flight-from-name">
                                                                         <h6>{{fromCity._source.city}},
@@ -502,7 +502,7 @@
                                                         [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
                                                         <div class="mob-title">
                                                             <h3>Preferred Airline</h3>
-                                                            <a href="javascript:;" class="mob-close mob-preferred-airline-close"
+                                                            <a  class="mob-close mob-preferred-airline-close"
                                                                 (click)="closeTravllerBlock()">
                                                                 <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                             </a>
@@ -639,7 +639,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="root-search">
-                                                    <button type="submit" class="searchbn">Search</button>
+                                                    <button type="button" class="searchbn" (click)="flightSearch()">Search</button>
                                                 </div>
                                             </div>
                                             <mat-error *ngIf="dateValidation">

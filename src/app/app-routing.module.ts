@@ -57,7 +57,13 @@ const routes: Routes = [
     //RegaliaGoldModule,
     //InfiniaModule,
     //DinersModule,
-    RouterModule.forRoot(routes)],
+        RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      onSameUrlNavigation: 'reload'
+    })
+    
+    ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

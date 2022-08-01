@@ -218,35 +218,30 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
         $('#endOfPage').trigger('click');
         }
-        
-        this.router.routeReuseStrategy.shouldReuseRoute = function() {
-	return false;
-	};
-        
         });
+
+        
   }
   
 @HostListener('window:resize', ['$event'])
 
-ngOnInit(): void {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-    this.loader = true;
-    this.getQueryParamData(null);
-    this.headerHideShow(null)
-    this.getAirpotsList();
-    this.flightSearch();
+        ngOnInit(): void {
+        this.isMobile = window.innerWidth < 991 ?  true : false;
+        this.route.url.subscribe(url =>{
+        this.loader = true;
+        this.getQueryParamData(null);
+        this.headerHideShow(null)
+        this.getAirpotsList();
+        this.flightSearch();
+        });
+        }
 
-  }
-
-  getQueryParamData(paramObj: any) {
-
-      this.route.queryParams
-        .subscribe((params: any) => {
-          this.queryFlightData = params;
-            this.searchData = params;
-          this.fromContryName = this.queryFlightData.fromContry;
-          this.toContryName = this.queryFlightData.toContry;
-          
+        getQueryParamData(paramObj: any) {
+        const params = this.route.snapshot.queryParams;
+        this.queryFlightData = params;
+        this.searchData = params;
+        this.fromContryName = this.queryFlightData.fromContry;
+        this.toContryName = this.queryFlightData.toContry;
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
@@ -259,12 +254,7 @@ ngOnInit(): void {
         this.flightTimingfrom = this.queryFlightData.flightfrom
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
-    
-          
-        });
-    
-
-  }
+        }
 
   flightDetailsTab(obj: any, value: string, indx: number) {
     var dashboard_menu_type = value;

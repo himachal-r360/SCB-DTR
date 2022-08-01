@@ -1,4 +1,3 @@
-import { JsonpClientBackend } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
@@ -19,6 +18,7 @@ import { FlightService } from '../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../environments/environment';
+import { MatDatepicker } from '@angular/material/datepicker'
 import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -49,6 +49,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('toCityInput') toCityInput!: ElementRef;
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
+ @ViewChild('picker') datePicker: MatDatepicker<Date>;
  @Input() modifySearch;
    cdnUrl: any;
   sub?: Subscription;
@@ -240,21 +241,14 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectToFlightList(para2: any) {
-  
         this.flightData.get('flightto').setValue(para2.id);
         this.flightData.get('toCity').setValue(para2.city);
         this.flightData.get('toContry').setValue(para2.country);
-         this.flightData.get('toAirportName').setValue(para2.airport_name);
+        this.flightData.get('toAirportName').setValue(para2.airport_name);
         this.toAirpotName = para2.airport_name;
         this.toCityName = para2.city;
-        
-         this.toFlightList = false;
-    setTimeout(() => {
-      let datePickerOpen=document.getElementById("datePickerOpen");
-      datePickerOpen?.click();
-    }, 50);
-  
-
+        this.toFlightList = false;
+        this.datePicker.open();
   }
 
   adultsVal:any
@@ -343,7 +337,6 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightSearch() {
     this.submitted = true;
-    
     this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
       this.dateValidation=false;
@@ -365,7 +358,6 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
          this.flightData.get('travel').setValue('INT');
         }
 
-  //  console.log(this.flightData);return;
 
     if(this.flightData.invalid || this.dateValidation==true){
       return
@@ -377,28 +369,29 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       this.flightSearchCallBack(searchValue);
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
       
-      searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
+     /* searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
       
       if(searchValue.arrival)
        searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
-      
-      //console.log(searchValue);return;
-
+      */
+        let url;
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
-          let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+           url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
         else{
-          let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+           url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
         }else{
-          let url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+           url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
     
        }  
-        
+       
+
+
         
         // (error) => { console.log(error) });
       }
