@@ -352,6 +352,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
   resetFlightTimingsFilter() {
     this.flight_Timingsitems.filter((item: any) => { item.active = false; return item; })
+    this.flight_return_Timingsitems.filter((item: any) => { item.active = false; return item; })
     this.popularFilterFlightData();
   }
   resetPriceFilter() {
@@ -1320,4 +1321,50 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         
   }
   
+  openMobileFilterSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
+
+  }
+  CloseSortingSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+  onApplyFilter(){
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
+   //sorting in mobile version
+   flightSortingMobile(val:any) {
+    let selectedVal = val;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    });
+  }
+  applySortingMobile() {
+    let sortingBtn = document.getElementById('sortMobileFilter');
+    if(sortingBtn)
+    {
+      sortingBtn.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
+
+
 }
