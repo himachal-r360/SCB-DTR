@@ -157,28 +157,28 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    
 
    }
 
   ngOnInit(): void {
+  
+       this.route.url.subscribe(url =>{
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)
     this.getAirpotsList();
     this.flightSearch();
+     });
   }
   
   
     getQueryParamData(paramObj: any) {
-
-      this.route.queryParams
-        .subscribe((params: any) => {
+        const params = this.route.snapshot.queryParams;
           this.queryFlightData = params;
             this.searchData = params;
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
-          
-          
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
@@ -191,7 +191,6 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.flightTimingfrom = this.queryFlightData.flightfrom
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
-        });
 
   }
   

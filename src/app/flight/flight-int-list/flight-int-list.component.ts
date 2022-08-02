@@ -219,29 +219,29 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         $('#endOfPage').trigger('click');
         }
         });
+
+        
   }
   
 @HostListener('window:resize', ['$event'])
 
-ngOnInit(): void {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-    this.loader = true;
-    this.getQueryParamData(null);
-    this.headerHideShow(null)
-    this.getAirpotsList();
-    this.flightSearch();
+        ngOnInit(): void {
+        this.isMobile = window.innerWidth < 991 ?  true : false;
+        this.route.url.subscribe(url =>{
+        this.loader = true;
+        this.getQueryParamData(null);
+        this.headerHideShow(null)
+        this.getAirpotsList();
+        this.flightSearch();
+        });
+        }
 
-  }
-
-  getQueryParamData(paramObj: any) {
-
-      this.route.queryParams
-        .subscribe((params: any) => {
-          this.queryFlightData = params;
-            this.searchData = params;
-          this.fromContryName = this.queryFlightData.fromContry;
-          this.toContryName = this.queryFlightData.toContry;
-          
+        getQueryParamData(paramObj: any) {
+        const params = this.route.snapshot.queryParams;
+        this.queryFlightData = params;
+        this.searchData = params;
+        this.fromContryName = this.queryFlightData.fromContry;
+        this.toContryName = this.queryFlightData.toContry;
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
@@ -254,12 +254,7 @@ ngOnInit(): void {
         this.flightTimingfrom = this.queryFlightData.flightfrom
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
-    
-          
-        });
-    
-
-  }
+        }
 
   flightDetailsTab(obj: any, value: string, indx: number) {
     var dashboard_menu_type = value;
@@ -758,7 +753,7 @@ ngOnInit(): void {
       if (flightList.length > 0) {
         flightList.filter((d: any) => {
           let singleFlightTiming = [];
-          singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
+          singleFlightTiming = d.onwardflights.filter(function (e: any, indx: number) {
             if (indx == 0) {
               if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
                 return e;
@@ -774,6 +769,24 @@ ngOnInit(): void {
               }
             }
           });
+          
+                    singleFlightTiming = d.returnflights.filter(function (e: any, indx: number) {
+            if (indx == 0) {
+              if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "6_12") { return item; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "12_18") { return item; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "18_0") { return item; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
+                return e;
+              }
+            }
+          });
+          
           if (singleFlightTiming.length > 0) {
             filteredTimingArr.push(d);
           }
@@ -1139,8 +1152,59 @@ ngOnInit(): void {
       $('#FlightDetails_' + i + '_' + j + " .flight-details").addClass("extra-active").show();
       $('#viewflight_details_' + i + '_' + j).addClass('d-none');
       $('#hideflight_details_' + i + '_' + j).removeClass('d-none');
+   }  else if (fromCall == "flight-flight-details_tab") {
+      $('#FlightDetails_' + i + '_' + j).removeClass('flight-details-box-hide');
+      $('#FlightDetails_' + i + '_' + j + " .flight-details").addClass("extra-active").show();
+      $('#viewflight_details_' + i + '_' + j).addClass('d-none');
+      $('#hideflight_details_' + i + '_' + j).removeClass('d-none');
     }
   }
+  
+    HideShowTab(i: number, fromCall: string, j: number) {
+    
+      if(fromCall=='onward'){
+       $('#FlightDetailsS_return_' + i + '_' + j).removeClass('flight-extra-content extra-active');
+       $('#FlightDetailsS_return_' + i + '_' + j).addClass('flight-details-box-hide');
+       $('#FlightDetailsS_onward_' + i + '_' + j).addClass('flight-extra-content extra-active');
+       $('#FlightDetailsS_onward_' + i + '_' + j).removeClass('flight-details-box-hide');
+        $('#FlightDetailsM_return_' + i + '_' + j).removeClass('flight-extra-tabs-active');
+       $('#FlightDetailsM_onward_' + i + '_' + j).addClass('flight-extra-tabs-active');
+       
+      }else{
+       $('#FlightDetailsS_onward_' + i + '_' + j).removeClass('flight-extra-content extra-active');
+       $('#FlightDetailsS_onward_' + i + '_' + j).addClass('flight-details-box-hide');
+       $('#FlightDetailsS_return_' + i + '_' + j).addClass('flight-extra-content extra-active');
+       $('#FlightDetailsS_return_' + i + '_' + j).removeClass('flight-details-box-hide');
+ 
+       $('#FlightDetailsM_onward_' + i + '_' + j).removeClass('flight-extra-tabs-active');
+       $('#FlightDetailsM_return_' + i + '_' + j).addClass('flight-extra-tabs-active');
+      }
+  }
+  
+    
+    HideShowTabM(i: number, fromCall: string) {
+    
+      if(fromCall=='onward'){
+         $('#FlightDetailsSM_onward_' + i ).removeClass('flight-details-box-hide');
+        $('#FlightDetailsSM_return_' + i ).addClass('flight-details-box-hide');
+        $('#mlite_onward_' + i ).removeClass('hidden');
+       $('#mlite_return_' + i ).addClass('hidden');
+       
+          $('#mlite_onward_li_' + i ).addClass('flight-extra-tabs-active');
+       $('#mlite_return_li_' + i ).removeClass('flight-extra-tabs-active');
+       
+      }else{
+         $('#FlightDetailsSM_return_' + i ).removeClass('flight-details-box-hide');
+        $('#FlightDetailsSM_onward_' + i ).addClass('flight-details-box-hide');
+ 
+       $('#mlite_return_' + i ).removeClass('hidden');
+       $('#mlite_onward_' + i ).addClass('hidden');
+               $('#mlite_onward_li_' + i ).removeClass('flight-extra-tabs-active');
+       $('#mlite_return_li_' + i ).addClass('flight-extra-tabs-active');
+      }
+  }
+  
+  
   hideFarebutton(i: number, fromCall: string, j: number) {
     if (fromCall == "fare-details") {
       $('.flight-details-box').addClass('flight-details-box-hide');
@@ -1258,11 +1322,11 @@ ngOnInit(): void {
   }
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    console.log(this.queryFlightData);return;
+    //console.log(this.searchData);return;
     
       let flightDetailsArr: any = { 
         "travel":"INT",
-        "travel_type":'',
+        "travel_type":this.searchData.flightdefault,
         "docKey": this.DocKey,
         "onwardFlightKey": flightKey,
         "returnFlightKey": '',
