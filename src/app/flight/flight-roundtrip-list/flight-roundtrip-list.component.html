@@ -586,9 +586,10 @@
                           <div class="col-6" >
                               <div class="mob-fr-list-title">
                                   <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{fromCityName}} To {{toCityName}}</h6>
-                              </div>
-                              
-                              <div class="mob-list-items" appToggleDetail *ngFor="let list of flightList; let i = index" id="MobileOnward_{{i}}">
+                                </div>
+                                <ng-container #itemsContainer></ng-container>
+                              <ng-template #item let-item="item">
+                              <div class="mob-list-items" appToggleDetail *ngFor="let list of item; let i = index" id="MobileOnward_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -958,12 +959,16 @@
                                     </div>
                                 </div>
                               </div>
+                            </ng-template>
+                            <div id="endOfPage" (click)="loadData()"></div>
                           </div>
                           <div class="col-6" >
                               <div class="mob-fr-list-title">
                                   <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{toCityName}} To {{fromCityName}}</h6>
-                              </div>
-                              <div class="mob-list-items" appToggleDetail *ngFor="let list of ReturnflightList; let i = index" id="MobileReturn_{{i}}">
+                                </div>
+                                <ng-container #itemsReturnContainer></ng-container>
+                              <ng-template #returnItem let-item="item">
+                              <div class="mob-list-items" appToggleDetail *ngFor="let list of item; let i = index" id="MobileReturn_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -1333,6 +1338,8 @@
                                     </div>
                                 </div>
                               </div>
+                            </ng-template>
+                            <div id="endOfReturnPage" (click)="loadReturnData()"></div>
                           </div>
                       </div>
 
