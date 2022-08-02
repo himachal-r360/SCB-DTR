@@ -105,6 +105,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
+  airlinesNameJson:any;
   layOverFilterArr: any;
   queryFlightData: any;
   fromContryName: any;
@@ -229,6 +230,7 @@ ngOnInit(): void {
     this.getQueryParamData(null);
     this.headerHideShow(null)
     this.getAirpotsList();
+    this.getAirlinesList();
     this.flightSearch();
  });
   }
@@ -268,7 +270,13 @@ ngOnInit(): void {
     }, 200);
   }
 
+    // get airline list
+  getAirlinesList() {
+    this._flightService.getFlightIcon().subscribe((res: any) => {
+      this.airlinesNameJson = res;
 
+    })
+  }
 
 
   // get airport list
