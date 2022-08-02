@@ -8,7 +8,7 @@ export const environment = {
   LOCALJSON:'false',
     LOCALLOGIN:'false',
   localInstance:0,
-  // url:"https://smartbuyadminuat.reward360.in/"
+  // url:"https://smartbuyadminuat.reward360.in/",
   url:"https://smartbuydev.reward360.in/",
    cdnUrl: 'assets/',
      cdnnotifyUrl: 'https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/notification/',
