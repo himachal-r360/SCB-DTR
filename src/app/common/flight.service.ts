@@ -47,7 +47,7 @@ export class FlightService {
         }else{
         return this.http.get('assets/data/flight-return.json');
         }
-        } 
+        }
         }else{
         return this.http.post(this.flight, body, { headers: this.header })
         }
