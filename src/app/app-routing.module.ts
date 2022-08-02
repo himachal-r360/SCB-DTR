@@ -4,8 +4,10 @@ import { FlightListComponent } from './flight/flight-list/flight-list.component'
 import { HomeComponent } from './home/home.component';
 import { ForyouTabComponent } from './foryou-tab/foryou-tab.component';
 import {PartnersComponent} from './partners/partners.component';
-/*import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
-import { DinersModule } from './diners/diners.module';
+import { BannersComponent } from './shared-components/banners/banners.component';
+import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
+import { SharedComponentsModule } from './shared-components/shared-components.module';
+/*import { DinersModule } from './diners/diners.module';
 import { InfiniaModule } from './infinia/infinia.module';
 */
 const routes: Routes = [
@@ -45,16 +47,19 @@ const routes: Routes = [
   {
     path: 'diners',
     loadChildren: () => import('./diners/diners.module').then(m => m.DinersModule)
-  },
+  },*/
   {
     path: 'regalia_gold',
-    loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule)
-  }*/
+    loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
+
+    
+  }
 ];
 
 @NgModule({
   imports: [
-    //RegaliaGoldModule,
+    RegaliaGoldModule,
+    SharedComponentsModule,
     //InfiniaModule,
     //DinersModule,
         RouterModule.forRoot(routes, {

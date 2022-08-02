@@ -8,25 +8,25 @@
     <h5 *ngFor="let banner of banners" >{{banner}}</h5>
 </div> -->
 
-<div id="regaliaGoldCarousel" class="carousel slide" data-bs-ride="carousel">
+<div id="regaliaGoldCarousel" class="carousel slide" data-bs-ride="carousel" >
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#regaliaGoldCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#regaliaGoldCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <!-- <button type="button" data-bs-target="#regaliaGoldCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item active" data-bs-interval="1000">
         <img src="{{cdnUrl}}images/banners/desktop/gold01.png" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Experience the difference</h5>
-          <button class="btn btn-default btn-card mt-30">KNOW YOUR CARD</button>
+          <button class="btn btn-default btn-card mt-30" (click)="benefitsLink()" >KNOW YOUR CARD</button>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item" data-bs-interval="1000">
         <img src="{{cdnUrl}}images/banners/desktop/gold02.png" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Experience the difference</h5>
-          <button class="btn btn-default btn-card mt-30">KNOW YOUR CARD</button>
+          <button class="btn btn-default btn-card mt-30" (click)="benefitsLink()">KNOW YOUR CARD</button>
         </div>
       </div>
       <!-- <div class="carousel-item">
@@ -136,6 +136,22 @@
                       <div>
                         <p class="city_name"><span>New Delhi</span><span class="mx-2">---</span><span>Kolkata</span></p>
                         <p class="date">Wed, 5 Jul</p>
+                      </div>
+                      <div>
+                        <img src="{{cdnUrl}}images/icons/icn-arrow-right.svg" alt="icn" class="clk-icn">
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="flex_item">
+                  <a href="#">
+                    <div class="content_item">
+                      <div>
+                        <img src="{{cdnUrl}}images/icons/icn-hotel-re.svg" alt="icn">
+                      </div>
+                      <div>
+                        <p class="city_name"><span>JW Marriot</span></p>
+                        <p class="hotel_place">Vittal Mallya Rd, Bangalore</p>
                       </div>
                       <div>
                         <img src="{{cdnUrl}}images/icons/icn-arrow-right.svg" alt="icn" class="clk-icn">

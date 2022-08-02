@@ -1,4 +1,11 @@
 
+
+$break-mob-3: 320px;
+$break-mob-2: 375px;
+$break-mob-1: 425px;
+$break-md-tab: 768px;
+
+
 .head_title{
     color: #000000;
     font-family: 'opensans-light';
@@ -9,7 +16,7 @@
 .travel_section{
     position: relative;
     border-radius: 20px;
-    height: 370px;
+    height: 420px;
     /* box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15); */
     margin-bottom: 3em;
     .heading_sec{
@@ -54,18 +61,26 @@
         top: 110px;
         position: absolute;
         z-index: 2;
+        &::after{
+            content: '';
+            background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
+            width: 90px;
+            height: 10px;
+            position: absolute;
+            bottom: -3px;
+            left: 43%;
+            background-repeat: no-repeat;
+            transition: transform .2s ease-in-out;
+        }
         .class_sel{
             position: relative;
-            &::after{
-                content: '';
-                background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
-                width: 90px;
-                height: 10px;
-                position: absolute;
-                bottom: -58px;
-                left: 43%;
-                background-repeat: no-repeat;
-                transition: transform .2s ease-in-out;
+            
+            .select_process{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 15px;
+                margin-top: 15px;
             }
         }
         
@@ -75,8 +90,8 @@
         padding: 25px;
         background-color: #ffffff;
         width: 100%;
-        height:100px;
-        top: 200px;
+        height:130px;
+        top: 194px;
         position: absolute;
         z-index: 1;
         box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
@@ -97,8 +112,8 @@
         padding: 25px;
         background-color: #ffffff;
         width: 100%;
-        height:100px;
-        top: 290px;
+        height:130px;
+        top: 310px;
         position: absolute;
         z-index: 0;
         box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
@@ -144,8 +159,10 @@
     img{
         background-color: #fff;
         padding: 15px;
+        margin-top: 15px;
         box-shadow: 0px 0px 13px rgb(0 0 0 / 25%);
         border-radius: 50%;
+        cursor: pointer;
     }
 }
 
@@ -156,4 +173,620 @@
     border-radius: 50%;
     height: 50px;
     width: 50px;
+}
+
+.trip_select{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+// Journey Radio btn
+.buttonTrip {
+    float: left;
+    margin: 0 8px 0 0;
+    width: 90px;
+    height: auto;
+    position: relative;
+    @media only screen and (max-width: 576px) {
+        width: 30.3%;
+    }
+}
+
+.buttonTrip label,
+.buttonTrip input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.buttonTrip input[type="radio"] {
+    opacity: 0.011;
+    z-index: 100;
+}
+
+.buttonTrip input[type="radio"]:checked+label {
+    background: #2C0E00;
+    border-radius: 5px;
+    border: 0px solid #CF8D56;
+    font-family: 'opensans-medium';
+    color: #ffffff;
+}
+
+.buttonTrip label {
+    cursor: pointer;
+    font-family: 'opensans-medium';
+    z-index: 1;
+    line-height: 15px;
+    color: #00000050;
+    background-color: #ffffff;
+    font-size: 14px;
+    height: 30px;
+    padding: 6px;
+    border: none;
+}
+.buttonTrip  > label.btn-default:before, .buttonTrip  > label.btn-default:after
+{
+    display: none;
+}
+
+.select_options {
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    .opt_box {
+        display: flex;
+        /* flex-basis: 40%;
+        margin-right: 3em; */
+        margin-bottom: 10px;
+        position: relative;
+    }
+    .travelSelect {
+        position: relative;
+        .travelInput {
+            width: 100%;
+            height: 20px;
+            border: none;
+            /* border-bottom: 1px solid #0000006b;
+            border-radius: 0; */
+            background-color: transparent;
+            font-size: 14px;
+            padding: 0px;
+            color: #000000;
+            font-family: 'opensans-medium';
+            @media only screen and (max-width:1024px) {
+                width: 110px;
+            }
+        }
+        .arrowDn_icon {
+            position: absolute;
+            top: 1px;
+            right: 0px;
+        }
+        .hotel_room_select{
+            position: absolute;
+            top: 30px;
+        }
+        .travelList {
+            position: absolute;
+            top: 30px;
+            left: -50px;
+            background-color: #ffffff;
+            color: #000000;
+            min-width: 250px;
+            border: 1px solid #ccc;
+            z-index: 2;
+            border-radius: 5px;
+            padding: 10px;
+            ul {
+                padding: 0px;
+                margin: 0;
+                li {
+                    list-style-type: none;
+                    a {
+                        .lab_name {
+                            font-size: 14px;
+                        }
+                        .sub_name {
+                            font-size: 10px;
+                            color: #5b5e61;
+                            display: block;
+                        }
+                        .count {
+                            background: #e8f3fd;
+                            padding: 5px 0;
+                            border-radius: 5px;
+                            margin: 0 10px;
+                            max-width: 30px;
+                            border: 0;
+                            font-size: 13px;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.select_city, .select_date {
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    position: relative;
+    .swap_icon {
+        position: absolute;
+        left: 45.5%;
+        font-size: 20px;
+        top: 25px;
+        img {
+            height: 45px;
+            width: 45px;
+            cursor: pointer;
+        }
+    }
+    .input_box, .date_box {
+        width: 100%;
+        /* height: 90px;
+        border-radius: 8px;
+        border: solid 1px #b7d6fa;
+        background-color: #f0f7ff; */
+        
+        label {
+            padding: 10px 10px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            margin-bottom: 0px;
+            .inputField {
+                border: 0;
+                outline: 0;
+                background: none;
+                min-width: 140px;
+                max-height: 36px;
+                cursor: pointer;
+                padding: 0;
+                margin: 0px;
+                font-size: 20px;
+                font-family: 'opensans-bold';
+                position: relative;
+                color: #C3832C;
+            }
+            .truncate {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            span {
+                color: #555555;
+                font-size: 12px;
+            }
+        }
+        .from_cities {
+            position: absolute;
+            top: 60px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+            width: 280px;
+            left: 15px;
+            min-height: 260px;
+            overflow: hidden;
+            z-index: 2;
+            border: 1px solid #ccc;
+            .search_icon {
+                position: absolute;
+                top: 14px;
+                left: 10px;
+                font-size: 10px;
+            }
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                padding: 11px 10px 11px 30px;
+                outline: 0;
+                border: 0;
+                width: 100%;
+                font-size: 16px;
+                color: #000000;
+                font-weight: 700;
+            }
+            .from_list {
+                max-height: 270px;
+                overflow-y: auto;
+                ul {
+                    padding: 0;
+                    margin: 0;
+                    li {
+                        padding: 6px 10px;
+                        margin-bottom: 5px;
+                        list-style: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            height: 30px;
+                            cursor: not-allowed;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                            span {
+                                i {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                        .list_item {
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
+        .to_cities {
+            position: absolute;
+            top: 60px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+            width: 280px;
+            left: -25px;
+            min-height: 260px;
+            overflow: hidden;
+            z-index: 2;
+            border: 1px solid #ccc;
+            .search_icon {
+                position: absolute;
+                top: 14px;
+                left: 10px;
+                font-size: 10px;
+            }
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                padding: 11px 10px 11px 30px;
+                outline: 0;
+                border: 0;
+                width: 100%;
+                font-size: 16px;
+                color: #000000;
+                font-weight: 700;
+            }
+            .to_list {
+                max-height: 270px;
+                overflow-y: auto;
+                ul {
+                    padding: 0;
+                    margin: 0;
+                    li {
+                        padding: 6px 10px;
+                        margin-bottom: 5px;
+                        list-style: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            height: 30px;
+                            cursor: not-allowed;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                            span {
+                                i {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                        .list_item {
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+.select_city{
+    .input_box{
+        &::before{
+            content: '';
+            background-image: url(./../../../assets/regalia_gold/images/icons/icn-location.svg);
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            bottom: 22px;
+            left: -10px;
+            background-repeat: no-repeat;
+            transition: transform .2s ease-in-out;
+        }
+    }
+}
+
+.select_date{
+    .date_box{
+        &::before{
+            content: '';
+            background-image: url(./../../../assets/regalia_gold/images/icons/icn-calendar.svg);
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            bottom: 38px;
+            left: -10px;
+            background-repeat: no-repeat;
+            transition: transform .2s ease-in-out;
+        }
+    }
+}
+
+
+.custom-dropdown .dropdown-menu {
+    right: 15px;
+    width: 100%;
+    border: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    z-index: 25;
+}
+
+.travelllerList {
+    min-width: 240px;
+    margin-top: 12px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    padding-top: 10px
+}
+
+.travelllerList:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffffff;
+    z-index: 2;
+    position: absolute;
+    left: 20px;
+    top: -10px
+}
+
+.travelllerList:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid rgba(0, 0, 0, .1);
+    position: absolute;
+    left: 18px;
+    top: -12px
+}
+
+.travelllerList ol,
+ul,
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.travelllerList li a {
+    color: #52728F;
+    padding: 10px 20px;
+    cursor: default;
+    display: block
+}
+
+.travelllerList li a:hover {
+    background: transparent
+}
+
+.travelllerList li a b {
+    font-weight: 700;
+    color: #000000;
+    font-size: 12px;
+    font-family: 'opensans-bold'
+}
+
+.travelllerList li a small {
+    color: #777;
+    font-size: 10px;
+    display: block;
+    padding-left: 0;
+    font-family: 'opensans-regular';
+}
+
+.travelllerList li a p {
+    margin: 0
+}
+
+.travelllerList li a .count {
+    background: #c3832c33;
+    padding: 5px 0;
+    border-radius: 5px;
+    margin: 0 10px;
+    max-width: 30px;
+    border: 0;
+    text-align: center
+}
+
+.roomsection small {
+    padding: 4px 20px;
+}
+
+.room_no {
+    background-color: #c3832c33;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.child-dropdown-pre {
+    height: 250px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.childadd-dropdown.dropdown-menu {
+    min-width: 350px;
+    left: -150px;
+}
+
+.child-dropdown-pre {
+    width: 350px;
+    height: 200px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.roomsection small {
+    padding: 4px 20px;
+    ;
+}
+
+.childadd-dropdown:before {
+    left: 156px
+}
+
+.childadd-dropdown:after {
+    left: 154px
+}
+
+.child-added {
+    padding: 10px 20px 20px;
+    width: 100%;
+    float: left
+}
+
+.child-add-continer {
+    float: left;
+    width: 65px;
+    /*width: 77px;*/
+    margin-right: 12px
+}
+
+.child_count {
+    font-size: 12px;
+}
+
+.child-add-pre {
+    width: 77px;
+}
+
+.child-add-dd li {
+    padding: 5px 10px
+}
+
+.child-add-dd li:hover {
+    background-color: #eee
+}
+
+.child-add-dd.custom-dropdown>button>span {
+    width: 70%
+}
+
+.child-add-dd.custom-dropdown>button i.fa {
+    margin-right: 5px
+}
+
+.validate-msg {
+    position: absolute;
+    bottom: -30px;
+    left: 18px;
+    padding: 5px;
+    height: auto;
+    background-color: #ffe0e0;
+    color: #ff0000;
+    //   width: 70%;
+    width: auto;
+    border-radius: 5px;
+    z-index: 2;
+    text-align: center;
+    //   box-shadow: 0.5px 0.9px 25px 0 rgba(25, 25, 25, 0.2);
+    @media screen and (max-width: 768px) and (min-width: 576px) {
+        bottom: -20px;
+        left: 20px;
+        height: auto;
+        padding: 1px;
+        width: 90%;
+    }
+    @media screen and (max-width: $break-mob-1) {
+        bottom: -18px;
+        left: 12px;
+        padding: 5px;
+        height: auto;
+        width: 90%;
+    }
+    &::before {
+        content: '';
+        border-style: solid;
+        border-width: 10px 15px 10px 0;
+        border-color: transparent #ffe0e0 transparent transparent;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+        transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        position: absolute;
+        top: -15px;
+        left: 45%;
+    }
+}
+
+.error_msg {
+    color: red;
+    font-size: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.error_msg2 {
+    margin-left: 20px;
+}
+
+.icon_fl {
+    margin-right: 8px;
+}
+
+.flight_city_select {
+    width: calc(100% - 60px);
+    p {
+        font-size: 14px;
+        margin-bottom: 0px;
+        line-height: 14px;
+        color: #000000;
+        // font-weight: bold;
+    }
+    .aiport_name {
+        color: #676768;
+        font-size: 12px;
+    }
+}
+
+.airport_code {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 11px;
+    width: calc(100% - 190px);
+    text-align: right;
 }

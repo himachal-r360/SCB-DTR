@@ -31,4 +31,31 @@ export class ExclusiveComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  exclusiveOptions: any = {
+    loop: false,
+    autoplay: true,
+    autoplayTimeout: 8000,
+    autoplayHoverPause: true,
+    margin: 30,
+
+    responsiveClass: true,
+    responsive: {
+      0: {
+        items: 2.5,
+        nav: false,
+        dots: false
+      },
+      600: {
+        items: 5,
+        nav: false,
+        dots: false
+      },
+      1000: {
+        items: 6,
+        nav: false,
+        dots: false
+      }
+    }
+  }
+
 }
