@@ -177,6 +177,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   ngOnInit(): void {
   
        this.route.url.subscribe(url =>{
+        $(".modal").hide();
+        $('body').removeClass( "modal-open" );
+         $("body").removeAttr("style");
+        $(".modal-backdrop").hide();
+        this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)
@@ -336,6 +341,13 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
 
 
+  gotoTop() {
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+  }
 
 
   ngAfterViewInit(): void {
@@ -1350,7 +1362,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   DisplayDetail()
   {
-    if(this.isOnwardSelected == true && this.isReturnSelected == true)
+    if(this.isOnwardSelected == true || this.isReturnSelected == true)
     {
       this.isDetailsShow = true;
     }

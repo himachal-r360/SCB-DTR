@@ -228,6 +228,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
        this.route.url.subscribe(url =>{
+        $(".modal").hide();
+        $('body').removeClass( "modal-open" );
+         $("body").removeAttr("style");
+        $(".modal-backdrop").hide();
+        this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)

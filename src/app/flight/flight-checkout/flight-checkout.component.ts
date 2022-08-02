@@ -213,6 +213,7 @@ new_fare: number = 0;
         
         airportsNameJson:any;
         airlinesNameJson:any;
+        countryJson:any;
         EMI_interest: number = 16;
         EMIAvailableLimit: number = 3000;
         totalOnwardDuration:number=0;
@@ -246,7 +247,7 @@ new_fare: number = 0;
  serviceId:string='Flight';
   isMobile:boolean= true;
 
-  constructor( public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal, @Inject(DOCUMENT) private document: any) { 
+  constructor( private ref: ChangeDetectorRef,public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal, @Inject(DOCUMENT) private document: any) { 
 
                 this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
                 this.serviceSettings=this.appConfigService.getConfig();
@@ -257,6 +258,7 @@ new_fare: number = 0;
 
                 this.getAirpotsList();
                 this.getAirLineList();
+                this.getCountryList();
 
                 this.isMobile = window.innerWidth < 991 ?  true : false;
                 if(this.isMobile){
@@ -328,6 +330,7 @@ new_fare: number = 0;
                 this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
                 this.selectedReturnVendor = [];
                 
+                
                 if(this.flightSessionData.returnFlights)
                 this.flightReturnDetails=this.flightSessionData.returnFlights;
                 else
@@ -338,7 +341,7 @@ new_fare: number = 0;
                                 
                 this.partnerToken=this.selectedOnwardVendor.partnerName;
                 this.enableVAS= this.serviceSettings.enabledVAS[this.partnerToken];
-                //console.log(this.partnerToken);
+                console.log(this.partnerToken);
                 //console.log(this.enableVAS);
 
                 this.getFlightDetails(this.flightSessionData);
@@ -470,7 +473,6 @@ new_fare: number = 0;
             jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE));
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID));
         jobGroup.addControl('whatsappFlag', new FormControl('1'));
-        //jobGroup.addControl('passengerAgree', new FormControl(''));
 
         jobGroup.addControl('gstNumber', new FormControl());
         jobGroup.addControl('gstBusinessName', new FormControl());
@@ -483,7 +485,6 @@ new_fare: number = 0;
   }
 
   ngOnInit(): void {
-  
   this.steps=1;
     
   }
@@ -628,6 +629,7 @@ new_fare: number = 0;
        
        
       addAdult(passenger,checkboxIndex) {
+      
            if ((this.adultsArray.length ) < (this.maxAdults)) {
             this.adults.push(this.adultsArray.length);
             this.adultsArray.push(this.passengerAdultFormCount);
@@ -642,10 +644,19 @@ new_fare: number = 0;
             
                 var title="";   var adult_first_name = "";var adult_last_name = "";let adult_dob:any;
                 
+                let adult_passport:any;
+                let adult_passport_expiry_date:any;
+                let adult_passport_issue_date:any;
+                var adult_passport_issuing_country='';
+                var adult_pax_nationality='';
+                var adult_pax_birthcountry='';
+                
+                
                 if(checkboxIndex !=-1){
                 title=passenger.title;
                 adult_first_name=passenger.firstName;
                 adult_last_name=passenger.lastName;
+               
                 
                 
                 if(passenger.dateOfBirth){
@@ -654,34 +665,81 @@ new_fare: number = 0;
                 const month = +values[1]-1;
                 const date = +values[0];
                 adult_dob=new Date(year, month, date);
+                }else{
+                adult_dob='';
+                }
+                
+                 adult_passport=passenger.passportNumber?passenger.passportNumber:'';
+                adult_passport_issuing_country=passenger.passportIssueCountry?passenger.passportIssueCountry:'';
+                adult_pax_nationality=passenger.paxNationality?passenger.paxNationality:'';
+                adult_pax_birthcountry=passenger.paxBirthCountry?passenger.paxBirthCountry:'';
+                
+               if(passenger.passportExpiryDate){
+                const values1 = passenger.passportExpiryDate.split('/');
+                const year1 = +values1[2];
+                const month1 = +values1[1]-1;
+                const date1 = +values1[0];
+                adult_passport_expiry_date=new Date(year1, month1, date1);
+                }else{
+                adult_passport_expiry_date='';
                 }
                 
                 
+                
+                if(passenger.passportIssueDate){
+                const values2 = passenger.passportIssueDate.split('/');
+                const year2 = +values2[2];
+                const month2 = +values2[1]-1;
+                const date2 = +values2[0];
+                adult_passport_issue_date=new Date(year2, month2, date2);
+                }else{
+                adult_passport_issue_date='';
+                }
                 
                 }
  
              this.passengerForm.addControl('adult_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
              this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
              this.passengerForm.addControl('adult_last_name' + i, new FormControl(adult_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
-            
              this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob, [Validators.required,validateAdultAge]));
+             
+             
+             
+             if(this.searchData.travel=='INT'){
+                this.passengerForm.addControl('adult_passport_num' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('adult_passport_expiry_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('adult_passport_issuing_country' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('adult_pax_nationality' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('adult_pax_birthcountry' + i, new FormControl('', [Validators.required]));
+               // this.passengerForm.addControl('adult_dom_pax_nationality' + i, new FormControl('', [Validators.required]));
+               
+               
+                this.passengerForm['controls']['adult_passport_num' + i].setValue(adult_passport);
+                this.passengerForm['controls']['adult_passport_expiry_date' + i].setValue(adult_passport_expiry_date);
+                this.passengerForm['controls']['adult_passport_issue_date' + i].setValue(adult_passport_issue_date);
+                this.passengerForm['controls']['adult_passport_issuing_country' + i].setValue(adult_passport_issuing_country);
+                this.passengerForm['controls']['adult_pax_nationality' + i].setValue(adult_pax_nationality);
+                this.passengerForm['controls']['adult_pax_birthcountry' + i].setValue(adult_pax_birthcountry);
+               
+               
+                       this.passengerForm.controls['adult_passport_num' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_passport_expiry_date' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_passport_issue_date' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_passport_issuing_country' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_pax_nationality' + i].updateValueAndValidity();
+                this.passengerForm.controls['adult_pax_birthcountry' + i].updateValueAndValidity();
+              //  this.passengerForm.controls['adult_dom_pax_nationality' + i].updateValueAndValidity();
+             }
             
             
+     
 
-                this.passengerForm.controls['adult_title' + i].updateValueAndValidity();
-                this.passengerForm.controls['adult_first_name' + i].updateValueAndValidity();
-                this.passengerForm.controls['adult_last_name' + i].updateValueAndValidity();
-                this.passengerForm.controls['adult_dob' + i].updateValueAndValidity();
-                
-                
-                 this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
-                 this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
-                // this.passengerForm.controls['passengerAgree'].setValidators([Validators.required, Validators.pattern('true')]);
+        this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
+        this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
+        this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
+        this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
 
-                 this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
-                this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-                // this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
-         
 
 
             this.passengerAdultFormCount++;
@@ -698,7 +756,6 @@ new_fare: number = 0;
          } 
  
         }
-
     }
     
     removeAdult(val,checkboxIndex) {
@@ -741,6 +798,20 @@ new_fare: number = 0;
         this.passengerForm.removeControl('adult_dob'+val);
         this.passengerForm.removeControl('adult_first_name' + val);
         this.passengerForm.removeControl('adult_last_name'+val);
+        
+        
+                if(this.searchData.travel=='INT'){
+                this.passengerForm.removeControl('adult_passport_num' +val);
+                this.passengerForm.removeControl('adult_passport_expiry_date' + val);
+                this.passengerForm.removeControl('adult_passport_issue_date' + val);
+                this.passengerForm.removeControl('adult_passport_issuing_country' +val);
+                this.passengerForm.removeControl('adult_pax_nationality' +val);
+                this.passengerForm.removeControl('adult_pax_birthcountry' + val);
+                // this.passengerForm.removeControl('adult_dom_pax_nationality' val);
+                }
+        
+        
+        
         this.passengerForm.clearValidators();
         this.passengerForm.updateValueAndValidity();
         this.adults.splice(val, 1);
@@ -760,7 +831,19 @@ new_fare: number = 0;
             if(checkboxIndex !=-1)
             this.saveChildTravellerId[checkboxIndex]=i;
             
+            
                 var title="";   var child_first_name = "";var child_last_name = "";let child_dob:any;
+                
+                  
+                let child_passport:any;
+                let child_passport_expiry_date:any;
+                let child_passport_issue_date:any;
+                var  child_passport_issuing_country='';
+                var child_pax_nationality='';
+                var child_pax_birthcountry='';
+                  
+                  
+                           
                 if(checkboxIndex !=-1){
                 title=passenger.title;
                 child_first_name=passenger.firstName;
@@ -774,6 +857,35 @@ new_fare: number = 0;
                 child_dob=new Date(year, month, date);
                 }
                 
+                child_passport=passenger.passportNumber?passenger.passportNumber:'';
+                child_passport_issuing_country=passenger.passportIssueCountry?passenger.passportIssueCountry:'';
+                child_pax_nationality=passenger.paxNationality?passenger.paxNationality:'';
+                child_pax_birthcountry=passenger.paxBirthCountry?passenger.paxBirthCountry:'';
+                
+               if(passenger.passportExpiryDate){
+                var values1 = passenger.passportExpiryDate.split('/');
+                var year1 = +values1[2];
+                var month1 = +values1[1]-1;
+                var date1 = +values1[0];
+                child_passport_expiry_date=new Date(year1, month1, date1);
+                }else{
+                child_passport_expiry_date='';
+                }
+                
+                
+                
+                if(passenger.passportIssueDate){
+                var values2 = passenger.passportIssueDate.split('/');
+                var year2 = +values2[2];
+                var month2 = +values2[1]-1;
+                var date2 = +values2[0];
+                child_passport_issue_date=new Date(year2, month2, date2);
+                }else{
+                child_passport_issue_date='';
+                }
+                
+                
+                
                 }
  
              this.passengerForm.addControl('child_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
@@ -786,6 +898,37 @@ new_fare: number = 0;
                 this.passengerForm.controls['child_first_name' + i].updateValueAndValidity();
                 this.passengerForm.controls['child_last_name' + i].updateValueAndValidity();
                 this.passengerForm.controls['child_dob' + i].updateValueAndValidity();
+                
+                
+                
+             if(this.searchData.travel=='INT'){
+                this.passengerForm.addControl('child_passport_num' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('child_passport_expiry_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('child_passport_issue_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('child_passport_issuing_country' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('child_pax_nationality' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('child_pax_birthcountry' + i, new FormControl('', [Validators.required]));
+               // this.passengerForm.addControl('child_dom_pax_nationality' + i, new FormControl('', [Validators.required]));
+               
+               
+                this.passengerForm['controls']['child_passport_num' + i].setValue(child_passport);
+                this.passengerForm['controls']['child_passport_expiry_date' + i].setValue(child_passport_expiry_date);
+                this.passengerForm['controls']['child_passport_issue_date' + i].setValue(child_passport_issue_date);
+                this.passengerForm['controls']['child_passport_issuing_country' + i].setValue(child_passport_issuing_country);
+                this.passengerForm['controls']['child_pax_nationality' + i].setValue(child_pax_nationality);
+                this.passengerForm['controls']['child_pax_birthcountry' + i].setValue(child_pax_birthcountry);
+               
+               
+                       this.passengerForm.controls['child_passport_num' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_passport_expiry_date' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_passport_issue_date' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_passport_issuing_country' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_pax_nationality' + i].updateValueAndValidity();
+                this.passengerForm.controls['child_pax_birthcountry' + i].updateValueAndValidity();
+              //  this.passengerForm.controls['child_dom_pax_nationality' + i].updateValueAndValidity();
+             }
+                
+                
 
             this.passengerChildFormCount++;
             
@@ -841,6 +984,17 @@ new_fare: number = 0;
         this.passengerForm.removeControl('child_dob'+val);
         this.passengerForm.removeControl('child_first_name' + val);
         this.passengerForm.removeControl('child_last_name'+val);
+        
+                    if(this.searchData.travel=='INT'){
+                this.passengerForm.removeControl('child_passport_num' +val);
+                this.passengerForm.removeControl('child_passport_expiry_date' + val);
+                this.passengerForm.removeControl('child_passport_issue_date' + val);
+                this.passengerForm.removeControl('child_passport_issuing_country' +val);
+                this.passengerForm.removeControl('child_pax_nationality' +val);
+                this.passengerForm.removeControl('child_pax_birthcountry' + val);
+                // this.passengerForm.removeControl('infant_dom_pax_nationality' val);
+                }
+        
         this.passengerForm.clearValidators();
         this.passengerForm.updateValueAndValidity();
         this.child.splice(val, 1);
@@ -863,10 +1017,21 @@ new_fare: number = 0;
             this.saveInfantTravellerId[checkboxIndex]=i;
             
                 var title="";   var infant_first_name = "";var infant_last_name = "";let infant_dob:any;
+                
+                              
+                let infant_passport:any;
+                let infant_passport_expiry_date:any;
+                let infant_passport_issue_date:any;
+                var  infant_passport_issuing_country='';
+                var infant_pax_nationality='';
+                var infant_pax_birthcountry='';
+                
                 if(checkboxIndex !=-1){
                 title=passenger.title;
                 infant_first_name=passenger.firstName;
                 infant_last_name=passenger.lastName;
+                
+  
                 
                                 if(passenger.dateOfBirth){
                 const values = passenger.dateOfBirth.split('/');
@@ -874,6 +1039,33 @@ new_fare: number = 0;
                 const month = +values[1]-1;
                 const date = +values[0];
                 infant_dob=new Date(year, month, date);
+                }
+                
+                infant_passport=passenger.passportNumber?passenger.passportNumber:'';
+                infant_passport_issuing_country=passenger.passportIssueCountry?passenger.passportIssueCountry:'';
+                infant_pax_nationality=passenger.paxNationality?passenger.paxNationality:'';
+                infant_pax_birthcountry=passenger.paxBirthCountry?passenger.paxBirthCountry:'';
+                
+               if(passenger.passportExpiryDate){
+                var values1 = passenger.passportExpiryDate.split('/');
+                var year1 = +values1[2];
+                var month1 = +values1[1]-1;
+                var date1 = +values1[0];
+                infant_passport_expiry_date=new Date(year1, month1, date1);
+                }else{
+                infant_passport_expiry_date='';
+                }
+                
+                
+                
+                if(passenger.passportIssueDate){
+                var values2 = passenger.passportIssueDate.split('/');
+                var year2 = +values2[2];
+                var month2 = +values2[1]-1;
+                var date2 = +values2[0];
+                infant_passport_issue_date=new Date(year2, month2, date2);
+                }else{
+                infant_passport_issue_date='';
                 }
                 
                 
@@ -889,6 +1081,35 @@ new_fare: number = 0;
             this.passengerForm.controls['infant_first_name' + i].updateValueAndValidity();
              this.passengerForm.controls['infant_last_name' + i].updateValueAndValidity();
                this.passengerForm.controls['infant_dob' + i].updateValueAndValidity();
+               
+               
+                if(this.searchData.travel=='INT'){
+                this.passengerForm.addControl('infant_passport_num' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('infant_passport_expiry_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('infant_passport_issue_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('infant_passport_issuing_country' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('infant_pax_nationality' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('infant_pax_birthcountry' + i, new FormControl('', [Validators.required]));
+               // this.passengerForm.addControl('infant_dom_pax_nationality' + i, new FormControl('', [Validators.required]));
+               
+               
+                this.passengerForm['controls']['infant_passport_num' + i].setValue(infant_passport);
+                this.passengerForm['controls']['infant_passport_expiry_date' + i].setValue(infant_passport_expiry_date);
+                this.passengerForm['controls']['infant_passport_issue_date' + i].setValue(infant_passport_issue_date);
+                this.passengerForm['controls']['infant_passport_issuing_country' + i].setValue(infant_passport_issuing_country);
+                this.passengerForm['controls']['infant_pax_nationality' + i].setValue(infant_pax_nationality);
+                this.passengerForm['controls']['infant_pax_birthcountry' + i].setValue(infant_pax_birthcountry);
+               
+               
+                       this.passengerForm.controls['infant_passport_num' + i].updateValueAndValidity();
+                this.passengerForm.controls['infant_passport_expiry_date' + i].updateValueAndValidity();
+                this.passengerForm.controls['infant_passport_issue_date' + i].updateValueAndValidity();
+                this.passengerForm.controls['infant_passport_issuing_country' + i].updateValueAndValidity();
+                this.passengerForm.controls['infant_pax_nationality' + i].updateValueAndValidity();
+                this.passengerForm.controls['infant_pax_birthcountry' + i].updateValueAndValidity();
+              //  this.passengerForm.controls['infant_dom_pax_nationality' + i].updateValueAndValidity();
+             }  
+               
              
 
             this.passengerInfantFormCount++;
@@ -945,6 +1166,18 @@ new_fare: number = 0;
         this.passengerForm.removeControl('infant_dob'+val);
         this.passengerForm.removeControl('infant_first_name' + val);
         this.passengerForm.removeControl('infant_last_name'+val);
+        
+                 if(this.searchData.travel=='INT'){
+                this.passengerForm.removeControl('infant_passport_num' +val);
+                this.passengerForm.removeControl('infant_passport_expiry_date' + val);
+                this.passengerForm.removeControl('infant_passport_issue_date' + val);
+                this.passengerForm.removeControl('infant_passport_issuing_country' +val);
+                this.passengerForm.removeControl('infant_pax_nationality' +val);
+                this.passengerForm.removeControl('infant_pax_birthcountry' + val);
+                // this.passengerForm.removeControl('infant_dom_pax_nationality' val);
+                }
+        
+        
         this.passengerForm.clearValidators();
         this.passengerForm.updateValueAndValidity();
         this.infant.splice(val, 1);
@@ -1392,6 +1625,11 @@ new_fare: number = 0;
       this.airlinesNameJson = res;
     })
   }
+    getCountryList() {
+    this._flightService.getCountryList().subscribe((res:any)=>{
+      this.countryJson = res.partnerResponse.countryList;
+    })
+  }
 
 
   calculateEMI(amount: number) {
@@ -1551,7 +1789,7 @@ new_fare: number = 0;
       if(res.statusCode ==200)
       {
          this.flightInfo=res.response;
-         console.log( this.flightInfo);
+        
       if(this.searchData.travel=='DOM'){
        if(res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.fareKey){
        if(partner=='Yatra'){
@@ -1684,9 +1922,7 @@ new_fare: number = 0;
        
        if(partner=='Easemytrip')
        this.cancellationPolicyOnward= this.emt_cancellationPolicy (res.response.flight_details.cancellationPolicy);
-       
-                
-       
+       // console.log( res.response.flight_details);
        }
        
        
