@@ -206,7 +206,6 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       return false;
       }else{
       this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
-      console.log(this.nextIndex , "next index");
       if(this.nextIndex > this.ReturnflightList.length){
       this.nextIndex=this.ReturnflightList.length ;
       }
