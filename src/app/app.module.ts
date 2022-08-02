@@ -25,6 +25,8 @@ import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { CustomReuseStrategy } from './route-reuse-strategy';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -70,6 +72,10 @@ export function appInitializerFn(appConfig: AppConfigService) {
       useFactory: appInitializerFn,
       multi: true,
       deps: [AppConfigService]
+    },
+     {
+      provide: RouteReuseStrategy,
+      useClass: CustomReuseStrategy,
     },
 SimpleGlobal,CommonHelper,CommunicationService,MatBottomSheet
   

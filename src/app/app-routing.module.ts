@@ -10,10 +10,10 @@ import { InfiniaModule } from './infinia/infinia.module';
 */
 const routes: Routes = [
   {
-    path:"" , component:HomeComponent
+    path:"" ,   component:HomeComponent 
   },
   {
-    path:"home" , component:HomeComponent 
+    path:"compare-fly" , component:HomeComponent 
   },
   
     {
@@ -57,7 +57,13 @@ const routes: Routes = [
     //RegaliaGoldModule,
     //InfiniaModule,
     //DinersModule,
-    RouterModule.forRoot(routes)],
+        RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      onSameUrlNavigation: 'reload'
+    })
+    
+    ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
