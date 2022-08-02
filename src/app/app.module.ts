@@ -24,6 +24,7 @@ import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MulticityHomeComponent } from './home/multicity/multicity.component';
+import { ToastrModule } from 'ngx-toastr';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -58,7 +59,8 @@ export function appInitializerFn(appConfig: AppConfigService) {
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
-    CarouselModule
+    CarouselModule,
+    ToastrModule.forRoot()
 
   ],
   exports:[SearchComponent],

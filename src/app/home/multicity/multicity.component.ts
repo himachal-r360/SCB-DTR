@@ -1,11 +1,14 @@
 import { Component, OnInit , Input , ElementRef, AfterViewInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators ,FormsModule,FormControl,FormArray } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AppConfigService } from '../../app-config.service';
+import { NotificationService } from '../../shared/services/notification.service'
+
 
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -81,12 +84,19 @@ export class MulticityHomeComponent implements OnInit {
   navItemActive:any;
   isShownMulticityTab: boolean = true ;
   isShownOneRoundway: boolean = false ;
+  maxMulticityCount: number;
+  serviceSettings: any | null;
+  multicityaddForm: FormGroup;
+  searchMulticityForm: FormGroup;
+  flightdeparture : any="";
 
   constructor(private element: ElementRef,
     public _styleManager: StyleManagerService,
     public router: Router,
     private _fb: FormBuilder,
-    private _flightService: FlightService
+    private _flightService: FlightService,
+    private appConfigService:AppConfigService,
+    private notifyService : NotificationService
     ) {
 
       setTimeout(() => {
@@ -95,6 +105,9 @@ export class MulticityHomeComponent implements OnInit {
         this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
         this._styleManager.setScript('custom', `assets/js/custom.js`);
      }, 10);
+
+     this.serviceSettings=this.appConfigService.getConfig();
+     this.maxMulticityCount = this.serviceSettings.multiCityMaxCount;
 
    }
 
@@ -619,28 +632,17 @@ this.flightData.value.flightclass =  val;
 
 navBarLink(navItem:any){
   this.navItemActive = navItem;
-alert('multi out');
-  if(this.navItemActive =='Multicity'){
-    alert('multi in');
+  if (this.navItemActive == 'Multicity') {
+
     this.isShownMulticityTab = true;
     this.isShownOneRoundway = false;
 
-  } else if(this.navItemActive =='Round Trip') {
-    alert('cild round trip');
-    this.isShownMulticityTab = false;
-    this.isShownOneRoundway = true;
-  } else if(this.navItemActive =='One Way'){
-      this.isShownMulticityTab = false;
-      this.isShownOneRoundway = true;
-
-  } else {
+}  else {
 
     this.isShownMulticityTab = false;
     this.isShownOneRoundway = true;
 
-  }
-
-
+}
   }
 
   ShownOneRoundoption(value : any): void {
@@ -648,6 +650,32 @@ alert('multi out');
     this.ShownOneRoundway.emit(value);
 
   }
+
+
+
+  multicityArray = [0,1];
+  multicityaddFun(){
+
+    if ((this.multicityArray.length ) < (this.maxMulticityCount)) {
+
+      this.multicityArray.push(this.multicityArray.length+1);
+
+     this.multicityaddForm = this._fb.group({
+      firstName: '',
+      lastName: ''
+    });
+
+
+
+    } else {
+
+      this.notifyService.showError("Maximum Multicity 3 only can add !!", "Multicity Info");
+
+    }
+
+  }
+
+
 
 
 }
