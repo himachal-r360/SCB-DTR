@@ -59,6 +59,12 @@ export class HomeComponent implements OnInit {
     nav: false
   }
 
+  trendingRoutes = [
+    {id:1 , fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+    {id:2, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+    {id:3, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+    {id:4, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+  ]
 
 
   constructor(
@@ -82,7 +88,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._flightService.showHeader(true);  
+    this._flightService.showHeader(true);
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
@@ -92,6 +98,9 @@ export class HomeComponent implements OnInit {
 
   }
 
+  owlCarousel() {
+    
+  }
 
 
   ConvertObjToQueryString(obj:any)

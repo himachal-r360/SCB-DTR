@@ -45,7 +45,528 @@
 
 
 
-
+    <!-- New Smartbuy Header --> 
+    <div class="container_hftab">
+       <div class="d-none d-sm-none d-lg-block">
+          <nav class=" sb_head">
+             <div class="row">
+                <div class="col-md-3">
+                   <div class="d-flex">
+                      <a class="navbar-brand" href="https://www.hdfcbank.com/" *ngIf="is_main==1" target="_blank">
+                      <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC Bank">
+                      </a>
+                      <a class="navbar-brand" href="{{domainRedirect}}{{domainPath}}">
+                      <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" class="smartbuy_logo">
+                      </a>
+                   </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="search_input">
+                      <input class="form-control mr-sm-2 sb_search" type="text" placeholder="Search for exciting deals & offers" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
+                      <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
+                         <ul *ngIf="serviceSettings.enableAlgolia">
+                            <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
+                            <a style="width:100%;" class="searchResults_a">
+                               <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px" class="mr-2"></div>
+                               <div style="width:60%;float:left">{{searchOption['name']}}</div>
+                               <div class="compare-title" style="float: right;">Offers in {{searchOption.subcategory_1}}</div>
+                            </a>
+                            </li>
+                            <li *ngIf="searchResults.length==0"><a>No Results Found...</a></li>
+                         </ul>
+                         <ul *ngIf="serviceSettings.enableEs" class="elastic-auto">
+                            <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
+                            <a style="width:100%;" class="searchResults_a">
+                               <div style="float:left"><img src="{{cdnUrl}}images/icons/deals.svg" height="20px" width="20px" class="mr-2"></div>
+                               <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && searchOption['highlight']['name']"><span [innerHTML]="searchOption['highlight']['name']"></span></div>
+                               <div style="width:60%;float:left" *ngIf="searchOption['highlight'] && !searchOption['highlight']['name']"><span [innerHTML]="searchOption['fields']['name']"></span></div>
+                               <div style="width:60%;float:left" *ngIf="!searchOption['highlight']">{{searchOption['fields']['name']}}</div>
+                               <div class="compare-title" style="float: right;" *ngIf="searchOption['fields']['category']">Offers in {{searchOption['fields']['category']}}</div>
+                            </a>
+                            </li>
+                            <li *ngIf="searchResults.length==0"><a>No Results Found...</a></li>
+                         </ul>
+                      </div>
+                      <span class="focus-border"></span>
+                      <span class="icn_tool">
+                         <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
+                         <ng-template #voiceSearch>
+                            <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span"> |</span>
+                            <span *ngIf="voiceActiveSectionDisabled; else voicesection;" class="mic-span">
+                            <a (click)="startVoiceRecognition()">
+                            <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                            </a>
+                            </span>
+                            <ng-template #voicesection>
+                               <ng-container *ngIf="!voiceActiveSectionError; else failure">
+                                  <ng-container *ngIf="voiceText; else start">
+                                     <a (click)="startVoiceRecognition()">
+                                     <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                     </a>
+                                  </ng-container>
+                                  <ng-template #start>
+                                     <ng-container *ngIf="voiceActiveSectionListening; else beginning">
+                                        <a (click)="startVoiceRecognition()">
+                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                        </a>
+                                     </ng-container>
+                                     <ng-template #beginning>
+                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic-l.svg" alt="mic" class="mic_lis" ></span>
+                                     </ng-template>
+                                  </ng-template>
+                               </ng-container>
+                               <ng-template #failure>
+                                  <a (click)="startVoiceRecognition()">
+                                  <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                  </a>
+                               </ng-template>
+                            </ng-template>
+                         </ng-template>
+                      </span>
+                   </div>
+                </div>
+                <div class="col-md-3">
+                   <div class="after_log">
+                      <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
+                      <div>
+                         <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
+                         <span [ngClass]="(pushcount)>0 ? 'cart_count_pla' : ''"><span></span></span>
+                      </div>
+                      <!--Notification Box Starts-->
+                      <div class="position-relative ">
+                         <div class="position-push-data" *ngIf="enablePushBox && serviceSettings.notifications==1 ">
+                            <div class=" ">
+                               <div class="modal-content push_noti_content " *ngIf="enableQuesBox ">
+                                  <div class="modal-header ">
+                                     <h6 class="modal-title ">Push Notification Box</h6>
+                                     <button type="button " class="close " data-bs-dismiss="modal " aria-label="Close ">
+                                     <span aria-hidden="true " (click)="disablePushBtn() ">&times;</span>
+                                     </button>
+                                  </div>
+                                  <div class="modal-body ">
+                                     <div class="push_noti_ques ">Why you should enabled your push on notification?</div>
+                                     <div class="push_noti_ans ">This will give you all the notifications of Special Offers, Discount, Newly launch products, services, and daily updates of deals and offers, etc.</div>
+                                     <div class="enable_icon " id=" " (click)="enablePushBtn() ">
+                                        <i class="fa fa-bell glyphi-radius "></i>
+                                        <span class="enb_text ">Enable Notifications </span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <div class="modal-content push_noti_content " *ngIf="enablePushContentBox">
+                                  <div class="no-notifications text-center" *ngIf="enableNoNotify==false " style="display:none;">
+                                     <p>Currently, there are no notifications for you!</p>
+                                     <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
+                                  </div>
+                                  <div class="modal-header push-modal-new-head">
+                                     <h6 class="modal-title " *ngIf="enablePushTitle==false ">Push Notification Box </h6>
+                                     <p class="modal-title push-modal-head" *ngIf="enablePushTitle==true ">Notifications </p>
+                                     <p *ngIf="enablePushTitle==true " class="push-not-font">Push on notifications enabled. Device now setup to receive push notifications</p>
+                                  </div>
+                                  <div class="modal-body" *ngIf="!deviceService.isMobile()">
+                                     <div class="tab-content " id="pills-tabContent " [innerHtml]="contentHtml"></div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <!--Notification Box Ends-->
+                   </div>
+                   <div class="inner_child" *ngIf="showCart && showcartIcon" (mouseleave)="disableCartBtn()">
+                   <div *ngIf="showCart " (mouseenter)="enableCartClick()">
+                   <img src="{{cdnUrl}}images/smartbuy/icons/icn-cart.svg" alt="profile" class="cart_icon">
+                   <span class="cart_count_pla" *ngIf="Qty>0"><span>{{Qty}}</span></span>
+                   <!--Cart Box Starts-->
+                   <div class="position-relative ">
+                      <div *ngIf="enableCartBox && showcartIcon ">
+                         <div class="white-med-text">
+                            <span class="showcart" (click)="shopping()"></span> <span class="emptycart" (click)="emptycart()"></span>
+                            <input type="hidden" class="cartCount" (click)="updateCartCount()" />
+                            <div class="w-shopping-add-to-cart cart-new" *ngIf="shoppingcart">
+                               <span *ngIf="cartDetails.length; else nocart">
+                                  <div class="w-auto-height">
+                                     <span *ngFor="let cart of cartDetails ;let index=index;">
+                                        <div class="row mt-3">
+                                           <div class="col-2 col-sm-2 col-md-2 pr-0 text-left">
+                                              <ng-container *ngIf="cart.options.isVegEggMeat=='Veg'">
+                                                 <img src="{{cdnUrl}}images/veg.svg" width="14" height="14" class="img-fluid">
+                                              </ng-container>
+                                              <ng-container *ngIf="cart.options.isVegEggMeat=='Non Veg'">
+                                                 <img src="{{cdnUrl}}images/non-veg.svg" width="14" height="14" class="img-fluid">
+                                              </ng-container>
+                                              <ng-container *ngIf="cart.options.isVegEggMeat=='Egg'">
+                                                 <img src="{{cdnUrl}}images/non-veg.svg" width="14" height="14" class="img-fluid">
+                                              </ng-container>
+                                           </div>
+                                           <div class="col-10 col-sm-10 col-md-10 pl-0 text-left">
+                                              <p class="m-0">{{cart.name}}</p>
+                                           </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                           <div class="col-5 col-sm-5 col-md-5 pt-1">
+                                              <p class="m-0 w-color"><i class="fa fa-rupee"></i> {{cart.subtotal}}</p>
+                                           </div>
+                                           <div class="col-7 col-sm-7 col-md-7 w-freshmenu-cart">
+                                              <div class="w-freshmenu-adding-cart">
+                                                 <div class="w-pt2" style="padding-top: 2px;">
+                                                    <a href="javascript:;" (click)="updatecart(cart.rowId,0)">-</a>
+                                                 </div>
+                                                 <div class="w-freshmenu-no">
+                                                    <input type="tel" [value]="cart.qty" readonly="true">
+                                                 </div>
+                                                 <div class="w-pt2" style="padding-top: 4px;">
+                                                    <a href="javascript:;" (click)="updatecart(cart.rowId,1)">+</a>
+                                                 </div>
+                                              </div>
+                                           </div>
+                                        </div>
+                                     </span>
+                                  </div>
+                                  <hr>
+                                  <div class="">
+                                     <div class="row">
+                                        <div class="col-8 col-sm-8 col-md-8">
+                                           <p>Total</p>
+                                        </div>
+                                        <div class="col-4 col-sm-4 col-md-4 pl-0">
+                                           <p class="text-right"><b><i class="fa fa-rupee"></i> {{carttotal}}</b></p>
+                                        </div>
+                                     </div>
+                                     <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                           <button class="btn btn-primary w-primary" (click)="placeorder()">PLACE ORDER</button>
+                                        </div>
+                                     </div>
+                                  </div>
+                               </span>
+                               <ng-template #nocart>
+                                  <div class="w-not-found-img mt-3 text-center">
+                                     <div class="w-not-found">
+                                        <img src="{{cdnUrl}}images/new-fried.svg">
+                                        <p class="title text-center mt-2">Your Cart is Empty.</p>
+                                        <p class="caption text-center">Add something from the menu!</p>
+                                        <a href="{{freshMenuUrl}}">
+                                        <button class="btn btn-primary w-primary">BROWSE DISHES</button>
+                                        </a>
+                                     </div>
+                                  </div>
+                               </ng-template>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                   <!--Cart boc ends-->
+                </div>
+             </div>
+             <div class="inner_child">
+                <div *ngIf="guestLogin==false && customerLogin==false">
+                   <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
+                </div>
+                <div *ngIf="guestLogin==true && customerLogin==false">
+                   <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
+                </div>
+                <div class="head_img" *ngIf="guestLogin==false && customerLogin==true">
+                   <div class="dropdown myaccount-drop">
+                      <a class="dropdown-toggle" href="#" role="button" id="dropdown-user" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="" *ngIf="customerLogin==false">Hi, Guest</span>
+                      <span class="custName" *ngIf="customerLogin==true">Hi {{ (customer_full_name.length>20)? (customer_full_name | slice:0:20)+'..':(customer_full_name) }} </span>
+                      <i class="fa fa-angle-down pl-10" aria-hidden="true"></i>
+                      </a>
+                      <div class="dropdown-menu user-menu myaccount-drop" aria-labelledby="dropdown-user">
+                         <div class="">
+                            <div class="points_sec" *ngIf="customeravailableStatus">
+                               <div class="px-4 py-2">
+                                  <div class="row">
+                                     <div class="col-8 text-left">
+                                        <div>
+                                           <p class="line">Available cashback points</p>
+                                           <p class="line_sub">XXXX 9827</p>
+                                        </div>
+                                     </div>
+                                     <div class="col-4 text-right">
+                                        <p class="value">{{customeravailablepoints}}</p>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('manage_account')">
+                            <div class="item">
+                               <img src="{{cdnUrl}}images/smartbuy/icons/icn-gear.svg" alt="account" class="">
+                               <span>Manage account</span>
+                            </div>
+                         </a>
+                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('manage_orders')">
+                            <div class="item">
+                               <img src="{{cdnUrl}}images/smartbuy/icons/icn-orders.svg" alt="account" class="">
+                               <span>My Orders / Bookings</span>
+                            </div>
+                         </a>
+                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('customer_support')">
+                            <div class="item">
+                               <img src="{{cdnUrl}}images/smartbuy/icons/icn-help.svg" alt="account" class="">
+                               <span>Customer Support</span>
+                            </div>
+                         </a>
+                         <a class="dropdown-item" href="{{domainRedirect}}logout">
+                            <div class="item">
+                               <img src="{{cdnUrl}}images/smartbuy/icons/icn-out.svg" alt="account" class="">
+                               <span>Logout</span>
+                            </div>
+                         </a>
+                      </div>
+                   </div>
+                </div>
+             </div>
+       </div>
+    </div>
+    </div>
+    <div class="">
+    <nav class="nav menu_list">
+    <ul>
+    <li>
+    <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou' ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you</a>
+    </li>
+    <li class="dropdown">
+    <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train' || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays</a>
+    <div class="dropdown-content-list list-travel">
+    <div class="row">
+    <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+    <div>
+    <div>
+    <p><a href="javascript:;" (click)="clickUrl('compare-fly')" class="list-travel-font">
+    Compare & Fly
+    </a></p>
+    <p class="points">{{serviceSettings.offer_construct.flight.reward}}X Reward Points | {{serviceSettings.offer_construct.jockey.cashback}}% Cashback</p>
+    </div>
+    </div>
+    <div class="list-travel-img mt-4">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-2.svg" alt="cleartrip" />
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-4.svg" alt="yatra" />
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-1.svg" alt="goibibo" />
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-3.svg" alt="easemytrip" />
+    </div>
+    </div>
+    <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
+    <div>
+    <div>
+    <p><a href="javascript:;" (click)="goTo('train')" class="list-travel-font">Trains</a></p>
+    <p class="points">{{serviceSettings.offer_construct.train.reward}}X Reward Points | {{serviceSettings.offer_construct.train.cashback}}% Cashback</p>
+    <p class="mb-2 mt-3"><a href="javascript:;" (click)="goTo('train/pnr')">Check PNR Status</a></p>
+    </div>
+    </div>
+    <div class="mt-3">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-5.svg" alt="cleartrip" />
+    </div>
+    </div>
+    <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+    <div>
+    <div>
+    <p><a href="javascript:;" (click)="clickUrl('compare-stay')" class="list-travel-font">Compare & Stay</a></p>
+    <p class="points">{{serviceSettings.offer_construct.hotel.reward}}X Reward Points | {{serviceSettings.offer_construct.hotel.cashback}}% Cashback</p>
+    </div>
+    </div>
+    <div class="list-travel-img mt-4">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-6.svg" alt="cleartrip" />
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-2.svg" alt="yatra" />
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-4.svg" alt="goibibo" />
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-1.svg" alt="easemytrip" />
+    </div>
+    </div>
+    <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.BUS==1">
+    <div>
+    <div>
+    <p><a href="javascript:;" (click)="goTo('bus')" class="list-travel-font">Bus</a></p>
+    <p class="points">{{serviceSettings.offer_construct.bus.reward}}X Reward Points | {{serviceSettings.offer_construct.bus.cashback}}% Cashback</p>
+    </div>
+    </div>
+    <div class="mt-3">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-7.svg" alt="cleartrip" />
+    </div>
+    </div>
+    </div>
+    </div>
+    </li>
+    <li class="dropdown">
+    <a class="nav_link_item" href="javascript:;">Shop</a>
+    <div class="dropdown-content-list list-shop">
+    <!-- <h5>E-Commerce</h5> -->
+    <div class="row g-4">
+    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+    <div class="content_show">
+    <a href="javascript:;" (click)="redirectUrlpopup('amazon',0,'amazon')">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/amazon.svg" alt="amazon">
+    <h5>Amazon</h5>
+    <p class="points m-0">{{serviceSettings.offer_construct.amazon.reward}}X Reward Points | {{serviceSettings.offer_construct.amazon.cashback}}% Cashback</p>
+    </a>
+    </div>
+    </div>
+    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+    <div class="content_show">
+    <a href="javascript:;" (click)="redirectUrlpopup('flipkart',0,'flipkart')">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/flipkart.svg" alt="flipkart">
+    <h5>Flipkart</h5>
+    <p class="points m-0">{{serviceSettings.offer_construct.flipkart.reward}}X Reward Points | {{serviceSettings.offer_construct.flipkart.cashback}}% Cashback</p>
+    </a>
+    </div>
+    </div>
+    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
+    <div class="content_show">
+    <a href="javascript:;" (click)="redirectUrlpopup('imagine',0,'imagine')">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/imagine.svg" alt="imagine">
+    <h5>Imagine | Tresor</h5>
+    <p class="points m-0">{{serviceSettings.offer_construct.imagine.reward}}X Reward Points | {{serviceSettings.offer_construct.imagine.cashback}}% Cashback</p>
+    </a>
+    </div>
+    </div>
+    <!-- </div> -->
+    <!-- <div class="row"> -->
+    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.IGP==1">
+    <div class="content_show">
+    <a href="javascript:;" (click)="redirectUrlpopup('igp',0,'igp')">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/igp.svg" alt="igp">
+    <h5>IGP</h5>
+    <p class="points m-0">{{serviceSettings.offer_construct.igp.reward}}X Reward Points | {{serviceSettings.offer_construct.igp.cashback}}% Cashback</p>
+    </a>
+    </div>
+    </div>
+    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
+    <div class="content_show">
+    <a href="javascript:;" (click)="redirectUrlpopup('jockey',0,'jockey')">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/jockey.svg" alt="jockey">
+    <h5>Jockey</h5>
+    <p class="points m-0">{{serviceSettings.offer_construct.jockey.reward}}X Reward Points | {{serviceSettings.offer_construct.jockey.cashback}}% Cashback</p>
+    </a>
+    </div>
+    </div>
+    <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON_PANTRY==1">
+    <div class="content_show">
+    <a href="javascript:;" (click)="goTo('grocery')">
+    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/grocery.svg" alt="grocery">
+    <h5>Amazon Grocery</h5>
+    <p class="points m-0">{{serviceSettings.offer_construct.amazon_pantry.reward}}X Reward Points | {{serviceSettings.offer_construct.amazon_pantry.cashback}}% Cashback</p>
+    </a>
+    </div>
+    </div>
+    </div>
+    </div>
+    </li>
+    <li class="dropdown">
+    <a class="nav_link_item" href="javascript:;">Instant Vouchers</a>
+    <div class="dropdown-content-list list-voucher">
+    <div class="container">
+    <h5 class="mb-3">Categories <span class="ps-4"><a (click)="redirectUrlpopup('instavouchers',0,'instavouchers')" class="view_text">View All</a></span></h5>
+    <div class="row">
+    <div class="col-sm-10 col-lg-10">
+    <ul class="list_group">
+    <li *ngFor="let vouchercat of getVouchersList">
+    <h5>{{vouchercat.voucher_name|nospace}}</h5>
+    <a href="javascript:;" *ngFor="let vouchercatval of vouchercat.voucher_value" (click)="redirectUrlpopup('instavouchers',1,vouchercatval.url)">{{vouchercatval.name}}</a>
+    </li>
+    </ul>
+    </div>
+    <div class="col-sm-2 col-lg-2 text-center">
+    <div>
+    <div class="brand_img">
+    <img (click)="redirectUrlpopup('instavouchers',0,'instavouchers')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/gyfter.svg" alt="gyfter">
+    </div>
+    <div>
+    <h5>Instant Voucher</h5>
+    <p>{{serviceSettings.offer_construct.instant_voucher.reward}}X Reward Points <br/> {{serviceSettings.offer_construct.mmt.reward}}% Cashback</p>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </li>
+    <li class="dropdown" *ngIf="DOMAIN_SETTINGS.PRIVILEGES==1">
+    <a class="nav_link_item" href="javascript:;">Privileges</a>
+    <div class="dropdown-content-list privi-list">
+    <ul class="privilege_list">
+    <li *ngIf="enablePrivileges['INFINIA']==1">
+    <a href="javascript:;" (click)="clickUrlBlank('infinia')">
+    <div class="">
+    <img src="{{cdnUrl}}images/smartbuy/partner/privi/infinia.png" alt="">
+    <span>Infinia</span>
+    </div>
+    </a>
+    </li>
+    <li *ngIf="enablePrivileges['INFINIA_RESERVE']==1">
+    <a href="javascript:;" (click)="clickUrlBlank('infinia_reserve')">
+    <div class="">
+    <img src="{{cdnUrl}}images/smartbuy/partner/privi/infinia.png" alt="">
+    <span>Infinia Reserve</span>
+    </div>
+    </a>
+    </li>
+    <li *ngIf="enablePrivileges['DINERS']==1">
+    <a href="javascript:;" (click)="clickUrlBlank('diners')">
+    <div class="">
+    <img src="{{cdnUrl}}images/smartbuy/partner/privi/diners.png" alt="">
+    <span>Diners Club</span>
+    </div>
+    </a>
+    </li>
+    <li *ngIf="enablePrivileges['REGALIA']==1">
+    <a href="javascript:;" (click)="clickUrlBlank('regalia')">
+    <div class="">
+    <img src="{{cdnUrl}}images/smartbuy/partner/privi/regalia.png" alt="">
+    <span>Regalia</span>
+    </div>
+    </a>
+    </li>
+    <li *ngIf="enablePrivileges['BUSINESS']==1">
+    <a href="javascript:;" (click)="clickUrlBlank('business')">
+    <div class="">
+    <img src="{{cdnUrl}}images/smartbuy/partner/privi/business.png" alt="">
+    <span>Business</span>
+    </div>
+    </a>
+    </li>
+    <li *ngIf="enablePrivileges['CORPORATE']==1">
+    <a href="javascript:;" (click)="clickUrlBlank('corporate')">
+    <div class="">
+    <img src="{{cdnUrl}}images/smartbuy/partner/privi/corporate.png" alt="">
+    <span>Corporate</span>
+    </div>
+    </a>
+    </li>
+    </ul>
+    </div>
+    </li>
+    <li class="dropdown" *ngIf="DOMAIN_SETTINGS.OFFER==1">
+    <a class="nav_link_item" href="javascript:;" (click)="clickUrl('deals')">Deals & Offers</a>
+    <div class="dropdown-content-list list-deals">
+    <div class="row">
+    <div class="col-sm-6 col-lg-6">
+    <ul class="list_group">
+    <li>
+    <h5>Categories</h5>
+    <a href="javascript:;" *ngFor="let category of dealsoffers" (click)="redirectDisUrl(category.categoryname)">{{category.categoryname}}</a>
+    </li>
+    </ul>
+    </div>
+    <div class="col-sm-6 col-lg-6 text-center">
+    <h4 class="title">Offers on Top Brands</h4>
+    <div class="brand_img" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+    <img (click)="redirectUrlpopup('amazon',0,'amazon')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/amazon.svg" alt="amazon">
+    </div>
+    <div class="brand_img" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+    <img (click)="redirectUrlpopup('flipkart',0,'flipkart')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/flipkart.svg" alt="flipkart">
+    </div>
+    <div class="brand_img" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
+    <img (click)="redirectUrlpopup('imagine',0,'imagine')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/premium.svg" alt="imaginetresor">
+    </div>
+    </div>
+    </div>
+    </div>
+    </li>
+    </ul>
+    </nav>
+    </div>
+    </nav>
+    </div>
+    </div>
 
 
 
