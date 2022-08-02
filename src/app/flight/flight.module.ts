@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlightListComponent } from './flight-list/flight-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes,RouteReuseStrategy } from '@angular/router';
 import { DurationTimePipe } from '../pipes/duration-time.pipe';
 import { MaterialModule } from '../material.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -15,23 +15,24 @@ import { PaymentModule } from 'src/app/payment/payment.module';
 import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-roundtrip-list.component';
 import { FlightIntListComponent } from './flight-int-list/flight-int-list.component';
 import { FlightSearchModule } from '../flight-search/flight-search.module';
+import { CustomReuseStrategy } from '../route-reuse-strategy';
 
 import { AgePipe } from 'src/app/pipes/age.pipe';
 import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
 const routes: Routes = [
   {
-    path:"flight-list" ,component:FlightListComponent
+    path:"flight-list" ,component:FlightListComponent,data: {  shouldReuse: true, },
   },
 
    {
-    path:"flight-checkout" ,component:FlightCheckoutComponent
+    path:"flight-checkout" ,component:FlightCheckoutComponent,data: {  shouldReuse: true, },
   },
   {
-    path:"flight-roundtrip" ,component:FlightRoundtripListComponent
+    path:"flight-roundtrip" ,component:FlightRoundtripListComponent,data: {  shouldReuse: true, },
   },
   {
-    path:"flight-int" ,component:FlightIntListComponent
+    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, },
   }
 
 
@@ -55,10 +56,18 @@ const routes: Routes = [
         NgxSliderModule,
         NgxSkeletonLoaderModule,FlightSearchModule,
         CouponsModule,PaymentModule,CountdownModule,
-          RouterModule.forRoot(routes),
-          DirectiveModule
+            RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      onSameUrlNavigation: 'reload'
+    })
   ],
   exports: [RouterModule],
-  providers: [ ]
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: CustomReuseStrategy,
+    },
+  ],
 })
 export class FlightModule { }

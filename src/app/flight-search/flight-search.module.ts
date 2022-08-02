@@ -26,7 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     DirectiveModule
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   exports: [FlightSearchComponent  ],
   entryComponents: []
 })

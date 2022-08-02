@@ -1,4 +1,3 @@
-import { JsonpClientBackend } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
@@ -19,6 +18,7 @@ import { FlightService } from '../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../environments/environment';
+import { MatDatepicker } from '@angular/material/datepicker'
 import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -49,6 +49,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('toCityInput') toCityInput!: ElementRef;
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
+ @ViewChild('picker') datePicker: MatDatepicker<Date>;
  @Input() modifySearch;
    cdnUrl: any;
   sub?: Subscription;
@@ -127,12 +128,12 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     toAirportName: ['',[Validators.required]],
     flightclass: ['E'],
     flightdefault: [],
-    departure:[''],
-    arrival: [''],
-    adults: ['1'],
+    departure:['',[Validators.required]],
+    arrival: ['',],
+    adults: ['1',[Validators.required]],
     child: ['0'],
     infants: ['0'],
-    travel: []
+    travel: ['',[Validators.required]]
   });
   public Error = (controlName: string, errorName: string) => {
     return this.flightData.controls[controlName].hasError(errorName);
@@ -240,21 +241,14 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectToFlightList(para2: any) {
-  
         this.flightData.get('flightto').setValue(para2.id);
         this.flightData.get('toCity').setValue(para2.city);
         this.flightData.get('toContry').setValue(para2.country);
-         this.flightData.get('toAirportName').setValue(para2.airport_name);
+        this.flightData.get('toAirportName').setValue(para2.airport_name);
         this.toAirpotName = para2.airport_name;
         this.toCityName = para2.city;
-        
-         this.toFlightList = false;
-    setTimeout(() => {
-      let datePickerOpen=document.getElementById("datePickerOpen");
-      datePickerOpen?.click();
-    }, 50);
-  
-
+        this.toFlightList = false;
+        this.datePicker.open();
   }
 
   adultsVal:any
@@ -266,8 +260,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
-        this.flightData.get('arrival').setValue(lastSearch.arrival);
-        this.flightData.get('departure').setValue(lastSearch.departure);
+        
+               
         this.flightData.get('flightclass').setValue(lastSearch.flightclass );
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
         this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
@@ -288,7 +282,17 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         
-        this.departureDate = new Date(lastSearch.departure);
+        /*
+         if(lastSearch.departure)
+        this.flightData.get('departure').setValue(moment(lastSearch.departure).format('YYYY-MM-DD'));
+       
+        if(lastSearch.arrival)
+        this.flightData.get('arrival').setValue(moment(lastSearch.arrival).format('YYYY-MM-DD'));
+        */
+        
+ 
+           
+       this.departureDate = new Date(lastSearch.departure);
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
         this.arrivalDate = new Date(lastSearch.arrival);
        }
@@ -333,17 +337,16 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flightSearch() {
     this.submitted = true;
-    
     this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
       this.dateValidation=false;
-      this.flightData.value.departure=moment(this.flightData.controls['departure']['value']).format('YYYY-MM-DD');
+     this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
     }
     else{
       this.dateValidation=true;
     }
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
-      this.flightData.value.arrival=moment(this.flightData.controls['arrival']['value']).format('YYYY-MM-DD');
+       this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
       this.flightData.get('flightdefault').setValue('R');
     }else{
     this.flightData.get('flightdefault').setValue('O');
@@ -355,7 +358,6 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
          this.flightData.get('travel').setValue('INT');
         }
 
-    console.log(this.flightData);
 
     if(this.flightData.invalid || this.dateValidation==true){
       return
@@ -366,22 +368,30 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.flightSearchCallBack(searchValue);
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
-
+      
+      searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
+      
+      if(searchValue.arrival)
+       searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
+      
+        let url;
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
-          let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+           url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
         else{
-          let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+           url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
         }else{
-          let url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+           url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
     
        }  
-        
+       
+
+
         
         // (error) => { console.log(error) });
       }

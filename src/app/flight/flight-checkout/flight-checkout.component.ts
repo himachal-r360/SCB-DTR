@@ -258,12 +258,12 @@ new_fare: number = 0;
                 this.getAirpotsList();
                 this.getAirLineList();
 
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-    if(this.isMobile){
-     this._flightService.showHeader(false);
-    }else{
-    this._flightService.showHeader(true);
-    }
+                this.isMobile = window.innerWidth < 991 ?  true : false;
+                if(this.isMobile){
+                this._flightService.showHeader(false);
+                }else{
+                this._flightService.showHeader(true);
+                }
    
 
           /*** SESSION */
@@ -484,7 +484,7 @@ new_fare: number = 0;
 
   ngOnInit(): void {
   
-
+  this.steps=1;
     
   }
 
@@ -1539,7 +1539,6 @@ new_fare: number = 0;
       }
     },600) ; 
 
-console.log(param);
   
     this._flightService.getFlightInfo(param).subscribe((res: any) => {
                 
@@ -1548,14 +1547,13 @@ console.log(param);
            setTimeout(() => {
                 $("#infoprocess").modal('hide');
                 }, 10);
-      if(this.searchData.travel=='DOM'){
+      
       if(res.statusCode ==200)
       {
-       
+         this.flightInfo=res.response;
+         console.log( this.flightInfo);
+      if(this.searchData.travel=='DOM'){
        if(res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.fareKey){
-       this.flightInfo=res.response;
-      
-      
        if(partner=='Yatra'){
                 if(res.response.onwardFlightDetails.fare.O){
                 if(res.response.onwardFlightDetails.fare.O.ADT){
@@ -1654,11 +1652,46 @@ console.log(param);
        
         if(partner=='Easemytrip' && res.response.returnFlightDetails && res.response.returnFlightDetails.cancellationPolicy)
        this.cancellationPolicyReturn= this.emt_cancellationPolicy (res.response.returnFlightDetails.cancellationPolicy);
+       }
+       }else{
+       /**International**/
+                if(res.response.flight_details.fare){
+                if(res.response.flight_details.fare.ADT){
+                baseFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt );
+                totalFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +res.response.flight_details.fare.ADT.TX;
+                totalFareOnward+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +res.response.flight_details.fare.ADT.TX;
+                this.AdtFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +res.response.flight_details.fare.ADT.TX;
+                }
+                if(res.response.flight_details.fare.CHD){
+                baseFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt );
+                totalFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +res.response.flight_details.fare.CHD.TX;
+                 totalFareOnward+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +res.response.flight_details.fare.CHD.TX;
+                this.ChildFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +res.response.flight_details.fare.CHD.TX;
+                }
+
+                if(res.response.flight_details.fare.INF){
+                baseFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt );
+                totalFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +res.response.flight_details.fare.INF.TX;
+                totalFareOnward+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +res.response.flight_details.fare.INF.TX;
+                this.InfantTotalFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +res.response.flight_details.fare.INF.TX;
+                } 
+                }
+                
+                
+       if(res.response && res.response.flight_details.bg.length >0) 
+       this.baggageInfoOnward = res.response.flight_details.bg;
+       
+       
+       if(partner=='Easemytrip')
+       this.cancellationPolicyOnward= this.emt_cancellationPolicy (res.response.flight_details.cancellationPolicy);
+       
+                
+       
+       }
        
        
        }else{
             $('#bookingprocessFailed').modal('show');           
-       }
        }
         taxFare=totalFare-baseFare;
       
@@ -1673,7 +1706,6 @@ console.log(param);
        this.onwardAmount=totalFareOnward;
        this.returnAmount=totalFareReturn;
 
-        }
     }, (error) => { 
     
         clearInterval(myInterval3);
@@ -1924,11 +1956,15 @@ console.log(param);
         
         
         let fareDetails=[];
+        
+        if(this.searchData.travel=='INT'){
+        fareDetails.push({ "amount": this.onwardAmount,   "fareKey": this.flightInfo.flight_details.fareKey, "flightKey": this.flightSessionData.onwardFlightKey });
+        }else{
         fareDetails.push({ "amount": this.onwardAmount,   "fareKey": this.flightInfo.onwardFlightDetails.fareKey, "flightKey": this.flightSessionData.onwardFlightKey });
         
        if(this.flightSessionData.returnFlightKey) 
          fareDetails.push({ "amount": this.returnAmount,   "fareKey": this.flightInfo.returnFlightDetails.fareKey, "flightKey": this.flightSessionData.returnFlightKey });
-     
+        } 
         
         
         
@@ -2306,7 +2342,7 @@ console.log(param);
     },
     "passengerDetails": this.paxInfo,
     "fare": this.fareData ,
-    "onwardFareKey": this.flightInfo.onwardFlightDetails.fareKey,
+    "onwardFareKey": this.searchData.travel=='INT'? this.flightInfo.flight_details.fareKey :this.flightInfo.onwardFlightDetails.fareKey,
     "returnFareKey": this.flightInfo.returnFlightDetails && this.flightInfo.returnFlightDetails.fareKey ? this.flightInfo.returnFlightDetails.fareKey : '',
     "inputs": {
       "Default":  this.searchData.flightdefault,
