@@ -336,6 +336,7 @@ pgSettingsCYBERToken:number=0;
 		showFlexiValue:any;
 		flexipayPGvalue:any;
 		dfBookingDetails:any;
+		   payzrestriction:boolean=false;
 	@ViewChild('flexipanelsection') public panel:ElementRef;
 	
 
@@ -527,7 +528,6 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			this.showRewardsBox=false;
 		}
 
-console.log(this.serviceId);
 
 	         this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
 
@@ -540,13 +540,19 @@ console.log(this.serviceId);
 			this.pgSettingsCYBER=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].CYBER;
 			this.pgSettingsNETBANKING=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].NETBANKING;
 			this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
-			this.pgSettingsPAYZAPP=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].PAYZAPP;
+			
 			this.pgSettingsTESTPG=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].TESTPG;
 			this.pgSettingsDEBITEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].DEBIT_EMI;
 			this.pgSettingsUPI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].UPI;
 			this.pgSettingFlexipayEMI = this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY;
 			
-		
+			 const cookieExistPay: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+			
+			if(cookieExistPay)
+			this.pgSettingsPAYZAPP=1;
+			else
+			this.pgSettingsPAYZAPP=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].PAYZAPP;
+			
 					
 			this.monthArray=Array.from(new Array(Number(12)),(val,index)=>index);
 			this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
@@ -666,6 +672,15 @@ console.log(this.serviceId);
 				promoCode: new FormControl('',Validators.required),
 				couponCaptcha: new FormControl({value: '', disabled: true},[Validators.required])
 			});
+			
+			       const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+                if(cookieExistsp){  
+                  this.payzrestriction=true;
+                setTimeout(()=>{
+                   $('#payzappCard').trigger('click');
+                    $('html,body').animate({ scrollTop: 9999 }, 'slow');
+                  });	
+        }
 
 	}
 	@Output() sendflexiAmount = new EventEmitter<any>();
@@ -1252,13 +1267,10 @@ payNow(ptype){
 	
 		passData=this.passData;
 		
-	
-		passData=this.passData;
-
-	
+		console.log(atob(this.passFareData));
 
 		let fareD= JSON.parse(atob(this.passFareData));
-		// console.log(fareD)
+		 console.log(fareD)
 		// let df_fareData = this.EncrDecr.set(JSON.stringify(fareD))
 
 		this.submittedPayForm=true;
@@ -1336,7 +1348,6 @@ payNow(ptype){
 				'dcemi_interestRate':this.dcemi_interestRate,
 				'dcemi_tenure':this.dcemi_tenure,
 			};
-			// console.log(validatePGParams)
 			var postPgvalidateParams = {
 			orderReferenceNumber:this.orderReferenceNumber,
 			postData:this.EncrDecr.set(JSON.stringify(validatePGParams))
@@ -1344,7 +1355,12 @@ payNow(ptype){
 
 			this.rest.validatePGData(postPgvalidateParams).subscribe(results => { 
 				if(results.result==true){
-				form.submit();
+				
+                                setTimeout(() => {
+                               form.submit();
+                                }, 100);
+				
+				
 				}else{
 				this.paynowBtnDisabled_5=false;
 				this.spinnerService.hide();
@@ -1398,7 +1414,9 @@ payNow(ptype){
 				};
 				this.rest.validatePGData(postPgvalidateParams).subscribe(results => {
 					if(results.result==true){
-					form.submit();
+					         setTimeout(() => {
+                               form.submit();
+                                }, 100);
 					}else{
 				this.paynowBtnDisabled_5=false;
 					this.spinnerService.hide();

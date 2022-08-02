@@ -252,6 +252,10 @@
     display: flex;
     justify-content: end;
     margin-top: 15px;
+    @media only screen and (max-width:600px) {
+      justify-content: start;
+      margin: 0px 0px 10px;
+    }
     p.invalid{
       color: #EB001B;
       display: flex;
@@ -920,6 +924,9 @@ input[type="radio"]:checked + .label:after {
       height: auto;
     }
   }
+}
+.payTitle{
+  font-size: 12px;
 }
 .payMethod-label{
   font-weight: normal;
@@ -1755,6 +1762,7 @@ p{
 .xs-check-font{
   @media screen and (max-width: 425px) and (min-width: 320px){
       font-size: 10px;
+      text-align: left;
   }
 }
 
@@ -2174,7 +2182,7 @@ p{
 }
 .flexiOTPNote{
   font-size: 14px;
-  font-style: italic;
+  /* font-style: italic; */
   font-weight: bold;
   color: #2AB9AC;
 }
@@ -2350,25 +2358,29 @@ p{
       }
 
       @media (max-width: 767px) {
-        .tab-content{
-          border-radius: 8px;
-          border: solid 1px #e6e6e6;
-          background-color: #fff;
-          padding: 10px 0px;
-        }
-        .tab-pane {
-          display: block !important;
-          opacity: 1;
-          border: none;
-          border-bottom: 1px solid #e6e6e6;
-          h6{
-            a{
-              font-size: 16px;
-              font-weight: 600;
-              color: #000;
+        .payment-content{
+
+          .tab-content{
+            border-radius: 8px;
+            border: solid 0px #e6e6e6;
+            background-color: #fff;
+            padding: 10px 0px;
+          }
+          .card.tab-pane {
+            display: block !important;
+            opacity: 1;
+            border: none;
+            border-bottom: 1px dashed #e6e6e6;
+            h6{
+              a{
+                font-size: 16px;
+                font-weight: 600;
+                color: #000;
+              }
             }
           }
         }
+        
       }
 
   }
@@ -2385,11 +2397,13 @@ p{
       padding: 10px 15px 10px 0px;
       font-size: 14px;
       font-weight: 600;
+      margin-bottom: 0px;
       a{
         padding: 10px 15px;
         border: 1px solid #e6e6e6;
         color: #555;
         font-size: 14px;
+        margin-bottom: 0px;
       }
     }
   }
@@ -2408,6 +2422,11 @@ p{
       }
       .accordion-button{
         padding: 0px;
+      }
+      .accordion-button:not(.collapsed){
+        img{
+          filter: invert(1%) sepia(379%) saturate(8482%) hue-rotate(198deg) brightness(140%) contrast(103%);
+        }
       }
     }
   }

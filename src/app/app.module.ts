@@ -7,7 +7,8 @@ import { FlightModule } from './flight/flight.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { CountdownModule } from 'ngx-countdown';
-import { HomeComponent } from './home/home.component';
+import { HomeModule } from './home/home.module';
+import { FlightSearchModule } from './flight-search/flight-search.module';
 import { HttpClientModule,HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './core/search/search.component';
@@ -23,7 +24,9 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 import { DirectiveModule } from './directives/directive.module';
 import { PartnersModule } from './partners/partners.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-
+import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { CustomReuseStrategy } from './route-reuse-strategy';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -35,7 +38,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     SearchComponent,
     AlertDialogComponent,
     
@@ -53,11 +55,11 @@ export function appInitializerFn(appConfig: AppConfigService) {
       headerName: 'X-XSRF-TOKEN'
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
-    MaterialModule,DirectiveModule,PartnersModule,
+    MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
-    CarouselModule
+    CarouselModule,RegaliaGoldModule
     
   ],
   exports:[SearchComponent],
@@ -70,6 +72,10 @@ export function appInitializerFn(appConfig: AppConfigService) {
       useFactory: appInitializerFn,
       multi: true,
       deps: [AppConfigService]
+    },
+     {
+      provide: RouteReuseStrategy,
+      useClass: CustomReuseStrategy,
     },
 SimpleGlobal,CommonHelper,CommunicationService,MatBottomSheet
   
