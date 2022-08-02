@@ -14,9 +14,40 @@ export class ToggleDetailDirective{
         //this.isOpen = this.elRef.nativeElement.contains(event.target) ? !this.isOpen : false;
         if(this.elRef.nativeElement.contains(event.target) && !element.closest('.not-close'))
         {
+          if(this.elRef.nativeElement.querySelector('.RadioClass'))
+          {
+            if(this.elRef.nativeElement.querySelector('.RadioClass').checked == true)
+            {
+              this.elRef.nativeElement
+              .querySelector('.dropdown')
+              .classList.remove('flight-from-hide')
+            }
+            else{
+
+
+              var isClass = this.elRef.nativeElement
+              .querySelector('.dropdown')
+              .classList.contains('flight-from-hide')
+
+              if(isClass)
+              {
+                this.elRef.nativeElement
+                .querySelector('.dropdown')
+                .classList.toggle('flight-from-hide')
+
+                this.elRef.nativeElement.querySelector('.RadioClass').checked = true;
+              }
+              else{
+                this.elRef.nativeElement.querySelector('.RadioClass').checked = true;
+              }
+            }
+          }
+         else{
           this.elRef.nativeElement
-          .querySelector('.dropdown')
-          .classList.toggle('flight-from-hide')
+                .querySelector('.dropdown')
+                .classList.toggle('flight-from-hide')
+         }
+
         }
 
       }

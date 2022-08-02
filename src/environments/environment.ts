@@ -8,8 +8,9 @@ export const environment = {
   COOKIE_DOMAIN:null,
   LOCALJSON:'true',
   localInstance:1,
-  // url:"https://smartbuyadminuat.reward360.in/"
-  url:"http://new.reward360.us/",
+   //url:"https://smartbuyadminuat.reward360.in/",
+  //url:"http://new.reward360.us/",
+  url:"https://smartbuydev.reward360.in/",
    cdnUrl: 'assets/',
    cdnnotifyUrl: 'https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/notification/',
   cdnDealUrl: 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/',

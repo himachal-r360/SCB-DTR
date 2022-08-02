@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="search_input">
-                            <input class="form-control mr-sm-2 sb_search" type="text" placeholder="What’s on your mind?" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
+                            <input class="form-control mr-sm-2 sb_search" type="text" placeholder="Search for exciting deals & offers" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
 
                             <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
                                 <ul *ngIf="serviceSettings.enableAlgolia">
@@ -607,6 +607,17 @@
         </nav>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
 <div class="pushnotification-toast" [innerHtml]="pushPopup"></div>
 <div [className]="notifyOpacity? 'notify-opacity emptydiv':'emptydiv'"></div>
 <div [className]="notifyOpacityCart? 'notify-opacity emptydiv':'emptydiv'"></div>
@@ -752,7 +763,7 @@
 
 <div class="sb-m-search mt-2" *ngIf="payzrestriction==false">
     <div class="search_input_m">
-        <input class="form-control mr-sm-2 sb_search" type="text" placeholder="What’s on your mind?" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
+        <input class="form-control mr-sm-2 sb_search" type="text" placeholder="Search for exciting deals & offers" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
         <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
             <ul *ngIf="serviceSettings.enableAlgolia">
                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
