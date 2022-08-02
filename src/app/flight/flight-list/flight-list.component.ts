@@ -95,7 +95,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
   flightListFullData: any = [];
-  
+
   minPrice: number = 0;
   maxPrice: number = 10000;
   resetMinPrice: number = 0;
@@ -105,6 +105,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
+  airlinesNameJson:any;
   layOverFilterArr: any;
   queryFlightData: any;
   fromContryName: any;
@@ -157,61 +158,61 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
   ]
   cdnUrl: any;
-  
+
           @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
-        @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;	 
+          @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
         pageIndex: number = 1;
         ITEMS_RENDERED_AT_ONCE=25;
         nextIndex=0;
-        
+
         private loadData() {
              if (this.pageIndex >= this.flightList.length) {
              return false;
               }else{
              this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
-             
+
              if(this.nextIndex > this.flightList.length){
              this.nextIndex=this.flightList.length;
              }
-             
+
             for (let n = this.pageIndex; n < this.nextIndex ; n++) {
              const context = {
                 item: [this.flightList[n]]
               };
-              
+
               this.container.createEmbeddedView(this.template, context);
             }
              this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
-            
+
            }
-        
+
            //$('.scrollToTop').trigger('click');
         }
-        
-        
+
+
          private intialData() {
             for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
              const context = {
                 item: [this.flightList[n]]
               };
-              
+
               this.container.createEmbeddedView(this.template, context);
             }
             //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
             //  this.gotoTop();
         }
-   serviceSettings:any;     
+   serviceSettings:any;
   enableFlightServices:any;
-  
+
   constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
-     this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
-       
+
                $(window).scroll(function(this) {
         if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
         $('#endOfPage').trigger('click');
@@ -219,16 +220,24 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         });
   
   }
-  
-@HostListener('window:resize', ['$event'])
+
+@HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+  this.isMobile = window.innerWidth < 991 ?  true : false;
+}
 
 ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
        this.route.url.subscribe(url =>{
+        $(".modal").hide();
+        $('body').removeClass( "modal-open" );
+         $("body").removeAttr("style");
+        $(".modal-backdrop").hide();
+        this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)
     this.getAirpotsList();
+    this.getAirlinesList();
     this.flightSearch();
  });
   }
@@ -268,7 +277,13 @@ ngOnInit(): void {
     }, 200);
   }
 
+    // get airline list
+  getAirlinesList() {
+    this._flightService.getFlightIcon().subscribe((res: any) => {
+      this.airlinesNameJson = res;
 
+    })
+  }
 
 
   // get airport list
@@ -282,7 +297,7 @@ ngOnInit(): void {
   showmoreAirline() {
    this.show_airline_more=1;
   }
-  
+
     show_layover_more:number=0;
   showmoreLayover() {
    this.show_layover_more=1;
@@ -755,7 +770,7 @@ ngOnInit(): void {
           return item;
         }
       })
-     
+
       var filteredAirlines: any[] = [];
       if (airlineArr.length > 0) {
         flightList.forEach((e: any) => {
@@ -773,8 +788,8 @@ ngOnInit(): void {
           flightList = filteredAirlines;
        // }
       }
-      
-     
+
+
 
       //Get AirLines Count
       if (this.airlines.length > 0) {
@@ -894,7 +909,7 @@ ngOnInit(): void {
 
  flightFromVal:any;
   flightSearch() {
-    
+
     this.loader = true;
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
@@ -916,7 +931,7 @@ ngOnInit(): void {
       this.popularFilterFlightData();
 
     }, (error) => { console.log(error) });
-    
+
   }
 
   ascPriceSummaryFlighs(flightsData:any)
@@ -933,7 +948,7 @@ ngOnInit(): void {
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
-            
+
         this._styleManager.removeStyle('bootstrap-select');
         this._styleManager.removeScript('bootstrap-select');
         this._styleManager.removeScript('custom');
@@ -992,10 +1007,10 @@ ngOnInit(): void {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
-  
-  
 
-  
+
+
+
   Initslider() {
     var $that = this;
     $that.sliderRange($that, $that.minPrice, $that.maxPrice);
@@ -1020,7 +1035,7 @@ ngOnInit(): void {
       }
 
     }
-       
+
   }
   onMaxValueChange(event: any) {
     this.maxPrice = event;
@@ -1084,8 +1099,8 @@ ngOnInit(): void {
 
   bookingSummary(flights: any, selected: any, flightKey: any) {
     /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
-    
-       let flightDetailsArr: any = { 
+
+       let flightDetailsArr: any = {
         "travel":"DOM",
         "travel_type":"O",
         "docKey": this.DocKey,
@@ -1093,19 +1108,19 @@ ngOnInit(): void {
         "returnFlightKey": '',
         "onwardFlights": flights,
         "returnFlights":'' ,
-        "onwardPriceSummary": selected, 
-        "returnPriceSummary": '', 
+        "onwardPriceSummary": selected,
+        "returnPriceSummary": '',
         "queryFlightData":this.queryFlightData
         };
-    
-    
+
+
     let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-   
+
         setTimeout(() => {
                 this.router.navigateByUrl(url);
-                }, 10);  
+                }, 10);
 
   }
 
@@ -1163,7 +1178,7 @@ ngOnInit(): void {
     this.popularFilterFlightData();
   }
 
-  
+
   openFlightDetailMobile(i:any,title:any){
       let flightDetail = document.getElementById('flightDetailMobile_' + i);
       let cancellation:any = document.getElementById('collapseTwo-fd_'+ i);
@@ -1188,7 +1203,7 @@ ngOnInit(): void {
     if(element) {
       element.style.display = "none";
     }
-    
+
   }
 
 }

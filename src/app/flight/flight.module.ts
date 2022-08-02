@@ -19,11 +19,12 @@ import { CustomReuseStrategy } from '../route-reuse-strategy';
 
 import { AgePipe } from 'src/app/pipes/age.pipe';
 import { CountdownModule } from 'ngx-countdown';
+import { DirectiveModule } from '../directives/directive.module';
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent,data: {  shouldReuse: true, },
   },
-  
+
    {
     path:"flight-checkout" ,component:FlightCheckoutComponent,data: {  shouldReuse: true, },
   },
@@ -33,7 +34,7 @@ const routes: Routes = [
   {
     path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, },
   }
-  
+
 
 ];
 
@@ -55,6 +56,7 @@ const routes: Routes = [
         NgxSliderModule,
         NgxSkeletonLoaderModule,FlightSearchModule,
         CouponsModule,PaymentModule,CountdownModule,
+        DirectiveModule,
             RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',

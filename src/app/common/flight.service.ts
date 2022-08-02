@@ -14,6 +14,7 @@ export class FlightService {
   flightListDate:any;
   flightsIcon = "assets/Json/airlines.json";
   airportsNameList ="assets/Json/airports.json";
+  countryList = "assets/Json/country.json";
   flightDetails:any;
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
@@ -47,7 +48,7 @@ export class FlightService {
         }else{
         return this.http.get('assets/data/flight-return.json');
         }
-        } 
+        }
         }else{
         return this.http.post(this.flight, body, { headers: this.header })
         }
@@ -59,6 +60,10 @@ export class FlightService {
 
   getFlightIcon(){
     return this.http.get(this.flightsIcon);
+  }
+  
+  getCountryList(){
+    return this.http.get(this.countryList);
   }
 
   getAirportName(){
@@ -79,8 +84,8 @@ export class FlightService {
 
   getFlightInfo(param:any)
   {
-     if(LOCALJSON=='true'){
-      return this.http.get('assets/data/flightInfo.json');
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/flightInfo-int.json');
     }else{
 
     return this.http.post(this.flightInfo, param, { headers: this.header })

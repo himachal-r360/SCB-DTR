@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -152,18 +152,36 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   isDetailsShow: boolean = false;
   onwardSelectedFlight :any;
   returnSelectedFlight:any;
-
-
+  MobileTotalDare:any;
+  @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
+  @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+  @ViewChild('itemsReturnContainer', { read: ViewContainerRef }) returnContainer: ViewContainerRef;
+  @ViewChild('returnItem', { read: TemplateRef }) returnTemplate: TemplateRef<any>;
+  pageIndex: number = 1;
+  ITEMS_RENDERED_AT_ONCE=25;
+  nextIndex=0;
 
   constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-    
-
+    $(window).scroll(function(this) {
+      if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
+      $('#endOfPage').trigger('click');
+      $('#endOfReturnPage').trigger('click');
+      }
+      });
    }
 
+   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+  }
   ngOnInit(): void {
   
        this.route.url.subscribe(url =>{
+        $(".modal").hide();
+        $('body').removeClass( "modal-open" );
+         $("body").removeAttr("style");
+        $(".modal-backdrop").hide();
+        this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)
@@ -171,15 +189,75 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.flightSearch();
      });
   }
-  
-  
+
+    private loadData() {
+      if (this.pageIndex >= this.flightList.length) {
+      return false;
+      }else{
+      this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
+      if(this.nextIndex > this.flightList.length){
+      this.nextIndex=this.flightList.length ;
+    }
+      for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+        const context = {
+          item: [this.flightList[n]]
+          
+        };
+        this.container.createEmbeddedView(this.template, context);
+      }
+      this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+    }
+  }
+
+  private loadReturnData() {
+    if (this.pageIndex >= this.ReturnflightList.length) {
+      return false;
+      }else{
+      this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
+      if(this.nextIndex > this.ReturnflightList.length){
+      this.nextIndex=this.ReturnflightList.length ;
+      }
+      for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+        const context = {
+          items: [this.ReturnflightList[n]]
+        };
+        this.container.createEmbeddedView(this.template, context);
+      }
+      this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+    }
+  }
+
+  private intialData() {
+    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+      const context = {
+        item: [this.flightList[n]],
+      };
+      this.container.createEmbeddedView(this.template, context);
+    }
+  }
+  private intialReturnData() {
+    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+    const context = {
+        item: [this.ReturnflightList[n]],
+      };
+      this.returnContainer.createEmbeddedView(this.returnTemplate, context);
+    
+    }
+  }
+
+
+
+
+
     getQueryParamData(paramObj: any) {
         const params = this.route.snapshot.queryParams;
           this.queryFlightData = params;
             this.searchData = params;
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
-        this.fromCityName = this.queryFlightData.fromCity; 
+
+
+        this.fromCityName = this.queryFlightData.fromCity;
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
         this.flightClassVal = this.queryFlightData.flightclass;
@@ -193,7 +271,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
 
   }
-  
+
 
 
   //Hide show header
@@ -220,9 +298,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
-    
-     
-    
+
+
+
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
@@ -263,6 +341,13 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
 
 
+  gotoTop() {
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+  }
 
 
   ngAfterViewInit(): void {
@@ -351,6 +436,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
   resetFlightTimingsFilter() {
     this.flight_Timingsitems.filter((item: any) => { item.active = false; return item; })
+    this.flight_return_Timingsitems.filter((item: any) => { item.active = false; return item; })
     this.popularFilterFlightData();
   }
   resetPriceFilter() {
@@ -610,6 +696,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       // Layover Filter Flights
       this.flightList = this.layoverFilterFlights(this.flightList);
       this.ReturnflightList = this.layoverFilterFlights(this.ReturnflightList);
+
+      this.container.clear();
+      this.returnContainer.clear();
+      this.intialData();
+      this.intialReturnData();
     }
 
 
@@ -1271,7 +1362,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   DisplayDetail()
   {
-    if(this.isOnwardSelected == true && this.isReturnSelected == true)
+    if(this.isOnwardSelected == true || this.isReturnSelected == true)
     {
       this.isDetailsShow = true;
     }
@@ -1292,10 +1383,10 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   navBarLink(navItem:any){
     this.navItemActive = navItem;
   }
-  
-  
+
+
   bookingSummary(onwardSelectedFlight: any, returnSelectedFlight: any) {
-        let flightDetailsArr: any = { 
+        let flightDetailsArr: any = {
         "travel":"DOM",
         "travel_type":"R",
         "docKey": this.DocKey,
@@ -1303,20 +1394,101 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         "returnFlightKey": returnSelectedFlight.flightKey,
         "onwardFlights": onwardSelectedFlight.flights,
         "returnFlights": returnSelectedFlight.flights,
-        "onwardPriceSummary": onwardSelectedFlight.priceSummery, 
-        "returnPriceSummary": returnSelectedFlight.priceSummery, 
+        "onwardPriceSummary": onwardSelectedFlight.priceSummery,
+        "returnPriceSummary": returnSelectedFlight.priceSummery,
         "queryFlightData":this.queryFlightData
         };
-    
+
     let randomFlightDetailKey = btoa(this.DocKey+onwardSelectedFlight.flightKey+returnSelectedFlight.flightKey+onwardSelectedFlight.priceSummery.partnerName+returnSelectedFlight.priceSummery.partnerName);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
     //this._flightService.setFlightsDetails(flightDetailsArr);
     let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-   
+
     setTimeout(() => {
         this.router.navigateByUrl(url);
-        }, 10);  
-        
+        }, 10);
+
   }
+
+  openFlightDetailMobile(i:any,title:any){
+    let flightDetail = document.getElementById('flightDetailMobile_' + i);
+    let cancellation:any = document.getElementById('collapseTwo-fd_'+ i);
+    let baggage:any = document.getElementById('collapseThree-fd_'+ i);
+    let fareRules:any = document.getElementById('collapsefour-fd_'+ i);
+    if(flightDetail && title == 'flightdetail') {
+      flightDetail.style.display = "block";
+    }
+    if(cancellation && title == 'cancellation'){
+      cancellation.classList.toggle("show");
+    }
+    if(baggage && title == 'baggagepolicy') {
+      baggage.classList.toggle("show");
+    }
+    if(fareRules && title == 'farerules'){
+      fareRules.classList.toggle("show");
+    }
+}
+
+closeFlightDetailMobile(i:any){
+  let element = document.getElementById('flightDetailMobile_' + i);
+  if(element) {
+    element.style.display = "none";
+  }
+}
   
+  openMobileFilterSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
+
+  }
+  CloseSortingSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+  onApplyFilter(){
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
+   //sorting in mobile version
+   flightSortingMobile(val:any) {
+    let selectedVal = val;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    });
+  }
+  applySortingMobile() {
+    let sortingBtn = document.getElementById('sortMobileFilter');
+    if(sortingBtn)
+    {
+      sortingBtn.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
+
+
+getLayoverHour(obj1: any, obj2: any) {
+  let dateHour: any;
+  if (obj2 != null || obj2 != undefined) {
+    let obj2Date = new Date(obj2.departureDateTime);
+    let obj1Date = new Date(obj1.arrivalDateTime);
+    dateHour = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+  }
+  return dateHour;
+}
 }
