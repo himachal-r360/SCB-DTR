@@ -28,24 +28,30 @@ export class FlightService {
   }
 
    showHeader(value: boolean) {
-   console.log(value);
         this.headerHideShow.next(value);
     }
 
 
-  flightList(para: any) {
-    let body = JSON.stringify(para);
-    //  if(LOCALJSON=='true'){
-    //   if(para.flightdefault=='O'){
-    //   return this.http.get('assets/data/flight-onward.json');
-    //   }else{
-    //   return this.http.get('assets/data/flight-return.json');
-    //   }
-    // }else{
-
-    return this.http.post(this.flight, body, { headers: this.header })
-    //}
-  }
+        flightList(para: any) {
+        let body = JSON.stringify(para);
+        if(LOCALJSON=='true'){
+        if(para.travel=='INT'){
+        if(para.flightdefault=='O'){
+        return this.http.get('assets/data/flight-int-onward.json');
+        }else{
+        return this.http.get('assets/data/flight-int-return.json');
+        }
+        }else{
+        if(para.flightdefault=='O'){
+        return this.http.get('assets/data/flight-onward.json');
+        }else{
+        return this.http.get('assets/data/flight-return.json');
+        }
+        }
+        }else{
+        return this.http.post(this.flight, body, { headers: this.header })
+        }
+        }
 
   getCityList(queryText: any) {
     return this.http.post(`${this.city}&queryText=${queryText}`, null)
