@@ -159,7 +159,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   cdnUrl: any;
 
           @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
-        @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+          @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
         pageIndex: number = 1;
         ITEMS_RENDERED_AT_ONCE=25;

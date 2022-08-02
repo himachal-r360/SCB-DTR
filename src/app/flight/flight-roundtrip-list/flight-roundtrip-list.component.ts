@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -153,11 +153,22 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   onwardSelectedFlight :any;
   returnSelectedFlight:any;
   MobileTotalDare:any;
-
+  @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
+  @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+  @ViewChild('itemsReturnContainer', { read: ViewContainerRef }) returnContainer: ViewContainerRef;
+  @ViewChild('returnItem', { read: TemplateRef }) returnTemplate: TemplateRef<any>;
+  pageIndex: number = 1;
+  ITEMS_RENDERED_AT_ONCE=25;
+  nextIndex=0;
 
   constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-
+    $(window).scroll(function(this) {
+      if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
+      $('#endOfPage').trigger('click');
+      $('#endOfReturnPage').trigger('click');
+      }
+      });
    }
 
    @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -170,6 +181,65 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.getAirpotsList();
     this.flightSearch();
   }
+
+    private loadData() {
+      if (this.pageIndex >= this.flightList.length) {
+      return false;
+      }else{
+      this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
+      if(this.nextIndex > this.flightList.length){
+      this.nextIndex=this.flightList.length ;
+    }
+      for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+        const context = {
+          item: [this.flightList[n]]
+          
+        };
+        this.container.createEmbeddedView(this.template, context);
+      }
+      this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+    }
+  }
+
+  private loadReturnData() {
+    if (this.pageIndex >= this.ReturnflightList.length) {
+      return false;
+      }else{
+      this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
+      console.log(this.nextIndex , "next index");
+      if(this.nextIndex > this.ReturnflightList.length){
+      this.nextIndex=this.ReturnflightList.length ;
+      }
+      for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+        const context = {
+          items: [this.ReturnflightList[n]]
+        };
+        this.container.createEmbeddedView(this.template, context);
+      }
+      this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+    }
+  }
+
+  private intialData() {
+    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+      const context = {
+        item: [this.flightList[n]],
+      };
+      this.container.createEmbeddedView(this.template, context);
+    }
+  }
+  private intialReturnData() {
+    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+    const context = {
+        item: [this.ReturnflightList[n]],
+      };
+      this.returnContainer.createEmbeddedView(this.returnTemplate, context);
+    
+    }
+  }
+
+
+
 
 
     getQueryParamData(paramObj: any) {
@@ -615,6 +685,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       // Layover Filter Flights
       this.flightList = this.layoverFilterFlights(this.flightList);
       this.ReturnflightList = this.layoverFilterFlights(this.ReturnflightList);
+
+      this.container.clear();
+      this.returnContainer.clear();
+      this.intialData();
+      this.intialReturnData();
     }
 
 

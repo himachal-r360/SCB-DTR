@@ -244,7 +244,11 @@
                                           </div>
                                       </div>
                                       <div>
-                                      <div class="round-flight-listing round-click"  appToggleDetail *ngFor="let list of flightList; let i = index" id="flight_list_{{i}}">
+                                    <div class="flight-listing-area">
+                                            <ng-container #itemsContainer></ng-container>
+                                     </div>
+                                    <ng-template #item let-item="item">  
+                                      <div class="round-flight-listing round-click"  appToggleDetail *ngFor="let list of item; let i = index" id="flight_list_{{i}}">
                                           <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
@@ -362,15 +366,17 @@
                                                       <a href="javascript:void(0);" (click)="DisplayDetail()" class="round-flight-details-click">
                                                           Flight Details
                                                           <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
-                                                      </a>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>   
+                                    <div id="endOfPage" (click)="loadData()"></div>
                                     </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <div class="round-flight-listing round-from-box">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="round-flight-listing round-from-box">
                                           <div class="round-from">
                                               <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{toCityName}} to {{fromCityName}} </h6>
                                               <p>{{returnDate | date:"EEE ,dd MMM" }}</p>
@@ -388,8 +394,11 @@
                                               </div>
                                           </div>
                                       </div>
-
-                                      <div class="round-flight-listing round-click" appToggleDetail *ngFor="let list of ReturnflightList; let i = index" id="return_flight_list_{{i}}">
+                                      <div class="flight-listing-area">
+                                        <ng-container #itemsReturnContainer></ng-container>
+                                      </div>
+                                      <ng-template #returnItem let-item="item">  
+                                      <div class="round-flight-listing round-click" appToggleDetail *ngFor="let list of item; let i = index" id="return_flight_list_{{i}}">
                                           <div class="round-flight-listing-content">
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
@@ -513,9 +522,11 @@
                                               </div>
                                           </div>
                                       </div>
+                                    </ng-template>
+                                    <div id="endOfReturnPage" (click)="loadReturnData()"></div>
                                   </div>
                               </div>
-                          </div>
+                            </div>
                       </div>
                   </div>
               </div>
@@ -576,6 +587,7 @@
                               <div class="mob-fr-list-title">
                                   <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{fromCityName}} To {{toCityName}}</h6>
                               </div>
+                              
                               <div class="mob-list-items" appToggleDetail *ngFor="let list of flightList; let i = index" id="MobileOnward_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
@@ -1840,7 +1852,6 @@
                                         <div class="accordion-body">
                                             <div class="default-sidebar">
                                                 <ul class="category-list clearfix mt-2">
-                                                
                                                     <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:0:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                         <div class="custom-controls-stacked">
                                                             <label class="custom-control material-checkbox">
