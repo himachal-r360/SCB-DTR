@@ -319,6 +319,7 @@
                         <div class="flight-listing-area">
                            <ng-container #itemsContainer></ng-container>
                         </div>
+                         <div class="text-center" *ngIf="flightList.length < 1">No flights found</div>
                          <ng-template #item let-item="item">  
                            <div  *ngFor="let list of item; let i = index" >
                             <div class="flight-listing"  *ngIf="list && list.flights.length > 0" id="flight_list_{{list.flightKey}}">
@@ -352,7 +353,7 @@
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                                 </div>
                                             </div>
-                                            <div class="text-center" *ngIf="list.flights.length < 0">No flights found</div>
+                                           
                                         </div>
                                         <div class="col-md-2">
                                             <div class="flight-listing-pri">
@@ -559,6 +560,7 @@
                                                                             </div>
                                                                         </div>-->
                                                                     </div>
+                                                                     <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airlineName != details.operatingAirline">Operated By : {{details.operatingAirline}}</div>
                                                                     <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.flights[i]  && list.flights[i+1] && getLayoverHour(list.flights[i],list.flights[i+1])">
  <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
                                                                   </div>
@@ -1000,6 +1002,7 @@
                                                                             </div>
                                                                         </div>-->
                                                                     </div>
+                                                                     <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airlineName != details.operatingAirline">Operated By : {{details.operatingAirline}}</div>
                                                                     <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                         <!-- <p>Change of planes・3h 0m Layover in Nagpur</p> -->
                                                                         <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
