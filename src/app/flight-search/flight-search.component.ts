@@ -260,8 +260,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
-        
-               
+        this.flightData.get('child').setValue(lastSearch.child);      
         this.flightData.get('flightclass').setValue(lastSearch.flightclass );
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
         this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
@@ -300,6 +299,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       this.adultsVal = lastSearch.adults;
       this.childVal = lastSearch.child;
       this.infantsVal = lastSearch.infants;
+      
+      console.log(lastSearch);
       
       this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
       if(lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != ""){
