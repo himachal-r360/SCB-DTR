@@ -41,7 +41,7 @@
     <!-- Smartbuy new Disclamier popup code  -->
     <!-- Button trigger modal -->
     <button class="hideHeader" data-bs-toggle="modal" data-bs-target="#disclamierPopup" id="sb_dis_popup"></button>
-    <div class="container_hftab">
+    <!-- <div class="container_hftab">
         <div class="d-none d-sm-none d-lg-block">
             <nav class=" sb_head">
                 <div class="row">
@@ -137,7 +137,7 @@
                                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
                                     <span [ngClass]="(pushcount)>0  ? 'cart_count_pla' : ''"><span></span></span>
                                 </div>
-                                <!-- // Notification Box Starts -->
+                                // Notification Box Starts
                                 <div class="position-relative ">
                                     <div class="position-push-data" *ngIf="enablePushBox && serviceSettings.notifications==1 ">
                                         <div class=" ">
@@ -182,13 +182,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- //Notification Box Ends -->
+                                //Notification Box Ends
                             </div>
                             <div class="inner_child" *ngIf="showCart && showcartIcon" (mouseleave)="disableCartBtn()">
                                 <div *ngIf="showCart " (mouseenter)="enableCartClick()">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-cart.svg" alt="profile" class="cart_icon">
                                     <span class="cart_count_pla" *ngIf="Qty>0"><span>{{Qty}}</span></span>
-                                    <!-- //Cart Box Starts -->
+                                    //Cart Box Starts
                                     <div class="position-relative ">
                                         <div *ngIf="enableCartBox && showcartIcon ">
 
@@ -271,7 +271,7 @@
                                     </div>
                                 </div>
 
-                                <!-- //Cart boc ends -->
+                                //Cart boc ends
                             </div>
 
                         </div>
@@ -424,7 +424,7 @@
                     <li class="dropdown">
                         <a class="nav_link_item" href="javascript:;">Shop</a>
                         <div class="dropdown-content-list list-shop">
-                            <!-- //<h5>E-Commerce</h5> -->
+                            //<h5>E-Commerce</h5>
                             <div class="row g-4">
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
                                     <div class="content_show">
@@ -454,8 +454,8 @@
                                         </a>
                                     </div>
                                 </div>
-                                <!-- //</div> -->
-                                <!-- //<div class="row"> -->
+                                //</div>
+                                //<div class="row">
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.IGP==1">
                                     <div class="content_show">
                                         <a href="javascript:;" (click)="redirectUrlpopup('igp',0,'igp')">
@@ -606,7 +606,7 @@
         </div>
         </nav>
     </div>
-</div>
+</div> -->
 
 
 
@@ -664,7 +664,7 @@
                         </div>
 
                         <span class="focus-border"></span>
-                        <span class="icn_tool"> 
+                        <span class="icn_tool rg_hdr_search_tool"> 
                             <span class="cross_icn" *ngIf="searchBarValue;else voiceSearch"> <img src="{{cdnUrl}}images/smartbuy/icons/close_icn.svg" alt="icn" class="" (click)="clear()"> </span>
                         <ng-template #voiceSearch>
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-search.svg" alt="logo"></span> <span class="mic-span tool_seperater"> | </span>
@@ -715,7 +715,7 @@
                             <button class="header_drpdwn_btn dropdown-toggle" href="#" id="concierge_DropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{cdnUrl}}/images/smartbuy/icons/rg_headphone_icn.svg" class="header_drpdwn_btn_icn"> 24/7 Concierge <span class="caret"></span>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right header_drpdwn_btn_div mb-0 pb-0" aria-labelledby="concierge_DropdownMenuLink" >
+                            <div class="dropdown-menu header_drpdwn_btn_div mb-0 pb-0 dropdown-menu-end" aria-labelledby="concierge_DropdownMenuLink" >
                                 <div class="support_bg_img">
                                     <p class="header_support_title fntwt_600">REGALIA gold</p>
                                     <p class="header_support_title">1800 118 887</p>
@@ -934,7 +934,7 @@
                                         <a class="dropdown-toggle hdr_btn" href="#" role="button" id="dropdown-user1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img src="{{cdnUrl}}/images/smartbuy/icons/card_icn.svg"><span class="btn-text">SWITCH TO</span><i class="fa fa-caret-down hdr_btn_caret" aria-hidden="true"></i>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-right privilege_drpdwn_div" aria-labelledby="dropdown-user1">
+                                        <div class="dropdown-menu dropdown-menu-end privilege_drpdwn_div" aria-labelledby="dropdown-user1">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="hdr_privilege_card">
@@ -1580,13 +1580,12 @@
                                                             <img src="{{cdnUrl}}images/smartbuy/partner/privi/infinia.png" alt="infinia" class="privilege_img">
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-5 pl-0">
                                                         <p class="privilege_text_highlight {
                                                             ">Infinia</p>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <img src="{{cdnUrl}}images/smartbuy/icons/rg_arrw_icn.svg" class="privilage_list_arw">
-                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -1606,7 +1605,7 @@
                                                             <img src="{{cdnUrl}}images/smartbuy/partner/privi/infinia.png" alt="infinia" class="privilege_img">
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5 pl-1">
+                                                    <div class="col-sm-5 pl-0">
                                                         <p class="privilege_text_highlight {
                                                             ">Infinia Reserve</p>
                                                     </div>
@@ -1630,7 +1629,7 @@
                                                             <img src="{{cdnUrl}}images/smartbuy/partner/privi/diners.png" alt="infinia" class="privilege_img">
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5 pl-1 pr-0">
+                                                    <div class="col-sm-5 pl-0">
                                                         <p class="privilege_text_highlight {
                                                             ">Diners Club</p>
                                                     </div>
@@ -1654,7 +1653,7 @@
                                                             <img src="{{cdnUrl}}images/smartbuy/partner/privi/regalia.png" alt="infinia" class="privilege_img">
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5 pl-1">
+                                                    <div class="col-sm-5 pl-0">
                                                         <p class="privilege_text_highlight {
                                                             ">Regalia</p>
                                                     </div>
@@ -1678,7 +1677,7 @@
                                                             <img src="{{cdnUrl}}images/smartbuy/partner/privi/business.png" alt="infinia" class="privilege_img">
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5 pl-1">
+                                                    <div class="col-sm-5 pl-0">
                                                         <p class="privilege_text_highlight {
                                                             ">Business</p>
                                                     </div>
@@ -1703,7 +1702,7 @@
                                                             <img src="{{cdnUrl}}images/smartbuy/partner/privi/corporate.png" alt="infinia" class="privilege_img">
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5 pl-1">
+                                                    <div class="col-sm-5 pl-0">
                                                         <p class="privilege_text_highlight {
                                                             ">Corporate</p>
                                                     </div>
@@ -1728,17 +1727,6 @@
                                     <li>
                                         <h5 class="rg_offers_title mb-3">Categories</h5>
                                         <a href="javascript:;" class="rg_offers_link" *ngFor="let category of dealsoffers" (click)="redirectDisUrl(category.categoryname)">{{category.categoryname}}</a>
-                                        <!-- static links -->
-                                        <a href="javascript:;" class="rg_offers_link">Travel</a>
-                                        <a href="javascript:;" class="rg_offers_link">Shopping</a>
-                                        <a href="javascript:;" class="rg_offers_link">Grocery</a>
-                                        <a href="javascript:;" class="rg_offers_link">Entertainment</a>
-                                        <a href="javascript:;" class="rg_offers_link">Restaurant</a>
-                                        <a href="javascript:;" class="rg_offers_link">Healthcare</a>
-                                        <a href="javascript:;" class="rg_offers_link">Bills</a>
-                                        <a href="javascript:;" class="rg_offers_link">Special Deals</a>
-                                        <a href="javascript:;" class="rg_offers_link">Startups</a>
-                                        <!-- end of static links -->
                                     </li>
                                 </ul>
                             </div>
