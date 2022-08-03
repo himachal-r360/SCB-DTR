@@ -56,6 +56,7 @@ const routes: Routes = [
         NgxSliderModule,
         NgxSkeletonLoaderModule,FlightSearchModule,
         CouponsModule,PaymentModule,CountdownModule,
+        DirectiveModule,
             RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',

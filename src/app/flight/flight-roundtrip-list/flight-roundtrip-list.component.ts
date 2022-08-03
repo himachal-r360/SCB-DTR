@@ -1354,7 +1354,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   DisplayDetail()
   {
-    if(this.isOnwardSelected == true && this.isReturnSelected == true)
+    if(this.isOnwardSelected == true || this.isReturnSelected == true)
     {
       this.isDetailsShow = true;
     }
