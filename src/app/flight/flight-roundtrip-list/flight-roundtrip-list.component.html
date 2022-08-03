@@ -257,10 +257,10 @@
                                                           <label for="onwardlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
-                                                  <div class="round-content-image">
-                                                                 <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                                  <div class="round-content-image" >
+                                                                 <img  *ngIf="flightList" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                                   </div>
-                                                  <div class="round-content-time">
+                                                  <div class="round-content-time" *ngIf="flightList">
                                                       <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                                       <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}  |
                                                         <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
@@ -268,7 +268,7 @@
                                                   </div>
                                               </div>
                                               <div class="round-content-right">
-                                                  <div class="round-content-stops">
+                                                  <div class="round-content-stops" *ngIf="flightList">
                                                     <h6>{{ list.flights[0].duration | durationTime }}</h6>
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
