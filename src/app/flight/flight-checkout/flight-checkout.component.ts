@@ -1790,7 +1790,19 @@ new_fare: number = 0;
       if(res.statusCode ==200)
       {
          this.flightInfo=res.response;
-        
+        var suggestHotels = {
+        service:'Flights',
+        city:this.searchData.toCity,
+        country_code:this.searchData.toContry,
+        address:'',
+        check_in_date:this.searchData.departure,
+        adult:1,
+        child:1
+        };
+
+
+      this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => {});
+      
       if(this.searchData.travel=='DOM'){
        if(res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.fareKey){
        if(partner=='Yatra'){
