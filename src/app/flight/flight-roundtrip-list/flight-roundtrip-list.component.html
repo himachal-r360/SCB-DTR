@@ -249,7 +249,7 @@
                                      </div>
                                     <ng-template #item let-item="item">  
                                       <div class="round-flight-listing round-click"  appToggleDetail *ngFor="let list of item; let i = index" id="flight_list_{{i}}">
-                                          <div class="round-flight-listing-content" >
+                                          <div class="round-flight-listing-content" *ngIf="list" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
@@ -284,7 +284,7 @@
                                           <div class="round-flight-info-box">
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
-                                          <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
@@ -399,7 +399,7 @@
                                       </div>
                                       <ng-template #returnItem let-item="item">  
                                       <div class="round-flight-listing round-click" appToggleDetail *ngFor="let list of item; let i = index" id="return_flight_list_{{i}}">
-                                          <div class="round-flight-listing-content">
+                                          <div class="round-flight-listing-content" *ngIf="list" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
@@ -435,7 +435,7 @@
                                           <div class="round-flight-info-box">
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
-                                          <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
                                               <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
