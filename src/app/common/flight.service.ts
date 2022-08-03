@@ -15,6 +15,7 @@ export class FlightService {
   flightsIcon = "assets/Json/airlines.json";
   airportsNameList ="assets/Json/airports.json";
   flightDetails:any;
+  multicitylisting = environment.url + "api/multicitySearch";
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
@@ -78,6 +79,17 @@ export class FlightService {
     }else{
     
     return this.http.post(this.flightInfo, param, { headers: this.header })
+    }
+  }
+  multicityList(para: any) {
+    let body = JSON.stringify(para);
+     if(LOCALJSON=='true'){
+      
+      return this.http.get('assets/data/multicity.json');
+     
+    }else{
+    
+    return this.http.post(this.multicitylisting, body, { headers: this.header })
     }
   }
 

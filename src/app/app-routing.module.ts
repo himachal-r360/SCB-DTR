@@ -22,6 +22,8 @@ const routes: Routes = [
     loadChildren: () => import('./flight/flight.module').then(m => m.FlightModule)
   },
   
+ 
+  
 
   {
     path: 'foryou',

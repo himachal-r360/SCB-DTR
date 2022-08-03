@@ -15,6 +15,8 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
 import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-roundtrip-list.component';
 import { AgePipe } from 'src/app/pipes/age.pipe';
+import { ListingComponent } from './multicity/listing/listing.component';
+
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent
@@ -25,8 +27,10 @@ const routes: Routes = [
   },
   {
     path:"flight-roundtrip" ,component:FlightRoundtripListComponent
+  },
+  {
+    path:"multicity" ,component:ListingComponent
   }
-  
 
 ];
 
@@ -36,7 +40,7 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent,AgePipe
+    FlightRoundtripListComponent,AgePipe, ListingComponent
 
   ],
   imports: [
