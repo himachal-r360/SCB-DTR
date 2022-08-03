@@ -96,7 +96,6 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
 
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
-  flightListFullData: any = [];
   
   minPrice: number = 0;
   maxPrice: number = 10000;
@@ -451,6 +450,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     let flightListWithOutFilter = this.flightListWithOutFilter;
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = this.unique(flightListConst);
+    
  
     var current_date = new Date(this.departureDate),
       current_year = current_date.getFullYear(),
@@ -462,6 +462,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
 
     //Popular Filter Search Data
     updatedflightList = this.unique(this.popularFilterFlights(this.flightList));
+    
     //Timing Filter Data
     updatedflightList = this.unique(this.timingFilterFlights(updatedflightList));
   
@@ -608,6 +609,8 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
       this.flightList = this.unique(filteredStopOver);
     }
 
+
+
     //PriceFilter
     if (this.flightList.length > 0) {
       var min_price = this.minPrice;
@@ -622,6 +625,11 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
       });
       this.flightList = this.unique(filteredPrice);
     }
+    
+      
+      //  console.log( this.minPrice);
+      // console.log( updatedflightList.length);
+   //console.log(this.flightList.length);
 
     //Airline Filter
     this.flightList = this.unique(this.airlineFilterFlights(this.flightList));
@@ -1142,14 +1150,15 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
       this.DocKey = res.response.docKey;
       
       this.flightList = this.ascPriceSummaryFlighs(res.response.flights);
+   
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
-      this.flightListFullData =   res.response.flights;
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
-        this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-        this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+        this.GetMinAndMaxPriceForFilter();
+       // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+       // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
       this.getAirlinelist();
@@ -1162,7 +1171,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     flightsData.filter((flightItem:any,indx:number)=>{
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare)     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })

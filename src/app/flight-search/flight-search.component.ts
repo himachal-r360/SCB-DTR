@@ -223,7 +223,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   selectFromFlightList(para1: any) {
         this.flightData.get('flightfrom').setValue(para1.id);
         this.flightData.get('fromCity').setValue(para1.city);
-        this.flightData.get('fromContry').setValue(para1.country);
+        this.flightData.get('fromContry').setValue(para1.country_code);
         this.flightData.get('fromAirportName').setValue(para1.airport_name);
         
         this.fromAirpotName = para1.airport_name;
@@ -243,7 +243,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   selectToFlightList(para2: any) {
         this.flightData.get('flightto').setValue(para2.id);
         this.flightData.get('toCity').setValue(para2.city);
-        this.flightData.get('toContry').setValue(para2.country);
+        this.flightData.get('toContry').setValue(para2.country_code);
         this.flightData.get('toAirportName').setValue(para2.airport_name);
         this.toAirpotName = para2.airport_name;
         this.toCityName = para2.city;
@@ -353,7 +353,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.flightData.get('flightdefault').setValue('O');
     }
     
-        if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
+        if(this.flightData.value.fromContry=='IN' && this.flightData.value.toContry=='IN' ){
          this.flightData.get('travel').setValue('DOM');
         }else{
          this.flightData.get('travel').setValue('INT');
@@ -376,7 +376,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
        searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
       
         let url;
-        if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
+        if(this.flightData.value.fromContry=='IN' && this.flightData.value.toContry=='IN' ){
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
            url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
