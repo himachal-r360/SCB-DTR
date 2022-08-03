@@ -213,12 +213,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
 
-               $(window).scroll(function(this) {
+      $(window).scroll(function(this) {
         if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-        $('#endOfPage').trigger('click');
+          $('#endOfPage').trigger('click');
         }
-        });
-  
+      });
   }
 
 @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -358,6 +357,7 @@ ngOnInit(): void {
   }
   // Flight Timings Filter
   FlightTimingsFilterFlightData(timingsItems: any) {
+    debugger
     timingsItems.active = !timingsItems.active;
     if (timingsItems.name == "0_6") {
       this.flight_PopularItems.filter((item: any) => { if (item.name == "Morning_Departures") { item.active; return item; } })
@@ -438,7 +438,7 @@ ngOnInit(): void {
 
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
-
+    debugger
     let updatedflightList: any = [];
 
     let flightListWithOutFilter = this.flightListWithOutFilter;
@@ -452,18 +452,18 @@ ngOnInit(): void {
 
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-
+    
     //Popular Filter Search Data
     updatedflightList = this.popularFilterFlights(this.flightList);
-
+    
     //Timing Filter Data
     updatedflightList = this.timingFilterFlights(updatedflightList);
-
+    
     //Flight Stops Filter
     updatedflightList = this.stopsFilterFlights(updatedflightList);
-
+    
     this.flightList = updatedflightList;
-
+    
     //it is used for getting values of count.
     this.RefundableFaresCount = 0;
     this.nonStopCount = 0;
@@ -540,10 +540,10 @@ ngOnInit(): void {
 
       })
     }
-
+    
     // Airlines Filter
     this.flightList = this.airlineFilterFlights(this.flightList);
-
+    
     //StopOverFilter
     if (this.flightList.length > 0) {
       var start = this.minStopOver;
@@ -562,7 +562,7 @@ ngOnInit(): void {
       });
       this.flightList = filteredStopOver;
     }
-
+    
     //PriceFilter
     if (this.flightList.length > 0) {
       var min_price = this.minPrice;
@@ -577,13 +577,13 @@ ngOnInit(): void {
       });
       this.flightList = filteredPrice;
     }
-
+    
     //Airline Filter
     this.flightList = this.airlineFilterFlights(this.flightList);
 
     // Layover Filter Flights
     this.flightList = this.layoverFilterFlights(this.flightList);
-
+    
      this.container.clear();
      this.intialData();
 
@@ -646,6 +646,7 @@ ngOnInit(): void {
 
   //Timing Filter Flights
   timingFilterFlights(flightList: any) {
+    debugger
     this.flightList = flightList;
     let updatedflightList: any = [];
     let isfilterMorningDepartures: any = false;
@@ -654,7 +655,7 @@ ngOnInit(): void {
       current_year = current_date.getFullYear(),
       current_mnth = current_date.getMonth(),
       current_day = current_date.getDate();
-
+    console.log(current_date,"current_date");
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
     var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
@@ -677,21 +678,24 @@ ngOnInit(): void {
     //Flight Timing Filter
     if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
       var filteredTimingArr: any[] = [];
+      
       if (flightList.length > 0) {
+        
         flightList.filter((d: any) => {
           let singleFlightTiming = [];
+          console.log(d.flights,"d.flights");
           singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
             if (indx == 0) {
-              if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
+              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "6_12") { return item; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "12_18") { return item; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "18_0") { return item; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
                 return e;
               }
             }
@@ -700,12 +704,15 @@ ngOnInit(): void {
             filteredTimingArr.push(d);
           }
         });
+        console.log(filteredTimingArr,"filteredTimingArr");
       }
       updatedflightList = filteredTimingArr;
+      
     }
     else {
       updatedflightList = flightList;
     }
+    
     return updatedflightList;
   }
   //stops Filter Flights

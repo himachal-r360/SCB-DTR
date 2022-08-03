@@ -216,7 +216,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         const context = {
           items: [this.ReturnflightList[n]]
         };
-        this.container.createEmbeddedView(this.template, context);
+        this.returnContainer.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
     }
@@ -227,15 +227,19 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       const context = {
         item: [this.flightList[n]],
       };
+      // console.log(context , "onward");
+      
       this.container.createEmbeddedView(this.template, context);
     }
   }
   private intialReturnData() {
     for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
-    const context = {
+    const returnContext = {
         item: [this.ReturnflightList[n]],
       };
-      this.returnContainer.createEmbeddedView(this.returnTemplate, context);
+      // console.log(returnContext , "return");
+      
+      this.returnContainer.createEmbeddedView(this.returnTemplate, returnContext);
     
     }
   }
@@ -1459,6 +1463,13 @@ closeFlightDetailMobile(i:any){
       }
       return item;
     });
+    this.priceSortingReturnFilteritems.filter((item:any)=>{
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    })
   }
   applySortingMobile() {
     let sortingBtn = document.getElementById('sortMobileFilter');
