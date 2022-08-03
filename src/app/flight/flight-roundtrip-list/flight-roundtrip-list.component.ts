@@ -337,7 +337,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare)     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })

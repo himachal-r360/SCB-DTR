@@ -2553,7 +2553,7 @@ new_fare: number = 0;
       
    for(let i=0;i<(this.flightSessionData.returnFlights.length);i++){ 
       
-     fligthsOnward.push({
+     fligthsReturn.push({
         "arr_tym":  this.flightSessionData.returnFlights[i]['arrivalDateTime'],
         "sourcity": this.airportsNameJson[this.flightSessionData.returnFlights[i]['departureAirport']]['city'],
         "car_id":  this.flightSessionData.returnFlights[i]['airline'],

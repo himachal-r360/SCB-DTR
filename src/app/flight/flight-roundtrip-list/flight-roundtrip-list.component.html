@@ -17,7 +17,7 @@
       </div>
   </section>
 
-  <section class="flight-listing-area mt-10" *ngIf="!isMobile">
+  <section class="flight-listing-area mt-100" *ngIf="!isMobile">
       <div class="container">
           <div class="row">
               <div class="col-lg-12">
@@ -277,7 +277,7 @@
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
                                                        <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
                                                       <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
-                                                      <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
+                                                      <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more </a>
                                                   </div>
                                               </div>
                                           </div>
@@ -285,8 +285,9 @@
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
-                                              <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
-                                                  <div class="round-options-list-top">
+                                           <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                              <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
+                                                  <div class="round-options-list-top"  >
                                                       <div class="round-list-image-box">
                                                           <div class="round-list-image">
                                                              <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" >
@@ -331,6 +332,7 @@
                                                               <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
                                                           </div>
                                                       </div>
+                                                    
                                                   </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
@@ -368,7 +370,9 @@
                                                           <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
                                                         </a>
                                                     </div>
+                                                      
                                                 </div>
+                                                </ng-container>
                                             </div>
                                         </div>
                                     </ng-template>   
@@ -436,7 +440,9 @@
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
                                           </div>
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
-                                              <div class="round-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
+                                          
+                                          <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                              <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
                                                           <div class="round-list-image">
@@ -520,6 +526,7 @@
                                                       </a>
                                                   </div>
                                               </div>
+                                               </ng-container>
                                           </div>
                                       </div>
                                     </ng-template>

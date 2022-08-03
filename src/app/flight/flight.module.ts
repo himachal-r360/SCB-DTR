@@ -16,8 +16,8 @@ import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-rou
 import { FlightIntListComponent } from './flight-int-list/flight-int-list.component';
 import { FlightSearchModule } from '../flight-search/flight-search.module';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
-
 import { AgePipe } from 'src/app/pipes/age.pipe';
+import { FilterPipe } from 'src/app/shared/pipes/filterUnique.pipe';
 import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
 const routes: Routes = [
@@ -44,7 +44,7 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent,FlightIntListComponent,AgePipe
+    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe
 
   ],
   imports: [
