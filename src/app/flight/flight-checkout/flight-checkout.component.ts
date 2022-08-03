@@ -489,6 +489,7 @@ new_fare: number = 0;
     
   }
 
+
   getQueryParamData() {
       this.route.queryParams
         .subscribe((params: any) => {
@@ -2146,6 +2147,10 @@ new_fare: number = 0;
                 "paxID": paxInfoCnt
               });
               
+            // if(this.passengerForm.controls['adult_pax_nationality'+i]['value']) 
+            //  this.paxInfo["paxNationality"] = "c";
+            //  this.paxInfo.push("paxNationality": this.passengerForm.controls['adult_pax_nationality'+i]['value']);
+              
 
               
         paxInfoCnt++;
@@ -2350,7 +2355,8 @@ new_fare: number = 0;
         }
         },700) ;  
      
-        console.log(this.itineraryRequest);
+      //  console.log(this.itineraryRequest);return;
+        
         var requestParamsEncrpt = {
         postData:this.EncrDecr.set(JSON.stringify(this.itineraryRequest)) 
         };
