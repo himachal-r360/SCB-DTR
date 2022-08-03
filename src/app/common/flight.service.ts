@@ -14,39 +14,46 @@ export class FlightService {
   flightListDate:any;
   flightsIcon = "assets/Json/airlines.json";
   airportsNameList ="assets/Json/airports.json";
+  countryList = "assets/Json/country.json";
   flightDetails:any;
   multicitylisting = environment.url + "api/multicitySearch";
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
-  
-  
+
+
   headerHideShow = new BehaviorSubject<Boolean>(true);
   currentHeader = this.headerHideShow.asObservable();
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
    showHeader(value: boolean) {
-   console.log(value);
         this.headerHideShow.next(value);
     }
 
 
-  flightList(para: any) {
-    let body = JSON.stringify(para);
-     if(LOCALJSON=='true'){
-      if(para.flightdefault=='O'){
-      return this.http.get('assets/data/flight-onward.json');
-      }else{
-      return this.http.get('assets/data/flight-return.json');
-      }
-    }else{
-    
-    return this.http.post(this.flight, body, { headers: this.header })
-    }
-  }
+        flightList(para: any) {
+        let body = JSON.stringify(para);
+        if(LOCALJSON=='true'){
+        if(para.travel=='INT'){
+        if(para.flightdefault=='O'){
+        return this.http.get('assets/data/flight-int-onward.json');
+        }else{
+        return this.http.get('assets/data/flight-int-return.json');
+        }
+        }else{
+        if(para.flightdefault=='O'){
+        return this.http.get('assets/data/flight-onward.json');
+        }else{
+        return this.http.get('assets/data/flight-return.json');
+        }
+        }
+        }else{
+        return this.http.post(this.flight, body, { headers: this.header })
+        }
+        }
 
   getCityList(queryText: any) {
     return this.http.post(`${this.city}&queryText=${queryText}`, null)
@@ -54,6 +61,10 @@ export class FlightService {
 
   getFlightIcon(){
     return this.http.get(this.flightsIcon);
+  }
+  
+  getCountryList(){
+    return this.http.get(this.countryList);
   }
 
   getAirportName(){
@@ -74,10 +85,10 @@ export class FlightService {
 
   getFlightInfo(param:any)
   {
-     if(LOCALJSON=='true'){
-      return this.http.get('assets/data/flightInfo.json');
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/flightInfo-int.json');
     }else{
-    
+
     return this.http.post(this.flightInfo, param, { headers: this.header })
     }
   }

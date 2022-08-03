@@ -6,6 +6,8 @@ import {environment} from '../../../environments/environment';
 import { Location } from '@angular/common';
 const MAIN_SITE_URL = environment.MAIN_SITE_URL; 
 const LOCALJSON = environment.LOCALJSON;
+const LOCALLOGIN = environment.LOCALLOGIN;
+
 import { SimpleGlobal } from 'ng2-simple-global';
 
 const config = {
@@ -19,6 +21,9 @@ headers : {
   providedIn: 'root'
 })
 export class RestapiService {
+  get() {
+    throw new Error('Method not implemented.');
+  }
   endpoint:any;domainName:any;domainPath:any;
   constructor(private http: HttpClient,private location:Location,private sg: SimpleGlobal) { 
   	let urlToSplit =this.location.path();
@@ -65,11 +70,16 @@ export class RestapiService {
  } 
 
   checkCsrfAuth (param:any):Observable<any> {
+  
+  if(LOCALLOGIN=='true'){
+   return this.http.get('assets/data/checckcsrf.json');
+  }else{
     if(LOCALJSON=='true'){
       return this.http.get('assets/data/checckcsrf.json');
     }else{
 
 	return this.http.post(MAIN_SITE_URL+this.domainPath+'check-csrf-with-auth',param, config).pipe(map((response: any) => response));
+    }
     }
   }
   getDealsOffers ():Observable<any> {
@@ -82,6 +92,10 @@ export class RestapiService {
 
   getVouchersList ():Observable<any> {
       return this.http.get('assets/data/voucherslist.json');
+  }
+
+  getRegaliaGoldList ():Observable<any> {
+    return this.http.get('assets/data/regalia_gold.json');
   }
   
     verifyDomain ():Observable<any> {
@@ -106,7 +120,12 @@ export class RestapiService {
    return this.http.post( this.endpoint+'getnotification','', config).pipe(map((response: any) => response));
  }
  getNotificationPopup (): Observable<any> {
-   return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/getnotificationPopup.json');
+   }else{
+	return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+    }
+   
  }
 
   arr=[];
@@ -275,7 +294,7 @@ createItinerary(param){
      if(LOCALJSON=='true'){
            return this.http.get('assets/data/validatePGData.json');
      }else{
-     return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
+     return this.http.post( this.endpoint+'validatePGDataFlight',param, config).pipe(map((response: any) => response));
      } 
      //return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
   }

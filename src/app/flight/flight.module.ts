@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlightListComponent } from './flight-list/flight-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes,RouteReuseStrategy } from '@angular/router';
 import { DurationTimePipe } from '../pipes/duration-time.pipe';
 import { MaterialModule } from '../material.module';
-import { DirectiveModule } from '../directives/directive.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
@@ -14,23 +13,40 @@ import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
 import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-roundtrip-list.component';
+import { FlightIntListComponent } from './flight-int-list/flight-int-list.component';
+import { FlightSearchModule } from '../flight-search/flight-search.module';
+import { CustomReuseStrategy } from '../route-reuse-strategy';
+
 import { AgePipe } from 'src/app/pipes/age.pipe';
+
 import { ListingComponent } from './multicity/listing/listing.component';
+
+import { CountdownModule } from 'ngx-countdown';
+import { DirectiveModule } from '../directives/directive.module';
 
 const routes: Routes = [
   {
-    path:"flight-list" ,component:FlightListComponent
+    path:"flight-list" ,component:FlightListComponent,data: {  shouldReuse: true, },
   },
-  
+
    {
-    path:"flight-checkout" ,component:FlightCheckoutComponent
+    path:"flight-checkout" ,component:FlightCheckoutComponent,data: {  shouldReuse: true, },
   },
   {
+    path:"flight-roundtrip" ,component:FlightRoundtripListComponent,data: {  shouldReuse: true, },
+  },
+  {
+
     path:"flight-roundtrip" ,component:FlightRoundtripListComponent
   },
   {
     path:"multicity" ,component:ListingComponent
+  },
+  {
+
+    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, },
   }
+
 
 ];
 
@@ -40,7 +56,9 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent,AgePipe, ListingComponent
+
+    FlightRoundtripListComponent,AgePipe, ListingComponent,FlightIntListComponent
+
 
   ],
   imports: [
@@ -49,13 +67,22 @@ const routes: Routes = [
         InputMaskModule,
         ReactiveFormsModule,
         MaterialModule,
-        DirectiveModule,
         NgxSliderModule,
-        NgxSkeletonLoaderModule,
-        CouponsModule,PaymentModule,
-          RouterModule.forRoot(routes)
+        NgxSkeletonLoaderModule,FlightSearchModule,
+        CouponsModule,PaymentModule,CountdownModule,
+        DirectiveModule,
+            RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      onSameUrlNavigation: 'reload'
+    })
   ],
   exports: [RouterModule],
-  providers: [ ]
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: CustomReuseStrategy,
+    },
+  ],
 })
 export class FlightModule { }

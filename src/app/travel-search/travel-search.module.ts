@@ -22,10 +22,10 @@ import { RedirectPopupModule } from 'src/app/redirect-popup/redirect-popup.modul
   imports: [
     CommonModule,ReactiveFormsModule,
     FormsModule,
-    ReactiveFormsModule,MatDialogModule,
-     MatCheckboxModule,FormsModule,   MatInputModule,
+    MatDialogModule,
+     MatCheckboxModule,  MatInputModule,
     MatFormFieldModule, MatDatepickerModule,
-    ReactiveFormsModule,MatNativeDateModule,NgxCaptchaModule,RedirectPopupModule,MatSelectModule
+    MatNativeDateModule,NgxCaptchaModule,RedirectPopupModule,MatSelectModule
   ],
   providers: [],
   exports: [TravelSearchComponent  ],
