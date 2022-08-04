@@ -23,6 +23,10 @@ export class FlightService {
   headerHideShow = new BehaviorSubject<Boolean>(true);
   currentHeader = this.headerHideShow.asObservable();
 
+  
+  
+  
+
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) {
   }
