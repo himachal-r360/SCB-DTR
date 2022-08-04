@@ -22,7 +22,7 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="travel-box mb-20">
-                    <app-flight-search modifySearch="true" ></app-flight-search>
+                    <app-flight-search modifySearch="true" isViewPartner="false"></app-flight-search>
                   </div>
               </div>
 
@@ -247,7 +247,7 @@
                                     <div class="flight-listing-area">
                                             <ng-container #itemsContainer></ng-container>
                                      </div>
-                                    <ng-template #item let-item="item">  
+                                    <ng-template #item let-item="item">
                                       <div class="round-flight-listing round-click"  appToggleDetail *ngFor="let list of item; let i = index" id="flight_list_{{i}}">
                                           <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
@@ -371,7 +371,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </ng-template>   
+                                    </ng-template>
                                     <div id="endOfPage" (click)="loadData()"></div>
                                     </div>
                                 </div>
@@ -397,7 +397,7 @@
                                       <div class="flight-listing-area">
                                         <ng-container #itemsReturnContainer></ng-container>
                                       </div>
-                                      <ng-template #returnItem let-item="item">  
+                                      <ng-template #returnItem let-item="item">
                                       <div class="round-flight-listing round-click" appToggleDetail *ngFor="let list of item; let i = index" id="return_flight_list_{{i}}">
                                           <div class="round-flight-listing-content">
                                               <div class="round-content-left">
@@ -1695,7 +1695,7 @@
   >>> mobile Sort Filters
 ---------------------------------->
 <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
-           
+
     <div class="mob-sf-box">
         <div class="mob-title">
             <h3>Sort & Filters</h3>
@@ -1792,10 +1792,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                
 
-                                    
-                                
+
+
+
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingThree">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1870,7 +1870,7 @@
                                                             <p>₹{{airlineItem.price}}</p>
                                                         </div>
                                                     </li>
-                                                   
+
                                                         <ng-container *ngIf="show_airline_more" >
                                                                     <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                         <div class="custom-controls-stacked">
@@ -1882,7 +1882,7 @@
                                                             </label>
                                                             <p>₹{{airlineItem.price}}</p>
                                                         </div>
-                                                    </li> 
+                                                    </li>
                                                     </ng-container>
                                                 </ul>
 
@@ -1957,7 +1957,7 @@
                                                         </div>
                                                     </li>
                                                     </ng-container>
-                                                    
+
                                                 </ul>
 
                                                 <div class="d-flex justify-content-between mt-2">

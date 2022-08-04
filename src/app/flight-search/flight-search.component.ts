@@ -41,7 +41,7 @@ export const MY_DATE_FORMATS = {
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ],
-  
+
 })
 
 
@@ -51,6 +51,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
  @ViewChild('picker') datePicker: MatDatepicker<Date>;
  @Input() modifySearch;
+ @Input() isViewPartner: string;
+ displayPartners:boolean = false;
    cdnUrl: any;
   sub?: Subscription;
   loader = false;
@@ -91,7 +93,6 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   windowItem = window;
   navItemActive:any;
   isShowPartner = false;
-  isPartnerDivShow =  true;
 
   constructor(
     public _styleManager: StyleManagerService,
@@ -140,9 +141,9 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
-
+console.log(this.isViewPartner)
    this._flightService.showHeader(true);
-
+   this.displayPartners = this.isViewPartner=="false" ? false : true;
     this.isMobile = window.innerWidth < 991 ?  true : false;
     // this.selectDate('DepartureDate');
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
@@ -153,7 +154,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngAfterViewInit(): void {
-    
+
 
   }
 
@@ -212,7 +213,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromFlightList = true;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
     this.getCityList(evt.target.value.trim().toLowerCase());
-    
+
   }
 
   toList(evt: any) {
@@ -227,10 +228,10 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         this.flightData.get('fromCity').setValue(para1.city);
         this.flightData.get('fromContry').setValue(para1.country);
         this.flightData.get('fromAirportName').setValue(para1.airport_name);
-        
+
         this.fromAirpotName = para1.airport_name;
         this.fromCityName = para1.city;
-        
+
         this.fromFlightList = false;
         let removeClassToCity = document.getElementById('removeClassToCity');
         removeClassToCity?.classList.remove('flight-from-hide');
@@ -239,7 +240,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         toCityDivElement?.click();
         this.toCityInput.nativeElement.focus();
         }, 50);
-        
+
   }
 
   selectToFlightList(para2: any) {
@@ -262,8 +263,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
-        
-               
+
+
         this.flightData.get('flightclass').setValue(lastSearch.flightclass );
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
         this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
@@ -277,23 +278,23 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         this.flightData.get('toCity').setValue(lastSearch.toCity);
         this.flightData.get('toContry').setValue(lastSearch.toContry);
         this.flightData.get('travel').setValue(lastSearch.travel);
-        
+
         this.fromCityName = lastSearch.fromCity;
         this.toCityName = lastSearch.toCity;
 
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
-        
+
         /*
          if(lastSearch.departure)
         this.flightData.get('departure').setValue(moment(lastSearch.departure).format('YYYY-MM-DD'));
-       
+
         if(lastSearch.arrival)
         this.flightData.get('arrival').setValue(moment(lastSearch.arrival).format('YYYY-MM-DD'));
         */
-        
- 
-           
+
+
+
       //  this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
        this.departureDate = new Date(lastSearch.departure);
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
@@ -303,15 +304,15 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       this.adultsVal = lastSearch.adults;
       this.childVal = lastSearch.child;
       this.infantsVal = lastSearch.infants;
-      
+
       this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
       if(lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != ""){
         this.navItemActive = "Round Trip"
       }
-      
-    }  
-  
-    
+
+    }
+
+
   }
 
   flightSearchCallBack(param:any){
@@ -354,7 +355,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     }else{
     this.flightData.get('flightdefault').setValue('O');
     }
-    
+
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
          this.flightData.get('travel').setValue('DOM');
         }else{
@@ -367,17 +368,17 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else {
       let searchValue = this.flightData.value;
-      
-      
+
+
       this.flightSearchCallBack(searchValue);
-      
+
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
-      
+
       searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
-      
+
       if(searchValue.arrival)
        searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
-      
+
         let url;
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
@@ -391,12 +392,12 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         }else{
            url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
-    
-       }  
-       
+
+       }
 
 
-        
+
+
         // (error) => { console.log(error) });
       }
     }
@@ -553,7 +554,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   swap()
   {
     var FromData = {flightFrom: this.flightData.value.flightfrom,fromAirpotName:this.flightData.value.fromAirportName,fromCityName: this.flightData.value.fromCity,fromContry : this.flightData.value.fromContry }
-    
+
         this.flightData.get('flightfrom').setValue(this.flightData.value.flightto );
         this.flightData.get('fromCity').setValue(this.flightData.value.toCity);
         this.flightData.get('fromContry').setValue(this.flightData.value.toContry);
