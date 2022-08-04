@@ -658,6 +658,7 @@ ngOnInit(): void {
       current_mnth = current_date.getMonth(),
       current_day = current_date.getDate();
    // console.log(current_date,"current_date");
+
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
     var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
@@ -706,7 +707,7 @@ ngOnInit(): void {
             filteredTimingArr.push(d);
           }
         });
-       // console.log(filteredTimingArr,"filteredTimingArr");
+
       }
       updatedflightList = filteredTimingArr;
       
@@ -913,7 +914,6 @@ ngOnInit(): void {
 
  flightFromVal:any;
   flightSearch() {
-
     this.loader = true;
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
