@@ -10,6 +10,14 @@ import { ExclusiveComponent } from './exclusive/exclusive.component';
 import { BrandsComponent } from './brands/brands.component';
 import { DealsComponent } from './deals/deals.component';
 import { BenefitsComponent } from './benefits/benefits.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 
@@ -30,7 +38,13 @@ import { BenefitsComponent } from './benefits/benefits.component';
     MaterialModule,
     CarouselModule,
     NgbModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+     MatCheckboxModule,  MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,NgxCaptchaModule,MatSelectModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
