@@ -40,7 +40,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   declarations: [
     AppComponent,
     SearchComponent,
-    AlertDialogComponentt
+    AlertDialogComponent
 
   ],
   imports: [
