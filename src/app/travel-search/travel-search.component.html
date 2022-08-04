@@ -54,7 +54,7 @@
                                                                                 </div>
                                                                                 <div class="airport_code">{{fromTrainOptions['_source']['code']}}</div>
                                                                             </div>
-                                                                    
+
                                                                         </li>
                                                                         <li *ngIf="trainFromOptions.length==0"><a>No Results Found...</a></li>
                                                                     </ul>
@@ -89,7 +89,7 @@
                                                                                 </div>
                                                                                 <div class="airport_code">{{toTrainOptions['_source']['code']}}</div>
                                                                             </div>
-                                                                     
+
                                                                         </li>
                                                                         <li *ngIf="trainToOptions.length==0"><a>No Results Found...</a></li>
                                                                     </ul>
@@ -108,12 +108,12 @@
                                                         <div class="form-group  mb-0 p-2">
                                                             <label>
                                        <span>Departure Date</span>
-                                                                   
+
                                           <input (click)="trainPicker.open()" class="form-control control_input " matInput [matDatepicker]="trainPicker"   [min]="minDateMlite"  [max]="trainpickermaxDateMlite"
                                 [(ngModel)]="trainDeparture"   autocomplete="off"  readonly formControlName="trainDeparture"  id="trainDeparture" placeholder="Select Date"  [value]="trainpickerDefaultMlite" >
                                  <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="trainPicker.open()" id="mliteTrainPicker" ></span>
                                 <mat-datepicker  #trainPicker></mat-datepicker>
-                                       
+
                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="icon" class="date_icon"></span>
                                        <div *ngIf="submittedTrain && searchTrainForm['controls']['trainDeparture']['errors']"class="error_msg">
                                           <small *ngIf="searchTrainForm['controls']['trainDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
@@ -453,7 +453,7 @@
                                                         </div>
                                                         <div class="airport_code">{{hOptions['_source']['city']}}</div>
                                                     </div>
-                                              
+
                                                 </li>
                                                 <li *ngIf="hotelOptions.length==0"><a>No Results Found...</a></li>
                                             </ul>
@@ -556,7 +556,7 @@
                                     <input (click)="hotelFromPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelFromPicker"   [min]="minDateMlite"  [max]="flightpickermaxDateMlite"
                                 [(ngModel)]="hotelCheckin"   autocomplete="off"  readonly formControlName="hotelCheckin"  id="hotelCheckin" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultFMlite" (dateChange)="EndDateChange($event,'hotel','web')" >
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="hotelFromPicker.open()" id="webHotelFromPicker" ></span>
-                                <mat-datepicker  #hotelFromPicker></mat-datepicker> 
+                                <mat-datepicker  #hotelFromPicker></mat-datepicker>
                             <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']" class="error_msg">
                                 <small *ngIf="searchHotelForm['controls']['hotelCheckin']['errors']['required']" class="validate-msg">Check in date required</small>
                             </div>
@@ -564,11 +564,11 @@
                         </div>
                         <div class="form-group flex_basis pl-2">
                             <p class="label_head"><span>Check-Out</span> </p>
-                             <input  (click)="hotelToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite" 
+                             <input  (click)="hotelToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite"
                                 [(ngModel)]="hotelCheckout"   autocomplete="off"  readonly formControlName="hotelCheckout"  id="hotelCheckout" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultTMlite" >
                                 <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="hotelToPicker.open()" id="webHotelToPicker" ></span>
-                                <mat-datepicker  #hotelToPicker></mat-datepicker> 
-                                
+                                <mat-datepicker  #hotelToPicker></mat-datepicker>
+
                             <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']" class="error_msg">
                                 <small *ngIf="searchHotelForm['controls']['hotelCheckout']['errors']['required']" class="validate-msg">Check out date required</small>
                             </div>
@@ -699,7 +699,7 @@
                                                             </div>
                                                             <div class="airport_code">{{fromFlightOptions['_source']['airport_code']}}</div>
                                                         </div>
-                                         
+
                                                     </li>
                                                     <li *ngIf="flightFromOptions.length==0"><a>No Results Found...</a></li>
                                                 </ul>
@@ -735,7 +735,7 @@
                                                             </div>
                                                             <div class="airport_code">{{toFlightOptions['_source']['airport_code']}}</div>
                                                         </div>
-                                                   
+
                                                     </li>
                                                     <li *ngIf="flightToOptions.length==0"><a>No Results Found...</a></li>
                                                 </ul>
@@ -753,11 +753,11 @@
 
                                  <input (click)="flightFromPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightFromPicker"   [min]="minDateMlite"  [max]="flightpickermaxDateMlite"
                                 [(ngModel)]="flightDeparture"   autocomplete="off"  readonly formControlName="flightDeparture"  id="flightDeparture" placeholder="DD/MM/YYYY"  [value]="flightpickerDefaultFMlite" (dateChange)="EndDateChange($event,'flight','web')" >
-    
+
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="flightFromPicker.open()" id="webFlightFromPicker" ></span>
-                                <mat-datepicker  #flightFromPicker panelClass="f_dep_m"></mat-datepicker> 
-                                
-                                
+                                <mat-datepicker  #flightFromPicker panelClass="f_dep_m"></mat-datepicker>
+
+
                             <div *ngIf="submittedFlight && searchFlightForm['controls']['flightDeparture']['errors']" class="error_msg">
                                 <small *ngIf="searchFlightForm['controls']['flightDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
                             </div>
@@ -765,10 +765,10 @@
                         <div class="form-group flex_basis pl-2">
                             <p class="label_head"><span>Return</span> </p>
 
-                                 <input  (click)="flightToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightToPicker"   [min]="minDateFlightToMlite"  [max]="flightpickermaxDateMlite" 
+                                 <input  (click)="flightToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightToPicker"   [min]="minDateFlightToMlite"  [max]="flightpickermaxDateMlite"
                                 [(ngModel)]="flightReturn"   autocomplete="off"  readonly formControlName="flightReturn"  id="flightReturn" placeholder="DD/MM/YYYY"  [value]="flightpickerDefaultTMlite" [disabled]="!showFlightReturn">
                                 <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="flightToPicker.open()" id="webFlightToPicker" ></span>
-                                <mat-datepicker #flightToPicker></mat-datepicker> 
+                                <mat-datepicker #flightToPicker></mat-datepicker>
                             <div *ngIf="submittedFlight && searchFlightForm['controls']['flightReturn']['errors']" class="error_msg">
                                 <small *ngIf="searchFlightForm['controls']['flightReturn']['errors']['required']" class="validate-msg">Return date required</small>
                             </div>
@@ -816,7 +816,7 @@
                                                             </div>
                                                             <div class="airport_code">{{fromBusOptions['_source']['code']}}</div>
                                                         </div>
-                                              
+
                                                     </li>
                                                     <li *ngIf="busFromOptions.length==0"><a>No Results Found...</a></li>
                                                 </ul>
@@ -851,7 +851,7 @@
                                                             </div>
                                                             <div class="airport_code">{{toBusOptions['_source']['code']}}</div>
                                                         </div>
-                                              
+
                                                     </li>
                                                     <li *ngIf="busToOptions.length==0"><a>No Results Found...</a></li>
                                                 </ul>
@@ -866,12 +866,12 @@
                     <div class="d-flex justify-content-between">
                         <div class="form-group flex_basis">
                             <p class="label_head"><span>Travel Date</span> </p>
-                                
+
                                   <input (click)="busPicker.open()" class="form-control control_input" matInput [matDatepicker]="busPicker"   [min]="minDateMlite"  [max]="buspickermaxDateMlite"
                                 [(ngModel)]="busDeparture"   autocomplete="off"  readonly formControlName="busDeparture"  id="busDeparture" placeholder="DD/MM/YYYY"  [value]="buspickerDefaultMlite" >
                                  <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="busPicker.open()" id="mliteBusPicker" ></span>
                                 <mat-datepicker #busPicker></mat-datepicker>
-                                
+
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="icon" class="date_icon" (click)="busPicker.open()"></span>
                             <div *ngIf="submittedBus && searchBusForm['controls']['busDeparture']['errors']" class="error_msg">
                                 <small *ngIf="searchBusForm['controls']['busDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
@@ -888,7 +888,7 @@
         <!-- Web Train Search-->
         <div *ngIf="searchDisplayForm=='train'">
             <div class="trip_details">
-               
+
                 <form [formGroup]="searchTrainForm" name="searchTrainForm">
                     <div class="w-100 my-3">
                         <div class="select_city">
@@ -921,7 +921,7 @@
                                                             </div>
                                                             <div class="airport_code">{{fromTrainOptions['_source']['code']}}</div>
                                                         </div>
-                                           
+
                                                     </li>
                                                     <li *ngIf="trainFromOptions.length==0"><a>No Results Found...</a></li>
                                                 </ul>
@@ -956,7 +956,7 @@
                                                             </div>
                                                             <div class="airport_code">{{toTrainOptions['_source']['code']}}</div>
                                                         </div>
-                                                  
+
                                                     </li>
                                                     <li *ngIf="trainToOptions.length==0"><a>No Results Found...</a></li>
                                                 </ul>
@@ -976,7 +976,7 @@
                                 <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
                             </mat-select>
                         </mat-form-field>
-      
+
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="form-group flex_basis">
@@ -1062,8 +1062,8 @@
                                                  <input (click)="hotelFromPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelFromPicker"   [min]="minDateMlite"  [max]="flightpickermaxDateMlite"
                                 [(ngModel)]="hotelCheckin"   autocomplete="off"  readonly formControlName="hotelCheckin"  id="hotelCheckin" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultFMlite" (dateChange)="EndDateChange($event,'hotel','mlite')" >
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="hotelFromPicker.open()" id="mliteHotelFromPicker" ></span>
-                                <mat-datepicker  touchUi #hotelFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker> 
-         
+                                <mat-datepicker  touchUi #hotelFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>
+
                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']"class="error_msg">
                                    <small *ngIf="searchHotelForm['controls']['hotelCheckin']['errors']['required']" class="validate-msg">Checkin date required</small>
                                 </div>
@@ -1076,11 +1076,11 @@
                                         <label>
                                             <span>Check-Out</span>
                                             <div class="form-group flex_basis">
-                                                                <input  (click)="hotelToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite" 
+                                                                <input  (click)="hotelToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite"
                                                 [(ngModel)]="hotelCheckout"   autocomplete="off"  readonly formControlName="hotelCheckout"  id="hotelCheckout" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultTMlite" >
                                                 <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="hotelToPicker.open()" id="mliteHotelToPicker" ></span>
-                                                <mat-datepicker touchUi  #hotelToPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker> 
-                                                
+                                                <mat-datepicker touchUi  #hotelToPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>
+
                                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']"class="error_msg">
                                                 <small *ngIf="searchHotelForm['controls']['hotelCheckout']['errors']['required']" class="validate-msg">Checkout date required</small>
                                                 </div>
@@ -1195,7 +1195,7 @@
                     <div class="form-search-list">
                         <div class="form-group pos-relative mb0">
                             <span class="from-icon"></span>
-                            
+
                             <input type="text" [(ngModel)]="hotelName" class="inputField hotelName hotelName-mobile" formControlName="hotelName" id="hotelName" placeholder="City" name="hotelName" (click)="hideShowForms('mobile', 'hotelName','hotels')" (keyup)="searchAutoComplete($event,'hotels','hotelName' ,'mobile');"
                                 (keypress)="charInput($event)" autocomplete="off">
                             <!-- <span class="dotted-line"></span> -->
@@ -1211,7 +1211,7 @@
                                 </div>
                                 <div class="airport_code">{{hOptions['_source']['city']}}</div>
                             </div>
-                    
+
                         </li>
                         <li *ngIf="hotelOptions.length==0"><a>No Results Found...</a></li>
                     </ul>
@@ -1295,12 +1295,12 @@
                                 <div class="col-6 pr-0">
                                     <div class="input_box bor-right-0 date_input_box">
                                         <label>
-                                        <span>Departure</span> 
+                                        <span>Departure</span>
                                         <div class="form-group flex_basis dep_m_cal">
                                         <input (click)="flightFromPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightFromPicker"   [min]="minDateMlite"  [max]="flightpickermaxDateMlite"
                                             [(ngModel)]="flightDeparture"   autocomplete="off"  readonly formControlName="flightDeparture"  id="flightDeparture" placeholder="DD/MM/YYYY"  [value]="flightpickerDefaultFMlite" (dateChange)="EndDateChange($event,'flight','mlite')" >
                                             <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="flightFromPicker.open()" id="mliteFlightFromPicker"></span>
-                                            <mat-datepicker touchUi #flightFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker> 
+                                            <mat-datepicker touchUi #flightFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>
                                             <div *ngIf="submittedFlight && searchFlightForm['controls']['flightDeparture']['errors']"class="error_msg">
                                                 <small *ngIf="searchFlightForm['controls']['flightDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
                                             </div>
@@ -1315,15 +1315,15 @@
                                         <label>
                                             <span>Return</span>
                                             <div class="form-group flex_basis ">
-                                            
-                                            
-                                                <input  (click)="flightToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightToPicker"   [min]="minDateFlightToMlite"  [max]="flightpickermaxDateMlite" 
+
+
+                                                <input  (click)="flightToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightToPicker"   [min]="minDateFlightToMlite"  [max]="flightpickermaxDateMlite"
                                                 [(ngModel)]="flightReturn"   autocomplete="off"  readonly formControlName="flightReturn"  id="flightReturn" placeholder="DD/MM/YYYY"  [value]="flightpickerDefaultTMlite" [disabled]="!showFlightReturn">
                                                 <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="flightToPicker.open()" id="mliteFlightToPicker" ></span>
-                                                <mat-datepicker touchUi #flightToPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker> 
-                                                
-                                                
-                                                
+                                                <mat-datepicker touchUi #flightToPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>
+
+
+
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['flightReturn']['errors']"class="error_msg">
                                                     <small *ngIf="searchFlightForm['controls']['flightReturn']['errors']['required']" class="validate-msg">Return date required</small>
                                                 </div>
@@ -1338,7 +1338,7 @@
                                 <label class="d-block">
                                      <span>Select Class</span>
                                 </label>
-              
+
 
                                 <mat-form-field class="fligh-select-mat-field w-100">
                                     <mat-select name="flightClass" class="categorie_select w-100" formControlName="flightClass" (ngModelChange)="selectClass($event)">
@@ -1443,7 +1443,7 @@
                                 </div>
                                 <div class="airport_code">{{fromFlightOptions['_source']['airport_code']}}</div>
                             </div>
-                  
+
                         </li>
                         <li *ngIf="flightFromOptions.length==0"><a>No Results Found...</a></li>
                     </ul>
@@ -1473,7 +1473,7 @@
                                 </div>
                                 <div class="airport_code">{{toFlightOptions['_source']['airport_code']}}</div>
                             </div>
-                 
+
                         </li>
                         <li *ngIf="flightToOptions.length==0"><a>No Results Found...</a></li>
                     </ul>
@@ -1546,7 +1546,7 @@
                                                 [(ngModel)]="busDeparture"   autocomplete="off"  readonly formControlName="busDeparture"  id="busDeparture" placeholder="DD/MM/YYYY"  [value]="buspickerDefaultMlite" >
                                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="busPicker.open()" id="mliteBusPicker" ></span>
                                         <mat-datepicker touchUi #busPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>
-                                        
+
                                             <div *ngIf="submittedBus && searchBusForm['controls']['busDeparture']['errors']"class="error_msg">
                                                 <small *ngIf="searchBusForm['controls']['busDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
                                             </div>
@@ -1580,7 +1580,7 @@
                                     </div>
                                     <div class="airport_code">{{fromBusOptions['_source']['code']}}</div>
                                 </div>
-                          
+
                             </li>
                             <li *ngIf="busFromOptions.length==0"><a>No Results Found...</a></li>
                         </ul>
@@ -1610,7 +1610,7 @@
                                     </div>
                                     <div class="airport_code">{{toBusOptions['_source']['code']}}</div>
                                 </div>
-                     
+
                             </li>
                             <li *ngIf="busToOptions.length==0"><a>No Results Found...</a></li>
                         </ul>
@@ -1683,7 +1683,7 @@
                                             [(ngModel)]="trainDeparture"   autocomplete="off"  readonly formControlName="trainDeparture"  id="trainDeparture" placeholder="DD/MM/YYYY"  [value]="trainpickerDefaultMlite" >
                                             <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="trainPicker.open()" id="mliteTrainPicker" ></span>
                                             <mat-datepicker touchUi #trainPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>
-                                        
+
                                         <div *ngIf="submittedTrain && searchTrainForm['controls']['trainDeparture']['errors']"class="error_msg">
                                             <small *ngIf="searchTrainForm['controls']['trainDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
                                         </div>
@@ -1693,8 +1693,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                             <div class="travel_select_m mb-15">
                                 <div class="opt_box">
                                     <label class="d-block">
@@ -1708,8 +1708,8 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                    
-               
+
+
                     <div class="city-popup from-city-pop" *ngIf="showMliteTrainFromForm">
                         <i class="hide-w" (click)="closeSearchBox()"><img src="{{cdnUrl}}images/icons/arrow-back.svg"></i>
                         <span class="pl-3">
@@ -1735,7 +1735,7 @@
                                     </div>
                                     <div class="airport_code">{{fromTrainOptions['_source']['code']}}</div>
                                 </div>
-                        
+
                             </li>
                             <li *ngIf="trainFromOptions.length==0"><a>No Results Found...</a></li>
                         </ul>
@@ -1764,7 +1764,7 @@
                                     </div>
                                     <div class="airport_code">{{toTrainOptions['_source']['code']}}</div>
                                 </div>
-                       
+
                             </li>
                             <li *ngIf="trainToOptions.length==0"><a>No Results Found...</a></li>
                         </ul>

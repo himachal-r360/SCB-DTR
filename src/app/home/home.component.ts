@@ -163,7 +163,6 @@ export class HomeComponent implements OnInit {
           });
       }
 
-
     }
 
 
@@ -202,6 +201,7 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl(url);
     }
   }
+
 
 
 }

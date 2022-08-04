@@ -24,7 +24,7 @@ import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import { formatDate } from '@angular/common';
 
 declare var require: any;
- declare var $: any;  
+ declare var $: any;
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
@@ -48,7 +48,7 @@ export class TravelSearchComponent implements OnInit {
         @Input()  popular;
         @Input()  tab;
        	@Output() closeBottomSheetPop = new EventEmitter<any>();
-        
+
         flightDeparture: any;
         flightReturn:any;
         busDeparture: any;
@@ -73,13 +73,13 @@ export class TravelSearchComponent implements OnInit {
         fromFlightCode:any;
         toFlightCode:any;
 
-        hotelName:any; 
-        hotelId:any;  countryId:any; 
+        hotelName:any;
+        hotelId:any;  countryId:any;
         busFrom:any;
         busTo:any;
         fromBusCode:any;
         toBusCode:any;
-     
+
         trainFrom:any;
         trainTo:any;
         fromTrainCode:any;
@@ -108,7 +108,7 @@ export class TravelSearchComponent implements OnInit {
         busFromText;
         busToText;
         trainFromText;
-        trainToText;	
+        trainToText;
         flightFromOptions: any[];
         flightToOptions: any[];
         hotelOptions: any[];
@@ -125,14 +125,14 @@ export class TravelSearchComponent implements OnInit {
         trainpickermaxDateMlite;
         hotelpickermaxDateMlite;
         flightpickermaxDateMlite;
-        
+
         buspickerDefaultMlite;
         trainpickerDefaultMlite;
         hotelpickerDefaultFMlite;
         hotelpickerDefaultTMlite;
         flightpickerDefaultFMlite;
          flightpickerDefaultTMlite;
-        
+
         arrowFromkeyLocation = 0;
         arrowTokeyLocation = 0;
         enableEs:boolean=true;
@@ -160,11 +160,11 @@ export class TravelSearchComponent implements OnInit {
         flightClass:string="E";
         roomCount:number=0;
        DOMAIN_SETTINGS:string;
-       
+
         showMliteHotelForm = false;
         showMliteFlightFromForm = false;
         showMliteFlightToForm = false;
-        
+
         showMliteBusFromForm = false;
         showMliteBusToForm = false;
         showMliteTrainFromForm = false;
@@ -201,7 +201,7 @@ export class TravelSearchComponent implements OnInit {
           {"code":"WEBCAN	", "desc":"Railway Counter Ticket: Passenger has been cancelled over internet and refund has not been collected."},
           {"code":"WEBCANRF", "desc":"Railway Counter Ticket: Passenger has been cancelled over internet and refund has been collected."},
           {"code":"FBKG", "desc":"Ticket Booked Outside ARP in FT Quota. Seat has not been allotted yet"},
-          
+
         ]
     stationsdump:any=[];
             pnrsubmitted: boolean = false;
@@ -217,10 +217,10 @@ export class TravelSearchComponent implements OnInit {
    redirectPopupTriggerTimestamp;
   poweredByPartners:any =[];
 
-   constructor(private activatedRoute: ActivatedRoute,private _elRef: ElementRef,private dialog: MatDialog,private router: Router,private es: ElasticsearchService,private formBuilder: FormBuilder,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private pay: PayService, private commonHelper: CommonHelper,private cookieService: CookieService, public formatter: NgbDateParserFormatter,private calendar: NgbCalendar,public irctc:IrctcApiService, 
+   constructor(private activatedRoute: ActivatedRoute,private _elRef: ElementRef,private dialog: MatDialog,private router: Router,private es: ElasticsearchService,private formBuilder: FormBuilder,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private pay: PayService, private commonHelper: CommonHelper,private cookieService: CookieService, public formatter: NgbDateParserFormatter,private calendar: NgbCalendar,public irctc:IrctcApiService,
   //  private _css: ClipboardService,
-    ) { 
-       
+    ) {
+
         this.serviceSettings=this.appConfigService.getConfig();
         this.cdnUrl = environment.cdnUrl;
         this.siteUrl=environment.MAIN_SITE_URL;
@@ -244,23 +244,23 @@ export class TravelSearchComponent implements OnInit {
 	{"_source":{"city":"Kolkata","airport_code":"CCU","airport_name":"Netaji Subhas Chandra Bose Airport"}},
 	{"_source":{"city":"Hyderabad","airport_code":"HYD","airport_name":"Hyderabad Airport"}},
 	];
-         
-      
+
+
 	this.defaultHotelOptions= [
-	{"_source":{ "city": "Mumbai", "full_content": "Mumbai, Maharashtra,  India","country" :"IN"}} , 
-	{"_source":{ "city": "Bangalore", "full_content": "Bangalore, Karnataka,  India","country" :"IN"} }, 
-	{"_source":{ "city": "Chennai", "full_content": "Chennai, Tamil Nadu, India","country" :"IN"}} , 
-	{"_source":{ "city": "Goa", "full_content": "Goa, India","country" :"IN"}} , 
-	{"_source":{ "city": "Kolkata", "full_content": "Kolkata, West Bengal, India","country" :"IN"}} , 
-	{"_source":{ "city": "Hyderabad", "full_content": "Hyderabad, Andhra Pradesh,  India","country" :"IN"}} , 
+	{"_source":{ "city": "Mumbai", "full_content": "Mumbai, Maharashtra,  India","country" :"IN"}} ,
+	{"_source":{ "city": "Bangalore", "full_content": "Bangalore, Karnataka,  India","country" :"IN"} },
+	{"_source":{ "city": "Chennai", "full_content": "Chennai, Tamil Nadu, India","country" :"IN"}} ,
+	{"_source":{ "city": "Goa", "full_content": "Goa, India","country" :"IN"}} ,
+	{"_source":{ "city": "Kolkata", "full_content": "Kolkata, West Bengal, India","country" :"IN"}} ,
+	{"_source":{ "city": "Hyderabad", "full_content": "Hyderabad, Andhra Pradesh,  India","country" :"IN"}} ,
 	{"_source":{ "city": "Jaipur", "full_content": "Jaipur, Rajasthan, India","country" :"IN"}},
-	{"_source":{ "city": "Cochin", "full_content": "Cochin, Kerala, India","country" :"IN"}}, 
+	{"_source":{ "city": "Cochin", "full_content": "Cochin, Kerala, India","country" :"IN"}},
 	{"_source":{ "city": "London", "full_content": "London, Greater London, United Kingdom","country" :"GB"}} ,
 	{"_source":{ "city": "Dubai", "full_content": "Dubai, Dubai Emirate, United Arab Emirates","country" :"AE"}} ,
 	{"_source":{ "city": "Singapore", "full_content": "Singapore, Singapore","country" :"SG"}} ,
 	{"_source":{ "city": "Bangkok", "full_content": "Bangkok, Bangkok Province, Thailand","country" :"TH"}} ,
 	];
-	
+
 
 	this.defaultTrainOptions=[
 	{"_source":{"name":"KSR BENGALURU","id":"0","code":"SBC"}},
@@ -274,7 +274,7 @@ export class TravelSearchComponent implements OnInit {
 	{"_source":{"name":"Tirupathi","id":"0","code":"TPTY"}},
 	{"_source":{"name":"GOHAD ROAD","id":"0","code":"GOA"}}
 	];
-	
+
 	this.defaultBusOptions=[
 	{"_source":{"stateId":"","name":"Bangalore","id":"3","state":"Bangalore"}},
 	{"_source":{"stateId":"","name":"Chennai","id":"102","state":"Chennai"}},
@@ -288,31 +288,31 @@ export class TravelSearchComponent implements OnInit {
 	{"_source":{"stateId":"","name":"Delhi","id":"1492","state":"Delhi"}}
 	];
 
-	}   
-	
+	}
+
 	this.flightFromOptions= this.defaultFlightOptions;
 	this.flightToOptions= this.defaultFlightOptions;
-	
+
 	this.hotelOptions= this.defaultHotelOptions;
-        
+
         this.trainFromOptions= this.defaultTrainOptions;
         this.trainToOptions= this.defaultTrainOptions;
-        
+
         this.busFromOptions= this.defaultBusOptions;
         this.busToOptions= this.defaultBusOptions;
-	
-	
+
+
 	var CurrentDate = new Date();
-	
+
 	this.minDate = {year: CurrentDate.getFullYear(), month: CurrentDate.getMonth()+1, day: CurrentDate.getDate()};
 	 this.minFlightReturnData=this.minDate;
 	CurrentDate.setDate(CurrentDate.getDate() + 90);
 	this.buspickermaxDateMlite= new Date( CurrentDate.getFullYear(), CurrentDate.getMonth()+1, CurrentDate.getDate());
 	this.buspickermaxDate = {year: CurrentDate.getFullYear(), month: CurrentDate.getMonth()+1, day: CurrentDate.getDate()};
-	
+
 	CurrentDate = new Date();
 	CurrentDate.setDate(CurrentDate.getDate() + 365);
-		
+
 	this.flightpickermaxDate = {year: CurrentDate.getFullYear(), month: CurrentDate.getMonth()+1, day: CurrentDate.getDate()};
 	this.flightpickermaxDateMlite= new Date( CurrentDate.getFullYear(), CurrentDate.getMonth()+1, CurrentDate.getDate());
 
@@ -320,8 +320,8 @@ export class TravelSearchComponent implements OnInit {
 	CurrentDate.setDate(CurrentDate.getDate() + 124);
 	this.trainpickermaxDate = {year: CurrentDate.getFullYear(), month: CurrentDate.getMonth()+1, day: CurrentDate.getDate()};
 	this.trainpickermaxDateMlite =  new Date( CurrentDate.getFullYear(), CurrentDate.getMonth()+1, CurrentDate.getDate());
-	
-        
+
+
       //Flight Form
        this.searchFlightForm = this.formBuilder.group({
         flightClass: [this.flightClass, Validators.required],
@@ -335,8 +335,8 @@ export class TravelSearchComponent implements OnInit {
         adult: [this.adult_cnt, Validators.required],
         child: [this.child_cnt],
         infant: [this.infant_cnt],
-	}); 
-	
+	});
+
       //Hotel Form
       this.searchHotelForm = this.formBuilder.group({
         hotelName: ['', Validators.required],
@@ -346,8 +346,8 @@ export class TravelSearchComponent implements OnInit {
         hotelCheckout: ['', Validators.required],
         roomCount: [0, Validators.required],
         rooms: new FormArray([])
-	}); 
-	
+	});
+
     //Bus Form
       this.searchBusForm = this.formBuilder.group({
         busFrom: ['', Validators.required],
@@ -355,8 +355,8 @@ export class TravelSearchComponent implements OnInit {
         fromBusCode: ['', Validators.required],
         toBusCode: ['', Validators.required],
         busDeparture: ['', Validators.required]
-	}); 
-	
+	});
+
      //Train Form
       this.searchTrainForm = this.formBuilder.group({
         trainFrom: ['', Validators.required],
@@ -366,98 +366,98 @@ export class TravelSearchComponent implements OnInit {
         trainDeparture: ['', Validators.required],
         trainQuota: ['GN', Validators.required]
 	});
-	this.selectTripType(this.flightTripType); 	
-	
-  
+	this.selectTripType(this.flightTripType);
+
+
    }
 
   ngOnInit() {
-  
+
           $(document).click(function (e) {
-          
+
                 if ($(e.target).hasClass("sb_search")) {
                 $(".topsearch-auto").show();
-                }  
+                }
                 if (!$(e.target).hasClass("sb_search")   && $(e.target).parents(".topsearch-auto").length === 0) {
                 $(".topsearch-auto").hide();
                 }
-                
+
                         if ($(e.target).hasClass("hotelNamePop")) {
                 $(".from_citiesPop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("hotelNamePop")   && $(e.target).parents(".from_citiesPop").length === 0) {
                 $(".from_citiesPop").hide();
                 }
 
                  if ($(e.target).hasClass("travelInputPop")) {
                 $(".travelListHotelPop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("travelInputPop")   && $(e.target).parents(".travelListHotelPop").length === 0) {
                 $(".travelListHotelPop").hide();
                 }
-                
+
                 if ($(e.target).hasClass("travelInputFlightPop")) {
                 $(".travelListFlightPop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("travelInputFlightPop")   && $(e.target).parents(".travelListFlightPop").length === 0) {
                 $(".travelListFlightPop").hide();
                 }
                 if ($(e.target).hasClass("flightFromPop")) {
                 $(".from_citiesFlightsPop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("flightFromPop")   && $(e.target).parents(".from_citiesFlightsPop").length === 0) {
                 $(".from_citiesFlightsPop").hide();
                 }
 
                 if ($(e.target).hasClass("flightToPop")) {
                 $(".to_citiesFlightPop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("flightToPop")   && $(e.target).parents(".to_citiesFlightPop").length === 0) {
                 $(".to_citiesFlightPop").hide();
                 }
-                   
-                
+
+
                 if ($(e.target).hasClass("busFromPop")) {
                 $(".from_cities_bus_pop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("busFromPop")   && $(e.target).parents(".from_cities_bus_pop").length === 0) {
                 $(".from_cities_bus_pop").hide();
                 }
 
                 if ($(e.target).hasClass("busToPop")) {
                 $(".to_cities_bus_pop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("busToPop")   && $(e.target).parents(".to_cities_bus_pop").length === 0) {
                 $(".to_cities_bus_pop").hide();
                 }
-                   
-                   
+
+
                 if ($(e.target).hasClass("trainFromPop")) {
                 $(".from_cities_train_pop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("trainFromPop")   && $(e.target).parents(".from_cities_train_pop").length === 0) {
                 $(".from_cities_train_pop").hide();
                 }
 
                 if ($(e.target).hasClass("trainToPop")) {
                 $(".to_cities_train_pop").show();
-                }  
+                }
                 if (!$(e.target).hasClass("trainToPop")   && $(e.target).parents(".to_cities_train_pop").length === 0) {
                 $(".to_cities_train_pop").hide();
                 }
 
-                
-                
+
+
         });
-  
+
    this.syncData();
      $( ".bottom-sheet-TravelerContainer" ).addClass( "bottom-sheet-TravelerContainer-"+this.searchDisplayForm );
-        if(this.searchDisplayForm=='train'){ 
+        if(this.searchDisplayForm=='train'){
         if (this.router.url.indexOf('/pnr') > -1) {
         }
-        } 
+        }
   }
-  
+
   copy(pnrNumber: string){
     // this._css.copy(pnrNumber)
   }
@@ -478,7 +478,7 @@ export class TravelSearchComponent implements OnInit {
     // convenience getters for easy access to form fields
     get hotelForm() { return this.searchHotelForm.controls; }
     get hotelRooms() { return this.hotelForm.rooms as FormArray; }
-    
+
     roomOperation(oper) {
         let numberOfRooms = (this.roomCount  );
         if(oper=='add'){
@@ -494,12 +494,12 @@ export class TravelSearchComponent implements OnInit {
         }else{
         return;
         }
-     
+
       if (this.hotelRooms.length < numberOfRooms) {
            var acnt;
             for (let i = this.hotelRooms.length; i < numberOfRooms; i++) {
              if(i==0) acnt=2; else acnt=1;
-            
+
                 this.hotelRooms.push(this.formBuilder.group({
                     hotel_adult: [acnt, Validators.required],
                     hotel_child: [0, [Validators.required]],
@@ -511,15 +511,15 @@ export class TravelSearchComponent implements OnInit {
                 this.hotelRooms.removeAt(i);
             }
         }
-        
+
      this.hoteltraveller();
-        
+
     }
   roomAdultOperation(room,oper){
   const controlArray = <FormArray> this.searchHotelForm.get('rooms');
   var currentAdultValue=controlArray.controls[room].get('hotel_adult').value;
   var currentChildValue=controlArray.controls[room].get('hotel_child').value;
-  
+
   if(oper=='add'){
      if((currentAdultValue+currentChildValue) > 4){
     alert("Can add only 5 guests in a room");
@@ -534,8 +534,8 @@ export class TravelSearchComponent implements OnInit {
     this.hoteltraveller();
   }
 
-   
-   
+
+
    hotelRoomsChildAge;
   roomChildOperation(room,oper){
    const controlArray = <FormArray> this.searchHotelForm.get('rooms');
@@ -546,22 +546,22 @@ export class TravelSearchComponent implements OnInit {
     alert("Can add only 5 guests in a room");
     return;
     }
-  
+
    if(currentChildValue < 3)
    controlArray.controls[room].get('hotel_child').setValue(currentChildValue+1)
    }else{
    if(currentChildValue > 0)
    controlArray.controls[room].get('hotel_child').setValue(currentChildValue-1)
    }
-   
+
     var updatedChildValue=controlArray.controls[room].get('hotel_child').value;
     this.hotelRoomsChildAge= <FormArray> controlArray.controls[room].get('child_age')
-   
+
    if (this.hotelRoomsChildAge.length < updatedChildValue) {
            var acnt;
             for (let i = this.hotelRoomsChildAge.length; i < updatedChildValue; i++) {
              if(i==0) acnt=2; else acnt=1;
-            
+
                this.hotelRoomsChildAge.push(this.formBuilder.group({
                     age: ['', Validators.required],
                 }));
@@ -571,19 +571,19 @@ export class TravelSearchComponent implements OnInit {
                this.hotelRoomsChildAge.removeAt(i);
             }
         }
-        
+
  this.hoteltraveller();
   }
  getRooms(): FormArray {
     return this.hotelRooms;
   }
-  
+
   getChildAges(roomid: number): FormArray {
     return this.getRooms()
       .at(roomid)
       .get('child_age') as FormArray;
   }
- 
+
    hoteltraveller() {
     let hotelValue=this.searchHotelForm.value;
         var guestCnt=0;
@@ -591,14 +591,14 @@ export class TravelSearchComponent implements OnInit {
         guestCnt += hotelValue.rooms[i]['hotel_adult']+hotelValue.rooms[i]['hotel_child'];
         }
     this.hotelInputText=hotelValue.roomCount+' Room(s) &  '+guestCnt+' Guest(s)';
-   
+
   }
- 
-  
+
+
   selectClass(event){
   this.flightClass=event;
   }
-  
+
   selectTripType(event){
   if(event=='R'){
   this.showFlightReturn=true;
@@ -612,17 +612,17 @@ export class TravelSearchComponent implements OnInit {
   this.flightReturn=null;
    this.searchFlightForm.controls["flightReturn"].setValue('');
   this.searchFlightForm.controls["flightReturn"].clearValidators();
-  this.searchFlightForm.controls["flightReturn"].updateValueAndValidity();         
+  this.searchFlightForm.controls["flightReturn"].updateValueAndValidity();
   }
    this.flightTripType=event;
   }
-  
+
   flightPassengers(passenger,opr){
-   
+
    switch(passenger){
-    case 'adult': { 
+    case 'adult': {
      switch(opr){
-      case 'plus': { 
+      case 'plus': {
         var a = this.adult_label;
         if (this.check_traveller_count(1)) {
         var b =this.adult_label + 1;
@@ -640,7 +640,7 @@ export class TravelSearchComponent implements OnInit {
         }
       break;
       }
-     case 'minus': { 
+     case 'minus': {
         var a =this.adult_label;
         var b = (a) - 1;
         if (b > 1) {
@@ -660,13 +660,13 @@ export class TravelSearchComponent implements OnInit {
         this.updatetraveller();
       break;
       }
-     } 
+     }
     break;
    }
-   
-  case 'child': { 
+
+  case 'child': {
      switch(opr){
-      case 'plus': { 
+      case 'plus': {
           var a = this.child_label;
     if (this.check_traveller_count(1)) {
         var b = (a) + 1;
@@ -684,7 +684,7 @@ export class TravelSearchComponent implements OnInit {
     }
       break;
       }
-     case 'minus': { 
+     case 'minus': {
     var a = this.child_label;
     var b = (a) - 1;
     if (b > 0) {
@@ -699,13 +699,13 @@ export class TravelSearchComponent implements OnInit {
     this.updatetraveller();
       break;
       }
-     } 
+     }
     break;
    }
-   
-  case 'infant': { 
+
+  case 'infant': {
      switch(opr){
-      case 'plus': { 
+      case 'plus': {
        var a = this.infant_label;
     var adults = this.adult_label;
     if (this.check_traveller_count(2)) {
@@ -721,7 +721,7 @@ export class TravelSearchComponent implements OnInit {
     }
       break;
       }
-     case 'minus': { 
+     case 'minus': {
           var a = this.infant_label;;
     var b = (a) - 1;
     if (b > 0) {
@@ -736,24 +736,24 @@ export class TravelSearchComponent implements OnInit {
     this.updatetraveller();
       break;
       }
-     } 
+     }
     break;
    }
    }
   }
-  
+
   mliteDatepickerOpened(){
   console.log('opened');
   $("body").css("overflow-x", "visible");
   }
-  
+
   mliteDatepickerClosed(){
-       setTimeout(()=>{  
+       setTimeout(()=>{
          $("body").css("overflow-x", "hidden");
         }, 100);
-   
+
   }
-  
+
   updatetraveller() {
     var adultcount = (this.adult_cnt);
     var childcount = (this.child_cnt);
@@ -772,16 +772,16 @@ export class TravelSearchComponent implements OnInit {
         classtype = "Economy";
     }
     var travellerCount = adultcount + childcount + infantcount;
-    
+
     if (travellerCount > 1) {
       this.travelInputText=travellerCount + " Travellers" ;
     } else if (travellerCount == 1) {
      this.travelInputText=travellerCount + " Adult";
     }
-   
+
 }
-  
-  
+
+
   flightPassengerError;
   check_traveller_count_message(type) {
    var adultCount = (this.adult_cnt);
@@ -829,9 +829,9 @@ check_traveller_count(type) {
         var month = ("0"+(this.today.getMonth()+1)).slice(-2);
         var day = ("0"+this.today.getDate()).slice(-2);
         var date1 = new Date(this.today.getFullYear()+'-'+month+'-'+day).getTime();
-         var datePipe =new DatePipe('en-US'); 
-         
-         
+         var datePipe =new DatePipe('en-US');
+
+
           //Flights
         lastFlightSearch=localStorage.getItem('flightLastSearch');
        const lastFlightSearchValue=JSON.parse(lastFlightSearch);
@@ -850,7 +850,7 @@ check_traveller_count(type) {
         this.adult_label=parseInt(lastFlightSearchValue.adult_cnt);
         this.child_label=parseInt(lastFlightSearchValue.child_cnt);
         this.infant_label=parseInt(lastFlightSearchValue.infant_cnt);
-        
+
         this.selectTripType(this.flightTripType);
         this.selectClass(this.flightClass);
          
@@ -860,25 +860,25 @@ check_traveller_count(type) {
         this.searchFlightForm['controls']['toFlightCode'].setValue(lastFlightSearchValue.toTravelCode);
         this.searchFlightForm['controls']['flightClass'].setValue(lastFlightSearchValue.flightClass);
         this.searchFlightForm['controls']['flightTripType'].setValue(lastFlightSearchValue.flightTripType);
-   
+
        var date4 = new Date(lastFlightSearchValue.departure).getTime();
-       
+
        if(date1 <= date4){
             this.flightpickerDefaultFMlite=new Date(datePipe.transform(lastFlightSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
         this.searchFlightForm['controls']['flightDeparture'].setValue(datePipe.transform(lastFlightSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
         this.minDateFlightToMlite=new Date(datePipe.transform(lastFlightSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
          this.flightDeparture=this.flightpickerDefaultFMlite;
        }
-       
+
        if(lastFlightSearchValue.rdeparture){
        var date5 = new Date(lastFlightSearchValue.rdeparture).getTime();
-       
+
         if(date1 <= date5){
         this.flightpickerDefaultTMlite=new Date(datePipe.transform(lastFlightSearchValue.rdeparture, 'dd MMM yyyy', 'en-ES'));
         this.searchFlightForm['controls']['flightReturn'].setValue(datePipe.transform(lastFlightSearchValue.rdeparture, 'dd MMM yyyy', 'en-ES'));
          this.flightReturn=new Date(datePipe.transform(lastFlightSearchValue.rdeparture, 'dd MMM yyyy', 'en-ES'));
         }
-        
+
         }
         }else{
         this.flightFromText='DEL, Indira Gandhi Airport';
@@ -891,14 +891,14 @@ check_traveller_count(type) {
         this.searchFlightForm['controls']['flightTo'].setValue('Mumbai');
         this.searchFlightForm['controls']['fromFlightCode'].setValue('DEL');
         this.searchFlightForm['controls']['toFlightCode'].setValue('BOM');
-        
-        }  
-        
-        
+
+        } 
+
+
            //Hotels
         lastHotelSearch=localStorage.getItem('hotelLastSearch');
        const lastHotelSearchValue=JSON.parse(lastHotelSearch);
-       
+
         if(lastHotelSearchValue){
         this.hotelFromText=lastHotelSearchValue.hotelName;
         this.hotelName=lastHotelSearchValue.hotelName;
@@ -909,7 +909,7 @@ check_traveller_count(type) {
         this.searchHotelForm['controls']['hotelId'].setValue(lastHotelSearchValue.hotelId);
         this.searchHotelForm['controls']['countryId'].setValue(lastHotelSearchValue.countryId);
         this.searchHotelForm['controls']['roomCount'].setValue(lastHotelSearchValue.roomCount);
-        
+
         const jsStartDate = new Date(lastHotelSearchValue.hotelCheckin);
         const jsEndDate = new Date(lastHotelSearchValue.hotelCheckout);
         const stoday = new NgbDate(jsStartDate.getFullYear(), jsStartDate.getMonth() + 1, jsStartDate.getDate());
@@ -918,20 +918,20 @@ check_traveller_count(type) {
 
         var date8 = new Date(lastHotelSearchValue.hotelCheckin).getTime();
         if(date1 <= date8){
-   
+
         this.hotelpickerDefaultFMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd MMM yyyy', 'en-ES'));
         this.hotelpickerDefaultTMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd MMM yyyy', 'en-ES'));
         this.searchHotelForm['controls']['hotelCheckin'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd MMM yyyy', 'en-ES'));
          this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd MMM yyyy', 'en-ES'));
-         
-         
+
+
         this.hotelCheckin = this.hotelpickerDefaultFMlite;
         this.hotelCheckout =  this.hotelpickerDefaultTMlite;
-         
+
         }
 
         let localRooms=JSON.parse(lastHotelSearchValue.room);
-        
+
            const controlArray = <FormArray> this.searchHotelForm.get('rooms');
            for (let room = 0; room < localRooms.length; room++) {
               this.hotelRooms.push(this.formBuilder.group({
@@ -939,15 +939,15 @@ check_traveller_count(type) {
                 hotel_child: [localRooms[room]['hotel_child'], [Validators.required]],
                 child_age: new FormArray([])
               }));
-              
-              
+
+
                 let childAgeArray=localRooms[room]['child_age'];
-               
+
                  if (childAgeArray.length >0) {
                 var updatedChildValue=controlArray.controls[room].get('hotel_child').value;
                 this.hotelRoomsChildAge= <FormArray> controlArray.controls[room].get('child_age')
                     for (let i = 0; i < childAgeArray.length; i++) {
-                    
+
                        this.hotelRoomsChildAge.push(this.formBuilder.group({
                             age: [localRooms[room]['child_age'][i]['age'], Validators.required],
                         }));
@@ -955,11 +955,11 @@ check_traveller_count(type) {
              }
             }
          this.hoteltraveller();
-        
+
         var date6 = new Date(lastHotelSearchValue.hotelCheckin).getTime();
-        
+
         } else{
-        
+
          this.hotelFromText='New Delhi,India';
         this.hotelName='New Delhi,India';
         this.hotelId='New Delhi';
@@ -970,11 +970,11 @@ check_traveller_count(type) {
         this.searchHotelForm['controls']['countryId'].setValue('IN');
         this.searchHotelForm['controls']['roomCount'].setValue(1);
         this.roomOperation('add');
-        
+
         }
-        
-        
-         
+
+
+
         //Bus
         lastBusSearch=localStorage.getItem('busLastSearch');
        const lastBusSearchValue=JSON.parse(lastBusSearch);
@@ -990,12 +990,12 @@ check_traveller_count(type) {
         this.searchBusForm['controls']['busTo'].setValue(lastBusSearchValue.searchTo);
         this.searchBusForm['controls']['fromBusCode'].setValue(lastBusSearchValue.fromTravelCode);
         this.searchBusForm['controls']['toBusCode'].setValue(lastBusSearchValue.toTravelCode);
-   
+
        var date2 = new Date(lastBusSearchValue.departure).getTime();
 
         if(date1 <= date2){
-        
-   
+
+
         this.buspickerDefaultMlite=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
         this.searchBusForm['controls']['busDeparture'].setValue(datePipe.transform(lastBusSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
          this.busDeparture=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
@@ -1018,7 +1018,7 @@ check_traveller_count(type) {
          lastTrainSearch=localStorage.getItem('trainLastSearch');
         const lastTrainSearchValue=JSON.parse(lastTrainSearch);
         if(lastTrainSearchValue){
-       
+
         this.trainFromText=lastTrainSearchValue.fromTravelCode+', '+lastTrainSearchValue.searchFrom;
         this.trainToText=lastTrainSearchValue.toTravelCode+', '+lastTrainSearchValue.searchTo;
         this.trainFrom=lastTrainSearchValue.searchFrom;
@@ -1030,27 +1030,27 @@ check_traveller_count(type) {
         this.searchTrainForm['controls']['trainTo'].setValue(lastTrainSearchValue.searchTo);
         this.searchTrainForm['controls']['fromTrainCode'].setValue(lastTrainSearchValue.fromTravelCode);
         this.searchTrainForm['controls']['toTrainCode'].setValue(lastTrainSearchValue.toTravelCode);
-        
+
         if(lastTrainSearchValue.trainQuota){
         this.searchTrainForm['controls']['trainQuota'].setValue(lastTrainSearchValue.trainQuota);
-        
+
         this.selectedQuota=lastTrainSearchValue.trainQuota;
         this.quota = this.selectedQuota;
         }else{
              this.searchTrainForm['controls']['trainQuota'].setValue('GN');
-        
+
         this.selectedQuota='GN';
         this.quota = this.selectedQuota;
-        
+
         }
-        
+
         var date3 = new Date(lastTrainSearchValue.departure).getTime();
         if(date1 <= date3){
-    
+
         this.trainpickerDefaultMlite=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
         this.searchTrainForm['controls']['trainDeparture'].setValue(datePipe.transform(lastTrainSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
         this.trainDeparture=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-        
+
           }
         } else{
                 this.trainFromText='NDLS, NEW DELHI';
@@ -1059,7 +1059,7 @@ check_traveller_count(type) {
         this.trainTo='MUMBAI CENTRAL';
         this.fromTrainCode='NDLS';
         this.toTrainCode='MMCT';
-        
+
            this.selectedQuota='GN';
         this.quota = this.selectedQuota;
          
@@ -1068,20 +1068,20 @@ check_traveller_count(type) {
         this.searchTrainForm['controls']['fromTrainCode'].setValue('NDLS');
         this.searchTrainForm['controls']['toTrainCode'].setValue('MMCT');
          this.searchTrainForm['controls']['trainQuota'].setValue('GN');
-        
+
         }
-         
-       
-         this.updatetraveller();  
-          
-  }	
-	
-    
+
+
+         this.updatetraveller(); 
+         
+  }
+
+
         showBlockno = 0;
         showBlock(blockno){
         this.showBlockno=blockno;
         }
-  
+
    setPickerDate(date,service): NgbDateStruct {
         let cuurdate  = date;
         let dateParts1 = cuurdate.split('-');
@@ -1143,72 +1143,72 @@ check_traveller_count(type) {
 	var tempFromSearchCode= this.searchFlightForm.controls.fromFlightCode.value;
 	var tempSearchTo= this.searchFlightForm.controls.flightTo.value;
 	var tempToSearchCode= this.searchFlightForm.controls.toFlightCode.value;
-	
+
 	var tempSearchFromText= this.flightFromText;
 	var tempSearchToText= this.flightToText;
-	
+
 	this.searchFlightForm['controls']['flightTo'].setValue(tempSearchFrom);
 	this.searchFlightForm['controls']['toFlightCode'].setValue(tempFromSearchCode);
 	this.searchFlightForm['controls']['flightFrom'].setValue(tempSearchTo);
 	this.searchFlightForm['controls']['fromFlightCode'].setValue(tempToSearchCode);
-	
-		
+
+
 	this.flightFromText= tempSearchToText;
 	this.flightToText= tempSearchFromText;
   }
-  
+
     switchBusRoutes(){
         var tempSearchFrom= this.searchBusForm.controls.busFrom.value;
 	var tempFromSearchCode= this.searchBusForm.controls.fromBusCode.value;
 	var tempSearchTo= this.searchBusForm.controls.busTo.value;
 	var tempToSearchCode= this.searchBusForm.controls.toBusCode.value;
-	
+
 	var tempSearchFromText= this.busFromText;
 	var tempSearchToText= this.busToText;
-	
+
 	this.searchBusForm['controls']['busTo'].setValue(tempSearchFrom);
 	this.searchBusForm['controls']['toBusCode'].setValue(tempFromSearchCode);
 	this.searchBusForm['controls']['busFrom'].setValue(tempSearchTo);
 	this.searchBusForm['controls']['fromBusCode'].setValue(tempToSearchCode);
-	
-		
+
+
 	this.busFromText= tempSearchToText;
 	this.busToText= tempSearchFromText;
   }
-  
-  
+
+
     switchTrainRoutes(){
         var tempSearchFrom= this.searchTrainForm.controls.trainFrom.value;
 	var tempFromSearchCode= this.searchTrainForm.controls.fromTrainCode.value;
 	var tempSearchTo= this.searchTrainForm.controls.trainTo.value;
 	var tempToSearchCode= this.searchTrainForm.controls.toTrainCode.value;
-	
+
 	var tempSearchFromText= this.trainFromText;
 	var tempSearchToText= this.trainToText;
-	
+
 	this.searchTrainForm['controls']['trainTo'].setValue(tempSearchFrom);
 	this.searchTrainForm['controls']['toTrainCode'].setValue(tempFromSearchCode);
 	this.searchTrainForm['controls']['trainFrom'].setValue(tempSearchTo);
 	this.searchTrainForm['controls']['fromTrainCode'].setValue(tempToSearchCode);
-	
-		
+
+
 	this.trainFromText= tempSearchToText;
 	this.trainToText= tempSearchFromText;
   }
-  
-  
-  
+
+
+
   displayTravel(type){
     this.showFlightPassenger = true;
     this.showHotelPassenger = true;
   }
-  
+
   closeTavelPopup(){
     this.showFlightPassenger = false;
     this.showHotelPassenger = false;
   }
-  
-  
+
+
     displayTravelM(type){
       $( ".bottom-sheet-TravelerContainer" ).addClass( "bottom-sheet-TravelerContainer-Full" );
     if(type==1)
@@ -1216,9 +1216,9 @@ check_traveller_count(type) {
     else
     this.showHotelPassenger = true;
    }
-   
+
   onSubmitTrain(service,type){
-   
+
     if(this.quota == "SS"){
        var message =
         'What is LOWER BERTH/Sr. CITIZEN Quota??<br>'+
@@ -1233,25 +1233,25 @@ check_traveller_count(type) {
                 messageData: message
             }
         });
-        
+
         dialogRef.afterClosed().subscribe(result => {
         this.onSubmit(service,type);
         });
-        
+
       }else{
       this.onSubmit(service,type);
       }
-        
-  
-  } 
-   
-  
+
+
+  }
+
+
   onSubmit(service,type) {
         var xss = require("xss");
        var cookieArray=[]; var datePipe =new DatePipe('en-US');   var uDate; var uDateR; var cDate;var cDateR;var cookieDate;
        
-        switch(service) { 
-        case 'flights': { 
+        switch(service) {
+        case 'flights': {
          this.submittedFlight = true;
         if(this.searchFlightForm.controls.fromFlightCode.value==""||this.searchFlightForm.controls.fromFlightCode.value==null)
         {
@@ -1259,7 +1259,7 @@ check_traveller_count(type) {
         }
         if(this.searchFlightForm.controls.toFlightCode.value==""||this.searchFlightForm.controls.toFlightCode.value==null)
         {
-        this.searchFlightForm['controls']['flightTo'].setValue('');	
+        this.searchFlightForm['controls']['flightTo'].setValue('');
         }
 
         if(this.searchFlightForm.controls.fromFlightCode.value==this.searchFlightForm.controls.toFlightCode.value){
@@ -1269,15 +1269,15 @@ check_traveller_count(type) {
         this.validateMessageFlight=false;
         }
         this.showFlightPassenger =false;
-        if (this.searchFlightForm.invalid) { 
+        if (this.searchFlightForm.invalid) {
         return;
         }
-        
-        
+
+
         let myDate =this.searchFlightForm.value.flightDeparture;
         uDate=datePipe.transform(myDate, 'yyyy-MM-dd', 'en-ES');
         cDate=datePipe.transform(myDate, 'dd LLL yyy', 'en-ES');
-        
+
         if(this.searchFlightForm.controls.flightReturn.value!='' && this.searchFlightForm.controls.flightReturn.value!=null){
        let myDate1 =this.searchFlightForm.value.flightReturn;
         uDateR=datePipe.transform(myDate1, 'yyyy-MM-dd', 'en-ES');
@@ -1287,7 +1287,7 @@ check_traveller_count(type) {
         cDateR='';
         }
 
-        
+
         this.searchArray = {
         searchFrom:xss(this.searchFlightForm.controls.flightFrom.value),
         searchTo:xss(this.searchFlightForm.controls.flightTo.value),
@@ -1305,14 +1305,14 @@ check_traveller_count(type) {
         flightFromText:xss(""+this.flightFromText+""),
         flightToText:xss(""+this.flightToText+"")
         };
-        
+
         localStorage.setItem('flightLastSearch', JSON.stringify(this.searchArray));
 
 
         // Only for Recent Search
 
         var search_values_setCookie = [];
-        
+
         search_values_setCookie.push({
           flightfrom:xss(this.searchFlightForm.controls.flightFrom.value).split(' ').join('-'),
           flightto:xss(this.searchFlightForm.controls.flightTo.value).split(' ').join('-'),
@@ -1329,28 +1329,28 @@ check_traveller_count(type) {
           infants:xss(""+this.infant_cnt+""),
           t:xss("ZWFybg==")
         });
-        
-        
-        
+
+
+
         if (localStorage.getItem("FlightRecentSearch") != null) {
         var FlightRecentSearch = JSON.parse(window.atob(localStorage.getItem("FlightRecentSearch")));
         for (let cok = 0; cok < FlightRecentSearch.length; cok++) {
              if (FlightRecentSearch[cok]['flightfrom'] == FlightRecentSearch[0].flightfrom && FlightRecentSearch[cok]['flightto'] == FlightRecentSearch[0].flightto && FlightRecentSearch[cok]['flightdeparture'] == FlightRecentSearch[0].flightdeparture && FlightRecentSearch[cok]['class'] == FlightRecentSearch[0].class && FlightRecentSearch[cok]['Default'] == FlightRecentSearch[0].Default) {
                 FlightRecentSearch.splice(cok, 1);
             }
-     
+
         }
           search_values_setCookie= FlightRecentSearch.concat(search_values_setCookie)
            if (search_values_setCookie.length >= 3) {
         search_values_setCookie=search_values_setCookie.reverse().slice(0,3).reverse();
         }
         }
-        
-        
-        
+
+
+
         localStorage.setItem('FlightRecentSearch', btoa(JSON.stringify(search_values_setCookie)));
         // Recent Search Ends Here
-        
+
         if(environment.IS_MAIN==1){
         const current = new Date();
         this.redirectPopupTriggerTimestamp=current.getTime();
@@ -1359,27 +1359,27 @@ check_traveller_count(type) {
         this.redirectPopupUrl=environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
         return;
         }
-        
-       
+
+
        if(this.serviceSettings.flightSearch==1){
        this.router.navigate([this.sg['domainPath']+'flights/listing'], { queryParams: this.searchArray  });
        }else{
    this.document.location.href =environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
      }
-        break; 
-        } 
-        case 'hotels': { 
+        break;
+        }
+        case 'hotels': {
         this.submittedHotel = true;
         this.showHotelPassenger = false;
-        
-        if (this.searchHotelForm.invalid) { 
+
+        if (this.searchHotelForm.invalid) {
           if(this.searchHotelForm['controls']['rooms']['status']=="INVALID"){
             this.showHotelPassenger = true;
             this.showHotelPassengerError = true;
-       
+
           }else{
            this.showHotelPassengerError = false;
-          } 
+          }
         return;
         }
         let myDate =this.searchHotelForm.value.hotelCheckin;
@@ -1395,9 +1395,9 @@ check_traveller_count(type) {
         // do something with person
         return person;
         });
-        
-     
-       
+
+
+
        this.searchArray = {
         hotelName:xss(this.searchHotelForm.controls.hotelName.value),
         hotelId:xss(this.searchHotelForm.controls.hotelId.value),
@@ -1426,17 +1426,17 @@ check_traveller_count(type) {
          for (let a = 0; a < this.searchHotelForm.controls.roomCount.value; a++) {
          search_values_setCookieHotel_temp['numberOfAdults'+(a+1)]=resultArray[a]['hotel_adult'];
          search_values_setCookieHotel_temp['numberOfChildren'+(a+1)]=resultArray[a]['hotel_child'];
-         
+
          for (let c = 0; c < resultArray[a]['child_age'].length; c++) {
           search_values_setCookieHotel_temp['room'+(a+1)+'Child'+(c+1)]=resultArray[a]['child_age'][c]['age'];
          }
          }
-        
+
         search_values_setCookieHotel_temp['t']=xss("ZWFybg==");
-        
+
         search_values_setCookieHotel.push(search_values_setCookieHotel_temp);
-        
-        
+
+
 
         if (localStorage.getItem("HotelRecentSearch") != null) {
         var HotelRecentSearchResult = JSON.parse(window.atob(localStorage.getItem("HotelRecentSearch")));
@@ -1453,14 +1453,14 @@ check_traveller_count(type) {
         search_values_setCookieHotel=search_values_setCookieHotel.reverse().slice(0,3).reverse();
         }
         }
-        
+
         localStorage.setItem('HotelRecentSearch', btoa(JSON.stringify(search_values_setCookieHotel)));
 // Recent search ends
-        
+
         let queryParam:string='';  var j=1
         $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
         queryParam+='numberOfAdults'+j+'='+(jsonObject['hotel_adult'])+'&numberOfChildren'+j+'='+(jsonObject['hotel_child'])+'&';
-        
+
        if(jsonObject['child_age'].length > 0){
          for (let k = 0; k < jsonObject['child_age'].length; k++) {
          queryParam+='room'+j+'Child'+(k+1)+'='+jsonObject['child_age'][k]['age']+'&';
@@ -1468,8 +1468,8 @@ check_traveller_count(type) {
         }
         j++;
         });
-        
-        
+
+
                if(environment.IS_MAIN==1){
         const current = new Date();
         this.redirectPopupTriggerTimestamp=current.getTime();
@@ -1481,19 +1481,19 @@ check_traveller_count(type) {
 
  this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
        //  console.log(JSON.stringify(this.searchHotelForm.value, null, 4));
-        
-        break; 
-        } 
+
+        break;
+        }
         case 'bus' : {
         this.submittedBus = true;
-         
+
         if(this.searchBusForm.controls.fromBusCode.value==""||this.searchBusForm.controls.fromBusCode.value==null)
         {
         this.searchBusForm['controls']['busFrom'].setValue('');
         }
         if(this.searchBusForm.controls.toBusCode.value==""||this.searchBusForm.controls.toBusCode.value==null)
         {
-        this.searchBusForm['controls']['busTo'].setValue('');	
+        this.searchBusForm['controls']['busTo'].setValue('');
         }
 
         if(this.searchBusForm.controls.fromBusCode.value==this.searchBusForm.controls.toBusCode.value){
@@ -1502,11 +1502,11 @@ check_traveller_count(type) {
         }else{
         this.validateMessageBus=false;
         }
-         
-        if (this.searchBusForm.invalid) { 
+
+        if (this.searchBusForm.invalid) {
         return;
         }
-        
+
         let myDate =this.searchBusForm.value.busDeparture;
         uDate=datePipe.transform(myDate, 'yyyy-MM-dd', 'en-ES');
         cDate=datePipe.transform(myDate, 'dd LLL yyy', 'en-ES');
@@ -1533,7 +1533,7 @@ check_traveller_count(type) {
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
         localStorage.setItem('busLastSearch', JSON.stringify(this.searchArray));
-        
+
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
         const cookieExistsConsent: boolean = this.cookieService.check(this.serviceSettings.cookieName);
@@ -1545,8 +1545,8 @@ check_traveller_count(type) {
         }else{
          this.cookieService.set( 'busSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict');
         }
-          $(".close-bottomsheet").trigger( "click" ); 
-        
+          $(".close-bottomsheet").trigger( "click" );
+
         delete this.searchArray["cdeparture"];
         
                        if(environment.IS_MAIN==1){
@@ -1560,9 +1560,9 @@ check_traveller_count(type) {
          this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
         
         
-        break; 
-        } 
-        case 'train': { 
+        break;
+        }
+        case 'train': {
         this.submittedTrain = true;
         if(this.searchTrainForm.controls.fromTrainCode.value==""||this.searchTrainForm.controls.fromTrainCode.value==null)
         {
@@ -1570,11 +1570,11 @@ check_traveller_count(type) {
         }
         if(this.searchTrainForm.controls.toTrainCode.value==""||this.searchTrainForm.controls.toTrainCode.value==null)
         {
-        this.searchTrainForm['controls']['trainTo'].setValue('');	
+        this.searchTrainForm['controls']['trainTo'].setValue('');
         }
-        
-        
-        if (this.searchTrainForm.invalid) { 
+
+
+        if (this.searchTrainForm.invalid) {
         return;
         }
 
@@ -1584,14 +1584,14 @@ check_traveller_count(type) {
         }else{
         this.validateMessageTrain=false;
         }
-        
+
 
         let myDate =this.searchTrainForm.value.trainDeparture;
         uDate=datePipe.transform(myDate, 'yyyy-MM-dd', 'en-ES');
         cDate=datePipe.transform(myDate, 'dd LLL yyy', 'en-ES');
         cookieDate=datePipe.transform(myDate, 'ddMMyyyy', 'en-ES');
 
-        
+
 
         this.searchArray = {
         searchFrom:xss(this.searchTrainForm.controls.trainFrom.value).split(' ').join('-'),
@@ -1615,7 +1615,7 @@ check_traveller_count(type) {
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
         localStorage.setItem('trainLastSearch', JSON.stringify(this.searchArray));
-        
+
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
         const cookieExistsConsent: boolean = this.cookieService.check(this.serviceSettings.cookieName);
@@ -1627,7 +1627,7 @@ check_traveller_count(type) {
         }else{
          this.cookieService.set( 'irctcSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict');
         }
-          $(".close-bottomsheet").trigger( "click" ); 
+          $(".close-bottomsheet").trigger( "click" );
         delete this.searchArray["cdeparture"];
         
         
@@ -1642,20 +1642,20 @@ check_traveller_count(type) {
         
          this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
         
-     
+
        
-        break; 
-        } 
-    } 
+        break;
+        }
+    }
 }
 
 
-  
-  
-hideShowForms(device,inputVal,service){ 
+
+
+hideShowForms(device,inputVal,service){
   $( ".bottom-sheet-TravelerContainer" ).addClass( "bottom-sheet-TravelerContainer-Full" );
-switch(service) { 
-   case 'flights': { 
+switch(service) {
+   case 'flights': {
         if(inputVal=='flightFrom'){
         this.fromFlightCityList = true;
         this.toFlightCityList = false;
@@ -1663,9 +1663,9 @@ switch(service) {
         if(this.searchFlightForm.controls.flightFrom.value=="")
         this.flightFromOptions= this.defaultFlightOptions;
         this.showMliteFlightFromForm = true;
-        
+
         if(device=='mobile'){
-        setTimeout(()=>{  
+        setTimeout(()=>{
         $(".flightFrom-"+device).val('');
         $(".flightFrom-"+device).select();
         }, 100);
@@ -1673,7 +1673,7 @@ switch(service) {
         $(".flightFrom-"+device).focus();
         $(".flightFrom-"+device).select();
         }
-        
+
         }  else if(inputVal=='flightTo'){
         this.fromFlightCityList = false;
         this.toFlightCityList = true;
@@ -1681,45 +1681,45 @@ switch(service) {
         if(this.searchFlightForm.controls.flightTo.value=="")
         this.flightToOptions= this.defaultFlightOptions;
           this.showMliteFlightToForm = true;
-          
+
         if(device=='mobile'){
-        setTimeout(()=>{  
+        setTimeout(()=>{
         $(".flightTo-"+device).val('');
-        $(".flightTo-"+device).select();  
+        $(".flightTo-"+device).select();
         }, 100);
         }else{
         $(".flightTo-"+device).focus();
-        $(".flightTo-"+device).select();  
+        $(".flightTo-"+device).select();
         }
-          
+
         }else{
         this.fromFlightCityList = false;
         this.toFlightCityList = false;
         this.showFlightPassenger =false;
         }
-   break; 
-   } 
-  case 'hotels': { 
+   break;
+   }
+  case 'hotels': {
      if(inputVal=='hotelName'){
          this.hotelCityList = true;
          this.showMliteHotelForm = true;
 
         if(device=='mobile'){
-        setTimeout(()=>{  
-        $(".hotelName-"+device).val('');                       
+        setTimeout(()=>{
+        $(".hotelName-"+device).val('');
         $(".hotelName-"+device).focus();
         }, 100);
         }else{
         $(".hotelName-"+device).focus();
-        $(".hotelName-"+device).select(); 
+        $(".hotelName-"+device).select();
         }
-         
-        }    
+
+        }
    if(inputVal=='hotelCheckin'){
     $('#hotelc_pop').trigger('click');
    }
-      break; 
-   } 
+      break;
+   }
    case 'bus' : {
         if(inputVal=='busFrom'){
         this.fromBusCityList = true;
@@ -1727,19 +1727,19 @@ switch(service) {
         if(this.searchBusForm.controls.busFrom.value=="")
         this.busFromOptions= this.defaultBusOptions;
            this.showMliteBusFromForm = true;
-           
+
         if(device=='mobile'){
-        setTimeout(()=>{  
+        setTimeout(()=>{
         $(".busFrom-"+device).val('');
-        $(".busFrom-"+device).select(); 
+        $(".busFrom-"+device).select();
         }, 100);
         }else{
         $(".busFrom-"+device).focus();
-        $(".busFrom-"+device).select(); 
+        $(".busFrom-"+device).select();
 
         }
-           
-    
+
+
         }
         else if(inputVal=='busTo'){
         this.fromBusCityList = false;
@@ -1747,36 +1747,36 @@ switch(service) {
         if(this.searchBusForm.controls.busTo.value=="")
         this.busToOptions= this.defaultBusOptions;
            this.showMliteBusToForm = true;
-           
+
         if(device=='mobile'){
-        setTimeout(()=>{  
+        setTimeout(()=>{
         $(".busTo-"+device).val('');
-        $(".busTo-"+device).select(); 
+        $(".busTo-"+device).select();
         }, 100);
         }else{
         $(".busTo-"+device).focus();
-        $(".busTo-"+device).select(); 
+        $(".busTo-"+device).select();
 
         }
-           
- 
+
+
         }else{
         this.fromBusCityList = false;
         this.toBusCityList = false;
         }
-   
-      break; 
-   } 
-  case 'train': { 
+
+      break;
+   }
+  case 'train': {
           if(inputVal=='trainFrom'){
         this.fromTrainCityList = true;
         this.toTrainCityList = false;
         if(this.searchTrainForm.controls.trainFrom.value=="")
         this.trainFromOptions= this.defaultTrainOptions;
            this.showMliteTrainFromForm = true;
-           
+
         if(device=='mobile'){
-        setTimeout(()=>{  
+        setTimeout(()=>{
         $(".trainFrom-"+device).val('');
         $(".trainFrom-"+device).select();
         }, 100);
@@ -1793,22 +1793,22 @@ switch(service) {
         this.trainToOptions= this.defaultTrainOptions;
            this.showMliteTrainToForm = true;
           if(device=='mobile'){
-          setTimeout(()=>{  
-           $(".trainTo-"+device).val(''); 
-           $(".trainTo-"+device).select(); 
+          setTimeout(()=>{
+           $(".trainTo-"+device).val('');
+           $(".trainTo-"+device).select();
            }, 100);
          }else{
         $(".trainTo-"+device).focus();
-        $(".trainTo-"+device).select();  
+        $(".trainTo-"+device).select();
          }
         }else{
         this.fromTrainCityList = false;
         this.toTrainCityList = false;
         }
-  
-      break; 
-   } 
-} 
+
+      break;
+   }
+}
 
 }
 
@@ -1819,63 +1819,63 @@ switch(service) {
         this.fromBusCityList = false;
         this.toBusCityList = false;
         this.fromTrainCityList = false;
-        this.toTrainCityList = false; 
-        
-        this.showMliteHotelForm = false; 
-        this.showMliteFlightFromForm = false; 
-        this.showMliteFlightToForm = false; 
-        this.showMliteBusFromForm = false; 
-        this.showMliteBusToForm = false; 
-        this.showMliteTrainFromForm = false; 
-        this.showMliteTrainToForm = false; 
+        this.toTrainCityList = false;
+
+        this.showMliteHotelForm = false;
+        this.showMliteFlightFromForm = false;
+        this.showMliteFlightToForm = false;
+        this.showMliteBusFromForm = false;
+        this.showMliteBusToForm = false;
+        this.showMliteTrainFromForm = false;
+        this.showMliteTrainToForm = false;
         this.showHotelPassenger=false;
-        
+
         $( ".bottom-sheet-TravelerContainer" ).removeClass( "bottom-sheet-TravelerContainer-Full" );
   }
 
 
   closeSearchBoxHotel(type) {
-  
+
     if(type==2){
         this.submittedHotel=true;
-        if (this.searchHotelForm.invalid) { 
+        if (this.searchHotelForm.invalid) {
           if(this.searchHotelForm['controls']['rooms']['status']=="INVALID"){
             this.showHotelPassenger = true;
             this.showHotelPassengerError = true;
             return;
           }else{
            this.showHotelPassengerError = false;
-          } 
-       
+          }
+
         }
     }
-    
-    
+
+
     if(type==1){
        /* this.submittedFlight=true;
-        if (this.searchFlightForm.invalid) { 
+        if (this.searchFlightForm.invalid) {
          return;
         }*/
     }
-  
+
         this.fromFlightCityList = false;
         this.toFlightCityList = false;
         this.hotelCityList = false;
         this.fromBusCityList = false;
         this.toBusCityList = false;
         this.fromTrainCityList = false;
-        this.toTrainCityList = false; 
-        
-        this.showMliteHotelForm = false; 
-        this.showMliteFlightFromForm = false; 
-        this.showMliteFlightToForm = false; 
-        this.showMliteBusFromForm = false; 
-        this.showMliteBusToForm = false; 
-        this.showMliteTrainFromForm = false; 
-        this.showMliteTrainToForm = false; 
+        this.toTrainCityList = false;
+
+        this.showMliteHotelForm = false;
+        this.showMliteFlightFromForm = false;
+        this.showMliteFlightToForm = false;
+        this.showMliteBusFromForm = false;
+        this.showMliteBusToForm = false;
+        this.showMliteTrainFromForm = false;
+        this.showMliteTrainToForm = false;
         this.showHotelPassenger=false;
         this.showFlightPassenger=false;
-        
+
         $( ".bottom-sheet-TravelerContainer" ).removeClass( "bottom-sheet-TravelerContainer-Full" );
   }
 
@@ -1883,41 +1883,41 @@ switch(service) {
        $( ".bottom-sheet-TravelerContainer" ).addClass( "bottom-sheet-TravelerContainer-Full" );
         if(this.enableEs)
         values=values['_source'];
-        switch(service) { 
-        case 'flights': { 
-        this.searchFlightForm['controls']['flightFrom'].setValue(values.city);		
-        this.searchFlightForm['controls']['fromFlightCode'].setValue(values.airport_code); 
-        this.flightFromText=values.airport_code+', '+values.airport_name; 
+        switch(service) {
+        case 'flights': {
+        this.searchFlightForm['controls']['flightFrom'].setValue(values.city);
+        this.searchFlightForm['controls']['fromFlightCode'].setValue(values.airport_code);
+        this.flightFromText=values.airport_code+', '+values.airport_name;
         this.flightFromOptions= this.defaultFlightOptions;
         this.closeSearchBox();
         $("#flightTo").select();
         $("#flightTo").focus();
-        
+
         if(device=='mobile'){
         this.showMliteFlightToForm=true;
         }
-        
-        break; 
-        } 
-   
+
+        break;
+        }
+
         case 'bus' : {
-         this.searchBusForm['controls']['busFrom'].setValue(values.name);		
-        this.searchBusForm['controls']['fromBusCode'].setValue(values.id); 
-        this.busFromText=values.name; 
+         this.searchBusForm['controls']['busFrom'].setValue(values.name);
+        this.searchBusForm['controls']['fromBusCode'].setValue(values.id);
+        this.busFromText=values.name;
         this.busFromOptions= this.defaultBusOptions;
          this.closeSearchBox();
         $("#busTo").select();
         $("#busTo").focus();
-        
+
         if(device=='mobile'){
         this.showMliteBusToForm=true;
         }
-        break; 
-        } 
-        case 'train': { 
-        this.searchTrainForm['controls']['trainFrom'].setValue(values.name);		
-        this.searchTrainForm['controls']['fromTrainCode'].setValue(values.code); 
-        this.trainFromText=values.code+', '+values.name; 
+        break;
+        }
+        case 'train': {
+        this.searchTrainForm['controls']['trainFrom'].setValue(values.name);
+        this.searchTrainForm['controls']['fromTrainCode'].setValue(values.code);
+        this.trainFromText=values.code+', '+values.name;
         this.trainFromOptions= this.defaultTrainOptions;
         this.closeSearchBox();
         $("#trainTo").select();
@@ -1925,70 +1925,70 @@ switch(service) {
          if(device=='mobile'){
         this.showMliteTrainToForm=true;
         }
-        
-        break; 
-        } 
-        } 
-	
+
+        break;
+        }
+        }
+
   }
 
-  onToClick(values,service,device) { 
+  onToClick(values,service,device) {
         if(this.enableEs)
         values=values['_source'];
-        switch(service) { 
-        case 'flights': { 
-        this.searchFlightForm['controls']['flightTo'].setValue(values.city);		
-        this.searchFlightForm['controls']['toFlightCode'].setValue(values.airport_code);  
-         this.flightToText=values.airport_code+', '+values.airport_name; 
+        switch(service) {
+        case 'flights': {
+        this.searchFlightForm['controls']['flightTo'].setValue(values.city);
+        this.searchFlightForm['controls']['toFlightCode'].setValue(values.airport_code);
+         this.flightToText=values.airport_code+', '+values.airport_name;
         this.flightToOptions= this.defaultFlightOptions;
         this.closeSearchBox();
         $("#flightDeparture").trigger( "click" );
-        
-        
-        break; 
-        } 
-        case 'hotels': { 
-        this.searchHotelForm['controls']['hotelName'].setValue(values.full_content);		
-        this.searchHotelForm['controls']['hotelId'].setValue(values.city);  
-        this.searchHotelForm['controls']['countryId'].setValue(values.country);  
-        this.hotelFromText=values.full_content; 
+
+
+        break;
+        }
+        case 'hotels': {
+        this.searchHotelForm['controls']['hotelName'].setValue(values.full_content);
+        this.searchHotelForm['controls']['hotelId'].setValue(values.city);
+        this.searchHotelForm['controls']['countryId'].setValue(values.country);
+        this.hotelFromText=values.full_content;
         this.hotelOptions= this.defaultHotelOptions;
         this.closeSearchBox();
-        
-        
+
+
         $("#"+device+"HotelFromPicker").trigger( "click" );
-        
-        break; 
-        } 
+
+        break;
+        }
          case 'bus' : {
-        this.searchBusForm['controls']['busTo'].setValue(values.name);		
-        this.searchBusForm['controls']['toBusCode'].setValue(values.id);  
-        this.busToText=values.name; 
+        this.searchBusForm['controls']['busTo'].setValue(values.name);
+        this.searchBusForm['controls']['toBusCode'].setValue(values.id);
+        this.busToText=values.name;
         this.busToOptions= this.defaultBusOptions;
         this.closeSearchBox();
-       
+
         $("#busDeparture").trigger( "click" );
-        
-        
-        
-        break; 
-        } 
-        case 'train': { 
-        this.searchTrainForm['controls']['trainTo'].setValue(values.name);		
-        this.searchTrainForm['controls']['toTrainCode'].setValue(values.code);  
-        this.trainToText=values.code+', '+values.name; 
+
+
+
+        break;
+        }
+        case 'train': {
+        this.searchTrainForm['controls']['trainTo'].setValue(values.name);
+        this.searchTrainForm['controls']['toTrainCode'].setValue(values.code);
+        this.trainToText=values.code+', '+values.name;
         this.trainToOptions= this.defaultTrainOptions;
         this.closeSearchBox();
-       
+
         $("#trainDeparture").trigger( "click" );
-        
-        
-        break; 
-        } 
-        } 	
+
+
+        break;
+        }
+        }
   }
   EndDateChange(event,service,channel): void {
-          var datePipe =new DatePipe('en-US'); 
+          var datePipe =new DatePipe('en-US');
   if(service=='flight'){
    if(this.flightTripType=='R'){
       this.minDateFlightToMlite=event.value;
@@ -2010,17 +2010,17 @@ switch(service) {
         this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(event.value, 'dd MMM yyyy', 'en-ES'));
        }
         $("#"+channel+"HotelToPicker").trigger( "click" );
-  
+
   }
-  
-   
+
+
   }
- 
-   searchAutoComplete($event,service,field,device) { 
-   
-  
+
+   searchAutoComplete($event,service,field,device) {
+
+
        let keycode = $event.which;
-       if($event.keyCode==13){ 
+       if($event.keyCode==13){
         this.arrowFromkeyLocation=0;
 	}else if ($event.keyCode != 40 && $event.keyCode != 38 ){
         this.arrowFromkeyLocation=0;
@@ -2033,13 +2033,13 @@ switch(service) {
         searchDisplayForm: service,
         queryText: this.queryText
         };
-        
+
         this.es.esSearch(searchParam).subscribe(res => {
         //On Enter Key Pressed
          if(keycode==13){
           if(res.hits.total > 0){
-                switch(service) { 
-                case 'flights': { 
+                switch(service) {
+                case 'flights': {
                 if(field=='flightFrom'){
                 this.flightFromOptions = this.defaultFlightOptions;
                 this.onFromClick(res.hits.hits[0],service,device);
@@ -2047,13 +2047,13 @@ switch(service) {
                 this.flightToOptions = this.defaultFlightOptions;
                 this.onToClick(res.hits.hits[0],service,device);
                 }
-                break; 
-                } 
-                case 'hotels': { 
+                break;
+                }
+                case 'hotels': {
                 this.hotelOptions = this.defaultHotelOptions;
                 this.onToClick(res.hits.hits[0],service,device);
-                break; 
-                } 
+                break;
+                }
                 case 'bus' : {
                 if(field=='busFrom'){
                 this.busFromOptions = this.defaultBusOptions;
@@ -2062,9 +2062,9 @@ switch(service) {
                 this.busToOptions = this.defaultBusOptions;
                 this.onToClick(res.hits.hits[0],service,device);
                 }
-                break; 
-                } 
-                case 'train': { 
+                break;
+                }
+                case 'train': {
                 if(field=='trainFrom'){
                 this.trainFromOptions = this.defaultTrainOptions;
                 this.onFromClick(res.hits.hits[0],service,device);
@@ -2072,24 +2072,24 @@ switch(service) {
                 this.trainToOptions = this.defaultTrainOptions;
                 this.onToClick(res.hits.hits[0],service,device);
                 }
-                break; 
-                } 
+                break;
+                }
           }
          }
-       }  
-        switch(service) { 
-        case 'flights': { 
+       }
+        switch(service) {
+        case 'flights': {
         if(field=='flightFrom'){
         this.flightFromOptions=res.hits.hits;
         }else{
         this.flightToOptions=res.hits.hits;
         }
-        break; 
-        } 
-        case 'hotels': { 
+        break;
+        }
+        case 'hotels': {
         this.hotelOptions=res.hits.hits;
-        break; 
-        } 
+        break;
+        }
         case 'bus' : {
         if(field=='busFrom'){
         this.busFromOptions=res.hits.hits;
@@ -2097,9 +2097,9 @@ switch(service) {
         this.busToOptions=res.hits.hits;
         }
 
-        break; 
-        } 
-        case 'train': { 
+        break;
+        }
+        case 'train': {
         var stringified = JSON.stringify(res.hits.hits);
         stringified = stringified.replace(/station_code/g, 'code');
         stringified = stringified.replace(/station_name/g, 'name');
@@ -2110,16 +2110,16 @@ switch(service) {
         this.trainToOptions=JSON.parse(stringified);
         }
 
-        break; 
-        } 
+        break;
         }
-          
+        }
+
         });
         }
 
-        
-       } 
-      }  
+
+       }
+      }
      }
     }
 
@@ -2131,19 +2131,19 @@ switch(service) {
         }else{
         status=false;
         }
-        switch(service) { 
-        case 'flights': { 
+        switch(service) {
+        case 'flights': {
         this.validateMessageFlight=status;
-        break; 
-        } 
+        break;
+        }
         case 'bus' : {
         this.validateMessageBus=status;
-        break; 
-        } 
-        case 'train': { 
+        break;
+        }
+        case 'train': {
         this.validateMessageTrain=status;
-        break; 
-        } 
+        break;
+        }
         }
     }
 
@@ -2152,31 +2152,31 @@ switch(service) {
   pnrKeyup(){
     this.pnrsubmitted=false;
   }
-  
+
     onPaste(event: ClipboardEvent) {
     let clipboardData = event.clipboardData;
-    let pastedText = clipboardData.getData('text');  
-    var patt1 = /^[a-zA-Z0-9]*$/g; 
+    let pastedText = clipboardData.getData('text');
+    var patt1 = /^[a-zA-Z0-9]*$/g;
     var result = pastedText.match(patt1);
     if(result==null || result==undefined){
       event.preventDefault();
     }
   }
-  
+
   public findInvalidControls(pnrNo) {
     if(this.pnrNumber==undefined || this.pnrNumber=="" || this.pnrNumber == "0"){
-      return "Please enter PNR number"; 
+      return "Please enter PNR number";
     }
      if(this.pnrNumber.length !=10 ){
-      return "PNR Number should be 10 digit numeric number."; 
+      return "PNR Number should be 10 digit numeric number.";
     }
-    
-  } 
-  
-  closeBottomSheet(){
-  this.closeBottomSheetPop.emit(1); 
+
   }
-  
+
+  closeBottomSheet(){
+  this.closeBottomSheetPop.emit(1);
+  }
+
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -2185,20 +2185,20 @@ switch(service) {
     return true;
 
   }
-  
+
   count:number=0;searchTrainKey: string;
-  
-   onPNRSubmit(){ 
+
+   onPNRSubmit(){
       const message=this.findInvalidControls(this.pnrNumber);
       // this.pnrsubmitted=true;
       if(message){
         this.pnrsubmitted=true;
         this.errorMessage=message;
         this.pnrNumber="";
-      }else{           
+      }else{
         let urlParams = new HttpParams()
         .set('pnrnumber', this.pnrNumber);
-        
+
         if(sessionStorage.getItem('-pnr')!=null){
             var PNR=sessionStorage.getItem('-pnr');
             var tempPNR=JSON.parse(atob(PNR));
@@ -2208,22 +2208,22 @@ switch(service) {
 
         //console.log(tempPNR +" ## "+ this.pnrNumber);
         const body:string = urlParams.toString();
-   
+
               const dialogRef2 = this.dialog.open(CaptchaDialog, {
                 panelClass: 'm-captch',
                 disableClose: true,
               });
               dialogRef2.afterClosed().subscribe(result => {
-            
+
                 if(result){
                   this.pnrsubmitted=true;
                     this.irctc.getPnr(body).subscribe(result => {
                       this.PnrDetails = result.partnerResponse;
                       if(result.errorcode==0){
-                      
+
                           if(result.errorDesc=='Sucess'){
                             this.count=this.count+1;
-                     
+
                                   this.pnrsubmitted=true;
                                   this.showDetails=true;
                                   this.errorMessage='';
@@ -2243,19 +2243,19 @@ switch(service) {
                       }
                   });
                 }
-              }); 
+              });
 
 
       }
   }
-  
+
 charInput($event){
 var keycode = $event.which;
 if((keycode >= 33 && keycode <= 47) || (keycode >= 91 && keycode <= 96) || (keycode >= 48 && keycode <= 64) || (keycode == 8377))
 {
 event.preventDefault();
 }
-}   
+}
 
 }
 
@@ -2283,10 +2283,10 @@ export class ConfirmationDialog {
 export class seniorCitizenDilog {
   constructor(public dialogTravel: MatDialogRef < seniorCitizenDilog > , @Inject(MAT_DIALOG_DATA) public data: any) {}
   ngOnInit(){}
-  seniorCitizenconfirm() { 
+  seniorCitizenconfirm() {
       this.dialogTravel.close();
   }
-  
+
 }
 
 @Component({
@@ -2299,10 +2299,10 @@ export class CaptchaDialog {
   submitted: boolean=false;
   size:any;lang:any;theme:any;type:any;
   constructor(public dialogRef1: MatDialogRef<CaptchaDialog>,@Inject(MAT_DIALOG_DATA) public data: DialogData, @Inject(APP_CONFIG) appConfig: any,private appConfigService:AppConfigService) {}
-  
+
     ngOnInit(){
         this.serviceSettings=this.appConfigService.getConfig();
-        this.siteKey=this.serviceSettings.SITEKEY;  
+        this.siteKey=this.serviceSettings.SITEKEY;
         this.size="Normal";
         this.lang="en";
         this.theme="Light";
@@ -2314,7 +2314,7 @@ export class CaptchaDialog {
     }
 
     submitCaptcha(){
-      
+
       this.submitted=true;
       if (this.formDialog.invalid){
         return;
