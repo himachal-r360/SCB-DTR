@@ -179,7 +179,7 @@
                                     </div> 
                                     
                                 </div>
-                                <div class="mt-1 fontsize-10" *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
+                                <div class="mt-1 fontsize-10" *ngIf="airlinesNameJson && flights.operatingAirline && flights.airline != flights.operatingAirline">
                                 Operated By :
                                 <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span> 
                                 <span   *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span> 

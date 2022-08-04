@@ -432,7 +432,7 @@
                                                       <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
                                                         <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
                                                       <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
-                                                      <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
+                                                      <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more </a>
                                                   </div>
                                               </div>
                                           </div>
