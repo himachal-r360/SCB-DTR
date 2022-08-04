@@ -7,7 +7,7 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
-  ViewChild,Input
+  ViewChild,Input, Output, EventEmitter
 
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -90,7 +90,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   isDisabled = false;
   windowItem = window;
   navItemActive:any;
-
+  isShowPartner = false;
+  isPartnerDivShow =  true;
 
   constructor(
     public _styleManager: StyleManagerService,
@@ -152,7 +153,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngAfterViewInit(): void {
-
+    
 
   }
 
@@ -338,7 +339,6 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   flightSearch() {
-    debugger
     this.submitted = true;
     this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
@@ -370,7 +370,6 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       
       
       this.flightSearchCallBack(searchValue);
-      console.log(searchValue , "searchValue");
       
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
       
@@ -602,5 +601,14 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       this.arrivalDate = '';
     }
   }
+
+  showPartner(){
+    this.isShowPartner = true;
+  }
+
+  hidePartner(){
+    this.isShowPartner = false;
+  }
+
 
 }

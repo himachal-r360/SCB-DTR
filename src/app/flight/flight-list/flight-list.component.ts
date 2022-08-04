@@ -906,7 +906,6 @@ ngOnInit(): void {
 
  flightFromVal:any;
   flightSearch() {
-    debugger;
     this.loader = true;
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
