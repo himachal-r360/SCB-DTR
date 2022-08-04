@@ -305,7 +305,7 @@ new_fare: number = 0;
                 }, 10);  
                 }else{
                 this.searchData=(this.flightSessionData.queryFlightData);
-                console.log(this.flightSessionData);
+               // console.log(this.flightSessionData);
                  setTimeout(() => {
                 $("#infoprocess").modal('show');
                 }, 10);
@@ -341,7 +341,7 @@ new_fare: number = 0;
                                 
                 this.partnerToken=this.selectedOnwardVendor.partnerName;
                 this.enableVAS= this.serviceSettings.enabledVAS[this.partnerToken];
-                console.log(this.partnerToken);
+                //console.log(this.partnerToken);
                 //console.log(this.enableVAS);
 
                 this.getFlightDetails(this.flightSessionData);
@@ -488,6 +488,7 @@ new_fare: number = 0;
   this.steps=1;
     
   }
+
 
   getQueryParamData() {
       this.route.queryParams
@@ -711,7 +712,7 @@ new_fare: number = 0;
                 this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('adult_passport_issuing_country' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('adult_pax_nationality' + i, new FormControl('', [Validators.required]));
-                this.passengerForm.addControl('adult_pax_birthcountry' + i, new FormControl('', [Validators.required]));
+               // this.passengerForm.addControl('adult_pax_birthcountry' + i, new FormControl('', [Validators.required]));
                // this.passengerForm.addControl('adult_dom_pax_nationality' + i, new FormControl('', [Validators.required]));
                
                
@@ -720,7 +721,7 @@ new_fare: number = 0;
                 this.passengerForm['controls']['adult_passport_issue_date' + i].setValue(adult_passport_issue_date);
                 this.passengerForm['controls']['adult_passport_issuing_country' + i].setValue(adult_passport_issuing_country);
                 this.passengerForm['controls']['adult_pax_nationality' + i].setValue(adult_pax_nationality);
-                this.passengerForm['controls']['adult_pax_birthcountry' + i].setValue(adult_pax_birthcountry);
+                //this.passengerForm['controls']['adult_pax_birthcountry' + i].setValue(adult_pax_birthcountry);
                
                
                        this.passengerForm.controls['adult_passport_num' + i].updateValueAndValidity();
@@ -728,7 +729,7 @@ new_fare: number = 0;
                 this.passengerForm.controls['adult_passport_issue_date' + i].updateValueAndValidity();
                 this.passengerForm.controls['adult_passport_issuing_country' + i].updateValueAndValidity();
                 this.passengerForm.controls['adult_pax_nationality' + i].updateValueAndValidity();
-                this.passengerForm.controls['adult_pax_birthcountry' + i].updateValueAndValidity();
+               // this.passengerForm.controls['adult_pax_birthcountry' + i].updateValueAndValidity();
               //  this.passengerForm.controls['adult_dom_pax_nationality' + i].updateValueAndValidity();
              }
             
@@ -806,7 +807,7 @@ new_fare: number = 0;
                 this.passengerForm.removeControl('adult_passport_issue_date' + val);
                 this.passengerForm.removeControl('adult_passport_issuing_country' +val);
                 this.passengerForm.removeControl('adult_pax_nationality' +val);
-                this.passengerForm.removeControl('adult_pax_birthcountry' + val);
+                //this.passengerForm.removeControl('adult_pax_birthcountry' + val);
                 // this.passengerForm.removeControl('adult_dom_pax_nationality' val);
                 }
         
@@ -907,7 +908,7 @@ new_fare: number = 0;
                 this.passengerForm.addControl('child_passport_issue_date' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('child_passport_issuing_country' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('child_pax_nationality' + i, new FormControl('', [Validators.required]));
-                this.passengerForm.addControl('child_pax_birthcountry' + i, new FormControl('', [Validators.required]));
+              //  this.passengerForm.addControl('child_pax_birthcountry' + i, new FormControl('', [Validators.required]));
                // this.passengerForm.addControl('child_dom_pax_nationality' + i, new FormControl('', [Validators.required]));
                
                
@@ -916,7 +917,7 @@ new_fare: number = 0;
                 this.passengerForm['controls']['child_passport_issue_date' + i].setValue(child_passport_issue_date);
                 this.passengerForm['controls']['child_passport_issuing_country' + i].setValue(child_passport_issuing_country);
                 this.passengerForm['controls']['child_pax_nationality' + i].setValue(child_pax_nationality);
-                this.passengerForm['controls']['child_pax_birthcountry' + i].setValue(child_pax_birthcountry);
+              //  this.passengerForm['controls']['child_pax_birthcountry' + i].setValue(child_pax_birthcountry);
                
                
                        this.passengerForm.controls['child_passport_num' + i].updateValueAndValidity();
@@ -924,7 +925,7 @@ new_fare: number = 0;
                 this.passengerForm.controls['child_passport_issue_date' + i].updateValueAndValidity();
                 this.passengerForm.controls['child_passport_issuing_country' + i].updateValueAndValidity();
                 this.passengerForm.controls['child_pax_nationality' + i].updateValueAndValidity();
-                this.passengerForm.controls['child_pax_birthcountry' + i].updateValueAndValidity();
+             //   this.passengerForm.controls['child_pax_birthcountry' + i].updateValueAndValidity();
               //  this.passengerForm.controls['child_dom_pax_nationality' + i].updateValueAndValidity();
              }
                 
@@ -991,7 +992,7 @@ new_fare: number = 0;
                 this.passengerForm.removeControl('child_passport_issue_date' + val);
                 this.passengerForm.removeControl('child_passport_issuing_country' +val);
                 this.passengerForm.removeControl('child_pax_nationality' +val);
-                this.passengerForm.removeControl('child_pax_birthcountry' + val);
+               // this.passengerForm.removeControl('child_pax_birthcountry' + val);
                 // this.passengerForm.removeControl('infant_dom_pax_nationality' val);
                 }
         
@@ -1089,7 +1090,7 @@ new_fare: number = 0;
                 this.passengerForm.addControl('infant_passport_issue_date' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('infant_passport_issuing_country' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('infant_pax_nationality' + i, new FormControl('', [Validators.required]));
-                this.passengerForm.addControl('infant_pax_birthcountry' + i, new FormControl('', [Validators.required]));
+              //  this.passengerForm.addControl('infant_pax_birthcountry' + i, new FormControl('', [Validators.required]));
                // this.passengerForm.addControl('infant_dom_pax_nationality' + i, new FormControl('', [Validators.required]));
                
                
@@ -1098,7 +1099,7 @@ new_fare: number = 0;
                 this.passengerForm['controls']['infant_passport_issue_date' + i].setValue(infant_passport_issue_date);
                 this.passengerForm['controls']['infant_passport_issuing_country' + i].setValue(infant_passport_issuing_country);
                 this.passengerForm['controls']['infant_pax_nationality' + i].setValue(infant_pax_nationality);
-                this.passengerForm['controls']['infant_pax_birthcountry' + i].setValue(infant_pax_birthcountry);
+               // this.passengerForm['controls']['infant_pax_birthcountry' + i].setValue(infant_pax_birthcountry);
                
                
                        this.passengerForm.controls['infant_passport_num' + i].updateValueAndValidity();
@@ -1106,7 +1107,7 @@ new_fare: number = 0;
                 this.passengerForm.controls['infant_passport_issue_date' + i].updateValueAndValidity();
                 this.passengerForm.controls['infant_passport_issuing_country' + i].updateValueAndValidity();
                 this.passengerForm.controls['infant_pax_nationality' + i].updateValueAndValidity();
-                this.passengerForm.controls['infant_pax_birthcountry' + i].updateValueAndValidity();
+              //  this.passengerForm.controls['infant_pax_birthcountry' + i].updateValueAndValidity();
               //  this.passengerForm.controls['infant_dom_pax_nationality' + i].updateValueAndValidity();
              }  
                
@@ -1173,7 +1174,7 @@ new_fare: number = 0;
                 this.passengerForm.removeControl('infant_passport_issue_date' + val);
                 this.passengerForm.removeControl('infant_passport_issuing_country' +val);
                 this.passengerForm.removeControl('infant_pax_nationality' +val);
-                this.passengerForm.removeControl('infant_pax_birthcountry' + val);
+               // this.passengerForm.removeControl('infant_pax_birthcountry' + val);
                 // this.passengerForm.removeControl('infant_dom_pax_nationality' val);
                 }
         
@@ -1789,7 +1790,19 @@ new_fare: number = 0;
       if(res.statusCode ==200)
       {
          this.flightInfo=res.response;
-        
+        var suggestHotels = {
+        service:'Flights',
+        city:this.searchData.toCity,
+        country_code:this.searchData.toContry,
+        address:'',
+        check_in_date:this.searchData.departure,
+        adult:1,
+        child:1
+        };
+
+
+      this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => {});
+      
       if(this.searchData.travel=='DOM'){
        if(res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.fareKey){
        if(partner=='Yatra'){
@@ -1896,22 +1909,22 @@ new_fare: number = 0;
                 if(res.response.flight_details.fare){
                 if(res.response.flight_details.fare.ADT){
                 baseFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt );
-                totalFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +res.response.flight_details.fare.ADT.TX;
-                totalFareOnward+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +res.response.flight_details.fare.ADT.TX;
-                this.AdtFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +res.response.flight_details.fare.ADT.TX;
+                totalFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +Number(res.response.flight_details.fare.ADT.TX);
+                totalFareOnward+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +Number(res.response.flight_details.fare.ADT.TX);
+                this.AdtFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt ) +Number(res.response.flight_details.fare.ADT.TX);
                 }
                 if(res.response.flight_details.fare.CHD){
                 baseFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt );
-                totalFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +res.response.flight_details.fare.CHD.TX;
-                 totalFareOnward+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +res.response.flight_details.fare.CHD.TX;
-                this.ChildFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +res.response.flight_details.fare.CHD.TX;
+                totalFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +Number(res.response.flight_details.fare.CHD.TX);
+                 totalFareOnward+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +Number(res.response.flight_details.fare.CHD.TX);
+                this.ChildFare+=Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt ) +Number(res.response.flight_details.fare.CHD.TX);
                 }
 
                 if(res.response.flight_details.fare.INF){
                 baseFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt );
-                totalFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +res.response.flight_details.fare.INF.TX;
-                totalFareOnward+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +res.response.flight_details.fare.INF.TX;
-                this.InfantTotalFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +res.response.flight_details.fare.INF.TX;
+                totalFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +Number(res.response.flight_details.fare.INF.TX);
+                totalFareOnward+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +Number(res.response.flight_details.fare.INF.TX);
+                this.InfantTotalFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +Number(res.response.flight_details.fare.INF.TX);
                 } 
                 }
                 
@@ -1937,6 +1950,8 @@ new_fare: number = 0;
         
        this.totalCollectibleAmount = Number(this.TotalFare) ;
        this.totalCollectibleAmountFromPartnerResponse=this.totalCollectibleAmount;
+       
+      // console.log( this.totalCollectibleAmountFromPartnerResponse);
        
        
        this.onwardAmount=totalFareOnward;
@@ -2084,6 +2099,8 @@ new_fare: number = 0;
         this.passengerForm.markAllAsTouched();
         
     
+   // console.log(this.passengerForm);
+    
         if (this.passengerForm.invalid ) {
        // console.log(this.passengerAdultFormCount);
         return;
@@ -2134,58 +2151,102 @@ new_fare: number = 0;
  
         for(let i=1;i<(this.passengerAdultFormCount);i++){
         
-          this.paxInfo.push(       {
-                "title": this.passengerForm.controls['adult_title'+i]['value'],
-                "firstName": this.passengerForm.controls['adult_first_name'+i]['value'],
-                "lastName": this.passengerForm.controls['adult_last_name'+i]['value'],
-                "type": "ADT",
-                "dob": moment(this.passengerForm.controls['adult_dob'+i]['value']).format('YYYY-MM-DD') ,
-                "dateOfBirth": moment(this.passengerForm.controls['adult_dob'+i]['value']).format('YYYY-MM-DD') ,
-                "paxNationality": "IN",
-                "frequentFlyerNumbers": [],
-                "paxID": paxInfoCnt
-              });
-              
-
+        let adult_data={};
+          
+        adult_data['title']=this.passengerForm.controls['adult_title'+i]['value'];
+        adult_data['firstName']=this.passengerForm.controls['adult_first_name'+i]['value'];
+        adult_data['lastName']=this.passengerForm.controls['adult_last_name'+i]['value'];
+        adult_data['type']="ADT";
+        adult_data['dob']=moment(this.passengerForm.controls['adult_dob'+i]['value']).format('YYYY-MM-DD');
+        adult_data['dateOfBirth']=moment(this.passengerForm.controls['adult_dob'+i]['value']).format('YYYY-MM-DD');
+        adult_data['frequentFlyerNumbers']=[];
+         
+        if(this.searchData.travel=='INT'){        
+        if(this.passengerForm.controls['adult_pax_nationality'+i]['value']) 
+        adult_data['paxNationality']= this.passengerForm.controls['adult_pax_nationality'+i]['value']; 
+        
+        if(this.passengerForm.controls['adult_passport_num'+i]['value']) {
+        
+        var passport_data={};
+        
+        passport_data['passportNumber']= this.passengerForm.controls['adult_passport_num'+i]['value']; 
+        passport_data['passportIssueDate']= moment(this.passengerForm.controls['adult_passport_issue_date'+i]['value']).format('YYYY-MM-DD');
+        passport_data['passportExpDate']= moment(this.passengerForm.controls['adult_passport_expiry_date'+i]['value']).format('YYYY-MM-DD');
+        passport_data['passportIssuingCountry']= this.passengerForm.controls['adult_passport_num'+i]['value']; 
+        adult_data['passportDetail']=passport_data;
+        }
+        }
+          
+        this.paxInfo.push(adult_data);
               
         paxInfoCnt++;
         }
         
         
+         
+        for(let i=1;i<(this.passengerChildFormCount);i++){
         
-                for(let i=1;i<(this.passengerChildFormCount);i++){
-          this.paxInfo.push(       {
-                "title": this.passengerForm.controls['child_title'+i]['value'],
-                "firstName": this.passengerForm.controls['child_first_name'+i]['value'],
-                "lastName": this.passengerForm.controls['child_last_name'+i]['value'],
-                "type": "CHD",
-                "dob": moment(this.passengerForm.controls['child_dob'+i]['value']).format('YYYY-MM-DD') ,
-                 "dateOfBirth": moment(this.passengerForm.controls['child_dob'+i]['value']).format('YYYY-MM-DD') ,
-                "paxNationality": "IN",
-                "frequentFlyerNumbers": [],
-                "paxID": paxInfoCnt
-              });
+        let child_data={};
+          
+        child_data['title']=this.passengerForm.controls['child_title'+i]['value'];
+        child_data['firstName']=this.passengerForm.controls['child_first_name'+i]['value'];
+        child_data['lastName']=this.passengerForm.controls['child_last_name'+i]['value'];
+        child_data['type']="CHD";
+        child_data['dob']=moment(this.passengerForm.controls['child_dob'+i]['value']).format('YYYY-MM-DD');
+        child_data['dateOfBirth']=moment(this.passengerForm.controls['child_dob'+i]['value']).format('YYYY-MM-DD');
+        child_data['frequentFlyerNumbers']=[];
+         
+        if(this.searchData.travel=='INT'){        
+        if(this.passengerForm.controls['child_pax_nationality'+i]['value']) 
+        child_data['paxNationality']= this.passengerForm.controls['child_pax_nationality'+i]['value']; 
+        
+        if(this.passengerForm.controls['child_passport_num'+i]['value']) {
+        
+        var passport_data={};
+        
+        passport_data['passportNumber']= this.passengerForm.controls['child_passport_num'+i]['value']; 
+        passport_data['passportIssueDate']= moment(this.passengerForm.controls['child_passport_issue_date'+i]['value']).format('YYYY-MM-DD');
+        passport_data['passportExpDate']= moment(this.passengerForm.controls['child_passport_expiry_date'+i]['value']).format('YYYY-MM-DD');
+        passport_data['passportIssuingCountry']= this.passengerForm.controls['child_passport_num'+i]['value']; 
+        child_data['passportDetail']=passport_data;
+        }
+        }
+          
+        this.paxInfo.push(child_data);
+              
         paxInfoCnt++;
         }
         
+      for(let i=1;i<(this.passengerInfantFormCount);i++){
         
-                for(let i=1;i<(this.passengerInfantFormCount);i++){
-          this.paxInfo.push(       {
-                "title": this.passengerForm.controls['infant_title'+i]['value'],
-                "firstName": this.passengerForm.controls['infant_first_name'+i]['value'],
-                "lastName": this.passengerForm.controls['infant_last_name'+i]['value'],
-                "type": "INF",
-                "dob": moment(this.passengerForm.controls['infant_dob'+i]['value']).format('YYYY-MM-DD') ,
-                "dateOfBirth": moment(this.passengerForm.controls['infant_dob'+i]['value']).format('YYYY-MM-DD') ,
-                
-                "paxNationality": "IN",
-                "frequentFlyerNumbers": [],
-                "paxID": paxInfoCnt
-               /* 'Passport' : "",
-                'PlaceOfIssue' : "",
-                'VisaType'  : "",
-                'passportDateOfExpiry'  : ""*/
-              });
+        let infant_data={};
+          
+        infant_data['title']=this.passengerForm.controls['infant_title'+i]['value'];
+        infant_data['firstName']=this.passengerForm.controls['infant_first_name'+i]['value'];
+        infant_data['lastName']=this.passengerForm.controls['infant_last_name'+i]['value'];
+        infant_data['type']="INF";
+        infant_data['dob']=moment(this.passengerForm.controls['infant_dob'+i]['value']).format('YYYY-MM-DD');
+        infant_data['dateOfBirth']=moment(this.passengerForm.controls['infant_dob'+i]['value']).format('YYYY-MM-DD');
+        infant_data['frequentFlyerNumbers']=[];
+         
+        if(this.searchData.travel=='INT'){        
+        if(this.passengerForm.controls['infant_pax_nationality'+i]['value']) 
+        infant_data['paxNationality']= this.passengerForm.controls['infant_pax_nationality'+i]['value']; 
+        
+        if(this.passengerForm.controls['infant_passport_num'+i]['value']) {
+        
+        var passport_data={};
+        
+        passport_data['passportNumber']= this.passengerForm.controls['infant_passport_num'+i]['value']; 
+        passport_data['passportIssueDate']= moment(this.passengerForm.controls['infant_passport_issue_date'+i]['value']).format('YYYY-MM-DD');
+        passport_data['passportExpDate']= moment(this.passengerForm.controls['infant_passport_expiry_date'+i]['value']).format('YYYY-MM-DD');
+        passport_data['passportIssuingCountry']= this.passengerForm.controls['infant_passport_num'+i]['value']; 
+        infant_data['passportDetail']=passport_data;
+        }
+        }
+          
+        this.paxInfo.push(infant_data);
+              
         paxInfoCnt++;
         }
         
@@ -2350,14 +2411,15 @@ new_fare: number = 0;
         }
         },700) ;  
      
-        console.log(this.itineraryRequest);
+
+        //  console.log(this.itineraryRequest);
         var requestParamsEncrpt = {
         postData:this.EncrDecr.set(JSON.stringify(this.itineraryRequest)) 
         };
         this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
         
         this.itinararyResponse= JSON.parse(this.EncrDecr.get(response.result ));
-        console.log(this.itinararyResponse);
+      // console.log(this.itinararyResponse);
         
         //this.itinararyResponse=(response);
           if(this.itinararyResponse['response'] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']==200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"]==200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"]==200){
@@ -2503,7 +2565,7 @@ new_fare: number = 0;
       
    for(let i=0;i<(this.flightSessionData.returnFlights.length);i++){ 
       
-     fligthsOnward.push({
+     fligthsReturn.push({
         "arr_tym":  this.flightSessionData.returnFlights[i]['arrivalDateTime'],
         "sourcity": this.airportsNameJson[this.flightSessionData.returnFlights[i]['departureAirport']]['city'],
         "car_id":  this.flightSessionData.returnFlights[i]['airline'],

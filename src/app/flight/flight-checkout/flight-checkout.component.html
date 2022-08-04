@@ -874,7 +874,7 @@
                                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                                         <mat-form-field appearance="outline" class="w-100">
                                                         <mat-label>Passport Number</mat-label>
-                                                        <input matInput [inputMask]="dateInputMask" formControlName="adult_passport_num{{saveAdultTravellerId[passenger.id]}}" 
+                                                        <input matInput  formControlName="adult_passport_num{{saveAdultTravellerId[passenger.id]}}" 
                                                         placeholder="Passport Number" name="PassportNumber" >
                                                         <mat-error *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">Please enter passport number</mat-error>
                                                         </mat-form-field>
@@ -906,7 +906,7 @@
                                                         <mat-label>Passport Issuing Country</mat-label>
                                                         <mat-select formControlName="adult_passport_issuing_country{{saveAdultTravellerId[passenger.id]}}">
                                                         <mat-option value=""> Select </mat-option>
-                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                         </mat-select>
                                                         <mat-error *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">Please enter passport issuing country</mat-error>
                                                         </mat-form-field>
@@ -918,7 +918,7 @@
                                                         <mat-label>PAX Nationality</mat-label>
                                                         <mat-select formControlName="adult_pax_nationality{{saveAdultTravellerId[passenger.id]}}">
                                                         <mat-option value=""> Select </mat-option>
-                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                         </mat-select>
                                                         <mat-error *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">Please enter nationality</mat-error>
                                                         </mat-form-field>
@@ -1046,7 +1046,7 @@
                                                         <mat-label>Passport Issuing Country</mat-label>
                                                         <mat-select formControlName="adult_passport_issuing_country{{saveAdultTravellerId[passenger.id]}}">
                                                         <mat-option value=""> Select </mat-option>
-                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                         </mat-select>
                                                         <mat-error *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">Please enter passport issuing country</mat-error>
                                                         </mat-form-field>
@@ -1058,7 +1058,7 @@
                                                         <mat-label>PAX Nationality</mat-label>
                                                         <mat-select formControlName="adult_pax_nationality{{saveAdultTravellerId[passenger.id]}}">
                                                         <mat-option value=""> Select </mat-option>
-                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                         </mat-select>
                                                         <mat-error *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">Please enter nationality</mat-error>
                                                         </mat-form-field>
@@ -1149,7 +1149,7 @@
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                              <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Number</mat-label>
-                                        <input matInput [inputMask]="dateInputMask" formControlName="adult_passport_num{{traveller}}" 
+                                        <input matInput  formControlName="adult_passport_num{{traveller}}" 
                                         placeholder="Passport Number" name="PassportNumber" >
                                         <mat-error *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">Please enter passport number</mat-error>
                                         </mat-form-field>
@@ -1181,7 +1181,7 @@
                                         <mat-label>Passport Issuing Country</mat-label>
                                         <mat-select formControlName="adult_passport_issuing_country{{traveller}}">
                                          <mat-option value=""> Select </mat-option>
-                                         <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                         <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+traveller)">Please enter passport issuing country</mat-error>
                                         </mat-form-field>
@@ -1193,7 +1193,7 @@
                                         <mat-label>PAX Nationality</mat-label>
                                         <mat-select formControlName="adult_pax_nationality{{traveller}}">
                                          <mat-option value=""> Select </mat-option>
-                                         <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                         <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','adult_pax_nationality'+traveller)">Please enter nationality</mat-error>
                                         </mat-form-field>
@@ -1415,7 +1415,7 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                 <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Passport Number</mat-label>
-                                <input matInput [inputMask]="dateInputMask" formControlName="child_passport_num{{saveChildTravellerId[passenger.id]}}" 
+                                <input matInput formControlName="child_passport_num{{saveChildTravellerId[passenger.id]}}" 
                                 placeholder="Passport Number" name="PassportNumber" >
                                 <mat-error *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">Please enter passport number</mat-error>
                                 </mat-form-field>
@@ -1447,7 +1447,7 @@
                                 <mat-label>Passport Issuing Country</mat-label>
                                 <mat-select formControlName="child_passport_issuing_country{{saveChildTravellerId[passenger.id]}}">
                                 <mat-option value=""> Select </mat-option>
-                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">Please enter passport issuing country</mat-error>
                                 </mat-form-field>
@@ -1459,7 +1459,7 @@
                                 <mat-label>PAX Nationality</mat-label>
                                 <mat-select formControlName="child_pax_nationality{{saveChildTravellerId[passenger.id]}}">
                                 <mat-option value=""> Select </mat-option>
-                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">Please enter nationality</mat-error>
                                 </mat-form-field>
@@ -1552,7 +1552,7 @@
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                 <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>Passport Number</mat-label>
-                                                <input matInput [inputMask]="dateInputMask" formControlName="child_passport_num{{saveChildTravellerId[passenger.id]}}" 
+                                                <input matInput formControlName="child_passport_num{{saveChildTravellerId[passenger.id]}}" 
                                                 placeholder="Passport Number" name="PassportNumber" >
                                                 <mat-error *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">Please enter passport number</mat-error>
                                                 </mat-form-field>
@@ -1584,7 +1584,7 @@
                                                 <mat-label>Passport Issuing Country</mat-label>
                                                 <mat-select formControlName="child_passport_issuing_country{{saveChildTravellerId[passenger.id]}}">
                                                 <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                 </mat-select>
                                                 <mat-error *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">Please enter passport issuing country</mat-error>
                                                 </mat-form-field>
@@ -1596,7 +1596,7 @@
                                                 <mat-label>PAX Nationality</mat-label>
                                                 <mat-select formControlName="child_pax_nationality{{saveChildTravellerId[passenger.id]}}">
                                                 <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                 </mat-select>
                                                 <mat-error *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">Please enter nationality</mat-error>
                                                 </mat-form-field>
@@ -1684,7 +1684,7 @@
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Number</mat-label>
-                                        <input matInput [inputMask]="dateInputMask" formControlName="child_passport_num{{traveller}}" 
+                                        <input matInput  formControlName="child_passport_num{{traveller}}" 
                                         placeholder="Passport Number" name="PassportNumber" >
                                         <mat-error *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">Please enter passport number</mat-error>
                                         </mat-form-field>
@@ -1716,7 +1716,7 @@
                                         <mat-label>Passport Issuing Country</mat-label>
                                         <mat-select formControlName="child_passport_issuing_country{{traveller}}">
                                         <mat-option value=""> Select </mat-option>
-                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+traveller)">Please enter passport issuing country</mat-error>
                                         </mat-form-field>
@@ -1728,7 +1728,7 @@
                                         <mat-label>PAX Nationality</mat-label>
                                         <mat-select formControlName="child_pax_nationality{{traveller}}">
                                         <mat-option value=""> Select </mat-option>
-                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','child_pax_nationality'+traveller)">Please enter nationality</mat-error>
                                         </mat-form-field>
@@ -1818,7 +1818,7 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                 <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Passport Number</mat-label>
-                                <input matInput [inputMask]="dateInputMask" formControlName="child_passport_num{{traveller}}" 
+                                <input matInput formControlName="child_passport_num{{traveller}}" 
                                 placeholder="Passport Number" name="PassportNumber" >
                                 <mat-error *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">Please enter passport number</mat-error>
                                 </mat-form-field>
@@ -1850,7 +1850,7 @@
                                 <mat-label>Passport Issuing Country</mat-label>
                                 <mat-select formControlName="child_passport_issuing_country{{traveller}}">
                                 <mat-option value=""> Select </mat-option>
-                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+traveller)">Please enter passport issuing country</mat-error>
                                 </mat-form-field>
@@ -1862,7 +1862,7 @@
                                 <mat-label>PAX Nationality</mat-label>
                                 <mat-select formControlName="child_pax_nationality{{traveller}}">
                                 <mat-option value=""> Select </mat-option>
-                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="passengerForm.hasError('required','child_pax_nationality'+traveller)">Please enter nationality</mat-error>
                                 </mat-form-field>
@@ -2009,7 +2009,7 @@
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                 <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>Passport Number</mat-label>
-                                                <input matInput [inputMask]="dateInputMask" formControlName="infant_passport_num{{saveInfantTravellerId[passenger.id]}}" 
+                                                <input matInput  formControlName="infant_passport_num{{saveInfantTravellerId[passenger.id]}}" 
                                                 placeholder="Passport Number" name="PassportNumber" >
                                                 <mat-error *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">Please enter passport number</mat-error>
                                                 </mat-form-field>
@@ -2041,7 +2041,7 @@
                                                 <mat-label>Passport Issuing Country</mat-label>
                                                 <mat-select formControlName="infant_passport_issuing_country{{saveInfantTravellerId[passenger.id]}}">
                                                 <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                 </mat-select>
                                                 <mat-error *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+saveInfantTravellerId[passenger.id])">Please enter passport issuing country</mat-error>
                                                 </mat-form-field>
@@ -2053,7 +2053,7 @@
                                                 <mat-label>PAX Nationality</mat-label>
                                                 <mat-select formControlName="infant_pax_nationality{{saveInfantTravellerId[passenger.id]}}">
                                                 <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                 </mat-select>
                                                 <mat-error *ngIf="passengerForm.hasError('required','infant_pax_nationality'+saveInfantTravellerId[passenger.id])">Please enter nationality</mat-error>
                                                 </mat-form-field>
@@ -2146,7 +2146,7 @@
                                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                                         <mat-form-field appearance="outline" class="w-100">
                                                         <mat-label>Passport Number</mat-label>
-                                                        <input matInput [inputMask]="dateInputMask" formControlName="infant_passport_num{{saveInfantTravellerId[passenger.id]}}" 
+                                                        <input matInput  formControlName="infant_passport_num{{saveInfantTravellerId[passenger.id]}}" 
                                                         placeholder="Passport Number" name="PassportNumber" >
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">Please enter passport number</mat-error>
                                                         </mat-form-field>
@@ -2178,7 +2178,7 @@
                                                         <mat-label>Passport Issuing Country</mat-label>
                                                         <mat-select formControlName="infant_passport_issuing_country{{saveInfantTravellerId[passenger.id]}}">
                                                         <mat-option value=""> Select </mat-option>
-                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                         </mat-select>
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+saveInfantTravellerId[passenger.id])">Please enter passport issuing country</mat-error>
                                                         </mat-form-field>
@@ -2190,7 +2190,7 @@
                                                         <mat-label>PAX Nationality</mat-label>
                                                         <mat-select formControlName="infant_pax_nationality{{saveInfantTravellerId[passenger.id]}}">
                                                         <mat-option value=""> Select </mat-option>
-                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                                         </mat-select>
                                                         <mat-error *ngIf="passengerForm.hasError('required','infant_pax_nationality'+saveInfantTravellerId[passenger.id])">Please enter nationality</mat-error>
                                                         </mat-form-field>
@@ -2278,7 +2278,7 @@
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Number</mat-label>
-                                        <input matInput [inputMask]="dateInputMask" formControlName="infant_passport_num{{traveller}}" 
+                                        <input matInput  formControlName="infant_passport_num{{traveller}}" 
                                         placeholder="Passport Number" name="PassportNumber" >
                                         <mat-error *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">Please enter passport number</mat-error>
                                         </mat-form-field>
@@ -2310,7 +2310,7 @@
                                         <mat-label>Passport Issuing Country</mat-label>
                                         <mat-select formControlName="infant_passport_issuing_country{{traveller}}">
                                         <mat-option value=""> Select </mat-option>
-                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+traveller)">Please enter passport issuing country</mat-error>
                                         </mat-form-field>
@@ -2322,7 +2322,7 @@
                                         <mat-label>PAX Nationality</mat-label>
                                         <mat-select formControlName="infant_pax_nationality{{traveller}}">
                                         <mat-option value=""> Select </mat-option>
-                                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="passengerForm.hasError('required','infant_pax_nationality'+traveller)">Please enter nationality</mat-error>
                                         </mat-form-field>
@@ -2412,7 +2412,7 @@
                         <div class="col-xl-4 col-lg-4 col-md-6">
                         <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Passport Number</mat-label>
-                        <input matInput [inputMask]="dateInputMask" formControlName="infant_passport_num{{traveller}}" 
+                        <input matInput  formControlName="infant_passport_num{{traveller}}" 
                         placeholder="Passport Number" name="PassportNumber" >
                         <mat-error *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">Please enter passport number</mat-error>
                         </mat-form-field>
@@ -2444,7 +2444,7 @@
                         <mat-label>Passport Issuing Country</mat-label>
                         <mat-select formControlName="infant_passport_issuing_country{{traveller}}">
                         <mat-option value=""> Select </mat-option>
-                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                         </mat-select>
                         <mat-error *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+traveller)">Please enter passport issuing country</mat-error>
                         </mat-form-field>
@@ -2456,7 +2456,7 @@
                         <mat-label>PAX Nationality</mat-label>
                         <mat-select formControlName="infant_pax_nationality{{traveller}}">
                         <mat-option value=""> Select </mat-option>
-                        <mat-option *ngFor="let country of countryJson;" value="{{country.country}}"> {{country.country}} </mat-option>
+                        <mat-option *ngFor="let country of countryJson;" value="{{country.countryCode}}"> {{country.country}} </mat-option>
                         </mat-select>
                         <mat-error *ngIf="passengerForm.hasError('required','infant_pax_nationality'+traveller)">Please enter nationality</mat-error>
                         </mat-form-field>

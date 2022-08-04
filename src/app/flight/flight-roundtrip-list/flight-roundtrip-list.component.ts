@@ -221,7 +221,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         const context = {
           items: [this.ReturnflightList[n]]
         };
-        this.container.createEmbeddedView(this.template, context);
+        this.returnContainer.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
     }
@@ -232,15 +232,19 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       const context = {
         item: [this.flightList[n]],
       };
+      // console.log(context , "onward");
+      
       this.container.createEmbeddedView(this.template, context);
     }
   }
   private intialReturnData() {
     for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
-    const context = {
+    const returnContext = {
         item: [this.ReturnflightList[n]],
       };
-      this.returnContainer.createEmbeddedView(this.returnTemplate, context);
+      // console.log(returnContext , "return");
+      
+      this.returnContainer.createEmbeddedView(this.returnTemplate, returnContext);
     
     }
   }
@@ -333,7 +337,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare)     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })
@@ -1471,6 +1475,13 @@ closeFlightDetailMobile(i:any){
       }
       return item;
     });
+    this.priceSortingReturnFilteritems.filter((item:any)=>{
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    })
   }
   applySortingMobile() {
     let sortingBtn = document.getElementById('sortMobileFilter');

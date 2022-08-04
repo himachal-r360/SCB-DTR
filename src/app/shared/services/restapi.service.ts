@@ -327,5 +327,13 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
     return this.http.post(this.endpoint+'saveCheckoutFlight', param, config).pipe(map((response: any) => response));
     }
   }
+  
+   suggestHotels (param): Observable<any> {
+    //if(LOCALJSON=='true'){
+   
+  // }else{
+    return this.http.post(this.endpoint+'suggest_items', param, config).pipe(map((response: any) => response));
+    //}
+  }
 
 }
