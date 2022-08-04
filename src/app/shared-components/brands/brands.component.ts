@@ -37,12 +37,12 @@ export class BrandsComponent implements OnInit {
     autoplay: true,
     autoplayTimeout: 8000,
     autoplayHoverPause: true,
-    margin: 30,
+    margin: 10,
 
     responsiveClass: true,
     responsive: {
       0: {
-        items: 2.5,
+        items: 2.3,
         nav: false,
         dots: false
       },

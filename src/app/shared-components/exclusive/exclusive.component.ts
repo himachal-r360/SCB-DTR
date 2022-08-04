@@ -36,12 +36,12 @@ export class ExclusiveComponent implements OnInit {
     autoplay: true,
     autoplayTimeout: 8000,
     autoplayHoverPause: true,
-    margin: 30,
+    margin: 15,
 
     responsiveClass: true,
     responsive: {
       0: {
-        items: 2.5,
+        items: 1.3,
         nav: false,
         dots: false
       },

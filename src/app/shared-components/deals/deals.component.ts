@@ -37,7 +37,7 @@ export class DealsComponent implements OnInit {
   dealOptions: any = {
     loop: false,
     navText: ['<span class="left_arrow" [style.opacity]="myCarousel.isLast ? 0:1"><img src="' + environment.cdnUrl + 'images/smartbuy/icons/left-arrow.svg"></span>', '<span class="right_arrow" ><img src="' + environment.cdnUrl + 'images/smartbuy/icons/right-arrow.svg"></span>'],
-    margin:25,
+    margin:20,
     responsiveClass: true,
     responsive: {
       0: {

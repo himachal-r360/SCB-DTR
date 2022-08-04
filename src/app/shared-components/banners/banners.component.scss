@@ -1,8 +1,14 @@
 
+$mobile: '@media screen and (max-width: 600px)';
+
 .btn-card{
     color: #CF8D56;
     padding: 15px;
     font-family: 'opensans-bold';
+    @media screen and (max-width: 600px) {
+        padding: 10px;
+        font-size: 14px;
+    }
 }
 
 #regaliaGoldCarousel{
@@ -25,15 +31,27 @@
         left: 5%;
         bottom: 3.25rem;
         text-align: left;
+        @media screen and (max-width: 600px) {
+            left: 3%;
+            bottom: 0;
+        }
         h5{
             font-size: 60px;
             font-family: 'opensans-bold';
             width: 500px;
+            @media screen and (max-width: 600px) {
+                font-size: 40px;
+                width: 440px;
+            }
         }
     }
     .carousel-item{
         img{
             height: 500px;
+            @media screen and (max-width: 600px) {
+                height: 300px;
+                object-fit: fill;
+            }
         }
     }
 }
@@ -50,11 +68,17 @@
             background-repeat: no-repeat;
             background-size: contain;
             padding: 25px 60px;
+            @media screen and (max-width: 600px) {
+                padding: 25px 20px;
+            }
             .card_name{
                 font-family: 'opensans-medium';
                 color: #ffffff;
                 font-size: 18px;
                 margin-bottom: 20px;
+                @media screen and (max-width: 600px) {
+                    font-size: 14px;
+                }
                 a{
                     color: #CF8D56;
                     font-size: 14px;
@@ -64,6 +88,10 @@
         .number{
             color: #ffffff;
             font-size: 30px;
+            @media screen and (max-width: 600px) {
+                font-size: 20px;
+                font-weight: bold;
+            }
             .full_points{
                 font-size: 12px;
                 font-style: italic;
@@ -74,6 +102,10 @@
             font-size: 14px;
             font-style: italic;
             margin-top: 8px;
+            @media screen and (max-width: 600px) {
+                font-size: 12px;
+                margin-top: 0px;
+            }
         }
     }
     .card_benefit{
@@ -116,17 +148,27 @@
                     line-height: normal; */
                 }
             }
+            .progress{
+                box-shadow: 0px 0px 8px rgb(255 164 2);
+                border-radius: 10px;
+            }
         }
     }
 }
 .recent_search{
     padding: 15px;
     background-color: #2C0E00;
+    @media screen and (max-width: 600px) {
+        padding: 0px 5px 10px;
+    }
     .text_rec{
         display: flex;
         align-items: center;
         justify-content: center;
         height: 60px;
+        @media screen and (max-width: 600px) {
+            height: 40px;
+        }
         .rec_text{
             color: #ffffff;
             font-size: 15px;
@@ -182,5 +224,23 @@
     }
     &:hover, &:hover .clk-icn{
         opacity: 1;
+    }
+}
+
+.perk_flex{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 15px;
+    @media screen and (max-width: 600px) {
+        justify-content: left;
+        overflow-x: auto;
+    }
+    div.perk_item{
+        width: 100%;
+        @media screen and (max-width: 600px) {
+            width: 85%;
+            flex-shrink: 0;
+        }
     }
 }

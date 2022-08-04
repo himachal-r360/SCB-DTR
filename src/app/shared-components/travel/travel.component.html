@@ -2,7 +2,7 @@
     <!-- <h5 class="head_title">Book Travel & Stay</h5> -->
     <div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-sm-6 col-12 px-sm-3 px-0">
                 <form [formGroup]="searchFlightForm" name="searchFlightForm">
                     <div class="travel_section">
                         <div class="heading_sec flight_bg">
@@ -106,8 +106,8 @@
                             <div class="row">
                                 <div class="col-5">
                                     <div>
-                                        <div class="from_sec_flight select_city">
-                                            <div class="input_box">
+                                        <div class="from_sec_flight select_city ">
+                                            <div class="flight_from input_box">
                                                 <label>
                                                     <span>From</span>
                                                     <input type="text" [(ngModel)]="flightFrom" (ngModelChange)="selectCheck(flightFrom,flightTo,'flights')" class="inputField flightFrom flightFrom-web flightFromPop"  formControlName="flightFrom" id="flightFrom" placeholder="From" name="flightFrom" (focus)="hideShowForms('web', 'flightFrom','flights')" (keyup)="searchAutoComplete($event,'flights','flightFrom' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
@@ -154,8 +154,8 @@
                                 </div>
                                 <div class="col-5">
                                     <div>
-                                        <div class="to_sec_flight select_city">
-                                            <div class="input_box">
+                                        <div class="to_sec_flight select_city ">
+                                            <div class="flight_to input_box">
                                                 <label>
                                                     <span>To</span>
                                                     <input type="text" [(ngModel)]="flightTo" (ngModelChange)="selectCheck(flightFrom,flightTo,'flights')" class="inputField flightTo flightTo-web flightToPop" formControlName="flightTo" id="flightTo" placeholder="To" name="flightTo" (focus)="hideShowForms('web', 'flightTo','flights')" (keyup)="searchAutoComplete($event,'flights','flightTo' ,'web')" (keypress)="charInput($event)" autocomplete="off">
@@ -254,7 +254,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-6">
+            <div class="col-sm-6 col-12 px-sm-3 px-0">
                 <form [formGroup]="searchHotelForm" name="searchHotelForm" ngxScrollToFirstInvalid>
                     <div class="travel_section">
                         <div class="heading_sec hotel_bg">
