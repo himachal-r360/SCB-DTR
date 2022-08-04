@@ -248,7 +248,7 @@ new_fare: number = 0;
   isMobile:boolean= true;
 
   constructor( private ref: ChangeDetectorRef,public _irctc: IrctcApiService,private _fb: FormBuilder,private _flightService:FlightService, private route:ActivatedRoute ,private router:Router, private sg: SimpleGlobal,private appConfigService:AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,private modalService:NgbModal, @Inject(DOCUMENT) private document: any) { 
-
+   this.route.url.subscribe(url =>{
                 this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
                 this.serviceSettings=this.appConfigService.getConfig();
                 this.whatsappFeature =this.serviceSettings.whatsappFeature;
@@ -376,7 +376,6 @@ new_fare: number = 0;
 
                 this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
                     if (results.result) {
-                    
                         let result = JSON.parse(this.EncrDecr.get(results.result));
                         this.IsDcemiEligibleFlag = result.eligible; 
                     }
@@ -481,6 +480,7 @@ new_fare: number = 0;
         jobGroup.addControl('gstPincode', new FormControl());
         jobGroup.addControl('gstState', new FormControl());
         jobGroup.addControl('saveGST', new FormControl('1'));
+         });
 
   }
 
