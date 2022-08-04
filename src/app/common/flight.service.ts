@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable ,EventEmitter} from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 const LOCALJSON = environment.LOCALJSON;
@@ -9,12 +9,12 @@ const LOCALJSON = environment.LOCALJSON;
 export class FlightService {
   flight = environment.url + "api/flightSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
-  flightInfo =  environment.url + "api/flightInfo";
+  flightInfo = environment.url + "api/flightInfo";
   flightListData: any;
-  flightListDate:any;
+  flightListDate: any;
   flightsIcon = "assets/Json/airlines.json";
-  airportsNameList ="assets/Json/airports.json";
-  flightDetails:any;
+  airportsNameList = "assets/Json/airports.json";
+  flightDetails: any;
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
@@ -27,63 +27,64 @@ export class FlightService {
   constructor(private http: HttpClient) {
   }
 
-   showHeader(value: boolean) {
-        this.headerHideShow.next(value);
+  showHeader(value: boolean) {
+    this.headerHideShow.next(value);
+  }
+
+
+  flightList(para: any) {
+    let body = JSON.stringify(para);
+    if (LOCALJSON == 'true') {
+      if (para.travel == 'INT') {
+        if (para.flightdefault == 'O') {
+          return this.http.get('assets/data/flight-int-onward.json');
+        } else {
+          return this.http.get('assets/data/flight-int-return.json');
+        }
+      } else {
+        if (para.flightdefault == 'O') {
+          return this.http.get('assets/data/flight-onward.json');
+        } else {
+          return this.http.get('assets/data/flight-return.json');
+        }
+      }
+    } else {
+      console.log(body, "body");
+
+      return this.http.post(this.flight, body, { headers: this.header })
     }
-
-
-        flightList(para: any) {
-        let body = JSON.stringify(para);
-        if(LOCALJSON=='true'){
-        if(para.travel=='INT'){
-        if(para.flightdefault=='O'){
-        return this.http.get('assets/data/flight-int-onward.json');
-        }else{
-        return this.http.get('assets/data/flight-int-return.json');
-        }
-        }else{
-        if(para.flightdefault=='O'){
-        return this.http.get('assets/data/flight-onward.json');
-        }else{
-        return this.http.get('assets/data/flight-return.json');
-        }
-        }
-        }else{
-        return this.http.post(this.flight, body, { headers: this.header })
-        }
-        }
+  }
 
   getCityList(queryText: any) {
     return this.http.post(`${this.city}&queryText=${queryText}`, null)
   }
 
-  getFlightIcon(){
+  getFlightIcon() {
     return this.http.get(this.flightsIcon);
   }
 
-  getAirportName(){
+  getAirportName() {
     return this.http.get(this.airportsNameList);
   }
 
   // setFlightsDetails
   // call from flight list for setting the value
   setFlightsDetails(param: any) {
-    this.flightDetailsSubject.next(param) ;
+    this.flightDetailsSubject.next(param);
   }
-    // call from flight details
+  // call from flight details
   getFlightDetailsVal(): Observable<any> {
     return this.flightDetailsSubject.asObservable();
   }
 
 
 
-  getFlightInfo(param:any)
-  {
-     if(LOCALJSON=='true'){
+  getFlightInfo(param: any) {
+    if (LOCALJSON == 'true') {
       return this.http.get('assets/data/flightInfo.json');
-    }else{
+    } else {
 
-    return this.http.post(this.flightInfo, param, { headers: this.header })
+      return this.http.post(this.flightInfo, param, { headers: this.header })
     }
   }
 
