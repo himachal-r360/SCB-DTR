@@ -357,7 +357,6 @@ ngOnInit(): void {
   }
   // Flight Timings Filter
   FlightTimingsFilterFlightData(timingsItems: any) {
-    debugger
     timingsItems.active = !timingsItems.active;
     if (timingsItems.name == "0_6") {
       this.flight_PopularItems.filter((item: any) => { if (item.name == "Morning_Departures") { item.active; return item; } })
@@ -438,7 +437,6 @@ ngOnInit(): void {
 
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
-    debugger
     let updatedflightList: any = [];
 
     let flightListWithOutFilter = this.flightListWithOutFilter;
@@ -646,16 +644,15 @@ ngOnInit(): void {
 
   //Timing Filter Flights
   timingFilterFlights(flightList: any) {
-    debugger
     this.flightList = flightList;
     let updatedflightList: any = [];
     let isfilterMorningDepartures: any = false;
     let isfilterFlightTiming = false;
     var current_date = new Date(this.departureDate),
-      current_year = current_date.getFullYear(),
-      current_mnth = current_date.getMonth(),
-      current_day = current_date.getDate();
-    console.log(current_date,"current_date");
+    current_year = current_date.getFullYear(),
+    current_mnth = current_date.getMonth(),
+    current_day = current_date.getDate();
+    
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
     var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
@@ -683,7 +680,6 @@ ngOnInit(): void {
         
         flightList.filter((d: any) => {
           let singleFlightTiming = [];
-          console.log(d.flights,"d.flights");
           singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
             if (indx == 0) {
               if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
@@ -704,7 +700,6 @@ ngOnInit(): void {
             filteredTimingArr.push(d);
           }
         });
-        console.log(filteredTimingArr,"filteredTimingArr");
       }
       updatedflightList = filteredTimingArr;
       
@@ -911,7 +906,7 @@ ngOnInit(): void {
 
  flightFromVal:any;
   flightSearch() {
-
+    debugger;
     this.loader = true;
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {

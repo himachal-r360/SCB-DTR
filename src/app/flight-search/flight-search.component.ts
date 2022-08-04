@@ -41,7 +41,7 @@ export const MY_DATE_FORMATS = {
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ],
-
+  
 })
 
 
@@ -211,6 +211,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fromFlightList = true;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
     this.getCityList(evt.target.value.trim().toLowerCase());
+    
   }
 
   toList(evt: any) {
@@ -233,7 +234,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         let removeClassToCity = document.getElementById('removeClassToCity');
         removeClassToCity?.classList.remove('flight-from-hide');
         setTimeout(() => {
-        let toCityDivElement=document.getElementById("toCityDiv");
+        let toCityDivElement:any=document.getElementById("toCityDiv");
         toCityDivElement?.click();
         this.toCityInput.nativeElement.focus();
         }, 50);
@@ -292,6 +293,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         
  
            
+      //  this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
        this.departureDate = new Date(lastSearch.departure);
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
         this.arrivalDate = new Date(lastSearch.arrival);
@@ -336,6 +338,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   flightSearch() {
+    debugger
     this.submitted = true;
     this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
@@ -367,6 +370,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       
       
       this.flightSearchCallBack(searchValue);
+      console.log(searchValue , "searchValue");
+      
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
       
       searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
