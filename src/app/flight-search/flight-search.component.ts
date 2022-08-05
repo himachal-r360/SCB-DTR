@@ -10,7 +10,7 @@ import {
   ViewChild,Input
 
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -90,7 +90,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   isDisabled = false;
   windowItem = window;
   navItemActive:any;
-
+  multicityFlightData : FormGroup;
 
   constructor(
     public _styleManager: StyleManagerService,
@@ -116,7 +116,6 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
     flightto: ['',[Validators.required]],
@@ -140,6 +139,30 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   ngOnInit(): void {
 
+    this.multicityFlightData = this._fb.group({
+      flightfrom: new FormArray([ new FormControl('',[Validators.required]) ]),
+      flightto: ['',[Validators.required]],
+      fromCity: ['',[Validators.required]],
+      toCity: ['',[Validators.required]],
+      fromContry: ['',[Validators.required]],
+      toContry: ['',[Validators.required]],
+          fromAirportName: ['',[Validators.required]],
+      toAirportName: ['',[Validators.required]],
+      flightclass: ['E'],
+      flightdefault: [],
+      departure:['',[Validators.required]],
+      arrival: ['',],
+      adults: ['1',[Validators.required]],
+      child: ['0'],
+      infants: ['0'],
+      travel: ['',[Validators.required]],
+      multicityFormGroup : this._fb.group({
+        form: this._fb.array([this.addMultiCity()]),
+      }),
+    });
+
+
+
    this._flightService.showHeader(true);
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
@@ -151,6 +174,59 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setSearchFilterData()
 
   }
+
+  addMultiCity() {
+
+    return this._fb.group({
+      flightfrom: new FormArray([ new FormControl('',[Validators.required]) ]),
+      flightto: ['',[Validators.required]],
+      fromCity: ['',[Validators.required]],
+      toCity: ['',[Validators.required]],
+      fromContry: ['',[Validators.required]],
+      toContry: ['',[Validators.required]],
+          fromAirportName: ['',[Validators.required]],
+      toAirportName: ['',[Validators.required]],
+      flightclass: ['E'],
+      flightdefault: [],
+      departure:['',[Validators.required]],
+      arrival: ['',],
+      adults: ['1',[Validators.required]],
+      child: ['0'],
+      infants: ['0'],
+      travel: ['',[Validators.required]],
+    }) ;
+  }
+
+  addMoreMultiCity() {
+    return this.multicityFormData.push(this.addMultiCity());
+  }
+
+  onSubmit() {
+    console.log(this.multicityFormData.value);
+  }
+
+  onChange(val, index: number) {
+
+      (<FormGroup>this.multicityFormData.at(index)).addControl(
+        'flightfrom'+index,
+        this._fb.control([])
+      );
+  }
+
+
+  get multicityFormData() {
+    const control = <FormArray>(
+      (<FormGroup>this.multicityFlightData.get('multicityFormGroup')).get('form')
+    );
+    return control;
+  }
+
+
+
+
+
+
+
   ngAfterViewInit(): void {
 
 
@@ -225,10 +301,10 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         this.flightData.get('fromCity').setValue(para1.city);
         this.flightData.get('fromContry').setValue(para1.country);
         this.flightData.get('fromAirportName').setValue(para1.airport_name);
-        
+
         this.fromAirpotName = para1.airport_name;
         this.fromCityName = para1.city;
-        
+
         this.fromFlightList = false;
         let removeClassToCity = document.getElementById('removeClassToCity');
         removeClassToCity?.classList.remove('flight-from-hide');
@@ -237,7 +313,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         toCityDivElement?.click();
         this.toCityInput.nativeElement.focus();
         }, 50);
-        
+
   }
 
   selectToFlightList(para2: any) {
@@ -260,8 +336,8 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
-        
-               
+
+
         this.flightData.get('flightclass').setValue(lastSearch.flightclass );
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
         this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
@@ -275,23 +351,23 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         this.flightData.get('toCity').setValue(lastSearch.toCity);
         this.flightData.get('toContry').setValue(lastSearch.toContry);
         this.flightData.get('travel').setValue(lastSearch.travel);
-        
+
         this.fromCityName = lastSearch.fromCity;
         this.toCityName = lastSearch.toCity;
 
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
-        
+
         /*
          if(lastSearch.departure)
         this.flightData.get('departure').setValue(moment(lastSearch.departure).format('YYYY-MM-DD'));
-       
+
         if(lastSearch.arrival)
         this.flightData.get('arrival').setValue(moment(lastSearch.arrival).format('YYYY-MM-DD'));
         */
-        
- 
-           
+
+
+
        this.departureDate = new Date(lastSearch.departure);
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
         this.arrivalDate = new Date(lastSearch.arrival);
@@ -300,15 +376,15 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       this.adultsVal = lastSearch.adults;
       this.childVal = lastSearch.child;
       this.infantsVal = lastSearch.infants;
-      
+
       this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
       if(lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != ""){
         this.navItemActive = "Round Trip"
       }
-      
-    }  
-  
-    
+
+    }
+
+
   }
 
   flightSearchCallBack(param:any){
@@ -351,7 +427,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     }else{
     this.flightData.get('flightdefault').setValue('O');
     }
-    
+
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
          this.flightData.get('travel').setValue('DOM');
         }else{
@@ -364,16 +440,16 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else {
       let searchValue = this.flightData.value;
-      
-      
+
+
       this.flightSearchCallBack(searchValue);
       localStorage.setItem('lastSearch',JSON.stringify(searchValue));
-      
+
       searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
-      
+
       if(searchValue.arrival)
        searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
-      
+
         let url;
         if(this.flightData.value.fromContry=='India' && this.flightData.value.toContry=='India' ){
         if(this.flightData.value.arrival == null || this.flightData.value.arrival == undefined ||this.flightData.value.arrival == "") {
@@ -387,12 +463,12 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
         }else{
            url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
-    
-       }  
-       
+
+       }
 
 
-        
+
+
         // (error) => { console.log(error) });
       }
     }
@@ -549,7 +625,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   swap()
   {
     var FromData = {flightFrom: this.flightData.value.flightfrom,fromAirpotName:this.flightData.value.fromAirportName,fromCityName: this.flightData.value.fromCity,fromContry : this.flightData.value.fromContry }
-    
+
         this.flightData.get('flightfrom').setValue(this.flightData.value.flightto );
         this.flightData.get('fromCity').setValue(this.flightData.value.toCity);
         this.flightData.get('fromContry').setValue(this.flightData.value.toContry);

@@ -1,371 +1,341 @@
                         <form [formGroup]="flightData">
-                            <div class="travel-select-data-area">
-                                <div class="travel-select-trip">
-                                    <ul class="travel-select-trip-ul">
-                                        <li>
-                                            <span class="selectway " (click)="navBarLink('One Way')"
-                                                [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null   ? 'active':'' ">One
-                                                Way</span>
-                                        </li>
-                                        <li>
-                                            <span class="selectway " (click)="navBarLink('Round Trip')"
-                                                [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round
-                                                Trip</span>
-                                        </li>
-                                        <li>
-                                            <span class="selectway" (click)="navBarLink('Multicity')"
-                                                [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multicity</span>
-                                        </li>
-                                        <li>
-                                            <div class="Travellers-dropdown ms-3" appDropdown>
-                                                <div class="Travellers-dropdown-title">
-                                                    <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i>
-                                                    </h5>
-                                                </div>
-                                                <ul class="Travellers-dropdown-data flight-from-hide dropdown"
-                                                    id="openTravellers" #openTravellers>
-                                                    <li>
-                                                        <p class="t-title">Travellers</p>
-                                                    </li>
-                                                    <li>
-                                                        <div class="Travellers-passengers-data">
-                                                            <div class="Travellers-name">
-                                                                <h6>Adult</h6>
-                                                                <p>12 years & above</p>
-                                                            </div>
-                                                            <div class="Travellers-qty">
-                                                                <div class="quantity buttons_added">
-                                                                    <input type="button" (click)="decreaseAdult()"
-                                                                        value="-" class="qty-buttons minus">
-                                                                    <input type="number" step="1"
-                                                                        oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
-                                                                        min="1" max="9" name="quantity" value="0"
-                                                                        title="Qty"
-                                                                        class="input-text qty text quantity_adult1_events"
-                                                                        formControlName="adults" size="4" pattern=""
-                                                                        inputmode=""
-                                                                        [(ngModel)]="flightData.value.adults">
-                                                                    <input type="button" (click)="increaseAdult()"
-                                                                        value="+" [disabled]="disableParent"
-                                                                        class="qty-buttons plus">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="Travellers-passengers-data">
-                                                            <div class="Travellers-name">
-                                                                <h6>Child</h6>
-                                                                <p>2 - 11 years</p>
-                                                            </div>
-                                                            <div class="Travellers-qty">
-                                                                <div class="quantity buttons_added">
-                                                                    <input type="button" (click)="decreaseChild()"
-                                                                        value="-" class="qty-buttons minus">
-                                                                    <input type="number" step="1" min="0" max="6"
-                                                                        name="quantity" value="0" title="Qty"
-                                                                        class="input-text qty text quantity_adult1_events"
-                                                                        size="4" pattern="" inputmode=""
-                                                                        formControlName="child"
-                                                                        [(ngModel)]="flightData.value.child">
-                                                                    <input type="button" (click)="increaseChild()"
-                                                                        [disabled]="disablechildren" value="+"
-                                                                        class="qty-buttons plus">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-
-                                                        <div class="Travellers-passengers-data">
-                                                            <div class="Travellers-name">
-                                                                <h6>Infant</h6>
-                                                                <p>Under 2 years</p>
-                                                            </div>
-                                                            <div class="Travellers-qty">
-                                                                <div class="quantity buttons_added">
-                                                                    <input type="button" (click)="decreaseInfant()"
-                                                                        value="-" class="qty-buttons minus">
-                                                                    <input type="number" step="1" min="0" max="6"
-                                                                        name="quantity" value="0" title="Qty"
-                                                                        class="input-text qty text quantity_adult1_events"
-                                                                        size="4" pattern="" formControlName="infants"
-                                                                        [(ngModel)]="flightData.value.infants"
-                                                                        inputmode="">
-                                                                    <input type="button" (click)="increaseInfant()"
-                                                                        [disabled]="disableinfants" value="+"
-                                                                        class="qty-buttons plus">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                          <div class="travel-select-data-area">
+                            <div class="travel-select-trip">
+                              <ul class="travel-select-trip-ul">
+                                <li>
+                                  <span class="selectway " (click)="navBarLink('One Way')"
+                                    [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null   ? 'active':'' ">One
+                                    Way</span>
+                                </li>
+                                <li>
+                                  <span class="selectway " (click)="navBarLink('Round Trip')"
+                                    [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round
+                                    Trip</span>
+                                </li>
+                                <li>
+                                  <span class="selectway" (click)="navBarLink('Multicity')"
+                                    [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multicity</span>
+                                </li>
+                                <li>
+                                  <div class="Travellers-dropdown ms-3" appDropdown>
+                                    <div class="Travellers-dropdown-title">
+                                      <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i>
+                                      </h5>
+                                    </div>
+                                    <ul class="Travellers-dropdown-data flight-from-hide dropdown" id="openTravellers"
+                                      #openTravellers>
+                                      <li>
+                                        <p class="t-title">Travellers</p>
+                                      </li>
+                                      <li>
+                                        <div class="Travellers-passengers-data">
+                                          <div class="Travellers-name">
+                                            <h6>Adult</h6>
+                                            <p>12 years & above</p>
+                                          </div>
+                                          <div class="Travellers-qty">
+                                            <div class="quantity buttons_added">
+                                              <input type="button" (click)="decreaseAdult()" value="-"
+                                                class="qty-buttons minus">
+                                              <input type="number" step="1"
+                                                oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
+                                                min="1" max="9" name="quantity" value="0" title="Qty"
+                                                class="input-text qty text quantity_adult1_events"
+                                                formControlName="adults" size="4" pattern="" inputmode=""
+                                                [(ngModel)]="flightData.value.adults">
+                                              <input type="button" (click)="increaseAdult()" value="+"
+                                                [disabled]="disableParent" class="qty-buttons plus">
                                             </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="Travellers-passengers-data">
+                                          <div class="Travellers-name">
+                                            <h6>Child</h6>
+                                            <p>2 - 11 years</p>
+                                          </div>
+                                          <div class="Travellers-qty">
+                                            <div class="quantity buttons_added">
+                                              <input type="button" (click)="decreaseChild()" value="-"
+                                                class="qty-buttons minus">
+                                              <input type="number" step="1" min="0" max="6" name="quantity" value="0"
+                                                title="Qty" class="input-text qty text quantity_adult1_events" size="4"
+                                                pattern="" inputmode="" formControlName="child"
+                                                [(ngModel)]="flightData.value.child">
+                                              <input type="button" (click)="increaseChild()"
+                                                [disabled]="disablechildren" value="+" class="qty-buttons plus">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <li>
 
-                                        </li>
-                                        <li>
-                                            <mat-select class=" ms-4" formControlName="flightclass">
-                                                <mat-option value="B">Business Class</mat-option>
-                                                <mat-option value="E">Economy Class</mat-option>
-                                                <mat-option value="F">First Class</mat-option>
-                                                <mat-option value="P">Premium Economy</mat-option>
-                                            </mat-select>
-                                            <!-- <select name="" class="liothers class-select ms-4" value="B"
+                                        <div class="Travellers-passengers-data">
+                                          <div class="Travellers-name">
+                                            <h6>Infant</h6>
+                                            <p>Under 2 years</p>
+                                          </div>
+                                          <div class="Travellers-qty">
+                                            <div class="quantity buttons_added">
+                                              <input type="button" (click)="decreaseInfant()" value="-"
+                                                class="qty-buttons minus">
+                                              <input type="number" step="1" min="0" max="6" name="quantity" value="0"
+                                                title="Qty" class="input-text qty text quantity_adult1_events" size="4"
+                                                pattern="" formControlName="infants"
+                                                [(ngModel)]="flightData.value.infants" inputmode="">
+                                              <input type="button" (click)="increaseInfant()"
+                                                [disabled]="disableinfants" value="+" class="qty-buttons plus">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+
+                                </li>
+                                <li>
+                                  <mat-select class=" ms-4" formControlName="flightclass">
+                                    <mat-option value="B">Business Class</mat-option>
+                                    <mat-option value="E">Economy Class</mat-option>
+                                    <mat-option value="F">First Class</mat-option>
+                                    <mat-option value="P">Premium Economy</mat-option>
+                                  </mat-select>
+                                  <!-- <select name="" class="liothers class-select ms-4" value="B"
                                                 aria-label="Default select example" formControlName="flightclass">
                                                 <option selected="selected" value="B">Business Class</option>
                                                 <option value="E">Economy Class</option>
                                                 <option value="F">First Class</option>
                                                 <option value="P">Premium Economy</option>
                                             </select> -->
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="travel-data">
-                                    <div class="row g-2">
-                                        <div class="col-lg-6">
-                                            <div class="select-root-area">
-                                                <div class="select-root-left" appDropdown>
-                                                    <span class="select-roottitle">FROM</span>
-                                                    <h5 class="fw_6 ">{{fromCityName}}</h5>
-                                                    <span class="select-roottitle">{{fromAirpotName}}</span>
-                                                    <div
-                                                        class="flight-from-data flight-from-hide ff-form-data dropdown">
-                                                        <div class="mob-title">
-                                                            <h3>Select City</h3>
-                                                            <a href="javascript:void(0)"
-                                                                class="mob-close mob-ff-from-close close-mobile">
-                                                                <img src="{{cdnUrl}}/images/icons/close.png"
-                                                                    (click)="onClose()" class="close-mobile" alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="mob-search" *ngIf="isMobile">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">From</label>
-                                                                        <input type="text" autocomplete="off"
-                                                                            class="w-100" placeholder="Search City"
-                                                                            formControlName="flightfrom"
-                                                                            (keyup)="fromList($event)"
-                                                                            (focus)="isFromorNot= true;fromList($event)"
-                                                                            [(ngModel)]="flightData.value.flightfrom">
-                                                                            
-                                                                            <input type="hidden"  formControlName="fromCity">
-                                                                            <input type="hidden"  formControlName="fromContry">
-                                                                             <input type="hidden"  formControlName="fromAirportName">
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="travel-data">
+                              <div class="row g-2">
+                                <div class="col-lg-6">
+                                  <div class="select-root-area">
+                                    <div class="select-root-left" appDropdown>
+                                      <span class="select-roottitle">FROM</span>
+                                      <h5 class="fw_6 ">{{fromCityName}}</h5>
+                                      <span class="select-roottitle">{{fromAirpotName}}</span>
+                                      <div class="flight-from-data flight-from-hide ff-form-data dropdown">
+                                        <div class="mob-title">
+                                          <h3>Select City</h3>
+                                          <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile">
+                                            <img src="{{cdnUrl}}/images/icons/close.png" (click)="onClose()"
+                                              class="close-mobile" alt="" />
+                                          </a>
+                                        </div>
+                                        <div class="mob-search" *ngIf="isMobile">
+                                          <div class="row">
+                                            <div class="col-md-12">
+                                              <div class="mob-search-list">
+                                                <label for="">From</label>
+                                                <input type="text" autocomplete="off" class="w-100"
+                                                  placeholder="Search City" formControlName="flightfrom"
+                                                  (keyup)="fromList($event)"
+                                                  (focus)="isFromorNot= true;fromList($event)"
+                                                  [(ngModel)]="flightData.value.flightfrom">
 
-                                                                    </div>
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">To</label>
-                                                                        <input type="text" autocomplete="off"
-                                                                            class="w-100" placeholder="Search City"
-                                                                            formControlName="flightto"
-                                                                            (keyup)="toList($event)"
-                                                                            (focus)="isFromorNot= false;toList($event)"
-                                                                            [(ngModel)]="flightData.value.flightto">
-                                                                        <input type="text" name="flightto"  style="display:none" id="toCitySearch">
-                                                                           <input type="hidden"  formControlName="toCity">
-                                                                            <input type="hidden"  formControlName="toContry">
-                                                                            <input type="hidden"  formControlName="toAirportName">
-                                                                            
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flight-from-data-search" *ngIf="!isMobile">
-                                                            <!-- <input type="text" autocomplete="off" class="w-100"
+                                                <input type="hidden" formControlName="fromCity">
+                                                <input type="hidden" formControlName="fromContry">
+                                                <input type="hidden" formControlName="fromAirportName">
+
+                                              </div>
+                                              <div class="mob-search-list">
+                                                <label for="">To</label>
+                                                <input type="text" autocomplete="off" class="w-100"
+                                                  placeholder="Search City" formControlName="flightto"
+                                                  (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)"
+                                                  [(ngModel)]="flightData.value.flightto">
+                                                <input type="text" name="flightto" style="display:none"
+                                                  id="toCitySearch">
+                                                <input type="hidden" formControlName="toCity">
+                                                <input type="hidden" formControlName="toContry">
+                                                <input type="hidden" formControlName="toAirportName">
+
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="flight-from-data-search" *ngIf="!isMobile">
+                                          <!-- <input type="text" autocomplete="off" class="w-100"
                                                                 id="fromCitySearch" placeholder="Search City"
                                                                 (keyup)="fromList($event)">
                                                             <input type="hidden" formControlName="flightfrom"
                                                             id="hdnfromCitySearch" > -->
-                                                            <input type="text" autocomplete="off" class="w-100"
-                                                                id="fromCitySearch" placeholder="Search City"
-                                                                formControlName="flightfrom" (keyup)="fromList($event)"
-                                                                autofocus #fromCityInput
-                                                                [(ngModel)]="flightData.value.flightfrom">
-                                                            <input type="text" name="flightfrom" style="display:none"
-                                                                id="fromCitySearch">
-                                                                
-                                                                 <input type="hidden"  formControlName="fromCity">
-                                                                            <input type="hidden"  formControlName="fromContry">
-                                                                              <input type="hidden"  formControlName="fromAirportName">
-                                                                                <input type="hidden"  formControlName="fromAirportName">
+                                          <input type="text" autocomplete="off" class="w-100" id="fromCitySearch"
+                                            placeholder="Search City" formControlName="flightfrom"
+                                            (keyup)="fromList($event)" autofocus #fromCityInput
+                                            [(ngModel)]="flightData.value.flightfrom">
+                                          <input type="text" name="flightfrom" style="display:none" id="fromCitySearch">
 
-                                                        </div>
+                                          <input type="hidden" formControlName="fromCity">
+                                          <input type="hidden" formControlName="fromContry">
+                                          <input type="hidden" formControlName="fromAirportName">
+                                          <input type="hidden" formControlName="fromAirportName">
 
-                                                        <ul class="flight-from-data-ul"
-                                                            *ngIf="fromFlightList  && !isMobile">
-                                                            <li class="flight-from-ul-li">
-                                                                <p class="flight-Results-text">Results</p>
-                                                            </li>
-                                                            <li class="flight-from-ul-li"
-                                                                *ngFor="let fromCity of cityList">
-                                                                <a class="flight-from-ul-li-a"
-                                                                    (click)="selectFromFlightList(fromCity._source)">
-                                                                    <div class="flight-from-name">
-                                                                        <h6>{{fromCity._source.city}},
-                                                                            {{fromCity._source.country}}</h6>
-                                                                        <p>{{fromCity._source.airport_name}} </p>
-                                                                    </div>
-                                                                    <div class="flight-from-shortname">
-                                                                        <h6>{{fromCity._source.airport_code}}</h6>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <ul class="flight-from-data-ul" *ngIf="isMobile">
-                                                            <li class="flight-from-ul-li">
-                                                                <p class="flight-Results-text">Results</p>
-                                                            </li>
-                                                            <li class="flight-from-ul-li"
-                                                                *ngFor="let toCity of cityList">
-                                                                <a  class="flight-from-ul-li-a"
-                                                                    (click)="isFromorNot == true ?selectFromFlightList(toCity._source) : selectToFlightList(toCity._source) ">
-                                                                    <div class="flight-from-name">
-                                                                        <h6>{{toCity._source.city}},
-                                                                            {{toCity._source.country}}</h6>
-                                                                        <p>{{toCity._source.airport_name}} </p>
-                                                                    </div>
-                                                                    <div class="flight-from-shortname">
-                                                                        <h6>{{toCity._source.airport_code}}</h6>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
+                                        </div>
 
-                                                        </ul>
-                                                    </div>
+                                        <ul class="flight-from-data-ul" *ngIf="fromFlightList  && !isMobile">
+                                          <li class="flight-from-ul-li">
+                                            <p class="flight-Results-text">Results</p>
+                                          </li>
+                                          <li class="flight-from-ul-li" *ngFor="let fromCity of cityList">
+                                            <a class="flight-from-ul-li-a"
+                                              (click)="selectFromFlightList(fromCity._source)">
+                                              <div class="flight-from-name">
+                                                <h6>{{fromCity._source.city}},
+                                                  {{fromCity._source.country}}</h6>
+                                                <p>{{fromCity._source.airport_name}} </p>
+                                              </div>
+                                              <div class="flight-from-shortname">
+                                                <h6>{{fromCity._source.airport_code}}</h6>
+                                              </div>
+                                            </a>
+                                          </li>
+                                        </ul>
+                                        <ul class="flight-from-data-ul" *ngIf="isMobile">
+                                          <li class="flight-from-ul-li">
+                                            <p class="flight-Results-text">Results</p>
+                                          </li>
+                                          <li class="flight-from-ul-li" *ngFor="let toCity of cityList">
+                                            <a class="flight-from-ul-li-a"
+                                              (click)="isFromorNot == true ?selectFromFlightList(toCity._source) : selectToFlightList(toCity._source) ">
+                                              <div class="flight-from-name">
+                                                <h6>{{toCity._source.city}},
+                                                  {{toCity._source.country}}</h6>
+                                                <p>{{toCity._source.airport_name}} </p>
+                                              </div>
+                                              <div class="flight-from-shortname">
+                                                <h6>{{toCity._source.airport_code}}</h6>
+                                              </div>
+                                            </a>
+                                          </li>
 
-                                                </div>
+                                        </ul>
+                                      </div>
 
-                                                <div class="select-root-icons" (click)="swap()">
-                                                    <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
-                                                </div>
-                                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
-                                                    <span class="select-roottitle">TO</span>
-                                                    <h5 class="fw_6 ">{{toCityName}}</h5>
-                                                    <span class="select-roottitle">{{toAirpotName}}</span>
+                                    </div>
 
-                                                    <div class="flight-to-data flight-from-hide dropdown"
-                                                        #removeClassToCity>
-                                                        <div class="mob-title">
-                                                            <h3>Select City</h3>
-                                                            <a href="javascript:void(0)"
-                                                                class="mob-close mob-ff-from-close close-mobile">
-                                                                <img src="{{cdnUrl}}/images/icons/close.png"
-                                                                    class="close-mobile" alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="mob-search" *ngIf="isMobile">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">From</label>
-                                                                        <input type="text" autocomplete="off"
-                                                                            (focus)="isFromorNot= true;fromList($event)"
-                                                                            class="w-100" placeholder="Search City"
-                                                                            formControlName="flightfrom"
-                                                                            (keyup)="fromList($event)"
-                                                                            [(ngModel)]="flightData.value.flightfrom"
-                                                                            id="fromCitySearch">
-                                                                        <input type="text" name="flightfrom"  style="display:none">
-                                                                         <input type="hidden"  formControlName="fromCity">
-                                                                            <input type="hidden"  formControlName="fromContry">
-                                                                              <input type="hidden"  formControlName="fromAirportName">
-                                                                    </div>
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">To</label>
-                                                                        <input type="text" autocomplete="off"
-                                                                            class="w-100" placeholder="Search City"
-                                                                            formControlName="flightto"
-                                                                            (keyup)="toList($event)"
-                                                                            (focus)="isFromorNot= false;toList($event)"
-                                                                            [(ngModel)]="flightData.value.flightto">
-                                                                        <input type="text" name="flightto"  style="display:none" id="toCitySearch">
-                                                                         <input type="hidden"  formControlName="toCity">
-                                                                            <input type="hidden"  formControlName="toContry">
-                                                                              <input type="hidden"  formControlName="toAirportName">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flight-from-data-search" *ngIf="!isMobile">
-                                                            <input type="text" autocomplete="off" class="w-100"
-                                                                id="toCitySearch" placeholder="Search City"
-                                                                formControlName="flightto" (keyup)="toList($event)"
-                                                                #toCityInput autofocus
-                                                                [(ngModel)]="flightData.value.flightto">
-                                                            <input type="text" name="flightto" style="display:none"
-                                                                id="toCitySearch">
-                                                                   <input type="hidden"  formControlName="toCity">
-                                                                            <input type="hidden"  formControlName="toContry">
-                                                                              <input type="hidden"  formControlName="toAirportName">
-                                                        </div>
-                                                        <ul class="flight-from-data-ul"
-                                                            *ngIf="toFlightList && !isMobile">
-                                                            <li class="flight-from-ul-li">
-                                                                <p class="flight-Results-text">Results</p>
-                                                            </li>
-                                                            <li class="flight-from-ul-li"
-                                                                *ngFor="let toCity of cityList">
-                                                                <a  class="flight-from-ul-li-a"
-                                                                    (click)="selectToFlightList(toCity._source)">
-                                                                    <div class="flight-from-name">
-                                                                        <h6>{{toCity._source.city}},
-                                                                            {{toCity._source.country}}</h6>
-                                                                        <p>{{toCity._source.airport_name}} </p>
-                                                                    </div>
-                                                                    <div class="flight-from-shortname">
-                                                                        <h6>{{toCity._source.airport_code}}</h6>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
+                                    <div class="select-root-icons" (click)="swap()">
+                                      <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
+                                    </div>
+                                    <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
+                                      <span class="select-roottitle">TO</span>
+                                      <h5 class="fw_6 ">{{toCityName}}</h5>
+                                      <span class="select-roottitle">{{toAirpotName}}</span>
 
-                                                        </ul>
-                                                        <ul class="flight-from-data-ul" *ngIf="isMobile">
-                                                            <li class="flight-from-ul-li">
-                                                                <p class="flight-Results-text">Results</p>
-                                                            </li>
-                                                            <li class="flight-from-ul-li"
-                                                                *ngFor="let fromCity of cityList">
-                                                                <a  class="flight-from-ul-li-a"
-                                                                    (click)="isFromorNot == true ?selectFromFlightList(fromCity._source) : selectToFlightList(fromCity._source)">
-                                                                    <div class="flight-from-name">
-                                                                        <h6>{{fromCity._source.city}},
-                                                                            {{fromCity._source.country}}</h6>
-                                                                        <p>{{fromCity._source.airport_name}} </p>
-                                                                    </div>
-                                                                    <div class="flight-from-shortname">
-                                                                        <h6>{{fromCity._source.airport_code}}</h6>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-                                                </div>
+                                      <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
+                                        <div class="mob-title">
+                                          <h3>Select City</h3>
+                                          <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile">
+                                            <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                          </a>
+                                        </div>
+                                        <div class="mob-search" *ngIf="isMobile">
+                                          <div class="row">
+                                            <div class="col-md-12">
+                                              <div class="mob-search-list">
+                                                <label for="">From</label>
+                                                <input type="text" autocomplete="off"
+                                                  (focus)="isFromorNot= true;fromList($event)" class="w-100"
+                                                  placeholder="Search City" formControlName="flightfrom"
+                                                  (keyup)="fromList($event)" [(ngModel)]="flightData.value.flightfrom"
+                                                  id="fromCitySearch">
+                                                <input type="text" name="flightfrom" style="display:none">
+                                                <input type="hidden" formControlName="fromCity">
+                                                <input type="hidden" formControlName="fromContry">
+                                                <input type="hidden" formControlName="fromAirportName">
+                                              </div>
+                                              <div class="mob-search-list">
+                                                <label for="">To</label>
+                                                <input type="text" autocomplete="off" class="w-100"
+                                                  placeholder="Search City" formControlName="flightto"
+                                                  (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)"
+                                                  [(ngModel)]="flightData.value.flightto">
+                                                <input type="text" name="flightto" style="display:none"
+                                                  id="toCitySearch">
+                                                <input type="hidden" formControlName="toCity">
+                                                <input type="hidden" formControlName="toContry">
+                                                <input type="hidden" formControlName="toAirportName">
+                                              </div>
                                             </div>
-                                            <div class="home-error d-flex">
-                                                <mat-error class="w-50"
-                                                    *ngIf="submitted && Error('flightfrom', 'required')">
-                                                    Select departure
-                                                </mat-error>
-                                                <mat-error *ngIf="submitted && Error('flightto', 'required')">
-                                                    Select arrival
-                                                </mat-error>
-                                                <!-- <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger w-50">
+                                          </div>
+                                        </div>
+                                        <div class="flight-from-data-search" *ngIf="!isMobile">
+                                          <input type="text" autocomplete="off" class="w-100" id="toCitySearch"
+                                            placeholder="Search City" formControlName="flightto"
+                                            (keyup)="toList($event)" #toCityInput autofocus
+                                            [(ngModel)]="flightData.value.flightto">
+                                          <input type="text" name="flightto" style="display:none" id="toCitySearch">
+                                          <input type="hidden" formControlName="toCity">
+                                          <input type="hidden" formControlName="toContry">
+                                          <input type="hidden" formControlName="toAirportName">
+                                        </div>
+                                        <ul class="flight-from-data-ul" *ngIf="toFlightList && !isMobile">
+                                          <li class="flight-from-ul-li">
+                                            <p class="flight-Results-text">Results</p>
+                                          </li>
+                                          <li class="flight-from-ul-li" *ngFor="let toCity of cityList">
+                                            <a class="flight-from-ul-li-a" (click)="selectToFlightList(toCity._source)">
+                                              <div class="flight-from-name">
+                                                <h6>{{toCity._source.city}},
+                                                  {{toCity._source.country}}</h6>
+                                                <p>{{toCity._source.airport_name}} </p>
+                                              </div>
+                                              <div class="flight-from-shortname">
+                                                <h6>{{toCity._source.airport_code}}</h6>
+                                              </div>
+                                            </a>
+                                          </li>
+
+                                        </ul>
+                                        <ul class="flight-from-data-ul" *ngIf="isMobile">
+                                          <li class="flight-from-ul-li">
+                                            <p class="flight-Results-text">Results</p>
+                                          </li>
+                                          <li class="flight-from-ul-li" *ngFor="let fromCity of cityList">
+                                            <a class="flight-from-ul-li-a"
+                                              (click)="isFromorNot == true ?selectFromFlightList(fromCity._source) : selectToFlightList(fromCity._source)">
+                                              <div class="flight-from-name">
+                                                <h6>{{fromCity._source.city}},
+                                                  {{fromCity._source.country}}</h6>
+                                                <p>{{fromCity._source.airport_name}} </p>
+                                              </div>
+                                              <div class="flight-from-shortname">
+                                                <h6>{{fromCity._source.airport_code}}</h6>
+                                              </div>
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                  <div class="home-error d-flex">
+                                    <mat-error class="w-50" *ngIf="submitted && Error('flightfrom', 'required')">
+                                      Select departure
+                                    </mat-error>
+                                    <mat-error *ngIf="submitted && Error('flightto', 'required')">
+                                      Select arrival
+                                    </mat-error>
+                                    <!-- <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger w-50">
                                                   <span class="fs_12"> Select departure</span>
                                               </div>
                                               <div *ngIf="submitted && Error('flightto', 'required')" class="text-danger w-50">
                                                 <span class="fs_12"> Select destination</span>
                                               </div> -->
-                                            </div>
-                                        </div>
+                                  </div>
+                                </div>
 
-                                        <div class="col-lg-6">
-                                            <div class="root-date">
-                                                <div class="select-root-area">
-                                                    <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
-                                                        <!-- <div class="area-root-departure" id="DepartureDate">
+                                <div class="col-lg-6">
+                                  <div class="root-date">
+                                    <div class="select-root-area">
+                                      <div class="select-dep-ret "
+                                        [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''">
+                                        <!-- <div class="area-root-departure" id="DepartureDate">
                                                             <div class="select-root-departure departure-date">
                                                                 <span class="select-roottitle">DEPARTURE</span>
                                                                 <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
@@ -383,77 +353,68 @@
                                                                     value="{{departureDate}}" formControlName="departure">
                                                             </div>
                                                         </div> -->
-                                                        <div class="area-root-departure " (click)="picker.open()"
-                                                            id="datePickerOpen">
-                                                            <div class="select-root-departure departure-date">
-                                                                <span class="select-roottitle">DEPARTURE</span>
-                                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-                                                                <span class="select-roottitle d-block w-100"
-                                                                    *ngIf="departureDate=='' ||departureDate==undefined">Tap
-                                                                    to add a <br> departure date</span>
-                                                                <span class="select-roottitle"
-                                                                    *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
+                                        <div class="area-root-departure " (click)="picker.open()" id="datePickerOpen">
+                                          <div class="select-root-departure departure-date">
+                                            <span class="select-roottitle">DEPARTURE</span>
+                                            <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                            <span class="select-roottitle d-block w-100"
+                                              *ngIf="departureDate=='' ||departureDate==undefined">Tap
+                                              to add a <br> departure date</span>
+                                            <span class="select-roottitle"
+                                              *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                                                     }}</span>
 
-                                                            </div>
+                                          </div>
 
-                                                            <div class="select-root-date"
-                                                                style="position: relative; left: 0;">
-                                                                <i
-                                                                    class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                          <div class="select-root-date" style="position: relative; left: 0;">
+                                            <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
 
-                                                                <mat-form-field
-                                                                    style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                                    <input matInput [min]="minDate"
-                                                                        [matDatepicker]="picker"
-                                                                        formControlName="departure"
-                                                                        [(ngModel)]="departureDate"
-                                                                        (dateChange)="currentPeriodClicked($event)">
-                                                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                                                    </mat-datepicker-toggle>
-                                                                    <mat-datepicker #picker></mat-datepicker>
-                                                                </mat-form-field>
+                                            <mat-form-field
+                                              style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                              <input matInput [min]="minDate" [matDatepicker]="picker"
+                                                formControlName="departure" [(ngModel)]="departureDate"
+                                                (dateChange)="currentPeriodClicked($event)">
+                                              <mat-datepicker-toggle matSuffix [for]="picker">
+                                              </mat-datepicker-toggle>
+                                              <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
 
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="area-root-reutrn" (click)="picker2.open()"
-                                                            id="datePickerArrival"
-                                                            [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'">
-                                                            <div class="select-root-reutrn ">
-                                                                <span class="select-roottitle">RETURN</span>
-                                                                <h5 class=" "
-                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
-                                                                    {{arrivalDate | date:'dd MMM' }}</h5>
-                                                                <span class="select-roottitle d-block w-100"
-                                                                    *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">Tap
-                                                                    to add
-                                                                    a <br> return date</span>
-                                                                <span class="select-roottitle"
-                                                                    *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
+                                          </div>
+                                        </div>
+                                        <div class="area-root-reutrn" (click)="picker2.open()" id="datePickerArrival"
+                                          [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'">
+                                          <div class="select-root-reutrn ">
+                                            <span class="select-roottitle">RETURN</span>
+                                            <h5 class=" "
+                                              *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
+                                              {{arrivalDate | date:'dd MMM' }}</h5>
+                                            <span class="select-roottitle d-block w-100"
+                                              *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">Tap
+                                              to add
+                                              a <br> return date</span>
+                                            <span class="select-roottitle"
+                                              *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
                                                                     | date:'EEEE' }}</span>
 
-                                                            </div>
-                                                            <div class="select-root-date">
-                                                                <i
-                                                                    class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
-                                                                <mat-form-field
-                                                                    style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                                    <input matInput [min]="departureDate"
-                                                                        [matDatepicker]="picker2"
-                                                                        formControlName="arrival"
-                                                                        [(ngModel)]="arrivalDate"
-                                                                        (dateChange)="currentPeriodArrivalClicked($event)">
-                                                                    <mat-datepicker-toggle matSuffix [for]="picker2">
-                                                                    </mat-datepicker-toggle>
-                                                                    <mat-datepicker #picker2></mat-datepicker>
-                                                                </mat-form-field>
-                                                            </div>
+                                          </div>
+                                          <div class="select-root-date">
+                                            <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
+                                            <mat-form-field
+                                              style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                              <input matInput [min]="departureDate" [matDatepicker]="picker2"
+                                                formControlName="arrival" [(ngModel)]="arrivalDate"
+                                                (dateChange)="currentPeriodArrivalClicked($event)">
+                                              <mat-datepicker-toggle matSuffix [for]="picker2">
+                                              </mat-datepicker-toggle>
+                                              <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                          </div>
 
-                                                        </div>
+                                        </div>
 
                                         <!--Mobile Picker-->
-                                                        <!-- <div class="area-root-reutrn" *ngIf="isMobile" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
+                                        <!-- <div class="area-root-reutrn" *ngIf="isMobile" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip'? '':'disableDiv'">
                                                             <div class="select-root-reutrn"  >
                                                                 <span class="select-roottitle">RETURN</span>
                                                                 <h5 class=" ">{{arrivalDate | date:'dd MMM' }}</h5>
@@ -477,185 +438,166 @@
 
 
 
-                                                    </div>
-                                                </div>
-                                                <div class="mob-travellers-class">
-                                                    <div class="mob-travellers-class-box"
-                                                        (click)="openTravellerBlock()">
-                                                        <div class="mob-travellers-class-box-left">
-                                                            <span>Travellers and Class</span>
-                                                            <h5>{{flightData.value.flightclass == 'E' ?"Economy Class" :
+                                      </div>
+                                    </div>
+                                    <div class="mob-travellers-class">
+                                      <div class="mob-travellers-class-box" (click)="openTravellerBlock()">
+                                        <div class="mob-travellers-class-box-left">
+                                          <span>Travellers and Class</span>
+                                          <h5>{{flightData.value.flightclass == 'E' ?"Economy Class" :
                                                                 ""}}{{flightData.value.flightclass == 'F' ?"First Class"
                                                                 : ""}}{{flightData.value.flightclass == 'P' ?"Premium
                                                                 Economy" : ""}}{{flightData.value.flightclass == 'B'
                                                                 ?"Business" : ""}} <span>{{flightData.value.adults}}
-                                                                    Adults, {{flightData.value.child}} Child,
-                                                                    {{flightData.value.infants}} Infant</span></h5>
-                                                        </div>
-                                                        <div class="mob-travellers-class-box-right">
-                                                            <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1"
-                                                                alt="">
-                                                        </div>
-                                                    </div>
+                                              Adults, {{flightData.value.child}} Child,
+                                              {{flightData.value.infants}} Infant</span></h5>
+                                        </div>
+                                        <div class="mob-travellers-class-box-right">
+                                          <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
+                                        </div>
+                                      </div>
 
-                                                    <div class="mob-filter-travellers"
-                                                        [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
-                                                        <div class="mob-title">
-                                                            <h3>Preferred Airline</h3>
-                                                            <a  class="mob-close mob-preferred-airline-close"
-                                                                (click)="closeTravllerBlock()">
-                                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="mob-add-travels">
-                                                            <ul class="Travellers-dropdown-data">
-                                                                <li>
-                                                                    <div class="Travellers-passengers-data">
-                                                                        <div class="Travellers-name">
-                                                                            <h6>Adult</h6>
-                                                                            <p>12 years &amp; above</p>
-                                                                        </div>
-                                                                        <div class="Travellers-qty">
-
-                                                                            <div class="quantity buttons_added">
-                                                                                <input type="button"
-                                                                                    (click)="decreaseAdult()" value="-"
-                                                                                    class="qty-buttons minus">
-                                                                                <input type="number" step="1"
-                                                                                    oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
-                                                                                    min="1" max="9" name="quantity"
-                                                                                    value="0" title="Qty"
-                                                                                    class="input-text qty text quantity_adult1_events"
-                                                                                    formControlName="adults" size="4"
-                                                                                    pattern="" inputmode=""
-                                                                                    [(ngModel)]="flightData.value.adults">
-                                                                                <input type="button"
-                                                                                    (click)="increaseAdult()" value="+"
-                                                                                    [disabled]="disableParent"
-                                                                                    class="qty-buttons plus">
-                                                                                <!-- <input type="button" value="-" class="qty-buttons minus">
-                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="Travellers-passengers-data">
-                                                                        <div class="Travellers-name">
-                                                                            <h6>Child</h6>
-                                                                            <p>2 - 11 years</p>
-                                                                        </div>
-                                                                        <div class="Travellers-qty">
-                                                                            <div class="quantity buttons_added">
-                                                                                <input type="button"
-                                                                                    (click)="decreaseChild()" value="-"
-                                                                                    class="qty-buttons minus">
-                                                                                <input type="number" step="1" min="0"
-                                                                                    max="6" name="quantity" value="0"
-                                                                                    title="Qty"
-                                                                                    class="input-text qty text quantity_adult1_events"
-                                                                                    size="4" pattern="" inputmode=""
-                                                                                    formControlName="child"
-                                                                                    [(ngModel)]="flightData.value.child">
-                                                                                <input type="button"
-                                                                                    (click)="increaseChild()"
-                                                                                    [disabled]="disablechildren"
-                                                                                    value="+" class="qty-buttons plus">
-                                                                                <!-- <input type="button" value="-" class="qty-buttons minus">
-                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="Travellers-passengers-data">
-                                                                        <div class="Travellers-name">
-                                                                            <h6>Infant</h6>
-                                                                            <p>Under 2 years</p>
-                                                                        </div>
-                                                                        <div class="Travellers-qty">
-                                                                            <div class="quantity buttons_added">
-                                                                                <input type="button"
-                                                                                    (click)="decreaseInfant()" value="-"
-                                                                                    class="qty-buttons minus">
-                                                                                <input type="number" step="1" min="0"
-                                                                                    max="6" name="quantity" value="0"
-                                                                                    title="Qty"
-                                                                                    class="input-text qty text quantity_adult1_events"
-                                                                                    size="4" pattern=""
-                                                                                    formControlName="infants"
-                                                                                    [(ngModel)]="flightData.value.infants"
-                                                                                    inputmode="">
-                                                                                <input type="button"
-                                                                                    (click)="increaseInfant()"
-                                                                                    [disabled]="disableinfants"
-                                                                                    value="+" class="qty-buttons plus">
-                                                                                <!-- <input type="button" value="-" class="qty-buttons minus">
-                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
-                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="mob-Choose-class">
-                                                                <h6>Choose Cabin Class</h6>
-                                                                <ul class="">
-                                                                    <li>
-                                                                        <a href="javascript:void(0)" class="" value="E"
-                                                                            (click)="getClassVal('E')"
-                                                                            [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
-                                                                            Economy</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="javascript:void(0)" class="" value="P"
-                                                                            (click)="getClassVal('P')"
-                                                                            [ngClass]="this.flightData.value.flightclass == 'P' ? 'active':'' ">Premium
-                                                                            Economy</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="javascript:void(0)" class="" value="B"
-                                                                            (click)="getClassVal('B')"
-                                                                            [ngClass]="this.flightData.value.flightclass == 'B' ? 'active':'' ">Business</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="javascript:void(0)" class="" value="F"
-                                                                            (click)="getClassVal('F')"
-                                                                            [ngClass]="this.flightData.value.flightclass == 'F' ? 'active':'' ">First
-                                                                            Class</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-                                                            <div class="mob-Choose-done pt-1 pl-0 pr-0">
-                                                                <a href="javascript:void(0)"
-                                                                    (click)="closeTravllerBlock()">
-                                                                    Done
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                      <div class="mob-filter-travellers"
+                                        [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
+                                        <div class="mob-title">
+                                          <h3>Preferred Airline</h3>
+                                          <a class="mob-close mob-preferred-airline-close"
+                                            (click)="closeTravllerBlock()">
+                                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                          </a>
+                                        </div>
+                                        <div class="mob-add-travels">
+                                          <ul class="Travellers-dropdown-data">
+                                            <li>
+                                              <div class="Travellers-passengers-data">
+                                                <div class="Travellers-name">
+                                                  <h6>Adult</h6>
+                                                  <p>12 years &amp; above</p>
                                                 </div>
-                                                <div class="root-search">
-                                                    <button type="button" class="searchbn" (click)="flightSearch()">Search</button>
+                                                <div class="Travellers-qty">
+
+                                                  <div class="quantity buttons_added">
+                                                    <input type="button" (click)="decreaseAdult()" value="-"
+                                                      class="qty-buttons minus">
+                                                    <input type="number" step="1"
+                                                      oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
+                                                      min="1" max="9" name="quantity" value="0" title="Qty"
+                                                      class="input-text qty text quantity_adult1_events"
+                                                      formControlName="adults" size="4" pattern="" inputmode=""
+                                                      [(ngModel)]="flightData.value.adults">
+                                                    <input type="button" (click)="increaseAdult()" value="+"
+                                                      [disabled]="disableParent" class="qty-buttons plus">
+                                                    <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
+                                                  </div>
                                                 </div>
-                                            </div>
-                                            <mat-error *ngIf="dateValidation">
-                                                Select departure
-                                            </mat-error>
-                                            <!-- <div *ngIf="dateValidation" class="text-danger">
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="Travellers-passengers-data">
+                                                <div class="Travellers-name">
+                                                  <h6>Child</h6>
+                                                  <p>2 - 11 years</p>
+                                                </div>
+                                                <div class="Travellers-qty">
+                                                  <div class="quantity buttons_added">
+                                                    <input type="button" (click)="decreaseChild()" value="-"
+                                                      class="qty-buttons minus">
+                                                    <input type="number" step="1" min="0" max="6" name="quantity"
+                                                      value="0" title="Qty"
+                                                      class="input-text qty text quantity_adult1_events" size="4"
+                                                      pattern="" inputmode="" formControlName="child"
+                                                      [(ngModel)]="flightData.value.child">
+                                                    <input type="button" (click)="increaseChild()"
+                                                      [disabled]="disablechildren" value="+" class="qty-buttons plus">
+                                                    <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="Travellers-passengers-data">
+                                                <div class="Travellers-name">
+                                                  <h6>Infant</h6>
+                                                  <p>Under 2 years</p>
+                                                </div>
+                                                <div class="Travellers-qty">
+                                                  <div class="quantity buttons_added">
+                                                    <input type="button" (click)="decreaseInfant()" value="-"
+                                                      class="qty-buttons minus">
+                                                    <input type="number" step="1" min="0" max="6" name="quantity"
+                                                      value="0" title="Qty"
+                                                      class="input-text qty text quantity_adult1_events" size="4"
+                                                      pattern="" formControlName="infants"
+                                                      [(ngModel)]="flightData.value.infants" inputmode="">
+                                                    <input type="button" (click)="increaseInfant()"
+                                                      [disabled]="disableinfants" value="+" class="qty-buttons plus">
+                                                    <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                <input type="button" value="+" class="qty-buttons plus"> -->
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </li>
+                                          </ul>
+                                          <div class="mob-Choose-class">
+                                            <h6>Choose Cabin Class</h6>
+                                            <ul class="">
+                                              <li>
+                                                <a href="javascript:void(0)" class="" value="E"
+                                                  (click)="getClassVal('E')"
+                                                  [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
+                                                  Economy</a>
+                                              </li>
+                                              <li>
+                                                <a href="javascript:void(0)" class="" value="P"
+                                                  (click)="getClassVal('P')"
+                                                  [ngClass]="this.flightData.value.flightclass == 'P' ? 'active':'' ">Premium
+                                                  Economy</a>
+                                              </li>
+                                              <li>
+                                                <a href="javascript:void(0)" class="" value="B"
+                                                  (click)="getClassVal('B')"
+                                                  [ngClass]="this.flightData.value.flightclass == 'B' ? 'active':'' ">Business</a>
+                                              </li>
+                                              <li>
+                                                <a href="javascript:void(0)" class="" value="F"
+                                                  (click)="getClassVal('F')"
+                                                  [ngClass]="this.flightData.value.flightclass == 'F' ? 'active':'' ">First
+                                                  Class</a>
+                                              </li>
+                                            </ul>
+                                          </div>
+
+                                          <div class="mob-Choose-done pt-1 pl-0 pr-0">
+                                            <a href="javascript:void(0)" (click)="closeTravllerBlock()">
+                                              Done
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="root-search">
+                                      <button type="button" class="searchbn" (click)="flightSearch()">Search</button>
+                                    </div>
+                                  </div>
+                                  <mat-error *ngIf="dateValidation">
+                                    Select departure
+                                  </mat-error>
+                                  <!-- <div *ngIf="dateValidation" class="text-danger">
                                             <span class="fs_12"> Select departure date</span>
                                         </div> -->
-                                        </div>
-                                    </div>
                                 </div>
+                              </div>
+                            </div>
 
 
 
-                                <div class="add-search-area">
-                                    <!-- <div class="add-search-content">
+                            <div class="add-search-area">
+                              <!-- <div class="add-search-content">
                                         <ul class="add-search-ul">
                                             <li class="custom-check-box">
                                                 <div class="custom-controls-stacked">
@@ -696,7 +638,7 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                    <!--<div class="add-search-content ms-3">
+                              <!--<div class="add-search-content ms-3">
                                         <div class="Preferred-area" appDropdown>
                                             <h5 class="Preferred-title">Preferred Airline <img
                                                     src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
@@ -740,7 +682,426 @@
                                             </div>
                                         </div>
                                     </div>-->
-                                </div>
                             </div>
+                          </div>
                         </form>
-                        
+
+                        <!-- multi City-->
+
+                        <form [formGroup]="multicityFlightData" novalidate (ngSubmit)="onSubmit()" *ngIf="isMobile">
+
+                          <div class="row g-2" formGroupName="multicityFormGroup">
+                            <!-- First Form starts -->
+                            <div formArrayName="form">
+                              <ng-container   *ngFor="let formData of multicityFormData.controls; let i = index"
+                                [formGroupName]="i">
+                                <div class="col-md-10" [formGroup]="formData">
+                                  <div class="row">
+                                    <div class="col-lg-6">
+                                      <div class="select-root-area">
+                                        <div class="select-root-left" appDropdown>
+                                          <span class="select-roottitle">FROM</span>
+                                          <h5 class="fw_6">{{fromCityName}}</h5>
+                                          <span class="select-roottitle">{{fromAirpotName}}</span>
+                                          <div class="flight-from-data flight-from-hide ff-form-data dropdown">
+                                            <div class="mob-title">
+                                              <h3>Select City</h3>
+                                              <a href="javascript:void(0)"
+                                                class="mob-close mob-ff-from-close close-mobile">
+                                                <img src="/assets/images/icons/close.png" (click)="onClose()"
+                                                  class="close-mobile" alt="" />
+                                              </a>
+                                            </div>
+                                            <div class="mob-search" *ngIf="isMobile">
+                                              <div class="row">
+                                                <div class="col-md-12">
+                                                  <div class="mob-search-list">
+                                                    <label for="">From</label>
+                                                    <input type="text" autocomplete="off" class="w-100"
+                                                      placeholder="Search City" formControlName="flightfrom"
+                                                      (keyup)="fromList($event)"
+                                                      (focus)="isFromorNot= true;fromList($event)"
+                                                      [(ngModel)]="fromCityName" />
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="flight-from-data-search" *ngIf="!isMobile" formArrayName="flightfrom">
+                                <div *ngFor="let flightfroma of multicityFlightData.get('flightfrom').controls; let index = index ">
+                                              <input type="text" autocomplete="off" class="w-100" id="fromCitySearch"
+                                                placeholder="Search City" formControlName="flightfrom"   [formControlName]="index"
+                                                (keyup)="fromList($event)" autofocus #fromCityInput
+                                                [(ngModel)]="multicityFlightData.value.flightfrom"  />
+                                              <input type="text" name="flightfrom" style="display:none"
+                                                id="fromCitySearch_{{i}}" /> </div>
+                                            </div>
+
+                                            <ul class="flight-from-data-ul" *ngIf="fromFlightList  && !isMobile">
+                                              <li class="flight-from-ul-li">
+                                                <p class="flight-Results-text">Results</p>
+                                              </li>
+                                              <li class="flight-from-ul-li" *ngFor="let fromCity of cityList">
+                                                <a href="#" class="flight-from-ul-li-a"
+                                                  (click)="selectFromFlightList(fromCity._source)">
+                                                  <div class="flight-from-name">
+                                                    <h6>
+                                                      {{fromCity._source.city}}, {{fromCity._source.country}}
+                                                    </h6>
+                                                    <p>{{fromCity._source.airport_name}}</p>
+                                                  </div>
+                                                  <div class="flight-from-shortname">
+                                                    <h6>{{fromCity._source.airport_code}}</h6>
+                                                  </div>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                            <ul class="flight-from-data-ul" *ngIf="isMobile">
+                                              <li class="flight-from-ul-li">
+                                                <p class="flight-Results-text">Results</p>
+                                              </li>
+                                              <li class="flight-from-ul-li" *ngFor="let toCity of cityList">
+                                                <a href="#" class="flight-from-ul-li-a"
+                                                  (click)="isFromorNot == true ?selectFromFlightList(toCity._source) : selectToFlightList(toCity._source) ">
+                                                  <div class="flight-from-name">
+                                                    <h6>
+                                                      {{toCity._source.city}}, {{toCity._source.country}}
+                                                    </h6>
+                                                    <p>{{toCity._source.airport_name}}</p>
+                                                  </div>
+                                                  <div class="flight-from-shortname">
+                                                    <h6>{{toCity._source.airport_code}}</h6>
+                                                  </div>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+
+                                        <div class="select-root-icons" (click)="swap()">
+                                          <img src="./assets/images/icons/twoway.png" alt="" />
+                                        </div>
+                                        <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
+                                          <span class="select-roottitle">TO</span>
+                                          <h5 class="fw_6">{{toCityName}}</h5>
+                                          <span class="select-roottitle">{{toAirpotName}}</span>
+
+                                          <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
+                                            <div class="mob-title">
+                                              <h3>Select City</h3>
+                                              <a href="javascript:void(0)"
+                                                class="mob-close mob-ff-from-close close-mobile">
+                                                <img src="/assets/images/icons/close.png" class="close-mobile" alt="" />
+                                              </a>
+                                            </div>
+                                            <div class="mob-search" *ngIf="isMobile">
+                                              <div class="row">
+                                                <div class="col-md-12">
+                                                  <div class="mob-search-list">
+                                                    <label for="">From</label>
+                                                    <input type="text" autocomplete="off"
+                                                      (focus)="isFromorNot= true;fromList($event)" class="w-100"
+                                                      placeholder="Search City" formControlName="flightfrom"
+                                                      (keyup)="fromList($event)" [(ngModel)]="fromCityName" />
+                                                  </div>
+                                                  <!-- <div class="mob-search-list">
+                                                                      <label for="">To</label>
+                                                                      <input type="text" autocomplete="off" class="w-100"
+                                                                        placeholder="Search City" formControlName="flightto"
+                                                                        (keyup)="toList($event)" (focus)="isFromorNot= false;toList($event)"
+                                                                        [(ngModel)]="toCityName">
+                                                                      <input type="text" name="flightto" style="display:none" id="toCitySearch">
+                                                                    </div> -->
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <!-- <div class="flight-from-data-search" *ngIf="!isMobile">
+                                                                <input type="text" autocomplete="off" class="w-100" id="toCitySearch"
+                                                                  placeholder="Search City" formControlName="flightto" (keyup)="toList($event)"
+                                                                  #toCityInput autofocus [(ngModel)]="multicityFlightData.value.flightto">
+                                                                <input type="text" name="flightto" style="display:none" id="toCitySearch">
+                                                              </div> -->
+                                            <ul class="flight-from-data-ul" *ngIf="toFlightList && !isMobile">
+                                              <li class="flight-from-ul-li">
+                                                <p class="flight-Results-text">Results</p>
+                                              </li>
+                                              <li class="flight-from-ul-li" *ngFor="let toCity of cityList">
+                                                <a href="#" class="flight-from-ul-li-a"
+                                                  (click)="selectToFlightList(toCity._source)">
+                                                  <div class="flight-from-name">
+                                                    <h6>
+                                                      {{toCity._source.city}}, {{toCity._source.country}}
+                                                    </h6>
+                                                    <p>{{toCity._source.airport_name}}</p>
+                                                  </div>
+                                                  <div class="flight-from-shortname">
+                                                    <h6>{{toCity._source.airport_code}}</h6>
+                                                  </div>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                            <ul class="flight-from-data-ul" *ngIf="isMobile">
+                                              <li class="flight-from-ul-li">
+                                                <p class="flight-Results-text">Results</p>
+                                              </li>
+                                              <li class="flight-from-ul-li" *ngFor="let fromCity of cityList">
+                                                <a href="#" class="flight-from-ul-li-a"
+                                                  (click)="isFromorNot == true ?selectFromFlightList(fromCity._source) : selectToFlightList(fromCity._source)">
+                                                  <div class="flight-from-name">
+                                                    <h6>
+                                                      {{fromCity._source.city}}, {{fromCity._source.country}}
+                                                    </h6>
+                                                    <p>{{fromCity._source.airport_name}}</p>
+                                                  </div>
+                                                  <div class="flight-from-shortname">
+                                                    <h6>{{fromCity._source.airport_code}}</h6>
+                                                  </div>
+                                                </a>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="home-error d-flex">
+                                        <mat-error class="w-50" *ngIf="submitted && Error('flightfrom', 'required')">
+                                          Select departure
+                                        </mat-error>
+                                        <!-- <mat-error *ngIf="submitted && Error('flightto', 'required')">
+                                                            Select departure
+                                                          </mat-error> -->
+                                      </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                      <div class="root-date">
+                                        <div class="select-root-area">
+                                          <div class="select-dep-ret">
+                                            <div class="area-root-departure" (click)="picker.open()" id="datePickerOpen"
+                                              *ngIf="!isMobile">
+                                              <div class="select-root-departure departure-date">
+                                                <span class="select-roottitle">DEPARTURE</span>
+                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                                <span class="select-roottitle d-block w-100"
+                                                  *ngIf="departureDate=='' ||departureDate==undefined">Tap to add a
+                                                  <br />
+                                                  departure date</span>
+                                                <span class="select-roottitle"
+                                                  *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate
+                                                                                             | date:'EEEE' }}</span>
+                                              </div>
+                                              <div class="select-root-date" style="position: relative; left: 0;">
+                                                <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                <mat-form-field
+                                                  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                  <input matInput [min]="minDate" [matDatepicker]="picker"
+                                                    formControlName="departure" [(ngModel)]="departureDate"
+                                                    (dateChange)="currentPeriodClicked($event)" />
+                                                  <mat-datepicker-toggle matSuffix [for]="picker">
+                                                  </mat-datepicker-toggle>
+                                                  <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                              </div>
+                                            </div>
+                                            <!--Mobile Picker-->
+                                            <div class="area-root-departure" (click)="picker.open()" id="datePickerOpen"
+                                              *ngIf="isMobile">
+                                              <div class="select-root-departure departure-date">
+                                                <span class="select-roottitle">DEPARTURE--{{isMobile}}</span>
+                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                                <span class="select-roottitle d-block w-100"
+                                                  *ngIf="departureDate=='' ||departureDate==undefined">Tap to add a
+                                                  <br />
+                                                  departure date</span>
+                                                <span class="select-roottitle"
+                                                  *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate
+                                                                                             | date:'EEEE' }}</span>
+                                              </div>
+                                              <div class="select-root-date" style="position: relative; left: 0;">
+                                                <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                <mat-form-field
+                                                  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                  <input matInput [min]="minDate" [matDatepicker]="picker"
+                                                    formControlName="departure" [(ngModel)]="departureDate"
+                                                    (dateChange)="currentPeriodClicked($event)" />
+                                                  <mat-datepicker-toggle matSuffix [for]="picker">
+                                                  </mat-datepicker-toggle>
+                                                  <mat-datepicker touchUi panelClass="bottomDatePicker" #picker>
+                                                  </mat-datepicker>
+                                                </mat-form-field>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="mob-travellers-class">
+                                          <div class="mob-travellers-class-box" (click)="openTravellerBlock()">
+                                            <div class="mob-travellers-class-box-left">
+                                              <span>Travellers and Class</span>
+                                              <h5>
+                                                {{multicityFlightData.value.flightclass == 'E' ?"Economy Class" : ""
+
+                                            }}{{multicityFlightData.value.flightclass == 'F' ?"First Class" : ""
+
+                                            }}{{multicityFlightData.value.flightclass == 'P' ?"Premium Economy" : ""
+
+                                            }}{{multicityFlightData.value.flightclass == 'B' ?"Business" : ""}}
+                                                <span>{{multicityFlightData.value.adults}} Adults,
+                                                  {{multicityFlightData.value.child}} Child,
+                                                  {{multicityFlightData.value.infants}} Infant</span>
+                                              </h5>
+                                            </div>
+                                            <div class="mob-travellers-class-box-right">
+                                              <img src="./assets/images/icons/down.png" class="ms-1" alt="" />
+                                            </div>
+                                          </div>
+
+                                          <div class="mob-filter-travellers"
+                                            [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
+                                            <div class="mob-title">
+                                              <h3>Preferred Airline</h3>
+                                              <a href="#" class="mob-close mob-preferred-airline-close"
+                                                (click)="closeTravllerBlock()">
+                                                <img src="./assets/images/icons/close.png" alt="" />
+                                              </a>
+                                            </div>
+                                            <div class="mob-add-travels">
+                                              <ul class="Travellers-dropdown-data">
+                                                <li>
+                                                  <div class="Travellers-passengers-data">
+                                                    <div class="Travellers-name">
+                                                      <h6>Adult</h6>
+                                                      <p>12 years &amp; above</p>
+                                                    </div>
+                                                    <div class="Travellers-qty">
+                                                      <div class="quantity buttons_added">
+                                                        <input type="button" (click)="decreaseAdult()" value="-"
+                                                          class="qty-buttons minus" />
+                                                        <input type="number" step="1"
+                                                          oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
+                                                          min="1" max="9" name="quantity" value="0" title="Qty"
+                                                          class="input-text qty text quantity_adult1_events"
+                                                          formControlName="adults" size="4" pattern="" inputmode=""
+                                                          [(ngModel)]="multicityFlightData.value.adults" />
+                                                        <input type="button" (click)="increaseAdult()" value="+"
+                                                          [disabled]="disableParent" class="qty-buttons plus" />
+                                                        <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                                         <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                                         <input type="button" value="+" class="qty-buttons plus"> -->
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div class="Travellers-passengers-data">
+                                                    <div class="Travellers-name">
+                                                      <h6>Child</h6>
+                                                      <p>2 - 11 years</p>
+                                                    </div>
+                                                    <div class="Travellers-qty">
+                                                      <div class="quantity buttons_added">
+                                                        <input type="button" (click)="decreaseChild()" value="-"
+                                                          class="qty-buttons minus" />
+                                                        <input type="number" step="1" min="0" max="6" name="quantity"
+                                                          value="0" title="Qty"
+                                                          class="input-text qty text quantity_adult1_events" size="4"
+                                                          pattern="" inputmode="" formControlName="child"
+                                                          [(ngModel)]="multicityFlightData.value.child" />
+                                                        <input type="button" (click)="increaseChild()"
+                                                          [disabled]="disablechildren" value="+"
+                                                          class="qty-buttons plus" />
+                                                        <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                                         <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                                         <input type="button" value="+" class="qty-buttons plus"> -->
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div class="Travellers-passengers-data">
+                                                    <div class="Travellers-name">
+                                                      <h6>Infant</h6>
+                                                      <p>Under 2 years</p>
+                                                    </div>
+                                                    <div class="Travellers-qty">
+                                                      <div class="quantity buttons_added">
+                                                        <input type="button" (click)="decreaseInfant()" value="-"
+                                                          class="qty-buttons minus" />
+                                                        <input type="number" step="1" min="0" max="6" name="quantity"
+                                                          value="0" title="Qty"
+                                                          class="input-text qty text quantity_adult1_events" size="4"
+                                                          pattern="" formControlName="infants"
+                                                          [(ngModel)]="multicityFlightData.value.infants" inputmode="" />
+                                                        <input type="button" (click)="increaseInfant()"
+                                                          [disabled]="disableinfants" value="+"
+                                                          class="qty-buttons plus" />
+                                                        <!-- <input type="button" value="-" class="qty-buttons minus">
+                                                                                                         <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                                                                         <input type="button" value="+" class="qty-buttons plus"> -->
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </li>
+                                              </ul>
+                                              <div class="mob-Choose-class">
+                                                <h6>Choose Cabin Class</h6>
+                                                <ul class="">
+                                                  <li>
+                                                    <a href="javascript:void(0)" class="" value="E"
+                                                      (click)="getClassVal('E')"
+                                                      [ngClass]="this.multicityFlightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
+                                                      Economy</a>
+                                                  </li>
+                                                  <li>
+                                                    <a href="javascript:void(0)" class="" value="P"
+                                                      (click)="getClassVal('P')"
+                                                      [ngClass]="this.multicityFlightData.value.flightclass == 'P' ? 'active':'' ">Premium
+                                                      Economy</a>
+                                                  </li>
+                                                  <li>
+                                                    <a href="javascript:void(0)" class="" value="B"
+                                                      (click)="getClassVal('B')"
+                                                      [ngClass]="this.multicityFlightData.value.flightclass == 'B' ? 'active':'' ">Business</a>
+                                                  </li>
+                                                  <li>
+                                                    <a href="javascript:void(0)" class="" value="F"
+                                                      (click)="getClassVal('F')"
+                                                      [ngClass]="this.multicityFlightData.value.flightclass == 'F' ? 'active':'' ">First
+                                                      Class</a>
+                                                  </li>
+                                                </ul>
+                                              </div>
+
+                                              <div class="mob-Choose-done pt-1 pl-0 pr-0">
+                                                <a href="javascript:void(0)" (click)="closeTravllerBlock()">
+                                                  Done
+                                                </a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <mat-error *ngIf="dateValidation"> Select departure </mat-error>
+                                      <!-- <div *ngIf="dateValidation" class="text-danger">
+                                                                     <span class="fs_12"> Select departure date</span>
+                                                                 </div> -->
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </div>
+                            <div class="col-md-2">
+                              <div class="root-search">
+                                <button type="submit" class="searchbn w-100">Search</button>
+                              </div>
+                            </div>
+
+                          </div>
+
+
+
+                          <div class="root-search mt-25">
+                            <a type="submit" class="add_anotherbutton" (click)="addMoreMultiCity()">+ Add another
+                              city</a>
+                          </div>
+
+                        </form>
