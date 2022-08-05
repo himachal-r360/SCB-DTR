@@ -417,7 +417,7 @@
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                     <span class="information-icon">
-                                                     <h6>&#8377; {{list.priceSummary[0].totalFare}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                     <h6>&#8377; {{list.priceSummary[0].totalFare|number}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
                                                         <!-- <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""> -->
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
@@ -586,7 +586,7 @@
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
                                                                                 <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
                                                                             </div>
-                                                                            <div class="tabs-depart-total">
+                                                                            <div class="tabs-depart-total w-25 text-center">
                                                                                 <p>{{details.duration | durationTime}}</p>
                                                                                  <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0" >Via {{details.stopsDetails[0]['layoverAirportName']}}                                                          </p>
                                                                             </div>
@@ -921,7 +921,7 @@
                                   </div>
                               </div>
                               <div class="mob-list-items-price" *ngIf="list.priceSummary.length > 0">
-                                  <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
+                                  <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
                                   <p  *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</p>
                               </div>
                           </div>
