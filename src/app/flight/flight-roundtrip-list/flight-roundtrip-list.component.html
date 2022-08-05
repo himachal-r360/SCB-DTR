@@ -274,7 +274,7 @@
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                                   </div>
                                                   <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
-                                                      <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
+                                                      <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
                                                        <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
                                                       <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
@@ -425,7 +425,7 @@
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                                   </div>
                                                   <div class="round-content-price"  *ngIf="list.priceSummary.length > 0">
-                                                      <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
+                                                      <h6>₹ {{list.priceSummary[0].totalFare | number}}</h6>
                                                         <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="40" >
                                                       <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
                                                       <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
