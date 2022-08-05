@@ -155,7 +155,7 @@
                                                                             (keyup)="fromList($event)"
                                                                             (focus)="isFromorNot= true;fromList($event)"
                                                                             [(ngModel)]="flightData.value.flightfrom">
-                                                                            
+
                                                                             <input type="hidden"  formControlName="fromCity">
                                                                             <input type="hidden"  formControlName="fromContry">
                                                                              <input type="hidden"  formControlName="fromAirportName">
@@ -173,7 +173,7 @@
                                                                            <input type="hidden"  formControlName="toCity">
                                                                             <input type="hidden"  formControlName="toContry">
                                                                             <input type="hidden"  formControlName="toAirportName">
-                                                                            
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -191,7 +191,7 @@
                                                                 [(ngModel)]="flightData.value.flightfrom">
                                                             <input type="text" name="flightfrom" style="display:none"
                                                                 id="fromCitySearch">
-                                                                
+
                                                                  <input type="hidden"  formControlName="fromCity">
                                                                             <input type="hidden"  formControlName="fromContry">
                                                                               <input type="hidden"  formControlName="fromAirportName">
@@ -753,7 +753,7 @@
                                     </div>
 
                                 <!-- Preferred-OTA-Partner -->
-                                <div class="Preferred-OTA-Partner-area ms-3" *ngIf="!isMobile && isPartnerDivShow" >
+                                <div class="Preferred-OTA-Partner-area ms-3" *ngIf="!isMobile && displayPartners" >
                                     <ul class="Preferred-OTA-Partner-ul">
                                         <li style="display: flex;flex-direction: column;">
                                             <span>Preferred </span>
@@ -786,10 +786,11 @@
                                     </ul>
                                   
                                 </div>
-                                
+
+
                                 </div>
                                 <!-- Mobile Preferred-OTA-Partner -->
-                                <div class="mob-Preferred-OTA-Partner-area"  *ngIf="isMobile">
+                                <div class="mob-Preferred-OTA-Partner-area"  *ngIf="isMobile && displayPartners">
                                     <div class="mob-Preferred-area" (click)="showPartner()">
                                         <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="./assets/images/icons/down.png" class="ms-1" alt=""></h5>
                                     </div>
@@ -838,4 +839,4 @@
                                 </div>
                             </div>
                         </form>
-                        
+
