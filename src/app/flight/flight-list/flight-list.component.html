@@ -75,6 +75,39 @@
                                 </div>
                             </div>
                             <hr>
+                            <div class="sidebar-widget partner-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Partners</h6>
+                                    <a href="javascript:void(0)" (click)="resetPartnerFlightsFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content" id="airline_list">
+                                    <ul class="category-list clearfix mt-2" >
+                                        
+                                        <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:0:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{partnerItem.partnerName}}</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <ng-container *ngIf="show_airline_more">
+                                        <li  class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{partnerItem.partnerName}}</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        </ng-container>
+                                    </ul>
+                                    <!-- <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a> -->
+                                </div>
+                            </div>
+                            <hr>
                             <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
                                 <div class="widget-title">
                                     <h6 class="">Flight Timings</h6>
@@ -219,7 +252,8 @@
                                     </ul>
                                 </div>
                             </div>
-
+                            <hr>
+                        
                         </div>
                         </div>
 
@@ -1350,6 +1384,50 @@
                                               </div>
                                           </div>
                                       </div>
+                                     <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingeight">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseeight" aria-expanded="false" aria-controls="collapseeight">
+                                                Partners
+                                            </button>
+                                        </h2>
+                                        <div id="collapseeight" class="accordion-collapse collapse" aria-labelledby="headingeight">
+                                            <div class="accordion-body">
+                                                <div class="default-sidebar">
+                                                    <ul class="category-list clearfix mt-2">
+                                                        <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr| slice:0:5 ; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                            <div class="custom-controls-stacked">
+                                                                <label class="custom-control material-checkbox">
+                                                                    <input type="checkbox" class="material-control-input" value="{{partnerItem.partnerName}}" [checked]="partnerItem.active"
+                                                                    (change)="flightPartnerFilterFlightData(partnerItem)">
+                                                                    <span class="material-control-indicator"></span>
+                                                                    <span class="description">{{partnerItem.partnerName}}</span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <ng-container *ngIf="show_airline_more">
+                                                            <li class="custom-check-box" *ngFor="let partnerItem of airlines| slice:5 ; let i = index "
+                                                                [ngClass]="{'active': partnerItem.active}">
+                                                                <div class="custom-controls-stacked">
+                                                                    <label class="custom-control material-checkbox">
+                                                                        <input type="checkbox" class="material-control-input" value="{{partnerItem.partnerItem}}"
+                                                                            [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)">
+                                                                        <span class="material-control-indicator"></span>
+                                                                        <span class="description">{{partnerItem.partnerName}}</span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        </ng-container>
+                                                    </ul>
+
+                                                    <div class="mob-reset text-end">
+                                                         <!-- <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a> -->
+                                                        <a href="javascript:void(0)" class="widget-content-more"  (click)="resetPartnerFlightsFilter()">Reset</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div>
                                       <div class="accordion-item">
                                           <h2 class="accordion-header" id="headingTwo">
                                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1373,7 +1451,7 @@
                                                   </div>
                                               </div>
                                           </div>
-                                      </div>
+                                    </div>
                                       <div class="accordion-item">
                                           <h2 class="accordion-header" id="headingThree">
                                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1473,6 +1551,7 @@
                                               </div>
                                           </div>
                                       </div>
+                                      
                                       <div class="accordion-item">
                                           <h2 class="accordion-header" id="headingsix">
                                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1548,7 +1627,7 @@
                                               </div>
                                           </div>
                                       </div>
-
+                              
 
                                   </div>
                               </div>
