@@ -21,15 +21,15 @@ export class DurationTimePipe implements PipeTransform {
     let response: string = "";
     
     if (hours > 0) {
-      response = response + hours + " h ";
+      response = response + hours + "h ";
     } 
 
     if (minutes > 0) {
-      response = response + minutes + " m ";
+      response = response + minutes + "m ";
     }
 
     if (seconds > 0) {
-      response = response + seconds + " s";
+      response = response + seconds + "s";
     }
 
     return response;

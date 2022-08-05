@@ -27,6 +27,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { CustomReuseStrategy } from './route-reuse-strategy';
+import { ToastrModule } from 'ngx-toastr';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -39,8 +40,8 @@ export function appInitializerFn(appConfig: AppConfigService) {
   declarations: [
     AppComponent,
     SearchComponent,
-    AlertDialogComponent,
-    
+    AlertDialogComponent
+
   ],
   imports: [
  BrowserModule,
@@ -59,8 +60,9 @@ export function appInitializerFn(appConfig: AppConfigService) {
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
-    CarouselModule,RegaliaGoldModule
-    
+    CarouselModule,RegaliaGoldModule,
+    ToastrModule.forRoot()
+
   ],
   exports:[SearchComponent],
    providers: [
@@ -78,7 +80,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
       useClass: CustomReuseStrategy,
     },
 SimpleGlobal,CommonHelper,CommunicationService,MatBottomSheet
-  
+
   ],
      entryComponents: [AlertDialogComponent],
   bootstrap: [AppComponent],

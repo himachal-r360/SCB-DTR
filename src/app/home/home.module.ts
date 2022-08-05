@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { CommonModule } from '@angular/common';
 import { FlightSearchModule } from '../flight-search/flight-search.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { FlightSearchModule } from '../flight-search/flight-search.module';
   ],
   imports: [
      CommonModule,
-   FlightSearchModule
+   FlightSearchModule,
+   CarouselModule
   ],
   providers: [],
   exports: [HomeComponent  ],

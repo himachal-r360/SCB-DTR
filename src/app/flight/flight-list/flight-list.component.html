@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="travel-box mb-20" >
-                    <app-flight-search modifySearch="true" ></app-flight-search>
+                    <app-flight-search modifySearch="true"  isViewPartner="false"></app-flight-search>
                  </div>
             </div>
             <div class="row">
@@ -14,7 +14,7 @@
                           <li class="list-inline-item" *ngFor="let service of enableFlightServices" >
                               <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.png" alt="{{service.name}}">
                           </li>
-                         
+
                       </ul>
                   </div>
               </div>
@@ -70,7 +70,7 @@
                                                 </label>
                                             </div>
                                         </li>
-                                       
+
                                     </ul>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                             <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
                                             <p [innerHTML]="timingsItems.value"></p>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="widget-content" id="airline_list">
                                     <ul class="category-list clearfix mt-2" >
-                                        
+
                                         <li class="custom-check-box" *ngFor="let airlineItem of airlines | slice:0:5; let i = index " [ngClass]="{'active': airlineItem.active}">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox" >
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="widget-content" id="layover_airport">
                                     <ul class="category-list clearfix mt-2" >
-                             
+
                                         <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr | slice:0:5; let i = index " [ngClass]="{'active': layoverItem.active}">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
@@ -213,7 +213,7 @@
                                             </div>
                                         </li>
                                         </ng-container>
-                                        
+
                                          <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
 
                                     </ul>
@@ -249,7 +249,7 @@
                                             value="{{Items.value}}" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
                                                 <p> <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span> {{Items.value}}</p>
                                             </li>
-                         
+
                                         </ul>
                                     </div>
                                 </div>
@@ -257,6 +257,22 @@
                             <div class="flight-search-filters">
                                 <div class="flight-search-filters-left">
                                     <p *ngIf="flightList">{{flightList.length}} flights found</p>
+                                </div>
+                            </div>
+                            <div class="listing-warning-area">
+                                <div class="listing-warning-left">
+                                    <p>
+                                        Search results for <img src="./assets/images/flights/2.png" alt=""> <img src="./assets/images/flights/4.png" alt="">
+                                        not displayed due to no response within 8 seconds. <br> However, if you’re prepared to wait longer please click refresh.
+                                    </p>
+                                </div>
+                                <div class="listing-warning-right">
+                                    <a href="">
+                                        <img src="./assets/images/icons/reload.png" alt="">
+                                    </a>
+                                    <a href="">
+                                        <img src="./assets/images/icons/close.png" alt="">
+                                    </a>
                                 </div>
                             </div>
                            </div>
@@ -320,7 +336,7 @@
                            <ng-container #itemsContainer></ng-container>
                         </div>
                          <div class="text-center" *ngIf="flightList.length < 1">No flights found</div>
-                         <ng-template #item let-item="item">  
+                         <ng-template #item let-item="item">
                            <div  *ngFor="let list of item; let i = index" >
                             <div class="flight-listing"  *ngIf="list && list.flights.length > 0" id="flight_list_{{list.flightKey}}">
                                 <div class="flight-listing-content"   >
@@ -353,12 +369,12 @@
                                                     <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
                                                 </div>
                                             </div>
-                                           
+
                                         </div>
                                         <div class="col-md-2">
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-image" *ngIf="list.priceSummary.length > 0">
-                                                  <img src="{{cdnUrl}}/images/flight_partners/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}"> 
+                                                  <img src="{{cdnUrl}}/images/flight_partners/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}">
                                                     <!--<p>{{list.priceSummary[0].partnerName}}</p>-->
                                                 </div>
                                             </div>
@@ -405,11 +421,11 @@
                                 </div>
 
                                     <!-- <div class="flight-info-box">
-                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p> 
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
                                     <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>-->
                                     <!-- <p></p>
                                     <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
-                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a> 
+                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
                                 </div>-->
                                 <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{list.flightKey}}" >
                                   <div class="flight-options-box" id="FareDetails_{{list.flightKey}}">
@@ -417,7 +433,7 @@
                                         <div class="flight-options-list">
                                             <div class="flight-options-list-left">
                                                 <div class="flight-options-logo">
-                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" height="20"> 
+                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" height="20">
                                                   {{item.partnerName}}
                                                     <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
                                                 </div>
@@ -538,6 +554,7 @@
                                                                             </div>
                                                                             <div class="tabs-depart-total">
                                                                                 <p>{{details.duration | durationTime}}</p>
+                                                                                 <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0" >Via {{details.stopsDetails[0]['layoverAirportName']}}                                                          </p>
                                                                             </div>
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
@@ -560,7 +577,11 @@
                                                                             </div>
                                                                         </div>-->
                                                                     </div>
-                                                                     <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airlineName != details.operatingAirline">Operated By : {{details.operatingAirline}}</div>
+                                                           <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                                                     Operated By :
+                                                                     <span *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</span>
+                                                                     <span   *ngIf="!airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</span>
+                                                                     </div>
                                                                     <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.flights[i]  && list.flights[i+1] && getLayoverHour(list.flights[i],list.flights[i+1])">
  <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
                                                                   </div>
@@ -771,10 +792,10 @@
                                 </div>
                             </div>
                              </div>
-                             
+
                           </ng-template>
                          <div id="endOfPage" (click)="loadData()"></div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -819,7 +840,7 @@
               </div>
           </div>
 
-          
+
 
           <div class="col-md-12">
               <div class="mob-all-flight">
@@ -852,7 +873,7 @@
                       </div>
 
                   </div>
-                <ng-template #item let-item="item">  
+                <ng-template #item let-item="item">
                 <div  *ngFor="let list of item; let i = index" >
               <div class="mob-list-area" *ngIf="list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
                   <div class="mob-list-items">
@@ -870,8 +891,8 @@
                                   <p  *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</p>
                               </div>
                           </div>
-                          
-                          
+
+
                           <div class="mob-list-items-name-bottom">
                               <div class="name-bottom-top">
                                   <div class="name-bottom-top-left">
@@ -894,13 +915,13 @@
                               </div>-->
                           </div>
                       </div>
-                      
-                      
+
+
                       <div class="mob-items-book-list" id="CompareToFly_{{list.flightKey}}">
                           <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                               <div class="mob-book-list-top">
                                   <div class="mob-booking-image">
-                                     <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" > 
+                                     <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" >
                                       <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
                                   </div>
                                   <div class="mob-booking-price">
@@ -933,21 +954,21 @@
                               </div>
                           </div>
                       </div>
-                      
+
                   </div>
               </div>
-              
-              
-              
+
+
+
                <!-- flight detail for mobile  -->
                         <div class="mob-fd-area"  id="flightDetailMobile_{{list.flightKey}}">
-                            <div class="mob-fd-box"> 
+                            <div class="mob-fd-box">
                                 <div class="mob-title">
                                     <h3>Flight Details</h3>
                                     <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
                                         <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                     </a>
-                                </div> 
+                                </div>
                                 <div class="mob-fd-filters d-block">
                                     <div class="mob-fd-accordion">
                                         <div class="accordion" id="accordionExample">
@@ -1002,13 +1023,15 @@
                                                                             </div>
                                                                         </div>-->
                                                                     </div>
-                                                                     <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airlineName != details.operatingAirline">Operated By : {{details.operatingAirline}}</div>
+                                                                     <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">  Operated By :
+                                                                     <span *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</span>
+                                                                     <span   *ngIf="!airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</span> </div>
                                                                     <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                         <!-- <p>Change of planes・3h 0m Layover in Nagpur</p> -->
                                                                         <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
-                                                                    </div> 
-                                                             
-                                                                </div>                                 
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1020,15 +1043,15 @@
                                                          aria-expanded="false" aria-controls="collapseTwo-fd" (click)="openFlightDetailMobile(list.flightKey,'cancellation')">
                                                         Cancellation Details
                                                     </button>
-                                                </h2>   
+                                                </h2>
                                                 <div id="collapseTwo-fd_{{list.flightKey}}" class="accordion-collapse collapse" aria-labelledby="headingTwo-fd"
                                                     data-bs-parent="#accordionExample" >
                                                     <div class="accordion-body">
-                                                        <div class="extra-tabs-details Fare-box"> 
+                                                        <div class="extra-tabs-details Fare-box">
                                                             <div class="extra-tabs-details-bottom p-0">
-                                                                <table class="table-bordered table-content w-100"> 
+                                                                <table class="table-bordered table-content w-100">
                                                                     <tbody>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="fw_6 fs_13">Time Frame</p>
                                                                                 <p class="opacity_05">(From Scheduled flight departure)</p>
@@ -1038,7 +1061,7 @@
                                                                                 <p class="opacity_05">(Per passenger)</p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="opacity_05">0 hours to 2 hours*</p>
                                                                             </td>
@@ -1048,7 +1071,7 @@
                                                                                 <p>Infant : Non refundable</p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="opacity_05">2 hours to 3 days*</p>
                                                                             </td>
@@ -1058,7 +1081,7 @@
                                                                                 <p>Infant : Non refundable</p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="opacity_05">3 days to 365 days*</p>
                                                                             </td>
@@ -1090,36 +1113,36 @@
                                                             <div class="rules-flight" >
                                                                 <div class="rules-flight-items" *ngFor="let flightItem of list.flights">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">    
+                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
                                                                     </div>
                                                                     <div class="rules-flight-content" >
                                                                         <h6 >
                                                                             {{flightItem.departureAirport}}
-                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">    
+                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                                             {{flightItem.arrivalAirport}}
                                                                         </h6>
-                                                                    </div>                                                
+                                                                    </div>
                                                                 </div>
                                                                 <!-- <div class="rules-flight-items opacity_05">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">    
+                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
                                                                     </div>
                                                                     <div class="rules-flight-content">
                                                                         <h6>
                                                                             NAG
-                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">    
+                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
                                                                             HYD
                                                                         </h6>
-                                                                    </div>                                                
+                                                                    </div>
                                                                 </div> -->
                                                             <!--</div>
                                                         </div>
                                                         <div class="extra-tabs-details-bottom p-0">
-                                                            <table class="table-bordered table-content w-100"> 
+                                                            <table class="table-bordered table-content w-100">
                                                                 <tbody>
-                                                                    <tr> 
+                                                                    <tr>
                                                                         <td>
-                                                                            <p class="fw_6 fs_13">Baggage</p> 
+                                                                            <p class="fw_6 fs_13">Baggage</p>
                                                                         </td>
                                                                         <td>
                                                                             <p class="fw_6 fs_13">Check-in Baggage</p>
@@ -1130,42 +1153,42 @@
                                                                             <p class="opacity_05">(Per passenger)</p>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr> 
+                                                                    <tr>
                                                                         <td>
                                                                             <p class=" ">Adult</p>
                                                                         </td>
                                                                         <td>
                                                                             <p class="fw_6 fs_13">15 Kgs</p>
-                                                                            <p class="opacity_05">(1 piece only)</p> 
+                                                                            <p class="opacity_05">(1 piece only)</p>
                                                                         </td>
                                                                         <td>
                                                                             <p class="fw_6 fs_13">7 Kgs</p>
-                                                                            <p class="opacity_05">(1 piece only)</p> 
+                                                                            <p class="opacity_05">(1 piece only)</p>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr> 
+                                                                    <tr>
                                                                         <td>
                                                                             <p class=" ">Child</p>
                                                                         </td>
                                                                         <td>
                                                                             <p class="fw_6 fs_13">15 Kgs</p>
-                                                                            <p class="opacity_05">(1 piece only)</p> 
+                                                                            <p class="opacity_05">(1 piece only)</p>
                                                                         </td>
                                                                         <td>
                                                                             <p class="fw_6 fs_13">7 Kgs</p>
-                                                                            <p class="opacity_05">(1 piece only)</p> 
+                                                                            <p class="opacity_05">(1 piece only)</p>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr> 
+                                                                    <tr>
                                                                         <td>
                                                                             <p class=" ">Infant</p>
                                                                         </td>
                                                                         <td>
-                                                                            <p class="fw_6 fs_13">Cabin bag only</p> 
+                                                                            <p class="fw_6 fs_13">Cabin bag only</p>
                                                                         </td>
                                                                         <td>
                                                                             <p class="fw_6 fs_13">7 Kgs</p>
-                                                                            <p class="opacity_05">(1 piece only)</p> 
+                                                                            <p class="opacity_05">(1 piece only)</p>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -1175,8 +1198,8 @@
                                                     </div>
                                                 </div>
                                             </div>-->
-                                            
-                                           <!-- 
+
+                                           <!--
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingfour-fd">
                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1187,11 +1210,11 @@
                                                 <div id="collapsefour-fd_{{list.flightKey}}" class="accordion-collapse collapse" aria-labelledby="headingfour-fd"
                                                     data-bs-parent="#accordionExample">
                                                     <div class="accordion-body stops-widget">
-                                                        <div class="extra-tabs-details Fare-box"> 
+                                                        <div class="extra-tabs-details Fare-box">
                                                             <div class="extra-tabs-details-bottom p-0">
-                                                                <table class="table-bordered table-content w-100"> 
+                                                                <table class="table-bordered table-content w-100">
                                                                     <tbody>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="fw_6 fs_13">Time Frame</p>
                                                                                 <p class="opacity_05">(From Scheduled flight departure)</p>
@@ -1201,7 +1224,7 @@
                                                                                 <p class="opacity_05">(Per passenger)</p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="opacity_05">0 hours to 2 hours*</p>
                                                                             </td>
@@ -1211,7 +1234,7 @@
                                                                                 <p>Infant : Non refundable</p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="opacity_05">2 hours to 3 days*</p>
                                                                             </td>
@@ -1221,7 +1244,7 @@
                                                                                 <p>Infant : Non refundable</p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr> 
+                                                                        <tr>
                                                                             <td>
                                                                                 <p class="opacity_05">3 days to 365 days*</p>
                                                                             </td>
@@ -1242,27 +1265,27 @@
                                         </div>
                                     </div>
                                     <div class="mob-sf-btns">
-                                        <a href="">Apply</a>
+                                        <a href="javascript:void(0)">Apply</a>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
-                          </div> 
-              
-              
-              
+                          </div>
+
+
+
               </div>
-              
-            </ng-template>  
+
+            </ng-template>
                <div id="endOfPage" (click)="loadData()"></div>
           </div>
-          
+
 
 
  <!-- ------------------------------
             >>> mobile Sort Filters
         ---------------------------------->
         <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
-           
+
           <div class="mob-sf-box">
               <div class="mob-title">
                   <h3>Sort & Filters</h3>
@@ -1414,7 +1437,7 @@
                                               <div class="accordion-body">
                                                   <div class="default-sidebar">
                                                       <ul class="category-list clearfix mt-2">
-                                                      
+
                                                           <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:0:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                               <div class="custom-controls-stacked">
                                                                   <label class="custom-control material-checkbox">
@@ -1426,7 +1449,7 @@
                                                                   <p>₹{{airlineItem.price}}</p>
                                                               </div>
                                                           </li>
-                                                         
+
                                                               <ng-container *ngIf="show_airline_more" >
                                                                           <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
                                                               <div class="custom-controls-stacked">
@@ -1438,7 +1461,7 @@
                                                                   </label>
                                                                   <p>₹{{airlineItem.price}}</p>
                                                               </div>
-                                                          </li> 
+                                                          </li>
                                                           </ng-container>
                                                       </ul>
 
@@ -1513,7 +1536,7 @@
                                                               </div>
                                                           </li>
                                                           </ng-container>
-                                                          
+
                                                       </ul>
 
                                                       <div class="d-flex justify-content-between mt-2">
