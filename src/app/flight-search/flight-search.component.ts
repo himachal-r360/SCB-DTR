@@ -263,7 +263,7 @@ console.log(this.isViewPartner)
   infantsVal:any
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('lastSearch');
+   let lastSearch:any=localStorage.getItem('flightLastSearch');
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
@@ -343,7 +343,6 @@ console.log(this.isViewPartner)
   sameCityValidation = false;
   flightSearch() {
     this.submitted = true;
-    this.selectedDate = this.flightData.value.departure;
     if(this.flightData.value.departure!="" && this.flightData.value.departure!=undefined){
       this.dateValidation=false;
      this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
@@ -382,7 +381,7 @@ console.log(this.isViewPartner)
 
       this.flightSearchCallBack(searchValue);
 
-      localStorage.setItem('lastSearch',JSON.stringify(searchValue));
+      localStorage.setItem('flightLastSearch',JSON.stringify(searchValue));
 
       searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 

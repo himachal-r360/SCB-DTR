@@ -54,11 +54,16 @@ export class TravelSearchComponent implements OnInit {
         @Input()  popular;
         @Input()  tab;
        	@Output() closeBottomSheetPop = new EventEmitter<any>();
-
-        flightDeparture: any;
-        flightReturn:any;
+        continueSearchFlights:any=[]
+        departure: any;
+        arrival:any;
         busDeparture: any;
         trainDeparture:any;
+          dateValidation: boolean = false;
+        departureMlite: any;
+        arrivalMlite:any;
+        busDepartureMlite: any;
+        trainDepartureMlite:any;
 
         cdnUrl: any;
         siteUrl:any;
@@ -74,20 +79,27 @@ export class TravelSearchComponent implements OnInit {
         toBusCityList:boolean = false;
         fromTrainCityList:boolean = false;
         toTrainCityList:boolean = false;
-        flightFrom:any;
-        flightTo:any;
-        fromFlightCode:any;
-        toFlightCode:any;
+        fromCity:any;
+        toCity:any;
+         fromCityDisp:any;
+        toCityDisp:any;
+        flightfrom:any;
+        flightto:any;
 
         hotelName:any;
+        hotelNameDisp:any;
         hotelId:any;  countryId:any;
         busFrom:any;
         busTo:any;
         fromBusCode:any;
         toBusCode:any;
+          busFromDisp:any;
+        busToDisp:any;
 
         trainFrom:any;
         trainTo:any;
+          trainFromDisp:any;
+        trainToDisp:any;
         fromTrainCode:any;
         toTrainCode:any;
         searchFlightForm: FormGroup;
@@ -162,7 +174,7 @@ export class TravelSearchComponent implements OnInit {
         child_label:number=0;
         infant_label:number=0;
         flightTripType:string="R";
-        flightClass:string="E";
+        flightclass:string="E";
         roomCount:number=0;
        DOMAIN_SETTINGS:string;
 
@@ -239,13 +251,13 @@ export class TravelSearchComponent implements OnInit {
 
 	if(this.enableEs){
 	this.defaultFlightOptions=[
-	{"_source":{"city":"New Delhi","airport_code":"DEL","airport_name":"Indira Gandhi Airport"}},
-	{"_source":{"city":"Mumbai","airport_code":"BOM","airport_name":"Chatrapati Shivaji Airport"}},
-	{"_source":{"city":"Bangalore","airport_code":"BLR","airport_name":"Kempegowda International Airport"}},
-	{"_source":{"city":"Goa","airport_code":"GOI","airport_name":"Dabolim Airport"}},
-	{"_source":{"city":"Chennai","airport_code":"MAA","airport_name":"Chennai Airport"}},
-	{"_source":{"city":"Kolkata","airport_code":"CCU","airport_name":"Netaji Subhas Chandra Bose Airport"}},
-	{"_source":{"city":"Hyderabad","airport_code":"HYD","airport_name":"Hyderabad Airport"}},
+	{"_source":{"city":"New Delhi","airport_code":"DEL","airport_name":"Indira Gandhi Airport","country_code":"IN"}},
+	{"_source":{"city":"Mumbai","airport_code":"BOM","airport_name":"Chatrapati Shivaji Airport","country_code":"IN"}},
+	{"_source":{"city":"Bangalore","airport_code":"BLR","airport_name":"Kempegowda International Airport","country_code":"IN"}},
+	{"_source":{"city":"Goa","airport_code":"GOI","airport_name":"Dabolim Airport","country_code":"IN"}},
+	{"_source":{"city":"Chennai","airport_code":"MAA","airport_name":"Chennai Airport","country_code":"IN"}},
+	{"_source":{"city":"Kolkata","airport_code":"CCU","airport_name":"Netaji Subhas Chandra Bose Airport","country_code":"IN"}},
+	{"_source":{"city":"Hyderabad","airport_code":"HYD","airport_name":"Hyderabad Airport","country_code":"IN"}},
 	];
 
 
@@ -325,20 +337,28 @@ export class TravelSearchComponent implements OnInit {
 	this.trainpickermaxDateMlite =  new Date( CurrentDate.getFullYear(), CurrentDate.getMonth()+1, CurrentDate.getDate());
 
 
-      //Flight Form
-       this.searchFlightForm = this.formBuilder.group({
-        flightClass: [this.flightClass, Validators.required],
+	
+      this.searchFlightForm = this.formBuilder.group({
         flightTripType: [this.flightTripType, Validators.required],
-        flightFrom: ['', Validators.required],
-        flightTo: ['', Validators.required],
-        fromFlightCode: ['', Validators.required],
-        toFlightCode: ['', Validators.required],
-        flightDeparture: ['', Validators.required],
-        flightReturn:[''],
-        adult: [this.adult_cnt, Validators.required],
-        child: [this.child_cnt],
-        infant: [this.infant_cnt],
-	});
+        flightfrom: ['',[Validators.required]],
+        flightto: ['',[Validators.required]],
+        fromCity: ['',[Validators.required]],
+        toCity: ['',[Validators.required]],
+        fromContry: ['',[Validators.required]],
+        toContry: ['',[Validators.required]],
+        fromAirportName: ['',[Validators.required]],
+        toAirportName: ['',[Validators.required]],
+        flightclass: ['E', Validators.required],
+        flightdefault: [],
+        departure:['',[Validators.required]],
+        arrival: ['',],
+        adults: ['1',[Validators.required]],
+        child: ['0'],
+        infants: ['0'],
+        travel: ['',[Validators.required]]
+        }, {
+        validators: MustMatch('fromCity', 'toCity')
+        });
 
       //Hotel Form
       this.searchHotelForm = this.formBuilder.group({
@@ -373,11 +393,49 @@ export class TravelSearchComponent implements OnInit {
 
 
    }
-  onSelect(event){
-    console.log(moment(event._d).format('YYYY-MM-DD'));
-    //this.flightDeparture = event._d;
-    this.flightDeparture = moment(event._d).format('YYYY-MM-DD');
-   //this.flightDepartureDisp = dateValue[0] + ',' + ' ' + dateValue[1] + ' ' + dateValue[2];
+   
+   openMliteDatePicker(type,field,rtype){
+    var datePipe =new DatePipe('en-US');
+      if(rtype==1){
+      this.selectTripType('R');
+      this.flightTripType='R';    
+      $('#roundTrip_m').trigger('click');  
+      }
+        switch(type){
+         
+        case 'flight': {
+        if(field=='departure'){
+        $('#flight_arrival_mlite').modal('hide');
+        $('#flight_departure_mlite').modal('show');
+        }else{
+        if(this.showFlightReturn){
+        this.minDateFlightToMlite= new Date(moment(this.departure).format('YYYY/MM/DD'));
+        $('#flight_arrival_mlite').modal('show');
+        $('#flight_departure_mlite').modal('hide');
+        }
+        }
+        break;
+        }
+        } 
+   }
+   
+   
+  onSelectMliteDate(event,type,field){
+        
+   
+   switch(type){
+      case 'flight': {
+      if(field=='departure'){
+        this.departure = event;
+        this.departureMlite = moment(event._d).format('DD/MM/YYYY');
+      }else{
+  
+       this.arrival = event;
+       this.arrivalMlite = moment(event._d).format('DD/MM/YYYY');
+    }
+     break;
+     }
+   } 
   }
 
   ngOnInit() {
@@ -605,23 +663,23 @@ export class TravelSearchComponent implements OnInit {
 
 
   selectClass(event){
-  this.flightClass=event;
+  this.flightclass=event;
   }
 
   selectTripType(event){
   if(event=='R'){
   this.showFlightReturn=true;
-    this.searchFlightForm.controls["flightReturn"].setValidators(Validators.required);
-    this.searchFlightForm.controls["flightReturn"].updateValueAndValidity();
+    this.searchFlightForm.controls["arrival"].setValidators(Validators.required);
+    this.searchFlightForm.controls["arrival"].updateValueAndValidity();
   }else
   if(event=='M'){
     this.router.navigateByUrl('/home');
   }else{
   this.showFlightReturn=false;
-  this.flightReturn=null;
-   this.searchFlightForm.controls["flightReturn"].setValue('');
-  this.searchFlightForm.controls["flightReturn"].clearValidators();
-  this.searchFlightForm.controls["flightReturn"].updateValueAndValidity();
+  this.arrival=null;
+   this.searchFlightForm.controls["arrival"].setValue('');
+  this.searchFlightForm.controls["arrival"].clearValidators();
+  this.searchFlightForm.controls["arrival"].updateValueAndValidity();
   }
    this.flightTripType=event;
   }
@@ -629,7 +687,7 @@ export class TravelSearchComponent implements OnInit {
   flightPassengers(passenger,opr){
 
    switch(passenger){
-    case 'adult': {
+    case 'adults': {
      switch(opr){
       case 'plus': {
         var a = this.adult_label;
@@ -637,7 +695,7 @@ export class TravelSearchComponent implements OnInit {
         var b =this.adult_label + 1;
         if (b < 9) {
         this.adult_label=b;
-        $(".adult .minus").removeClass('disabled');
+        $(".adults .minus").removeClass('disabled');
         } else {
         this.adult_label=9;
         $(this).addClass('disabled');
@@ -712,7 +770,7 @@ export class TravelSearchComponent implements OnInit {
     break;
    }
 
-  case 'infant': {
+  case 'infants': {
      switch(opr){
       case 'plus': {
        var a = this.infant_label;
@@ -752,7 +810,6 @@ export class TravelSearchComponent implements OnInit {
   }
 
   mliteDatepickerOpened(){
-  console.log('opened');
   $("body").css("overflow-x", "visible");
   }
 
@@ -767,7 +824,7 @@ export class TravelSearchComponent implements OnInit {
     var adultcount = (this.adult_cnt);
     var childcount = (this.child_cnt);
     var infantcount = (this.infant_cnt);
-    var mFlightClass = this.flightClass;
+    var mFlightClass = this.flightclass;
     var classtype;
     if (mFlightClass == 'E') {
         classtype = "Economy";
@@ -842,64 +899,85 @@ check_traveller_count(type) {
 
 
           //Flights
-        lastFlightSearch=localStorage.getItem('flightLastSearch');
+      lastFlightSearch=localStorage.getItem('flightLastSearch');
        const lastFlightSearchValue=JSON.parse(lastFlightSearch);
+       
         if(lastFlightSearchValue){
-        this.flightFromText=lastFlightSearchValue.flightFromText;
-        this.flightToText=lastFlightSearchValue.flightToText;
-        this.flightFrom=lastFlightSearchValue.searchFrom;
-        this.flightTo=lastFlightSearchValue.searchTo;
-        this.fromFlightCode=lastFlightSearchValue.fromTravelCode;
-        this.toFlightCode=lastFlightSearchValue.toTravelCode;
-        this.flightClass=lastFlightSearchValue.flightClass;
-        this.flightTripType=lastFlightSearchValue.flightTripType;
-        this.adult_cnt=parseInt(lastFlightSearchValue.adult_cnt);
-        this.child_cnt=parseInt(lastFlightSearchValue.child_cnt);
-        this.infant_cnt=parseInt(lastFlightSearchValue.infant_cnt);
-        this.adult_label=parseInt(lastFlightSearchValue.adult_cnt);
-        this.child_label=parseInt(lastFlightSearchValue.child_cnt);
-        this.infant_label=parseInt(lastFlightSearchValue.infant_cnt);
+        this.flightFromText=lastFlightSearchValue.flightfrom+', '+lastFlightSearchValue.fromAirportName;
+        this.flightToText=lastFlightSearchValue.flightto+', '+lastFlightSearchValue.toAirportName;
+        this.fromCity=lastFlightSearchValue.fromCity;
+        this.toCity=lastFlightSearchValue.toCity;
+        this.fromCityDisp=lastFlightSearchValue.fromCity;
+        this.toCityDisp=lastFlightSearchValue.toCity;
+        this.flightfrom=lastFlightSearchValue.flightfrom;
+        this.flightto=lastFlightSearchValue.flightto;
+        this.flightclass=lastFlightSearchValue.flightclass;
+        this.flightTripType=lastFlightSearchValue.flightdefault;
+        this.adult_cnt=parseInt(lastFlightSearchValue.adults);
+        this.child_cnt=parseInt(lastFlightSearchValue.child);
+        this.infant_cnt=parseInt(lastFlightSearchValue.infants);
+        this.adult_label=parseInt(lastFlightSearchValue.adults);
+        this.child_label=parseInt(lastFlightSearchValue.child);
+        this.infant_label=parseInt(lastFlightSearchValue.infants);
 
         this.selectTripType(this.flightTripType);
-        this.selectClass(this.flightClass);
+        this.selectClass(this.flightclass);
          
-        this.searchFlightForm['controls']['flightFrom'].setValue(lastFlightSearchValue.searchFrom);
-        this.searchFlightForm['controls']['flightTo'].setValue(lastFlightSearchValue.searchTo);
-        this.searchFlightForm['controls']['fromFlightCode'].setValue(lastFlightSearchValue.fromTravelCode);
-        this.searchFlightForm['controls']['toFlightCode'].setValue(lastFlightSearchValue.toTravelCode);
-        this.searchFlightForm['controls']['flightClass'].setValue(lastFlightSearchValue.flightClass);
-        this.searchFlightForm['controls']['flightTripType'].setValue(lastFlightSearchValue.flightTripType);
+        this.searchFlightForm['controls']['fromCity'].setValue(lastFlightSearchValue.fromCity);
+        this.searchFlightForm['controls']['toCity'].setValue(lastFlightSearchValue.toCity);
+        this.searchFlightForm['controls']['flightfrom'].setValue(lastFlightSearchValue.flightfrom);
+        this.searchFlightForm['controls']['flightto'].setValue(lastFlightSearchValue.flightto);
+        
+        this.searchFlightForm['controls']['fromContry'].setValue(lastFlightSearchValue.fromContry);
+        this.searchFlightForm['controls']['fromAirportName'].setValue(lastFlightSearchValue.fromAirportName);
+        this.searchFlightForm['controls']['toContry'].setValue(lastFlightSearchValue.toContry);
+        this.searchFlightForm['controls']['toAirportName'].setValue(lastFlightSearchValue.toAirportName);
+        
+        this.searchFlightForm['controls']['flightclass'].setValue(lastFlightSearchValue.flightclass);
+        this.searchFlightForm['controls']['flightTripType'].setValue(lastFlightSearchValue.flightdefault);
 
-       var date4 = new Date(lastFlightSearchValue.departure).getTime();
+       var date4 = new Date(moment(lastFlightSearchValue.departure).format('YYYY/MM/DD')).getTime();
 
        if(date1 <= date4){
-            this.flightpickerDefaultFMlite=new Date(datePipe.transform(lastFlightSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-        this.searchFlightForm['controls']['flightDeparture'].setValue(datePipe.transform(lastFlightSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-        this.minDateFlightToMlite=new Date(datePipe.transform(lastFlightSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-         this.flightDeparture=this.flightpickerDefaultFMlite;
+        this.flightpickerDefaultFMlite=new Date(moment(lastFlightSearchValue.departure).format('YYYY/MM/DD'));
+        this.searchFlightForm['controls']['departure'].setValue(moment(lastFlightSearchValue.departure).format('DD/MM/YYYY'));
+        this.minDateFlightToMlite=new Date(moment(lastFlightSearchValue.departure).format('YYYY/MM/DD'));
+        this.departure=new Date(moment(lastFlightSearchValue.departure).format('YYYY/MM/DD'));
+        this.departureMlite= moment(lastFlightSearchValue.departure).format('DD/MM/YYYY');
+           
        }
 
-       if(lastFlightSearchValue.rdeparture){
-       var date5 = new Date(lastFlightSearchValue.rdeparture).getTime();
+       if(lastFlightSearchValue.arrival){
+       var date5 = new Date(moment(lastFlightSearchValue.arrival).format('YYYY/MM/DD')).getTime();
 
         if(date1 <= date5){
-        this.flightpickerDefaultTMlite=new Date(datePipe.transform(lastFlightSearchValue.rdeparture, 'dd MMM yyyy', 'en-ES'));
-        this.searchFlightForm['controls']['flightReturn'].setValue(datePipe.transform(lastFlightSearchValue.rdeparture, 'dd MMM yyyy', 'en-ES'));
-         this.flightReturn=new Date(datePipe.transform(lastFlightSearchValue.rdeparture, 'dd MMM yyyy', 'en-ES'));
+        this.flightpickerDefaultTMlite=new Date(moment(lastFlightSearchValue.arrival).format('YYYY/MM/DD'));
+        this.searchFlightForm['controls']['arrival'].setValue(moment(lastFlightSearchValue.arrival).format('DD/MM/YYYY'));
+         this.arrival=new Date(moment(lastFlightSearchValue.arrival).format('YYYY/MM/DD'));
+         this.arrivalMlite = moment(lastFlightSearchValue.arrival).format('DD/MM/YYYY');
         }
 
         }
         }else{
         this.flightFromText='DEL, Indira Gandhi Airport';
-        this.flightToText='BOM, Chatrapati Shivaji Airport';
-        this.flightFrom='New Delhi';
-        this.flightTo='Mumbai';
-        this.fromFlightCode='DEL';
-        this.toFlightCode='BOM';
-        this.searchFlightForm['controls']['flightFrom'].setValue('New Delhi');
-        this.searchFlightForm['controls']['flightTo'].setValue('Mumbai');
-        this.searchFlightForm['controls']['fromFlightCode'].setValue('DEL');
-        this.searchFlightForm['controls']['toFlightCode'].setValue('BOM');
+         this.flightToText='BOM, Chatrapati Shivaji Airport';
+        this.fromCity='New Delhi';
+        this.toCity='Mumbai';
+        this.fromCityDisp='New Delhi';
+        this.toCityDisp='Mumbai';
+        
+        this.flightfrom='DEL';
+        this.flightto='BOM';
+        this.searchFlightForm['controls']['fromCity'].setValue('New Delhi');
+        this.searchFlightForm['controls']['toCity'].setValue('Mumbai');
+        this.searchFlightForm['controls']['flightfrom'].setValue('DEL');
+        this.searchFlightForm['controls']['flightto'].setValue('BOM');
+        
+        this.searchFlightForm['controls']['fromContry'].setValue('IN');
+        this.searchFlightForm['controls']['fromAirportName'].setValue('Indira Gandhi Airport');
+        this.searchFlightForm['controls']['toContry'].setValue('IN');
+        this.searchFlightForm['controls']['toAirportName'].setValue('Chatrapati Shivaji Airport');
+        
 
         } 
 
@@ -911,6 +989,7 @@ check_traveller_count(type) {
         if(lastHotelSearchValue){
         this.hotelFromText=lastHotelSearchValue.hotelName;
         this.hotelName=lastHotelSearchValue.hotelName;
+        this.hotelNameDisp=lastHotelSearchValue.hotelName;
         this.hotelId=lastHotelSearchValue.hotelId;
         this.countryId=lastHotelSearchValue.countryId;
         this.roomCount=parseInt(lastHotelSearchValue.roomCount);
@@ -924,10 +1003,10 @@ check_traveller_count(type) {
         var date8 = new Date(lastHotelSearchValue.hotelCheckin).getTime();
         if(date1 <= date8){
 
-        this.hotelpickerDefaultFMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd MMM yyyy', 'en-ES'));
-        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd MMM yyyy', 'en-ES'));
-        this.searchHotelForm['controls']['hotelCheckin'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd MMM yyyy', 'en-ES'));
-         this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd MMM yyyy', 'en-ES'));
+        this.hotelpickerDefaultFMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd/MM/YYYY', 'en-ES'));
+        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd/MM/YYYY', 'en-ES'));
+        this.searchHotelForm['controls']['hotelCheckin'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd/MM/YYYY', 'en-ES'));
+         this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd/MM/YYYY', 'en-ES'));
 
 
         this.hotelCheckin = this.hotelpickerDefaultFMlite;
@@ -967,6 +1046,7 @@ check_traveller_count(type) {
 
          this.hotelFromText='New Delhi,India';
         this.hotelName='New Delhi,India';
+         this.hotelNameDisp='New Delhi,India';
         this.hotelId='New Delhi';
         this.countryId='IN';
         this.roomCount=1;
@@ -987,7 +1067,9 @@ check_traveller_count(type) {
          this.busFromText=lastBusSearchValue.searchFrom;
          this.busToText=lastBusSearchValue.searchTo;
         this.busFrom=lastBusSearchValue.searchFrom;
+        this.busFromDisp=lastBusSearchValue.searchFrom;
         this.busTo=lastBusSearchValue.searchTo;
+        this.busToDisp=lastBusSearchValue.searchTo;
         this.fromBusCode=lastBusSearchValue.fromTravelCode;
         this.toBusCode=lastBusSearchValue.toTravelCode;
          
@@ -1001,9 +1083,9 @@ check_traveller_count(type) {
         if(date1 <= date2){
 
 
-        this.buspickerDefaultMlite=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-        this.searchBusForm['controls']['busDeparture'].setValue(datePipe.transform(lastBusSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-         this.busDeparture=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
+        this.buspickerDefaultMlite=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
+        this.searchBusForm['controls']['busDeparture'].setValue(datePipe.transform(lastBusSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
+         this.busDeparture=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
 
           }
         }  else{
@@ -1011,6 +1093,8 @@ check_traveller_count(type) {
          this.busToText='Mumbai';
         this.busFrom='Delhi';
         this.busTo='Mumbai';
+         this.busFromDisp='Delhi';
+        this.busToDisp='Mumbai';
         this.fromBusCode=1492;
         this.toBusCode=649;
          
@@ -1028,6 +1112,8 @@ check_traveller_count(type) {
         this.trainToText=lastTrainSearchValue.toTravelCode+', '+lastTrainSearchValue.searchTo;
         this.trainFrom=lastTrainSearchValue.searchFrom;
         this.trainTo=lastTrainSearchValue.searchTo;
+         this.trainFromDisp=lastTrainSearchValue.searchFrom;
+        this.trainToDisp=lastTrainSearchValue.searchTo;
         this.fromTrainCode=lastTrainSearchValue.fromTravelCode;
         this.toTrainCode=lastTrainSearchValue.toTravelCode;
          
@@ -1052,9 +1138,9 @@ check_traveller_count(type) {
         var date3 = new Date(lastTrainSearchValue.departure).getTime();
         if(date1 <= date3){
 
-        this.trainpickerDefaultMlite=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-        this.searchTrainForm['controls']['trainDeparture'].setValue(datePipe.transform(lastTrainSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
-        this.trainDeparture=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd MMM yyyy', 'en-ES'));
+        this.trainpickerDefaultMlite=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
+        this.searchTrainForm['controls']['trainDeparture'].setValue(datePipe.transform(lastTrainSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
+        this.trainDeparture=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
 
           }
         } else{
@@ -1062,6 +1148,8 @@ check_traveller_count(type) {
         this.trainToText='MMCT, MUMBAI CENTRAL';
         this.trainFrom='NEW DELHI';
         this.trainTo='MUMBAI CENTRAL';
+        this.trainFromDisp='NEW DELHI';
+        this.trainToDisp='MUMBAI CENTRAL';
         this.fromTrainCode='NDLS';
         this.toTrainCode='MMCT';
 
@@ -1120,19 +1208,37 @@ check_traveller_count(type) {
 
 }
   switchFlightRoutes(){
-        var tempSearchFrom= this.searchFlightForm.controls.flightFrom.value;
-	var tempFromSearchCode= this.searchFlightForm.controls.fromFlightCode.value;
-	var tempSearchTo= this.searchFlightForm.controls.flightTo.value;
-	var tempToSearchCode= this.searchFlightForm.controls.toFlightCode.value;
+        var tempSearchFrom= this.searchFlightForm.controls.fromCity.value;
+	var tempFromSearchCode= this.searchFlightForm.controls.flightfrom.value;
+	var tempFromSearchCountry= this.searchFlightForm.controls.fromContry.value;
+	var tempFromSearchAirport= this.searchFlightForm.controls.fromAirportName.value;
+	
+	
+	var tempSearchTo= this.searchFlightForm.controls.toCity.value;
+	var tempToSearchCode= this.searchFlightForm.controls.flightto.value;
+	var tempToSearchCountry= this.searchFlightForm.controls.toContry.value;
+	var tempToSearchAirport= this.searchFlightForm.controls.toAirportName.value;
+	
 
 	var tempSearchFromText= this.flightFromText;
 	var tempSearchToText= this.flightToText;
+	
+	var tempSearchFromCityDisp= this.fromCityDisp;
+	var tempSearchToCityDisp= this.toCityDisp;
 
-	this.searchFlightForm['controls']['flightTo'].setValue(tempSearchFrom);
-	this.searchFlightForm['controls']['toFlightCode'].setValue(tempFromSearchCode);
-	this.searchFlightForm['controls']['flightFrom'].setValue(tempSearchTo);
-	this.searchFlightForm['controls']['fromFlightCode'].setValue(tempToSearchCode);
+	this.searchFlightForm['controls']['toCity'].setValue(tempSearchFrom);
+	this.searchFlightForm['controls']['flightto'].setValue(tempFromSearchCode);
+	this.searchFlightForm['controls']['toContry'].setValue(tempFromSearchCountry);
+	this.searchFlightForm['controls']['toAirportName'].setValue(tempFromSearchAirport);
+	
+	
+	this.searchFlightForm['controls']['fromCity'].setValue(tempSearchTo);
+	this.searchFlightForm['controls']['flightfrom'].setValue(tempToSearchCode);
+	this.searchFlightForm['controls']['fromContry'].setValue(tempToSearchCountry);
+	this.searchFlightForm['controls']['fromAirportName'].setValue(tempToSearchAirport);
 
+        this.fromCityDisp=tempSearchToCityDisp;
+        this.toCityDisp=tempSearchFromCityDisp;
 
 	this.flightFromText= tempSearchToText;
 	this.flightToText= tempSearchFromText;
@@ -1146,6 +1252,10 @@ check_traveller_count(type) {
 
 	var tempSearchFromText= this.busFromText;
 	var tempSearchToText= this.busToText;
+	
+	
+	var tempSearchFromDisp= this.busFromDisp;
+	var tempSearchToDisp= this.busToDisp;
 
 	this.searchBusForm['controls']['busTo'].setValue(tempSearchFrom);
 	this.searchBusForm['controls']['toBusCode'].setValue(tempFromSearchCode);
@@ -1155,6 +1265,9 @@ check_traveller_count(type) {
 
 	this.busFromText= tempSearchToText;
 	this.busToText= tempSearchFromText;
+	
+	this.busFromDisp= tempSearchToDisp;
+	this.busToDisp= tempSearchFromDisp;
   }
 
 
@@ -1166,6 +1279,10 @@ check_traveller_count(type) {
 
 	var tempSearchFromText= this.trainFromText;
 	var tempSearchToText= this.trainToText;
+	
+	
+	var tempSearchFromDisp= this.trainFromDisp;
+	var tempSearchToDisp= this.trainToDisp;
 
 	this.searchTrainForm['controls']['trainTo'].setValue(tempSearchFrom);
 	this.searchTrainForm['controls']['toTrainCode'].setValue(tempFromSearchCode);
@@ -1175,6 +1292,8 @@ check_traveller_count(type) {
 
 	this.trainFromText= tempSearchToText;
 	this.trainToText= tempSearchFromText;
+		this.trainFromDisp= tempSearchToDisp;
+	this.trainToDisp= tempSearchFromDisp;
   }
 
 
@@ -1225,128 +1344,109 @@ check_traveller_count(type) {
 
 
   }
+  ConvertObjToQueryString(obj:any)
+  {
 
-
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
+  }
+  flightSearchCallBack(param:any){
+      let searchValueAllobj=param;
+      let continueSearch:any=localStorage.getItem('continueSearch');
+      if(continueSearch==null){
+        this.continueSearchFlights=[];
+      }
+      if(continueSearch!=null && continueSearch.length>0){
+        this.continueSearchFlights=JSON.parse(continueSearch);
+        this.continueSearchFlights=this.continueSearchFlights.filter((item:any)=>{
+          if(item.flightfrom!=searchValueAllobj.flightfrom || item.flightto!=searchValueAllobj.flightto)
+          {
+              return item;
+          }
+        })
+      }
+      if(this.continueSearchFlights.length>3){
+        this.continueSearchFlights=this.continueSearchFlights.slice(0,3);
+      }
+      this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+      localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
+  }
+  sameCityValidation = false;
   onSubmit(service,type) {
         var xss = require("xss");
        var cookieArray=[]; var datePipe =new DatePipe('en-US');   var uDate; var uDateR; var cDate;var cDateR;var cookieDate;
        
         switch(service) {
         case 'flights': {
-         this.submittedFlight = true;
-        if(this.searchFlightForm.controls.fromFlightCode.value==""||this.searchFlightForm.controls.fromFlightCode.value==null)
-        {
-        this.searchFlightForm['controls']['flightFrom'].setValue('');
+           this.submittedFlight = true;
+        if(this.searchFlightForm.value.departure!="" && this.searchFlightForm.value.departure!=undefined){
+        this.dateValidation=false;
+       // this.searchFlightForm.value.departure=this.searchFlightForm.value.departure.getFullYear()+'-' +(this.searchFlightForm.value.departure.getMonth()+ 1)+'-' +this.searchFlightForm.value.departure.getDate();
         }
-        if(this.searchFlightForm.controls.toFlightCode.value==""||this.searchFlightForm.controls.toFlightCode.value==null)
-        {
-        this.searchFlightForm['controls']['flightTo'].setValue('');
+        else{
+        this.dateValidation=true;
+        }
+        if(this.searchFlightForm.value.formCity != this.searchFlightForm.value.toCity){
+        this.sameCityValidation = false
+        }
+        else {
+        this.sameCityValidation = true;
+
         }
 
-        if(this.searchFlightForm.controls.fromFlightCode.value==this.searchFlightForm.controls.toFlightCode.value){
-        this.validateMessageFlight=true;
-        return;
+        if(this.searchFlightForm.value.arrival!="" && this.searchFlightForm.value.arrival!=undefined ){
+       // this.searchFlightForm.value.arrival=this.searchFlightForm.value.arrival.getFullYear()+'-' +(this.searchFlightForm.value.arrival.getMonth()+ 1)+'-' +this.searchFlightForm.value.arrival.getDate();
+        this.searchFlightForm.get('flightdefault').setValue('R');
         }else{
-        this.validateMessageFlight=false;
-        }
-        this.showFlightPassenger =false;
-        if (this.searchFlightForm.invalid) {
-        return;
+        this.searchFlightForm.get('flightdefault').setValue('O');
         }
 
-
-        let myDate =this.searchFlightForm.value.flightDeparture;
-        uDate=datePipe.transform(myDate, 'yyyy-MM-dd', 'en-ES');
-        cDate=datePipe.transform(myDate, 'dd LLL yyy', 'en-ES');
-
-        if(this.searchFlightForm.controls.flightReturn.value!='' && this.searchFlightForm.controls.flightReturn.value!=null){
-       let myDate1 =this.searchFlightForm.value.flightReturn;
-        uDateR=datePipe.transform(myDate1, 'yyyy-MM-dd', 'en-ES');
-        cDateR=datePipe.transform(myDate1, 'dd LLL yyy', 'en-ES');
+        if(this.searchFlightForm.value.fromContry=='IN' && this.searchFlightForm.value.toContry=='IN' ){
+        this.searchFlightForm.get('travel').setValue('DOM');
         }else{
-        uDateR='';
-        cDateR='';
+        this.searchFlightForm.get('travel').setValue('INT');
         }
 
+console.log(this.searchFlightForm);
 
-        this.searchArray = {
-        searchFrom:xss(this.searchFlightForm.controls.flightFrom.value),
-        searchTo:xss(this.searchFlightForm.controls.flightTo.value),
-        fromTravelCode:xss(this.searchFlightForm.controls.fromFlightCode.value),
-        toTravelCode:xss(this.searchFlightForm.controls.toFlightCode.value),
-        departure:xss(uDate),
-        cdeparture:xss(cDate),
-        rdeparture:xss(uDateR),
-        crdeparture:xss(cDateR),
-        flightClass:xss(this.searchFlightForm.controls.flightClass.value),
-        flightTripType:xss(this.searchFlightForm.controls.flightTripType.value),
-        adult_cnt:xss(this.adult_cnt),
-        child_cnt:xss(""+this.child_cnt+""),
-        infant_cnt:xss(""+this.infant_cnt+""),
-        flightFromText:xss(""+this.flightFromText+""),
-        flightToText:xss(""+this.flightToText+"")
-        };
-
-        localStorage.setItem('flightLastSearch', JSON.stringify(this.searchArray));
+        if(this.searchFlightForm.invalid || this.dateValidation==true){
+        return
+        }
+        else {
+        let searchValue = this.searchFlightForm.value;
 
 
-        // Only for Recent Search
+        this.flightSearchCallBack(searchValue);
 
-        var search_values_setCookie = [];
+        localStorage.setItem('flightLastSearch',JSON.stringify(searchValue));
 
-        search_values_setCookie.push({
-          flightfrom:xss(this.searchFlightForm.controls.flightFrom.value).split(' ').join('-'),
-          flightto:xss(this.searchFlightForm.controls.flightTo.value).split(' ').join('-'),
-          fcode:xss(this.searchFlightForm.controls.fromFlightCode.value),
-          tcode:xss(this.searchFlightForm.controls.toFlightCode.value),
-          flightdeparture:xss(uDate),
-          cdeparture:xss(cDate),
-          flightreturn:xss(uDateR),
-          crdeparture:xss(cDateR),
-          class:xss(this.searchFlightForm.controls.flightClass.value),
-          Default:xss(this.searchFlightForm.controls.flightTripType.value),
-          adults:xss(this.adult_cnt),
-          child:xss(""+this.child_cnt+""),
-          infants:xss(""+this.infant_cnt+""),
-          t:xss("ZWFybg==")
-        });
+        searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
+        if(searchValue.arrival)
+        searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
 
-
-        if (localStorage.getItem("FlightRecentSearch") != null) {
-        var FlightRecentSearch = JSON.parse(window.atob(localStorage.getItem("FlightRecentSearch")));
-        for (let cok = 0; cok < FlightRecentSearch.length; cok++) {
-             if (FlightRecentSearch[cok]['flightfrom'] == FlightRecentSearch[0].flightfrom && FlightRecentSearch[cok]['flightto'] == FlightRecentSearch[0].flightto && FlightRecentSearch[cok]['flightdeparture'] == FlightRecentSearch[0].flightdeparture && FlightRecentSearch[cok]['class'] == FlightRecentSearch[0].class && FlightRecentSearch[cok]['Default'] == FlightRecentSearch[0].Default) {
-                FlightRecentSearch.splice(cok, 1);
-            }
+        let url;
+        if(this.searchFlightForm.value.fromContry=='IN' && this.searchFlightForm.value.toContry=='IN' ){
+        if(this.searchFlightForm.value.arrival == null || this.searchFlightForm.value.arrival == undefined ||this.searchFlightForm.value.arrival == "") {
+        url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+        this.router.navigateByUrl(url);
+        }
+        else{
+        url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+        this.router.navigateByUrl(url);
+        }
+        }else{
+        url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+        this.router.navigateByUrl(url);
 
         }
-          search_values_setCookie= FlightRecentSearch.concat(search_values_setCookie)
-           if (search_values_setCookie.length >= 3) {
-        search_values_setCookie=search_values_setCookie.reverse().slice(0,3).reverse();
-        }
-        }
-
-
-
-        localStorage.setItem('FlightRecentSearch', btoa(JSON.stringify(search_values_setCookie)));
-        // Recent Search Ends Here
-
-        if(environment.IS_MAIN==1){
-        const current = new Date();
-        this.redirectPopupTriggerTimestamp=current.getTime();
-        this.redirectPopupTrigger=1;
-        this.redirectPopup=2;
-        this.redirectPopupUrl=environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
-        return;
-        }
-
-
-       if(this.serviceSettings.flightSearch==1){
-       this.router.navigate([this.sg['domainPath']+'flights/listing'], { queryParams: this.searchArray  });
-       }else{
-   this.document.location.href =environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
-     }
+       } 
+       
+       
         break;
         }
         case 'hotels': {
@@ -1637,41 +1737,34 @@ hideShowForms(device,inputVal,service){
   $( ".bottom-sheet-TravelerContainer" ).addClass( "bottom-sheet-TravelerContainer-Full" );
 switch(service) {
    case 'flights': {
-        if(inputVal=='flightFrom'){
+        if(inputVal=='fromCity'){
         this.fromFlightCityList = true;
         this.toFlightCityList = false;
         this.showFlightPassenger =false;
-        if(this.searchFlightForm.controls.flightFrom.value=="")
+        if(this.searchFlightForm.controls.flightfrom.value=="")
         this.flightFromOptions= this.defaultFlightOptions;
         this.showMliteFlightFromForm = true;
-
-        if(device=='mobile'){
+        this.searchFlightFromHeader='Popular Cities';
         setTimeout(()=>{
-        $(".flightFrom-"+device).val('');
-        $(".flightFrom-"+device).select();
+        $(".fromCity-"+device).val('');
+        $(".fromCity-"+device).focus();
         }, 100);
-        }else{
-        $(".flightFrom-"+device).focus();
-        $(".flightFrom-"+device).select();
-        }
+       
 
-        }  else if(inputVal=='flightTo'){
+        }  else if(inputVal=='toCity'){
         this.fromFlightCityList = false;
         this.toFlightCityList = true;
         this.showFlightPassenger =false;
-        if(this.searchFlightForm.controls.flightTo.value=="")
+         this.searchFlightToHeader='Popular Cities';
+        if(this.searchFlightForm.controls.flightto.value=="")
         this.flightToOptions= this.defaultFlightOptions;
           this.showMliteFlightToForm = true;
 
-        if(device=='mobile'){
         setTimeout(()=>{
-        $(".flightTo-"+device).val('');
-        $(".flightTo-"+device).select();
+        $(".toCity-"+device).val('');
+        $(".toCity-"+device).focus();
         }, 100);
-        }else{
-        $(".flightTo-"+device).focus();
-        $(".flightTo-"+device).select();
-        }
+       
 
         }else{
         this.fromFlightCityList = false;
@@ -1684,16 +1777,12 @@ switch(service) {
      if(inputVal=='hotelName'){
          this.hotelCityList = true;
          this.showMliteHotelForm = true;
-
-        if(device=='mobile'){
+       this.searchHotelHeader='Popular Cities';
         setTimeout(()=>{
         $(".hotelName-"+device).val('');
         $(".hotelName-"+device).focus();
         }, 100);
-        }else{
-        $(".hotelName-"+device).focus();
-        $(".hotelName-"+device).select();
-        }
+       
 
         }
    if(inputVal=='hotelCheckin'){
@@ -1709,16 +1798,11 @@ switch(service) {
         this.busFromOptions= this.defaultBusOptions;
            this.showMliteBusFromForm = true;
 
-        if(device=='mobile'){
         setTimeout(()=>{
         $(".busFrom-"+device).val('');
         $(".busFrom-"+device).select();
         }, 100);
-        }else{
-        $(".busFrom-"+device).focus();
-        $(".busFrom-"+device).select();
-
-        }
+        
 
 
         }
@@ -1729,16 +1813,11 @@ switch(service) {
         this.busToOptions= this.defaultBusOptions;
            this.showMliteBusToForm = true;
 
-        if(device=='mobile'){
         setTimeout(()=>{
         $(".busTo-"+device).val('');
         $(".busTo-"+device).select();
         }, 100);
-        }else{
-        $(".busTo-"+device).focus();
-        $(".busTo-"+device).select();
-
-        }
+       
 
 
         }else{
@@ -1866,13 +1945,17 @@ switch(service) {
         values=values['_source'];
         switch(service) {
         case 'flights': {
-        this.searchFlightForm['controls']['flightFrom'].setValue(values.city);
-        this.searchFlightForm['controls']['fromFlightCode'].setValue(values.airport_code);
+        this.searchFlightForm['controls']['fromCity'].setValue(values.city);
+        this.searchFlightForm['controls']['flightfrom'].setValue(values.airport_code);
+        this.searchFlightForm['controls']['fromContry'].setValue(values.country_code);
+        this.searchFlightForm['controls']['fromAirportName'].setValue(values.airport_name);
+        
         this.flightFromText=values.airport_code+', '+values.airport_name;
+        this.fromCityDisp=values.city;
         this.flightFromOptions= this.defaultFlightOptions;
         this.closeSearchBox();
-        $("#flightTo").select();
-        $("#flightTo").focus();
+        $("#toCity").select();
+        $("#toCity").focus();
 
         if(device=='mobile'){
         this.showMliteFlightToForm=true;
@@ -1918,12 +2001,17 @@ switch(service) {
         values=values['_source'];
         switch(service) {
         case 'flights': {
-        this.searchFlightForm['controls']['flightTo'].setValue(values.city);
-        this.searchFlightForm['controls']['toFlightCode'].setValue(values.airport_code);
+        
+        this.searchFlightForm['controls']['toCity'].setValue(values.city);
+        this.searchFlightForm['controls']['flightto'].setValue(values.airport_code);
+        this.searchFlightForm['controls']['toContry'].setValue(values.country_code);
+        this.searchFlightForm['controls']['toAirportName'].setValue(values.airport_name);
+        
+         this.toCityDisp=values.city;
          this.flightToText=values.airport_code+', '+values.airport_name;
         this.flightToOptions= this.defaultFlightOptions;
         this.closeSearchBox();
-        $("#flightDeparture").trigger( "click" );
+       // $("#departure").trigger( "click" );
 
 
         break;
@@ -1937,7 +2025,7 @@ switch(service) {
         this.closeSearchBox();
 
 
-        $("#"+device+"HotelFromPicker").trigger( "click" );
+        //$("#"+device+"HotelFromPicker").trigger( "click" );
 
         break;
         }
@@ -1948,7 +2036,7 @@ switch(service) {
         this.busToOptions= this.defaultBusOptions;
         this.closeSearchBox();
 
-        $("#busDeparture").trigger( "click" );
+       // $("#busDeparture").trigger( "click" );
 
 
 
@@ -1961,7 +2049,7 @@ switch(service) {
         this.trainToOptions= this.defaultTrainOptions;
         this.closeSearchBox();
 
-        $("#trainDeparture").trigger( "click" );
+       // $("#trainDeparture").trigger( "click" );
 
 
         break;
@@ -1976,8 +2064,8 @@ switch(service) {
       var compare1 = new Date(event.value).getTime();
       var compare2 = new Date(this.flightpickerDefaultTMlite).getTime();
        if(compare1 > compare2){
-        this.flightpickerDefaultTMlite=new Date(datePipe.transform(event.value, 'dd MMM yyyy', 'en-ES'));
-        this.searchFlightForm['controls']['flightReturn'].setValue(datePipe.transform(event.value, 'dd MMM yyyy', 'en-ES'));
+        this.flightpickerDefaultTMlite=new Date(moment(event.value).format('YYYY/MM/DD'));
+        this.searchFlightForm['controls']['arrival'].setValue(moment(event.value).format('DD/MM/YYYY'));
        }
     $("#"+channel+"FlightToPicker").trigger( "click" );
     }
@@ -1987,8 +2075,8 @@ switch(service) {
       var compare1 = new Date(event.value).getTime();
       var compare2 = new Date(this.hotelpickerDefaultTMlite).getTime();
        if(compare1 > compare2){
-        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(event.value, 'dd MMM yyyy', 'en-ES'));
-        this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(event.value, 'dd MMM yyyy', 'en-ES'));
+        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(event.value, 'dd/MM/YYYY', 'en-ES'));
+        this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(event.value, 'dd/MM/YYYY', 'en-ES'));
        }
         $("#"+channel+"HotelToPicker").trigger( "click" );
 
@@ -1998,8 +2086,6 @@ switch(service) {
   }
 
    searchAutoComplete($event,service,field,device) {
-
-
        let keycode = $event.which;
        if($event.keyCode==13){
         this.arrowFromkeyLocation=0;
@@ -2021,25 +2107,31 @@ switch(service) {
           if(res.hits.total > 0){
                 switch(service) {
                 case 'flights': {
-                if(field=='flightFrom'){
+               
+                if(field=='fromCity'){
+                this.searchFlightFromHeader='Result';
                 this.flightFromOptions = this.defaultFlightOptions;
                 this.onFromClick(res.hits.hits[0],service,device);
                 }else{
+                this.searchFlightToHeader='Result';
                 this.flightToOptions = this.defaultFlightOptions;
                 this.onToClick(res.hits.hits[0],service,device);
                 }
                 break;
                 }
                 case 'hotels': {
+                this.searchHotelHeader='Result';
                 this.hotelOptions = this.defaultHotelOptions;
                 this.onToClick(res.hits.hits[0],service,device);
                 break;
                 }
                 case 'bus' : {
                 if(field=='busFrom'){
+                 this.searchBusFromHeader='Result';
                 this.busFromOptions = this.defaultBusOptions;
                 this.onFromClick(res.hits.hits[0],service,device);
                 }else{
+                  this.searchBusToHeader='Result';
                 this.busToOptions = this.defaultBusOptions;
                 this.onToClick(res.hits.hits[0],service,device);
                 }
@@ -2047,9 +2139,11 @@ switch(service) {
                 }
                 case 'train': {
                 if(field=='trainFrom'){
+                  this.searchTrainFromHeader='Result';
                 this.trainFromOptions = this.defaultTrainOptions;
                 this.onFromClick(res.hits.hits[0],service,device);
                 }else{
+                  this.searchTrainToHeader='Result';
                 this.trainToOptions = this.defaultTrainOptions;
                 this.onToClick(res.hits.hits[0],service,device);
                 }
@@ -2060,21 +2154,26 @@ switch(service) {
        }
         switch(service) {
         case 'flights': {
-        if(field=='flightFrom'){
+        if(field=='fromCity'){
+         this.searchFlightFromHeader='Result';
         this.flightFromOptions=res.hits.hits;
         }else{
+         this.searchFlightToHeader='Result';
         this.flightToOptions=res.hits.hits;
         }
         break;
         }
         case 'hotels': {
+        this.searchHotelHeader='Result';
         this.hotelOptions=res.hits.hits;
         break;
         }
         case 'bus' : {
         if(field=='busFrom'){
+          this.searchBusFromHeader='Result';
         this.busFromOptions=res.hits.hits;
         }else{
+          this.searchBusToHeader='Result';
         this.busToOptions=res.hits.hits;
         }
 
@@ -2086,8 +2185,10 @@ switch(service) {
         stringified = stringified.replace(/station_name/g, 'name');
 
         if(field=='trainFrom'){
+          this.searchTrainFromHeader='Result';
         this.trainFromOptions=JSON.parse(stringified);
         }else{
+          this.searchTrainToHeader='Result';
         this.trainToOptions=JSON.parse(stringified);
         }
 
@@ -2099,6 +2200,48 @@ switch(service) {
         }
 
 
+       }else{
+        switch(service) {
+        case 'flights': {
+       
+        if(field=='fromCity'){
+         this.flightFromOptions= this.defaultFlightOptions;
+         this.searchFlightFromHeader='Popular Cities';
+        }else{
+        this.flightToOptions= this.defaultFlightOptions;
+         this.searchFlightToHeader='Popular Cities';
+        }
+        break;
+        }
+        case 'hotels': {
+        this.searchHotelHeader='Popular Cities';
+         this.hotelOptions= this.defaultHotelOptions;
+        break;
+        }
+        case 'bus' : {
+        if(field=='busFrom'){
+          this.searchBusFromHeader='Popular Cities';
+          this.busFromOptions= this.defaultBusOptions;
+        }else{
+          this.searchBusToHeader='Popular Cities';
+          this.busToOptions= this.defaultBusOptions;
+        }
+       
+        break;
+        }
+        case 'train': {
+
+        if(field=='trainFrom'){
+          this.searchTrainFromHeader='Popular Cities';
+          this.trainFromOptions= this.defaultTrainOptions;
+        }else{
+          this.searchTrainToHeader='Popular Cities';
+          this.trainToOptions= this.defaultTrainOptions;
+        }
+        break;
+        }
+        }
+       
        }
       }
      }
@@ -2305,5 +2448,21 @@ export class CaptchaDialog {
     }
 
 }
+export function MustMatch(controlName: any, matchingControlName: any) {
+  {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors && !matchingControl.errors['MustMatch']) {
+        return;
+      }
+      else if (control.value == matchingControl.value) {
+        matchingControl.setErrors({ MustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    }
+  }
 
+}
 
