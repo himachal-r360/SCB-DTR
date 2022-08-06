@@ -104,14 +104,14 @@ public modeselectTrending= 'All';
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
     
-     this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
-     this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
+    // this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
+     //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
 
   }
   
    ngOnDestroy() {
-    this._styleManager.removeStyle('owl-default');
-    this._styleManager.removeScript('owl');
+   // this._styleManager.removeStyle('owl-default');
+   // this._styleManager.removeScript('owl');
   }
   
  loadTopBanner(l) {

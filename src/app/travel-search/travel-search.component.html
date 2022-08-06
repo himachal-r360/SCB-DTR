@@ -1297,10 +1297,31 @@
                                         <label>
                                         <span>Departure</span>
                                         <div class="form-group flex_basis dep_m_cal">
-                                        <input (click)="flightFromPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightFromPicker"   [min]="minDateMlite"  [max]="flightpickermaxDateMlite"
-                                            [(ngModel)]="flightDeparture"   autocomplete="off"  readonly formControlName="flightDeparture"  id="flightDeparture" placeholder="DD/MM/YYYY"  [value]="flightpickerDefaultFMlite" (dateChange)="EndDateChange($event,'flight','mlite')" >
-                                            <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="flightFromPicker.open()" id="mliteFlightFromPicker"></span>
-                                            <mat-datepicker touchUi #flightFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>
+                                        <input class="form-control control_input p-0" matInput
+                                            [(ngModel)]="flightDeparture"   autocomplete="off"  readonly formControlName="flightDeparture"  id="flightDeparture" placeholder="DD/MM/YYYY"  [value]="flightpickerDefaultFMlite">
+                                            <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" data-bs-toggle="modal" data-bs-target="#flight_departure_mlite" id="mliteFlightFromPicker"></span>
+                                          
+                                            
+                        <div class="modal bottom_mlite_popup" id="flight_departure_mlite" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title">Select Departure Date</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" >
+                        <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelect($event)"></mat-calendar>
+                        </div>
+                        <div class="modal-footer">
+                        <input class="form-control control_input p-0" matInput
+                        [(ngModel)]="flightDeparture"   autocomplete="off"  readonly formControlName="flightDeparture"  id="flightDeparture"  [value]="flightpickerDefaultFMlite" (dateChange)="EndDateChange($event,'flight','mlite')" >
+
+                        <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
+                        </div> 
+                        </div>
+                        </div>
+                        </div>
+                                            
                                             <div *ngIf="submittedFlight && searchFlightForm['controls']['flightDeparture']['errors']"class="error_msg">
                                                 <small *ngIf="searchFlightForm['controls']['flightDeparture']['errors']['required']" class="validate-msg">Departure date required</small>
                                             </div>

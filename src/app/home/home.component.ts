@@ -175,9 +175,6 @@ export class HomeComponent implements OnInit {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-    console.log(this.popularDomasticRoutes);
-    
-
   }
 
   ConvertObjToQueryString(obj:any)

@@ -23,7 +23,7 @@ import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
   parse: {
-    dateInput: 'YYYY-MM-DD',
+    dateInput: 'M-D-YYYY',
   },
   display: {
     dateInput: 'YYYY-MM-DD',

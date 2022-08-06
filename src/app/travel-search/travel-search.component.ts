@@ -1,6 +1,5 @@
 import { Component, OnInit,NgModule,ChangeDetectorRef, ElementRef  ,Input,Output, EventEmitter,HostListener,Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators ,FormsModule,FormControl,FormArray} from '@angular/forms';
-import { NgbDateParserFormatter,NgbDateStruct, NgbCalendar,NgbInputDatepicker,NgbDate} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../environments/environment';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
@@ -15,23 +14,26 @@ import { CookieService } from 'ngx-cookie-service';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
 import { ActivatedRoute, Router} from '@angular/router';
 import { MatDialog,MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DatePipe } from '@angular/common';
-import {MatNativeDateModule, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
+import {MatNativeDateModule, NativeDateAdapter, DateAdapter,MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import { formatDate } from '@angular/common';
-
+import * as moment from 'moment';
 declare var require: any;
  declare var $: any;
-export const PICK_FORMATS = {
-  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+const MY_DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+  },
   display: {
-      dateInput: 'input',
-      monthYearLabel: {year: 'numeric', month: 'short'},
-      dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
-      monthYearA11yLabel: {year: 'numeric', month: 'long'}
+    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
   }
 };
 
@@ -40,6 +42,10 @@ export const PICK_FORMATS = {
   selector: 'app-travel-search',
   templateUrl: './travel-search.component.html',
   styleUrls: ['./travel-search.component.scss'],
+   providers: [
+     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }
+  ]
 })
 export class TravelSearchComponent implements OnInit {
         @Input() searchDisplayForm;
@@ -143,9 +149,8 @@ export class TravelSearchComponent implements OnInit {
         searchBusToHeader:string="Popular Cities";
         searchTrainFromHeader:string="Popular Cities";
         searchTrainToHeader:string="Popular Cities";
-        hotelCheckin: NgbDate | null;
-        hotelCheckout: NgbDate | null;
-        hoveredDate: NgbDate | null = null;
+        hotelCheckin:any;
+        hotelCheckout:any;
         searchArray:any = [];
         travelInputText:string="1 Adult, Economy";
         hotelInputText:string="1 Room(s) &  2 Guest(s)";
@@ -217,7 +222,7 @@ export class TravelSearchComponent implements OnInit {
    redirectPopupTriggerTimestamp;
   poweredByPartners:any =[];
 
-   constructor(private activatedRoute: ActivatedRoute,private _elRef: ElementRef,private dialog: MatDialog,private router: Router,private es: ElasticsearchService,private formBuilder: FormBuilder,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private pay: PayService, private commonHelper: CommonHelper,private cookieService: CookieService, public formatter: NgbDateParserFormatter,private calendar: NgbCalendar,public irctc:IrctcApiService,
+   constructor(private activatedRoute: ActivatedRoute,private _elRef: ElementRef,private dialog: MatDialog,private router: Router,private es: ElasticsearchService,private formBuilder: FormBuilder,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private pay: PayService, private commonHelper: CommonHelper,private cookieService: CookieService, public irctc:IrctcApiService,
   //  private _css: ClipboardService,
     ) {
 
@@ -228,8 +233,6 @@ export class TravelSearchComponent implements OnInit {
         this.poweredByPartners = this.serviceSettings.poweredByPartners;
         this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
         this.enableEs=this.serviceSettings.enableEs;
-	this.hotelCheckin = calendar.getToday();
-        this.hotelCheckout = calendar.getNext(calendar.getToday(), 'd', 1);
         this.quotaList =AppConfig.IRCTC_List_Quota;
 
           this.stationsdump =  require('src/assets/data/stations.json');
@@ -370,6 +373,12 @@ export class TravelSearchComponent implements OnInit {
 
 
    }
+  onSelect(event){
+    console.log(moment(event._d).format('YYYY-MM-DD'));
+    //this.flightDeparture = event._d;
+    this.flightDeparture = moment(event._d).format('YYYY-MM-DD');
+   //this.flightDepartureDisp = dateValue[0] + ',' + ' ' + dateValue[1] + ' ' + dateValue[2];
+  }
 
   ngOnInit() {
 
@@ -910,10 +919,6 @@ check_traveller_count(type) {
         this.searchHotelForm['controls']['countryId'].setValue(lastHotelSearchValue.countryId);
         this.searchHotelForm['controls']['roomCount'].setValue(lastHotelSearchValue.roomCount);
 
-        const jsStartDate = new Date(lastHotelSearchValue.hotelCheckin);
-        const jsEndDate = new Date(lastHotelSearchValue.hotelCheckout);
-        const stoday = new NgbDate(jsStartDate.getFullYear(), jsStartDate.getMonth() + 1, jsStartDate.getDate());
-        const etoday = new NgbDate(jsEndDate.getFullYear(), jsEndDate.getMonth() + 1, jsEndDate.getDate());
 
 
         var date8 = new Date(lastHotelSearchValue.hotelCheckin).getTime();
@@ -1082,31 +1087,7 @@ check_traveller_count(type) {
         this.showBlockno=blockno;
         }
 
-   setPickerDate(date,service): NgbDateStruct {
-        let cuurdate  = date;
-        let dateParts1 = cuurdate.split('-');
-        let currentdate=dateParts1[0]+"/"+dateParts1[1]+"/"+dateParts1[2];
-        let currentstamp = new Date(currentdate).getTime();
 
-        if(service == 'train'){
-        let todaydate = new Date();
-        let getmaxmonthirctc = new Date(todaydate.setDate(todaydate.getDate() + 124));
-        let finaltodayirctc = new Date(getmaxmonthirctc).getTime();
-        if(currentstamp > finaltodayirctc){
-        this.traindialog();
-        }
-        }
-        if(service=='bus'){
-        let todaydate = new Date();
-        let getmaxmonthredbus = new Date(todaydate.setDate(todaydate.getDate() + 90));
-        let finaltodayredbus = new Date(getmaxmonthredbus).getTime();
-        if(currentstamp > finaltodayredbus){
-        this.redbusdialog();
-        }
-        }
-        let dateParts = date.split('-');
-        return this.formatter.parse(dateParts[0] + "-" + dateParts[1] + "-" + dateParts[2]);
- }
         redbusdialog(){
         const errmsg = [];
         errmsg.push('As per Redbus, you can book for a travel date only 90 days in advance.');

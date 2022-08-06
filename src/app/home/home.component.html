@@ -40,78 +40,7 @@
             </div>
         </div>
     </section>
-
-    <!-- Trending Routes -->
-    <section class="TrendingRoutes-area mb-50">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="home-TrendingRoutes-text">
-                        <h4>Trending Routes</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-slider grid-4 tranding-routes-slider" *ngIf="isMobile == false">
-                        <ng-container *ngFor="let trendingItem of trendingRoutes">
-                            <div class="box-item">
-                                <a href="javascript:void(0)">
-                                    <div class="Trending-item">
-                                        <div class="Trending-left">
-                                            <img src="{{trendingItem.fromImg}}" class="img-fluid" alt="">
-                                            <p>{{trendingItem.fromCity}}</p>
-                                        </div>
-                                        <div class="Trending-center">
-                                            <div class="half-circle-top"></div>
-                                            <p>Form</p>
-                                            <h6>&#8377;3,528</h6>
-                                            <img src="assets/images/icons/Trending.png" alt="">
-                                            <div class="half-circle-bottom"></div>
-                                        </div>
-                                        <div class="Trending-right">
-                                            <img src="{{trendingItem.toImg}}" class="img-fluid" alt="">
-                                            <p>{{trendingItem.toCity}}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-                <div class="owl-slider grid-4 tranding-routes-slider " *ngIf="isMobile == true">
-                    <owl-carousel-o [options]="customOptions">
-                        <ng-container *ngFor="let trendingItem of trendingRoutes; let i = index">
-                            <ng-template carouselSlide>
-                                <div class="box-item">
-                                    <a href="javascript:void(0)">
-                                        <div class="Trending-item">
-                                            <div class="Trending-left">
-                                                <img src="{{trendingItem.fromImg}}" class="img-fluid" alt="">
-                                                <p>{{trendingItem.fromCity}}</p>
-                                            </div>
-                                            <div class="Trending-center">
-                                                <div class="half-circle-top"></div>
-                                                <p>Form</p>
-                                                <h6>&#8377;3,528</h6>
-                                                <img src="assets/images/icons/Trending.png" alt="">
-                                                <div class="half-circle-bottom"></div>
-                                            </div>
-                                            <div class="Trending-right">
-                                                <img src="{{trendingItem.toImg}}" class="img-fluid" alt="">
-                                                <p>{{trendingItem.toCity}}</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </ng-template>
-                        </ng-container>
-                    </owl-carousel-o>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Continue Search -->
+ <!-- Continue Search -->
     <section class="ContinueSearch-area mb-50" *ngIf="continueSearchVal && continueSearchVal.length>0">
         <div class="container">
             <div class="row">
@@ -184,6 +113,77 @@
             </div>
         </div>
     </section>
+    <!-- Trending Routes -->
+    <section class="TrendingRoutes-area mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-TrendingRoutes-text">
+                        <h4>Trending Routes</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-slider grid-4 tranding-routes-slider" *ngIf="isMobile == false">
+                        <ng-container *ngFor="let trendingItem of trendingRoutes">
+                            <div class="box-item">
+                                <a href="javascript:void(0)">
+                                    <div class="Trending-item">
+                                        <div class="Trending-left">
+                                            <img src="{{trendingItem.fromImg}}" class="img-fluid" alt="">
+                                            <p>{{trendingItem.fromCity}}</p>
+                                        </div>
+                                        <div class="Trending-center">
+                                            <div class="half-circle-top"></div>
+                                            <p>Form</p>
+                                            <h6>&#8377;3,528</h6>
+                                            <img src="assets/images/icons/Trending.png" alt="">
+                                            <div class="half-circle-bottom"></div>
+                                        </div>
+                                        <div class="Trending-right">
+                                            <img src="{{trendingItem.toImg}}" class="img-fluid" alt="">
+                                            <p>{{trendingItem.toCity}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="owl-slider grid-4 tranding-routes-slider " *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let trendingItem of trendingRoutes; let i = index">
+                            <ng-template carouselSlide>
+                                <div class="box-item">
+                                    <a href="javascript:void(0)">
+                                        <div class="Trending-item">
+                                            <div class="Trending-left">
+                                                <img src="{{trendingItem.fromImg}}" class="img-fluid" alt="">
+                                                <p>{{trendingItem.fromCity}}</p>
+                                            </div>
+                                            <div class="Trending-center">
+                                                <div class="half-circle-top"></div>
+                                                <p>Form</p>
+                                                <h6>&#8377;3,528</h6>
+                                                <img src="assets/images/icons/Trending.png" alt="">
+                                                <div class="half-circle-bottom"></div>
+                                            </div>
+                                            <div class="Trending-right">
+                                                <img src="{{trendingItem.toImg}}" class="img-fluid" alt="">
+                                                <p>{{trendingItem.toCity}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
+   
 
     <!-- Popular Domestic Flight Routes -->
     <section class="popular-Domestic-area mb-50">

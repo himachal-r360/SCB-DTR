@@ -104,6 +104,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
   minStopOver: number = 0;
   maxStopOver: number = 24;
   airlines: any;
+  partnerFilterArr: any;
   flightIcons: any;
   airportsNameJson: any;
   airlinesNameJson: any;
@@ -166,6 +167,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         pageIndex: number = 26;
         ITEMS_RENDERED_AT_ONCE=25;
         nextIndex=0;
+        
         
         private loadData() {
              if (this.pageIndex >= this.flightList.length) {
@@ -381,6 +383,12 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     this.popularFilterFlightData();
     }
   }
+  flightPartnerFilterFlightData(partnerItem: any) {
+    partnerItem.active = !partnerItem.active;
+    if (!this.isMobile) {
+      this.popularFilterFlightData();
+    }
+  }
   flightLayoverFilterFlightData(layoverItem: any) {
     layoverItem.active = !layoverItem.active;
     if(!this.isMobile)
@@ -413,6 +421,10 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     this.airlines.filter((item: any) => { item.active = false; return item; })
     this.popularFilterFlightData();
   }
+  resetPartnerFlightsFilter() {
+    this.partnerFilterArr.filter((item: any) => { item.active = false; return item; })
+    this.popularFilterFlightData();
+  }
   resetStopOverFilter() {
     this.minStopOver = 0;
     this.maxStopOver = 24;
@@ -430,6 +442,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     this.resetAirlineFlightsFilter()
     this.resetStopOverFilter();
     this.resetLayOverFilter();
+    this.resetPartnerFlightsFilter();
   }
   /* Reset function end*/
 
@@ -638,6 +651,9 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     this.flightList = this.unique(this.layoverFilterFlights(this.flightList));
     
     this.flightList=this.unique(this.unique(this.flightList));
+
+      //Partner Filter
+    this.flightList = this.unique(this.partnerFilterFlights(this.flightList));
    
 
      this.container.clear();
@@ -937,6 +953,8 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
           flightList = filteredAirlines;
        // }
       }
+
+
       
 
 
@@ -963,6 +981,37 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     return flightList;
     
   }
+
+    //partner filter
+    partnerFilterFlights(flightList: any){
+      if (flightList.length > 0) {
+        let partnerArr: any = [];
+        partnerArr = this.partnerFilterArr.filter((item: any) => {
+          if (item.active == true) {
+            return item;
+          }
+        })
+  
+        var filteredAirlines: any[] = [];
+        if (partnerArr.length > 0) {
+          flightList.forEach((e: any) => {
+            var flights = [];
+            e.priceSummary.filter((d: any) => {
+              if (partnerArr.map(function (x: any) { return x.partnerName; }).indexOf(d.partnerName) > -1) {
+                flights.push(d);
+              }
+            })
+            if (flights.length > 0) {
+              e.priceSummary=flights;
+              filteredAirlines.push(e);
+            }
+          });
+          flightList = filteredAirlines;
+        }
+      }
+      return flightList;
+    }
+  
   //layover airport filter
   layoverFilterFlights(flightList: any) {
 
@@ -1001,23 +1050,19 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
   getAirlinelist() {
     let airlineNameArr = [];
     let layOverArr = [];
-    
-    
+    let airlinePartnerArr = [];
     for (let j = 0; j < this.flightList.length; j++) {
       let singleFlightList = [];
       let singleFlightListR = [];
-         
       let priceSummaryList = this.flightList[j].priceSummary;
       let priceSummary;
-      
-     /***Onward**/      
-     singleFlightList = this.flightList[j].onwardflights;
-     
+
+      /***Onward**/
+      singleFlightList = this.flightList[j].onwardflights;
+
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName;
-     
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
-
         if (h < singleFlightList.length) {
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             if (this.airportsNameJson != null) {
@@ -1044,56 +1089,60 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
               airlineNameArr.push(airlineNameObj);
             }
           }
+          let partnerName = priceSummaryList[p].partnerName;
+          if (airlinePartnerArr.filter((d: any) => { if (d.partnerName == partnerName) { return d; } }).length < 1) {
+            let partnerObj = {
+              "partnerName": partnerName,
+              "active": false
+            };
+            airlinePartnerArr.push(partnerObj);
+          }
         }
       }
-      
-      
-            
-     /***Return**/     
-     if(this.flightList[j].returnflights.length > 0 ){ 
-     singleFlightListR = this.flightList[j].returnflights;
-      for (let h = 0; h < singleFlightListR.length; h++) {
-        let airlineName = singleFlightListR[h].airlineName
-        let arrivalAirportCode = singleFlightListR[h].arrivalAirport
-        
-       if(airlineName != undefined){
 
-        if (h < singleFlightListR.length) {
-          if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
-            if (this.airportsNameJson != null) {
-              let layOverFilterObj = {
-                "arrivalAirportCode": arrivalAirportCode,
-                "arrivalAirport": this.airportsNameJson[singleFlightListR[h].arrivalAirport].airport_name,
-                "price": priceSummaryList[0].totalFare,
-                "active": false
-              };
-              layOverArr.push(layOverFilterObj);
+      /***Return**/
+      if (this.flightList[j].returnflights.length > 0) {
+        singleFlightListR = this.flightList[j].returnflights;
+        for (let h = 0; h < singleFlightListR.length; h++) {
+          let airlineName = singleFlightListR[h].airlineName
+          let arrivalAirportCode = singleFlightListR[h].arrivalAirport
+
+          if (airlineName != undefined) {
+            if (h < singleFlightListR.length) {
+              if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
+                if (this.airportsNameJson != null) {
+                  let layOverFilterObj = {
+                    "arrivalAirportCode": arrivalAirportCode,
+                    "arrivalAirport": this.airportsNameJson[singleFlightListR[h].arrivalAirport].airport_name,
+                    "price": priceSummaryList[0].totalFare,
+                    "active": false
+                  };
+                  layOverArr.push(layOverFilterObj);
+                }
+              }
+            }
+            for (let p = 0; p < priceSummaryList.length; p++) {
+              priceSummary = priceSummaryList[p].totalFare
+              if (airlineNameArr.filter((d: any) => { if (d.airlineName == airlineName) { return d; } }).length < 1) {
+                if (airlineNameArr.filter((d: any) => { if (d.priceSummary) { return d; } }).length < 1) {
+                  let airlineNameObj = {
+                    "airlineName": airlineName,
+                    "price": priceSummary,
+                    "flighCount": 0,
+                    "active": false
+                  };
+                  airlineNameArr.push(airlineNameObj);
+                }
+              }
             }
           }
+
         }
-        for (let p = 0; p < priceSummaryList.length; p++) {
-          priceSummary = priceSummaryList[p].totalFare
-          if (airlineNameArr.filter((d: any) => { if (d.airlineName == airlineName) { return d; } }).length < 1) {
-            if (airlineNameArr.filter((d: any) => { if (d.priceSummary) { return d; } }).length < 1) {
-              let airlineNameObj = {
-                "airlineName": airlineName,
-                "price": priceSummary,
-                "flighCount": 0,
-                "active": false
-              };
-              airlineNameArr.push(airlineNameObj);
-            }
-          }
-        }
-      }
-      }
       }
     }
-    
-    
     this.airlines = this.unique(airlineNameArr);
+    this.partnerFilterArr = airlinePartnerArr;
     this.layOverFilterArr = this.removeDumplicateValue(layOverArr);
-
   }
   
   removeDumplicateValue(myArray){ 
