@@ -17,24 +17,24 @@ import { MatDialog,MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DatePipe } from '@angular/common';
-import {MatNativeDateModule, NativeDateAdapter, DateAdapter,MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS} from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker'
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import { formatDate } from '@angular/common';
 import * as moment from 'moment';
 declare var require: any;
  declare var $: any;
-const MY_DATE_FORMAT = {
+
+export const MY_DATE_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+    dateInput: 'M/D/YYYY',
   },
   display: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
-    monthYearLabel: 'MMMM YYYY',
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY'
-  }
+  },
 };
 
 
@@ -43,8 +43,7 @@ const MY_DATE_FORMAT = {
   templateUrl: './travel-search.component.html',
   styleUrls: ['./travel-search.component.scss'],
    providers: [
-     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }
+        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
 })
 export class TravelSearchComponent implements OnInit {
@@ -64,6 +63,9 @@ export class TravelSearchComponent implements OnInit {
         arrivalMlite:any;
         busDepartureMlite: any;
         trainDepartureMlite:any;
+        
+         hotelCheckinMlite: any;
+        hotelCheckoutMlite:any;
 
         cdnUrl: any;
         siteUrl:any;
@@ -409,13 +411,36 @@ export class TravelSearchComponent implements OnInit {
         $('#flight_departure_mlite').modal('show');
         }else{
         if(this.showFlightReturn){
-        this.minDateFlightToMlite= new Date(moment(this.departure).format('YYYY/MM/DD'));
+ 
         $('#flight_arrival_mlite').modal('show');
         $('#flight_departure_mlite').modal('hide');
         }
         }
         break;
         }
+        
+               case 'hotel': {
+        if(field=='departure'){
+        $('#hotel_arrival_mlite').modal('hide');
+        $('#hotel_departure_mlite').modal('show');
+        }else{
+ 
+        $('#hotel_arrival_mlite').modal('show');
+        $('#hotel_departure_mlite').modal('hide');
+        }
+        break;
+        }
+                 
+        case 'bus': {
+        $('#bus_departure_mlite').modal('show');
+        break;
+        }
+        
+           case 'train': {
+        $('#train_departure_mlite').modal('show');
+        break;
+        }
+        
         } 
    }
    
@@ -427,14 +452,58 @@ export class TravelSearchComponent implements OnInit {
       case 'flight': {
       if(field=='departure'){
         this.departure = event;
-        this.departureMlite = moment(event._d).format('DD/MM/YYYY');
+        this.departureMlite = moment(event).format('DD/MM/YYYY');
+        this.minDateFlightToMlite=event;
+        var compare1 = new Date(event).getTime();
+        var compare2 = new Date(this.arrival).getTime();
+        if(compare1 > compare2){
+        this.arrivalMlite=(moment(event).format('DD/MM/YYYY'));
+        
+        this.arrival = event;
+        this.searchFlightForm['controls']['arrival'].setValue(moment(event).format('DD/MM/YYYY'));
+        }
+        
+        
       }else{
-  
        this.arrival = event;
-       this.arrivalMlite = moment(event._d).format('DD/MM/YYYY');
+       this.arrivalMlite = moment(event).format('DD/MM/YYYY');
     }
      break;
      }
+     
+           case 'hotel': {
+      if(field=='departure'){
+        this.hotelCheckin = event;
+         this.minDateHotelToMlite=event;
+        this.hotelCheckinMlite = moment(event).format('DD/MM/YYYY');
+        var compare1 = new Date(event).getTime();
+        var compare2 = new Date(this.hotelCheckout).getTime();
+        if(compare1 > compare2){
+        this.hotelCheckoutMlite=(moment(event).format('DD/MM/YYYY'));
+        this.hotelCheckout = event;
+        
+        this.searchFlightForm['controls']['hotelCheckout'].setValue(moment(event).format('DD/MM/YYYY'));
+        }
+        
+      }else{
+       this.hotelCheckout = event;
+       this.hotelCheckoutMlite = moment(event).format('DD/MM/YYYY');
+    }
+     break;
+     }
+     
+     case 'bus': {
+        this.busDeparture = event;
+        this.busDepartureMlite = moment(event).format('DD/MM/YYYY');
+     break;
+     }
+     
+          case 'train': {
+        this.trainDeparture = event;
+        this.trainDepartureMlite = moment(event).format('DD/MM/YYYY');
+     break;
+     }
+     
    } 
   }
 
@@ -1011,6 +1080,9 @@ check_traveller_count(type) {
 
         this.hotelCheckin = this.hotelpickerDefaultFMlite;
         this.hotelCheckout =  this.hotelpickerDefaultTMlite;
+        
+        this.hotelCheckinMlite=datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd/MM/YYYY', 'en-ES');
+        this.hotelCheckoutMlite=datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd/MM/YYYY', 'en-ES');
 
         }
 
@@ -1082,11 +1154,10 @@ check_traveller_count(type) {
 
         if(date1 <= date2){
 
-
-        this.buspickerDefaultMlite=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
-        this.searchBusForm['controls']['busDeparture'].setValue(datePipe.transform(lastBusSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
-         this.busDeparture=new Date(datePipe.transform(lastBusSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
-
+        this.buspickerDefaultMlite=new Date(datePipe.transform(lastBusSearchValue.departure, 'YYYY-MM-dd', 'en-ES'));
+        this.searchBusForm['controls']['busDeparture'].setValue(datePipe.transform(lastBusSearchValue.departure, 'YYYY-MM-dd', 'en-ES'));
+         this.busDeparture=new Date(datePipe.transform(lastBusSearchValue.departure, 'YYYY-MM-dd', 'en-ES'));
+        this.busDepartureMlite=moment(lastBusSearchValue.departure).format('DD/MM/YYYY');
           }
         }  else{
         this.busFromText='Delhi';
@@ -1138,9 +1209,10 @@ check_traveller_count(type) {
         var date3 = new Date(lastTrainSearchValue.departure).getTime();
         if(date1 <= date3){
 
-        this.trainpickerDefaultMlite=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
-        this.searchTrainForm['controls']['trainDeparture'].setValue(datePipe.transform(lastTrainSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
-        this.trainDeparture=new Date(datePipe.transform(lastTrainSearchValue.departure, 'dd/MM/YYYY', 'en-ES'));
+        this.trainpickerDefaultMlite=new Date(datePipe.transform(lastTrainSearchValue.departure, 'YYYY-MM-dd', 'en-ES'));
+        this.searchTrainForm['controls']['trainDeparture'].setValue(datePipe.transform(lastTrainSearchValue.departure, 'YYYY-MM-dd', 'en-ES'));
+        this.trainDeparture=new Date(datePipe.transform(lastTrainSearchValue.departure, 'YYYY-MM-dd', 'en-ES'));
+        this.trainDepartureMlite=moment(lastTrainSearchValue.departure).format('DD/MM/YYYY');
 
           }
         } else{
