@@ -143,18 +143,17 @@
                                                                 <div class="col-md-12">
                                                                     <div class="mob-search-list">
                                                                         <label for="">From</label>
-                                                                        <!-- <input type="hidden" autocomplete="off"
-                                                                            class="w-100" placeholder="Search City"
-                                                                            formControlName="flightfrom"
-                                                                            (keyup)="fromList($event)"
-                                                                            (focus)="isFromorNot= true;fromList($event)"
-                                                                            [(ngModel)]="flightData.value.flightfrom"> -->
-                                                                        <input type="text" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="flightfrom"
                                                                             (keyup)="fromList($event)"
                                                                             (focus)="isFromorNot= true;fromList($event)"
                                                                             [(ngModel)]="flightData.value.flightfrom">
+                                                                        <input type="text" autocomplete="off"
+                                                                            class="w-100" placeholder="Search City"
+                                                                            (keyup)="fromList($event)"
+                                                                            (focus)="isFromorNot= true;fromList($event)"
+                                                                            value="{{flightData.value.fromCity+' ('+flightData.value.flightfrom+') '+flightData.value.fromAirportName}}">
 
                                                                             <input type="hidden"  formControlName="fromCity">
                                                                             <input type="hidden"  formControlName="fromContry">
@@ -163,12 +162,17 @@
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
-                                                                        <input type="text" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="flightto"
                                                                             (keyup)="toList($event)"
                                                                             (focus)="isFromorNot= false;toList($event)"
                                                                             [(ngModel)]="flightData.value.flightto" id="toCityDiv">
+                                                                        <input type="text" autocomplete="off"
+                                                                            class="w-100" placeholder="Search City"
+                                                                            (keyup)="toList($event)"
+                                                                            (focus)="isFromorNot= false;toList($event)"
+                                                                            value="{{flightData.value.toCity+' ('+flightData.value.flightto+') '+flightData.value.toAirportName}}">
                                                                         <input type="text" name="flightto"  style="display:none" id="toCitySearch">
                                                                            <input type="hidden"  formControlName="toCity">
                                                                             <input type="hidden"  formControlName="toContry">
@@ -190,7 +194,7 @@
                                                                 autofocus #fromCityInput
                                                                 [(ngModel)]="flightData.value.flightfrom">
                                                             <input type="text" name="flightfrom" style="display:none"
-                                                                id="fromCitySearch">
+                                                                id="fromCitySearch" >
 
                                                                  <input type="hidden"  formControlName="fromCity">
                                                                             <input type="hidden"  formControlName="fromContry">
@@ -254,7 +258,7 @@
                                                     <div class="flight-to-data flight-from-hide dropdown"
                                                         #removeClassToCity>
                                                         <div class="mob-title">
-                                                            <h3>Select City</h3>
+                                                            <h3>Select To City</h3>
                                                             <a href="javascript:void(0)"
                                                                 class="mob-close mob-ff-from-close close-mobile">
                                                                 <img src="{{cdnUrl}}/images/icons/close.png"
@@ -266,13 +270,18 @@
                                                                 <div class="col-md-12">
                                                                     <div class="mob-search-list">
                                                                         <label for="">From</label>
-                                                                        <input type="text" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             (focus)="isFromorNot= true;fromList($event)"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="flightfrom"
-                                                                            (keyup)="fromList($event)"
                                                                             [(ngModel)]="flightData.value.flightfrom"
                                                                             id="fromCitySearch">
+                                                                        <input type="text" autocomplete="off"
+                                                                            (focus)="isFromorNot= true;fromList($event)"
+                                                                            class="w-100" placeholder="Search City"     
+                                                                            (keyup)="fromList($event)"
+                                                                            id="fromCitySearch"
+                                                                            value="{{flightData.value.fromCity+' ('+flightData.value.flightfrom+') '+flightData.value.fromAirportName}}">
                                                                         <input type="text" name="flightfrom"  style="display:none">
                                                                          <input type="hidden"  formControlName="fromCity">
                                                                             <input type="hidden"  formControlName="fromContry">
@@ -280,12 +289,18 @@
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
-                                                                        <input type="text" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="flightto"
                                                                             (keyup)="toList($event)"
                                                                             (focus)="isFromorNot= false;toList($event)"
                                                                             [(ngModel)]="flightData.value.flightto" >
+                                                                        <input type="text" autocomplete="off"
+                                                                            class="w-100" placeholder="Search City"
+                                                                            (keyup)="toList($event)"
+                                                                            (focus)="isFromorNot= false;toList($event)"
+                                                                            value="{{flightData.value.toCity+' ('+flightData.value.flightto+') '+flightData.value.toAirportName}}" >
+                                                                            <!-- value="{{flightData.value.toCity+' ('+flightData.value.flightto+') '+flightData.value.toAirportName}}" -->
                                                                         <input type="text" name="flightto"  style="display:none" id="toCitySearch">
                                                                          <input type="hidden"  formControlName="toCity">
                                                                             <input type="hidden"  formControlName="toContry">
@@ -650,9 +665,13 @@
                                                     <button type="button" class="searchbn" (click)="flightSearch()">Search</button>
                                                 </div>
                                             </div>
-                                            <mat-error *ngIf="dateValidation">
-                                                Select departure
-                                            </mat-error>
+                                 
+                                                <mat-error *ngIf="dateValidation">
+                                                    Select departure
+                                                </mat-error>
+                                            
+                                            
+
                                             <!-- <div *ngIf="dateValidation" class="text-danger">
                                             <span class="fs_12"> Select departure date</span>
                                         </div> -->
