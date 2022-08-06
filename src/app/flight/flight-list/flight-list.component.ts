@@ -901,7 +901,6 @@ ngOnInit(): void {
    
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
-        
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
 
         if (h < singleFlightList.length) {
@@ -946,7 +945,7 @@ ngOnInit(): void {
     this.airlines = airlineNameArr;
     this.partnerFilterArr = airlinePartnerArr;
     this.layOverFilterArr = layOverArr;
-    console.log(this.partnerFilterArr,"this.partnerFilterArr");
+ 
   }
 
   searchNonStop(item: any) {

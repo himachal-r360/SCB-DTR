@@ -78,6 +78,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   math = Math;
   EMI_interest: number = 16;
   navItemActive:any;
+  dummyForLoader = Array(10).fill(0).map((x,i)=>i);
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -175,7 +176,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.isMobile = window.innerWidth < 991 ?  true : false;
   }
   ngOnInit(): void {
-  
+
        this.route.url.subscribe(url =>{
         $(".modal").hide();
         $('body').removeClass( "modal-open" );
@@ -201,7 +202,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       for (let n = this.pageIndex; n < this.nextIndex ; n++) {
         const context = {
           item: [this.flightList[n]]
-          
+
         };
         this.container.createEmbeddedView(this.template, context);
       }
@@ -233,7 +234,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         item: [this.flightList[n]],
       };
       // console.log(context , "onward");
-      
+
       this.container.createEmbeddedView(this.template, context);
     }
   }
@@ -243,9 +244,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         item: [this.ReturnflightList[n]],
       };
       // console.log(returnContext , "return");
-      
+
       this.returnContainer.createEmbeddedView(this.returnTemplate, returnContext);
-    
+
     }
   }
 
@@ -324,7 +325,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
-
+        this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
 
@@ -925,14 +926,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         }
       })
       console.log(this.flight_return_Timingsitems , "this.flight_return_Timingsitems");
-      
+
       let isTimingFilterItems = this.flight_return_Timingsitems.filter((item: any) => {
         if (item.active == true) {
           return item;
         }
       })
       console.log(isTimingFilterItems , "isTimingFilterItems");
-      
+
       if (isTimingFilterItems.length > 0) {
         isfilterFlightTiming = true;
       }
@@ -943,7 +944,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           console.log(returnFlightList , "returnFlightList");
           console.log(date2);
           console.log(date3);
-          
+
           returnFlightList.filter((d: any) => {
             let singleFlightTiming = [];
             singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
@@ -1449,7 +1450,7 @@ closeFlightDetailMobile(i:any){
     element.style.display = "none";
   }
 }
-  
+
   openMobileFilterSection()
   {
     var filterDiv = document.getElementById('sortMobileFilter');

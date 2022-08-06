@@ -10,7 +10,7 @@ import {
   ViewChild,Input, Output, EventEmitter
 
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -117,7 +117,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
      }, 10);
 
     }
-
+sameCity
 
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
@@ -136,7 +136,9 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     child: ['0'],
     infants: ['0'],
     travel: ['',[Validators.required]]
-  });
+  }, {
+    validators: MustMatch('flightfrom', 'flightto')
+});
   public Error = (controlName: string, errorName: string) => {
     return this.flightData.controls[controlName].hasError(errorName);
   };
@@ -209,6 +211,8 @@ console.log(this.isViewPartner)
   }
 
   fromList(evt: any) {
+    console.log('fg');
+    // console.log(evt.keyCode);
     this.toFlightList = false;
     this.fromFlightList = true;
     this.SearchCityName = evt.target.value.trim().toLowerCase();
@@ -336,7 +340,7 @@ console.log(this.isViewPartner)
   }
 
 
-
+  sameCityValidation = false;
   flightSearch() {
     this.submitted = true;
     this.selectedDate = this.flightData.value.departure;
@@ -347,6 +351,14 @@ console.log(this.isViewPartner)
     else{
       this.dateValidation=true;
     }
+    if(this.flightData.formCity != this.flightData.toCity){
+      this.sameCityValidation = false
+    }
+    else {
+      this.sameCityValidation = true;
+      
+    }
+
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
        this.flightData.value.arrival=this.flightData.value.arrival.getFullYear()+'-' +(this.flightData.value.arrival.getMonth()+ 1)+'-' +this.flightData.value.arrival.getDate();
       this.flightData.get('flightdefault').setValue('R');
@@ -609,5 +621,22 @@ console.log(this.isViewPartner)
     this.isShowPartner = false;
   }
 
+
+}
+export function MustMatch(controlName: any, matchingControlName: any) {
+  {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors && !matchingControl.errors['MustMatch']) {
+        return;
+      }
+      else if (control.value == matchingControl.value) {
+        matchingControl.setErrors({ MustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    }
+  }
 
 }
