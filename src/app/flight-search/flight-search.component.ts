@@ -91,6 +91,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   windowItem = window;
   navItemActive:any;
   multicityFlightData : FormGroup;
+  multicityFormfield : FormGroup;
 
   constructor(
     public _styleManager: StyleManagerService,
@@ -161,6 +162,27 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
     });
 
+    this.multicityFormfield = this._fb.group({
+      flightfrom: new FormArray([ new FormControl('',[Validators.required]) ]),
+      flightto: ['',[Validators.required]],
+      fromCity: ['',[Validators.required]],
+      toCity: ['',[Validators.required]],
+      fromContry: ['',[Validators.required]],
+      toContry: ['',[Validators.required]],
+          fromAirportName: ['',[Validators.required]],
+      toAirportName: ['',[Validators.required]],
+      flightclass: ['E'],
+      flightdefault: [],
+      departure:['',[Validators.required]],
+      arrival: ['',],
+      adults: ['1',[Validators.required]],
+      child: ['0'],
+      infants: ['0'],
+      travel: ['',[Validators.required]],
+      multicityFormGroup : this._fb.group({
+        form: this._fb.array([this.addMultiCity()]),
+      }),
+    });
 
 
    this._flightService.showHeader(true);
