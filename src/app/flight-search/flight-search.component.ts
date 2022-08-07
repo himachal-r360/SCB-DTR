@@ -135,6 +135,8 @@ sameCity
     adults: ['1',[Validators.required]],
     child: ['0'],
     infants: ['0'],
+    mobFromAddress: [''],
+    mobToAddress: [''],
     travel: ['',[Validators.required]]
   }, {
     validators: MustMatch('flightfrom', 'flightto')
@@ -261,7 +263,7 @@ console.log(this.isViewPartner)
   adultsVal:any
   childVal:any
   infantsVal:any
-
+  flightFromInput:any;
   setSearchFilterData() {
    let lastSearch:any=localStorage.getItem('flightLastSearch');
     if(lastSearch != null || lastSearch != undefined){
@@ -281,7 +283,6 @@ console.log(this.isViewPartner)
         this.flightData.get('toCity').setValue(lastSearch.toCity);
         this.flightData.get('toContry').setValue(lastSearch.toContry);
         this.flightData.get('travel').setValue(lastSearch.travel);
-
         this.fromCityName = lastSearch.fromCity;
         this.toCityName = lastSearch.toCity;
 
@@ -372,7 +373,7 @@ console.log(this.isViewPartner)
         }
 
 
-    if(this.flightData.invalid || this.dateValidation==true){
+    if (this.flightData.invalid || this.dateValidation == true) {
       return
     }
     else {
@@ -383,10 +384,10 @@ console.log(this.isViewPartner)
 
       localStorage.setItem('flightLastSearch',JSON.stringify(searchValue));
 
-      searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
+      searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
-      if(searchValue.arrival)
-       searchValue.arrival=moment(searchValue.arrival).format('YYYY-MM-DD');
+      if (searchValue.arrival)
+        searchValue.arrival = moment(searchValue.arrival).format('YYYY-MM-DD');
 
         let url;
         if(this.flightData.value.fromContry=='IN' && this.flightData.value.toContry=='IN' ){
@@ -394,22 +395,16 @@ console.log(this.isViewPartner)
            url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
-        else{
-           url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+        else {
+          url = "flight-roundtrip?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
-        }else{
-           url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
-          this.router.navigateByUrl(url);
-
-       }
-
-
-
-
-        // (error) => { console.log(error) });
+      } else {
+        url = "flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+        this.router.navigateByUrl(url);
       }
     }
+  }
 
   ConvertObjToQueryString(obj:any)
   {

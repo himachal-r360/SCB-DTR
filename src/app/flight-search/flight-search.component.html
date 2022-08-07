@@ -143,12 +143,12 @@
                                                                 <div class="col-md-12">
                                                                     <div class="mob-search-list">
                                                                         <label for="">From</label>
-                                                                        <!-- <input type="hidden" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="flightfrom"
                                                                             (keyup)="fromList($event)"
                                                                             (focus)="isFromorNot= true;fromList($event)"
-                                                                            [(ngModel)]="flightData.value.flightfrom"> -->
+                                                                            [(ngModel)]="flightData.value.flightfrom">
                                                                         <input type="text" autocomplete="off"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="fromCity"
@@ -163,7 +163,7 @@
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
-                                                                        <input type="text" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="toCity"
                                                                             (keyup)="toList($event)"
@@ -254,7 +254,7 @@
                                                     <div class="flight-to-data flight-from-hide dropdown"
                                                         #removeClassToCity>
                                                         <div class="mob-title">
-                                                            <h3>Select City</h3>
+                                                            <h3>Select To City</h3>
                                                             <a href="javascript:void(0)"
                                                                 class="mob-close mob-ff-from-close close-mobile">
                                                                 <img src="{{cdnUrl}}/images/icons/close.png"
@@ -266,7 +266,7 @@
                                                                 <div class="col-md-12">
                                                                     <div class="mob-search-list">
                                                                         <label for="">From</label>
-                                                                        <input type="text" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             (focus)="isFromorNot= true;fromList($event)"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="fromCity"
@@ -280,7 +280,7 @@
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
-                                                                        <input type="text" autocomplete="off"
+                                                                        <input type="hidden" autocomplete="off"
                                                                             class="w-100" placeholder="Search City"
                                                                             formControlName="toCity"
                                                                             (keyup)="toList($event)"
@@ -650,9 +650,13 @@
                                                     <button type="button" class="searchbn" (click)="flightSearch()">Search</button>
                                                 </div>
                                             </div>
-                                            <mat-error *ngIf="dateValidation">
-                                                Select departure
-                                            </mat-error>
+                                 
+                                                <mat-error *ngIf="dateValidation">
+                                                    Select departure
+                                                </mat-error>
+                                            
+                                            
+
                                             <!-- <div *ngIf="dateValidation" class="text-danger">
                                             <span class="fs_12"> Select departure date</span>
                                         </div> -->

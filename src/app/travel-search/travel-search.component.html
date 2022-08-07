@@ -481,7 +481,7 @@
                                     <small *ngIf="searchHotelForm['controls']['hotelName']['errors']['required']" class="validate-msg">Please select a city name from the list</small>
                                 </div>
                                 
-                                  <div class="hotel-to-data dropdown"  *ngIf="hotelCityList" #menu  >
+                                  <div class="hotel-to-data dropdown from_citiesPop"  *ngIf="hotelCityList" #menu  >
                                         <div class="mob-title">
                                         <h3>Select City</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()"
@@ -501,8 +501,7 @@
                                         <p class="flight-Results-text">{{searchHotelHeader}}</p>
                                         </li>
                                         <li class="flight-from-ul-li"  *ngFor="let hOptions of hotelOptions;let ind=index;">
-                                        <a  class="flight-from-ul-li-a"                                                                    (click)="onToClick(hOptions,'hotels','web')">
-                                        
+                                        <a  class="flight-from-ul-li-a"    (click)="onToClick(hOptions,'hotels','web')">
                                          <div class="hotel-from-name">
                                         <h6><i class="fa fa-building"></i> &nbsp;{{hOptions._source.full_content}}</h6>
                                         <p>{{hOptions._source.airport_name}} </p>
@@ -510,34 +509,13 @@
                                         <div class="flight-from-shortname">
                                         <h6>{{hOptions._source.city}}</h6>
                                         </div>
-                                        
-                                  
-                                                                                </a>
+                                    </a>
                                         </li>
                                         <li *ngIf="hotelOptions.length==0"><a>No Results Found...</a></li>
                                         </ul>
                                         </div>
                                 
-                                <!--<div class="from_cities from_citiesPop" *ngIf="hotelCityList" #menu>
-                                    <div>
-                                        <div class="from_list">
-                                            <ul>
-                                                <li class="pop-city sticky-top" *ngIf="searchHotelHeader"><span class="popular-cities">{{searchHotelHeader}}</span> <span class="float-right" (click)="closeSearchBox()"><i class="material-icons xs-none cross-sym">close</i></span></li>
-                                                <li *ngFor="let hOptions of hotelOptions;let ind=index;" (click)="onToClick(hOptions,'hotels','web')" [ngClass]="{'activeli': ind==arrowFromkeyLocation}">
-                                                    <div class="list_item" *ngIf="enableEs && hOptions['_source']">
-                                                        <div class="icon_fl"><i class="fa fa-building"></i></div>
-                                                        <div class="flight_city_select">
-                                                            <p class="city_name">{{hOptions['_source']['full_content']}}</p>
-                                                        </div>
-                                                        <div class="airport_code">{{hOptions['_source']['city']}}</div>
-                                                    </div>
-
-                                                </li>
-                                                <li *ngIf="hotelOptions.length==0"><a>No Results Found...</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>-->
+                  
                             </div>
                         </div>
                     </div>
@@ -751,7 +729,7 @@
                                 <div class="input_box">
                                     <label>
                                         <span>From</span>
-                                        <input type="text" class="inputField  " value="{{fromCityDisp}}" readonly    (click)="hideShowForms('web', 'fromCity','flights')" >
+                                        <input type="text" class="inputField  flightFromPop" value="{{fromCityDisp}}" readonly    (click)="hideShowForms('web', 'fromCity','flights')" >
                                         <input type="hidden" formControlName="flightfrom" name="flightfrom" id="flightfrom" >
                                         <input type="hidden"  formControlName="fromContry">
                                         <input type="hidden"  formControlName="fromAirportName">
@@ -769,7 +747,7 @@
                                     </div>
                                     
                                     
-                                        <div class="flight-to-data dropdown "  *ngIf="fromFlightCityList" #menu  >
+                                        <div class="flight-to-data dropdown from_citiesFlightsPop"  *ngIf="fromFlightCityList" #menu  >
                                         <div class="mob-title">
                                         <h3>Select City</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()"
@@ -781,7 +759,7 @@
                                         <div class="flight-from-data-search">
                                         <input type="hidden"   [(ngModel)]="fromCity" (ngModelChange)="selectCheck(fromCity,toCity,'flights')" formControlName="fromCity" id="fromCity" placeholder="From" name="fromCity"  (keyup)="searchAutoComplete($event,'flights','fromCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
 
-                                        <input type="text"    class="inputField fromCity fromCity-web flightFromPop"  placeholder="From" name="fromCity"  (keyup)="searchAutoComplete($event,'flights','fromCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
+                                        <input type="text"    class="inputField fromCity fromCity-web "  placeholder="From" name="fromCity"  (keyup)="searchAutoComplete($event,'flights','fromCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
 
                                         </div>
                                         <ul class="flight-from-data-ul">
@@ -811,7 +789,7 @@
                                 <div class="input_box">
                                     <label>
                                         <span>To</span>
-                                        <input type="text" class="inputField" value="{{toCityDisp}}" readonly    (click)="hideShowForms('web', 'toCity','flights')" >
+                                        <input type="text" class="inputField flightToPop" value="{{toCityDisp}}" readonly    (click)="hideShowForms('web', 'toCity','flights')" >
                                         
                                         <input type="hidden" formControlName="flightto" name="flightto" id="flightto" >
                                                                             <input type="hidden"  formControlName="toContry">
@@ -824,7 +802,7 @@
                                         <small *ngIf="searchFlightForm['controls']['toCity']['errors']['required']" class="validate-msg">Please select a city name from the list</small>
                                     </div>
                                     
-                            <div class="flight-to-data dropdown "  *ngIf="toFlightCityList" #menu  >
+                            <div class="flight-to-data dropdown to_citiesFlightPop"  *ngIf="toFlightCityList" #menu  >
                                         <div class="mob-title">
                                         <h3>Select City</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()"
@@ -836,7 +814,7 @@
                                         <div class="flight-from-data-search" >
                                        <input type="hidden"   [(ngModel)]="toCity"   (ngModelChange)="selectCheck(fromCity,toCity,'flights')"  formControlName="toCity" id="toCity" placeholder="To" name="toCity" (focus)="hideShowForms('web', 'toCity','flights')" (keyup)="searchAutoComplete($event,'flights','toCity' ,'web')" (keypress)="charInput($event)" autocomplete="off">
 
-                                        <input type="text"  class="inputField toCity toCity-web flightToPop"  placeholder="To" name="toCity"  (keyup)="searchAutoComplete($event,'flights','toCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
+                                        <input type="text"  class="inputField toCity toCity-web "  placeholder="To" name="toCity"  (keyup)="searchAutoComplete($event,'flights','toCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
 
                                         </div>
                                         <ul class="flight-from-data-ul">
@@ -910,7 +888,7 @@
                                 <div class="input_box">
                                     <label>
                                         <span>From</span>
-                                         <input type="text" class="inputField  " value="{{busFromDisp}}" readonly    (click)="hideShowForms('web', 'busFrom','bus')" >
+                                         <input type="text" class="inputField  busFromPop" value="{{busFromDisp}}" readonly    (click)="hideShowForms('web', 'busFrom','bus')" >
                                        
                                         <input type="hidden" formControlName="fromBusCode" name="fromBusCode" id="fromBusCode" >
                                         <p class="truncate" title="{{busFromText}}">
@@ -925,7 +903,7 @@
                                     </div>
                                     
                                     
-                                     <div class="flight-to-data dropdown "  *ngIf="fromBusCityList" #menu  >
+                                     <div class="flight-to-data dropdown from_cities_bus_pop"  *ngIf="fromBusCityList" #menu  >
                                         <div class="mob-title">
                                         <h3>Select City</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()"
@@ -937,7 +915,7 @@
                                         <div class="flight-from-data-search">
                                          <input type="hidden" [(ngModel)]="busFrom" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" formControlName="busFrom" id="busFrom" placeholder="From" name="busFrom"  (keyup)="searchAutoComplete($event,'bus','busFrom' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
                                          
-                                          <input type="text" class="inputField busFrom busFrom-web busFromPop" placeholder="From"  (keyup)="searchAutoComplete($event,'bus','busFrom' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
+                                          <input type="text" class="inputField busFrom busFrom-web " placeholder="From"  (keyup)="searchAutoComplete($event,'bus','busFrom' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
 
 
                                         </div>
@@ -969,7 +947,7 @@
                                 <div class="input_box">
                                     <label>
                                         <span>To</span>
-                                         <input type="text" class="inputField  " value="{{busToDisp}}" readonly    (click)="hideShowForms('web', 'busTo','bus')" >
+                                         <input type="text" class="inputField  busToPop" value="{{busToDisp}}" readonly    (click)="hideShowForms('web', 'busTo','bus')" >
                                         <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
                                         <p class="truncate" title="{{busToText}}">
                                             <!-- <span  title="" class=" airPortName ">{{busToText}}</span> -->
@@ -980,7 +958,7 @@
                                     </div>
                                     
                                     
-                                     <div class="flight-to-data dropdown "  *ngIf="toBusCityList" #menu  >
+                                     <div class="flight-to-data dropdown to_cities_bus_pop"  *ngIf="toBusCityList" #menu  >
                                         <div class="mob-title">
                                         <h3>Select City</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()"
@@ -992,7 +970,7 @@
                                         <div class="flight-from-data-search">
                                          <input type="hidden" [(ngModel)]="busTo" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" formControlName="busTo" id="busTo"  (keyup)="searchAutoComplete($event,'bus','busTo' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
                                          
-                                          <input type="text" class="inputField busFrom busFrom-web busFromPop" placeholder="To"  (keyup)="searchAutoComplete($event,'bus','busTo' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
+                                          <input type="text" class="inputField busTo busTo-web " placeholder="To"  (keyup)="searchAutoComplete($event,'bus','busTo' ,'web');" (keypress)="charInput($event)"  autocomplete="off" >
 
 
                                         </div>
@@ -1055,7 +1033,7 @@
                                 <div class="input_box">
                                     <label>
                                         <span>From</span>
-                                        <input type="text" class="inputField  " value="{{trainFromDisp}}" readonly    (click)="hideShowForms('web', 'trainFrom','train')" >
+                                        <input type="text" class="inputField  trainFromPop" value="{{trainFromDisp}}" readonly    (click)="hideShowForms('web', 'trainFrom','train')" >
                                         <input type="hidden" formControlName="fromTrainCode" name="fromTrainCode" id="fromTrainCode" >
                                         <p class="truncate" title="{{trainFromText}}">
                                             <span  title="" class=" airPortName ">{{trainFromText}}</span>
@@ -1070,7 +1048,7 @@
                                     
                                     
                                     
-                               <div class="flight-to-data dropdown "  *ngIf="fromTrainCityList" #menu  >
+                               <div class="flight-to-data dropdown from_cities_train_pop"  *ngIf="fromTrainCityList" #menu  >
                                         <div class="mob-title">
                                         <h3>Select Station</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()"
@@ -1082,7 +1060,7 @@
                                         <div class="flight-from-data-search">
                                          <input type="hidden" [(ngModel)]="trainFrom" (ngModelChange)="selectCheck(trainFrom,trainTo,'train')"  formControlName="trainFrom" id="trainFrom" name="trainFrom"  (keyup)="searchAutoComplete($event,'train','trainFrom','web');" (keypress)="charInput($event)"  autocomplete="off" >
                                          
-                                        <input type="text" class="inputField trainFrom-web trainFrom trainFromPop"  placeholder="From"   (keyup)="searchAutoComplete($event,'train','trainFrom','web');" (keypress)="charInput($event)"  autocomplete="off" >
+                                        <input type="text" class="inputField trainFrom-web trainFrom "  placeholder="From"   (keyup)="searchAutoComplete($event,'train','trainFrom','web');" (keypress)="charInput($event)"  autocomplete="off" >
 
 
                                         </div>
@@ -1116,7 +1094,7 @@
                                 <div class="input_box">
                                     <label>
                                         <span>To</span>
-                                        <input type="text" class="inputField  " value="{{trainToDisp}}" readonly    (click)="hideShowForms('web', 'trainTo','train')" >
+                                        <input type="text" class="inputField  trainToPop" value="{{trainToDisp}}" readonly    (click)="hideShowForms('web', 'trainTo','train')" >
                                         <input type="hidden" formControlName="toTrainCode" name="toTrainCode" id="toTrainCode" >
                                         <p class="truncate" title="{{trainToText}}">
                                             <span  title="" class=" airPortName ">{{trainToText}}</span>
@@ -1128,7 +1106,7 @@
                                     
                                     
                                                          
-                               <div class="flight-to-data dropdown "  *ngIf="toTrainCityList" #menu  >
+                               <div class="flight-to-data dropdown to_cities_train_pop"  *ngIf="toTrainCityList" #menu  >
                                         <div class="mob-title">
                                         <h3>Select Station</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()"
@@ -1140,7 +1118,7 @@
                                         <div class="flight-from-data-search">
                                            <input type="hidden" [(ngModel)]="trainTo" (ngModelChange)="selectCheck(trainFrom,trainTo,'train')"  formControlName="trainTo" id="trainTo"  name="trainTo" autocomplete="off">
                                          
-                                         <input type="text" class="inputField trainTo trainTo-web trainToPop"  placeholder="To" name="trainTo"  (keyup)="searchAutoComplete($event,'train','trainTo' ,'web')" (keypress)="charInput($event)" autocomplete="off">
+                                         <input type="text" class="inputField trainTo trainTo-web "  placeholder="To" name="trainTo"  (keyup)="searchAutoComplete($event,'train','trainTo' ,'web')" (keypress)="charInput($event)" autocomplete="off">
                 
 
 

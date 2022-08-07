@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
     navSpeed: 1000,
     margin: 20,
     nav: true, 
-    navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+    navText:[ "<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
     responsive: {
       0: {
         items: 1.2
