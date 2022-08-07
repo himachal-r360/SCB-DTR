@@ -52,9 +52,9 @@
                                                         </a>
                                                         </div>
                                                         <div class="flight-from-data-search" >
-                                                        <input type="hidden"   [(ngModel)]="toCity"   (ngModelChange)="selectCheck(fromCity,toCity,'flights')" class="inputField toCity toCity-web flightToPop" formControlName="toCity" id="toCity" placeholder="To" name="toCity" (focus)="hideShowForms('web', 'toCity','flights')" (keyup)="searchAutoComplete($event,'flights','toCity' ,'web')" (keypress)="charInput($event)" autocomplete="off">
+                                                        <input type="hidden"   [(ngModel)]="toCity"   (ngModelChange)="selectCheck(fromCity,toCity,'flights')" class="inputField toCity toCity-web flightToPop" formControlName="toCity" id="toCity" placeholder="To" name="toCity" (focus)="hideShowForms('web', 'toCity','flights')" (keyup)="searchAutoComplete($event,'train','trainFrom' ,'web')" (keypress)="charInput($event)" autocomplete="off">
 
-                                                        <input type="text"  class="inputField toCity toCity-web flightToPop"  placeholder="To" name="toCity"  (keyup)="searchAutoComplete($event,'flights','toCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
+                                                        <input type="text"  class="inputField toCity toCity-web flightToPop"  placeholder="To" name="toCity"  (keyup)="searchAutoComplete($event,'train','trainFrom' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
 
                                                         </div>
                                                         <ul class="flight-from-data-ul">
@@ -1604,7 +1604,7 @@
                             <div class="row">
                                 <div class="col-6 pr-0">
                                     <div class="input_box bor-right-0 date_input_box">
-                                        <label (click)="openMliteDatePicker('flight','departure')">
+                                        <label (click)="openMliteDatePicker('flight','departure',0)">
                                         <span>Departure</span> 
                                         <div class="form-group flex_basis dep_m_cal">
                                         <input class="form-control control_input p-0 hidden" matInput
@@ -1651,11 +1651,21 @@
                                         </div>
 
                                         <!--[disabled]="!showFlightReturn"-->
-                                        <div class="col-6 ">
+                                        <div class="col-6 " >
                                         <div class="input_box  date_input_box">
-                                        <label>
+                                        <label *ngIf="!arrivalMlite">
                                         <a (click)="openMliteDatePicker('flight','arrival',1)" class="mt-25">Add return date</a>
                                         </label>
+                                        
+                                          <label (click)="openMliteDatePicker('flight','arrival',0)" *ngIf="arrivalMlite">
+                                        <span>Return</span>
+                                        <div class="form-group flex_basis dep_m_cal">
+                                        <input *ngIf="arrivalMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite">
+                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
+                                        </div>
+                                        </label>
+                                        
+                                        
                                         </div>
                                         </div>
                                         </div>
