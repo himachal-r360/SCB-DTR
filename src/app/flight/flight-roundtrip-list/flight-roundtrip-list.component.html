@@ -139,19 +139,32 @@
                                           <a href="javascript:void(0)" (click)="resetAirlineFlightsFilter()">Reset</a>
                                       </div>
                                       <div class="widget-content">
-                                          <ul class="category-list clearfix mt-2">
-                                              <li class="custom-check-box" *ngFor="let airlineItem of airlines ; let i = index " [ngClass]="{'active': airlineItem.active}">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox" >
-                                                        <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
-                                                    </label>
-                                                    <p>&#8377;{{airlineItem.price}}</p>
-                                                </div>
-                                            </li>
-                                          </ul>
-                                          <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
+                                          <ul class="category-list clearfix mt-2" >
+
+                                        <li class="custom-check-box" *ngFor="let airlineItem of airlines | slice:0:5; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                </label>
+                                                <p>&#8377;{{airlineItem.price}}</p>
+                                            </div>
+                                        </li>
+                                        <ng-container *ngIf="show_airline_more">
+                                        <li  class="custom-check-box" *ngFor="let airlineItem of airlines | slice:5; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                </label>
+                                                <p>&#8377;{{airlineItem.price}}</p>
+                                            </div>
+                                        </li>
+                                        </ng-container>
+                                    </ul>
+                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
                                       </div>
                                   </div>
                                   <hr>
@@ -180,17 +193,33 @@
                                       </div>
                                       <div class="widget-content">
                                           <ul class="category-list clearfix mt-2">
-                                            <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr ; let i = index " [ngClass]="{'active': layoverItem.active}">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                                                        <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description">{{layoverItem.arrivalAirport}}</span>
-                                                    </label>
-                                                    <p>&#8377;{{layoverItem.price}}</p>
-                                                </div>
-                                            </li>
+                                           <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr| slice:0:5 ; let i = index " [ngClass]="{'active': layoverItem.active}"
+                                                    (change)="flightLayoverFilterFlightData(layoverItem)">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                                <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active" >
+                                                                <span class="material-control-indicator"></span>
+                                                                <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                            </label>
+                                                            <p>₹{{layoverItem.price}}</p>
+                                                        </div>
+                                                    </li>
+                                                    <ng-container *ngIf="show_layover_more" >
+                                                                <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr| slice:5; let i = index " [ngClass]="{'active': layoverItem.active}"
+                                                    (change)="flightLayoverFilterFlightData(layoverItem)">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                                <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active" >
+                                                                <span class="material-control-indicator"></span>
+                                                                <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                            </label>
+                                                            <p>₹{{layoverItem.price}}</p>
+                                                        </div>
+                                                    </li>
+                                                    </ng-container>
+                                                    
                                           </ul>
+                                          <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                       </div>
                                   </div>
                               </div>
@@ -198,7 +227,7 @@
 
                       </div>
                       <div class="layout-right round-right">
-                          <div class="round-benefits" [hidden]="loader">
+                          <!--<div class="round-benefits" [hidden]="loader">
                               <div class="row align-items-center" >
                                   <div class="col-md-3" >
                                       <div class="benefits-card-select">
@@ -226,7 +255,7 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
+                          </div>-->
                           <div class="position-relative" [hidden]="loader">
                               <div class="flight-search-filters-counts text-center mb-20">
                                   <ul class="flight-counts">
@@ -291,10 +320,12 @@
                                         </div>
                                     <div class="flight-listing-area">
                                             <ng-container #itemsContainer></ng-container>
+                                              <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                                      </div>
                                     <ng-template #item let-item="item">
-                                      <div class="round-flight-listing round-click"  appToggleDetail *ngFor="let list of item; let i = index" id="flight_list_{{i}}">
-                                          <div class="round-flight-listing-content" *ngIf="list" >
+                                     <div *ngFor="let list of item; let i = index" id="flight_list_{{i}}">
+                                      <div class="round-flight-listing round-click"  appToggleDetail  *ngIf="list">
+                                          <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
@@ -420,6 +451,7 @@
                                                 </ng-container>
                                             </div>
                                         </div>
+                                        </div>
                                     </ng-template>
                                     <div id="endOfPage" (click)="loadData()"></div>
                                     </div>
@@ -473,10 +505,12 @@
                                       </div>
                                       <div class="flight-listing-area">
                                         <ng-container #itemsReturnContainer></ng-container>
+                                          <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">No flights found</div>
                                       </div>
                                       <ng-template #returnItem let-item="item">
-                                      <div class="round-flight-listing round-click" appToggleDetail *ngFor="let list of item; let i = index" id="return_flight_list_{{i}}">
-                                          <div class="round-flight-listing-content" *ngIf="list" >
+                                      <div *ngFor="let list of item; let i = index" id="return_flight_list_{{i}}">
+                                      <div class="round-flight-listing round-click" appToggleDetail *ngIf="list"  >
+                                          <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
@@ -514,7 +548,7 @@
                                           </div>
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
                                           
-                                          <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                          <ng-container  *ngFor="let item of list.priceSummary; let j = index">
                                               <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
                                                   <div class="round-options-list-top">
                                                       <div class="round-list-image-box">
@@ -602,6 +636,7 @@
                                                </ng-container>
                                           </div>
                                       </div>
+                                      </div>
                                     </ng-template>
                                     <div id="endOfReturnPage" (click)="loadReturnData()"></div>
                                   </div>
@@ -627,7 +662,7 @@
                       </div>
                       <div class="mob-listing-header-center">
                           <h6>{{fromCityName}} - {{toCityName}}</h6>
-                          <p>Wed, {{departureDate | date:'dd MMM' }}  | {{totalPassenger}} Travellers |
+                          <p>{{departureDate | date:'dd MMM' }}  | {{totalPassenger}} Travellers |
                             <span *ngIf="flightClassVal == 'B'">Business</span>
                         <span *ngIf="flightClassVal == 'E'">Economy</span>
                         <span *ngIf="flightClassVal == 'F'">First</span>
@@ -684,8 +719,10 @@
                                   <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{fromCityName}} To {{toCityName}}</h6>
                                 </div>
                                 <ng-container #itemsContainer></ng-container>
+                                 <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                               <ng-template #item let-item="item">
-                              <div class="mob-list-items" appToggleDetail *ngFor="let list of item; let i = index" id="MobileOnward_{{i}}">
+                               <div  *ngFor="let list of item; let i = index">
+                              <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileOnward_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -724,7 +761,7 @@
                                                     <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
                                                 </div>
                                                 <div class="mob-more-flight">
-                                                  <a  href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</a>
+                                                  <a  href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more</a>
 
                                                 </div>
                                             </div>
@@ -736,7 +773,7 @@
                                   </div>
                                   <div class="mob-items-book-list flight-from-hide dropdown not-close" >
                                       <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
-                                          <div class="mob-book-list-top">
+                                          <div class="mob-book-list-top" *ngIf="item.splrtFareFlight==false">
                                               <div class="mob-booking-image">
                                                   <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
                                               </div>
@@ -749,7 +786,7 @@
                                           </div>
                                           <div class="mob-book-list-bottom">
                                               <div class="mob-extra">
-                                                  <ul>
+                                                  <!--<ul>
                                                       <li>
                                                           <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
                                                       </li>
@@ -759,7 +796,7 @@
                                                       <li>
                                                           <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
                                                       </li>
-                                                  </ul>
+                                                  </ul>-->
                                               </div>
                                               <div class="mob-details">
                                                   <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
@@ -1072,6 +1109,7 @@
                                     </div>
                                 </div>
                               </div>
+                              </div>
                             </ng-template>
                             <div id="endOfPage" (click)="loadData()"></div>
                           </div>
@@ -1096,8 +1134,10 @@
                                   <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt="">  {{toCityName}} To {{fromCityName}}</h6>
                                 </div>
                                 <ng-container #itemsReturnContainer></ng-container>
+                                 <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">No flights found</div>
                               <ng-template #returnItem let-item="item">
-                              <div class="mob-list-items" appToggleDetail *ngFor="let list of item; let i = index" id="MobileReturn_{{i}}">
+                              <div *ngFor="let list of item; let i = index" >
+                              <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileReturn_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -1136,7 +1176,7 @@
                                                     <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
                                                 </div>
                                                 <div class="mob-more-flight">
-                                                  <a  href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</a>
+                                                  <a  href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more</a>
 
                                                 </div>
                                             </div>
@@ -1148,7 +1188,7 @@
                                   </div>
                                   <div class="mob-items-book-list flight-from-hide dropdown not-close">
                                       <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
-                                          <div class="mob-book-list-top">
+                                          <div class="mob-book-list-top" *ngIf="item.splrtFareFlight==false">
                                               <div class="mob-booking-image">
                                                   <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
                                               </div>
@@ -1161,7 +1201,7 @@
                                           </div>
                                           <div class="mob-book-list-bottom">
                                               <div class="mob-extra">
-                                                  <ul>
+                                                  <!--<ul>
                                                       <li>
                                                           <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
                                                       </li>
@@ -1171,7 +1211,7 @@
                                                       <li>
                                                           <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
                                                       </li>
-                                                  </ul>
+                                                  </ul>-->
                                               </div>
                                               <div class="mob-details">
                                                   <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
@@ -1483,6 +1523,7 @@
                                         </div>
                                     </div>
                                 </div>
+                              </div>
                               </div>
                             </ng-template>
                             <div id="endOfReturnPage" (click)="loadReturnData()"></div>
@@ -1913,8 +1954,7 @@
                                             Flight Timings
                                         </button>
                                     </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                       >
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"   >
                                         <div class="accordion-body">
                                             <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
                                             <div class="flighttiming-content flight-departing">
@@ -2033,7 +2073,7 @@
                                                 </ul>
 
                                                 <div class="d-flex justify-content-between mt-2">
-                                                     <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a>
+                                                     <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
                                                     <a href="javascript:void(0)" class="widget-content-more"  (click)="resetAirlineFlightsFilter()">Reset</a>
                                                 </div>
                                             </div>
@@ -2107,7 +2147,7 @@
                                                 </ul>
 
                                                 <div class="d-flex justify-content-between mt-2">
-                                                 <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
+                                                 <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                                     <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
                                                     <a  class="widget-content-more" href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
                                                 </div>

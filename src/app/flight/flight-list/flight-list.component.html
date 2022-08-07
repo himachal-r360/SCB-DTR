@@ -104,7 +104,7 @@
                                         </li>
                                         </ng-container>
                                     </ul>
-                                    <!-- <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a> -->
+                                  
                                 </div>
                             </div>
                             <hr>
@@ -190,7 +190,7 @@
                                         </li>
                                         </ng-container>
                                     </ul>
-                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a>
+                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
                                 </div>
                             </div>
                             <hr>
@@ -246,10 +246,8 @@
                                             </div>
                                         </li>
                                         </ng-container>
-
-                                         <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
-
                                     </ul>
+                                      <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                 </div>
                             </div>
                             <hr>
@@ -293,22 +291,22 @@
                                     <p *ngIf="flightList">{{flightList.length}} flights found</p>
                                 </div>
                             </div>
-                            <div class="listing-warning-area">
+                            <!--<div class="listing-warning-area">
                                 <div class="listing-warning-left">
                                     <p>
-                                        Search results for <img src="./assets/images/flights/2.png" alt=""> <img src="./assets/images/flights/4.png" alt="">
+                                        Search results for <img src="{{cdnUrl}}/images/flights/2.png" alt=""> <img src="{{cdnUrl}}/images/flights/4.png" alt="">
                                         not displayed due to no response within 8 seconds. <br> However, if you’re prepared to wait longer please click refresh.
                                     </p>
                                 </div>
                                 <div class="listing-warning-right">
                                     <a href="">
-                                        <img src="./assets/images/icons/reload.png" alt="">
+                                        <img src="{{cdnUrl}}/images/icons/reload.png" alt="">
                                     </a>
                                     <a href="">
-                                        <img src="./assets/images/icons/close.png" alt="">
+                                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                     </a>
                                 </div>
-                            </div>
+                            </div>-->
                            </div>
                         <div class="tabletitle-area" [hidden]="loader">
                             <div class="row">
@@ -369,7 +367,7 @@
                         <div class="flight-listing-area">
                            <ng-container #itemsContainer></ng-container>
                         </div>
-                         <div class="text-center" *ngIf="flightList.length < 1">No flights found</div>
+                         <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                          <ng-template #item let-item="item">
                            <div  *ngFor="let list of item; let i = index" >
                             <div class="flight-listing"  *ngIf="list && list.flights.length > 0" id="flight_list_{{list.flightKey}}">
@@ -907,6 +905,7 @@
                       </div>
 
                   </div>
+                  <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                 <ng-template #item let-item="item">
                 <div  *ngFor="let list of item; let i = index" >
               <div class="mob-list-area" *ngIf="list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
@@ -1544,7 +1543,7 @@
                                                       </ul>
 
                                                       <div class="d-flex justify-content-between mt-2">
-                                                           <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a>
+                                                           <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
                                                           <a href="javascript:void(0)" class="widget-content-more"  (click)="resetAirlineFlightsFilter()">Reset</a>
                                                       </div>
                                                   </div>
@@ -1619,7 +1618,7 @@
                                                       </ul>
 
                                                       <div class="d-flex justify-content-between mt-2">
-                                                       <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
+                                                       <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                                           <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
                                                           <a  class="widget-content-more" href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
                                                       </div>

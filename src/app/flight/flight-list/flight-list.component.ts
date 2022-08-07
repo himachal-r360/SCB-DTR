@@ -983,7 +983,7 @@ ngOnInit(): void {
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
-      console.log(this.flightList);
+     // console.log(this.flightList);
       this.flightListFullData =   res.response.onwardFlights;
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
@@ -992,7 +992,7 @@ ngOnInit(): void {
        // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
-      console.log(this.flightList,"this.flightList");
+     // console.log(this.flightList,"this.flightList");
       this.getAirlinelist();
       this.popularFilterFlightData();
 

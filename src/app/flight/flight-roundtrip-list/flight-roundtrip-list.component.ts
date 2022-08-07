@@ -23,7 +23,10 @@ declare var $: any;
 export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDestroy {
   cdnUrl: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
-
+  showMoreAirline = false;
+  showLessAirline = true;
+  showLessLayover = true;
+  showMoreLayover = false;
   flightList: any = [];
   ReturnflightList: any = [];
   flightIcons: any;
@@ -250,7 +253,15 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     }
   }
 
+  show_airline_more:number=0;
+  showmoreAirline() {
+   this.show_airline_more=1;
+  }
 
+    show_layover_more:number=0;
+  showmoreLayover() {
+   this.show_layover_more=1;
+  }
 
 
 
@@ -905,7 +916,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     // Return timing flight
     timingFilterReturnFlights(returnFlightList: any) {
       this.ReturnflightList = returnFlightList;
-      console.log(this.ReturnflightList , "return");
+      //console.log(this.ReturnflightList , "return");
       let updatedflightList: any = [];
       let isfilterMorningDepartures: any = false;
       let isfilterFlightTiming = false;
@@ -925,14 +936,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           isfilterMorningDepartures = true;
         }
       })
-      console.log(this.flight_return_Timingsitems , "this.flight_return_Timingsitems");
+      //console.log(this.flight_return_Timingsitems , "this.flight_return_Timingsitems");
 
       let isTimingFilterItems = this.flight_return_Timingsitems.filter((item: any) => {
         if (item.active == true) {
           return item;
         }
       })
-      console.log(isTimingFilterItems , "isTimingFilterItems");
+      //console.log(isTimingFilterItems , "isTimingFilterItems");
 
       if (isTimingFilterItems.length > 0) {
         isfilterFlightTiming = true;
@@ -941,9 +952,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
         var filteredTimingArr: any[] = [];
         if (returnFlightList.length > 0) {
-          console.log(returnFlightList , "returnFlightList");
-          console.log(date2);
-          console.log(date3);
+          //console.log(returnFlightList , "returnFlightList");
+          //console.log(date2);
+          //console.log(date3);
 
           returnFlightList.filter((d: any) => {
             let singleFlightTiming = [];

@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FlightService } from '../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
@@ -45,7 +45,7 @@ export const MY_DATE_FORMATS = {
 })
 
 
-export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FlightSearchComponent implements OnInit,  OnDestroy {
   @ViewChild('toCityInput') toCityInput!: ElementRef;
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
@@ -93,31 +93,7 @@ export class FlightSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   windowItem = window;
   navItemActive:any;
   isShowPartner = false;
-
-  constructor(
-    public _styleManager: StyleManagerService,
-      public router: Router,
-      private _fb: FormBuilder,
-      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal
-
-    ) {
-      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-      window.onresize = (e) =>
-      {
-          //ngZone.run will help to run change detection
-          this.ngZone.run(() => {
-            this.isMobile = window.innerWidth < 991 ?  true : false;
-          });
-      }
-      setTimeout(() => {
-        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
-        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
-        this._styleManager.setScript('custom', `assets/js/custom.js`);
-     }, 10);
-
-    }
-sameCity
+  sameCity;
 
   flightData: any = this._fb.group({
     flightfrom: ['',[Validators.required]],
@@ -141,10 +117,36 @@ sameCity
   }, {
     validators: MustMatch('flightfrom', 'flightto')
 });
+  constructor(
+    public _styleManager: StyleManagerService,
+    public route: ActivatedRoute,
+      public router: Router,
+      private _fb: FormBuilder,
+      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal
+
+    ) {
+      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+      window.onresize = (e) =>
+      {
+          //ngZone.run will help to run change detection
+          this.ngZone.run(() => {
+            this.isMobile = window.innerWidth < 991 ?  true : false;
+          });
+      }
+      setTimeout(() => {
+        this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
+        this._styleManager.setStyle('daterangepicker', `assets/css/daterangepicker.css`);
+        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+     }, 10);
+
+    }
+
   public Error = (controlName: string, errorName: string) => {
     return this.flightData.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
+         this.route.url.subscribe(url =>{
 console.log(this.isViewPartner)
    this._flightService.showHeader(true);
    this.displayPartners = this.isViewPartner=="false" ? false : true;
@@ -155,12 +157,9 @@ console.log(this.isViewPartner)
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
     this.setSearchFilterData()
-
+   });
   }
-  ngAfterViewInit(): void {
 
-
-  }
 
   currentPeriodClicked(datePicker:any){
     let date = datePicker.target.value
