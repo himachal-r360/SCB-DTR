@@ -27,7 +27,6 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { CustomReuseStrategy } from './route-reuse-strategy';
-import { MulticityHomeComponent } from './home/multicity/multicity.component';
 import { ToastrModule } from 'ngx-toastr';
 
 export function appInitializerFn(appConfig: AppConfigService) {
@@ -41,8 +40,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   declarations: [
     AppComponent,
     SearchComponent,
-    AlertDialogComponent,
-    MulticityHomeComponent
+    AlertDialogComponent
 
   ],
   imports: [

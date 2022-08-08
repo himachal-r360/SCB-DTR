@@ -107,6 +107,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   airportsNameJson: any;
   airlinesNameJson:any;
   layOverFilterArr: any;
+  partnerFilterArr:any;
   queryFlightData: any;
   fromContryName: any;
   toContryName: any;
@@ -157,12 +158,13 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
     { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
   ]
+
   cdnUrl: any;
 
           @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
           @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
-        pageIndex: number = 1;
+        pageIndex: number = 26;
         ITEMS_RENDERED_AT_ONCE=25;
         nextIndex=0;
 
@@ -171,7 +173,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
              return false;
               }else{
              this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
-
+             
              if(this.nextIndex > this.flightList.length){
              this.nextIndex=this.flightList.length;
              }
@@ -213,12 +215,11 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
        this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
 
-               $(window).scroll(function(this) {
+      $(window).scroll(function(this) {
         if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-        $('#endOfPage').trigger('click');
+          $('#endOfPage').trigger('click');
         }
-        });
-  
+      });
   }
 
 @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -228,35 +229,39 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
        this.route.url.subscribe(url =>{
+        $(".modal").hide();
+        $('body').removeClass( "modal-open" );
+         $("body").removeAttr("style");
+        $(".modal-backdrop").hide();
+        this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)
-    this.getAirpotsList();
-    this.getAirlinesList();
+    this.getAirpotsNameList();
+    this.getAirlinesIconList();
     this.flightSearch();
  });
+
   }
 
   getQueryParamData(paramObj: any) {
-
-        const params = this.route.snapshot.queryParams;
-        this.queryFlightData = params;
-        this.searchData = params;
-        this.fromContryName = this.queryFlightData.fromContry;
-        this.toContryName = this.queryFlightData.toContry;
-        this.fromCityName = this.queryFlightData.fromCity; 
-        this.toCityName = this.queryFlightData.toCity;
-        this.departureDate = new Date(this.queryFlightData.departure);
-        this.flightClassVal = this.queryFlightData.flightclass;
-        this.adultsVal = this.queryFlightData.adults;
-        this.childVal = this.queryFlightData.child;
-        this.infantsVal = this.queryFlightData.infants;
-        this.fromAirpotName = this.queryFlightData.fromAirportName;
-        this.toAirpotName = this.queryFlightData.toAirportName;
-        this.flightTimingfrom = this.queryFlightData.flightfrom
-        this.flightTimingto = this.queryFlightData.flightto
-        this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
-
+    const params = this.route.snapshot.queryParams;
+    this.queryFlightData = params;
+    this.searchData = params;
+    this.fromContryName = this.queryFlightData.fromContry;
+    this.toContryName = this.queryFlightData.toContry;
+    this.fromCityName = this.queryFlightData.fromCity;
+    this.toCityName = this.queryFlightData.toCity;
+    this.departureDate = new Date(this.queryFlightData.departure);
+    this.flightClassVal = this.queryFlightData.flightclass;
+    this.adultsVal = this.queryFlightData.adults;
+    this.childVal = this.queryFlightData.child;
+    this.infantsVal = this.queryFlightData.infants;
+    this.fromAirpotName = this.queryFlightData.fromAirportName;
+    this.toAirpotName = this.queryFlightData.toAirportName;
+    this.flightTimingfrom = this.queryFlightData.flightfrom
+    this.flightTimingto = this.queryFlightData.flightto
+    this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
   }
 
   flightDetailsTab(obj: any, value: string, indx: number) {
@@ -273,21 +278,21 @@ ngOnInit(): void {
   }
 
     // get airline list
-  getAirlinesList() {
+  getAirlinesIconList() {
     this._flightService.getFlightIcon().subscribe((res: any) => {
       this.airlinesNameJson = res;
 
     })
   }
 
-
   // get airport list
-  getAirpotsList() {
+  getAirpotsNameList() {
     this._flightService.getAirportName().subscribe((res: any) => {
       this.airportsNameJson = res;
 
     })
   }
+
   show_airline_more:number=0;
   showmoreAirline() {
    this.show_airline_more=1;
@@ -370,9 +375,15 @@ ngOnInit(): void {
 
   flightAirlineFilterFlightData(airlineItem: any) {
     airlineItem.active = !airlineItem.active;
-    if(!this.isMobile)
-    {
-    this.popularFilterFlightData();
+    if (!this.isMobile) {
+      this.popularFilterFlightData();
+    }
+  }
+
+  flightPartnerFilterFlightData(partnerItem: any) {
+    partnerItem.active = !partnerItem.active;
+    if (!this.isMobile) {
+      this.popularFilterFlightData();
     }
   }
   flightLayoverFilterFlightData(layoverItem: any) {
@@ -407,6 +418,10 @@ ngOnInit(): void {
     this.airlines.filter((item: any) => { item.active = false; return item; })
     this.popularFilterFlightData();
   }
+  resetPartnerFlightsFilter() {
+    this.partnerFilterArr.filter((item: any) => { item.active = false; return item; })
+    this.popularFilterFlightData();
+  }
   resetStopOverFilter() {
     this.minStopOver = 0;
     this.maxStopOver = 24;
@@ -424,6 +439,7 @@ ngOnInit(): void {
     this.resetAirlineFlightsFilter()
     this.resetStopOverFilter();
     this.resetLayOverFilter();
+    this.resetPartnerFlightsFilter();
   }
   /* Reset function end*/
 
@@ -438,7 +454,6 @@ ngOnInit(): void {
 
   //It is used for searching flights with left side filters.
   popularFilterFlightData() {
-
     let updatedflightList: any = [];
 
     let flightListWithOutFilter = this.flightListWithOutFilter;
@@ -452,18 +467,18 @@ ngOnInit(): void {
 
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-
+    
     //Popular Filter Search Data
     updatedflightList = this.popularFilterFlights(this.flightList);
-
+    
     //Timing Filter Data
     updatedflightList = this.timingFilterFlights(updatedflightList);
-
+    
     //Flight Stops Filter
     updatedflightList = this.stopsFilterFlights(updatedflightList);
-
+    
     this.flightList = updatedflightList;
-
+    
     //it is used for getting values of count.
     this.RefundableFaresCount = 0;
     this.nonStopCount = 0;
@@ -540,10 +555,10 @@ ngOnInit(): void {
 
       })
     }
-
+    
     // Airlines Filter
-    this.flightList = this.airlineFilterFlights(this.flightList);
-
+    // this.flightList = this.airlineFilterFlights(this.flightList);
+    
     //StopOverFilter
     if (this.flightList.length > 0) {
       var start = this.minStopOver;
@@ -562,7 +577,7 @@ ngOnInit(): void {
       });
       this.flightList = filteredStopOver;
     }
-
+    
     //PriceFilter
     if (this.flightList.length > 0) {
       var min_price = this.minPrice;
@@ -577,13 +592,18 @@ ngOnInit(): void {
       });
       this.flightList = filteredPrice;
     }
-
+    
     //Airline Filter
     this.flightList = this.airlineFilterFlights(this.flightList);
+
+    //Partner Filter
+    this.flightList = this.partnerFilterFlights(this.flightList);
 
     // Layover Filter Flights
     this.flightList = this.layoverFilterFlights(this.flightList);
 
+
+    
      this.container.clear();
      this.intialData();
 
@@ -654,6 +674,7 @@ ngOnInit(): void {
       current_year = current_date.getFullYear(),
       current_mnth = current_date.getMonth(),
       current_day = current_date.getDate();
+   // console.log(current_date,"current_date");
 
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
@@ -677,21 +698,24 @@ ngOnInit(): void {
     //Flight Timing Filter
     if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
       var filteredTimingArr: any[] = [];
+      
       if (flightList.length > 0) {
+        
         flightList.filter((d: any) => {
           let singleFlightTiming = [];
+        //  console.log(d.flights,"d.flights");
           singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
             if (indx == 0) {
-              if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
+              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "6_12") { return item; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "12_18") { return item; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "18_0") { return item; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
                 return e;
               }
             }
@@ -700,12 +724,15 @@ ngOnInit(): void {
             filteredTimingArr.push(d);
           }
         });
+
       }
       updatedflightList = filteredTimingArr;
+      
     }
     else {
       updatedflightList = flightList;
     }
+    
     return updatedflightList;
   }
   //stops Filter Flights
@@ -779,12 +806,8 @@ ngOnInit(): void {
             filteredAirlines.push(e);
           }
         });
-       // if (filteredAirlines.length > 0) {
-          flightList = filteredAirlines;
-       // }
+        flightList = filteredAirlines;
       }
-
-
 
       //Get AirLines Count
       if (this.airlines.length > 0) {
@@ -802,6 +825,38 @@ ngOnInit(): void {
     }
     return flightList;
   }
+
+
+  //partner filter
+  partnerFilterFlights(flightList: any){
+    if (flightList.length > 0) {
+      let partnerArr: any = [];
+      partnerArr = this.partnerFilterArr.filter((item: any) => {
+        if (item.active == true) {
+          return item;
+        }
+      })
+
+      var filteredAirlines: any[] = [];
+      if (partnerArr.length > 0) {
+        flightList.forEach((e: any) => {
+          var flights = [];
+          e.priceSummary.filter((d: any) => {
+            if (partnerArr.map(function (x: any) { return x.partnerName; }).indexOf(d.partnerName) > -1) {
+              flights.push(d);
+            }
+          })
+          if (flights.length > 0) {
+            e.priceSummary=flights;
+            filteredAirlines.push(e);
+          }
+        });
+        flightList = filteredAirlines;
+      }
+    }
+    return flightList;
+  }
+
   //layover airport filter
   layoverFilterFlights(flightList: any) {
 
@@ -835,12 +890,15 @@ ngOnInit(): void {
 
   getAirlinelist() {
     let airlineNameArr = [];
+    let airlinePartnerArr = [];
     let layOverArr = [];
+    
     for (let j = 0; j < this.flightList.length; j++) {
       let singleFlightList = [];
       singleFlightList = this.flightList[j].flights;
       let priceSummaryList = this.flightList[j].priceSummary;
       let priceSummary;
+   
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
@@ -854,12 +912,13 @@ ngOnInit(): void {
                 "price": priceSummaryList[0].totalFare,
                 "active": false
               };
+
               layOverArr.push(layOverFilterObj);
             }
           }
         }
         for (let p = 0; p < priceSummaryList.length; p++) {
-          priceSummary = priceSummaryList[p].totalFare
+          priceSummary = priceSummaryList[p].totalFare;
           if (airlineNameArr.filter((d: any) => { if (d.airlineName == airlineName) { return d; } }).length < 1) {
             if (airlineNameArr.filter((d: any) => { if (d.priceSummary) { return d; } }).length < 1) {
               let airlineNameObj = {
@@ -871,12 +930,22 @@ ngOnInit(): void {
               airlineNameArr.push(airlineNameObj);
             }
           }
+          
+          let partnerName = priceSummaryList[p].partnerName;
+          if (airlinePartnerArr.filter((d: any) => { if (d.partnerName == partnerName) { return d; } }).length < 1) {
+              let partnerObj = {
+                "partnerName": partnerName,
+                "active": false
+              };
+              airlinePartnerArr.push(partnerObj);
+          }
         }
       }
     }
     this.airlines = airlineNameArr;
+    this.partnerFilterArr = airlinePartnerArr;
     this.layOverFilterArr = layOverArr;
-
+ 
   }
 
   searchNonStop(item: any) {
@@ -904,7 +973,6 @@ ngOnInit(): void {
 
  flightFromVal:any;
   flightSearch() {
-
     this.loader = true;
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
@@ -915,13 +983,16 @@ ngOnInit(): void {
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
+     // console.log(this.flightList);
       this.flightListFullData =   res.response.onwardFlights;
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
-        this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-        this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+       this.GetMinAndMaxPriceForFilter();
+       // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+       // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
+     // console.log(this.flightList,"this.flightList");
       this.getAirlinelist();
       this.popularFilterFlightData();
 
@@ -935,7 +1006,7 @@ ngOnInit(): void {
 
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare)     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })
