@@ -1906,6 +1906,32 @@ new_fare: number = 0;
        }
        }else{
        /**International**/
+              if(partner=='Yatra'){
+              if(res.response.flight_details.fare.O){
+                if(res.response.flight_details.fare.O.ADT){
+                baseFare+=Number(res.response.flight_details.fare.O.ADT.bf * res.response.flight_details.fare.O.ADT.qt );
+                totalFare+=Number(res.response.flight_details.fare.O.ADT.tf * res.response.flight_details.fare.O.ADT.qt );
+                totalFareOnward+=Number(res.response.flight_details.fare.O.ADT.tf * res.response.flight_details.fare.O.ADT.qt ) ;
+                this.AdtFare+=Number(res.response.flight_details.fare.O.ADT.tf * res.response.flight_details.fare.O.ADT.qt );
+                }
+                if(res.response.flight_details.fare.O.CHD){
+                baseFare+=Number(res.response.flight_details.fare.O.CHD.bf * res.response.flight_details.fare.O.CHD.qt );
+                totalFare+=Number(res.response.flight_details.fare.O.CHD.tf * res.response.flight_details.fare.O.CHD.qt );
+                 totalFareOnward+=Number(res.response.flight_details.fare.O.CHD.tf * res.response.flight_details.fare.O.CHD.qt );
+                this.ChildFare+=Number(res.response.flight_details.fare.O.CHD.tf * res.response.flight_details.fare.O.CHD.qt );
+                }
+
+                if(res.response.flight_details.fare.O.INF){
+                baseFare+=Number(res.response.flight_details.fare.O.INF.bf * res.response.flight_details.fare.O.INF.qt );
+                totalFare+=Number(res.response.flight_details.fare.O.INF.tf * res.response.flight_details.fare.O.INF.qt ) ;
+                totalFareOnward+=Number(res.response.flight_details.fare.O.INF.tf * res.response.flight_details.fare.O.INF.qt ) ;
+                this.InfantTotalFare+=Number(res.response.flight_details.fare.O.INF.tf * res.response.flight_details.fare.O.INF.qt ) ;
+                } 
+                }
+              
+              
+              }else{
+       
                 if(res.response.flight_details.fare){
                 if(res.response.flight_details.fare.ADT){
                 baseFare+=Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt );
@@ -1927,8 +1953,8 @@ new_fare: number = 0;
                 this.InfantTotalFare+=Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt ) +Number(res.response.flight_details.fare.INF.TX);
                 } 
                 }
-                
-                
+             }   
+                 
        if(res.response && res.response.flight_details.bg.length >0) 
        this.baggageInfoOnward = res.response.flight_details.bg;
        
@@ -2412,14 +2438,14 @@ new_fare: number = 0;
         },700) ;  
      
 
-        //  console.log(this.itineraryRequest);
+          console.log(this.itineraryRequest);
         var requestParamsEncrpt = {
         postData:this.EncrDecr.set(JSON.stringify(this.itineraryRequest)) 
         };
         this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
         
         this.itinararyResponse= JSON.parse(this.EncrDecr.get(response.result ));
-      // console.log(this.itinararyResponse);
+       console.log(this.itinararyResponse);
         
         //this.itinararyResponse=(response);
           if(this.itinararyResponse['response'] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']==200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"]==200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"]==200){

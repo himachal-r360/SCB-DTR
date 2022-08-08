@@ -43,11 +43,18 @@ export class ToggleDetailDirective{
             }
           }
          else{
-          this.elRef.nativeElement
-                .querySelector('.dropdown')
-                .classList.toggle('flight-from-hide')
+            this.elRef.nativeElement
+            .querySelector('.dropdown')
+            .classList.remove('flight-from-hide')
          }
-
+        }
+        else{
+          if(element.closest('.showless-close'))
+          {
+            this.elRef.nativeElement
+            .querySelector('.dropdown')
+            .classList.add('flight-from-hide')
+          }
         }
 
       }

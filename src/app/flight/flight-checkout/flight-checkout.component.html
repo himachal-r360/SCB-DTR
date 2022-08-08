@@ -4272,7 +4272,7 @@
                              <a href="javascript:void(0);" class="button-style w-100"  (click)="continueReviewBooking()"*ngIf="steps==4">Continue</a>
                         </div>
                     </div>
-                    <div *ngIf="steps==5" class="d-none d-lg-block d-xl-none">
+                    <div *ngIf="steps==5 && !isMobile" >
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalCollectibleAmount"
 [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken" 
   (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">

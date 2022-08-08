@@ -58,12 +58,93 @@ export class HomeComponent implements OnInit {
     },
     nav: false
   }
+  // $this = $(this),
+  // $items = $this.data("items") ? $this.data("items") : 1,
+  // $loop = $this.attr("data-loop") ? $this.data("loop") : true,
+  // $navdots = $this.data("nav-dots") ? $this.data("nav-dots") : false,
+  // $navarrow = $this.data("nav-arrow") ? $this.data("nav-arrow") : true,
+  // $autoplay = $this.attr("data-autoplay") ? $this.data("autoplay") : false,
+  // $autospeed = $this.attr("data-autospeed") ? $this.data("autospeed") : 5000,
+  // $smartspeed = $this.attr("data-smartspeed") ? $this.data("smartspeed") : 1000,
+  // $autohgt = $this.data("autoheight") ? $this.data("autoheight") : false,
+  // $space = $this.attr("data-space") ? $this.data("space") : 30,
+  // $animateOut = $this.attr("data-animateOut") ? $this.data("animateOut") : false;
+
+  DomasticFlightsOptions: OwlOptions = {
+    loop: true,
+    autoplay:false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 1000,
+    margin: 20,
+    nav: true, 
+    navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+    responsive: {
+      0: {
+        items: 1.2
+      },
+      400: {
+        items: 1.2 
+      },
+      740: {
+        items: 2.2
+      },
+      940: {
+        items: 4
+      }
+    }    
+  }
+
+  existingOffer: OwlOptions = {
+    loop: true,
+    autoplay:false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 1000,
+    margin: 20,
+    nav: true, 
+    navText:[ "<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+    responsive: {
+      0: {
+        items: 1.2
+      },
+      400: {
+        items: 1.2 
+      },
+      740: {
+        items: 2.2
+      },
+      940: {
+        items: 3
+      }
+    }    
+  }
+
 
   trendingRoutes = [
     {id:1 , fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
     {id:2, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
     {id:3, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
     {id:4, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+  ]
+
+  popularDomasticRoutes = [
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/2.png'},
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/3.png'},
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/4.png'},
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/5.png'},
+  ]
+
+  exitingOffers = [
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/2.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/3.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
   ]
 
 
@@ -82,7 +163,6 @@ export class HomeComponent implements OnInit {
           });
       }
 
-
     }
 
 
@@ -95,13 +175,7 @@ export class HomeComponent implements OnInit {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-
   }
-
-  owlCarousel() {
-    
-  }
-
 
   ConvertObjToQueryString(obj:any)
   {
@@ -115,6 +189,8 @@ export class HomeComponent implements OnInit {
   }
 
   continueSearch(param:any){
+  
+    if(param.fromContry=='IN' && param.toContry=='IN' ){
     if(param.arrival == "" || param.arrival == undefined || param.arrival == null ){
       let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
@@ -123,7 +199,14 @@ export class HomeComponent implements OnInit {
       let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
     }
+    }else{
+      let     url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
+          this.router.navigateByUrl(url);
+
+       }
+
   }
+
 
 
 }
