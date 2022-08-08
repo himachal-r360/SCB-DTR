@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, Output, forwardRef, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit,OnChanges,SimpleChanges, Inject, Input, Output, forwardRef, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor  } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Options } from 'ng5-slider';
@@ -19,7 +19,7 @@ import { AppConfigService } from '../app-config.service';
   templateUrl: './paywithpoints.component.html',
   styleUrls: ['./paywithpoints.component.scss'],
 })
-export class PaywithpointsComponent implements OnInit  {
+export class PaywithpointsComponent implements OnInit,OnChanges  {
 
   REWARD_CUSTOMERID: string;
   REWARD_GUESTLOGIN: boolean=true;
@@ -32,21 +32,41 @@ export class PaywithpointsComponent implements OnInit  {
   IsDcemiEligibleFlag: boolean=false;
   cdnUrl: any;
   @Input() serviceId;
-  value: number = 100;
+  @Input() payTotalFare;
+  value: number = 0;
   savedCards: any = [];
   customerInfo:any[];
+  cards:any[];
   options: Options = {
     floor: 0,
-    ceil: 200,
+    ceil: 100,
     showSelectionBar: true,
   };
  serviceSettings:any;
+ selectedCardDetails:any;
+ ctype:any;
+ response1:any;
+ pointData:any;
+ errorMsg0:any;
+ points_available:any;
+ points_percentage:any;
+ CcCharges:any;
+ intitialconversionptoc:any;
+ hasCards:boolean=false;
+ // amount:number;
+ orderamount:number;
+ redemptionMsg:any;
+ redemption_value:any;
   constructor(private dialog: MatDialog, public rest: RestapiService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.getCustomerCards();
+    
+    
   }
 
   ngOnInit() {
+     
            setTimeout(() => {
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
@@ -60,9 +80,9 @@ export class PaywithpointsComponent implements OnInit  {
                   this.REWARD_MOBILE = '';
                   this.REWARD_FIRSTNAME = '';
                   this.REWARD_LASTNAME = '';
-                  this.REWARD_CUSTOMERNAME ='';
+                  this.REWARD_CUSTOMERNAME ='';
               }else{
-                 if(customerInfo["org_session"]==1){
+                 if(customerInfo !==undefined && customerInfo["org_session"]==1){
                     setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
                     var customerInfo = this.sg['customerInfo'];
                     this.REWARD_GUESTLOGIN = customerInfo['guestLogin'];
@@ -71,73 +91,73 @@ export class PaywithpointsComponent implements OnInit  {
                   //  console.log(this.REWARD_GUESTLOGIN);
 
                     if(customerInfo["guestLogin"]==true){
-                            this.REWARD_CUSTOMERID = customerInfo["id"];
-                            this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-                            this.REWARD_EMAILID = customerInfo["email"];
-                            this.REWARD_MOBILE = customerInfo["mobile"];
+                            this.REWARD_CUSTOMERID = customerInfo["id"];
+                            this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+                            this.REWARD_EMAILID = customerInfo["email"];
+                            this.REWARD_MOBILE = customerInfo["mobile"];
                             this.IsDcemiEligibleFlag=true;
                     }else{
-                            this.REWARD_CUSTOMERID = customerInfo["id"];
-                            this.REWARD_EMAILID = customerInfo["email"];
-                            this.REWARD_MOBILE = customerInfo["mobile"];
-                            this.REWARD_FIRSTNAME = customerInfo["firstname"];
-                            this.REWARD_LASTNAME = customerInfo["lastname"];
-                            this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
-                            this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+                            this.REWARD_CUSTOMERID = customerInfo["id"];
+                            this.REWARD_EMAILID = customerInfo["email"];
+                            this.REWARD_MOBILE = customerInfo["mobile"];
+                            this.REWARD_FIRSTNAME = customerInfo["firstname"];
+                            this.REWARD_LASTNAME = customerInfo["lastname"];
+                            this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
+                            this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
     
-                            const urlSearchParams = new HttpParams()
-                                .set('customerid', customerInfo["id"])
-                                .set('programName', this.sg['domainName']);
-                            let body: string = urlSearchParams.toString();
-            
-                            //Check Dc Emi Eligible
-                              if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].DEBIT_EMI==1){
-                              var checkEligibleParams = {
-                                  'client_token': 'HDFC243',
-                                  'mobile': customerInfo["mobile"],
-                              };
-                              var postCheckEligibleParam = {
-                                  postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
-                              };
-                              this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
-                                  if (results.result) {
-                                      let result = JSON.parse(this.EncrDecr.get(results.result));
-                                      this.IsDcemiEligibleFlag = result.eligible;
-                                  }
-                              });
-                            }
-                            var getaddresspostparam = {
-                              "customerId": this.REWARD_CUSTOMERID,
-                              "programName": this.sg['domainName']
-                            };
-                            //this.getCustomerAddress(getaddresspostparam);
-                            if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].DEBIT_EMI==1){
-                              //Check Dc Emi Eligible
-                              var checkEligibleParams = {'client_token': 'HDFC243',
-                              'mobile':customerInfo["mobile"],
-                              };
-                              var postCheckEligibleParam = {
-                              postData:this.EncrDecr.set(JSON.stringify(checkEligibleParams))
-                              };
-                  
-                              this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
-                                if(results.result ){
-                                  let result=JSON.parse(this.EncrDecr.get(results.result ));
-                                  this.IsDcemiEligibleFlag=result.eligible;
-                                }
-                              });
-                            }
-                            var saveCardPostParam = {
-                              "customerid": customerInfo["id"],
-                              "programName": this.sg['domainName']
-                            };
-                            var saveCardParam = {
-                              postData: this.EncrDecr.set(JSON.stringify(saveCardPostParam))
-                            };
-                            this.rest.getSaveCards(saveCardParam).subscribe(data => {
-                              this.savedCards = data;
-                            });
-                      }
+                            const urlSearchParams = new HttpParams()
+                                .set('customerid', customerInfo["id"])
+                                .set('programName', this.sg['domainName']);
+                            let body: string = urlSearchParams.toString();
+            
+                            //Check Dc Emi Eligible
+                              if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].DEBIT_EMI==1){
+                              var checkEligibleParams = {
+                                  'client_token': 'HDFC243',
+                                  'mobile': customerInfo["mobile"],
+                              };
+                              var postCheckEligibleParam = {
+                                  postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
+                              };
+                              this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
+                                  if (results.result) {
+                                      let result = JSON.parse(this.EncrDecr.get(results.result));
+                                      this.IsDcemiEligibleFlag = result.eligible;
+                                  }
+                              });
+                            }
+                            var getaddresspostparam = {
+                              "customerId": this.REWARD_CUSTOMERID,
+                              "programName": this.sg['domainName']
+                            };
+                            //this.getCustomerAddress(getaddresspostparam);
+                            if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].DEBIT_EMI==1){
+                              //Check Dc Emi Eligible
+                              var checkEligibleParams = {'client_token': 'HDFC243',
+                              'mobile':customerInfo["mobile"],
+                              };
+                              var postCheckEligibleParam = {
+                              postData:this.EncrDecr.set(JSON.stringify(checkEligibleParams))
+                              };
+                  
+                              this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
+                                if(results.result ){
+                                  let result=JSON.parse(this.EncrDecr.get(results.result ));
+                                  this.IsDcemiEligibleFlag=result.eligible;
+                                }
+                              });
+                            }
+                            var saveCardPostParam = {
+                              "customerid": customerInfo["id"],
+                              "programName": this.sg['domainName']
+                            };
+                            var saveCardParam = {
+                              postData: this.EncrDecr.set(JSON.stringify(saveCardPostParam))
+                            };
+                            this.rest.getSaveCards(saveCardParam).subscribe(data => {
+                              this.savedCards = data;
+                            });
+                      }
                   }else {
                       setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
                       this.REWARD_CUSTOMERID = '';
@@ -145,7 +165,7 @@ export class PaywithpointsComponent implements OnInit  {
                       this.REWARD_MOBILE = '';
                       this.REWARD_FIRSTNAME = '';
                       this.REWARD_LASTNAME = '';
-                      this.REWARD_CUSTOMERNAME ='';
+                      this.REWARD_CUSTOMERNAME ='';
                       this.XSRFTOKEN = 'NULL';
                       if (environment.localInstance == 0) {
                         this.document.location.href = environment.MAIN_SITE_URL+this.sg['domainPath'] + 'check-login';
@@ -158,7 +178,7 @@ export class PaywithpointsComponent implements OnInit  {
         this.REWARD_MOBILE = '';
        this.REWARD_FIRSTNAME = '';
                       this.REWARD_LASTNAME = '';
-                      this.REWARD_CUSTOMERNAME ='';
+                      this.REWARD_CUSTOMERNAME ='';
         this.XSRFTOKEN = 'NULL';
             if (environment.localInstance == 0)
                 this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
@@ -167,6 +187,106 @@ export class PaywithpointsComponent implements OnInit  {
     }, 50);
 
   }
+    ngOnChanges(changes: SimpleChanges): void {
+    this.orderamount= Number(this.payTotalFare);
+    this.orderamount = this.orderamount - this.value;
+    this.setSlider();
+  }
+    getCustomerCards(){
+        var cards = [];
+        if(this.sg['customerInfo'] && this.sg['customerInfo']['customercards'].length>0){
+          this.hasCards = true;
+          this.cards = this.sg['customerInfo']['customercards'];
+          this.selectedCardDetails = this.cards[0];
+          this.checkAvailablePointsforSavedCard();
+          
+          
+        }
+
+  }
+  setSlider(){
+    // update slider dynamically
+           
+      
+             if(Object.keys(this.pointData['condition']).length!=0){
+          var name=this.pointData['condition']['name'];
+          var condition_type=this.pointData['condition'].condition_type; 
+          var redemption_type=this.pointData['condition'].redemption_type;
+          this.redemption_value=this.pointData['condition'].redemption_value;
+          var min_value=this.pointData['condition'].min_value;
+          var max_value=this.pointData['condition'].max_value;
+          var monthly_trn_limit=this.pointData['condition'].monthly_trn_limit;
+          var monthly_trn_value=this.pointData['condition'].monthly_trn_value;
+          var total_count=this.pointData['condition'].total_count;
+          var total_transvalue=this.pointData['condition'].total_transvalue;
+
+         
+      }
+       let opts: Options = {
+                  floor: 0,
+                  ceil: (Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100),
+            };
+            this.value = 0;
+             this.options = opts;
+  }
+  checkAvailablePointsforSavedCard(){ 
+    var request = {
+      "takecard":this.selectedCardDetails.id,
+      "type":"available_points",
+      "bin":"",
+      "clientToken":this.sg['domainName'].toUpperCase(),
+      "ctype":this.ctype,
+      "modal":"DIGITAL",
+      "noopt": 1,
+      // "customer_id":this.customerInfo["customerid"],
+      "programName":this.sg['domainName'],
+      "_token":this.XSRFTOKEN
+    };
+    var passData = {
+      postData: this.EncrDecr.set(JSON.stringify(request))
+    };
+    this.rest.getcustomercardpoints(passData).subscribe(response => {
+      this.response1=response;
+      if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
+      {
+        this.errorMsg0=""
+        var customername=this.response1['customername'];
+        this.points_available=this.response1['points_available'];
+
+        this.points_percentage=this.response1['points_percentage'];
+        var client_type=this.response1['client_type'];
+        var card_type=this.response1['card_type'];
+        this.CcCharges = this.response1['CcCharges'];
+        this.pointData = this.response1;
+        console.log(this.pointData);
+        this.setSlider();
+        // this.intitialconversionptoc();
+      }else{
+        this.errorMsg0="Something went wrong";
+        if(this.response1['message']!=undefined)
+        {
+          this.errorMsg0=this.response1['message'];
+        }
+      }
+    }), (err: HttpErrorResponse) => {
+      var message = 'Something went wrong';
+      alert(message);
+      this.errorMsg0="";
+      
+    };
+  }
+  selectedCard(id){
+    for(let i=0;i<this.cards.length;i++){
+      if(id == this.cards[i].id){
+        this.selectedCardDetails = this.cards[i];
+          this.checkAvailablePointsforSavedCard();
+          break;
+      }
+    }
+
+  }
+ 
+
   calldialog(event) {
     var message=event;
     const dialogRef = this.dialog.open(ConfirmationDialog, {
@@ -234,8 +354,8 @@ export class ConfirmationDialog {
         this.popup=data.popup;
         this.customerInfo = data.customerInfo;
         this.serviceId=data.serviceId;
-        this.REWARD_EMAILID = this.customerInfo["email"];
-        this.REWARD_MOBILE = this.customerInfo["mobile"];
+        this.REWARD_EMAILID = this.customerInfo["email"];
+        this.REWARD_MOBILE = this.customerInfo["mobile"];
         this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
         this.customermobile = this.REWARD_MOBILE;
        // console.log(this.customerInfo);
@@ -265,6 +385,7 @@ export class ConfirmationDialog {
         this.Form3 = this.formBuilder.group({
           otp:['', [Validators.required,Validators.pattern("^[0-9]*$")]]
         });
+        
 
   }
   ngOnInit() {
@@ -352,6 +473,7 @@ export class ConfirmationDialog {
         };
     }
   }
+
   pointsToRs(val){
     this.infiniaPts=val;
     this.conv_amount=Math.round(Number(this.points_percentage)*Number(this.infiniaPts));

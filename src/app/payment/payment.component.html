@@ -1,5 +1,5 @@
-<div class="  payment_cnt" *ngIf="showRewardsBox">
-<ng-container >
+<div class="  " *ngIf="showRewardsBox">
+<!-- <ng-container >
         <div class="payPoints-section ">
             <h5 class="point-title"><b>Pay using Points</b></h5>
             <div class="row">
@@ -34,6 +34,10 @@
                 </div>
             </div>
         </div>
+    </ng-container> -->
+
+    <ng-container>
+        <app-paywithpoints *ngIf="pointsPG" [serviceId]="serviceId" [payTotalFare]="payTotalFare"></app-paywithpoints>  
     </ng-container>
 
     <ng-container *ngIf="showProceedPayment">
@@ -91,6 +95,7 @@
         </ng-template>
 
     </ng-container>
+
   </div>
    <!-- New Payment Code pahse 3 -->
 
@@ -98,10 +103,10 @@
         <div class="card_partner_info">
             <div class="amount_sec">
                 <div>
-                    <p class="title">Paying</p>
+                    <p class="title">Paying </p>
                 </div>
                 <div class="text-end">
-                    <p class="title_sub">Amount</p>
+                    <p class="title_sub">Amount </p>
                     <p class="title_value">₹{{payTotalFare| number:'1.2-2'}} 
                         <!-- <a href="">Show Breakup</a> -->
                     </p>
