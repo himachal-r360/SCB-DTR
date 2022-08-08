@@ -89,8 +89,9 @@ export class FlightService {
 
 
   getFlightInfo(param: any) {
+   console.log(param);
     if (LOCALJSON == 'true') {
-      return this.http.get('assets/data/flightInfo.json');
+      return this.http.get('assets/data/flightInfo-int.json');
     } else {
 
       return this.http.post(this.flightInfo, param, { headers: this.header })
