@@ -225,6 +225,8 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   private intialData() {
     for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+      if(this.flightList[n] != undefined)
+    {
       const context = {
         item: [this.flightList[n]],
       };
@@ -232,15 +234,20 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       this.container.createEmbeddedView(this.template, context);
     }
+    }
   }
   private intialReturnData() {
-    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
-    const returnContext = {
+    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE; n++) {
+    if(this.ReturnflightList[n] != undefined)
+    {
+      const returnContext = {
         item: [this.ReturnflightList[n]],
       };
       // console.log(returnContext , "return");
 
       this.returnContainer.createEmbeddedView(this.returnTemplate, returnContext);
+
+    }
 
     }
   }
@@ -693,8 +700,15 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       this.container.clear();
       this.returnContainer.clear();
-      this.intialData();
-      this.intialReturnData();
+      if(this.flightList.length > 0)
+      {
+        this.intialData();
+      }
+      if(this.ReturnflightList.length > 0)
+      {
+        this.intialReturnData();
+      }
+
     }
 
 

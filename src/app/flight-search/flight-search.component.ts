@@ -267,7 +267,7 @@ console.log(this.isViewPartner)
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
-        
+
 
         this.flightData.get('flightclass').setValue(lastSearch.flightclass );
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
@@ -300,6 +300,9 @@ console.log(this.isViewPartner)
 
       //  this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
        this.departureDate = new Date(lastSearch.departure);
+
+      this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
+
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
         this.arrivalDate = new Date(lastSearch.arrival);
        }
@@ -307,7 +310,6 @@ console.log(this.isViewPartner)
       this.adultsVal = lastSearch.adults;
       this.childVal = lastSearch.child;
       this.infantsVal = lastSearch.infants;
-
       this.totalPassenger =parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
       if(lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != ""){
         this.navItemActive = "Round Trip"
@@ -357,7 +359,7 @@ console.log(this.isViewPartner)
     }
     else {
       this.sameCityValidation = true;
-      
+
     }
 
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
