@@ -328,7 +328,7 @@
                         <div class="flight-listing-area">
                            <ng-container #itemsContainer></ng-container>
                         </div>
-                         <div class="text-center" *ngIf="flightList.length < 1">No flights found</div>
+                         <div class="text-center" *ngIf="!loader &&  flightList.length < 1">No flights found</div>
                          <ng-template #item let-item="item">
                            <div  *ngFor="let list of item; let i = index" >
                             <div class="flight-listing"  *ngIf="list && list.onwardflights.length > 0" id="flight_list_{{list.flightKey}}">
@@ -981,6 +981,7 @@
                           </div>
                       </div>
                  </div>  
+                   <div class="text-center" *ngIf="!loader &&  flightList.length < 1">No flights found</div>
                 <ng-template #item let-item="item">
                 <div  *ngFor="let list of item; let i = index" >
               <div class="mob-list-area" *ngIf="list && list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
