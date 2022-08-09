@@ -711,6 +711,23 @@ defaultFlightOptions: any[];
     this.isShowPartner = false;
   }
 
+  FixedLengthDisplay(value:string)
+  {
+    if(this.isMobile)
+    {
+      if(value.length > 18)
+      {
+          var response = value.substring(0, 15)+"...";
+          return response;
+      }
+      else{
+        return value;
+      }
+    }
+    else{
+      return value;
+    }
+  }
 
 }
 export function MustMatch(controlName: any, matchingControlName: any) {

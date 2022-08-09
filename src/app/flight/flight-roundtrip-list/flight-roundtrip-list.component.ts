@@ -82,6 +82,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   isMobile:boolean= false
   math = Math;
   EMI_interest: number = 16;
+  EMIAvailableLimit: number = 3000;
   navItemActive:any;
   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
   options: Options = {
@@ -306,7 +307,7 @@ var couponParam = {
 postData:this.EncrDecr.set(JSON.stringify(urlParams))
 };
 
-this.rest.getCouponsByService(couponParam).subscribe(results => { 
+this.rest.getCouponsByService(couponParam).subscribe(results => {
    if(results.status=="success"){
    this.flightCoupons=results.data;
    }
@@ -1417,12 +1418,18 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
-  DisplayDetail()
+  DisplayDetail(flightKey:any,flights:any,item:any,event:any,type:string)
   {
-    if(this.isOnwardSelected == true || this.isReturnSelected == true)
-    {
+
+      if(type =='onward' && this.isOnwardSelected == false)
+      {
+      this.onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
+      }
+      if(type =='return' && this.isReturnSelected == false){
+        this.returnSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
+      }
       this.isDetailsShow = true;
-    }
+
   }
 
   changeFareRuleTab(event:any){
@@ -1555,4 +1562,5 @@ getLayoverHour(obj1: any, obj2: any) {
   }
   return dateHour;
 }
+
 }
