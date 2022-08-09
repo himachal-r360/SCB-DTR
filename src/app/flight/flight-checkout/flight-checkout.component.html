@@ -475,8 +475,8 @@
                             <div class="flight-extra-details">
                             
                         <div class="rules-flight" >
+                                <a href="javascript:void(0);"  (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails">
                                     <div class="rules-flight-items">
-                                     <a href="javascript:void(0);"  (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails">
                                         <div class="rules-flight-thumbe">
                                             <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0].airline}}.gif" alt="{{flightOnwardDetails[0].airline}}" class="flight-image mr-10">
                                         </div>
@@ -487,12 +487,12 @@
                                                 {{searchData.toCity}}
                                             </h6>
                                         </div>
-                                        </a>
                                     </div>
+                                </a>
                                     
                                     
-                                <div class="rules-flight-items" *ngIf="flightReturnDetails[0]">
-                                 <a href="javascript:void(0);"  (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails">
+                                <a href="javascript:void(0);"  (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails">
+                                    <div class="rules-flight-items" *ngIf="flightReturnDetails[0]">
                                         <div class="rules-flight-thumbe">
                                             <img src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0].airline}}.gif" alt="{{flightReturnDetails[0].airline}}" class="flight-image mr-10">
                                         </div>
@@ -503,8 +503,8 @@
                                                 {{searchData.fromCity}}
                                             </h6>
                                         </div>
-                                            </a>  
                                     </div>
+                                </a>  
                               
                                 </div>
                             
@@ -1216,78 +1216,75 @@
                                 <div class=" modal coupon_mlite_popup" id="addTraveller_mlite" tabindex="-1" aria-labelledby="addTraveller_mlite" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                                 <div class="modal-dialog">
                                 <div class="modal-content">
-                                <div class="add_new_traveler p-20" *ngIf="adultsArrayM.length>0 " >
+                                <div class="add_new_traveler p-20 pt-0" *ngIf="adultsArrayM.length>0 " >
                                 <div *ngIf="adultsArrayM.length>0">
                                 <!--Manaual Passenger Adult-->
                                 <ng-container  *ngFor="let traveller of adultsArrayM; index as i; trackBy: trackByTraveller;let last = last;" >
-                                <div class="modal-header pb-0">
-                                <h5 class="modal-title">Add New Adult</h5>
-                                <button type="button" class="btn-close"  (click)="removeMobileAdult(traveller,-1)"></button>
-                                </div>
-                                <div class="modal-body pt-0">
-                                <div>
-                                <div >
-                                <div class="row">
-                                <div class="col-12">
-                                <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Title</mat-label>
-                                <mat-select formControlName="adult_title{{traveller}}">
-                                <mat-option value=""> Select </mat-option>
-                                <mat-option value="Mr"> Mr </mat-option>
-                                <mat-option value="Mrs" >Mrs</mat-option>
-                                <mat-option value="Ms">Ms</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Please enter title</mat-error>
-                                </mat-form-field>
-                                </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add New Adult</h5>
+                                        <button type="button" class="btn-close"  (click)="removeMobileAdult(traveller,-1)"></button>
+                                    </div>
+                                    <div class="modal-body pt-0">
+                                    <div>
+                                    <div >
+                                    <div class="row">
+                                        <div class="col-12">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Title</mat-label>
+                                        <mat-select formControlName="adult_title{{traveller}}">
+                                        <mat-option value=""> Select </mat-option>
+                                        <mat-option value="Mr"> Mr </mat-option>
+                                        <mat-option value="Mrs" >Mrs</mat-option>
+                                        <mat-option value="Ms">Ms</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Please enter title</mat-error>
+                                        </mat-form-field>
+                                        </div>
 
-                                <div class="col-12">
-                                <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>First Name</mat-label>
-                                <input matInput placeholder="First Name"
-                                name="adult_first_name"  formControlName="adult_first_name{{traveller}}" >
-                                <mat-error *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">Please enter first name</mat-error>
-                                <mat-error *ngIf="passengerForm.hasError('pattern','adult_first_name'+traveller)">Please enter valid first name</mat-error>
-                                <mat-error *ngIf="passengerForm.hasError('minlength','adult_first_name'+traveller)">Please enter atleast 2 character</mat-error>
-                                <mat-error *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller)">Please enter maximum 26 character</mat-error>
-                                </mat-form-field>
+                                        <div class="col-12">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name"
+                                        name="adult_first_name"  formControlName="adult_first_name{{traveller}}" >
+                                        <mat-error *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">Please enter first name</mat-error>
+                                        <mat-error *ngIf="passengerForm.hasError('pattern','adult_first_name'+traveller)">Please enter valid first name</mat-error>
+                                        <mat-error *ngIf="passengerForm.hasError('minlength','adult_first_name'+traveller)">Please enter atleast 2 character</mat-error>
+                                        <mat-error *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller)">Please enter maximum 26 character</mat-error>
+                                        </mat-form-field>
 
-                                </div>
-                                <div class="col-xl-3 col-lg-3 col-md-6">
-                                <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Last Name</mat-label>
-                                <input matInput placeholder="Last Name"
-                                formControlName="adult_last_name{{traveller}}" >
-                                <mat-error *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">Please enter first name</mat-error>
-                                <mat-error *ngIf="passengerForm.hasError('pattern','adult_last_name'+traveller)">Please enter valid first name</mat-error>
-                                <mat-error *ngIf="passengerForm.hasError('minlength','adult_last_name'+traveller)">Please enter atleast 2 character</mat-error>
-                                <mat-error *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">Please enter maximum 26 character</mat-error>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 col-md-6">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name"
+                                        formControlName="adult_last_name{{traveller}}" >
+                                        <mat-error *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">Please enter first name</mat-error>
+                                        <mat-error *ngIf="passengerForm.hasError('pattern','adult_last_name'+traveller)">Please enter valid first name</mat-error>
+                                        <mat-error *ngIf="passengerForm.hasError('minlength','adult_last_name'+traveller)">Please enter atleast 2 character</mat-error>
+                                        <mat-error *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">Please enter maximum 26 character</mat-error>
 
-                                </mat-form-field>
-                                </div>
-                                <div class="col-12">
-                                <div class="form-group">
-                                <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Date Of Birth</mat-label>
-                                <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{traveller}}" 
-                                placeholder="Date Of Birth"
-                                name="dateOfBirth" >
+                                        </mat-form-field>
+                                        </div>
+                                        <div class="col-12">
+                                        <div class="form-group">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Date Of Birth</mat-label>
+                                        <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{traveller}}" 
+                                        placeholder="Date Of Birth"
+                                        name="dateOfBirth" >
 
-                                <mat-error *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please enter dob</mat-error>
-                                <mat-error *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">Adult age should be above 12 years.</mat-error>
-                                </mat-form-field>
+                                        <mat-error *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please enter dob</mat-error>
+                                        <mat-error *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">Adult age should be above 12 years.</mat-error>
+                                        </mat-form-field>
 
-                                </div>
-                                </div>
-                                
-                                
-                                
-                                
-                                <div> <button class="btn btn-primary"  (click)="validateMliteForm('adult',traveller)">Add</button> </div>
-                                </div>
-                                </div>
-                                </div>
-                                </div>
+                                        </div>
+                                        </div>
+                                    
+                                        <div> <button class="btn btn-primary w-100"  (click)="validateMliteForm('adult',traveller)">Add</button> </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
                                 </ng-container>
                                 </div>
                                 </div>
@@ -1300,9 +1297,11 @@
                                 <table class="table  traveller_table" >
                                     <thead>
                                         <tr>
-                                            <th scope="col"  class="col-6">Name</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Date of Birth</th>
                                             <th scope="col">Gender</th>
+                                            <th scope="col"></th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1311,14 +1310,14 @@
                                 <td>{{passengerForm.value['adult_title' + traveller]}} {{passengerForm.value['adult_first_name' + traveller]}} {{passengerForm.value['adult_last_name' + traveller]}}</td>
                                 <td>{{passengerForm.value['adult_dob' + traveller] | date:'dd-MM-YYYY'}}</td>
                                 <td>
-                                <div [ngSwitch]="passengerForm.value['adult_title' + traveller]">
-                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
-                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
-                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
-                                <ng-template ngSwitchDefault></ng-template>
-                                </div>
-                                <span ><button type="button" class="btn-close"  (click)="removeMobileAdult(traveller,-1)"></button></span>
+                                    <div [ngSwitch]="passengerForm.value['adult_title' + traveller]">
+                                        <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                        <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                        <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                        <ng-template ngSwitchDefault></ng-template>
+                                    </div>
                                 </td>
+                                <td> <span ><button type="button" class="btn-close"  (click)="removeMobileAdult(traveller,-1)"></button></span></td>
                                 </tr>
                                 </ng-container>
                                   </tbody>
@@ -3939,7 +3938,7 @@
                     </div>
                     <div class="booking-inner-box from-to-box">
                         <div class="">
-                                <div class="row">
+                                <div class="row gy-4">
                                     <div class="col-xl-6 col-lg-6 col-md-6">
                                         <p class="label_text">Email</p>
                                         <p class="label_value">{{contactDatails.email}}</p>
@@ -4376,7 +4375,7 @@
             <div class="footer-sticky-mlite">
                 <div>
                     <div class="apply_fare">
-                        <p *ngIf="steps<5" class="w-75"></p>
+                        <!-- <p *ngIf="steps<5" class="w-75"></p> -->
                         <p  *ngIf="steps==5"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
                         <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
                     </div>
