@@ -636,8 +636,7 @@
                         </div>
                       </div>
                     </div>
-                    <div id="BaggageDetails" class="flight-extra-content-o"
-                      [ngClass]="{'extra-active': !cancellationPolicyOnward  }">
+                    <div id="BaggageDetails" class="flight-extra-content-o hide"       [ngClass]="{'extra-active': !cancellationPolicyOnward  }">
 
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -677,7 +676,7 @@
 
                 <!--Return-->
 
-                <div id="returnFareDetails" class="flight-extra-content-return hidden">
+                <div id="returnFareDetails" class="flight-extra-content-return hide">
                   <ul class="list-unstyled flight-extra-tabs">
                     <li *ngIf="cancellationPolicyReturn">
                       <a href="javascript:void(0);" class="flight-extra-content-rr"
@@ -830,7 +829,7 @@
         <!--Steps 1 Ends-->
 
         <!--Steps 2 Starts-->
-        <div class="col-md-8" [ngClass]="{'showTab':steps==2 , 'hidden':steps !=2}">
+        <div class="col-md-8" [ngClass]="{'showTab':steps==2 , 'hide':steps !=2}">
           <form [formGroup]="passengerForm" name="passengerForm" ngxScrollToFirstInvalid>
             <div class="booking-process-content">
               <div class="booking-title-box">
@@ -874,7 +873,7 @@
                           </div>
 
                           <div>
-                            <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}">
+                            <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                               <ng-container
                                 *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0">
                                 <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}"
@@ -1056,7 +1055,7 @@
 
 
                             <div>
-                              <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}">
+                              <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                                 <ng-container
                                   *ngIf="passenger && passenger.age > 12 && saveAdultTravellerId[passenger.id] > 0">
                                   <input type="hidden" value="{{saveAdultTravellerId[passenger.id]}}"
@@ -1568,7 +1567,7 @@
                           </div>
 
                           <div>
-                            <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}">
+                            <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                               <ng-container *ngIf="passenger &&  saveChildTravellerId[passenger.id] > 0">
                                 <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}"
                                   id="passengerBoxId_{{passenger.id}}" />
@@ -1749,7 +1748,7 @@
 
 
                             <div>
-                              <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}">
+                              <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                                 <ng-container
                                   *ngIf="passenger && passenger.age > 12 && saveChildTravellerId[passenger.id] > 0">
                                   <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}"
@@ -2331,7 +2330,7 @@
                           </div>
 
                           <div>
-                            <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}">
+                            <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                               <ng-container *ngIf="passenger &&  saveInfantTravellerId[passenger.id] > 0">
                                 <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}"
                                   id="passengerBoxId_{{passenger.id}}" />
@@ -2512,7 +2511,7 @@
 
 
                             <div>
-                              <div class="mt-3 hidden" id="passengerBox_{{passenger.id}}">
+                              <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                                 <ng-container
                                   *ngIf="passenger && passenger.age > 12 && saveInfantTravellerId[passenger.id] > 0">
                                   <input type="hidden" value="{{saveInfantTravellerId[passenger.id]}}"

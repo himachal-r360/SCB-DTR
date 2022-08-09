@@ -452,8 +452,8 @@
                                     </div>
                                 </div>
 
-                              <div class="flight-info-box">
-                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                              <div class="flight-info-box" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
                                 </div>
                                 <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{list.flightKey}}" >
                                   <div class="flight-options-box" id="FareDetails_{{list.flightKey}}">
@@ -507,7 +507,11 @@
                                                   <a href="javascript:void(0);" class="button-style" (click)="bookingSummary(list.flights,item,list.flightKey)">Book</a>
                                                 </div>
                                             </div>
+                                            
                                         </div>
+                                        <div class="flight-info-box" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                </div>
                                         <div class="flight-info-box ">
                                           <ul class="extra-tabs-right-ul">
                                                 <!-- <li class="ms-0">
@@ -537,7 +541,6 @@
                                                     </div>
                                                 </li>-->
                                             </ul>
-                                            <!-- <a href="javascript:void(0);" class="flight-details-click">Flight Details <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1"  alt=""></a> -->
                                             <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}_{{j}}" (click)="HideShowCompareToFly(list.flightKey,'flight-details',j)" >Flight Details <i class="fa fa-angle-down ml-10"></i></a>
                                             <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}_{{j}}" (click)="hideFarebutton(list.flightKey,'flight-details',j)" >Flight Details <i class="fa fa-angle-up ml-10"></i></a>
                                         </div>
@@ -938,9 +941,10 @@
                                       <p>{{list.flights[list.flights.length-1].arrivalAirport}}</p>
                                   </div>
                               </div>
-                              <!--<div class="name-bottom-bottom">
-                                  <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
-                              </div>-->
+                                                       
+                                     <div class="name-bottom-bottom" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
+                                </div>
                           </div>
                       </div>
 
@@ -962,6 +966,10 @@
                                       </a>
                                   </div>
                               </div>
+                                                  
+                             <div class="name-bottom-bottom" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                </div>
                               <div class="mob-book-list-bottom">
                                   <div class="mob-extra">
                                       <ul>

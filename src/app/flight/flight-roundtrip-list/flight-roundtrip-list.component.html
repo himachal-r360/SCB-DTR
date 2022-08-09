@@ -337,7 +337,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image" >
-                                                                 <img  *ngIf="flightList" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                                                 <img  class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                                   </div>
                                                   <div class="round-content-time" *ngIf="flightList">
                                                       <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -361,9 +361,7 @@
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="round-flight-info-box" *ngIf="flightList">
-                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
-                                          </div>
+                                
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
                                            <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                               <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
@@ -523,7 +521,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image">
-                                                                <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                                                <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                                   </div>
                                                   <div class="round-content-time">
                                                       <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -548,9 +546,7 @@
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="round-flight-info-box">
-                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs. 500 discount</p>
-                                          </div>
+                                     
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
                                           
                                           <ng-container  *ngFor="let item of list.priceSummary; let j = index">
@@ -734,7 +730,7 @@
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
-                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                              <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                               <div class="mob-list-flight-name">
                                                   <h6>{{list.flights[0].airlineName}}</h6>
                                               </div>
@@ -763,10 +759,10 @@
                                           <div class="mob-items-book-list-items">
                                             <div class="mob-book-list-top">
                                                 <div class="mob-booking-image">
-                                                    <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" alt="" />
+                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="20">
                                                 </div>
                                                 <div class="mob-booking-price">
-                                                    <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
+                                                    <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
                                                 </div>
                                                 <div class="mob-more-flight">
                                                   <a  href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more</a>
@@ -774,16 +770,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                          <div class="name-bottom-bottom">
+                                        <!--  <div class="name-bottom-bottom">
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
-                                          </div>
+                                          </div>-->
                                       </div>
                                   </div>
                                   <div class="mob-items-book-list flight-from-hide dropdown not-close" >
-                                      <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
-                                          <div class="mob-book-list-top" *ngIf="item.splrtFareFlight==false">
+                                  <ng-container  *ngFor="let item of list.priceSummary; let j = index">
+                                      <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
+                                          <div class="mob-book-list-top" >
                                               <div class="mob-booking-image">
-                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
+                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20"/>
                                               </div>
                                               <div class="mob-booking-price">
                                                   <h6>₹ {{item.totalFare |number}}</h6>
@@ -792,7 +789,7 @@
                                                   <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
                                               </div>
                                           </div>
-                                          <div class="mob-book-list-bottom">
+                                          <div class="mob-book-list-bottom"  >
                                               <div class="mob-extra">
                                                   <!--<ul>
                                                       <li>
@@ -810,10 +807,12 @@
                                                   <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
                                               </div>
                                           </div>
+                                       
                                       </div>
-                                      <div class="mob-items-book-Showless showless-close">
+                                      <div class="mob-items-book-Showless showless-close" *ngIf="item.splrtFareFlight==false">
                                         <a href="javascript:void(0);">Show less</a>
                                     </div>
+                                      </ng-container> 
                                   </div>
                                   <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
                                     <div class="mob-fd-box">
@@ -1149,7 +1148,7 @@
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
-                                              <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                              <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
                                               <div class="mob-list-flight-name">
                                                   <h6>{{list.flights[0].airlineName}}</h6>
                                               </div>
@@ -1178,10 +1177,10 @@
                                           <div class="mob-items-book-list-items">
                                             <div class="mob-book-list-top">
                                                 <div class="mob-booking-image">
-                                                    <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" alt="" />
+                                                     <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="20">
                                                 </div>
                                                 <div class="mob-booking-price">
-                                                    <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
+                                                    <h6>₹ {{list.priceSummary[0].totalFare|number}}</h6>
                                                 </div>
                                                 <div class="mob-more-flight">
                                                   <a  href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more</a>
@@ -1189,16 +1188,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                          <div class="name-bottom-bottom">
+                                         <!-- <div class="name-bottom-bottom">
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
-                                          </div>
+                                          </div>-->
                                       </div>
                                   </div>
                                   <div class="mob-items-book-list flight-from-hide dropdown not-close">
-                                      <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
-                                          <div class="mob-book-list-top" *ngIf="item.splrtFareFlight==false">
+                                   <ng-container  *ngFor="let item of list.priceSummary; let j = index">
+                                      <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
+                                          <div class="mob-book-list-top" >
                                               <div class="mob-booking-image">
-                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="" />
+                                                  <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
                                               </div>
                                               <div class="mob-booking-price">
                                                   <h6>₹{{item.totalFare |number}}</h6>
@@ -1207,7 +1207,7 @@
                                                   <button class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
                                               </div>
                                           </div>
-                                          <div class="mob-book-list-bottom">
+                                          <div class="mob-book-list-bottom" >
                                               <div class="mob-extra">
                                                   <!--<ul>
                                                       <li>
@@ -1226,9 +1226,10 @@
                                               </div>
                                           </div>
                                       </div>
-                                      <div class="mob-items-book-Showless showless-close">
+                                      <div class="mob-items-book-Showless showless-close" *ngIf="item.splrtFareFlight==false">
                                         <a href="javascript:void(0);">Show less</a>
-                                    </div>
+                                     </div>
+                                    </ng-container>
                                   </div>
                                   <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
                                     <div class="mob-fd-box">
@@ -2782,7 +2783,7 @@
                                 <span>Round-Trip</span>
                               </div>
                               <div class="fr-faresummary">
-                                <img src="{{cdnUrl}}/images/flight_partners/small/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="">
+                                <img src="{{cdnUrl}}/images/flight_partners/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="">
                               </div>
                           </div>
                           <div class="fr-flight-fixed-bottom">

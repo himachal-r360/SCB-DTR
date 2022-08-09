@@ -310,22 +310,21 @@ ngOnInit(): void {
   showmoreLayover() {
    this.show_layover_more=1;
   }
+flightCoupons=[];
+getCoupons(){
+const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+var couponParam = {
+postData:this.EncrDecr.set(JSON.stringify(urlParams))
+};
 
-	getCoupons(){
-		var couponMinValCheckArr = [];
-			const urlParams = {'client_token': 'HDFC243','service_id':'1'};
-			var couponParam = {
-			postData:this.EncrDecr.set(JSON.stringify(urlParams))
-			};
+this.rest.getCouponsByService(couponParam).subscribe(results => { 
+   if(results.status=="success"){
+   this.flightCoupons=results.data;
+   }
 
-			this.rest.getCouponsByService(couponParam).subscribe(results => { 
-	
-	
-		});
-		
-	}
+});
 
-
+}
 
 
   convertDate(str: any) {
@@ -997,6 +996,7 @@ ngOnInit(): void {
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.loader = false;
+     // console.log(this.flightCoupons);
       this.DocKey = res.response.docKey;
       // this.flightList = res.response.onwardFlights;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
