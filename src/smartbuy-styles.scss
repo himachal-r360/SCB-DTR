@@ -21,13 +21,38 @@ ul,
 li,
 a {
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    // margin-bottom: 0.5rem;
     line-height: 1.2;
 }
 
 
 
 /**Smartbuy Common***/
+/* Bottom to UP Animation */
+@keyframes slideInUp{0%{-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
+
+.bottom_mlite_popup{
+    animation-name: slideInUp;
+    animation-duration: 200ms;
+    animation-timing-function: ease-in-out;
+    .modal-dialog{
+        margin: 0;
+        display:flex;
+        align-items: flex-end;
+        min-height: calc(100% - 0px);
+         .modal-body{
+         padding:0px;
+          }
+        .modal-header{
+            .modal-title{
+                font-family: 'opensans-medium';
+                font-size: 18px;
+            }
+        }
+        
+    }
+}
+
  .cdk-global-overlay-wrapper, .cdk-overlay-container {
      z-index: 99999 !important;
   }
@@ -177,10 +202,10 @@ a {
 	 border-radius: 15px 15px 0px 0px;
 	 padding: 15px 20px 0px !important;
 }
- .mobileDiscalimer-container .container {
-	/* height: 90vh;
-	*/
-}
+//  .mobileDiscalimer-container .container {
+// 	/* height: 90vh;
+// 	*/
+// }
  .mobileDiscalimer-container .container .modal-body {
 	 max-height: 55vh;
 	 overflow-y: auto;
@@ -221,9 +246,9 @@ a {
 
 /**Smartbuy Common***/
 /** For you ***/
-#sync1{
+// #sync1{
 
-}
+// }
 #sync2 .item {
         background-color: transparent;
         border: none;
@@ -280,9 +305,9 @@ a {
     }
 
     #for-you-entertainment {
-        .owl-item {
-            //position: relative;
-        }
+        // .owl-item {
+        //     //position: relative;
+        // }
         .owl-prev {
             background: transparent;
             position: absolute;
@@ -832,6 +857,50 @@ a {
     .contact-form .mat-form-field .mat-form-field-wrapper{
         padding-bottom:2px !important;
     }
+
+    .bottom_mlite_popup{
+        .modal-body{
+            height: 55vh;
+            overflow-y: auto;
+            .mat-calendar-header{
+                .mat-calendar-controls{
+                    margin: 1% calc(4.7142857143% - 16px) !important;
+                }
+            }
+            .mat-calendar-table-header th{
+                font-size: 14px !important;
+                color: $black-color !important;
+                font-weight: bold !important;
+            }
+            .mat-calendar-content{
+                .mat-calendar-body-cell-content{
+                    border-radius: 10px !important;
+                }
+            }
+            .mat-calendar-body-cell-content.mat-focus-indicator{
+                font-family: $medium !important;
+            }
+        }
+        .modal-footer{
+            display: block;
+            box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.15);
+            .select_city{
+                .date_input_box{
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    label{
+                        a{
+                            font-size: 14px;
+                            color: $primary-color;
+                        }
+                    }
+                }
+            }
+        }
+    
+    }
 }
 
 
@@ -841,7 +910,10 @@ a {
 }
 
 .flight-image{
-border-radius:4px;
+    border-radius: 4px;
+    height: 30px;
+    width: 30px;
+    vertical-align: top;
 }
 
 
@@ -1114,7 +1186,7 @@ border-radius:4px;
 
 .travel-select-trip {
     position: relative;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 
@@ -1180,11 +1252,11 @@ ul.travel-select-trip-ul {
 .select-root-left {
     width: 52%;
     border-right: 1px solid #d3d3d3;
-    padding: 5px 0;
+    padding: 0px 0;
 }
 .select-root-right {
     width: 48%;
-    padding: 5px 0px 5px 30px;
+    padding: 0 0 0 30px;
 }
 
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
@@ -1192,11 +1264,11 @@ ul.travel-select-trip-ul {
 }
 
 .select-root-icons {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     position: absolute;
     left: 0;
-    right: 0;
+    right: -3px;
     margin: auto;
     border: 1px solid #d3d3d3;
     border-radius: 50px;
@@ -1208,8 +1280,9 @@ ul.travel-select-trip-ul {
     cursor: pointer;
 }
 .select-root-icons img{
-    width: 20px;
+    width: 9px;
 }
+
 
 
 .root-date {
@@ -1221,10 +1294,12 @@ ul.travel-select-trip-ul {
 .searchbn {
     background: $primary-color;
     color: #fff;
-    padding: 28px 40px;
+    padding: 24px 40px;
     border-radius: 5px;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 27px;
+    width: 100%;
+    text-align: center;
 }
 .searchbn:hover {
     background: #005cac;
@@ -1241,7 +1316,7 @@ ul.travel-select-trip-ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0px 5px 0px;
+    padding: 0;
 }
 
 
@@ -2016,7 +2091,7 @@ hr:not([size]) {
 
 .flight-radio {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     align-items: center;
 }
 .flight-radio-time h6 {
@@ -2110,7 +2185,7 @@ hr:not([size]) {
 }
 
 .flight-info-box {
-    padding: 12px 15px;
+    padding: 5px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2445,9 +2520,22 @@ input::-webkit-inner-spin-button {
     border-radius: 9.16584px;
     width: 100%;
     max-width: 20rem;
-    top: 85px;
+    top: 75px;
     overflow: hidden;
 }
+
+.hotel-from-data, .hotel-to-data {
+    z-index: 9;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0px 0px 8.02011px rgb(0 0 0 / 13%);
+    border-radius: 9.16584px;
+    width: 100%;
+    max-width: 38rem;
+    top: 75px;
+    overflow: hidden;
+}
+
 .flight-from-data-search {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -2459,7 +2547,7 @@ input::-webkit-inner-spin-button {
     color: rgba(0, 0, 0, 0.5);
 }
 .flight-from-data-ul {
-    padding: 8px 10px;
+    padding: 8px 10px !important;
     max-height: 160px;
     overflow: auto;
 }
@@ -2483,7 +2571,23 @@ input::-webkit-inner-spin-button {
     background-repeat: no-repeat;
     background-position: 0 4px;
 }
-
+.hotel-from-name {
+   
+}
+.hotel-from-name h6 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+.hotel-from-name p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 11px;
+    color: rgba(0, 0, 0, 0.5);
+}
 
 .flight-from-name h6 {
     font-style: normal;
@@ -2626,7 +2730,7 @@ button:focus, button:active {
     border-radius: 6px;
     color: $primary-color;
     min-width: 110px;
-    padding: 10px 10px;
+    padding: 8px 10px;
 }
 
 .flight-city-box{
@@ -2855,8 +2959,8 @@ button:focus, button:active {
     background: rgba(29, 134, 255, 0.07);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 6px;
-    display: flex;
-    min-width: 158px;
+    display: inline-flex;
+    min-width: auto;
 }
 .flight-counts-list {
     padding: 8px;
@@ -2871,8 +2975,9 @@ button:focus, button:active {
 }
 
 .flight-counts-list p span {
-    width: auto;
+    width: 17px;
     height: 17px;
+    // padding: 2px;
     background: #fff;
     display: block;
     border-radius: 50px;
@@ -3449,6 +3554,8 @@ table.table-bordered.table-content {
     margin-top: 10px !important;
     color: #BBBBBB;
     display: inline-block;
+    text-align: center;
+    padding: 0 2px;
 }
 .details-steps-ul a {
     position: relative;
@@ -3548,7 +3655,7 @@ table.table-bordered.table-content {
     background: #f3f8ff;
     border: 1px solid rgba(29, 135, 255, 0.2);
     border-radius: 10px;
-    padding: 20px 15px;
+    padding: 15px 15px;
 }
 
 .Continuesearch-items-text {
@@ -3639,7 +3746,7 @@ table.table-bordered.table-content {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    top: -29px;
+    top: -31px;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -3657,7 +3764,7 @@ table.table-bordered.table-content {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    bottom: -29px;
+    bottom: -31px;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -5759,8 +5866,9 @@ button.accordion-button .xlsheats{
 				span {
 					background: #fff;
 					width: auto;
-					min-width: 17px;
-					height: 17px;
+					min-width: 18px;
+					height: 18px;
+          font-size: 9;
 					color: #000;
 					display: inline-block;
 					border-radius: 30px;
@@ -5891,11 +5999,8 @@ button.accordion-button .xlsheats{
 .mob-items-book-list {
 	position: relative;
 	border-top: 1px solid rgb(0 0 0 / 10%);
-	.mob-items-book-list-items {
-		&:nth-last-child(1) {
-			border: none;
-		}
-	}
+    background: #E8F3FF;
+    // display:none;
 }
 .mob-book-list-bottom {
 	display: flex;
@@ -5943,6 +6048,7 @@ button.accordion-button .xlsheats{
 	display: flex;
 	justify-content: space-between;
 	padding: 10px;
+  align-items: center;
 }
 .mob-booking {
 	a {
@@ -5969,7 +6075,8 @@ button.accordion-button .xlsheats{
   }
 }
 .mob-booking-image {
-	width: 55px;
+  width: 26px;
+  margin-right: 3px;
 }
 .mob-sf-area {
 	position: fixed;
@@ -5979,6 +6086,7 @@ button.accordion-button .xlsheats{
 	background: #404040;
 	height: 100%;
 	display: none;
+    padding: 0 !important;
 }
 .mob-fd-area {
 	position: fixed;
@@ -6227,7 +6335,7 @@ button.accordion-button .xlsheats{
 }
 
 .round-flight-info-box {
-    padding: 12px 15px;
+    padding: 5px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6603,8 +6711,6 @@ button.accordion-button .xlsheats{
 .fr-flight-fixed-top {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .fr-flight-fixed-top a{
   font-style: normal;
@@ -6613,12 +6719,12 @@ button.accordion-button .xlsheats{
   line-height: 16px;
   color: #1D86FF;
 }
-.fr-flight-fixed-bottom{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 10px;
-}
+// .fr-flight-fixed-bottom{
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // padding-top: 10px;
+// }
 .fr-flight-fixed-bottom h6{
   font-style: normal;
   font-weight: 700;
@@ -6658,7 +6764,7 @@ button.accordion-button .xlsheats{
     font-style: normal;
     font-weight: 600;
     font-size: 13px;
-    line-height: 19px; 
+    line-height: 19px;
     text-align: center;
     color: #000000;
     opacity: 0.5;
@@ -6676,14 +6782,14 @@ button.accordion-button .xlsheats{
     margin: 0 5px;
     display: inline-block;
 }
-.popular-routes-list-ul a.active { 
+.popular-routes-list-ul a.active {
     color: #1D86FF;
-    background: rgb(29 134 255 / 7%); 
+    background: rgb(29 134 255 / 7%);
 
 }
 
-.popular-flight-slider, 
-.Popular-flight-items, 
+.popular-flight-slider,
+.Popular-flight-items,
 .Popular-flight-content{
     position: relative;
 }
@@ -6701,7 +6807,7 @@ button.accordion-button .xlsheats{
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
-    line-height: 19px; 
+    line-height: 19px;
     text-align: center;
     color: #FFFFFF;
 }
@@ -6724,16 +6830,16 @@ button.accordion-button .xlsheats{
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
-    line-height: 19px; 
+    line-height: 19px;
     text-align: center;
 }
 
-.popular-flight-slider .owl-nav {
+.popular-flight-slider .owl-nav, .carousel-Offers-flight .owl-nav {
     position: absolute !important;
     right: 0px !important;
     top: -54px !important;
 }
-.popular-flight-slider .owl-prev, 
+.popular-flight-slider .owl-prev,
 .popular-flight-slider .owl-next ,
 .Exciting-Offers-slider .owl-prev,
 .Exciting-Offers-slider .owl-next{
@@ -6750,7 +6856,9 @@ button.accordion-button .xlsheats{
 .popular-flight-slider .owl-nav.disabled {
     display: block !important;
 }
-.popular-flight-slider  .owl-theme .owl-nav [class*=owl-] {
+.popular-flight-slider  .owl-theme .owl-nav [class*=owl-],
+.popular-Offers-slider  .owl-theme .owl-nav [class*=owl-],
+.Exciting-Offers-slider .owl-theme .owl-nav [class*=owl-]{
     color: rgb(0 0 0 / 50%) !important;
 }
 
@@ -6764,14 +6872,14 @@ button.accordion-button .xlsheats{
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
-    line-height: normal; 
+    line-height: normal;
     color: #FFFFFF;
 }
 .Exciting-Offers-slider-content h6{
     font-style: normal;
     font-weight: 600;
     font-size: 19px;
-    line-height: 38px; 
+    line-height: 38px;
     color: #FFFFFF;
 }
 .Exciting-Offers-slider-content .Offers-time {
@@ -6806,7 +6914,7 @@ button.accordion-button .xlsheats{
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
-    line-height: 16px; 
+    line-height: 16px;
     color: rgba(0, 0, 0, 0.7);
 }
 .OTA-Partner-list {
@@ -6820,8 +6928,8 @@ button.accordion-button .xlsheats{
 .OTA-Partner-list img {
     margin-left: 7px;
 }
-.OTA-Partner-list:hover{ 
-    box-shadow: 0px 6px 5px rgba(0, 0, 0, 0.06); 
+.OTA-Partner-list:hover{
+    box-shadow: 0px 6px 5px rgba(0, 0, 0, 0.06);
 }
 
 
@@ -6861,7 +6969,7 @@ button.accordion-button .xlsheats{
 }
 .mob-ota-bg {
     margin-top: 50px;
-    height: 62%;
+    // height: 62%;
     background: #fff;
     border-radius: 20px 20px 0 0;
     bottom: 0;
@@ -6882,7 +6990,7 @@ button.accordion-button .xlsheats{
 .mob-OTA-Partner-list img {
     margin-left: 15px;
 }
-/* end Preferred-OTA-Partner */ 
+/* end Preferred-OTA-Partner */
 
 
 /* start listing warning area */
@@ -6903,7 +7011,7 @@ button.accordion-button .xlsheats{
     font-size: 12px;
     line-height: 20px;
     color: #000000;
-    background: url(../../assets/images/icons/wait.png) no-repeat;
+   /* background: url(../../assets/images/icons/wait.png) no-repeat;*/
     background-position: 15px center;
 }
 .listing-warning-left p img {
@@ -6936,9 +7044,9 @@ button.accordion-button .xlsheats{
     color: rgba(0, 0, 0, 0.7);
     margin-bottom: 10px;
 }
-.mob-oat-ul{ 
+.mob-oat-ul{
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
 .mob-oat-list {
     background: #FFFFFF;
@@ -6967,11 +7075,11 @@ button.accordion-button .xlsheats{
     position: fixed;
     top: 0;
     z-index: 10;
-    width: 100%; 
+    width: 100%;
     height: 100%;
     display: none;
 }
-.mob-oat-boxs {  
+.mob-oat-boxs {
     background: #fff;
     border-radius: 20px 20px 0 0;
     position: absolute;
@@ -6980,7 +7088,7 @@ button.accordion-button .xlsheats{
     box-shadow: 0px -5px 27px rgba(0, 0, 0, 0.25);
 }
 .mob-oat-content{
-    padding: 0 15px 15px 15px; 
+    padding: 0 15px 15px 15px;
 }
 .mob-oat-content p{
     font-style: normal;
@@ -7012,7 +7120,7 @@ button.accordion-button .xlsheats{
     font-size: 12px;
     line-height: 20px;
     color: #000000;
-    background: url(../../assets/images/icons/wait.png) no-repeat;
+  /*  background: url(../../assets/images/icons/wait.png) no-repeat;*/
     background-position: 15px 17px;
 }
 .mob-sr-warning-left p img {
@@ -7049,8 +7157,78 @@ button.accordion-button .xlsheats{
     margin-right: 5px;
 }
 
+.root-search {
+    position: relative;
+    display: inherit;
+    width: auto;
+    min-width: 169px;
+}
 /* end listing warning area */
 
 /* end Flight Slider */
 
+.mob-more-flight {
+  width: 43%;
+}
+.mob-more-flight a{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #1D86FF;
+}
+.mob-more-flight {
+  width: 60px;
+}
+.mob-booking-Selected a{
+  font-size: 9px;
+  padding: 4px 3px;
+}
+.mob-booking-Selected button{
+  font-size: 9px;
+  padding: 4px 3px;
+}
+.mob-items-book-Showless a{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 15px;
+  color: #1D86FF;
+}
+.mob-items-book-Showless {
+  text-align: center;
+  padding-bottom: 5px;
+}
 
+.fr-fixed-price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.fr-fixed-price p, .fr-fixed-price span{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14.5056px;
+  line-height: 20px;
+}
+.fr-fixed-price a{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14.5056px;
+  line-height: 20px;
+  color: #1D86FF;
+}
+.fr-flight-fixed-top .fr-applycoupon span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14.5056px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.5);
+}
+img {
+  max-width: 100%;
+  height: auto;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}

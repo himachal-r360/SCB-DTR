@@ -98,20 +98,20 @@ public modeselectTrending= 'All';
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
-    console.log((this.poweredByPartners));
+    //console.log((this.poweredByPartners));
 
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
     
-     this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
-     this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
+    // this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
+     //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
 
   }
   
    ngOnDestroy() {
-    this._styleManager.removeStyle('owl-default');
-    this._styleManager.removeScript('owl');
+   // this._styleManager.removeStyle('owl-default');
+   // this._styleManager.removeScript('owl');
   }
   
  loadTopBanner(l) {
@@ -281,44 +281,42 @@ public modeselectTrending= 'All';
         }
         
         var allCookies_key = [];
-        if (localStorage.getItem('FlightRecentSearch') !== null) allCookies_key.push('FlightRecentSearch');
+        if (localStorage.getItem('flightLastSearch') !== null) allCookies_key.push('flightLastSearch');
         if (localStorage.getItem('HotelRecentSearch') !== null) allCookies_key.push('HotelRecentSearch');
         if (localStorage.getItem('busLastSearch') !== null) allCookies_key.push('busLastSearch');
         if (localStorage.getItem('trainLastSearch') !== null) allCookies_key.push('trainLastSearch');
 
-        if (localStorage.getItem('FlightRecentSearch') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearch') !== null || localStorage.getItem('trainLastSearch') !== null) {
+        if (localStorage.getItem('flightLastSearch') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearch') !== null || localStorage.getItem('trainLastSearch') !== null) {
 
           Object.values(allCookies_key).forEach(data => {
 
             let item = localStorage.getItem(data);
+           
 
-            if (data == 'FlightRecentSearch' || data == 'HotelRecentSearch') {
+            if (data == 'flightLastSearch' || data == 'HotelRecentSearch') {
 
-              if (data == 'FlightRecentSearch' && localStorage.getItem('FlightRecentSearch') !== null) {
-
-                var get_valueall = atob(item);
-                var get_value = JSON.parse(get_valueall).slice(-1)[0];
-
-                var dateformat = get_value.flightdeparture;
+              if (data == 'flightLastSearch' && localStorage.getItem('flightLastSearch') !== null) {
+               let url;
+               var searchValue = JSON.parse(item);
+               
+                var type = 'flight';
+                var searchFrom = searchValue.fromCity;
+                var searchTo = searchValue.toCity;
+                
+                var dateformat = searchValue.departure;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');
-
-                var type = 'flight';
-
-                var searchFrom = get_value.flightfrom;
-                var searchTo = get_value.flightto;
-
-                let diff = new Date().getTime() - strdate.getTime();
-
-                if (diff > 0) {
-
-                  var url = this.domainRedirect + 'compare-fly';
-
-                } else {
-
-                  var url = this.domainRedirect + 'flights/search?Default=' + get_value.Default + '&adults=' + get_value.adults + '&child=' + get_value.child + '&class=' + get_value.class + '&fcode=' + get_value.fcode + '&flightdeparture=' + get_value.flightdeparture + '&flightfrom=' + get_value.flightfrom + '&flightreturn=' + get_value.flightreturn + '&flightto=' + get_value.flightto + '&infants=' + get_value.infants + '&tcode=' + get_value.tcode + '&t=ZWFybg==';
-
+                
+               if(searchValue.fromContry=='IN' && searchValue.toContry=='IN' ){    
+                if(searchValue.arrival == "" || searchValue.arrival == undefined || searchValue.arrival == null ){
+                 url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
                 }
+                else {
+                 url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
+                }
+               }else{
+                url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+             }
 
               }
               else if (data == 'HotelRecentSearch' && localStorage.getItem('HotelRecentSearch') !== null) {
@@ -498,7 +496,7 @@ public modeselectTrending= 'All';
         this.topDealCategory= result.result['aggregations']['category_filter']['buckets'];
         }
         
-        if(result.result['sub_aggregations']['sub_category_filter']){
+        if(result.result['sub_aggregations'] && result.result['sub_aggregations']['sub_category_filter']){
         this.topDealSubCategory= result.result['sub_aggregations']['sub_category_filter']['buckets'];
         }
       } else {
@@ -523,7 +521,17 @@ public modeselectTrending= 'All';
   showBlock(blockno) {
     this.showBlockno = blockno;
   }
- 
+   ConvertObjToQueryString(obj:any)
+  {
+
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
+  }
+
  goToNew(path){
      if(environment.IS_MAIN==1){
         const current = new Date();

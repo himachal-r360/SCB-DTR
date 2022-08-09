@@ -75,6 +75,39 @@
                                 </div>
                             </div>
                             <hr>
+                            <div class="sidebar-widget partner-widget">
+                                <div class="widget-title">
+                                    <h6 class="">Partners</h6>
+                                    <a href="javascript:void(0)" (click)="resetPartnerFlightsFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content" id="airline_list">
+                                    <ul class="category-list clearfix mt-2" >
+
+                                        <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:0:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{partnerItem.partnerName}}</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <ng-container *ngIf="show_airline_more">
+                                        <li  class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control material-checkbox" >
+                                                    <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                    <span class="material-control-indicator"></span>
+                                                    <span class="description">{{partnerItem.partnerName}}</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        </ng-container>
+                                    </ul>
+                                  
+                                </div>
+                            </div>
+                            <hr>
                             <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
                                 <div class="widget-title">
                                     <h6 class="">Flight Timings</h6>
@@ -157,7 +190,7 @@
                                         </li>
                                         </ng-container>
                                     </ul>
-                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a>
+                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
                                 </div>
                             </div>
                             <hr>
@@ -213,12 +246,11 @@
                                             </div>
                                         </li>
                                         </ng-container>
-
-                                         <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
-
                                     </ul>
+                                      <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                 </div>
                             </div>
+                            <hr>
 
                         </div>
                         </div>
@@ -259,22 +291,22 @@
                                     <p *ngIf="flightList">{{flightList.length}} flights found</p>
                                 </div>
                             </div>
-                            <div class="listing-warning-area">
+                            <!--<div class="listing-warning-area">
                                 <div class="listing-warning-left">
                                     <p>
-                                        Search results for <img src="./assets/images/flights/2.png" alt=""> <img src="./assets/images/flights/4.png" alt="">
+                                        Search results for <img src="{{cdnUrl}}/images/flights/2.png" alt=""> <img src="{{cdnUrl}}/images/flights/4.png" alt="">
                                         not displayed due to no response within 8 seconds. <br> However, if you’re prepared to wait longer please click refresh.
                                     </p>
                                 </div>
                                 <div class="listing-warning-right">
                                     <a href="">
-                                        <img src="./assets/images/icons/reload.png" alt="">
+                                        <img src="{{cdnUrl}}/images/icons/reload.png" alt="">
                                     </a>
                                     <a href="">
-                                        <img src="./assets/images/icons/close.png" alt="">
+                                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                     </a>
                                 </div>
-                            </div>
+                            </div>-->
                            </div>
                         <div class="tabletitle-area" [hidden]="loader">
                             <div class="row">
@@ -335,7 +367,7 @@
                         <div class="flight-listing-area">
                            <ng-container #itemsContainer></ng-container>
                         </div>
-                         <div class="text-center" *ngIf="flightList.length < 1">No flights found</div>
+                         <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                          <ng-template #item let-item="item">
                            <div  *ngFor="let list of item; let i = index" >
                             <div class="flight-listing"  *ngIf="list && list.flights.length > 0" id="flight_list_{{list.flightKey}}">
@@ -374,7 +406,7 @@
                                         <div class="col-md-2">
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-image" *ngIf="list.priceSummary.length > 0">
-                                                  <img src="{{cdnUrl}}/images/flight_partners/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}">
+                                                  <img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}">
                                                     <!--<p>{{list.priceSummary[0].partnerName}}</p>-->
                                                 </div>
                                             </div>
@@ -383,7 +415,7 @@
                                             <div class="flight-listing-pri">
                                                 <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                     <span class="information-icon">
-                                                     <h6>&#8377; {{list.priceSummary[0].totalFare}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                     <h6>&#8377; {{list.priceSummary[0].totalFare|number}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
                                                         <!-- <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""> -->
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
@@ -412,30 +444,25 @@
                                                     <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                 </div>
                                                 <div class="flight-listing-viewfares">
-                                                    <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> VIEW FARES</a>
-                                                    <a href="javascript:void(0)" class="button-style hidefares d-none " id="hidefares_{{list.flightKey}}" (click)="hideFarebutton(list.flightKey,'fare-details',0)"> HIDE FARES</a>
+                                                    <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> View Fares <i class="fa fa-angle-down ml-10"></i></a>
+                                                    <a href="javascript:void(0)" class="button-style hidefares d-none " id="hidefares_{{list.flightKey}}" (click)="hideFarebutton(list.flightKey,'fare-details',0)"> Hide Fares<i class="fa fa-angle-up ml-10"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                    <!-- <div class="flight-info-box">
-                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
-                                    <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>-->
-                                    <!-- <p></p>
-                                    <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
-                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
-                                </div>-->
+                              <div class="flight-info-box" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
+                                </div>
                                 <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{list.flightKey}}" >
                                   <div class="flight-options-box" id="FareDetails_{{list.flightKey}}">
                                     <div class="flight-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                         <div class="flight-options-list">
                                             <div class="flight-options-list-left">
                                                 <div class="flight-options-logo">
-                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" height="20">
-                                                  {{item.partnerName}}
-                                                    <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
+                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="25" height="25">
+                                                  <b class="ml-10">{{item.partnerName}}</b>
                                                 </div>
                                                 <div class="flight-options-text">
                                                   <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -480,7 +507,11 @@
                                                   <a href="javascript:void(0);" class="button-style" (click)="bookingSummary(list.flights,item,list.flightKey)">Book</a>
                                                 </div>
                                             </div>
+                                            
                                         </div>
+                                        <div class="flight-info-box" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                </div>
                                         <div class="flight-info-box ">
                                           <ul class="extra-tabs-right-ul">
                                                 <!-- <li class="ms-0">
@@ -510,9 +541,8 @@
                                                     </div>
                                                 </li>-->
                                             </ul>
-                                            <!-- <a href="javascript:void(0);" class="flight-details-click">Flight Details <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1"  alt=""></a> -->
-                                            <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}_{{j}}" (click)="HideShowCompareToFly(list.flightKey,'flight-details',j)" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
-                                            <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}_{{j}}" (click)="hideFarebutton(list.flightKey,'flight-details',j)" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
+                                            <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}_{{j}}" (click)="HideShowCompareToFly(list.flightKey,'flight-details',j)" >Flight Details <i class="fa fa-angle-down ml-10"></i></a>
+                                            <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}_{{j}}" (click)="hideFarebutton(list.flightKey,'flight-details',j)" >Flight Details <i class="fa fa-angle-up ml-10"></i></a>
                                         </div>
                                         <div class="flight-details-box flightfaresbox flight-details-box-hide" id="FlightDetails_{{list.flightKey}}_{{j}}">
                                             <div class="flight-extra-details">
@@ -552,7 +582,7 @@
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
                                                                                 <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
                                                                             </div>
-                                                                            <div class="tabs-depart-total">
+                                                                            <div class="tabs-depart-total w-25 text-center">
                                                                                 <p>{{details.duration | durationTime}}</p>
                                                                                  <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0" >Via {{details.stopsDetails[0]['layoverAirportName']}}                                                          </p>
                                                                             </div>
@@ -873,6 +903,7 @@
                       </div>
 
                   </div>
+                  <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                 <ng-template #item let-item="item">
                 <div  *ngFor="let list of item; let i = index" >
               <div class="mob-list-area" *ngIf="list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
@@ -887,7 +918,7 @@
                                   </div>
                               </div>
                               <div class="mob-list-items-price" *ngIf="list.priceSummary.length > 0">
-                                  <h6>₹ {{list.priceSummary[0].totalFare}}</h6>
+                                  <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
                                   <p  *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</p>
                               </div>
                           </div>
@@ -910,14 +941,15 @@
                                       <p>{{list.flights[list.flights.length-1].arrivalAirport}}</p>
                                   </div>
                               </div>
-                              <!--<div class="name-bottom-bottom">
-                                  <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get ₹ 1500 off on SmartBuy</p>
-                              </div>-->
+                                                       
+                                     <div class="name-bottom-bottom" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
+                                </div>
                           </div>
                       </div>
 
 
-                      <div class="mob-items-book-list" id="CompareToFly_{{list.flightKey}}">
+                      <div class="mob-items-book-list" style="display:none;"  id="CompareToFly_{{list.flightKey}}">
                           <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                               <div class="mob-book-list-top">
                                   <div class="mob-booking-image">
@@ -934,6 +966,10 @@
                                       </a>
                                   </div>
                               </div>
+                                                  
+                             <div class="name-bottom-bottom" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                </div>
                               <div class="mob-book-list-bottom">
                                   <div class="mob-extra">
                                       <ul>
@@ -991,7 +1027,7 @@
                                                             <div class="extra-tabs-details-bottom p-0">
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one">
-                                                                        <p class="depart-one-image" *ngIf="flightIcons"><img src="{{this.flightIcons[list.flights[0].airline].logo}}" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                        <p class="depart-one-image" ><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                         <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                         <div class="tabs-depart-left float-none">
                                                                             <div class="tabs-depart-times">
@@ -1113,7 +1149,7 @@
                                                             <div class="rules-flight" >
                                                                 <div class="rules-flight-items" *ngFor="let flightItem of list.flights">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                                                        <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
                                                                     </div>
                                                                     <div class="rules-flight-content" >
                                                                         <h6 >
@@ -1125,7 +1161,7 @@
                                                                 </div>
                                                                 <!-- <div class="rules-flight-items opacity_05">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                                                        <img  src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
                                                                     </div>
                                                                     <div class="rules-flight-content">
                                                                         <h6>
@@ -1350,6 +1386,50 @@
                                               </div>
                                           </div>
                                       </div>
+                                     <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingeight">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseeight" aria-expanded="false" aria-controls="collapseeight">
+                                                Partners
+                                            </button>
+                                        </h2>
+                                        <div id="collapseeight" class="accordion-collapse collapse" aria-labelledby="headingeight">
+                                            <div class="accordion-body">
+                                                <div class="default-sidebar">
+                                                    <ul class="category-list clearfix mt-2">
+                                                        <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr| slice:0:5 ; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                            <div class="custom-controls-stacked">
+                                                                <label class="custom-control material-checkbox">
+                                                                    <input type="checkbox" class="material-control-input" value="{{partnerItem.partnerName}}" [checked]="partnerItem.active"
+                                                                    (change)="flightPartnerFilterFlightData(partnerItem)">
+                                                                    <span class="material-control-indicator"></span>
+                                                                    <span class="description">{{partnerItem.partnerName}}</span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <ng-container *ngIf="show_airline_more">
+                                                            <li class="custom-check-box" *ngFor="let partnerItem of airlines| slice:5 ; let i = index "
+                                                                [ngClass]="{'active': partnerItem.active}">
+                                                                <div class="custom-controls-stacked">
+                                                                    <label class="custom-control material-checkbox">
+                                                                        <input type="checkbox" class="material-control-input" value="{{partnerItem.partnerItem}}"
+                                                                            [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)">
+                                                                        <span class="material-control-indicator"></span>
+                                                                        <span class="description">{{partnerItem.partnerName}}</span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        </ng-container>
+                                                    </ul>
+
+                                                    <div class="mob-reset text-end">
+                                                         <!-- <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a> -->
+                                                        <a href="javascript:void(0)" class="widget-content-more"  (click)="resetPartnerFlightsFilter()">Reset</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div>
                                       <div class="accordion-item">
                                           <h2 class="accordion-header" id="headingTwo">
                                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1373,7 +1453,7 @@
                                                   </div>
                                               </div>
                                           </div>
-                                      </div>
+                                    </div>
                                       <div class="accordion-item">
                                           <h2 class="accordion-header" id="headingThree">
                                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1466,13 +1546,14 @@
                                                       </ul>
 
                                                       <div class="d-flex justify-content-between mt-2">
-                                                           <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a>
+                                                           <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
                                                           <a href="javascript:void(0)" class="widget-content-more"  (click)="resetAirlineFlightsFilter()">Reset</a>
                                                       </div>
                                                   </div>
                                               </div>
                                           </div>
                                       </div>
+
                                       <div class="accordion-item">
                                           <h2 class="accordion-header" id="headingsix">
                                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1540,7 +1621,7 @@
                                                       </ul>
 
                                                       <div class="d-flex justify-content-between mt-2">
-                                                       <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>4">+{{layOverFilterArr.length-5}} more</a>
+                                                       <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                                           <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
                                                           <a  class="widget-content-more" href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
                                                       </div>

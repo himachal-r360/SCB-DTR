@@ -335,5 +335,11 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
     return this.http.post(this.endpoint+'suggest_items', param, config).pipe(map((response: any) => response));
     //}
   }
-
+    getCouponsByService (param):Observable<any> { 
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/getCouponsByService.json');
+    }else{
+	return this.http.post( this.endpoint+'getCouponsByService',param, config).pipe(map((response: any) => response));
+    }
+  }
 }

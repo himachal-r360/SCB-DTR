@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
     navSpeed: 1000,
     margin: 20,
     nav: true, 
-    navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+    navText:[ "<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
     responsive: {
       0: {
         items: 1.2
@@ -175,9 +175,6 @@ export class HomeComponent implements OnInit {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-    console.log(this.popularDomasticRoutes);
-    
-
   }
 
   ConvertObjToQueryString(obj:any)
@@ -192,6 +189,8 @@ export class HomeComponent implements OnInit {
   }
 
   continueSearch(param:any){
+  
+    if(param.fromContry=='IN' && param.toContry=='IN' ){
     if(param.arrival == "" || param.arrival == undefined || param.arrival == null ){
       let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
@@ -200,6 +199,12 @@ export class HomeComponent implements OnInit {
       let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
     }
+    }else{
+      let     url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
+          this.router.navigateByUrl(url);
+
+       }
+
   }
 
 
