@@ -507,11 +507,13 @@
               <div class="flight-extra-details">
 
                 <div class="rules-flight">
-                    <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails">
+                
+                
+                    <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails"  *ngIf="cancellationPolicyOnward || baggageInfoOnward" >
                   <div class="rules-flight-items">
                       <div class="rules-flight-thumbe">
                         <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0].airline}}.gif"
-                          alt="{{flightOnwardDetails[0].airline}}" class="flight-image mr-10">
+                          alt="{{flightOnwardDetails[0].airline}}" class=" mr-10">
                       </div>
                       <div class="rules-flight-content">
                         <h6>
@@ -524,11 +526,11 @@
                 </a>
 
 
-                <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails">
+                <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails"  *ngIf="cancellationPolicyReturn || baggageInfoReturn">
                   <div class="rules-flight-items" *ngIf="flightReturnDetails[0]">
                       <div class="rules-flight-thumbe">
                         <img src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0].airline}}.gif"
-                          alt="{{flightReturnDetails[0].airline}}" class="flight-image mr-10">
+                          alt="{{flightReturnDetails[0].airline}}" class=" mr-10">
                       </div>
                       <div class="rules-flight-content">
                         <h6>
@@ -551,16 +553,15 @@
                         (click)="changeFareRuleTabBottomOnward($event)" data-bind="CancellationDetails">Fare Rules</a>
                     </li>
                     <li *ngIf="baggageInfoOnward">
-                      <a href="javascript:void(0);"
+                      <a href="javascript:void(0);" class="flight-extra-content-ob"
                         [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }" data-bind="BaggageDetails"
                         (click)="changeFareRuleTabBottomOnward($event)">Baggage Policy</a>
                     </li>
 
                   </ul>
 
-                  <div class="extra-tabs-ara">
-                    <div id="CancellationDetails" class="flight-extra-content-o"
-                      [ngClass]="{'extra-active': cancellationPolicyOnward  }">
+                  <div class="extra-tabs-ara">          
+                  <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnward"           [ngClass]="{'extra-active': cancellationPolicyOnward  }">
                       <table class="table-bordered table-content w-100">
                         <tbody>
                           <tr>
@@ -634,7 +635,7 @@
                         </div>
                       </div>
                     </div>
-                    <div id="BaggageDetails" class="flight-extra-content-o hide"       [ngClass]="{'extra-active': !cancellationPolicyOnward  }">
+                    <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfoOnward"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
 
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -682,7 +683,7 @@
                         (click)="changeFareRuleTabBottomReturn($event)" data-bind="CancellationDetailsR">Fare Rules</a>
                     </li>
                     <li *ngIf="baggageInfoReturn">
-                      <a href="javascript:void(0);"
+                      <a href="javascript:void(0);" class="flight-extra-content-rb"
                         [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyReturn  }"
                         data-bind="BaggageDetailsR" (click)="changeFareRuleTabBottomReturn($event)">Baggage Policy</a>
                     </li>
@@ -690,7 +691,7 @@
                   </ul>
 
                   <div class="extra-tabs-ara">
-                    <div id="CancellationDetailsR" class="flight-extra-content-r"
+                    <div id="CancellationDetailsR" class="flight-extra-content-r" *ngIf="cancellationPolicyReturn"  
                       [ngClass]="{'extra-active': cancellationPolicyReturn  }">
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -765,8 +766,7 @@
                         </div>
                       </div>
                     </div>
-                    <div id="BaggageDetailsR" class="flight-extra-content-r"
-                      [ngClass]="{'extra-active': !cancellationPolicyReturn }">
+                    <div id="BaggageDetailsR" class="flight-extra-content-r"      [ngClass]="{'extra-active': !cancellationPolicyReturn }" *ngIf="baggageInfoReturn">
 
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -4143,11 +4143,9 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info">
                       <div class="float-start">
-                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                          class="mx-2" alt="">
+                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" class="flight-image mx-2" alt="Multi">
                         <img *ngIf="!onward_airline_unique"
-                          src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif" width="40px"
-                          class="mx-2" alt="">
+                          src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif" class="flight-image mx-2" alt="{{flightOnwardDetails[0]['airline']}}">
                       </div>
                       <h6>
                         <span class="city_text">{{searchData.fromCity}}</span>
@@ -4201,11 +4199,9 @@
 
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                          class="mx-2" alt="">
+                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"                 class="flight-image  mx-2" alt="Multi">
                         <img *ngIf="!onward_airline_unique"
-                          src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif" width="40px"
-                          class="mx-2" alt="">
+                          src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif"                    class="flight-image  mx-2" alt="{{flightOnwardDetails[0]['airline']}}">
                       </div>
                       <h6>
                         <span class="city_text">{{searchData.fromCity}}</span>

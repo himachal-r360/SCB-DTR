@@ -259,6 +259,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
+          this.returnDate = new Date(this.queryFlightData.arrival);
         this.flightClassVal = this.queryFlightData.flightclass;
         this.adultsVal = this.queryFlightData.adults;
         this.childVal = this.queryFlightData.child;
