@@ -54,7 +54,6 @@ export class FlightService {
         }
       }
     } else {
-      console.log(body, "body");
 
       return this.http.post(this.flight, body, { headers: this.header })
     }
@@ -89,7 +88,6 @@ export class FlightService {
 
 
   getFlightInfo(param: any) {
-   console.log(param);
     if (LOCALJSON == 'true') {
       return this.http.get('assets/data/flightInfo.json');
     } else {
