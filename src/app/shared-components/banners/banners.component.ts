@@ -32,6 +32,10 @@ export class BannersComponent implements OnInit {
   points_available :any;
   wb_spend:any; 
   wb_perc:any;
+
+  mb_perc:any;
+  is_wb_progressbar:boolean=false;
+  is_mb_progressbar:boolean=false;
   ngOnInit(): void {
 
     this.rest.getRegaliaGoldList().subscribe(res => {
@@ -41,10 +45,26 @@ export class BannersComponent implements OnInit {
     });
 
      this.rest.getMilestoneDetail().subscribe(res => {
-        console.log("getMilestoneDetail");
+        console.log(res.milestone_detail.benefits_availed);
         this.wb_spend = res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT;
-        this.wb_perc = Math.round((res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.wb.spends.TARGET_SPEND_AMOUNT)*100);
-        console.log(this.wb_perc);
+        if(res.milestone_detail.benefits_availed.wb.can_avail==1){
+          this.is_wb_progressbar=false;
+        }else{
+          this.wb_perc = ((res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.wb.spends.TARGET_SPEND_AMOUNT)*100);
+          this.is_wb_progressbar=true;
+        }
+        if(res.milestone_detail.benefits_availed.pv.previous_quarter.can_avail==1||res.milestone_detail.benefits_availed.pv.current_quarter.can_avail==1){
+               this.is_mb_progressbar=false;
+        }else{
+          this.mb_perc = ((res.milestone_detail.benefits_availed.pv.current_quarter.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.pv.current_quarter.spends.TARGET_SPEND_AMOUNT)*100);
+          this.is_mb_progressbar=true;
+        }
+        console.log( this.is_wb_progressbar);
+
+      //  this.mb_perc=100;
+        //this.mb_spend = res.milestone_detail.benefits_availed.pv.spends.ACHIEVED_SPEND_AMOUNT;
+        // this.mb_perc = Math.round((res.milestone_detail.benefits_availed.pv.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.pv.spends.TARGET_SPEND_AMOUNT)*100);
+        // console.log(this.wb_perc);
     });
 
      this.rest.availablePoints().subscribe(res => {
