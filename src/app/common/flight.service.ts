@@ -13,8 +13,9 @@ export class FlightService {
   flightListData: any;
   flightListDate: any;
   flightsIcon = "assets/Json/airlines.json";
-  airportsNameList = "assets/Json/airports.json";
-  flightDetails: any;
+  airportsNameList ="assets/Json/airports.json";
+  countryList = "assets/Json/country.json";
+  flightDetails:any;
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
@@ -66,6 +67,10 @@ export class FlightService {
   getFlightIcon() {
     return this.http.get(this.flightsIcon);
   }
+  
+  getCountryList(){
+    return this.http.get(this.countryList);
+  }
 
   getAirportName() {
     return this.http.get(this.airportsNameList);
@@ -84,6 +89,7 @@ export class FlightService {
 
 
   getFlightInfo(param: any) {
+   console.log(param);
     if (LOCALJSON == 'true') {
       return this.http.get('assets/data/flightInfo.json');
     } else {

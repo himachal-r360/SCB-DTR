@@ -11,6 +11,9 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { AppConfigService } from '../../app-config.service';
+import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -96,7 +99,6 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
 
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
-  flightListFullData: any = [];
   
   minPrice: number = 0;
   maxPrice: number = 10000;
@@ -165,7 +167,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
           @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
         @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;	 
 
-        pageIndex: number = 1;
+        pageIndex: number = 26;
         ITEMS_RENDERED_AT_ONCE=25;
         nextIndex=0;
         
@@ -211,7 +213,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
    serviceSettings:any;     
   enableFlightServices:any;
   
-  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor(public rest:RestapiService,private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
@@ -233,11 +235,17 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         ngOnInit(): void {
         this.isMobile = window.innerWidth < 991 ?  true : false;
         this.route.url.subscribe(url =>{
+        $(".modal").hide();
+        $('body').removeClass( "modal-open" );
+         $("body").removeAttr("style");
+        $(".modal-backdrop").hide();
+        this.gotoTop();
         this.loader = true;
         this.getQueryParamData(null);
         this.headerHideShow(null)
         this.getAirpotsList();
         this.getAirlinesList();
+        this.getCoupons();
         this.flightSearch();
         });
         }
@@ -251,6 +259,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
+          this.returnDate = new Date(this.queryFlightData.arrival);
         this.flightClassVal = this.queryFlightData.flightclass;
         this.adultsVal = this.queryFlightData.adults;
         this.childVal = this.queryFlightData.child;
@@ -261,7 +270,21 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
         }
+flightCoupons=[];
+getCoupons(){
+const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+var couponParam = {
+postData:this.EncrDecr.set(JSON.stringify(urlParams))
+};
 
+this.rest.getCouponsByService(couponParam).subscribe(results => { 
+   if(results.status=="success"){
+   this.flightCoupons=results.data;
+   }
+
+});
+
+}
   flightDetailsTab(obj: any, value: string, indx: number) {
     var dashboard_menu_type = value;
     $('.flight-extra-content').hide();
@@ -459,6 +482,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     let flightListWithOutFilter = this.flightListWithOutFilter;
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = this.unique(flightListConst);
+    
  
     var current_date = new Date(this.departureDate),
       current_year = current_date.getFullYear(),
@@ -470,6 +494,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
 
     //Popular Filter Search Data
     updatedflightList = this.unique(this.popularFilterFlights(this.flightList));
+    
     //Timing Filter Data
     updatedflightList = this.unique(this.timingFilterFlights(updatedflightList));
   
@@ -616,6 +641,8 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
       this.flightList = this.unique(filteredStopOver);
     }
 
+
+
     //PriceFilter
     if (this.flightList.length > 0) {
       var min_price = this.minPrice;
@@ -630,6 +657,11 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
       });
       this.flightList = this.unique(filteredPrice);
     }
+    
+      
+      //  console.log( this.minPrice);
+      // console.log( updatedflightList.length);
+   //console.log(this.flightList.length);
 
     //Airline Filter
     this.flightList = this.unique(this.airlineFilterFlights(this.flightList));
@@ -1186,14 +1218,15 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
       this.DocKey = res.response.docKey;
       
       this.flightList = this.ascPriceSummaryFlighs(res.response.flights);
+   
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
-      this.flightListFullData =   res.response.flights;
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
-        this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-        this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+        this.GetMinAndMaxPriceForFilter();
+       // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+       // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
       this.getAirlinelist();
@@ -1206,7 +1239,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
     flightsData.filter((flightItem:any,indx:number)=>{
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare)     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })

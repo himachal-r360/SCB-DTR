@@ -97,7 +97,7 @@ span.menu-name {
     box-shadow: 0 1px 10px rgba(0, 0, 0, .2);
     -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, .2);
     @media screen and (max-width: 768px) and (min-width: 320px) {
-        z-index: 2;
+        z-index: 5; 
     }
     .navbar-toggler {
         padding: 0;
@@ -1454,6 +1454,9 @@ li.main-nav>.active {
             font-size: 22px;
             height: auto;
         }
+        .reg_gld_mlite_toggler_icn{
+            color:#fff;
+        }
     }
     .nav-right {
         flex-flow: row-reverse wrap;
@@ -1490,6 +1493,10 @@ li.main-nav>.active {
                     height: 20px;
                     margin-bottom: 3px;
                 }
+            }
+            .reg_gold_icn{
+                position: relative;
+                padding:0px 3px;
             }
             .profile_pic {
                 width: 25px;
@@ -4036,6 +4043,8 @@ marquee {
             animation-name: bottom_top_animation;
             animation-duration: 200ms;
             animation-timing-function: ease-in-out;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
             // &::before {
             //     content: '';
             //     width: 0;
@@ -5299,12 +5308,16 @@ marquee {
                 font-size: 14px;
                 font-family: $regular;
                 font-weight: normal;
-                /* padding-bottom: 10px; */
+                color:#555555;
+                padding-bottom: 10px; 
                 &:hover {
                     font-weight: bold;
                     border: 0;
+                     color: #1D86FF !important;
                 }
             }
+            
+           
             a.view_text {
                 font-family: $medium;
                 cursor: pointer;
@@ -5797,14 +5810,14 @@ marquee {
                 font-weight: 300;
                 font-size: 16px;
                 color: #FFFFFF;
-                opacity: 0.5;
+                // opacity: 0.5;
                 border-bottom:none;
                 padding:5px 10px 5px 10px;
                 border-radius:3px;
                 width:100%;
             }
             .rg_hdr_search_tool{
-                right:30px;
+                right:30px !important;
             }
             .header-concierge-btn {
                 .header_drpdwn_btn{
@@ -5832,6 +5845,8 @@ marquee {
                     border-radius:0px;
                     border-bottom-left-radius:3px;
                     border-bottom-right-radius:3px;
+                    position:absolute;
+                    right:0;
                   }
                   .support_bg_img {
                     background-image: url("../../assets/regalia_gold/images/smartbuy/icons/header_support.svg");
@@ -5886,7 +5901,7 @@ marquee {
 	border-bottom-right-radius: 3px;
 	border: none;
 	margin-top: 0.4rem;
-	min-width: 200px;
+	min-width: 18px;
 }
 .privilege_img_div {
 	width: 50px;
@@ -5910,11 +5925,13 @@ marquee {
 	font-weight: 400;
 	font-size: 10px;
 	color: #fff !important;
+    line-height:10px;
 }
 .privilege_text {
 	font-weight: 100;
 	font-size: 10px;
 	color: #fff;
+    line-height:10px;
 }
 .cntnt_center {
 	display: flex;
@@ -6032,6 +6049,7 @@ marquee {
         background: radial-gradient(162.89% 100.17% at 3.6% 1.49%, #2C0E00 44.79%, #CF8D56 100%);
         box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.5);
         padding:20px 20px;
+        width:20vw;
         li{
             padding:0px;
             margin:0px;
@@ -6057,7 +6075,8 @@ marquee {
     }
 }
 .privilage_list_arw {
-	width: 50% !important;
+	width: 12px !important;
+    height: 12px !important;
 }
 .rg_offers_title{
     font-weight: 600;
@@ -6109,14 +6128,23 @@ marquee {
 .hdr_btn{
     background: #FFFFFF;
     border-radius: 3px;
-    color:#000;
+    color:#CF8D56;
     font-size:12px;
     padding:8px 10px;
     border:none;
     // margin-top:0.8rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.btn-text{
+    font-size:12px;
+    color:#000 !important;
+    margin-left:5px;
+    margin-right:5px;
 }
 .hdr_btn_caret{
-    color:#CF8D56;
+    color:#CF8D56 !important;
 }
 .hdr_btn:focus{
     outline:none;
@@ -6164,3 +6192,207 @@ margin-top:1rem;
 }
 
     }
+
+    // mlite regalia gold header css
+    .m_hdr_search_bar {
+        width: 100%;
+        background: #FFFFFF09;
+        border-radius: 4px;
+        border: none;
+        padding: 3px 8px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        .search_icon {
+            color: #fff;
+            opacity: 0.35;
+        }
+        .search_input {
+            font-size: 12px;
+            color: #ffffff30;
+            background: transparent;
+            border: none;
+            margin-left: 1rem;
+            width: 100%;
+        }
+        .search_input::placeholder {
+            color: #ffffff30;
+            font-size: 12px;
+        }
+    }
+    .wdt_90 {
+        width: 90%;
+    }
+    .m_custmr_name {
+        font-family: 'opensans-regular';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 11px;
+        color: #FFFFFF;
+        // margin-left: 5px;
+        // margin-right: 5px;
+    }
+    .reg_gold_navbar_collapse.m-show {
+        left: 0px;
+        width: 50%;
+        @media screen and (max-width: 425px) and (min-width: 320px) {
+            width: 90% !important;
+        }
+    }
+    .reg_gold_navbar_collapse{
+        padding:30px 15px;
+        .m_profile_name {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 27px;
+        }
+        .m_profile_points {
+            padding: 0px 5px;
+            border-radius: 3px;
+            border: none;
+            font-size: 10px;
+            width: fit-content !important;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .hdr_text {
+            font-size: 14px;
+        }
+        
+        .hdr_text .fa {
+            font-size: 15px;
+            margin-left: 5px;
+        }
+        /* .hdr_seperator {
+            border: 1px solid #ffffff50;
+        } */
+        .reg_gold_menu_body{
+            border-top: none;
+            margin: 0px 0px;
+            padding-top: 0px; 
+        }
+        .m_sidebar_link {
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            // display: inline-block !important;
+            text-transform: capitalize !important;
+        }
+        .active{
+            font-weight:600;
+        }
+        /* .opt_seperator {
+            border: 1px dashed #ffffff50;
+        } */
+        .m_support_div {
+            margin-top: 2rem;
+            .m_support_text {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 30px;
+                text-transform: uppercase;
+            }
+        }
+        .hdr_travel {
+            background: #FFFFFF05;
+            border-radius: 8px;
+            padding: 10px 10px;
+            // margin-top: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            &:hover {
+                .travel_arw_icn {
+                    display: block;
+                }
+                .circular_div {
+                    .card_img {
+                        filter: invert(55%) sepia(22%) saturate(1391%) hue-rotate(355deg) brightness(95%) contrast(85%);
+                    }
+                }
+                /* .travel_highlight {
+                    color: #C3832C !important;
+                } */
+                .travel_text {
+                    opacity: 1 !important;
+                }
+                /* background: #FFFFFF15; */
+            }
+            .circular_div {
+                width: 35px;
+                height: 35px;
+                /* background: #FFFFFF20; */
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+                .fa {
+                    color: #fff;
+                    font-size: 15px;
+                }
+            }
+            .travel_highlight {
+                font-weight: 600;
+                font-size: 15px !important;
+                line-height: 20px;
+            }
+            .travel_text {
+                font-size: 11px !important;
+                line-height: 15px;
+                opacity: 0.5;
+            }
+            .travel_arw_icn {
+                font-size:12px;
+                display: none;
+            }
+        }
+        .m_sidebar_header {
+            padding: 0;
+            border-bottom: none !important;
+        }
+        .cntnt_center{
+            display:flex;
+            align-items:center;
+        }
+        .m_navigational_link {
+            font-style: normal;
+            font-size: 18px;
+            font-weight:600;
+            line-height: 27px;
+            span {
+                margin-right: 10px;
+            }
+        }
+        .hdr_privilege_card{
+        border-radius: 5px;
+        padding:10px 5px;
+        margin-top:1rem;
+        margin-bottom:1rem;
+        .privilege_text_highlight{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height:normal;
+        }
+        .privilege_text{
+            font-style: normal;
+            font-weight: 100;
+            font-size: 10px;
+            line-height:normal;
+        }
+        .m_privilege_img_div {
+            width: 64px;
+            height: 40px;
+            .privilege_img{
+                width:100%;
+                height:100%;
+            }
+        }
+        }
+    }
+    // end of mlite regalia gold header css

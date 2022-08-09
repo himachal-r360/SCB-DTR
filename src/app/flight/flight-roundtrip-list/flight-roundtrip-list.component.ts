@@ -9,7 +9,9 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { Options } from '@angular-slider/ngx-slider';
 import { Location, ViewportScroller } from '@angular/common';
-
+import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 declare var $: any;
 
 @Component({
@@ -23,7 +25,10 @@ declare var $: any;
 export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDestroy {
   cdnUrl: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
-
+  showMoreAirline = false;
+  showLessAirline = true;
+  showLessLayover = true;
+  showMoreLayover = false;
   flightList: any = [];
   ReturnflightList: any = [];
   flightIcons: any;
@@ -77,6 +82,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   isMobile:boolean= false
   math = Math;
   EMI_interest: number = 16;
+  EMIAvailableLimit: number = 3000;
   navItemActive:any;
   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
   options: Options = {
@@ -158,11 +164,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('itemsReturnContainer', { read: ViewContainerRef }) returnContainer: ViewContainerRef;
   @ViewChild('returnItem', { read: TemplateRef }) returnTemplate: TemplateRef<any>;
-  pageIndex: number = 1;
+  pageIndex: number = 26;
   ITEMS_RENDERED_AT_ONCE=25;
   nextIndex=0;
 
-  constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
+  constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     $(window).scroll(function(this) {
       if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
@@ -178,10 +184,16 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   ngOnInit(): void {
 
        this.route.url.subscribe(url =>{
+        $(".modal").hide();
+        $('body').removeClass( "modal-open" );
+         $("body").removeAttr("style");
+        $(".modal-backdrop").hide();
+        this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)
     this.getAirpotsList();
+        this.getCoupons();
     this.flightSearch();
      });
   }
@@ -252,7 +264,15 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     }
   }
 
+  show_airline_more:number=0;
+  showmoreAirline() {
+   this.show_airline_more=1;
+  }
 
+    show_layover_more:number=0;
+  showmoreLayover() {
+   this.show_layover_more=1;
+  }
 
 
 
@@ -280,7 +300,21 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   }
 
+flightCoupons=[];
+getCoupons(){
+const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+var couponParam = {
+postData:this.EncrDecr.set(JSON.stringify(urlParams))
+};
 
+this.rest.getCouponsByService(couponParam).subscribe(results => {
+   if(results.status=="success"){
+   this.flightCoupons=results.data;
+   }
+
+});
+
+}
 
   //Hide show header
   headerHideShow(event:any) {
@@ -341,7 +375,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare)     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })
@@ -349,6 +383,13 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
 
 
+  gotoTop() {
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+  }
 
 
   ngAfterViewInit(): void {
@@ -907,7 +948,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     // Return timing flight
     timingFilterReturnFlights(returnFlightList: any) {
       this.ReturnflightList = returnFlightList;
-      console.log(this.ReturnflightList , "return");
+      //console.log(this.ReturnflightList , "return");
       let updatedflightList: any = [];
       let isfilterMorningDepartures: any = false;
       let isfilterFlightTiming = false;
@@ -927,14 +968,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           isfilterMorningDepartures = true;
         }
       })
-      console.log(this.flight_return_Timingsitems , "this.flight_return_Timingsitems");
+      //console.log(this.flight_return_Timingsitems , "this.flight_return_Timingsitems");
 
       let isTimingFilterItems = this.flight_return_Timingsitems.filter((item: any) => {
         if (item.active == true) {
           return item;
         }
       })
-      console.log(isTimingFilterItems , "isTimingFilterItems");
+      //console.log(isTimingFilterItems , "isTimingFilterItems");
 
       if (isTimingFilterItems.length > 0) {
         isfilterFlightTiming = true;
@@ -943,9 +984,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
         var filteredTimingArr: any[] = [];
         if (returnFlightList.length > 0) {
-          console.log(returnFlightList , "returnFlightList");
-          console.log(date2);
-          console.log(date3);
+          //console.log(returnFlightList , "returnFlightList");
+          //console.log(date2);
+          //console.log(date3);
 
           returnFlightList.filter((d: any) => {
             let singleFlightTiming = [];
@@ -1377,12 +1418,18 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
-  DisplayDetail()
+  DisplayDetail(flightKey:any,flights:any,item:any,event:any,type:string)
   {
-    if(this.isOnwardSelected == true || this.isReturnSelected == true)
-    {
+
+      if(type =='onward' && this.isOnwardSelected == false)
+      {
+      this.onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
+      }
+      if(type =='return' && this.isReturnSelected == false){
+        this.returnSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
+      }
       this.isDetailsShow = true;
-    }
+
   }
 
   changeFareRuleTab(event:any){
@@ -1515,4 +1562,5 @@ getLayoverHour(obj1: any, obj2: any) {
   }
   return dateHour;
 }
+
 }

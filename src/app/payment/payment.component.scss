@@ -245,13 +245,15 @@
 .saveCard_radio{
   background-color: #FBFBFB;
   border-radius: 8px;
-  padding: 0px 20px;
+  padding: 15px 20px;
   margin: 20px 0px 15px;
 }
 .secure_text{
     display: flex;
     justify-content: end;
     margin-top: 15px;
+    align-items: center;
+    gap: 10px;
     @media only screen and (max-width:600px) {
       justify-content: start;
       margin: 0px 0px 10px;
@@ -259,8 +261,12 @@
     p.invalid{
       color: #EB001B;
       display: flex;
-      align-items: end;
+      align-items: center;
+      gap: 25px;
       font-size: 14px;
+      .form-check{
+        padding-left:0;
+      }
     }
     p.valid{
       color: #009817;
@@ -783,7 +789,7 @@ $small: 40em;
   padding: 0px;
   font-size: 16px;
   font-weight: 600;
-  margin: 20px 0px 5px;
+  margin: 5px 0px 5px;
   // font-weight: bold;
   color: #000;
   text-transform: capitalize;
@@ -1114,13 +1120,13 @@ input[type="radio"]:checked + .label:after {
 .error{
     color: $color-red;
     padding: 0px 0px;
-    margin-top: -14px;
-    margin-bottom: 10px;
+    margin-top: -4px;
+    margin-bottom: 5px;
     font-size: 12px;
 }
 .error1{
   color: $color-red;
-   font-size: 10px;
+   font-size: 12px;
 }
 .error_tc{
   color: $color-red;
@@ -1424,11 +1430,13 @@ input[type="radio"]:checked + .label:after {
       font-size: 12px;
     }
     .w-flexpay-price {
-    box-shadow: 0px 3px 10px #00000029;
-    border: 1px solid #213C8A;
-    border-radius: 4px;
-    opacity: 0.87;
-    padding: 0px;
+      background: #FBFBFB;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 3px 10px #00000029;
+    border: 1px solid #213C8A; 
+    opacity: 0.87; */
+    border-radius: 6px;
+    padding: 15px;
     margin-top: 20px;
     text-align: center;
     cursor: pointer;
@@ -1437,7 +1445,7 @@ input[type="radio"]:checked + .label:after {
       margin: 0px;
     }
     .emi-duration {
-      color:#223F97;
+      color:$black-color;
       font-weight: bold;
       font-size:14px;
     }
@@ -1449,20 +1457,21 @@ input[type="radio"]:checked + .label:after {
     }
     .w-flexpay-active {
       box-shadow: 0px 3px 10px #00000029;
-      border: 1px solid #213C8A;
+      border: 1px solid #1D86FF;
       border-radius: 4px;
-      background-color:#213C8A;
-      padding: 0px;
+      /* background-color:#213C8A; */
+      background: rgba(29, 134, 255, 0.1);
+      padding: 15px;
       margin-top: 20px;
       cursor: pointer;
       text-align: center;
       .emi-duration {
-        color:#ffffff;
+        color:$black-color;
         font-weight: bold;
         font-size:14px;
       }
       .emi-tenure {
-        color:#ffffff;
+        color:#484848;
         font-size:10px;
         font-weight: bold;
       }
@@ -1574,9 +1583,9 @@ input[type="radio"]:checked + .label:after {
 .flexi_Error{
   color: $color-red;
   padding: 0px 0px;
-  margin-top: -14px;
+  margin-top: -4px;
   font-size: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 .flexi_points li{
   font-size: 12px;
@@ -2409,6 +2418,19 @@ p{
   }
   .nav-pills .nav-item .nav-link.active, .nav-pills .show>.nav-link{
     color: #ffffff;
+  }
+}
+
+.tokenise_popup{
+  .modal-body{
+    width: 80%;
+    margin: 0 auto;
+    @media only screen and (max-width:600px) {
+      width: 100%;
+    }
+  }
+  .text_points{
+    text-align: left;
   }
 }
 

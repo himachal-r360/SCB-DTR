@@ -27,7 +27,7 @@ import { RedirectPopupModule } from 'src/app/redirect-popup/redirect-popup.modul
     MatFormFieldModule, MatDatepickerModule,
     MatNativeDateModule,NgxCaptchaModule,RedirectPopupModule,MatSelectModule
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   exports: [TravelSearchComponent  ],
   entryComponents: [ConfirmationDialog,CaptchaDialog,TravelSearchComponent,seniorCitizenDilog]
 })

@@ -107,7 +107,7 @@ a {
 
     .btn-normal {
         width: 100%;
-        background-color: #004c8f;
+        background-color: $primary-color;
         padding: 10px 15px 10px 20px;
         display: block;
         color: $white_color !important;
@@ -820,11 +820,25 @@ a {
     .flight_options .opt_box .mat-form-field .mat-form-field-infix{
         width: 150px;
     }
+    .select_class_dropdown .mat-form-field .mat-form-field-infix{
+        width: 130px;
+        padding: 0px;
+        .mat-select-min-line{
+            font-family: 'opensans-medium';
+            font-size: 14px;
+        }
+    }
+    .select_class_dropdown .mat-form-field .mat-form-field-underline{
+        height: 0px;
+    }
 }
 
 @media only screen and (max-width:600px) {
     .deals_offers_sec .mat-form-field .mat-form-field-infix{
         width: 100%;
+    }
+    .select_class_dropdown .mat-form-field .mat-form-field-underline{
+        height: 0px;
     }
 }
 
@@ -839,7 +853,7 @@ border-radius:4px;
 }
 
 
-.partners_container_emi .owl-carousel .owl-item{
+.partners_container_emi .owl-carousel .owl-item, .partners_container_deals .owl-carousel .owl-item{
     max-width: 25%;
 }
 
@@ -3270,7 +3284,7 @@ h6 {
     display: block;
     width: 100%;
     line-height: 28px;
-    padding: 10px 25px;
+    padding: 10px 25px 10px 35px;
     border-radius: 0px;
     background: transparent;
     border: 1px solid #d3d3d3;
@@ -3334,11 +3348,11 @@ textarea.error {
 }
 
 *::-webkit-scrollbar-button {
-    background-color: #0088ff;
+    background-color: #CF8D56;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #0088ff;
+    background-color: #CF8D56;
 }
 
 /*================================================
@@ -8367,4 +8381,11 @@ button.accordion-button .xlsheats{
 }
 
 
+.regaliaGoldCarousel{
 
+    .carousel-indicators [data-bs-target]{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+}
