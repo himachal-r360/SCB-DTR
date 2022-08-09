@@ -841,11 +841,11 @@
                                                                           <p>{{fromCityName}} to {{toCityName}} <br> Depart</p>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                    <div class="extra-tabs-details-bottom ">
                                                                         <div class="tabs-depart-box"  *ngFor="let details of list.flights;let i=index;">
                                                                             <div class="tabs-depart-one">
-                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
-                                                                                <div class="tabs-depart-left">
+                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif"  class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                <div class="tabs-depart-left  float-none">
                                                                                     <div class="tabs-depart-times">
                                                                                         <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                         <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
@@ -1258,11 +1258,11 @@
                                                                           <p>{{toCityName}} to {{fromCityName}} <br> Depart</p>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="extra-tabs-details-bottom p-0">
+                                                                    <div class="extra-tabs-details-bottom ">
                                                                         <div class="tabs-depart-box"  *ngFor="let details of list.flights;let i=index;">
                                                                             <div class="tabs-depart-one">
-                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
-                                                                                <div class="tabs-depart-left">
+                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif"  class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                <div class="tabs-depart-left  float-none">
                                                                                     <div class="tabs-depart-times">
                                                                                         <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                         <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
@@ -2193,7 +2193,7 @@
                                   <div class="round-ff-content">
                                       <div class="round-ff-left" [hidden]="!isOnwardSelected" >
                                           <div class="round-ff-image">
-                                              <img src="{{cdnUrl}}/images/airlines/{{onwardSelectedFlight.flights[0].airline}}.gif" alt="{{onwardSelectedFlight.flights[0].airline}}">
+                                              <img src="{{cdnUrl}}/images/airlines/{{onwardSelectedFlight.flights[0].airline}}.gif"  class="flight-image" alt="{{onwardSelectedFlight.flights[0].airline}}">
                                               <p> {{onwardSelectedFlight.flights[0].airline}}  {{onwardSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
@@ -2221,7 +2221,7 @@
                                   <div class="round-ff-content">
                                       <div class="round-ff-left">
                                           <div class="round-ff-image" >
-                                              <img src="{{cdnUrl}}/images/airlines/{{returnSelectedFlight.flights[0].airline}}.gif" alt="{{returnSelectedFlight.flights[0].airline}}" >
+                                              <img  class="flight-image" src="{{cdnUrl}}/images/airlines/{{returnSelectedFlight.flights[0].airline}}.gif" alt="{{returnSelectedFlight.flights[0].airline}}" >
                                               <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
                                           </div>
                                           <div class="round-ff-time">
@@ -2328,8 +2328,8 @@
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
                                                       <div class="tabs-depart-one" *ngFor="let flights of onwardSelectedFlight.flights;let i = index">
-                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" class="me-2" alt="{{flights.airline}}">{{flights.airline}} {{flights.flightNumber}}</p>
-                                                          <div class="tabs-depart-left">
+                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image me-2" alt="{{flights.airline}}">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <div class="tabs-depart-left  float-none">
                                                               <div class="tabs-depart-times">
                                                                   <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
                                                                   <p>{{flights.departureDateTime| date:'EEE, MMM dd'}}</p>
@@ -2371,8 +2371,8 @@
                                               <div class="extra-tabs-details-bottom">
                                                   <div class="tabs-depart-box">
                                                       <div class="tabs-depart-three" *ngFor="let flights of returnSelectedFlight.flights;let i = index">
-                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="22px" class="me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
-                                                          <div class="tabs-depart-left">
+                                                          <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                          <div class="tabs-depart-left  float-none">
                                                               <div class="tabs-depart-times">
                                                                   <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
                                                                   <p>{{flights.departureDateTime| date:'EEE, MMM dd'}}</p>
