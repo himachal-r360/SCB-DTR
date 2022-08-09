@@ -762,12 +762,12 @@ new_fare: number = 0;
 
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true);
-             $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             $('#passengerBox_'+checkboxIndex).removeClass('hide');
 
              }
         } else {
          if(checkboxIndex !=-1){
-          $('#passengerBox_'+checkboxIndex).addClass('hidden');
+          $('#passengerBox_'+checkboxIndex).addClass('hide');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false);
          }
 
@@ -779,7 +779,7 @@ new_fare: number = 0;
         var passengerName = this.passengerForm.controls['adult_first_name' + val]['value'];
         const index = this.adultsArray.indexOf(val, 0);
          if(checkboxIndex !=-1)
-     $('#passengerBox_'+checkboxIndex).addClass('hidden');
+     $('#passengerBox_'+checkboxIndex).addClass('hide');
         if (index > -1) {
             this.adultsArray.splice(index, 1);
         }
@@ -950,11 +950,11 @@ new_fare: number = 0;
 
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true);
-             $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             $('#passengerBox_'+checkboxIndex).removeClass('hide');
              }
         } else {
          if(checkboxIndex !=-1){
-          $('#passengerBox_'+checkboxIndex).addClass('hidden');
+          $('#passengerBox_'+checkboxIndex).addClass('hide');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false);
          }
 
@@ -968,7 +968,7 @@ new_fare: number = 0;
         var passengerName = this.passengerForm.controls['child_first_name' + val]['value'];
         const index = this.childArray.indexOf(val, 0);
          if(checkboxIndex !=-1)
-     $('#passengerBox_'+checkboxIndex).addClass('hidden');
+     $('#passengerBox_'+checkboxIndex).addClass('hide');
         if (index > -1) {
             this.childArray.splice(index, 1);
         }
@@ -1132,11 +1132,11 @@ new_fare: number = 0;
 
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true);
-             $('#passengerBox_'+checkboxIndex).removeClass('hidden');
+             $('#passengerBox_'+checkboxIndex).removeClass('hide');
              }
         } else {
          if(checkboxIndex !=-1){
-          $('#passengerBox_'+checkboxIndex).addClass('hidden');
+          $('#passengerBox_'+checkboxIndex).addClass('hide');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false);
          }
 
@@ -1150,7 +1150,7 @@ new_fare: number = 0;
         var passengerName = this.passengerForm.controls['infant_first_name' + val]['value'];
         const index = this.infantArray.indexOf(val, 0);
          if(checkboxIndex !=-1)
-     $('#passengerBox_'+checkboxIndex).addClass('hidden');
+     $('#passengerBox_'+checkboxIndex).addClass('hide');
         if (index > -1) {
             this.infantArray.splice(index, 1);
         }
@@ -1765,19 +1765,39 @@ new_fare: number = 0;
   changeFareRuleTabOnward(event:any){
     $('.flight-extra-content-onward').show();
     $('.flight-extra-content-return').hide();
-     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+  
+    $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+  
+    if(this.cancellationPolicyOnward){
     var Element = document.getElementById("CancellationDetails");
     Element!.style.display = 'block';
      $('.flight-extra-content-oo').addClass('flight-extra-tabs-active');
+    }
+    if(!this.cancellationPolicyOnward && this.baggageInfoOnward){
+    var Element = document.getElementById("BaggageDetails");
+    Element!.style.display = 'block';
+     $('.flight-extra-content-ob').addClass('flight-extra-tabs-active');
+    }
+     
   }
 
     changeFareRuleTabReturn(event:any){
       $('.flight-extra-content-onward').hide();
     $('.flight-extra-content-return').show();
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+    
+    
+     if(this.cancellationPolicyReturn){
     var Element = document.getElementById("CancellationDetailsR");
     Element!.style.display = 'block';
     $('.flight-extra-content-rr').addClass('flight-extra-tabs-active');
+    }
+        if(!this.cancellationPolicyReturn && this.baggageInfoReturn){
+    var Element = document.getElementById("BaggageDetailsR");
+    Element!.style.display = 'block';
+     $('.flight-extra-content-rb').addClass('flight-extra-tabs-active');
+    }
+    
   }
 
 
