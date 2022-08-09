@@ -303,7 +303,7 @@ defaultFlightOptions: any[];
         this.toAirpotName = values.airport_name;
         this.toCityName = values.city;
          setTimeout(() => {
-       // this.datePicker.open();
+        this.datePicker.open();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
 
@@ -690,8 +690,8 @@ defaultFlightOptions: any[];
 
   navBarLink(navItem:any){
     this.navItemActive = navItem;
-    
-    
+
+
     if(this.navItemActive == 'Round Trip'){
        this.flightData.controls["arrival"].setValidators(Validators.required);
        this.flightData.controls["arrival"].updateValueAndValidity();
@@ -700,7 +700,7 @@ defaultFlightOptions: any[];
         this.flightData.controls["arrival"].setValue('');
         this.flightData.controls["arrival"].clearValidators();
         this.flightData.controls["arrival"].updateValueAndValidity();
-    } 
+    }
   }
 
   showPartner(){
@@ -711,6 +711,23 @@ defaultFlightOptions: any[];
     this.isShowPartner = false;
   }
 
+  FixedLengthDisplay(value:string)
+  {
+    if(this.isMobile)
+    {
+      if(value.length > 18)
+      {
+          var response = value.substring(0, 15)+"...";
+          return response;
+      }
+      else{
+        return value;
+      }
+    }
+    else{
+      return value;
+    }
+  }
 
 }
 export function MustMatch(controlName: any, matchingControlName: any) {

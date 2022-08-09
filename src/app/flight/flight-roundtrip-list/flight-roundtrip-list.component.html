@@ -211,7 +211,7 @@
                                                         </div>
                                                     </li>
                                                     </ng-container>
-                                                    
+
                                           </ul>
                                           <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                       </div>
@@ -291,12 +291,12 @@
                           <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content w-100">
                                 <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                                <span class="float-right" style="width:75%;" > 
+                                <span class="float-right" style="width:75%;" >
                                 <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 </span>
-                                </div>  
+                                </div>
                           </div>
                         </div>
                                     <div class="flight-listing-area">
@@ -339,7 +339,7 @@
                                                   </div>
                                               </div>
                                           </div>
-                                
+
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
                                            <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                               <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
@@ -388,7 +388,7 @@
                                                               <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
                                                           </div>
                                                       </div>
-                                                    
+
                                                   </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
@@ -421,12 +421,12 @@
                                                               </li>
                                                           </ul>-->
                                                       </div>
-                                                      <a href="javascript:void(0);" (click)="DisplayDetail()" class="round-flight-details-click">
+                                                      <a href="javascript:void(0);" (click)="DisplayDetail(list.flightKey,list.flights,item,$event,'onward')" class="round-flight-details-click">
                                                           Flight Details
                                                           <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
                                                         </a>
                                                     </div>
-                                                      
+
                                                 </div>
                                                 </ng-container>
                                             </div>
@@ -459,12 +459,12 @@
                           <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content w-100">
                                 <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                                <span class="float-right" style="width:75%;" > 
+                                <span class="float-right" style="width:75%;" >
                                 <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 </span>
-                                </div>  
+                                </div>
                           </div>
                         </div>
                                       <div class="flight-listing-area">
@@ -508,9 +508,9 @@
                                                   </div>
                                               </div>
                                           </div>
-                                     
+
                                           <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
-                                          
+
                                           <ng-container  *ngFor="let item of list.priceSummary; let j = index">
                                               <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
                                                   <div class="round-options-list-top">
@@ -590,7 +590,7 @@
                                                               </li>
                                                           </ul>-->
                                                       </div>
-                                                      <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail()">
+                                                      <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail(list.flightKey,list.flights,item,$event,'return')">
                                                           Flight Details
                                                           <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="" >
                                                       </a>
@@ -661,20 +661,20 @@
                       </ul>
                   </div>
               </div>
-              
+
                                              <div *ngIf="loader">
               <div  class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                           <div class="filter-loader-content w-100">
                               <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                              <span class="w-75 float-right"> 
+                              <span class="w-75 float-right">
                               <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                </span>
                           </div>
                       </div>
-                 </div> 
-              
+                 </div>
+
               <div class="col-md-12">
                   <div class="mob-list-area mob-fr-list-area">
                       <div class="row g-0">
@@ -767,10 +767,10 @@
                                                   <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
                                               </div>
                                           </div>
-                                       
+
                                       </div>
-                                
-                                      </ng-container> 
+
+                                      </ng-container>
                                             <div class="mob-items-book-Showless showless-close" >
                                         <a href="javascript:void(0);">Show less</a>
                                     </div>
@@ -1156,7 +1156,7 @@
                                   </div>
                                   <div class="mob-items-book-list flight-from-hide dropdown not-close">
                                    <ng-container  *ngFor="let item of list.priceSummary; let j = index;let last=last;">
-                                      <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false"> 
+                                      <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
                                           <div class="mob-book-list-top" >
                                               <div class="mob-booking-image">
                                                   <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
@@ -1187,7 +1187,7 @@
                                               </div>
                                           </div>
                                       </div>
-                                   
+
                                     </ng-container>
                                        <div class="mob-items-book-Showless showless-close">
                                         <a href="javascript:void(0);">Show less</a>
@@ -1508,9 +1508,77 @@
       </div>
   </section>
 
+
 </main>
 
 
+        <!-- Mlite Fare Summary Popup -->
+        <div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel"
+        aria-hidden="true" *ngIf="isOnwardSelected">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header pb-0">
+              <h5 class="modal-title">Fare Summary</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+              <div>
+                <img
+                  src="{{cdnUrl}}/images/flight_partners/small-no/{{onwardSelectedFlight.priceSummery.partnerName}}.png"
+                  alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
+              </div>
+              <div class="widget-content">
+                <ul class="widget-list clearfix">
+                  <li class="fare-list-item">
+                    <div class="fare-list-box">
+                      <div class="fare-list-left">
+                        <p>
+                          <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                          Base Fare
+                        </p>
+                      </div>
+                      <div class="fare-list-right">
+                        <p>&#8377;{{(onwardSelectedFlight.priceSummery.baseFare  + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.baseFare : 0))|number}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="fare-list-item">
+                    <div class="fare-list-box">
+                      <div class="fare-list-left">
+                        <p>
+                          <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                          Taxes and Fees
+                        </p>
+                      </div>
+                      <div class="fare-list-right">
+                        <p>&#8377;{{(onwardSelectedFlight.priceSummery.totalFare-onwardSelectedFlight.priceSummery.baseFare)
+                          + (returnSelectedFlight != null ? (returnSelectedFlight.priceSummery.totalFare-returnSelectedFlight.priceSummery.baseFare) : 0)
+                           |number}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="fare-list-item">
+                    <div class="fare-list-box pt-30">
+                      <div class="fare-list-left">
+                        <h6 class="fw_7">Grand Total</h6>
+                      </div>
+                      <div class="fare-list-right">
+                        <h6 class="fw_7">₹{{(onwardSelectedFlight.priceSummery.totalFare  + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) | number}}</h6>
+                        <p class="opacity_05" *ngIf="(onwardSelectedFlight.priceSummery.totalFare  + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) > EMIAvailableLimit">EMI @
+                          {{calculateEMI((onwardSelectedFlight.priceSummery.totalFare  + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)))|number: '.2'}}/month</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+          </div>
+        </div>
+      </div>
 <!-- ------------------------------
   >>> mobile Flight details filters
 ---------------------------------->
@@ -2145,7 +2213,7 @@
  <!-- ------------------------------
         >>> flight fixed
         ---------------------------------->
-        <div class="flight-fixed-area" *ngIf="isDisplayDetail && !isMobile">
+        <div class="flight-fixed-area" *ngIf="onwardSelectedFlight && !isMobile">
           <div class="container">
               <div class="row">
                   <div class="col-lg-12">
@@ -2748,12 +2816,16 @@
                                 <img src="{{cdnUrl}}/images/flight_partners/small-no/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="{{onwardSelectedFlight.priceSummery.partnerName}}" class="mt-1 mb-1">
                               </div>
                           </div>
+                          <div class="mob-ff-name">
+                            <h6>{{fromCityName}} to {{toCityName}}</h6>
+                        </div>
                           <div class="fr-flight-fixed-bottom">
                               <div class="fr-fixed-price">
                                   <h6>₹ {{(onwardSelectedFlight.priceSummery.totalFare  + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) | number}}</h6>
                                   <p>EMI @ {{calculateEMI(onwardSelectedFlight.priceSummery.totalFare +(returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) | number}}/month</p>
                                   <span>|</span>
-                                  <a href="javascript:void(0)">Fare Details</a>
+                                  <a href="javascript:void(0)" data-bs-toggle="modal"
+                                  data-bs-target="#fareSummary_mlite">Fare Details</a>
                                 </div>
                               <div class="fr-fixed-btn">
                                   <a href="javascript:void(0)" (click)="isReturnSelected  ? bookingSummary(onwardSelectedFlight,returnSelectedFlight) : 0 " class="button-style w-100 mt-2" [ngClass]="{'disable-partner':!isReturnSelected}">Continue</a>
@@ -2764,4 +2836,5 @@
               </div>
           </div>
       </div>
+
 
