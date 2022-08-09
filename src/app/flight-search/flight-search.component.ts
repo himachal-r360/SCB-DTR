@@ -388,6 +388,9 @@ defaultFlightOptions: any[];
 
       //  this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
        this.departureDate = new Date(lastSearch.departure);
+
+      this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
+
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
         this.arrivalDate = new Date(lastSearch.arrival);
        }
@@ -443,7 +446,7 @@ defaultFlightOptions: any[];
     }
     else {
       this.sameCityValidation = true;
-      
+
     }
 
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
