@@ -187,7 +187,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         $(".modal").hide();
         $('body').removeClass( "modal-open" );
          $("body").removeAttr("style");
-        $(".modal-backdrop").hide();
+        $(".modal-backdrop").remove();
         this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
@@ -375,7 +375,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare)     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare && a.splrtFareFlight==false  && b.splrtFareFlight==false )     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })

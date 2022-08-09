@@ -356,7 +356,7 @@ new_fare: number = 0;
                 }, 10);
                 }else{
                 this.searchData=(this.flightSessionData.queryFlightData);
-                //console.log(this.searchData);
+                console.log(this.searchData);
                  setTimeout(() => {
                 $("#infoprocess").modal('show');
                 }, 10);
@@ -2157,7 +2157,7 @@ new_fare: number = 0;
         $(".modal").hide();
         $('body').removeClass( "modal-open" );
         $("body").removeAttr("style");
-        $(".modal-backdrop").hide();
+        $(".modal-backdrop").remove();
         }
 
   goBack(){
