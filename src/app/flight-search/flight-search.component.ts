@@ -143,7 +143,7 @@ defaultFlightOptions: any[];
       setTimeout(() => {
         this._styleManager.setScript('custom', `assets/js/custom.js`);
      }, 10);
-     
+
      	this.defaultFlightOptions=[
 	{"_source":{"city":"New Delhi","airport_code":"DEL","airport_name":"Indira Gandhi Airport","country_code":"IN"}},
 	{"_source":{"city":"Mumbai","airport_code":"BOM","airport_name":"Chatrapati Shivaji Airport","country_code":"IN"}},
@@ -221,14 +221,14 @@ defaultFlightOptions: any[];
   }*/
 }
 
-        
+
      searchAutoComplete($event,field,device) {
        let keycode = $event.which;
         if ($event.keyCode != 40 && $event.keyCode != 38 ){
         if ($event.timeStamp - this.lastKeypress > 0) {
         this.queryText = $event.target.value;
         if(this.queryText && this.queryText.length > 0){
- 
+
         let searchParam = {
         searchDisplayForm: 'flights',
         queryText: this.queryText
@@ -247,10 +247,10 @@ defaultFlightOptions: any[];
                 this.flightToOptions = this.defaultFlightOptions;
                 this.onToClick(res.hits.hits[0],device);
                 }
-               
+
            }
         }
-       
+
         if(field=='fromCity'){
          this.searchFlightFromHeader='Result';
         this.flightFromOptions=res.hits.hits;
@@ -258,12 +258,12 @@ defaultFlightOptions: any[];
          this.searchFlightToHeader='Result';
         this.flightToOptions=res.hits.hits;
         }
-     
+
         });
 
 
        }else{
-       
+
         if(field=='fromCity'){
          this.flightFromOptions= this.defaultFlightOptions;
          this.searchFlightFromHeader='Popular Cities';
@@ -271,7 +271,7 @@ defaultFlightOptions: any[];
         this.flightToOptions= this.defaultFlightOptions;
          this.searchFlightToHeader='Popular Cities';
         }
-       
+
        }
       }
      }
@@ -285,7 +285,7 @@ defaultFlightOptions: any[];
         this.flightFromOptions= this.defaultFlightOptions;
         this.fromAirpotName = values.airport_name;
         this.fromCityName = values.city;
-       
+
         setTimeout(() => {
         let toCityDivElement:any=document.getElementById("toCityDiv");
         toCityDivElement?.click();
@@ -295,7 +295,7 @@ defaultFlightOptions: any[];
   }
 
   onToClick(values,device) {
-        values=values['_source'];   
+        values=values['_source'];
         this.flightData['controls']['toCity'].setValue(values.city);
         this.flightData['controls']['flightto'].setValue(values.airport_code);
         this.flightData['controls']['toContry'].setValue(values.country_code);
@@ -303,7 +303,7 @@ defaultFlightOptions: any[];
         this.toAirpotName = values.airport_name;
         this.toCityName = values.city;
          setTimeout(() => {
-        this.datePicker.open();
+       // this.datePicker.open();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
 
@@ -311,11 +311,11 @@ defaultFlightOptions: any[];
          minDateFlightToMlite =  new Date();
           minDateMlite =  new Date();
    openMliteDatePicker(field,rtype){
-     
+
      if(rtype==1){
       this.navItemActive = "Round Trip"
       }
-         
+
         if(field=='departure'){
         $('#flight_arrival_mlite').modal('hide');
         $('#flight_departure_mlite').modal('show');
@@ -323,11 +323,11 @@ defaultFlightOptions: any[];
         $('#flight_arrival_mlite').modal('show');
         $('#flight_departure_mlite').modal('hide');
         }
-        
+
    }
-   
+
      onSelectMliteDate(event,field){
-        
+
       if(field=='departure'){
         this.departureDate =event;
         this.minDateFlightToMlite=event;
@@ -337,16 +337,16 @@ defaultFlightOptions: any[];
         this.arrivalDate = event;
         this.flightData['controls']['arrival'].setValue(event);
         }
-        
-        
+
+
       }else{
        this.arrivalDate = event;
     }
 
-     
+
   }
-   
-   
+
+
   adultsVal:any
   childVal:any
   infantsVal:any
@@ -356,7 +356,7 @@ defaultFlightOptions: any[];
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
-        this.flightData.get('child').setValue(lastSearch.child);      
+        this.flightData.get('child').setValue(lastSearch.child);
         this.flightData.get('flightclass').setValue(lastSearch.flightclass );
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
         this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
@@ -388,6 +388,9 @@ defaultFlightOptions: any[];
 
       //  this.flightData.value.departure=this.flightData.value.departure.getFullYear()+'-' +(this.flightData.value.departure.getMonth()+ 1)+'-' +this.flightData.value.departure.getDate();
        this.departureDate = new Date(lastSearch.departure);
+
+      this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
+
        if(lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
         this.arrivalDate = new Date(lastSearch.arrival);
        }
@@ -443,7 +446,7 @@ defaultFlightOptions: any[];
     }
     else {
       this.sameCityValidation = true;
-      
+
     }
 
     if(this.flightData.value.arrival!="" && this.flightData.value.arrival!=undefined ){
@@ -452,7 +455,7 @@ defaultFlightOptions: any[];
     }else{
     this.flightData.get('flightdefault').setValue('O');
     }
-    
+
         if(this.flightData.value.fromContry=='IN' && this.flightData.value.toContry=='IN' ){
          this.flightData.get('travel').setValue('DOM');
         }else{
@@ -686,9 +689,17 @@ defaultFlightOptions: any[];
 
   navBarLink(navItem:any){
     this.navItemActive = navItem;
-    if(this.navItemActive == 'One Way'){
-      this.arrivalDate = '';
-    }
+    
+    
+    if(this.navItemActive == 'Round Trip'){
+       this.flightData.controls["arrival"].setValidators(Validators.required);
+       this.flightData.controls["arrival"].updateValueAndValidity();
+    }else{
+        this.arrivalDate = '';
+        this.flightData.controls["arrival"].setValue('');
+        this.flightData.controls["arrival"].clearValidators();
+        this.flightData.controls["arrival"].updateValueAndValidity();
+    } 
   }
 
   showPartner(){

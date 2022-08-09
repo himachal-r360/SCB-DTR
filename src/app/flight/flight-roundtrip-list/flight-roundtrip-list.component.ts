@@ -9,7 +9,9 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { Options } from '@angular-slider/ngx-slider';
 import { Location, ViewportScroller } from '@angular/common';
-
+import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 declare var $: any;
 
 @Component({
@@ -165,7 +167,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   ITEMS_RENDERED_AT_ONCE=25;
   nextIndex=0;
 
-  constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
+  constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     $(window).scroll(function(this) {
       if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
@@ -190,6 +192,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.getQueryParamData(null);
     this.headerHideShow(null)
     this.getAirpotsList();
+        this.getCoupons();
     this.flightSearch();
      });
   }
@@ -233,6 +236,8 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   private intialData() {
     for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+      if(this.flightList[n] != undefined)
+    {
       const context = {
         item: [this.flightList[n]],
       };
@@ -240,15 +245,20 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       this.container.createEmbeddedView(this.template, context);
     }
+    }
   }
   private intialReturnData() {
-    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
-    const returnContext = {
+    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE; n++) {
+    if(this.ReturnflightList[n] != undefined)
+    {
+      const returnContext = {
         item: [this.ReturnflightList[n]],
       };
       // console.log(returnContext , "return");
 
       this.returnContainer.createEmbeddedView(this.returnTemplate, returnContext);
+
+    }
 
     }
   }
@@ -289,7 +299,21 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   }
 
+flightCoupons=[];
+getCoupons(){
+const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+var couponParam = {
+postData:this.EncrDecr.set(JSON.stringify(urlParams))
+};
 
+this.rest.getCouponsByService(couponParam).subscribe(results => { 
+   if(results.status=="success"){
+   this.flightCoupons=results.data;
+   }
+
+});
+
+}
 
   //Hide show header
   headerHideShow(event:any) {
@@ -716,8 +740,15 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       this.container.clear();
       this.returnContainer.clear();
-      this.intialData();
-      this.intialReturnData();
+      if(this.flightList.length > 0)
+      {
+        this.intialData();
+      }
+      if(this.ReturnflightList.length > 0)
+      {
+        this.intialReturnData();
+      }
+
     }
 
 

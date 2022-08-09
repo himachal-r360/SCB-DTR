@@ -10,6 +10,9 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { AppConfigService } from '../../app-config.service';
+import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -195,11 +198,15 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
          private intialData() {
             for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
-             const context = {
-                item: [this.flightList[n]]
-              };
+              if(this.flightList[n] != undefined)
+              {
+                const context = {
+                  item: [this.flightList[n]]
+                };
 
-              this.container.createEmbeddedView(this.template, context);
+                this.container.createEmbeddedView(this.template, context);
+              }
+
             }
             //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
             //  this.gotoTop();
@@ -207,7 +214,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
    serviceSettings:any;
   enableFlightServices:any;
 
-  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor(public rest:RestapiService,private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
@@ -239,6 +246,7 @@ ngOnInit(): void {
     this.headerHideShow(null)
     this.getAirpotsNameList();
     this.getAirlinesIconList();
+    this.getCoupons();
     this.flightSearch();
  });
 
@@ -302,9 +310,21 @@ ngOnInit(): void {
   showmoreLayover() {
    this.show_layover_more=1;
   }
+flightCoupons=[];
+getCoupons(){
+const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+var couponParam = {
+postData:this.EncrDecr.set(JSON.stringify(urlParams))
+};
 
+this.rest.getCouponsByService(couponParam).subscribe(results => { 
+   if(results.status=="success"){
+   this.flightCoupons=results.data;
+   }
 
+});
 
+}
 
 
   convertDate(str: any) {
@@ -467,18 +487,18 @@ ngOnInit(): void {
 
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-    
+
     //Popular Filter Search Data
     updatedflightList = this.popularFilterFlights(this.flightList);
-    
+
     //Timing Filter Data
     updatedflightList = this.timingFilterFlights(updatedflightList);
-    
+
     //Flight Stops Filter
     updatedflightList = this.stopsFilterFlights(updatedflightList);
-    
+
     this.flightList = updatedflightList;
-    
+
     //it is used for getting values of count.
     this.RefundableFaresCount = 0;
     this.nonStopCount = 0;
@@ -555,10 +575,10 @@ ngOnInit(): void {
 
       })
     }
-    
+
     // Airlines Filter
     // this.flightList = this.airlineFilterFlights(this.flightList);
-    
+
     //StopOverFilter
     if (this.flightList.length > 0) {
       var start = this.minStopOver;
@@ -577,7 +597,7 @@ ngOnInit(): void {
       });
       this.flightList = filteredStopOver;
     }
-    
+
     //PriceFilter
     if (this.flightList.length > 0) {
       var min_price = this.minPrice;
@@ -592,7 +612,7 @@ ngOnInit(): void {
       });
       this.flightList = filteredPrice;
     }
-    
+
     //Airline Filter
     this.flightList = this.airlineFilterFlights(this.flightList);
 
@@ -603,7 +623,7 @@ ngOnInit(): void {
     this.flightList = this.layoverFilterFlights(this.flightList);
 
 
-    
+
      this.container.clear();
      this.intialData();
 
@@ -671,10 +691,9 @@ ngOnInit(): void {
     let isfilterMorningDepartures: any = false;
     let isfilterFlightTiming = false;
     var current_date = new Date(this.departureDate),
-      current_year = current_date.getFullYear(),
-      current_mnth = current_date.getMonth(),
-      current_day = current_date.getDate();
-   // console.log(current_date,"current_date");
+    current_year = current_date.getFullYear(),
+    current_mnth = current_date.getMonth(),
+    current_day = current_date.getDate();
 
     var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
     var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
@@ -698,9 +717,9 @@ ngOnInit(): void {
     //Flight Timing Filter
     if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
       var filteredTimingArr: any[] = [];
-      
+
       if (flightList.length > 0) {
-        
+
         flightList.filter((d: any) => {
           let singleFlightTiming = [];
         //  console.log(d.flights,"d.flights");
@@ -727,12 +746,12 @@ ngOnInit(): void {
 
       }
       updatedflightList = filteredTimingArr;
-      
+
     }
     else {
       updatedflightList = flightList;
     }
-    
+
     return updatedflightList;
   }
   //stops Filter Flights
@@ -892,13 +911,13 @@ ngOnInit(): void {
     let airlineNameArr = [];
     let airlinePartnerArr = [];
     let layOverArr = [];
-    
+
     for (let j = 0; j < this.flightList.length; j++) {
       let singleFlightList = [];
       singleFlightList = this.flightList[j].flights;
       let priceSummaryList = this.flightList[j].priceSummary;
       let priceSummary;
-   
+
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
@@ -930,7 +949,7 @@ ngOnInit(): void {
               airlineNameArr.push(airlineNameObj);
             }
           }
-          
+
           let partnerName = priceSummaryList[p].partnerName;
           if (airlinePartnerArr.filter((d: any) => { if (d.partnerName == partnerName) { return d; } }).length < 1) {
               let partnerObj = {
@@ -945,7 +964,7 @@ ngOnInit(): void {
     this.airlines = airlineNameArr;
     this.partnerFilterArr = airlinePartnerArr;
     this.layOverFilterArr = layOverArr;
- 
+
   }
 
   searchNonStop(item: any) {
@@ -977,6 +996,7 @@ ngOnInit(): void {
     let searchObj = (this.searchData);
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.loader = false;
+     // console.log(this.flightCoupons);
       this.DocKey = res.response.docKey;
       // this.flightList = res.response.onwardFlights;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
