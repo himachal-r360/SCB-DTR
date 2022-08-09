@@ -2364,9 +2364,9 @@
                         <button class="navbar-toggler pt-0"
                         type="button" (click)="toggleNavbar()">
                         <span class="navbar-toggler-icon reg_gld_mlite_toggler_icn"> ☰ </span>
-</button>
-</a>
-</div>
+                        </button>
+                    </a>
+                </div>
 
 <div class="logo pl-10" *ngIf="payzrestriction==true">
 
@@ -2587,7 +2587,7 @@
                 <p class="hdr_text">Regalia Gold</p>
             </div>
             <div class="col-6 text-right">
-                <a href="#" class="hdr_text">Switch to <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="#" class="hdr_text" (click)="menuMobile('gold_switch')">Switch to <i class="fa fa-angle-right" aria-hidden="true"></i></a>
             </div>
             <div class="col-12">
                 <hr class="hdr_seperator"/>
@@ -2599,10 +2599,10 @@
             <div>
                 <ul>
                     <li>
-                        <a href="#" class="m_sidebar_link" id="reg-travel">
+                        <a href="javascript:;" class="m_sidebar_link" id="reg-travel" (click)="menuMobile('gold_travel&stay')">
                             <div class="row">
                                 <div class="col-10">
-                                    <p class="m_sidebar_link">Travel & Stay</p>
+                                    <p class="m_sidebar_link" >Travel & Stay</p>
                                 </div>
                                 <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
                                 <div class="col-12"><hr class="opt_seperator"></div>
@@ -2610,86 +2610,62 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="m_sidebar_link" id="reg-benifits">
-                        <div class="row">
-                            <div class="col-10">
-                                <p class="m_sidebar_link">Regalia Gold Benefits</p>
+                        <a href="javascript:;" class="m_sidebar_link" id="reg-benifits" (click)="menuMobile('gold_benefits')">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p class="m_sidebar_link" >Regalia Gold Benefits</p>
+                                </div>
+                                <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
+                                <div class="col-12"><hr class="opt_seperator"></div>
                             </div>
-                            <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
-                            <div class="col-12"><hr class="opt_seperator"></div>
-                        </div>
                         </a>
                     </li>
                     <li>
-                            <a href="#" class="m_sidebar_link" id="reg-rewards">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <p class="m_sidebar_link">Rewards</p>
-                                    </div>
-                                    <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
-                                    <div class="col-12"><hr class="opt_seperator"></div>
+                        <a href="javascript:;" class="m_sidebar_link" id="reg-rewards" (click)="menuMobile('gold_rewards')">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p class="m_sidebar_link" >Rewards</p>
                                 </div>
-                                </a>
+                                <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
+                                <div class="col-12"><hr class="opt_seperator"></div>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                            <a href="#" class="m_sidebar_link" id="reg-airmiles">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <p class="m_sidebar_link">Shopping</p>
-                                    </div>
-                                    <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
-                                    <div class="col-12"><hr class="opt_seperator"></div>
+                        <a href="javascript:;" class="m_sidebar_link" id="reg-airmiles" (click)="menuMobile('gold_shopping')">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p class="m_sidebar_link" >Shopping</p>
                                 </div>
-                                </a>
+                                <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
+                                <div class="col-12"><hr class="opt_seperator"></div>
+                            </div>
+                        </a>
                     </li>
                     <li> 
-                                <a href="#" class="m_sidebar_link">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <p class="m_sidebar_link">Airmiles</p>
-                                    </div>
-                                    <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
-                                    <div class="col-12" id="shop_cat_1"><hr class="opt_seperator"></div>
+                        <a href="javascript:;" class="m_sidebar_link">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p class="m_sidebar_link">Airmiles</p>
                                 </div>
-                                </a>
+                                <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
+                                <div class="col-12" id="shop_cat_1"><hr class="opt_seperator"></div>
+                            </div>
+                        </a>
                     </li>
                     <li> 
-                                <a href="#" class="m_sidebar_link">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <p class="m_sidebar_link">Deals Offers</p>
-                                    </div>
-                                    <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
-                                    <div class="col-12"><hr class="opt_seperator"></div>
+                        <a href="javascript:;" class="m_sidebar_link">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p class="m_sidebar_link">Deals Offers</p>
                                 </div>
-                                </a>
+                                <div class="col-2"><i class="fa fa-angle-right m_opt_arw_icon" aria-hidden="true"></i></div>
+                                <div class="col-12"><hr class="opt_seperator"></div>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
-        <!-- <div>
-            <ul>
-                <li *ngIf="payzrestriction==false">
-                    <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''">
-                        <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="menu_name" (click)="menuMobile('shop')">
-                        <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/shop.svg" alt="" class="svg_icn_menu"> Shop by Category</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
-                    </a>
-                </li>
-                <li *ngIf="payzrestriction==false">
-                    <a href="javascript:;" class="menu_name" (click)="menuMobile('privileges')">
-                        <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/privi.svg" alt="" class="svg_icn_menu"> Privileges</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
-                    </a>
-                </li>
-                <li *ngIf="payzrestriction==false">
-                    <a href="javascript:;" class="menu_name" (click)="menuMobile('deals')">
-                        <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/deals.svg" alt="" class="svg_icn_menu"> Deals & Offers</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
-                    </a>
-                </li>
-            </ul>
-        </div> -->
 
         <div class="m_support_div">
             <div class="row">
@@ -2706,365 +2682,7 @@
 
 
     </div>
-
-    <!-- Travel and Stay sidebar -->
-    <div class="m_sidebar_header reg-travel-show reg-travel-block hide" >
-        <div  class="m_navigational_link" id="m-nav-reg-link"><span><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Travel & Stay</span></div>
-
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="hdr_travel">
-                    <a href="#"><div class="row">
-                    
-                        <div class="col-2">
-                            <div class="circular_div">
-                                <img src="{{cdnUrl}}images/smartbuy/icons/hdr_plane_icn.svg" alt="" class="circular_div_img card_img"/>
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <p class="travel_highlight">Flight</p>
-                            <p class="travel_text">3X Reward Points | 10% Cashback</p>
-                        </div>
-                        <!-- <div class="col-2 text-left">
-                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                        </div> -->
-                        
-                    </div></a> 
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="hdr_travel">
-                    <a href="#"  class="travel_highlight"><div class="row ">
-                        <div class="col-2">
-                            <div class="circular_div">
-                                <img src="{{cdnUrl}}images/smartbuy/icons/hdr_stay_icn.svg" alt="" class="circular_div_img card_img"/>
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <p class="travel_highlight">Stay</p>
-                            <p class="travel_text">3X Reward Points | 10% Cashback</p>
-                        </div>
-                    </div></a>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="hdr_travel">
-                    <a href="#"  class="travel_highlight">
-                        <div class="row ">
-                        <div class="col-2">
-                            <div class="circular_div">
-                                <img src="{{cdnUrl}}images/smartbuy/icons/hdr_travel_mt_icn.svg" class="circular_div_img">
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <p class="travel_highlight">MakeMyTrip</p>
-                            <p class="travel_text">10X Reward Points | 10% Cashback</p>
-                        </div>
-                        
-                    </div></a>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="hdr_travel">
-                    <a href="#"  class="travel_highlight">
-                    <div class="row">
-                        <div class="col-2">
-                            <div class="circular_div">
-                                <img src="{{cdnUrl}}images/smartbuy/icons/hdr_train_icn.svg" alt="" class="circular_div_img card_img"/>
-                            </div>
-                        </div>
-                        <div class="col-10">
-                        <p class="travel_highlight">Train</p>
-                            <p class="travel_text">Upto 3X Reward Points | 10% Cashback</p>
-                        </div>
-                    </div>
-                </a>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="hdr_travel">
-                    <a href="#"  class="travel_highlight">
-                    <div class="row ">
-                        <div class="col-2">
-                            <div class="circular_div">
-                                <img src="{{cdnUrl}}images/smartbuy/icons/hdr_bus_icn.svg" alt="" class="circular_div_img card_img"/>
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <p class="travel_highlight">Bus</p> 
-                            <p class="travel_text">Upto 3X Reward Points | 10% Cashback</p>
-                        </div>
-                    </div>
-                     </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end of travel & Stay sidebar -->
-
-
-    <!-- Regalia gold benefits sidebar -->
-    <div class="m_sidebar_header reg-benifits-show reg-benifits-block hide">
-        <div  class="m_navigational_link" id="m-nav-reg-link"><span><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Regalia Gold Benefits</span></div>
-        <div class="row mt-4">
-        <div class="col-12">
-                                    <div class="hdr_travel">
-                                        <div class="row cntnt_center">
-                                            <div class="col-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_sign_board_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <p class="travel_highlight">Milestone Benefits</p>
-                                            </div>
-                                            <div class="col-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="hdr_travel">
-                                        <div class="row cntnt_center">
-                                            <div class="col-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_globe_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <p class="travel_highlight">Travel Benefits</p>
-                                            </div>
-                                            <div class="col-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="hdr_travel">
-                                        <div class="row cntnt_center">
-                                            <div class="col-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_credit_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <p class="travel_highlight">Know Your Card</p>
-                                            </div>
-                                            <div class="col-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    </div>
-    <!-- end of regalia gold benefits sidebar -->
-
-
-    <!-- Rewards sidebar -->
-    <div class="m_sidebar_header reg-rewards-show reg-rewards-block hide">
-        <div  class="m_navigational_link" id="m-nav-reg-link"><span><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Rewards</span></div>
-
-        <div class="row mt-4">
-        <div class="col-12">
-                                    <div class="hdr_travel">
-                                        <div class="row cntnt_center">
-                                            <div class="col-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_trophy_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <p class="travel_highlight">Premium Rewards</p>
-                                            </div>
-                                            <div class="col-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="hdr_travel">
-                                        <div class="row cntnt_center">
-                                            <div class="col-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_voucher_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <p class="travel_highlight">Luxuary Vouchers</p>
-                                            </div>
-                                            <div class="col-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="hdr_travel">
-                                        <div class="row cntnt_center">
-                                            <div class="col-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_apple_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <p class="travel_highlight">All Things Apple</p>
-                                            </div>
-                                            <div class="col-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="hdr_travel">
-                                        <div class="row cntnt_center">
-                                            <div class="col-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_refresh_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <p class="travel_highlight">Points To Cash</p>
-                                            </div>
-                                            <div class="col-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-        </div>
-    </div>
-    <!-- end of rewards sidebar -->
-
-        <!-- shopping sidebar -->
-        <div class="m_sidebar_header reg-shop-show reg-shop-block hide">
-            <div  class="m_navigational_link" id="m-nav-reg-link"><span><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Shopping</span></div>
     
-            <div class="row mt-4">
-                                    <div class="col-12">
-                                        <div class="hdr_travel">
-                                            <a href="#">
-                                            <div class="row cntnt_center">
-                                                <div class="col-2">
-                                                    <div class="circular_div">
-                                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_flipkart.svg" class="circular_div_img">
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <p class="travel_highlight">Flipkart</p>
-                                                    <p class="travel_text">5X Reward Points | 5% Cashback</p>
-                                                </div>
-                                                <div class="col-2 text-left pl-0">
-                                                    <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="hdr_travel">
-                                            <a href="#">
-                                            <div class="row cntnt_center">
-                                                <div class="col-2">
-                                                    <div class="circular_div">
-                                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_igp.svg" class="circular_div_img">
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <p class="travel_highlight">IGP</p>
-                                                    <p class="travel_text">3X Reward Points | 2% Cashback</p>
-                                                </div>
-                                                <div class="col-2 text-left">
-                                                    <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="hdr_travel">
-                                            <a href="#">
-                                            <div class="row cntnt_center">
-                                                <div class="col-2">
-                                                    <div class="circular_div">
-                                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_apple.svg" class="circular_div_img" class="circular_div_img">
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <p class="travel_highlight">Imagine | Tresor</p>
-                                                    <p class="travel_text">10X Reward Points | 10% Cashback</p>
-                                                </div>
-                                                <div class="col-2 text-left">
-                                                    <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="hdr_travel">
-                                            <div class="row cntnt_center">
-                                                <div class="col-2">
-                                                    <div class="circular_div">
-                                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_gift_card.svg" class="circular_div_img">
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <p class="travel_highlight">Instant Voucher</p>
-                                                    <p class="travel_text">3X Reward Points | 1% Cashback</p>
-                                                </div>
-                                                <div class="col-2 text-left">
-                                                    <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-    
-            </div>
-        </div>
-        <!-- end of shopping sidebar -->
-
-        <!-- switch to sidebar -->
-    <div class="m_sidebar_header reg-switch-show reg-switch-block hide">
-        <div  class="m_navigational_link" id="m-nav-reg-link"><span><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Switch to</span></div>
-
-        <div class="row mt-4">
-                                <div class="col-12">
-                                    <div class="hdr_privilege_card">
-                                        <div class="row cntnt_center">
-                                            <div class="col-4">
-                                                <div class="m_privilege_img_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/privilege_card1.svg" class="privilege_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-6 pl-0">
-                                                <p class="privilege_text_highlight mb-0 ">Regalia</p>
-                                                <p class="privilege_text">xxx 1234</p>
-                                            </div>
-                                            <div class="col-2 pdng_lft_0">
-                                                <img src="{{cdnUrl}}images/smartbuy/icons/arrw_icn.svg" width="15px" height="15px">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-        </div>
-    </div>
-    <!-- end of switch to sidebar -->
-
-
-
-
-
-
-
-
-
     <!-- <div class="menu_footer">
         <div class="logo_m d-flex">
             <a class="navbar-brand" href="https://www.hdfcbank.com/" *ngIf="is_main==1" target="_blank">
@@ -3100,317 +2718,382 @@
             <div><img src="{{cdnUrl}}images/r360_logo_black.svg" alt="r30_logo"></div>
         </div>
     </div> -->
+
+
 </div>
 </div>
-<div class="collapse navbar-collapse  sb_mlite subMenuMlite" [ngClass]="{ 'menu-show': navbarOpenMenu }">
+<div class="collapse navbar-collapse  sb_mlite subMenuMlite " [ngClass]="{ 'menu-show': navbarOpenMenu }">
 <div class="w-100">
-    <div class="subMenu_header">
-        <div class="back_nav" *ngIf="showName=='shop'">
-            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Shop by Category</span>
+    <!-- <div class="subMenu_header">
+        <div class="back_nav" *ngIf="showName=='gold_travel&stay'">
+            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Travel and Stay</span>
         </div>
-        <div class="back_nav" *ngIf="showMenu && showName=='privileges'">
-            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Privileges</span>
+        <div class="back_nav" *ngIf="showMenu && showName=='gold_benefits'">
+            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Regalia Gold Benefits</span>
         </div>
-        <div class="back_nav" *ngIf="showName=='deals'">
-            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Deals & Offers</span>
+        <div class="back_nav" *ngIf="showName=='gold_rewards'">
+            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Rewards</span>
         </div>
-    </div>
-    <div class="subMenu_body">
-        <div *ngIf="showName=='shop'">
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="travel_m-tab" data-bs-toggle="pill" href="#travel_m" role="tab" aria-controls="travel_m" aria-selected="true">
-                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/travel.svg" class="img-fluid" alt="Travel">
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="shop_m-tab" data-bs-toggle="pill" href="#shop_m" role="tab" aria-controls="shop_m" aria-selected="false">
-                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/shop.svg" class="img-fluid" alt="Shop">
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="voucher_m-tab" data-bs-toggle="pill" href="#voucher_m" role="tab" aria-controls="voucher_m" aria-selected="false">
-                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/voucher.svg" class="img-fluid" alt="Vouchers">
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="travel_m" role="tabpanel" aria-labelledby="travel_m-tab">
-                    <div class="menu_sec">
-                        <ul>
-                            <li *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
-                                <div class="row">
-                                    <div class="col-3 p-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/flight_m.svg" alt="fl_icn">
-                                    </div>
-                                    <div class="col-9 p-0">
-                                        <h6>Flights</h6>
-                                        <a href="javascript:;" (click)="clickUrl('compare-fly')"><span>Compare & Fly</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
+        <div class="back_nav" *ngIf="showName=='gold_shopping'">
+            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Shopping</span>
+        </div>
+        <div class="back_nav" *ngIf="showName=='gold_switch'">
+            <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Switch to </span>
+        </div>
+    </div> -->
+    <div class="subMenu_body reg_gold_navbar_collapse">
+        <div *ngIf="showName=='gold_travel&stay'">
+            <!-- Travel and Stay sidebar -->
+            <div class="m_sidebar_header reg-travel-show reg-travel-block hide" >
+                <div  class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Travel & Stay</span></div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="hdr_travel">
+                            <a href="#"><div class="row">
+                            
+                                <div class="col-2">
+                                    <div class="circular_div">
+                                        <img src="{{cdnUrl}}images/smartbuy/icons/hdr_plane_icn.svg" alt="" class="circular_div_img card_img"/>
                                     </div>
                                 </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.TRAIN==1">
-                                <div class="row">
-                                    <div class="col-3 p-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/train_m.svg" alt="fl_icn">
-                                    </div>
-                                    <div class="col-9 p-0">
-                                        <h6>Trains</h6>
-                                        <a href="javascript:;" (click)="goTo('train')"><span>Book Train Tickets</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                        <a href="javascript:;" (click)="goTo('train/pnr')"><span>Check PNR Status</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
+                                <div class="col-10">
+                                    <p class="travel_highlight">Flight</p>
+                                    <p class="travel_text">3X Reward Points | 10% Cashback</p>
                                 </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.BUS==1">
-                                <div class="row">
-                                    <div class="col-3 p-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/bus_m.svg" alt="fl_icn">
-                                    </div>
-                                    <div class="col-9 p-0">
-                                        <h6>Bus</h6>
-                                        <a href="javascript:;" (click)="goTo('bus')"><span>Book Bus Tickets</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.HOTEL==1">
-                                <div class="row">
-                                    <div class="col-3 p-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/stay_m.svg" alt="fl_icn">
-                                    </div>
-                                    <div class="col-9 p-0">
-                                        <h6>Hotel Stays</h6>
-                                        <a href="javascript:;" (click)="clickUrl('compare-stay')"><span>Compare & Stay</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="brand_list">
-                        <p>Top Brands</p>
-                        <div class="img_sec">
-                            <div>
-                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/emt.svg">
-                            </div>
-                            <div>
-                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/cleartrip.svg">
-                            </div>
-                            <div>
-                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/Yatra.svg">
-                            </div>
+                                <!-- <div class="col-2 text-left">
+                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                </div> -->
+                                
+                            </div></a> 
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="shop_m" role="tabpanel" aria-labelledby="shop_m-tab">
-                    <div class="menu_sec ">
-                        <ul class="shop_tab">
-                            <h6 class='title'>E-Commerce</h6>
-                            <li *ngIf="DOMAIN_SETTINGS.AMAZON==1">
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/amazon_m.svg" alt="amazon_m">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="javascript:;" (click)="redirectUrlpopup('amazon',0,'amazon')"><span>Amazon</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
+                    <div class="col-12">
+                        <div class="hdr_travel">
+                            <a href="#"  class="travel_highlight"><div class="row ">
+                                <div class="col-2">
+                                    <div class="circular_div">
+                                        <img src="{{cdnUrl}}images/smartbuy/icons/hdr_stay_icn.svg" alt="" class="circular_div_img card_img"/>
                                     </div>
                                 </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/flipkart_m.svg" alt="flipkart_m">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="javascript:;" (click)="redirectUrlpopup('flipkart',0,'flipkart')"><span>Flipkart</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
+                                <div class="col-10">
+                                    <p class="travel_highlight">Stay</p>
+                                    <p class="travel_text">3X Reward Points | 10% Cashback</p>
                                 </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.IGP==1">
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/igp_m.svg" alt="igp_m">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="javascript:;" (click)="redirectUrlpopup('igp',0,'igp')"><span>IGP</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/apple_m.svg" alt="apple_m">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="javascript:;" (click)="redirectUrlpopup('imagine',0,'imagine')"><span>Imagine | Tresor</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.JOCKEY==1">
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/jockey.svg" alt="jockey">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="javascript:;" (click)="redirectUrlpopup('jockey',0,'jockey')"><span>Jockey</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li *ngIf="DOMAIN_SETTINGS.AMAZON_PANTRY==1">
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/grocery.svg" alt="grocery">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="javascript:;" (click)="goTo('grocery')"><span>Amazon Grocery</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
-                                </div>
-                            </li>
-
-                        </ul>
+                            </div></a>
+                        </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="voucher_m" role="tabpanel" aria-labelledby="voucher_m-tab">
-                    <div class="menu_sec">
-                        <ul class="voucher_tab">
-                            <li *ngFor="let vouchercat of getVouchersList">
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/voucher/{{vouchercat.voucher_name}}.svg" alt="{{vouchercat.voucher_name}}">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="javascript:;" (click)="redirectUrlpopup('instavouchers',1,vouchercat.voucher_url)"><span>{{vouchercat.voucher_name}}</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
+                    <div class="col-12">
+                        <div class="hdr_travel">
+                            <a href="#"  class="travel_highlight">
+                                <div class="row ">
+                                <div class="col-2">
+                                    <div class="circular_div">
+                                        <img src="{{cdnUrl}}images/smartbuy/icons/hdr_travel_mt_icn.svg" class="circular_div_img">
                                     </div>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="row">
-                                    <div class="col-2 pl-0">
-                                        <img src="{{cdnUrl}}images/smartbuy/icons/mobile/voucher/ViewAll.svg" alt="View All">
-                                    </div>
-                                    <div class="col-10 pr-0">
-                                        <a href="{{domainRedirect}}?instavouchers=true"><span>View All</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                    </div>
+                                <div class="col-10">
+                                    <p class="travel_highlight">MakeMyTrip</p>
+                                    <p class="travel_text">10X Reward Points | 10% Cashback</p>
                                 </div>
-                            </li>
-                        </ul>
+                                
+                            </div></a>
+                        </div>
                     </div>
-                    <div class="brand_list">
-                        <p>Top Brands</p>
-                        <div class="img_sec">
-                            <div>
-                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/croma.svg">
+                    <div class="col-12">
+                        <div class="hdr_travel">
+                            <a href="#"  class="travel_highlight">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="circular_div">
+                                        <img src="{{cdnUrl}}images/smartbuy/icons/hdr_train_icn.svg" alt="" class="circular_div_img card_img"/>
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                <p class="travel_highlight">Train</p>
+                                    <p class="travel_text">Upto 3X Reward Points | 10% Cashback</p>
+                                </div>
                             </div>
-                            <div>
-                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/lifestyle.svg">
+                        </a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="hdr_travel">
+                            <a href="#"  class="travel_highlight">
+                            <div class="row ">
+                                <div class="col-2">
+                                    <div class="circular_div">
+                                        <img src="{{cdnUrl}}images/smartbuy/icons/hdr_bus_icn.svg" alt="" class="circular_div_img card_img"/>
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <p class="travel_highlight">Bus</p> 
+                                    <p class="travel_text">Upto 3X Reward Points | 10% Cashback</p>
+                                </div>
                             </div>
-                            <div>
-                                <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/fabindia.svg">
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- end of travel & Stay sidebar -->
         </div>
-        <div *ngIf="DOMAIN_SETTINGS.PRIVILEGES==1 && showName=='privileges'" class="tab-content">
-            <div class="privi-pane">
-                <div class="menu_sec">
-                    <ul class="privi_tab">
-                        <li *ngIf="enablePrivileges['INFINIA']==1">
-                            <div class="row">
-                                <div class="col-2 pl-0">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/mobile/priv/infinia_m.svg" alt="fl_icn">
-                                </div>
-                                <div class="col-10 pr-0">
-                                    <a href="javascript:;" (click)="clickUrlBlank('infinia')"><span>Infinia</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li *ngIf="enablePrivileges['INFINIA_RESERVE']==1">
-                            <div class="row">
-                                <div class="col-2 pl-0">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/mobile/priv/regalia_m.svg" alt="fl_icn">
-                                </div>
-                                <div class="col-10 pr-0">
-                                    <a href="javascript:;" (click)="clickUrlBlank('infinia_reserve')"><span>Infinia Reserve</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li *ngIf="enablePrivileges['DINERS']==1">
-                            <div class="row">
-                                <div class="col-2 pl-0">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/mobile/priv/diners_m.svg" alt="fl_icn">
-                                </div>
-                                <div class="col-10 pr-0">
-                                    <a href="javascript:;" (click)="clickUrlBlank('diners')"><span>Diners Club</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                </div>
-                            </div>
-                        </li>
+        <div *ngIf="showName=='gold_benifits'" class="tab-content">
+            <!-- Regalia gold benefits sidebar -->
+            <div class="m_sidebar_header reg-benifits-show reg-benifits-block hide">
+                <div  class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Regalia Gold Benefits</span></div>
+                <div class="row mt-4">
+                <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/hdr_sign_board_icn.svg" class="circular_div_img card_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Milestone Benefits</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/hdr_globe_icn.svg" class="circular_div_img card_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Travel Benefits</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/hdr_credit_icn.svg" class="circular_div_img card_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Know Your Card</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            </div>
+            <!-- end of regalia gold benefits sidebar -->
+        </div>
+        <div *ngIf="showName=='gold_rewards'" class="tab-content">
+            <!-- Rewards sidebar -->
+            <div class="m_sidebar_header reg-rewards-show reg-rewards-block hide">
+                <div  class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Rewards</span></div>
 
-                        <li *ngIf="enablePrivileges['REGALIA']==1">
-                            <div class="row">
-                                <div class="col-2 pl-0">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/mobile/priv/regalia_m.svg" alt="fl_icn">
-                                </div>
-                                <div class="col-10 pr-0">
-                                    <a href="javascript:;" (click)="clickUrlBlank('regalia')"><span>Regalia</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li *ngIf="enablePrivileges['BUSINESS']==1">
-                            <div class="row">
-                                <div class="col-2 pl-0">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/mobile/priv/business_m.svg" alt="fl_icn">
-                                </div>
-                                <div class="col-10 pr-0">
-                                    <a href="javascript:;" (click)="clickUrlBlank('business')"><span>Business</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li *ngIf="enablePrivileges['CORPORATE']==1">
-                            <div class="row">
-                                <div class="col-2 pl-0">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/mobile/priv/corporate_m.svg" alt="fl_icn">
-                                </div>
-                                <div class="col-10 pr-0">
-                                    <a href="javascript:;" (click)="clickUrlBlank('corporate')"><span>Corporate</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="row mt-4">
+                <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/hdr_trophy_icn.svg" class="circular_div_img card_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Premium Rewards</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/hdr_voucher_icn.svg" class="circular_div_img card_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Luxuary Vouchers</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/hdr_apple_icn.svg" class="circular_div_img card_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">All Things Apple</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/hdr_refresh_icn.svg" class="circular_div_img card_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Points To Cash</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                 </div>
             </div>
+            <!-- end of rewards sidebar -->
         </div>
-        <div *ngIf="DOMAIN_SETTINGS.OFFER==1 && showName=='deals'" class="tab-content">
-            <div class="deals-pane">
-                <div class="menu_sec">
-                    <ul class="deals_tab">
-                        <li *ngFor="let category of dealsoffers">
-                            <div class="row">
-                                <div class="col-2 pl-0">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/mobile/deals/{{category.categoryname}}.svg" alt="{{category.categoryname}}">
-                                </div>
-                                <div class="col-10 pr-0">
-                                    <a href="javascript:;" (click)="redirectDisUrl(category.categoryname)"><span>{{category.categoryname}}</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
-                                </div>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div>
-                <div class="brand_list">
-                    <p> Offers on Top Brands</p>
-                    <div class="img_sec">
-                        <div>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/emt.svg">
-                        </div>
-                        <div>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/cleartrip.svg">
-                        </div>
-                        <div>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/Yatra.svg">
-                        </div>
-                    </div>
+        <div *ngIf="showName=='gold_shopping'" class="tab-content">
+           <!-- shopping sidebar -->
+            <div class="m_sidebar_header reg-shop-show reg-shop-block hide">
+                <div  class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Shopping</span></div>
+        
+                <div class="row mt-4">
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <a href="#">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_flipkart.svg" class="circular_div_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Flipkart</p>
+                                                        <p class="travel_text">5X Reward Points | 5% Cashback</p>
+                                                    </div>
+                                                    <div class="col-2 text-left pl-0">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <a href="#">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_igp.svg" class="circular_div_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">IGP</p>
+                                                        <p class="travel_text">3X Reward Points | 2% Cashback</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <a href="#">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_apple.svg" class="circular_div_img" class="circular_div_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Imagine | Tresor</p>
+                                                        <p class="travel_text">10X Reward Points | 10% Cashback</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="hdr_travel">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-2">
+                                                        <div class="circular_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/hdr_gift_card.svg" class="circular_div_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p class="travel_highlight">Instant Voucher</p>
+                                                        <p class="travel_text">3X Reward Points | 1% Cashback</p>
+                                                    </div>
+                                                    <div class="col-2 text-left">
+                                                        <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+        
                 </div>
             </div>
+            <!-- end of shopping sidebar -->
+        </div>
+        <div *ngIf="showName=='gold_switch'" class="tab-content">
+            <!-- switch to sidebar -->
+            <div class="m_sidebar_header reg-switch-show reg-switch-block hide">
+                <div  class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Switch to</span></div>
+
+                <div class="row mt-4">
+                                        <div class="col-12">
+                                            <div class="hdr_privilege_card">
+                                                <div class="row cntnt_center">
+                                                    <div class="col-4">
+                                                        <div class="m_privilege_img_div">
+                                                            <img src="{{cdnUrl}}images/smartbuy/icons/privilege_card1.svg" class="privilege_img">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 pl-0">
+                                                        <p class="privilege_text_highlight mb-0 ">Regalia</p>
+                                                        <p class="privilege_text">xxx 1234</p>
+                                                    </div>
+                                                    <div class="col-2 pdng_lft_0">
+                                                        <img src="{{cdnUrl}}images/smartbuy/icons/arrw_icn.svg" width="15px" height="15px">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                </div>
+            </div>
+            <!-- end of switch to sidebar -->
         </div>
     </div>
 

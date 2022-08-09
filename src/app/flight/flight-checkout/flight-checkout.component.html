@@ -507,9 +507,8 @@
               <div class="flight-extra-details">
 
                 <div class="rules-flight">
+                    <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails">
                   <div class="rules-flight-items">
-                    <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)"
-                      data-bind="onwardFareDetails">
                       <div class="rules-flight-thumbe">
                         <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0].airline}}.gif"
                           alt="{{flightOnwardDetails[0].airline}}" class="flight-image mr-10">
@@ -521,13 +520,12 @@
                           {{searchData.toCity}}
                         </h6>
                       </div>
-                    </a>
-                  </div>
+                    </div>
+                </a>
 
 
+                <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails">
                   <div class="rules-flight-items" *ngIf="flightReturnDetails[0]">
-                    <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)"
-                      data-bind="returnFareDetails">
                       <div class="rules-flight-thumbe">
                         <img src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0].airline}}.gif"
                           alt="{{flightReturnDetails[0].airline}}" class="flight-image mr-10">
@@ -539,8 +537,8 @@
                           {{searchData.fromCity}}
                         </h6>
                       </div>
-                    </a>
-                  </div>
+                    </div>
+                </a>
 
                 </div>
 
@@ -1393,12 +1391,12 @@
                           data-bs-keyboard="false">
                           <div class="modal-dialog">
                             <div class="modal-content">
-                              <div class="add_new_traveler p-20" *ngIf="adultsArrayM.length>0 ">
+                              <div class="add_new_traveler pt-0" *ngIf="adultsArrayM.length>0 ">
                                 <div *ngIf="adultsArrayM.length>0">
                                   <!--Manaual Passenger Adult-->
                                   <ng-container
                                     *ngFor="let traveller of adultsArrayM; index as i; trackBy: trackByTraveller;let last = last;">
-                                    <div class="modal-header pb-0">
+                                    <div class="modal-header">
                                       <h5 class="modal-title">Add New Adult</h5>
                                       <button type="button" class="btn-close"
                                         (click)="removeMobileAdult(traveller,-1)"></button>
@@ -1502,9 +1500,10 @@
                         <table class="table  traveller_table">
                           <thead>
                             <tr>
-                              <th scope="col" class="col-6">Name</th>
+                              <th scope="col">Name</th>
                               <th scope="col">Date of Birth</th>
                               <th scope="col">Gender</th>
+                              <th scope="col"></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1521,8 +1520,10 @@
                                     <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
                                     <ng-template ngSwitchDefault></ng-template>
                                   </div>
-                                  <span><button type="button" class="btn-close"
-                                      (click)="removeMobileAdult(traveller,-1)"></button></span>
+                                </td>
+                                <td>
+                                    <span><button type="button" class="btn-close"
+                                        (click)="removeMobileAdult(traveller,-1)"></button></span>
                                 </td>
                               </tr>
                             </ng-container>
@@ -2260,9 +2261,10 @@
                         <table class="table  traveller_table">
                           <thead>
                             <tr>
-                              <th scope="col" class="col-6">Name</th>
+                              <th scope="col">Name</th>
                               <th scope="col">Date of Birth</th>
                               <th scope="col">Gender</th>
+                              <th scope="col"></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -2278,9 +2280,9 @@
                                     <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
                                     <ng-template ngSwitchDefault></ng-template>
                                   </div>
-                                  <span><button type="button" class="btn-close"
-                                      (click)="removeMobileChild(traveller,-1)"></button></span>
                                 </td>
+                                <td><span><button type="button" class="btn-close"
+                                    (click)="removeMobileChild(traveller,-1)"></button></span></td>
                               </tr>
                             </ng-container>
                           </tbody>
@@ -3026,9 +3028,10 @@
                         <table class="table  traveller_table">
                           <thead>
                             <tr>
-                              <th scope="col" class="col-6">Name</th>
+                              <th scope="col" >Name</th>
                               <th scope="col">Date of Birth</th>
                               <th scope="col">Gender</th>
+                              <th scope="col"></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -3044,9 +3047,9 @@
                                     <ng-template [ngSwitchCase]="'Miss'">Miss</ng-template>
                                     <ng-template ngSwitchDefault></ng-template>
                                   </div>
-                                  <span><button type="button" class="btn-close"
-                                      (click)="removeMobileInfant(traveller,-1)"></button></span>
                                 </td>
+                                <td><span><button type="button" class="btn-close"
+                                    (click)="removeMobileInfant(traveller,-1)"></button></span></td>
                               </tr>
                             </ng-container>
                           </tbody>
@@ -3095,7 +3098,7 @@
                 <h6>Contact Details</h6>
                 <p>Your booking information will be sent here</p>
 
-                <div class="row">
+                <div class="row gy-4">
                   <div class="col-xl-6 col-lg-6 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Email</mat-label>
@@ -4589,7 +4592,7 @@
             </div>
             <div class="booking-inner-box from-to-box">
               <div class="">
-                <div class="row">
+                <div class="row gy-4">
                   <div class="col-xl-6 col-lg-6 col-md-6">
                     <p class="label_text">Email</p>
                     <p class="label_value">{{contactDatails.email}}</p>
@@ -5193,12 +5196,16 @@
   <div class="d-block d-sm-none">
     <div class="footer-sticky-mlite">
       <div>
-        <div class="apply_fare">
-          <p *ngIf="steps<5" class="w-75"></p>
-          <p *ngIf="steps==5"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
-              data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
-          <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
-              data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
+        <div class="apply_fare row">
+         <!--  <p *ngIf="steps<5" class="w-75"></p> -->
+            <div class="col-6 text-left">
+                <p *ngIf="steps==5"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+                    data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+            </div>
+            <div class="col-6 text-right">
+                <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+                    data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
+            </div>
         </div>
         <div class="price_sec">
           <div class="row">
