@@ -1,27 +1,77 @@
-<section class="mob-flights-listing" *ngIf="searchData && isMobile">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 p-0">
-        <div class="mob-listing-header">
-          <div class="mob-listing-header-left">
-            <a href="javascript:;" (click)="triggerBack()">
-              <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-            </a>
-          </div>
-          <div class="mob-listing-header-center">
-            <h6>{{searchData.fromCity}} - {{searchData.toCity}}</h6>
-            <p>{{searchData.departure | date:"EEE,dd MMM" }} | {{maxAdults+maxChilds+maxInfants}} Travellers |
-              {{flightClasses[searchData.flightclass]}}
-            </p>
-          </div>
-          <div class="mob-listing-header-right">
-
+<div class="flight_mlite_process">
+    <section class="mob-flights-listing" *ngIf="searchData && isMobile">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 p-0">
+              <div class="mob-listing-header">
+                <div class="mob-listing-header-left">
+                  <a href="javascript:;" (click)="triggerBack()">
+                    <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                  </a>
+                </div>
+                <div class="mob-listing-header-center">
+                  <h6>{{searchData.fromCity}} - {{searchData.toCity}}</h6>
+                  <p>{{searchData.departure | date:"EEE,dd MMM" }} | {{maxAdults+maxChilds+maxInfants}} Travellers |
+                    {{flightClasses[searchData.flightclass]}}
+                  </p>
+                </div>
+                <div class="mob-listing-header-right">
+      
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
+      <section class="details-steps-area mb-40" [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div [ngClass]="{'col-md-7': enableVAS==1, 'col-md-6':enableVAS==0 }">
+                <div class="details-steps-box">
+                  <ul class="m-0 details-steps-ul">
+                    <li>
+                      <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }"
+                        (click)="moveTab(1)">
+                        <!-- steps-done - Class For done steps -->
+                        <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/flight.png" alt="" /></span>
+                        <span class="steps-text">Flight Details</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps >2  , 'active':steps==2 }"
+                        (click)="moveTab(2)">
+                        <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/user.png" alt="" /></span>
+                        <span class="steps-text">Traveller Details</span>
+                      </a>
+                    </li>
+                    <li *ngIf="enableVAS==1">
+                      <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 3 , 'active':steps==3 }"
+                        (click)="moveTab(3)">
+                        <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/meal.png" alt="" /></span>
+                        <span class="steps-text">Seats & Meals</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 4 , 'active':steps==4 }"
+                        (click)="moveTab(4)">
+                        <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/review.png" alt="" /></span>
+                        <span class="steps-text">Review Booking</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 5 , 'active':steps==5  }"
+                        (click)="moveTab(5)">
+                        <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/payment.png" alt="" /></span>
+                        <span class="steps-text">Payment</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+</div>
 <main class="site-main">
   <!-- <div class="route-details row">
         <div class="col-2">
@@ -36,54 +86,7 @@
         </div>
     </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
-  <section class="details-steps-area mb-40" [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div [ngClass]="{'col-md-7': enableVAS==1, 'col-md-6':enableVAS==0 }">
-          <div class="details-steps-box">
-            <ul class="m-0 details-steps-ul">
-              <li>
-                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }"
-                  (click)="moveTab(1)">
-                  <!-- steps-done - Class For done steps -->
-                  <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/flight.png" alt="" /></span>
-                  <span class="steps-text">Flight Details</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps >2  , 'active':steps==2 }"
-                  (click)="moveTab(2)">
-                  <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/user.png" alt="" /></span>
-                  <span class="steps-text">Traveller Details</span>
-                </a>
-              </li>
-              <li *ngIf="enableVAS==1">
-                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 3 , 'active':steps==3 }"
-                  (click)="moveTab(3)">
-                  <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/meal.png" alt="" /></span>
-                  <span class="steps-text">Seats & Meals</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 4 , 'active':steps==4 }"
-                  (click)="moveTab(4)">
-                  <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/review.png" alt="" /></span>
-                  <span class="steps-text">Review Booking</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 5 , 'active':steps==5  }"
-                  (click)="moveTab(5)">
-                  <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/payment.png" alt="" /></span>
-                  <span class="steps-text">Payment</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
   <section class="flight-details-area mt-10">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
@@ -159,13 +162,13 @@
 
                 <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnward[i]">
                   <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-4">
                       <h6>Airline</h6>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <h6>Check-in Baggage</h6>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <h6>Cabin Baggage</h6>
                     </div>
                     <!--<div class="col-md-4">
@@ -175,15 +178,15 @@
                                         </div>-->
                   </div>
                   <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-4">
                       <p>{{baggageInfoOnward[i].flightName}}<br>{{baggageInfoOnward[i].flightNo}}</p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
                       <ng-template #checkIn_content>{{baggageInfoOnward[i].checkIn}}</ng-template>
                       <ng-template #checkIn_blank>NA</ng-template>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
                       <ng-template #cabin_content>{{baggageInfoOnward[i].cabin}}</ng-template>
                       <ng-template #cabin_blank>NA</ng-template>
@@ -356,13 +359,13 @@
 
                 <div class="Booking-Flight-passanger" *ngIf="baggageInfoReturn[i]">
                   <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-4">
                       <h6>Airline</h6>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <h6>Check-in Baggage</h6>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <h6>Cabin Baggage</h6>
                     </div>
                     <!--<div class="col-md-4">
@@ -372,15 +375,15 @@
                                         </div>-->
                   </div>
                   <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-4">
                       <p>{{baggageInfoReturn[i].flightName}}<br>{{baggageInfoReturn[i].flightNo}}</p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <p *ngIf="baggageInfoReturn[i].checkIn;then checkIn_content else checkIn_blank"></p>
                       <ng-template #checkIn_content>{{baggageInfoReturn[i].checkIn}}</ng-template>
                       <ng-template #checkIn_blank>NA</ng-template>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-4">
                       <p *ngIf="baggageInfoReturn[i].cabin ;then cabin_content else cabin_blank"></p>
                       <ng-template #cabin_content>{{baggageInfoReturn[i].cabin}}</ng-template>
                       <ng-template #cabin_blank>NA</ng-template>
@@ -508,20 +511,20 @@
 
                 <div class="rules-flight">
                     <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails">
-                  <div class="rules-flight-items">
-                      <div class="rules-flight-thumbe">
-                        <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0].airline}}.gif"
-                          alt="{{flightOnwardDetails[0].airline}}" class="flight-image mr-10">
-                      </div>
-                      <div class="rules-flight-content">
-                        <h6>
-                          {{searchData.fromCity}}
-                          <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
-                          {{searchData.toCity}}
-                        </h6>
-                      </div>
-                    </div>
-                </a>
+                    <div class="rules-flight-items">
+                        <div class="rules-flight-thumbe">
+                            <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0].airline}}.gif"
+                            alt="{{flightOnwardDetails[0].airline}}" class="flight-image mr-10">
+                        </div>
+                        <div class="rules-flight-content">
+                            <h6>
+                            {{searchData.fromCity}}
+                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                            {{searchData.toCity}}
+                            </h6>
+                        </div>
+                        </div>
+                    </a>
 
 
                 <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails">
