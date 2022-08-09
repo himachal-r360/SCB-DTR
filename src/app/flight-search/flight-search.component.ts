@@ -303,7 +303,7 @@ defaultFlightOptions: any[];
         this.toAirpotName = values.airport_name;
         this.toCityName = values.city;
          setTimeout(() => {
-        this.datePicker.open();
+       // this.datePicker.open();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
 
@@ -686,9 +686,17 @@ defaultFlightOptions: any[];
 
   navBarLink(navItem:any){
     this.navItemActive = navItem;
-    if(this.navItemActive == 'One Way'){
-      this.arrivalDate = '';
-    }
+    
+    
+    if(this.navItemActive == 'Round Trip'){
+       this.flightData.controls["arrival"].setValidators(Validators.required);
+       this.flightData.controls["arrival"].updateValueAndValidity();
+    }else{
+        this.arrivalDate = '';
+        this.flightData.controls["arrival"].setValue('');
+        this.flightData.controls["arrival"].clearValidators();
+        this.flightData.controls["arrival"].updateValueAndValidity();
+    } 
   }
 
   showPartner(){

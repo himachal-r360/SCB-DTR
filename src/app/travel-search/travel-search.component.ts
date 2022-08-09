@@ -192,14 +192,7 @@ export class TravelSearchComponent implements OnInit {
         quotaList;
         selectedQuota:any = 'GN';
         quota:string = 'GN';
-        upcomingFjnData = [
-          {"title":"Mumbai to Bangalore","price":"1200","trip":"Round trip"},
-          {"title":"Mumbai to Goa","price":"1800","trip":"Round trip"},
-          {"title":"Mumbai to Chennai","price":"1200","trip":"Round trip"},
-          {"title":"Mumbai to Delhi","price":"2000","trip":"Oneway trip"},
-          {"title":"Mumbai to Mangalore","price":"1200","trip":"Round trip"},
-          {"title":"Mumbai to Hyderabad","price":"2200","trip":"Round trip"},
-        ];
+
         acronymsData = [
           {"code":"CAN", "desc":"CANCELLED"},
           {"code":"CNF", "desc":"CONFIRM"},

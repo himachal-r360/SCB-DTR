@@ -10,6 +10,9 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { AppConfigService } from '../../app-config.service';
+import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -207,7 +210,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
    serviceSettings:any;
   enableFlightServices:any;
 
-  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor(public rest:RestapiService,private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
@@ -239,6 +242,7 @@ ngOnInit(): void {
     this.headerHideShow(null)
     this.getAirpotsNameList();
     this.getAirlinesIconList();
+    this.getCoupons();
     this.flightSearch();
  });
 
@@ -303,6 +307,19 @@ ngOnInit(): void {
    this.show_layover_more=1;
   }
 
+	getCoupons(){
+		var couponMinValCheckArr = [];
+			const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+			var couponParam = {
+			postData:this.EncrDecr.set(JSON.stringify(urlParams))
+			};
+
+			this.rest.getCouponsByService(couponParam).subscribe(results => { 
+	
+	
+		});
+		
+	}
 
 
 

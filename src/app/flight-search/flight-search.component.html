@@ -122,8 +122,28 @@
                                                     <span class="select-roottitle">FROM</span>
                                                     <h5 class="fw_6 ">{{fromCityName}}</h5>
                                                     <span class="select-roottitle">{{fromAirpotName}}</span>
-                                                    <div
-                                                        class="flight-from-data flight-from-hide ff-form-data dropdown">
+                                        <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
+                                        <small   class="validate-msg">Please select to city</small>
+                                        </div>                     
+
+
+                                        <div class="error_msg w-50" *ngIf="!isMobile && Error('flightto', 'MustMatch')">
+                                        <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
+                                        </div>  
+                                        
+                                                 <div class="" *ngIf="isMobile && submitted && Error('flightfrom', 'required')">
+                                        <small   class="validate-msg">Please select to city</small>
+                                        </div>                     
+
+
+                                        <div class="" *ngIf="isMobile && Error('flightto', 'MustMatch')">
+                                        <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
+                                        </div>  
+                                        
+                                        
+                                        
+                                        
+                                                    <div               class="flight-from-data flight-from-hide ff-form-data dropdown">
                                                         <div class="mob-title">
                                                             <h3>Select From City</h3>
                                                             <a href="javascript:void(0)"
@@ -132,6 +152,7 @@
                                                                     (click)="onClose()" class="close-mobile" alt="" />
                                                             </a>
                                                         </div>
+                                                        
                                                    <div class="mob-search" *ngIf="isMobile">
                                                             <div class="row">
                                                                 <div class="col-md-12">
@@ -165,6 +186,8 @@
                                                         <input type="hidden"  formControlName="fromContry">
                                                         <input type="hidden"  formControlName="fromAirportName">
                                                         <input type="hidden"  formControlName="fromAirportName">
+                                                        
+                           
 
                                                         </div>
 
@@ -191,7 +214,7 @@
                                                         
                                    
                                                     </div>
-
+                           
                                                 </div>
 
                                                 <div class="select-root-icons" (click)="swap()">
@@ -201,6 +224,16 @@
                                                     <span class="select-roottitle">TO</span>
                                                     <h5 class="fw_6 ">{{toCityName}}</h5>
                                                     <span class="select-roottitle">{{toAirpotName}}</span>
+                                                                                                     <div class="error_msg w-50"  *ngIf="!isMobile && submitted && Error('flightto', 'required')" >
+                                <small class="validate-msg">Please select to city</small>
+                                </div>
+                                
+                                              <div class="" *ngIf="isMobile && submitted && Error('flightto', 'required')">
+                                        <small   class="validate-msg">Please select to city</small>
+                                        </div>                     
+
+
+                                    
                                                     <div class="flight-to-data flight-from-hide dropdown"
                                                         #removeClassToCity>
                                                         <div class="mob-title">
@@ -220,6 +253,7 @@
                                                                         <input type="hidden"  formControlName="flightfrom">
                                                                         <input type="hidden"  formControlName="fromContry">
                                                                         <input type="hidden"  formControlName="fromAirportName">
+                                                                           
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
@@ -263,20 +297,10 @@
                                                         
                                         
                                                     </div>
-
+                            
                                                 </div>
                                             </div>
-                                            <div class="home-error d-flex">
-                                                <mat-error class="w-50"
-                                                    *ngIf="submitted && Error('flightfrom', 'required')">
-                                                    Select departure
-                                                </mat-error>
-                                                
-                                                <mat-error *ngIf="submitted && Error('flightto', 'required')">
-                                                    Select arrival
-                                                </mat-error>
-                                                <mat-error *ngIf="Error('flightto', 'MustMatch')">From and To cannot be same.</mat-error>
-                                            </div>
+                         
                                         </div>
 
                                         <div class="col-lg-6">
@@ -286,13 +310,12 @@
                                                     <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
                                                  <div class="area-root-departure " (click)="picker.open()"
                                                             id="datePickerOpen">
+                       
                                                             <div class="select-root-departure departure-date">
                                                                 <span class="select-roottitle">DEPARTURE</span>
                                                                 <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
                                           
-                                                                    <span class="select-roottitle d-block w-100"
-                                                                    *ngIf="departureDate=='' ||departureDate==undefined">Select
-                                                                      Departure</span>
+                                                                    <span class="select-roottitle d-block w-100" *ngIf="departureDate=='' ||departureDate==undefined">Select Departure</span>
                                                                 <span class="select-roottitle"
                                                                     *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                                                     }}</span>
@@ -318,11 +341,12 @@
 
 
                                                             </div>
+                                                           
                                                         </div>
                                                         <div class="area-root-reutrn" (click)="picker2.open()"
                                                             id="datePickerArrival"
                                                             [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'">
-                                                            <div class="select-root-reutrn ">
+                                                            <div class="select-root-reutrn departure-date">
                                                                 <span class="select-roottitle">RETURN</span>
                                                                 <h5 class=" "
                                                                     *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
@@ -367,14 +391,21 @@
                                                                 <span class="select-roottitle"
                                                                     *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                                                     }}</span>
-
+                              
+          <div class="mt-30"  *ngIf="submitted && Error('departure', 'required')" >
+                                        <small class="validate-msg" >Please select departure date</small>
+                                        </div>
+                                       
                                                             </div>
+                                                            
                                                             <div class="select-root-date"                    style="position: relative; left: 0;">
                                                                 <i   class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
                                                                 <mat-form-field       style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                                 <input  matInput   [(ngModel)]="departureDate"   autocomplete="off"  readonly formControlName="departure"  id="departure" >
                                                                 </mat-form-field>
+                                                                
                                                             </div>
+                                                            
                                                         </div>
                                                          <div class="modal bottom_mlite_popup" id="flight_departure_mlite" tabindex="-1" aria-hidden="true">
                                                                 <div class="modal-dialog">
@@ -436,8 +467,10 @@
                                                                 <span class="select-roottitle"
                                                                     *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
                                                                     | date:'EEEE' }}</span>
-
-                                                            </div>
+                                                <div class="error_msg w-35" *ngIf="submitted && Error('arrival', 'required')" >
+                                                <small class="validate-msg"  >Please select arrival date</small>
+                                                </div>
+    </div>
                                                             <div class="select-root-date">
                                                                 <i
                                                                     class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
@@ -662,9 +695,16 @@
                                                 </div>
                                             </div>
                                  
-                                                <mat-error *ngIf="dateValidation">
-                                                    Select departure
-                                                </mat-error>
+                                                
+                                        <div class="home-error d-flex" *ngIf="!isMobile">
+                                        <div class="error_msg w-35"  >
+                                        <small class="validate-msg"  *ngIf="submitted && Error('departure', 'required')">Please select departure date</small>
+                                        </div>
+
+                                        <div class="error_msg w-35"   >
+                                        <small class="validate-msg"  *ngIf="submitted && Error('arrival', 'required')">Please select arrival date</small>
+                                        </div>
+                                        </div>
                                          </div>
                                     </div>
                                 </div>

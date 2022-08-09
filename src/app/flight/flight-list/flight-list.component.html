@@ -444,30 +444,25 @@
                                                     <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                 </div>
                                                 <div class="flight-listing-viewfares">
-                                                    <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> VIEW FARES</a>
-                                                    <a href="javascript:void(0)" class="button-style hidefares d-none " id="hidefares_{{list.flightKey}}" (click)="hideFarebutton(list.flightKey,'fare-details',0)"> HIDE FARES</a>
+                                                    <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> View Fares <i class="fa fa-angle-down ml-10"></i></a>
+                                                    <a href="javascript:void(0)" class="button-style hidefares d-none " id="hidefares_{{list.flightKey}}" (click)="hideFarebutton(list.flightKey,'fare-details',0)"> Hide Fares<i class="fa fa-angle-up ml-10"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                    <!-- <div class="flight-info-box">
-                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>
-                                    <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Book return Indigo flight to get &#8377; 1500 off on SmartBuy</p>-->
-                                    <!-- <p></p>
-                                    <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}" (click)="HideShowCompareToFly(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
-                                    <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}" (click)="hideFarebutton(i,'flight-details')" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
-                                </div>-->
+                              <div class="flight-info-box">
+                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                                </div>
                                 <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{list.flightKey}}" >
                                   <div class="flight-options-box" id="FareDetails_{{list.flightKey}}">
                                     <div class="flight-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                         <div class="flight-options-list">
                                             <div class="flight-options-list-left">
                                                 <div class="flight-options-logo">
-                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" height="20">
-                                                  {{item.partnerName}}
-                                                    <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
+                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="25" height="25">
+                                                  <b class="ml-10">{{item.partnerName}}</b>
                                                 </div>
                                                 <div class="flight-options-text">
                                                   <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -543,8 +538,8 @@
                                                 </li>-->
                                             </ul>
                                             <!-- <a href="javascript:void(0);" class="flight-details-click">Flight Details <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1"  alt=""></a> -->
-                                            <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}_{{j}}" (click)="HideShowCompareToFly(list.flightKey,'flight-details',j)" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
-                                            <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}_{{j}}" (click)="hideFarebutton(list.flightKey,'flight-details',j)" >Flight Details <img src="{{cdnUrl}}/images/icons/down.png" alt=""></a>
+                                            <a href="javascript:void(0)"  class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}_{{j}}" (click)="HideShowCompareToFly(list.flightKey,'flight-details',j)" >Flight Details <i class="fa fa-angle-down ml-10"></i></a>
+                                            <a href="javascript:void(0)"  class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}_{{j}}" (click)="hideFarebutton(list.flightKey,'flight-details',j)" >Flight Details <i class="fa fa-angle-up ml-10"></i></a>
                                         </div>
                                         <div class="flight-details-box flightfaresbox flight-details-box-hide" id="FlightDetails_{{list.flightKey}}_{{j}}">
                                             <div class="flight-extra-details">
@@ -1024,7 +1019,7 @@
                                                             <div class="extra-tabs-details-bottom p-0">
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one">
-                                                                        <p class="depart-one-image" *ngIf="flightIcons"><img src="{{this.flightIcons[list.flights[0].airline].logo}}" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                        <p class="depart-one-image" ><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                         <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                         <div class="tabs-depart-left float-none">
                                                                             <div class="tabs-depart-times">
@@ -1146,7 +1141,7 @@
                                                             <div class="rules-flight" >
                                                                 <div class="rules-flight-items" *ngFor="let flightItem of list.flights">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                                                        <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
                                                                     </div>
                                                                     <div class="rules-flight-content" >
                                                                         <h6 >
@@ -1158,7 +1153,7 @@
                                                                 </div>
                                                                 <!-- <div class="rules-flight-items opacity_05">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img *ngIf="flightIcons" src="{{this.flightIcons[list.flights[0].airline].logo}}" alt="">
+                                                                        <img  src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
                                                                     </div>
                                                                     <div class="rules-flight-content">
                                                                         <h6>
