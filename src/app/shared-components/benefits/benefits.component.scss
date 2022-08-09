@@ -8,15 +8,20 @@
     background-position: center; 
     background-repeat: no-repeat; 
     background-size: cover; 
+    padding-top:3rem;
     .banner_title{
         font-weight: 600;
         font-size: 45px;
         line-height: 66px;
         text-align: center;
         color: #FFFFFF;
+        padding:0px 20px;
         @media screen and (max-width: 600px) {
             font-size: 29px;
             line-height: 36px;
+        }
+        .b_hdr{
+            // padding-top:1rem;
         }
     }
     .banner_h{
@@ -44,6 +49,9 @@
     } 
     li{
         height:60px;
+        @media screen and (max-width: 600px) {
+            padding-left:5px;
+        } 
     }
     .benefits_tabs_link{
         font-weight: 600;
@@ -86,6 +94,7 @@
         @media screen and (max-width:600px){
             font-size: 14px;
             line-height: normal;
+            margin-top:15px !important;
         }
     }
     .black_text{
@@ -254,10 +263,23 @@
         display:flex;
         justify-content:center;
         align-items:center;
+        @media screen and (max-width:600px){
+           width:60px;
+           height:60px;
+        }
+        @media screen and (max-width:360px){
+            width:50px;
+            height:50px;
+         }
+
     }
     .circular_div_img{
         max-width:100%;
         max-height:100%;
+        @media screen and (max-width:600px){
+            max-width:70%;
+            max-height:70%;
+         }
     }
 }
 
@@ -266,6 +288,9 @@
     font-size: 22px;
     line-height: 50px;
     color:#000000;
+    @media screen and (max-width:600px){
+        line-height: 30px;
+     }
 }
 .mail_link{
     color:#CF8D56;
@@ -293,30 +318,20 @@
 	}
 }
 
-
-$color_1: #000;
-.hide {
-	display: none;
+.p_dot:before {
+    content:"• ";
 }
-.internal {
-	text-decoration: none;
-	color: $color_1;
-	&:after {
-		content: "\002B";
-		padding-left: 5px;
-	}
+.tab_seperater{
+    content: "| ";
 }
-.internal.expanded {
-	&:after {
-		content: "\002D";
-	}
+.primary_hdr{
+    font-family: 'opensans-regular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
 }
-#name {
-	&:not(.hide) {
-		display: block;
-	}
-}
-
 @media screen and (max-width:600px){
     .benefits_tab_ul::-webkit-scrollbar {
         height:0px;
@@ -340,6 +355,31 @@ $color_1: #000;
         .mlite_travel_btn::-webkit-scrollbar {
             height:0px;
             }
+
+            .box_row{
+                display:flex;
+                flex-wrap:nowrap;
+                overflow-x:auto;
+                .box-col{
+                    width:90%;
+                }
+            }
+            .box_row::-webkit-scrollbar {
+                height:0px;
+                }
+                .mlite_brdr_btm{
+                    padding-top:1rem;
+                    padding-bottom:1rem;
+                    border-bottom:1px dashed #e6e6e6;
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
+                .mlite_less_padng{
+                    margin-top:55px;
+                    padding-top:0px;
+                    padding-bottom:0px;
+                }
 }
 @media screen and (max-width:360px){
         .milestone_round_div{
