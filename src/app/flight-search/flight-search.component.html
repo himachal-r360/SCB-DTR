@@ -403,7 +403,6 @@
                                                                 <mat-form-field       style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                                 <input  matInput   [(ngModel)]="departureDate"   autocomplete="off"  readonly formControlName="departure"  id="departure" >
                                                                 </mat-form-field>
-                                                                
                                                             </div>
                                                             
                                                         </div>
@@ -453,10 +452,8 @@
                                                                 </div>
                                                                 </div>
                                                         
-                                                        <div class="area-root-reutrn" 
-                                                            id="datePickerArrival"
-                                                            [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'">
-                                                            <div class="select-root-reutrn " (click)="openMliteDatePicker('arrival',0)">
+                                                        <div class="area-root-reutrn"              id="datePickerArrival"                        [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'" (click)="openMliteDatePicker('arrival',0)">
+                                                            <div class="select-root-reutrn " >
                                                                 <span class="select-roottitle">RETURN</span>
                                                                 <h5 class=" "     *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
                                                                     {{arrivalDate | date:'dd MMM' }}</h5>

@@ -29,15 +29,32 @@ export class BannersComponent implements OnInit {
   cdnUrl: any;
   cdnDealUrl: any;
   siteUrl: any;
-
+  points_available :any;
+  wb_spend:any; 
+  wb_perc:any;
   ngOnInit(): void {
 
     this.rest.getRegaliaGoldList().subscribe(res => {
       this.mainBanners = res.mainBanners.diners;
-      console.log(this.mainBanners)
+      //console.log("TEst");
+      //console.log(this.mainBanners)
     });
 
+     this.rest.getMilestoneDetail().subscribe(res => {
+        console.log("getMilestoneDetail");
+        this.wb_spend = res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT;
+        this.wb_perc = Math.round((res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.wb.spends.TARGET_SPEND_AMOUNT)*100);
+        console.log(this.wb_perc);
+    });
 
+     this.rest.availablePoints().subscribe(res => {
+       // console.log("availablePoints");
+      //  console.log(res);
+        if(res.status=="true"){
+            this.points_available=res.points_available;
+            console.log(this.points_available);
+         }
+    }); 
 }
 benefitsLink(){
   this.router.navigate(['/regalia_gold/know-your-card']);

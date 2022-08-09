@@ -97,6 +97,12 @@ export class RestapiService {
   getRegaliaGoldList ():Observable<any> {
     return this.http.get('assets/data/regalia_gold.json');
   }
+  getMilestoneDetail ():Observable<any> {
+    return this.http.get('assets/data/milestone.json');
+  }
+  availablePoints() :Observable<any>{
+    return this.http.get('assets/data/availablepoints.json');
+  }
   
     verifyDomain ():Observable<any> {
           

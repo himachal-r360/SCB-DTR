@@ -19,6 +19,7 @@ export class RegaliaGoldHomeComponent implements OnInit {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.cdnDealUrl = environment.cdnDealUrl;
     this.siteUrl = environment.MAIN_SITE_URL;
+     this.customer_login=this.sg['customerLogin'];
     
  
   }
@@ -27,8 +28,12 @@ export class RegaliaGoldHomeComponent implements OnInit {
    cdnUrl: any;
    cdnDealUrl: any;
    siteUrl: any;
+   customer_login:boolean=false;
+   
 
   ngOnInit(): void {
+   // console.log(this.sg.'customerLogin']);
+     console.log(this.serviceSettings);
   }
 
 }

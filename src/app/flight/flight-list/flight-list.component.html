@@ -26,25 +26,14 @@
                     <div class="filter-loaders animation-loader" *ngIf="loader">
                       <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                           <div class="filter-loader-content ">
-                              <span class="filter-box-title mt-0 w-50"><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                [theme]="{
-                                  'border-radius': 0
-                                }"></ngx-skeleton-loader></span>
-                              <span class="filter-box-subtext "><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                [theme]="{
-                                  'height':'8px',
-                                  'border-radius': '3px'
-                                }"></ngx-skeleton-loader></span>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                           </div>
                       </div>
 
                   </div>
-                    <!-- <ngx-skeleton-loader *ngIf="loader" count="10" appearance="line" animation="pulse"
-                        [theme]="{
-
-                           height: '90px',
-                          'border-radius': 0
-                        }"></ngx-skeleton-loader> -->
+      
                         <div [hidden]="loader">
                           <div class="Filterslayout d-flex justify-content-between align-items-center" >
                             <h6 class="fs_16">Filters</h6>
@@ -335,32 +324,16 @@
                             </div>
                         </div>
                         <!-- Listing -->
-                        <div class="flight-listing-area" *ngIf="loader">
+                        <div class="flight-listing-area" *ngIf="loader" >
                           <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
-                              <div class="listing-loader-thumb">
-                                  <span class="loader-box-image"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                    [theme]="{
-                                      'height':'100%',
-                                      'border-radius': '8px'
-                                    }"></ngx-skeleton-loader></span>
-                              </div>
-                              <div class="listing-loader-content">
-                                  <span class="loader-box-title"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                    [theme]="{
-                                      'height':'20px',
-                                      'border-radius': '3px'
-                                    }"></ngx-skeleton-loader></span>
-                                  <span class="loader-box-subtext"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                    [theme]="{
-                                      'height':'8px',
-                                      'border-radius': '3px'
-                                    }"></ngx-skeleton-loader></span>
-                                  <span class="loader-box-subtext w-50"> <ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                    [theme]="{
-                                      'height':'8px',
-                                      'border-radius': '3px'
-                                    }"></ngx-skeleton-loader></span>
-                              </div>
+                                <div class="filter-loader-content w-100">
+                                <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
+                                <span class="float-right" style="width:90%;" > 
+                                <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                </span>
+                                </div>  
                           </div>
                         </div>
 
@@ -383,6 +356,12 @@
                                                     <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
                                                 </div>
                                             </div>
+                                                                <ng-container *ngFor="let details of flightList;">
+                                        <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                        Operated by  <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                        <b   *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                        </div>
+                                        </ng-container> 
                                         </div>
                                         <div class="col-md-4">
                                             <div class="flight-city-box" *ngIf="list.flights.length > 0">
@@ -575,7 +554,7 @@
                                                             <div class="extra-tabs-details-bottom">
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one" >
-                                                                        <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">IndiGo {{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
+                                                                        <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif"  class="flight-image me-2" alt="">IndiGo {{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
                                                                         <div class="tabs-depart-left float-none">
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -607,11 +586,10 @@
                                                                             </div>
                                                                         </div>-->
                                                                     </div>
-                                                           <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
-                                                                     Operated By :
-                                                                     <span *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</span>
-                                                                     <span   *ngIf="!airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</span>
-                                                                     </div>
+                                                           <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                        Operated by  <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                        <b   *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                        </div>
                                                                     <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.flights[i]  && list.flights[i+1] && getLayoverHour(list.flights[i],list.flights[i+1])">
  <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
                                                                   </div>
@@ -838,10 +816,10 @@
 <section class="mob-flights-listing" *ngIf="isMobile">
   <div class="container">
       <div class="row">
-          <div class="col-md-12 p-0">
+          <div class="col-md-12 p-0 fixed-top"  >
               <div class="mob-listing-header">
                   <div class="mob-listing-header-left">
-                      <a href="javascript:;" routerLink="/" >
+                      <a href="javascript:;" routerLink="/compare-fly" >
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>
@@ -854,13 +832,13 @@
                       </p>
                   </div>
                   <div class="mob-listing-header-right">
-                      <a href="javascript:;" routerLink="/" >
+                      <a href="javascript:;" routerLink="/compare-fly" >
                           <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                       </a>
                   </div>
               </div>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12 mt-70" *ngIf="!loader">
               <div class="mob-listing-fiters">
                   <h6>{{flightList.length}} Flights Found</h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()">
@@ -872,7 +850,7 @@
 
 
 
-          <div class="col-md-12">
+          <div class="col-md-12" *ngIf="!loader">
               <div class="mob-all-flight">
                   <ul>
                       <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"  value="{{Items.value}}" >
@@ -887,22 +865,18 @@
 
           <div class="col-md-12">
             <ng-container #itemsContainer></ng-container>
-                            <div class="filter-loaders animation-loader" *ngIf="loader">
-                      <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
-                          <div class="filter-loader-content ">
-                              <span class="filter-box-title mt-0 w-50"><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                [theme]="{
-                                  'border-radius': 0
-                                }"></ngx-skeleton-loader></span>
-                              <span class="filter-box-subtext "><ngx-skeleton-loader *ngIf="loader" count="1" appearance="line" animation="pulse"
-                                [theme]="{
-                                  'height':'8px',
-                                  'border-radius': '3px'
-                                }"></ngx-skeleton-loader></span>
+            <div *ngIf="loader">
+              <div  class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                          <div class="filter-loader-content w-100">
+                              <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
+                              <span class="w-75 float-right"> 
+                              <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                               <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                               </span>
                           </div>
                       </div>
-
-                  </div>
+                 </div>     
                   <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                 <ng-template #item let-item="item">
                 <div  *ngFor="let list of item; let i = index" >
@@ -911,7 +885,7 @@
                       <div class="mob-list-items-name">
                           <div class="mob-list-items-name-top">
                               <div class="mob-list-items-image">
-                                  <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                  <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}"  class="flight-image">
                                   <div class="mob-list-flight-name"  *ngIf="list.flights.length > 0">
                                       <h6>{{list.flights[0].airlineName}}</h6>
                                       <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
@@ -1024,10 +998,10 @@
                                                                     <p>{{fromCityName}} to {{toCityName}} <br> Depart</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="extra-tabs-details-bottom p-0">
+                                                            <div class="extra-tabs-details-bottom ">
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one">
-                                                                        <p class="depart-one-image" ><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" width="22px" class="me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                        <p class="depart-one-image" ><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif"  class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                         <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                         <div class="tabs-depart-left float-none">
                                                                             <div class="tabs-depart-times">
@@ -1059,9 +1033,10 @@
                                                                             </div>
                                                                         </div>-->
                                                                     </div>
-                                                                     <div class="mt-1 fontsize-10" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">  Operated By :
-                                                                     <span *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</span>
-                                                                     <span   *ngIf="!airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</span> </div>
+                                                                    <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                        Operated by  <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                        <b   *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                        </div>
                                                                     <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                         <!-- <p>Change of planes・3h 0m Layover in Nagpur</p> -->
                                                                         <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
@@ -1300,9 +1275,9 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                    <div class="mob-sf-btns">
-                                        <a href="javascript:void(0)">Apply</a>
-                                    </div>
+                                    <!--<div class="mob-sf-btns">
+                                        <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)">Close</a>
+                                    </div>-->
                                 </div>
                             </div>
                           </div>
