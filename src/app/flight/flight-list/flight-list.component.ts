@@ -218,8 +218,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
-       this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-       this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
 
       $(window).scroll(function(this) {
@@ -1034,9 +1032,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
-
-        this._styleManager.removeStyle('bootstrap-select');
-        this._styleManager.removeScript('bootstrap-select');
         this._styleManager.removeScript('custom');
   }
   HideShowCompareToFly(i: number, fromCall: string, j: number) {

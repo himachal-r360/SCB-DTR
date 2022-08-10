@@ -693,6 +693,7 @@ defaultFlightOptions: any[];
 
 
     if(this.navItemActive == 'Round Trip'){
+       this.minDateFlightToMlite=this.departureDate;
        this.flightData.controls["arrival"].setValidators(Validators.required);
        this.flightData.controls["arrival"].updateValueAndValidity();
     }else{

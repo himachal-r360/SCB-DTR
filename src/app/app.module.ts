@@ -28,6 +28,7 @@ import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { CustomReuseStrategy } from './route-reuse-strategy';
 import { ToastrModule } from 'ngx-toastr';
+import { CssLoaderComponent } from './css-loader.component';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -40,7 +41,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   declarations: [
     AppComponent,
     SearchComponent,
-    AlertDialogComponent
+    AlertDialogComponent,CssLoaderComponent
 
   ],
   imports: [
@@ -83,7 +84,7 @@ SimpleGlobal,CommonHelper,CommunicationService,MatBottomSheet
 
   ],
      entryComponents: [AlertDialogComponent],
-  bootstrap: [AppComponent],
+  bootstrap: [CssLoaderComponent,AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
