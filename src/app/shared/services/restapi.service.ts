@@ -82,13 +82,7 @@ export class RestapiService {
     }
     }
   }
-    getcustomercardpoints(param){
-  if(LOCALJSON=='true'){
-    return this.http.get('assets/data/availablepoints.json').pipe(map((response:any) => response));
-  }else{
-    return this.http.post(this.endpoint+'getcustomercardpoints', param, config).pipe(map((response:any) => response));
-  }
-}
+
   getDealsOffers ():Observable<any> {
     if(LOCALJSON=='true'){
       return this.http.get('assets/data/getDealsandoffers.json');

@@ -57,11 +57,26 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  orderamount:number;
  redemptionMsg:any;
  redemption_value:any;
-  constructor(private dialog: MatDialog, public rest: RestapiService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService) { 
+ voucherOtp:Boolean=false;
+ voucherapplyform:Boolean=false;
+ voucherslider:Boolean=true;
+ submittedForm3:Boolean=false;
+ Form3: FormGroup;
+ voucherForm1: FormGroup;
+  constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.getCustomerCards();
-    
+    this.Form3 = this.formBuilder.group({
+          otp:['', [Validators.required,Validators.pattern("^[0-9]*$")]]
+        });
+     this.voucherForm1 = this.formBuilder.group({
+          first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
+          last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
+          applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
+          dob:['', Validators.required],
+          applyvouchercode:['', [Validators.required,Validators.pattern("^[a-zA-Z0-9]*$")]]
+        });
     
   }
 
@@ -206,8 +221,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
   setSlider(){
     // update slider dynamically
-           
-      
+
              if(Object.keys(this.pointData['condition']).length!=0){
           var name=this.pointData['condition']['name'];
           var condition_type=this.pointData['condition'].condition_type; 
@@ -245,7 +259,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
     };
-    this.rest.getcustomercardpoints(passData).subscribe(response => {
+    this.pay.getcustomercardpoints(passData).subscribe(response => {
       this.response1=response;
       if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
       {
@@ -258,7 +272,6 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         var card_type=this.response1['card_type'];
         this.CcCharges = this.response1['CcCharges'];
         this.pointData = this.response1;
-        console.log(this.pointData);
         this.setSlider();
         // this.intitialconversionptoc();
       }else{
@@ -275,6 +288,12 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       
     };
   }
+  voucherForm(){
+    this.voucherOtp = false;
+    this.voucherslider = false;
+    this.voucherapplyform = true;
+  }
+
   selectedCard(id){
     for(let i=0;i<this.cards.length;i++){
       if(id == this.cards[i].id){
@@ -286,6 +305,106 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
 
   }
  
+  generateVoucherOtp(){
+    //need to change as per api
+    var request = {
+      "takecard":this.selectedCardDetails.id,
+      "type":"available_points",
+      "bin":"",
+      "clientToken":this.sg['domainName'].toUpperCase(),
+      "ctype":this.ctype,
+      "modal":"DIGITAL",
+      "noopt": 1,
+      // "customer_id":this.customerInfo["customerid"],
+      "programName":this.sg['domainName'],
+      "_token":this.XSRFTOKEN
+    };
+    var passData = {
+      postData: this.EncrDecr.set(JSON.stringify(request))
+    };
+        this.pay.generateVoucherOtp(passData).subscribe(response => {
+        if(response.reward_message='successful'){
+          this.voucherOtp = true;
+          this.voucherslider = false;
+
+        }else{
+          this.voucherOtp = false;
+          this.voucherslider = true;
+        }
+    }), (err: HttpErrorResponse) => {
+      var message = 'Something went wrong';
+      alert(message);
+      this.errorMsg0="";
+      
+    };
+    
+  }
+   OTPVerification(){
+    this.submittedForm3=true;
+    if (this.Form3.status !='VALID') {
+      return;
+    }else{
+      console.log('validated');
+    }
+  }
+    handleEvent($event,ref){
+   // console.log($event);
+  }
+  onFinishedTimer(): void {
+    //console.log("---TIMER FINISHED---");
+  }
+  resendOTP(ref){
+    ref.restart();
+  }
+    isCardValid(control: FormControl) {
+      const q = new Promise((resolve, reject) => {
+      // resolve(null);
+      setTimeout(() => {
+      let prgramName=this.sg['domainName'];
+      //let cardnumber=control.value.replace(/-/g, "");
+      let cardnumber=control.value;
+      if(prgramName=='SMARTBUY' || prgramName==''){
+      var res = cardnumber.substring(0, 6);
+      }else{
+      var res = cardnumber.substring(0, 9);
+      }
+      const urlParams = new HttpParams()
+      .set('card_number', res)
+      .set('prgramName', prgramName)
+      .set('_token', this.XSRFTOKEN);
+        let body = urlParams.toString();
+        this.rest.isCardValid(body).subscribe((data) => {
+         if(data==0){
+          resolve({ 'isCardValid': true });
+         }else
+          resolve(null);
+        }, () => { resolve({ 'isCardValid': true }); });
+      }, 5000);
+    });
+    return q;
+  }
+    applyVoucher(){
+    // this.submitted1=true;
+    if (this.voucherForm1.status !='VALID') {
+      return;
+    }else{
+        var first9digit = this.voucherForm1.controls['first4digit'].value;
+        var first4digit = first9digit.substring(0, 4).trim();
+        var last4digit = this.voucherForm1.controls['last4digit'].value;
+        var applymobile = this.voucherForm1.controls['applymobile'].value;
+        var dob = this.voucherForm1.controls['dob'].value;
+        var datePipe = new DatePipe('en-US'); 
+        var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        var applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
+        /*console.log(first9digit);
+        console.log(first4digit);
+        console.log(last4digit);
+        console.log(applymobile);
+        console.log(dobStr);
+        console.log(applyvouchercode);*/
+
+    }
+  }
 
   calldialog(event) {
     var message=event;
