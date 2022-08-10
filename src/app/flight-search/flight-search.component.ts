@@ -516,8 +516,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     }
     else {
       let searchValue = this.flightData.value;
-      let searchMulticityValue = this.multiCityArrayM;
-      console.log(searchMulticityValue , 'searchMulticityValue');
+      // let searchMulticityValue = this.multiCityArrayM;
+      // console.log(searchMulticityValue , 'searchMulticityValue');
       
       this.flightSearchCallBack(searchValue);
 
@@ -543,7 +543,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl(url);
       }
       if(this.navItemActive == "Multicity") {
-        url = "flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(searchMulticityValue))
+        url = "flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.multiCityArrayM))
         this.router.navigateByUrl(url)
       }
     }
@@ -558,20 +558,21 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     return str.join("&");
   }
 
-  ConvertObjToQueryStringMutlticity(obj1:any){
+  ConvertObjToQueryStringMutlticity(obj:any){
   var strUrl="";
-  for(var i=0;i<this.multiCityArrayM.length;i++){
+  for(var i=0;i<obj.length;i++){
     var str:any = [];
-    obj1=this.multiCityArrayM[i];
+    let obj1:any=obj[i];
     for (var p in obj1){
       if (obj1.hasOwnProperty(p)) {
         str.push(encodeURIComponent(p) + "["+i+"]=" + encodeURIComponent(obj1[p]));
       }
     }
-    
-    return strUrl=strUrl+"&"+str.join("&");
-    }
+    strUrl=strUrl+"&"+str.join("&");
   }
+  return strUrl
+  
+}
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
