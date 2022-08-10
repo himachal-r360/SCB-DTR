@@ -129,7 +129,7 @@
               <div class="Flight-One" *ngFor="let flights of flightOnwardDetails;let i = index">
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
-                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}"
+                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
                       class="flight-image mr-10">
                     <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                     <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -325,7 +325,7 @@
               <div class="Flight-One" *ngFor="let flights of flightReturnDetails;let i = index">
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
-                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}"
+                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
                       class="flight-image mr-10">
                     <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                     <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -1485,7 +1485,7 @@
 
 
 
-                                            <div> <button class="btn btn-primary"
+                                            <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('adult',traveller)">Add</button> </div>
                                           </div>
                                         </div>
@@ -2246,7 +2246,7 @@
 
                                               </div>
                                             </ng-container>
-                                            <div> <button class="btn btn-primary"
+                                            <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('child',traveller)">Add</button> </div>
                                           </div>
                                         </div>
@@ -3013,7 +3013,7 @@
                                               </div>
                                             </ng-container>
 
-                                            <div> <button class="btn btn-primary"
+                                            <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('infant',traveller)">Add</button> </div>
                                           </div>
                                         </div>
@@ -4261,7 +4261,7 @@
                 <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
                   <div class="Booking-Flight-name">
                     <div class="Booking-Flight-name-left">
-                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px"
+                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif"
                         alt="{{flights.airline}}" class="flight-image mr-10">
                       <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                       <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -4363,11 +4363,9 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                          class="mx-2" alt="">
+                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"        class="flight-image mx-2" alt="">
                         <img *ngIf="!return_airline_unique"
-                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif" width="40px"
-                          class="mx-2" alt="">
+                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"        class="flight-image mx-2" alt="">
                       </div>
                       <h6>
                         <span class="city_text">{{searchData.toCity}}</span>
@@ -4421,11 +4419,9 @@
 
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                          class="mx-2" alt="">
+                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"                  class="flight-image mx-2" alt="">
                         <img *ngIf="!return_airline_unique"
-                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif" width="40px"
-                          class="mx-2" alt="">
+                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"                class="flight-image mx-2" alt="">
                       </div>
                       <h6>
                         <span class="city_text">{{searchData.fromCity}}</span>
@@ -4482,8 +4478,7 @@
                 <div class="Flight-One flight_detail_review" *ngFor="let flights of flightReturnDetails;let i = index">
                   <div class="Booking-Flight-name">
                     <div class="Booking-Flight-name-left">
-                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px"
-                        alt="{{flights.airline}}" class="flight-image mr-10">
+                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif"               alt="{{flights.airline}}" class="flight-image mr-10">
                       <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                       <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
                     </div>

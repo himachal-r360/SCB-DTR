@@ -275,7 +275,7 @@ new_fare: number = 0;
                 this.getAirpotsList();
                 this.getAirLineList();
                 this.getCountryList();
-                 this.resetPopups();
+                 this.resetPopups('construct');
                 const jobGroup: FormGroup = new FormGroup({});
                 this.passengerForm = jobGroup;
                 jobGroup.addControl('saveTraveller',new FormControl(''));
@@ -308,7 +308,8 @@ new_fare: number = 0;
 
   ngOnInit(): void {
        this.route.url.subscribe(url =>{
-        this.resetPopups();
+        this.resetPopups('onInint');
+        
                 this.steps=1;
                 this.isMobile = window.innerWidth < 991 ?  true : false;
                 if(this.isMobile){
@@ -2131,7 +2132,7 @@ new_fare: number = 0;
   }
 
   triggerBack(){
-   $('#bookingprocessFailed').modal('hide');
+   this.resetPopups('trigger back');
    let url;
   if(this.searchData.travel=='DOM'){   
    if(this.searchData.flightdefault=='R')
@@ -2145,7 +2146,7 @@ new_fare: number = 0;
 
   }
 
-        resetPopups(){
+        resetPopups(message){
         $('#bookingprocessPriceChange').modal('hide');
         $('#bookingprocessFailed').modal('hide');
         $("#infoprocess").modal('hide');
@@ -2155,20 +2156,19 @@ new_fare: number = 0;
         $('#infantTraveller_mlite').modal('hide');
         $('#bookingprocessExpires').modal('hide');
         $(".modal").hide();
-        $('body').removeClass( "modal-open" );
         $("body").removeAttr("style");
         $(".modal-backdrop").remove();
         }
 
   goBack(){
-  this.resetPopups();
+  this.resetPopups('goback');
   this.router.navigateByUrl('/');
 
 
   }
 
   ngOnDestroy(): void {
-   this.resetPopups();
+   this.resetPopups('destroy');
     if(this.sessionTimer){
       clearInterval(this.sessionTimer);
     }
@@ -2249,7 +2249,7 @@ new_fare: number = 0;
         this.passengerForm.markAllAsTouched();
 
 
-   // console.log(this.passengerForm);
+   console.log(this.passengerForm);
 
         if (this.passengerForm.invalid ) {
        // console.log(this.passengerAdultFormCount);
@@ -2552,7 +2552,7 @@ new_fare: number = 0;
         this.itineraryRequest["returnCheckInDate"]= moment(this.searchData.arrival).format('YYYY-MM-DD');
         
         
-         this.resetPopups();
+         this.resetPopups('itinerary');
 
             $('#infoprocess').modal('show');
       this.loaderValue=10;
@@ -2639,7 +2639,7 @@ this.new_fare=0;
       		  setTimeout(() => {
 		 this.continueWithNewFareInterval=myInterval1;
 		 $('#bookingprocessPriceChange').modal('show');
-                  }, 20);
+                  }, 10);
  		}else{
  		   this.saveCheckout(myInterval1);
  		}
@@ -2649,7 +2649,7 @@ this.new_fare=0;
                 setTimeout(() => {
                 $('#infoprocess').modal('hide');
                 $('#bookingprocessFailed').modal('show');
-                }, 20);
+                }, 10);
 
           }
          }),(err:HttpErrorResponse)=>{
@@ -2657,7 +2657,7 @@ this.new_fare=0;
                  setTimeout(() => {
                 $('#infoprocess').modal('hide');
                 $('#bookingprocessFailed').modal('show');
-                }, 20);
+                }, 10);
          }
 
        }
