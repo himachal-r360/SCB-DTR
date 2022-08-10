@@ -18,6 +18,7 @@ API_URL:{
  'DINERS': 'https://smartbuydev.reward360.in/diners/api/',
  'INFINIA'  : 'https://smartbuydev.reward360.in/infinia/api/',
  'REGALIA': 'https://smartbuydev.reward360.in/regalia/api/',
+  'REGALIA_GOLD': 'https://smartbuydev.reward360.in/regalia/api/',
  'CORPORATE': 'https://smartbuydev.reward360.in/corporate/api/',
  'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
 'REGALIA_GOLD': 'https://smartbuydev.reward360.in/regalia_gold/api/',
@@ -37,6 +38,7 @@ API_URL:{
  'DINERS': 'https://smartbuydev.reward360.in/lite/diners/',
  'INFINIA'  : 'https://smartbuydev.reward360.in/lite/infinia/',
  'REGALIA': 'https://smartbuydev.reward360.in/lite/regalia/',
+  'REGALIA_GOLD': 'https://smartbuydev.reward360.in/lite/regalia/',
  'CORPORATE': 'https://smartbuydev.reward360.in/lite/corporate/',
   'BUSINESS': 'https://smartbuydev.reward360.in/lite/business/',
 'REGALIA_GOLD': 'https://smartbuydev.reward360.in/lite/regalia_gold/',
@@ -117,8 +119,8 @@ API_URL:{
     "INFINIA":"infinia/checknatgeo" ,
     "REGALIA":"regalia/bus",
     "CORPORATE":"corporate/bus",
-    "BUSINESS":"business/bus",
-  "REGALIA_GOLD":"regalia_gold"        
+    "BUSINESS":"business/bus"  ,
+    "REGALIA_GOLD":"regalia/bus",     
   }
   
   
