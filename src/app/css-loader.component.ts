@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 @Component({
   selector: 'css-loader',
-  template: `<link rel="stylesheet" type="text/css" [href]="path">`,
+  template: `<link *ngIf="cssPath" rel="stylesheet" type="text/css" [href]="path">`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -36,7 +36,7 @@ export class CssLoaderComponent {
 	 this.cssPath = `smartbuy.css`;
 	break;
 	default:
-	this.cssPath = `smartbuy.css`;
+	this.cssPath = '';
 	break;
 	}  
       console.log(this.cssPath);
