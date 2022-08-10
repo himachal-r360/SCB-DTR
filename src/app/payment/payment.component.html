@@ -254,7 +254,22 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6 col-12 text-end">
-                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0"><p class="invalid"><span class="material-icons pe-2 ">warning</span>  Tokenise and Save</p> <span> <input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)" class="mt-10"> <span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i></span> </span></div>
+                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0">
+                                                                                <span> 
+                                                                                    <p class="invalid">
+                                                                                        <span class="material-icons px-1">warning</span>
+                                                                                        <span class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="1" id="tokenization{{cardIndex}}" (change)="checkInfo($event,cardIndex)">
+                                                                                            <label class="form-check-label" for="tokenization{{cardIndex}}">
+                                                                                                 Tokenise & Save
+                                                                                            </label>
+                                                                                        </span>
+                                                                                        <!-- <input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)" class="mt-10"> 
+                                                                                        <span class="material-icons px-1" for="tokenization{{cardIndex}}">warning</span>  Tokenise and Save -->
+                                                                                    </p> 
+                                                                                </span>
+                                                                                <span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i> </span> 
+                                                                            </div>
                                                                             <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==1"><p class="valid"><span class="material-icons pe-2 ">lock</span> Secure now</p><input type="checkbox" name="tokenization" id="tokenization{{cardIndex}}" checked value="1" style="display:none;"></div>
                                                                         </div>
                                                                     </div>
@@ -690,7 +705,7 @@
                                                                     <div class="sub-info">
                                                                     <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
                                                                         Value</span></p>
-                                                                    <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare )| commaSeparator | number}} paid as interest in complete EMI tenure) </p>
+                                                                    <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare )| commaSeparator }} paid as interest in complete EMI tenure) </p>
                                                                     </div>
                                                                 </label>
                                                                                     </div>
@@ -1253,17 +1268,17 @@
                                                                                     <p>Please Choose a Tenure</p>
                                                                                 </div>
                                                                                 <div class="row" *ngIf="showflexipaydefaultsection && !fpGuestsession">
-                                                                                    <div *ngFor="let installment of flexiPayNewcalcArr;let i=index" class="col-12 col-md-6">
+                                                                                    <div *ngFor="let installment of flexiPayNewcalcArr;let i=index" class="col-6 col-sm-6">
                                                                                         <div class="w-flexpay-price" (click)="select(i)" [ngClass]="{'w-flexpay-active': selectedIndex == i, 'list-group-item': true}">
                                                                                             <label for="payFlexiemi-subOne{{installment.key}}" class="radio flexi_radio">
-                                                  <input type="radio" formControlName='flexiOptions' name="flexiOptions" id="payFlexiemi-subOne{{installment.key}}" class="hidden dc_emi_option" value="{{installment.key}}" (click)="calculateIntr(installment.key)"/>
-                                                        <span class="label d-none"></span>
-                                                        <div class="sub-info m-0">
-                                                        <p class="emi-duration"> {{installment.key}} days later</p>
-                                                        <p class="emi-tenure" *ngIf="installment.key==15; else intrest">No extra cost</p>
-                                                      </div>
-                                                      <ng-template #intrest><p class="emi-tenure">Interest = ₹{{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
-                                                  </label>
+                                                                                                 <input type="radio" formControlName='flexiOptions' name="flexiOptions" id="payFlexiemi-subOne{{installment.key}}" class="hidden dc_emi_option" value="{{installment.key}}" (click)="calculateIntr(installment.key)"/>
+                                                                                                    <span class="label d-none"></span>
+                                                                                                    <div class="sub-info m-0">
+                                                                                                    <p class="emi-duration"> {{installment.key}} days later</p>
+                                                                                                    <p class="emi-tenure" *ngIf="installment.key==15; else intrest">No extra cost</p>
+                                                                                                </div>
+                                                                                                <ng-template #intrest><p class="emi-tenure">Interest = ₹{{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
+                                                                                            </label>
                                                                                         </div>
                                                                                     </div>
                             
@@ -1333,12 +1348,14 @@
                                                                         </div>
                                                                       </div> -->
                                                                                                 </div>
-                                                                                                <div class="row w-flexipay-discount m-0" *ngIf="selectedperiod==15">
-                                                                                                    <div class="col-2 col-md-1 pr0">
-                                                                                                        <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
-                                                                                                    </div>
-                                                                                                    <div class="col-10 col-md-11">
-                                                                                                        <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">₹{{intrstopay | commaSeparator}}</span> Applied!</small>
+                                                                                                <div class="w-flexipay-discount mb-10">
+                                                                                                    <div class="row m-0" *ngIf="selectedperiod==15">
+                                                                                                        <div class="col-2 col-sm-2 pr-0">
+                                                                                                            <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
+                                                                                                        </div>
+                                                                                                        <div class="col-10 col-sm-10">
+                                                                                                            <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">₹{{intrstopay | commaSeparator}}</span> Applied!</small>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
