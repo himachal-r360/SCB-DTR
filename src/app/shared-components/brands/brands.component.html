@@ -6,7 +6,7 @@
                 <div>
                     <a href="">
                         <div class="item_brand">
-                            <img src="{{cdnUrl}}images/smartbuy/brands/svg/{{brand.image}}" alt="{{brand.title}}">
+                            <a (click)="redirectUrl('instavouchers',1,brand.url)"><img src="{{cdnUrl}}images/smartbuy/brands/svg/{{brand.image}}" alt="{{brand.title}}"></a>
                         </div>
                     </a>
                 </div>
@@ -14,4 +14,6 @@
         </owl-carousel-o>
     </div>
 </div>
+<app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"
+    [redirectPopupHeader]="redirectPopupHeader" [redirectPopupImpmessage]="redirectPopupImpmessage" [redirectPopupMessage]="redirectPopupMessage"></app-redirect-popup>
 

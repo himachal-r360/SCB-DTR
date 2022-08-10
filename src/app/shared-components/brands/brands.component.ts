@@ -13,7 +13,8 @@ import { environment } from 'src/environments/environment';
 export class BrandsComponent implements OnInit {
 
   constructor(public rest: RestapiService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService) {
-  
+    
+    this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl;
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -23,12 +24,21 @@ export class BrandsComponent implements OnInit {
     
  
   }
+  redirectPopupTrigger: number = 0; 
+  redirectPopupPartner; 
+  redirectPopupType; 
+  redirectPopupUrl; 
+  redirectPopupHeader; 
+  redirectPopupImpmessage; 
+  redirectPopupMessage; 
+  redirectPopup;
+  redirectPopupTriggerTimestamp;
   foryouBrands = [];
-   serviceSettings: any;
-   cdnUrl: any;
-   cdnDealUrl: any;
-   siteUrl: any;
-
+  serviceSettings: any;
+  cdnUrl: any;
+  cdnDealUrl: any;
+  siteUrl: any;
+  domainRedirect: string;
   ngOnInit(): void {
 
   }
@@ -57,6 +67,29 @@ export class BrandsComponent implements OnInit {
         nav: false,
         dots: false
       }
+    }
+  }
+  redirectUrl(partner, type, url) {
+    const current = new Date();
+    if (url) {
+      let partnerData = this.serviceSettings['lang']['popup_redirections'][partner];
+      this.redirectPopupHeader = partnerData[partner + '_title'];
+      this.redirectPopupImpmessage = partnerData[partner + '_pup_importantText'];
+      this.redirectPopupMessage = partnerData[partner + '_pup_dearcustomer'];
+
+      if (type == 1){
+        this.redirectPopup = 1;
+        console.log(this.domainRedirect + 'insta-redirection/shopredirectLink?u=' + (window.btoa(url)));
+        this.redirectPopupUrl = this.domainRedirect + 'insta-redirection/shopredirectLink?u=' + (window.btoa(url));
+      }else{
+        this.redirectPopup = 1;
+        this.redirectPopupUrl = this.domainRedirect + 'popup-redirection/' + partner;
+      }
+      this.redirectPopupPartner = partner;
+      this.redirectPopupType = type;
+      this.redirectPopupTrigger = 1;
+    
+      this.redirectPopupTriggerTimestamp = current.getTime();
     }
   }
 
