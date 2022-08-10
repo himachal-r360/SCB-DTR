@@ -303,7 +303,7 @@ defaultFlightOptions: any[];
         this.toAirpotName = values.airport_name;
         this.toCityName = values.city;
          setTimeout(() => {
-        this.datePicker.open();
+       // this.datePicker.open();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
 

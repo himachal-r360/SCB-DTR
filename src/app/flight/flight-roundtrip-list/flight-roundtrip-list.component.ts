@@ -12,6 +12,7 @@ import { Location, ViewportScroller } from '@angular/common';
 import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
+import { formatNumber } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -167,6 +168,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   pageIndex: number = 26;
   ITEMS_RENDERED_AT_ONCE=25;
   nextIndex=0;
+  
+    pageIndexR: number = 26;
+  nextIndexR=0;
 
   constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -184,10 +188,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   ngOnInit(): void {
 
        this.route.url.subscribe(url =>{
-        $(".modal").hide();
-        $('body').removeClass( "modal-open" );
-         $("body").removeAttr("style");
-        $(".modal-backdrop").remove();
+        this.resetPopups();
         this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
@@ -197,7 +198,12 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.flightSearch();
      });
   }
-
+        resetPopups(){
+        $('#flightChange').modal('hide');
+        $(".modal").hide();
+        $("body").removeAttr("style");
+        $(".modal-backdrop").remove();
+        }
     private loadData() {
       if (this.pageIndex >= this.flightList.length) {
       return false;
@@ -218,20 +224,20 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
 
   private loadReturnData() {
-    if (this.pageIndex >= this.ReturnflightList.length) {
+    if (this.pageIndexR >= this.ReturnflightList.length) {
       return false;
       }else{
-      this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
-      if(this.nextIndex > this.ReturnflightList.length){
-      this.nextIndex=this.ReturnflightList.length ;
+      this.nextIndexR = this.pageIndexR + this.ITEMS_RENDERED_AT_ONCE;
+      if(this.nextIndexR > this.ReturnflightList.length){
+      this.nextIndexR=this.ReturnflightList.length ;
       }
-      for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+      for (let n = this.pageIndexR; n < this.nextIndexR ; n++) {
         const context = {
           items: [this.ReturnflightList[n]]
         };
         this.returnContainer.createEmbeddedView(this.template, context);
       }
-      this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+      this.pageIndexR += this.ITEMS_RENDERED_AT_ONCE;
     }
   }
 
@@ -1358,9 +1364,46 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }
   }
   }
-
-  onSelectOnword(flightKey:any,flights:any,item:any,event:any)
+  flightChangeDisplay:any;
+  
+  flightsChange:any; selectedChange:any; flightKeyChange:any; itemChange:any;eventChange:any;
+  
+  onSelectOnwardSplrt:any;
+  
+  onSelectOnword(flightKey:any,flights:any,item:any,priceDump:any,event:any)
   {
+   if(item.partnerName=='Cleartrip'){
+   this.onSelectOnwardSplrt= priceDump.filter((item: any) => {
+      if(item.partnerName=='Cleartrip' && item.splrtFareFlight==true )
+      return item;
+    });
+    }else{
+    this.onSelectOnwardSplrt=[];
+    }
+  
+        let departureAirportUser=this.searchData.flightfrom;
+        let arrivalAirportUser=this.searchData.flightto;
+
+        let departureAirportSelected=flights[0]['departureAirport'];
+        let arrivalAirportSelected=flights[flights.length-1]['arrivalAirport'];
+        this.flightsChange=flights;
+        this.itemChange=item;
+        this.flightKeyChange=flightKey;
+        this.eventChange=event;
+
+        if (departureAirportSelected != departureAirportUser) {
+        this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[departureAirportUser ].city + ". Cheapest flight at ₹"+formatNumber(item.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[departureAirportSelected ].airport_name+ ', ' +this.airportsNameJson[departureAirportSelected ].city + ' (' + departureAirportSelected + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelected ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ').';
+        $('#flightChangeO').modal('show');
+        return;
+        }
+
+
+        if (arrivalAirportSelected != arrivalAirportUser) {
+        this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[arrivalAirportUser ].city + ". Cheapest flight at ₹"+formatNumber(item.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[arrivalAirportSelected ].airport_name+ ', ' +this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelected ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ').';
+        $('#flightChangeO').modal('show');
+        return;
+        }
+  
 
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".onwardbuttons").html('Select');
@@ -1389,9 +1432,249 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     });
 
   }
-
-  onSelectReturn(flightKey:any,flights:any,item:any,event:any)
+  
+    onSelectOnwordContinue(flightKey:any,flights:any,item:any,event:any)
   {
+  
+    $('#flightChangeO').modal('hide');
+    $(".onwardbuttons").removeClass('button-selected-style');
+    $(".onwardbuttons").html('Select');
+      var selected = event.target as HTMLElement
+      if(selected)
+      {
+        this.isOnwardSelected = true;
+        this.isDisplayDetail = true;
+        this.isFlightsSelected = true;
+        selected.classList.add('button-selected-style')
+        selected.innerHTML = 'Selected'
+      }
+      var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
+    this.onwardSelectedFlight = onwardSelectedFlight;
+    var partner = item.partnerName;
+    this.ReturnflightList.forEach((z:any)=>{
+        z.priceSummary.forEach((a:any)=>{
+          if(a.partnerName == partner)
+          {
+            a.disabled = false;
+          }
+          else{
+            a.disabled = true;
+          }
+        });
+    });
+
+  }
+    flightChangeDisplayR:any;
+  
+  flightsChangeR:any; selectedChangeR:any; flightKeyChangeR:any; itemChangeR:any;eventChangeR:any;
+  onSelectReturnSplrt:any;
+ 
+  onSelectReturn(flightKey:any,flights:any,item:any,priceDump:any,event:any)
+  {
+  if(this.isOnwardSelected == true)
+      {
+        if(item.partnerName=='Cleartrip'){
+        this.onSelectReturnSplrt= priceDump.filter((item: any) => {
+        if(item.partnerName=='Cleartrip' && item.splrtFareFlight==true )
+        return item;
+        });
+        }else{
+        this.onSelectReturnSplrt=[];
+        }
+        
+        /*
+        
+              
+  if(this.onSelectOnwardSplrt.length >0 && this.onSelectReturnSplrt.length>0){
+        var returnFlightnumbers=[];  var onwardFlightnumbers=[];
+        var onwardAirline = onwardSelectedFlight.flights[0]['airline'];
+        var returnAirline =returnSelectedFlight.flights[0]['airline'];
+        var splrt_status = 0; var eligibleCombo=0;
+        var sumval;
+        
+        var get_onward_price_new = onwardSelectedFlight.priceSummery.totalFare;
+        var selected_price_new = returnSelectedFlight.priceSummery.totalFare;
+        var sumvalold = parseInt(get_onward_price_new) + parseInt(selected_price_new);
+        
+        if (onwardAirline == returnAirline) {
+        splrt_status = 1;
+        }
+
+        if (onwardAirline == returnAirline && splrt_status == 1) {
+        var onward_combofare = this.onSelectOnwardSplrt;
+         for (var i = 0; i < returnSelectedFlight.flights.length; i++)  {     returnFlightnumbers.push(returnSelectedFlight.flights[i]['flightNumber']);  }
+         for (var i = 0; i < onwardSelectedFlight.flights.length; i++)  {     onwardFlightnumbers.push(onwardSelectedFlight.flights[i]['flightNumber']);  }
+          
+        if (returnFlightnumbers.length == 1) {
+        onward_combofare = onward_combofare.filter(function(a) {
+        var clearTripSPLRTComboFlightNO = a.clearTripSPLRTComboFlightNO;
+        var ComboFlightNO = clearTripSPLRTComboFlightNO.split(",");
+        if (ComboFlightNO.indexOf(returnFlightnumbers[0]) >= 0) {
+        return a;
+        }
+        });
+       
+        if (onward_combofare.length > 0) {
+        this.onward_combofareKey=onward_combofare[0].clearTripFareKey;
+        get_onward_price_new = onward_combofare[0].totalFare;
+        eligibleCombo = 1;
+        }
+        } else {
+        onward_combofare = onward_combofare.filter(function(a) {
+        var clearTripSPLRTComboFlightNO = a.clearTripSPLRTComboFlightNO;
+        var ComboFlightNO = clearTripSPLRTComboFlightNO.split("$");
+                var equal = ComboFlightNO.length == returnFlightnumbers.length; // if array sizes mismatches, then we assume, that they are not equal
+                if (equal) {
+                $.each(ComboFlightNO, function(foo, val) {
+                if (!equal) return false;
+                if ($.inArray(val, returnFlightnumbers) == -1) {
+                equal = false;
+                } else {
+                equal = true;
+                }
+                });
+                }
+        if (equal) {
+        return a;
+        }
+        });
+        if (onward_combofare.length > 0) {
+       this.onward_combofareKey=onward_combofare[0].clearTripFareKey;
+        get_onward_price_new = onward_combofare[0].totalFare;
+        eligibleCombo = 1;
+        }
+
+        }
+        var return_combofare = this.onSelectReturnSplrt;
+        var comboairline =onwardSelectedFlight.flights[0]['carrier_id'];
+        if (comboairline == '6E' || comboairline == 'SG') { eligibleCombo = 1; }
+        
+        if (onwardFlightnumbers.length == 1 && eligibleCombo == 1) {
+            return_combofare = return_combofare.filter(function(a) {
+                var clearTripSPLRTComboFlightNO = a.clearTripSPLRTComboFlightNO;
+                var ComboFlightNO = clearTripSPLRTComboFlightNO.split(",");
+                if (ComboFlightNO.indexOf(onwardFlightnumbers[0]) >= 0) {
+                    return a;
+                }
+            });
+            if (return_combofare.length > 0) {
+                this.return_combofareKey=return_combofare[0].clearTripFareKey;
+                selected_price_new = return_combofare[0].totalFare;
+            }
+        } else {
+            return_combofare = return_combofare.filter(function(a) {
+                var clearTripSPLRTComboFlightNO = a.clearTripSPLRTComboFlightNO;
+                var ComboFlightNO = clearTripSPLRTComboFlightNO.split("$");
+                
+                var equal = ComboFlightNO.length == onwardFlightnumbers.length; // if array sizes mismatches, then we assume, that they are not equal
+                if (equal) {
+                $.each(ComboFlightNO, function(foo, val) {
+                if (!equal) return false;
+                if ($.inArray(val, onwardFlightnumbers) == -1) {
+                equal = false;
+                } else {
+                equal = true;
+                }
+                });
+                }
+                if (equal) {
+                return a;
+                }
+                
+            });
+            if (return_combofare.length > 0) {
+                this.return_combofareKey=return_combofare[0].clearTripFareKey;
+                selected_price_new = return_combofare[0].totalFare;
+            }
+
+
+        }
+    }
+      
+      
+        var sumval_new = parseInt(get_onward_price_new) + parseInt(selected_price_new);
+
+        if (sumval_new < sumvalold && onwardAirline == returnAirline && splrt_status == 1) {
+        //$('#dom-selected-strike-disc').show();
+       // $('#splrtFlight').val(1);
+       sumval = sumval_new;
+        } else {
+       // $('#onward_combo').val(0);
+       // $('#return_combo').val(0);
+      //  $('#onward_combofareKey').val(tmp_onward_combofareKey);
+      //  $('#return_combofareKey').val(tmp_return_combofareKey);
+        sumval = sumvalold;
+        }
+      
+      
+      
+      
+         console.log(sumvalold);
+         console.log(sumval);
+
+  
+ // console.log(this.onSelectOnwardSplrt);
+  //console.log(this.onSelectReturnSplrt);
+  }
+  return;
+        
+    */    
+        
+        
+        
+      
+        let departureAirportUserR=this.searchData.flightto;
+        let arrivalAirportUserR=this.searchData.flightfrom;
+
+        let departureAirportSelectedR=flights[0]['departureAirport'];
+        let arrivalAirportSelectedR=flights[flights.length-1]['arrivalAirport'];
+        this.flightsChangeR=flights;
+        this.itemChangeR=item;
+        this.flightKeyChangeR=flightKey;
+        this.eventChangeR=event;
+      
+      
+       if (departureAirportSelectedR != departureAirportUserR) {
+        this.flightChangeDisplayR= "We found more airports near " + this.airportsNameJson[departureAirportUserR ].city + ". Cheapest flight at ₹"+formatNumber(item.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[departureAirportSelectedR ].airport_name+ ', ' +this.airportsNameJson[departureAirportSelectedR ].city + ' (' + departureAirportSelectedR + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelectedR ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelectedR ].city + ' (' + arrivalAirportSelectedR + ').';
+        $('#flightChangeR').modal('show');
+        return;
+        }
+
+
+        if (arrivalAirportSelectedR != arrivalAirportUserR) {
+        this.flightChangeDisplayR= "We found more airports near " + this.airportsNameJson[arrivalAirportUserR ].city + ". Cheapest flight at ₹"+formatNumber(item.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[arrivalAirportSelectedR ].airport_name+ ', ' +this.airportsNameJson[arrivalAirportSelectedR ].city + ' (' + arrivalAirportSelectedR + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelectedR ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelectedR ].city + ' (' + arrivalAirportSelectedR + ').';
+        $('#flightChangeR').modal('show');
+        return;
+        }
+       
+      
+      
+    $(".returnButtons").removeClass('button-selected-style');
+    $(".returnButtons").html('Select');
+      var selected = event.target as HTMLElement
+      if(selected)
+      {
+        this.isReturnSelected = true;
+        selected.classList.add('button-selected-style')
+        selected.innerHTML = 'Selected'
+      }
+
+        this.isDisplayDetail = true;
+        this.isFlightsSelected = true;
+
+      var returnSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
+      this.returnSelectedFlight = returnSelectedFlight;
+      }
+      else{
+        alert('Please choose onward flight.')
+      }
+  }
+  
+  
+  
+    onSelectReturnChange(flightKey:any,flights:any,item:any,event:any)
+  {
+   $('#flightChangeR').modal('hide');
   if(this.isOnwardSelected == true)
       {
     $(".returnButtons").removeClass('button-selected-style');
@@ -1414,6 +1697,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         alert('Please choose onward flight.')
       }
   }
+  
+  
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
@@ -1447,9 +1732,12 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   navBarLink(navItem:any){
     this.navItemActive = navItem;
   }
+  
 
-
+  onward_combofareKey:any;return_combofareKey:any;
   bookingSummary(onwardSelectedFlight: any, returnSelectedFlight: any) {
+  
+  
         let flightDetailsArr: any = {
         "travel":"DOM",
         "travel_type":"R",
