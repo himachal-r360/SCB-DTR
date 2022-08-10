@@ -117,8 +117,8 @@ API_URL:{
     "INFINIA":"infinia/checknatgeo" ,
     "REGALIA":"regalia/bus",
     "CORPORATE":"corporate/bus",
-    "BUSINESS":"business/bus"
-"REGALIA_GOLD":"regalia_gold/milestone"        
+    "BUSINESS":"business/bus",
+  "REGALIA_GOLD":"regalia_gold"        
   }
   
   
