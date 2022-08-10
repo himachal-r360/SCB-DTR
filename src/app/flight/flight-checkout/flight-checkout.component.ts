@@ -291,7 +291,7 @@ new_fare: number = 0;
                 jobGroup.addControl('gstPincode', new FormControl());
                 jobGroup.addControl('gstState', new FormControl());
                 jobGroup.addControl('saveGST', new FormControl('1'));
-                
+
                 this.adultsArray = [];
                 this.childArray = [];
                 this.infantArray = [];
@@ -317,7 +317,7 @@ new_fare: number = 0;
                 }else{
                 this._flightService.showHeader(true);
                 }
-                
+
 
 
           /*** SESSION */
@@ -741,7 +741,7 @@ new_fare: number = 0;
     let maxdate=moment().format('YYYY-MM-DD');
     let input_date = moment(c.value).format('YYYY-MM-DD');
 
-    if(moment(input_date).isAfter(maxdate))
+    if(moment(input_date).isSameOrAfter(maxdate))
     {
     return  {
     validatePassportIssue: {
@@ -755,13 +755,10 @@ new_fare: number = 0;
 
     function passexpcheck(c: FormControl) {
 
-      let journery_date=$('#journery_date').val();
-
-     let mindate=moment().format('YYYY-MM-DD');
       let input_date = moment(c.value).format('YYYY-MM-DD');
-      let maxdate = moment(journery_date).subtract(30, 'years').calendar();
+      let maxdate = moment($('#journery_date').val()).format('YYYY-MM-DD');
 
-      if(moment(input_date).isAfter(maxdate))
+      if(Date.parse(input_date) < Date.parse(maxdate))
       {
       return  {
       validatePassportExp: {
@@ -769,6 +766,8 @@ new_fare: number = 0;
       }
       };
       }
+
+
 
       }
 
@@ -1817,9 +1816,9 @@ new_fare: number = 0;
   changeFareRuleTabOnward(event:any){
     $('.flight-extra-content-onward').show();
     $('.flight-extra-content-return').hide();
-  
+
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-  
+
     if(this.cancellationPolicyOnward){
     var Element = document.getElementById("CancellationDetails");
     Element!.style.display = 'block';
@@ -1830,15 +1829,15 @@ new_fare: number = 0;
     Element!.style.display = 'block';
      $('.flight-extra-content-ob').addClass('flight-extra-tabs-active');
     }
-     
+
   }
 
     changeFareRuleTabReturn(event:any){
       $('.flight-extra-content-onward').hide();
     $('.flight-extra-content-return').show();
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-    
-    
+
+
      if(this.cancellationPolicyReturn){
     var Element = document.getElementById("CancellationDetailsR");
     Element!.style.display = 'block';
@@ -1849,7 +1848,7 @@ new_fare: number = 0;
     Element!.style.display = 'block';
      $('.flight-extra-content-rb').addClass('flight-extra-tabs-active');
     }
-    
+
   }
 
 
@@ -2182,11 +2181,11 @@ new_fare: number = 0;
   triggerBack(){
    $('#bookingprocessFailed').modal('hide');
    let url;
-  if(this.searchData.travel=='DOM'){   
+  if(this.searchData.travel=='DOM'){
    if(this.searchData.flightdefault=='R')
      url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
    else
-     url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData))); 
+     url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
     }else{
    url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
    }
@@ -2198,7 +2197,7 @@ new_fare: number = 0;
         $('#bookingprocessPriceChange').modal('hide');
         $('#bookingprocessFailed').modal('hide');
         $("#infoprocess").modal('hide');
-        $("#bookingprocessFailed1").modal('hide');  
+        $("#bookingprocessFailed1").modal('hide');
         $('#addTraveller_mlite').modal('hide');
         $('#childTraveller_mlite').modal('hide');
         $('#infantTraveller_mlite').modal('hide');
@@ -2599,8 +2598,8 @@ new_fare: number = 0;
 
         if(this.searchData.arrival)
         this.itineraryRequest["returnCheckInDate"]= moment(this.searchData.arrival).format('YYYY-MM-DD');
-        
-        
+
+
          this.resetPopups();
 
             $('#infoprocess').modal('show');

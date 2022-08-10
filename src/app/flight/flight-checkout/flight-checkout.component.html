@@ -16,7 +16,7 @@
                   </p>
                 </div>
                 <div class="mob-listing-header-right">
-      
+
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
         </div>
     </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
-  
+
   <section class="flight-details-area mt-10">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
@@ -510,8 +510,8 @@
               <div class="flight-extra-details">
 
                 <div class="rules-flight">
-                
-                
+
+
                     <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails"  *ngIf="cancellationPolicyOnward || baggageInfoOnward" >
                   <div class="rules-flight-items">
                       <div class="rules-flight-thumbe">
@@ -563,7 +563,7 @@
 
                   </ul>
 
-                  <div class="extra-tabs-ara">          
+                  <div class="extra-tabs-ara">
                   <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnward"           [ngClass]="{'extra-active': cancellationPolicyOnward  }">
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -694,7 +694,7 @@
                   </ul>
 
                   <div class="extra-tabs-ara">
-                    <div id="CancellationDetailsR" class="flight-extra-content-r" *ngIf="cancellationPolicyReturn"  
+                    <div id="CancellationDetailsR" class="flight-extra-content-r" *ngIf="cancellationPolicyReturn"
                       [ngClass]="{'extra-active': cancellationPolicyReturn  }">
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -1349,6 +1349,9 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+traveller)">
+                                          Please enter a valid expiry date</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -1362,6 +1365,10 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+
+                                      <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+traveller)">
+                                          Please enter a valid issued date.</mat-error>
+
                                       </mat-form-field>
                                     </div>
 
@@ -4569,7 +4576,7 @@
                   </div>
                   <div class="operated_by"
                     *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
-                    Operated by 
+                    Operated by
                     <span
                       *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                     <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
