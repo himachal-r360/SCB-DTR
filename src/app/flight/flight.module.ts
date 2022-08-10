@@ -20,6 +20,7 @@ import { AgePipe } from 'src/app/pipes/age.pipe';
 import { FilterPipe } from 'src/app/shared/pipes/filterUnique.pipe';
 import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
+import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent,data: {  shouldReuse: true, },
@@ -33,6 +34,9 @@ const routes: Routes = [
   },
   {
     path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, },
+  },
+  {
+    path:"flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
   }
 
 
@@ -44,7 +48,7 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe
+    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent
 
   ],
   imports: [
