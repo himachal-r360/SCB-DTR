@@ -19,10 +19,11 @@ export class BrandsComponent implements OnInit {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.cdnDealUrl = environment.cdnDealUrl;
     this.siteUrl = environment.MAIN_SITE_URL;
+    this.foryouBrands = this.serviceSettings.foryou_brands;
     
  
   }
- 
+  foryouBrands = [];
    serviceSettings: any;
    cdnUrl: any;
    cdnDealUrl: any;
