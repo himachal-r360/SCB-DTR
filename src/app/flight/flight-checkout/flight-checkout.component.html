@@ -947,6 +947,8 @@
                                             *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">
                                             Adult age should be above 12 years.</mat-error>
                                         </mat-form-field>
+
+
                                       </div>
                                     </div>
 
@@ -1300,6 +1302,11 @@
                                       <mat-error
                                         *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">Adult
                                         age should be above 12 years.</mat-error>
+
+                                        <mat-error *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
+                                          Please Enter Valid DOB
+                                        </mat-error>
+
                                     </mat-form-field>
 
                                   </div>
@@ -1315,6 +1322,19 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('minlength','adult_passport_num'+traveller)">
+                                          Please enter atleast 8 digits.</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+traveller)">
+                                          Cannot exceed more than 12 characters.</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('pattern','adult_passport_num'+traveller)">
+                                          This field must contain only letters</mat-error>
+
                                       </mat-form-field>
 
                                     </div>

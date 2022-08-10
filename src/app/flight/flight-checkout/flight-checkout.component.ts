@@ -10,7 +10,7 @@ import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , ValidatorFn} from '@angular/forms';
 import { createMask } from '@ngneat/input-mask';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
@@ -139,6 +139,7 @@ new_fare: number = 0;
         emailInputMask = createMask({ alias: 'email' });
         saveAdultTravellerId=[]; saveChildTravellerId=[];    saveInfantTravellerId=[];
         patternName = /^[a-zA-Z\s]*$/;
+        patternAlphaNumeric = /^[a-zA-Z0-9]+$/;
         emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         maxAdults: number;
         maxChilds: number;
@@ -254,7 +255,7 @@ new_fare: number = 0;
         gstNumber:any
         mobileNumber:any;
         showLoader:number=1;
- serviceId:string='Flight';
+  serviceId:string='Flight';
   isMobile:boolean= true;
   isCollapseBasefare : boolean = false;
   isCollapseDiscount : boolean = false;
@@ -714,17 +715,63 @@ new_fare: number = 0;
 
                 }
 
+  const youngerThanValidator = (maxAge: number): ValidatorFn => control =>
+  (new Date()).getFullYear() - (new Date(control.value)).getFullYear() > maxAge ? { younger: true } : null;
+
+  function passissuecheck(c: FormControl) {
+
+    let journery_date=$('#journery_date').val();
+
+    let mndate=moment(journery_date).subtract(30, 'years').calendar();
+    let mindate = moment(mndate).format('YYYY-MM-DD');
+    let maxdate=moment().format('YYYY-MM-DD');
+    let input_date = moment(c.value).format('YYYY-MM-DD');
+
+    if(moment(input_date).isAfter(maxdate))
+    {
+    return  {
+    validatePassportIssue: {
+    valid: false
+    }
+    };
+    }
+
+    }
+
+
+    function passexpcheck(c: FormControl) {
+
+      let journery_date=$('#journery_date').val();
+
+     let mindate=moment().format('YYYY-MM-DD');
+      let input_date = moment(c.value).format('YYYY-MM-DD');
+      let maxdate = moment(journery_date).subtract(30, 'years').calendar();
+
+      if(moment(input_date).isAfter(maxdate))
+      {
+      return  {
+      validatePassportExp: {
+      valid: false
+      }
+      };
+      }
+
+      }
+
+
              this.passengerForm.addControl('adult_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
              this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
              this.passengerForm.addControl('adult_last_name' + i, new FormControl(adult_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
-             this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob, [Validators.required,validateAdultAge]));
+             this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob,
+              [Validators.required,validateAdultAge, youngerThanValidator(100)]));
 
 
 
              if(this.searchData.travel=='INT'){
-                this.passengerForm.addControl('adult_passport_num' + i, new FormControl('', [Validators.required]));
-                this.passengerForm.addControl('adult_passport_expiry_date' + i, new FormControl('', [Validators.required]));
-                this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('adult_passport_num' + i, new FormControl('', [Validators.required, Validators.minLength(8),Validators.maxLength(12),Validators.pattern(this.patternAlphaNumeric)]));
+
+                this.passengerForm.addControl('adult_passport_expiry_date' + i, new FormControl('', [Validators.required,passexpcheck]));
+                this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required,passissuecheck]));
                 this.passengerForm.addControl('adult_passport_issuing_country' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('adult_pax_nationality' + i, new FormControl('', [Validators.required]));
                // this.passengerForm.addControl('adult_pax_birthcountry' + i, new FormControl('', [Validators.required]));
@@ -772,6 +819,8 @@ new_fare: number = 0;
          }
 
         }
+
+
     }
 
     removeAdult(val,checkboxIndex) {
@@ -2203,7 +2252,7 @@ new_fare: number = 0;
         this.passengerForm.markAllAsTouched();
 
 
-   // console.log(this.passengerForm);
+    console.log(this.passengerForm);
 
         if (this.passengerForm.invalid ) {
        // console.log(this.passengerAdultFormCount);
