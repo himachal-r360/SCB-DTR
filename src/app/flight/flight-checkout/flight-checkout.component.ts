@@ -550,7 +550,7 @@ new_fare: number = 0;
           "splrtFlight": this.selectedOnwardVendor.splrtFareFlight
         }
 
-        this.getFlightInfo(body,this.selectedOnwardVendor.partnerName);
+        this.getFlightInfo(body,this.selectedOnwardVendor.partnerName,this.searchData);
         this.durationCalc();
       }
 
@@ -1853,7 +1853,7 @@ new_fare: number = 0;
   }
 
 
-  getFlightInfo(param:any,partner:any)
+  getFlightInfo(param:any,partner:any,searchData:any)
   {
   this.loaderValue=10;
   const myInterval3 =setInterval(()=>{
@@ -1866,7 +1866,7 @@ new_fare: number = 0;
     },600) ;
 
 
-    this._flightService.getFlightInfo(param).subscribe((res: any) => {
+    this._flightService.getFlightInfo(param,searchData).subscribe((res: any) => {
 
       let baseFare=0; let taxFare=0; let totalFare=0;let totalFareOnward=0;let totalFareReturn=0;
       let adultFare = 0; let childFare=0; let infantFare=0;
