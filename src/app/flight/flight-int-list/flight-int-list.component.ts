@@ -238,7 +238,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         $(".modal").hide();
         $('body').removeClass( "modal-open" );
          $("body").removeAttr("style");
-        $(".modal-backdrop").hide();
+        $(".modal-backdrop").remove();
         this.gotoTop();
         this.loader = true;
         this.getQueryParamData(null);

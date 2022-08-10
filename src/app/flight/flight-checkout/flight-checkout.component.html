@@ -10,8 +10,8 @@
                   </a>
                 </div>
                 <div class="mob-listing-header-center">
-                  <h6>{{searchData.fromCity}} - {{searchData.toCity}}</h6>
-                  <p>{{searchData.departure | date:"EEE,dd MMM" }} | {{maxAdults+maxChilds+maxInfants}} Travellers |
+                  <h6>{{searchData.fromCity}} - {{searchData.toCity}} <span *ngIf="searchData && searchData.flightdefault=='R'"> | {{{searchData.toCity}} - {{{searchData.fromCity}}</span></h6>
+                  <p>{{searchData.departure | date:"EEE,dd MMM" }} <span *ngIf="searchData && searchData.flightdefault=='R'"> | {{{searchData.arrival | date:'EEE, dd MMM' }}</span>| {{maxAdults+maxChilds+maxInfants}} Travellers |
                     {{flightClasses[searchData.flightclass]}}
                   </p>
                 </div>
@@ -5179,7 +5179,7 @@
               </div>
             </div>
             <div class="refresh-text text-center pt-2">
-              <button type="button" class="btn btn-primary" (click)="continueWithNewFare('')">Continue with New
+              <button type="button" class="btn btn-primary" (click)="continueWithNewFare(continueWithNewFareInterval)">Continue with New
                 Fare</button>
             </div>
             <div class="refresh-text text-center pt-2">
@@ -5238,14 +5238,14 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-    aria-hidden="true">
+    aria-hidden="true" *ngIf="steps==5 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Coupon Code</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" *ngIf="steps==5">
+        <div class="modal-body" >
 
           <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
             [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"

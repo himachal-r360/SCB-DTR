@@ -110,7 +110,7 @@
                                                 <mat-option value="F">First Class</mat-option>
                                                 <mat-option value="P">Premium Economy</mat-option>
                                             </mat-select>
-                                  
+
                                         </li>
                                     </ul>
                                 </div>
@@ -121,28 +121,28 @@
                                                 <div class="select-root-left" appDropdown>
                                                     <span class="select-roottitle">FROM</span>
                                                     <h5 class="fw_6 ">{{fromCityName}}</h5>
-                                                    <span class="select-roottitle">{{fromAirpotName}}</span>
+                                                    <span class="select-roottitle">{{ fromAirpotName}}</span>
                                         <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
                                         <small   class="validate-msg">Please select to city</small>
-                                        </div>                     
+                                        </div>
 
 
                                         <div class="error_msg w-50" *ngIf="!isMobile && Error('flightto', 'MustMatch')">
                                         <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
-                                        </div>  
-                                        
+                                        </div>
+
                                                  <div class="" *ngIf="isMobile && submitted && Error('flightfrom', 'required')">
                                         <small   class="validate-msg">Please select to city</small>
-                                        </div>                     
+                                        </div>
 
 
                                         <div class="" *ngIf="isMobile && Error('flightto', 'MustMatch')">
                                         <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
-                                        </div>  
-                                        
-                                        
-                                        
-                                        
+                                        </div>
+
+
+
+
                                                     <div               class="flight-from-data flight-from-hide ff-form-data dropdown">
                                                         <div class="mob-title">
                                                             <h3>Select From City</h3>
@@ -152,7 +152,7 @@
                                                                     (click)="onClose()" class="close-mobile" alt="" />
                                                             </a>
                                                         </div>
-                                                        
+
                                                    <div class="mob-search" *ngIf="isMobile">
                                                             <div class="row">
                                                                 <div class="col-md-12">
@@ -174,7 +174,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flight-from-data-search" *ngIf="!isMobile">
-                                              
+
                                                         <input type="text" autocomplete="off" class="w-100"
                                                         id="fromCitySearch" placeholder="Search City"
                                                         (keyup)="searchAutoComplete($event,'fromCity' ,'web');"
@@ -186,8 +186,8 @@
                                                         <input type="hidden"  formControlName="fromContry">
                                                         <input type="hidden"  formControlName="fromAirportName">
                                                         <input type="hidden"  formControlName="fromAirportName">
-                                                        
-                           
+
+
 
                                                         </div>
 
@@ -209,12 +209,12 @@
                                                 </li>
                                                 <li *ngIf="flightFromOptions.length==0"><a>No Results Found...</a></li>
                                                 </ul>
-                                                        
-                                                        
-                                                        
-                                   
+
+
+
+
                                                     </div>
-                           
+
                                                 </div>
 
                                                 <div class="select-root-icons" (click)="swap()">
@@ -227,13 +227,13 @@
                                                                                                      <div class="error_msg w-50"  *ngIf="!isMobile && submitted && Error('flightto', 'required')" >
                                 <small class="validate-msg">Please select to city</small>
                                 </div>
-                                
+
                                               <div class="" *ngIf="isMobile && submitted && Error('flightto', 'required')">
                                         <small   class="validate-msg">Please select to city</small>
-                                        </div>                     
+                                        </div>
 
 
-                                    
+
                                                     <div class="flight-to-data flight-from-hide dropdown"
                                                         #removeClassToCity>
                                                         <div class="mob-title">
@@ -253,7 +253,7 @@
                                                                         <input type="hidden"  formControlName="flightfrom">
                                                                         <input type="hidden"  formControlName="fromContry">
                                                                         <input type="hidden"  formControlName="fromAirportName">
-                                                                           
+
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
@@ -294,13 +294,13 @@
                                                         </li>
                                                         <li *ngIf="flightToOptions.length==0"><a>No Results Found...</a></li>
                                                         </ul>
-                                                        
-                                        
+
+
                                                     </div>
-                            
+
                                                 </div>
                                             </div>
-                         
+
                                         </div>
 
                                         <div class="col-lg-6">
@@ -310,11 +310,11 @@
                                                     <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
                                                  <div class="area-root-departure " (click)="picker.open()"
                                                             id="datePickerOpen">
-                       
+
                                                             <div class="select-root-departure departure-date">
                                                                 <span class="select-roottitle">DEPARTURE</span>
                                                                 <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-                                          
+
                                                                     <span class="select-roottitle d-block w-100" *ngIf="departureDate=='' ||departureDate==undefined">Select Departure</span>
                                                                 <span class="select-roottitle"
                                                                     *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
@@ -341,7 +341,7 @@
 
 
                                                             </div>
-                                                           
+
                                                         </div>
                                                         <div class="area-root-reutrn" (click)="picker2.open()"
                                                             id="datePickerArrival"
@@ -351,7 +351,7 @@
                                                                 <h5 class=" "
                                                                     *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
                                                                     {{arrivalDate | date:'dd MMM' }}</h5>
-                        
+
                                                                     <span class="select-roottitle d-block w-100"
                                                                     *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">
                                                                          Select  Return</span>
@@ -391,20 +391,20 @@
                                                                 <span class="select-roottitle"
                                                                     *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                                                     }}</span>
-                              
+
           <div class="mt-30"  *ngIf="submitted && Error('departure', 'required')" >
                                         <small class="validate-msg" >Please select departure date</small>
                                         </div>
-                                       
+
                                                             </div>
-                                                            
+
                                                             <div class="select-root-date"                    style="position: relative; left: 0;">
                                                                 <i   class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
                                                                 <mat-form-field       style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                                 <input  matInput   [(ngModel)]="departureDate"   autocomplete="off"  readonly formControlName="departure"  id="departure" >
                                                                 </mat-form-field>
                                                             </div>
-                                                            
+
                                                         </div>
                                                          <div class="modal bottom_mlite_popup" id="flight_departure_mlite" tabindex="-1" aria-hidden="true">
                                                                 <div class="modal-dialog">
@@ -431,11 +431,11 @@
                                                                 </div>
                                                                 <div class="col-6 ">
                                                                 <div class="input_box  date_input_box">
-                                                                
+
                                                                 <label *ngIf="!arrivalDate">
                                                                 <a (click)="openMliteDatePicker('arrival',1)" class="">Add return date</a>
                                                                 </label>
-                                                                
+
                                                                 <label (click)="openMliteDatePicker('arrival',0)"  *ngIf="arrivalDate">
                                                                         <span>Return</span>
                                                                         <div class="form-group flex_basis dep_m_cal" *ngIf="arrivalDate">
@@ -447,17 +447,17 @@
                                                                 </div>
                                                                 </div>
                                                                 <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
-                                                                </div> 
                                                                 </div>
                                                                 </div>
                                                                 </div>
-                                                        
+                                                                </div>
+
                                                         <div class="area-root-reutrn"              id="datePickerArrival"                        [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'" (click)="openMliteDatePicker('arrival',0)">
                                                             <div class="select-root-reutrn " >
                                                                 <span class="select-roottitle">RETURN</span>
                                                                 <h5 class=" "     *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
                                                                     {{arrivalDate | date:'dd MMM' }}</h5>
-                                                               
+
                                                                     <span class="select-roottitle d-block w-100"
                                                                     *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">
                                                                          Select  Return</span>
@@ -477,7 +477,7 @@
                                                                         formControlName="arrival"
                                                                         [(ngModel)]="arrivalDate"
                                                                        >
-                                                               
+
                                                                 </mat-form-field>
                                                             </div>
                                                         </div>
@@ -518,16 +518,16 @@
                                                         </div>
                                                         </div>
                                                         <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
-                                                        </div> 
+                                                        </div>
                                                         </div>
                                                         </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            
+
                                             <!--Mobile Date Picker Ends-->
-                                            
-                   
+
+
                                                 <div class="mob-travellers-class">
                                                     <div class="mob-travellers-class-box"
                                                         (click)="openTravellerBlock()">
@@ -691,8 +691,8 @@
                                                     <button type="button" class="searchbn" (click)="flightSearch()">Search</button>
                                                 </div>
                                             </div>
-                                 
-                                                
+
+
                                         <div class="home-error d-flex" *ngIf="!isMobile">
                                         <div class="error_msg w-35"  >
                                         <small class="validate-msg"  *ngIf="submitted && Error('departure', 'required')">Please select departure date</small>
@@ -741,7 +741,7 @@
                                                     </li>
                                                     <li class="Preferred-list">
                                                         <a href="#" class="">
-                                                            Vistara 
+                                                            Vistara
                                                         </a>
                                                     </li>
                                                     <li class="Preferred-list">
@@ -757,7 +757,7 @@
                                         </div>
                                     </div>
 
-                               
+
                                 <div class="Preferred-OTA-Partner-area ms-3" *ngIf="!isMobile && displayPartners" >
                                     <ul class="Preferred-OTA-Partner-ul">
                                         <li style="display: flex;flex-direction: column;">
@@ -791,9 +791,9 @@
                                     </ul>
                                 </div>
                                 </div>-->
-                                
-                                
-                                
+
+
+
                                 <!-- Mobile Preferred-OTA-Partner -->
                                 <!--<div class="mob-Preferred-OTA-Partner-area"  *ngIf="isMobile && displayPartners">
                                     <div class="mob-Preferred-area" (click)="showPartner()">

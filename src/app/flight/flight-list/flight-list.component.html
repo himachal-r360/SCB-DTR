@@ -33,7 +33,7 @@
                       </div>
 
                   </div>
-      
+
                         <div [hidden]="loader">
                           <div class="Filterslayout d-flex justify-content-between align-items-center" >
                             <h6 class="fs_16">Filters</h6>
@@ -93,7 +93,7 @@
                                         </li>
                                         </ng-container>
                                     </ul>
-                                  
+
                                 </div>
                             </div>
                             <hr>
@@ -328,12 +328,12 @@
                           <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content w-100">
                                 <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                                <span class="float-right" style="width:90%;" > 
+                                <span class="float-right" style="width:90%;" >
                                 <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 </span>
-                                </div>  
+                                </div>
                           </div>
                         </div>
 
@@ -361,7 +361,7 @@
                                         Operated by  <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
                                         <b   *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
                                         </div>
-                                        </ng-container> 
+                                        </ng-container>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="flight-city-box" *ngIf="list.flights.length > 0">
@@ -486,7 +486,7 @@
                                                   <a href="javascript:void(0);" class="button-style" (click)="bookingSummary(list.flights,item,list.flightKey)">Book</a>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="flight-info-box" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
                                 <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
@@ -555,7 +555,7 @@
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one" >
                                                                         <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif"  class="flight-image me-2" alt="">IndiGo {{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
-                                                                        <div class="tabs-depart-left float-none">
+                                                                        <div class="tabs-depart-left float-none justify-content-between w-100">
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
@@ -855,7 +855,8 @@
                   <ul>
                       <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems"  value="{{Items.value}}" >
                           <a href="javascript:void(0)" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
-                              <span *ngIf="Items.name!='no_stops'">{{flightList.length}}</span>
+                              <span *ngIf="Items.name!='no_stops' && Items.active">{{flightList.length}}</span>
+                              <span *ngIf="Items.name!='All_Flights' && Items.active">{{flightList.length}}</span>
                               {{Items.value}}
                           </a>
                       </li>
@@ -869,14 +870,14 @@
               <div  class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                           <div class="filter-loader-content w-100">
                               <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                              <span class="w-75 float-right"> 
+                              <span class="w-75 float-right">
                               <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                </span>
                           </div>
                       </div>
-                 </div>     
+                 </div>
                   <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                 <ng-template #item let-item="item">
                 <div  *ngFor="let list of item; let i = index" >
@@ -915,7 +916,7 @@
                                       <p>{{list.flights[list.flights.length-1].arrivalAirport}}</p>
                                   </div>
                               </div>
-                                                       
+
                                      <div class="name-bottom-bottom" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
                                 <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
                                 </div>
@@ -928,7 +929,7 @@
                               <div class="mob-book-list-top">
                                   <div class="mob-booking-image">
                                      <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40" >
-                                      <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt="" /> -->
+                                     <span>{{item.partnerName}}</span>
                                   </div>
                                   <div class="mob-booking-price">
                                       <h6>₹ {{item.totalFare |number}}</h6>
@@ -940,7 +941,7 @@
                                       </a>
                                   </div>
                               </div>
-                                                  
+
                              <div class="name-bottom-bottom" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
                                 <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
                                 </div>
@@ -1003,7 +1004,7 @@
                                                                     <div class="tabs-depart-one">
                                                                         <p class="depart-one-image" ><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif"  class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                         <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
-                                                                        <div class="tabs-depart-left float-none">
+                                                                        <div class="tabs-depart-left float-none justify-content-between w-100">
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
