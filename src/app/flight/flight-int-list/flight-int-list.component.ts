@@ -217,8 +217,6 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
-       this._styleManager.setStyle('bootstrap-select', `assets/css/bootstrap-select.min.css`);
-       this._styleManager.setScript('bootstrap-select', `assets/js/bootstrap-select.min.js`);
        this._styleManager.setScript('custom', `assets/js/custom.js`);
        
                $(window).scroll(function(this) {
@@ -238,7 +236,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         $(".modal").hide();
         $('body').removeClass( "modal-open" );
          $("body").removeAttr("style");
-        $(".modal-backdrop").hide();
+        $(".modal-backdrop").remove();
         this.gotoTop();
         this.loader = true;
         this.getQueryParamData(null);
@@ -259,6 +257,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
+          this.returnDate = new Date(this.queryFlightData.arrival);
         this.flightClassVal = this.queryFlightData.flightclass;
         this.adultsVal = this.queryFlightData.adults;
         this.childVal = this.queryFlightData.child;
@@ -1246,9 +1245,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
-            
-        this._styleManager.removeStyle('bootstrap-select');
-        this._styleManager.removeScript('bootstrap-select');
         this._styleManager.removeScript('custom');
   }
   HideShowCompareToFly(i: number, fromCall: string, j: number) {
