@@ -10,7 +10,7 @@ import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , ValidatorFn} from '@angular/forms';
 import { createMask } from '@ngneat/input-mask';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
@@ -139,6 +139,7 @@ new_fare: number = 0;
         emailInputMask = createMask({ alias: 'email' });
         saveAdultTravellerId=[]; saveChildTravellerId=[];    saveInfantTravellerId=[];
         patternName = /^[a-zA-Z\s]*$/;
+        patternAlphaNumeric = /^[a-zA-Z0-9]+$/;
         emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         maxAdults: number;
         maxChilds: number;
@@ -255,7 +256,7 @@ new_fare: number = 0;
         gstNumber:any
         mobileNumber:any;
         showLoader:number=1;
- serviceId:string='Flight';
+  serviceId:string='Flight';
   isMobile:boolean= true;
   isCollapseBasefare : boolean = false;
   isCollapseDiscount : boolean = false;
@@ -275,7 +276,7 @@ new_fare: number = 0;
                 this.getAirpotsList();
                 this.getAirLineList();
                 this.getCountryList();
-                 this.resetPopups();
+                 this.resetPopups('construct');
                 const jobGroup: FormGroup = new FormGroup({});
                 this.passengerForm = jobGroup;
                 jobGroup.addControl('saveTraveller',new FormControl(''));
@@ -290,7 +291,7 @@ new_fare: number = 0;
                 jobGroup.addControl('gstPincode', new FormControl());
                 jobGroup.addControl('gstState', new FormControl());
                 jobGroup.addControl('saveGST', new FormControl('1'));
-                
+
                 this.adultsArray = [];
                 this.childArray = [];
                 this.infantArray = [];
@@ -308,7 +309,8 @@ new_fare: number = 0;
 
   ngOnInit(): void {
        this.route.url.subscribe(url =>{
-        this.resetPopups();
+        this.resetPopups('onInint');
+        
                 this.steps=1;
                 this.isMobile = window.innerWidth < 991 ?  true : false;
                 if(this.isMobile){
@@ -316,7 +318,7 @@ new_fare: number = 0;
                 }else{
                 this._flightService.showHeader(true);
                 }
-                
+
 
 
           /*** SESSION */
@@ -549,7 +551,7 @@ new_fare: number = 0;
           "splrtFlight": this.selectedOnwardVendor.splrtFareFlight
         }
 
-        this.getFlightInfo(body,this.selectedOnwardVendor.partnerName);
+        this.getFlightInfo(body,this.selectedOnwardVendor.partnerName,this.searchData);
         this.durationCalc();
       }
 
@@ -728,17 +730,62 @@ new_fare: number = 0;
 
                 }
 
+  const youngerThanValidator = (maxAge: number): ValidatorFn => control =>
+  (new Date()).getFullYear() - (new Date(control.value)).getFullYear() > maxAge ? { younger: true } : null;
+
+  function passissuecheck(c: FormControl) {
+
+    let journery_date=$('#journery_date').val();
+
+    let mndate=moment(journery_date).subtract(30, 'years').calendar();
+    let mindate = moment(mndate).format('YYYY-MM-DD');
+    let maxdate=moment().format('YYYY-MM-DD');
+    let input_date = moment(c.value).format('YYYY-MM-DD');
+
+    if(moment(input_date).isSameOrAfter(maxdate))
+    {
+    return  {
+    validatePassportIssue: {
+    valid: false
+    }
+    };
+    }
+
+    }
+
+
+    function passexpcheck(c: FormControl) {
+
+      let input_date = moment(c.value).format('YYYY-MM-DD');
+      let maxdate = moment($('#journery_date').val()).format('YYYY-MM-DD');
+
+      if(Date.parse(input_date) < Date.parse(maxdate))
+      {
+      return  {
+      validatePassportExp: {
+      valid: false
+      }
+      };
+      }
+
+
+
+      }
+
+
              this.passengerForm.addControl('adult_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
              this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
              this.passengerForm.addControl('adult_last_name' + i, new FormControl(adult_last_name, [Validators.required,Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
-             this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob, [Validators.required,validateAdultAge]));
+             this.passengerForm.addControl('adult_dob' + i, new FormControl(adult_dob,
+              [Validators.required,validateAdultAge, youngerThanValidator(100)]));
 
 
 
              if(this.searchData.travel=='INT'){
-                this.passengerForm.addControl('adult_passport_num' + i, new FormControl('', [Validators.required]));
-                this.passengerForm.addControl('adult_passport_expiry_date' + i, new FormControl('', [Validators.required]));
-                this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required]));
+                this.passengerForm.addControl('adult_passport_num' + i, new FormControl('', [Validators.required, Validators.minLength(8),Validators.maxLength(12),Validators.pattern(this.patternAlphaNumeric)]));
+
+                this.passengerForm.addControl('adult_passport_expiry_date' + i, new FormControl('', [Validators.required,passexpcheck]));
+                this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required,passissuecheck]));
                 this.passengerForm.addControl('adult_passport_issuing_country' + i, new FormControl('', [Validators.required]));
                 this.passengerForm.addControl('adult_pax_nationality' + i, new FormControl('', [Validators.required]));
                // this.passengerForm.addControl('adult_pax_birthcountry' + i, new FormControl('', [Validators.required]));
@@ -786,6 +833,8 @@ new_fare: number = 0;
          }
 
         }
+
+
     }
 
     removeAdult(val,checkboxIndex) {
@@ -1768,9 +1817,9 @@ new_fare: number = 0;
   changeFareRuleTabOnward(event:any){
     $('.flight-extra-content-onward').show();
     $('.flight-extra-content-return').hide();
-  
+
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-  
+
     if(this.cancellationPolicyOnward){
     var Element = document.getElementById("CancellationDetails");
     Element!.style.display = 'block';
@@ -1781,15 +1830,15 @@ new_fare: number = 0;
     Element!.style.display = 'block';
      $('.flight-extra-content-ob').addClass('flight-extra-tabs-active');
     }
-     
+
   }
 
     changeFareRuleTabReturn(event:any){
       $('.flight-extra-content-onward').hide();
     $('.flight-extra-content-return').show();
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-    
-    
+
+
      if(this.cancellationPolicyReturn){
     var Element = document.getElementById("CancellationDetailsR");
     Element!.style.display = 'block';
@@ -1800,11 +1849,11 @@ new_fare: number = 0;
     Element!.style.display = 'block';
      $('.flight-extra-content-rb').addClass('flight-extra-tabs-active');
     }
-    
+
   }
 
 
-  getFlightInfo(param:any,partner:any)
+  getFlightInfo(param:any,partner:any,searchData:any)
   {
   this.loaderValue=10;
   const myInterval3 =setInterval(()=>{
@@ -1817,7 +1866,7 @@ new_fare: number = 0;
     },600) ;
 
 
-    this._flightService.getFlightInfo(param).subscribe((res: any) => {
+    this._flightService.getFlightInfo(param,searchData).subscribe((res: any) => {
 
       let baseFare=0; let taxFare=0; let totalFare=0;let totalFareOnward=0;let totalFareReturn=0;
       let adultFare = 0; let childFare=0; let infantFare=0;
@@ -2131,13 +2180,13 @@ new_fare: number = 0;
   }
 
   triggerBack(){
-   $('#bookingprocessFailed').modal('hide');
+   this.resetPopups('trigger back');
    let url;
-  if(this.searchData.travel=='DOM'){   
+  if(this.searchData.travel=='DOM'){
    if(this.searchData.flightdefault=='R')
      url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
    else
-     url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData))); 
+     url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
     }else{
    url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
    }
@@ -2145,30 +2194,29 @@ new_fare: number = 0;
 
   }
 
-        resetPopups(){
+        resetPopups(message){
         $('#bookingprocessPriceChange').modal('hide');
         $('#bookingprocessFailed').modal('hide');
         $("#infoprocess").modal('hide');
-        $("#bookingprocessFailed1").modal('hide');  
+        $("#bookingprocessFailed1").modal('hide');
         $('#addTraveller_mlite').modal('hide');
         $('#childTraveller_mlite').modal('hide');
         $('#infantTraveller_mlite').modal('hide');
         $('#bookingprocessExpires').modal('hide');
         $(".modal").hide();
-        $('body').removeClass( "modal-open" );
         $("body").removeAttr("style");
         $(".modal-backdrop").remove();
         }
 
   goBack(){
-  this.resetPopups();
+  this.resetPopups('goback');
   this.router.navigateByUrl('/');
 
 
   }
 
   ngOnDestroy(): void {
-   this.resetPopups();
+   this.resetPopups('destroy');
     if(this.sessionTimer){
       clearInterval(this.sessionTimer);
     }
@@ -2249,7 +2297,7 @@ new_fare: number = 0;
         this.passengerForm.markAllAsTouched();
 
 
-   // console.log(this.passengerForm);
+   console.log(this.passengerForm);
 
         if (this.passengerForm.invalid ) {
        // console.log(this.passengerAdultFormCount);
@@ -2552,7 +2600,7 @@ new_fare: number = 0;
         this.itineraryRequest["returnCheckInDate"]= moment(this.searchData.arrival).format('YYYY-MM-DD');
         
         
-         this.resetPopups();
+         this.resetPopups('itinerary');
 
             $('#infoprocess').modal('show');
       this.loaderValue=10;
@@ -2639,7 +2687,7 @@ this.new_fare=0;
       		  setTimeout(() => {
 		 this.continueWithNewFareInterval=myInterval1;
 		 $('#bookingprocessPriceChange').modal('show');
-                  }, 20);
+                  }, 10);
  		}else{
  		   this.saveCheckout(myInterval1);
  		}
@@ -2649,7 +2697,7 @@ this.new_fare=0;
                 setTimeout(() => {
                 $('#infoprocess').modal('hide');
                 $('#bookingprocessFailed').modal('show');
-                }, 20);
+                }, 10);
 
           }
          }),(err:HttpErrorResponse)=>{
@@ -2657,7 +2705,7 @@ this.new_fare=0;
                  setTimeout(() => {
                 $('#infoprocess').modal('hide');
                 $('#bookingprocessFailed').modal('show');
-                }, 20);
+                }, 10);
          }
 
        }

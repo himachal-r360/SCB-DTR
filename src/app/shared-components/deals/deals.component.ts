@@ -4,6 +4,7 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import { AppConfigService } from 'src/app/app-config.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { environment } from 'src/environments/environment';
+import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 
 @Component({
   selector: 'app-deals',
@@ -12,23 +13,28 @@ import { environment } from 'src/environments/environment';
 })
 export class DealsComponent implements OnInit {
 
-  constructor(public rest: RestapiService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService) {
-  
+  constructor(public rest: RestapiService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService,private EncrDecr: EncrDecrService) {
+    
+    console.log(this.sg);
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl;
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-
+    this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
     this.cdnDealUrl = environment.cdnDealUrl;
     this.siteUrl = environment.MAIN_SITE_URL;
-    
+    this.getDeals();
  
   }
- 
+   domainRedirect: string;  
    serviceSettings: any;
    cdnUrl: any;
    cdnDealUrl: any;
    siteUrl: any;
-
+   topDeals = [];
+   showDealListLoader: Boolean = false;
+   showDealList: Boolean = false;
+   redirectPopupTrigger: number = 0; redirectPopupPartner; redirectPopupType; redirectPopupUrl; redirectPopupHeader; redirectPopupImpmessage; redirectPopupMessage; redirectPopup;
+   redirectPopupTriggerTimestamp;
   ngOnInit(): void {
 
     
@@ -64,9 +70,29 @@ export class DealsComponent implements OnInit {
     }
 
   }
-
-
-  
-
-
+  //Get Deals
+  getDeals(){
+    var getDealParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: 'All', sub_category: 'All'})) };
+    this.rest.getDeals(JSON.stringify(getDealParam)).subscribe(result => {
+      if (result.status == 'success') {
+        this.showDealList = true;
+        this.showDealListLoader = false;
+        this.topDeals = (result.result['hits']); 
+      } else {
+        this.showDealListLoader = false;
+        this.topDeals = [];
+      }
+    });
+ }
+ redirectDisUrl(url) {
+   if (environment.IS_MAIN == 1) {
+     this.document.location.href = environment.MAIN_SITE_URL + url;
+   } else {
+     const current = new Date();
+     this.redirectPopupTriggerTimestamp = current.getTime();
+     this.redirectPopupTrigger = 1;
+     this.redirectPopup = 2;
+     this.redirectPopupUrl = this.domainRedirect + url;
+   }
+ }
 }
