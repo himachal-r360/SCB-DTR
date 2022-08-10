@@ -51,6 +51,49 @@
     <div class="card_details">
       <div class="row">
         <div class="col-sm-6 p-0">
+          <!-- nocard Details -->
+
+          <div class="col-sm-12">
+            <div class="unlock_card goldCardDetails">
+                <div class="">
+                     <img src="{{cdnUrl}}images/smartbuy/icons/coin-icn.svg" alt="" class="img-fluid">
+                </div>
+                <div class="text_verify">
+                    <p class="">Verify mobile number & add card details to</p>
+                    <p class="mt-15">Unlock Rewards Summary</p>
+                </div>
+                <div>
+                    <div class="mark_question">
+                        <div class="tooltip"><img src="{{cdnUrl}}images/smartbuy/icons/qmark.svg" alt="" class="img-fluid">
+                            <span class="tooltiptext">
+                                <div>
+                                    <p class="text_eg">e.g.</p>
+                                    <p class="text_card">Regalia Credit Card xx1234 <span class="material-icons down_arrow">expand_more</span></p>
+                                    <div class="points_sec row">
+                                        <div class="col-4">
+                                            <p class="value"><span class="material-icons">chevron_down</span> 35,645</p>
+                                            <p class="name">Saved in 2021</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p class="value"><span class="material-icons">chevron_down</span> 35,645</p>
+                                            <p class="name">Reward Points</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p class="value"><span class="material-icons">chevron_down</span> 35,645</p>
+                                            <p class="name">Points Expiring</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="icon_place" data-bs-toggle="modal" data-bs-target="#unlockCardPopup"> <span><img src="{{cdnUrl}}images/smartbuy/icons/east.svg" alt="icn-right"></span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
           <div class="goldCardDetails">
               <div class="bg_place">
                 <p class="card_name">Regalia Gold Card xx10101 <span><a href="#">View Details</a></span></p>
@@ -76,6 +119,7 @@
                   </div>
               </div>
           </div>
+
         </div>
         <div class="col-sm-6 p-0">
           <div class="card_benefit">
@@ -163,6 +207,77 @@
               </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Unlock Crad Popup Capture Details -->
+  
+  <!-- Modal Enter Details -->
+  <div class="modal fade unlockCardPopup" id="unlockCardPopup" tabindex="-1" aria-labelledby="unlockCardPopupLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="unlockCardPopupLabel">Enter Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form>
+                    <div class="mb-3">
+                      <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card">
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth">
+                        <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
+                      </div>
+                  </form>
+            </div>
+        </div>
+        <div class="modal-footer pt-0 border-0">
+          <button type="button" class="btn cancel_btn" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary verify_btn" data-bs-toggle="modal" data-bs-target="#unlockOtpPopup">Verify</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verify OTP Details -->
+  <div class="modal fade unlockCardPopup" id="unlockOtpPopup" tabindex="-1" aria-labelledby="unlockOtpPopupLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title" id="unlockOtpPopupLabel">Verify with OTP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-0">
+            <p class="otp_text">OTP sent to your mobile number</p>
+            <div class="pt-20">
+                <form>
+                    <div class="mb-3 position-relative">
+                      <input type="text" class="form-control input_control" id="numOtp" placeholder="Enter OTP">
+                      <a href="" class="resend_otp_link">Resend OTP</a>
+                    </div>
+                  </form>
+            </div>
+            <div class="row mt-30">
+                <div class="col-6">
+                    <p class="resend_text">Resend OTP in <span>00:09</span></p>
+                </div>
+                <div class="col-6 text-right">
+                   <div><button class="btn btn-primary w-100">Verify</button></div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer pt-0 border-0">
+          <button type="button" class="btn cancel_btn" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary verify_btn">Verify</button>
+        </div> -->
       </div>
     </div>
   </div>

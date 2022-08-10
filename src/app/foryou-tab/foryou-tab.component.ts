@@ -38,6 +38,7 @@ public modeselectTrending= 'All';
   customerInfo: any[];
   saveCard: any;
   custCardsAvailable: Boolean;
+  custCardsNotAvailable: Boolean = true;
   customercards: any; primaryCust: any;
   selectedCardDetails: any;
   customeravailablepoints: any;
@@ -565,6 +566,7 @@ public modeselectTrending= 'All';
     if (this.saveCard == 1) {
       this.getCardDetails();		//fetch card details for normal login
       //UPDATE AVAILABLE POINTS 
+      this.custCardsNotAvailable == false;
       if (this.custCardsAvailable == true) {
         this.pay.updateavaliablepoints().subscribe(res => {
           if (res['points_available'] && (res['points_available'] != undefined || res['points_available'] != null)) {
@@ -714,6 +716,7 @@ public modeselectTrending= 'All';
         let customercards = response.customercards;
         this.customercards = customercards;
         if (customercards.length > 0) {
+          this.custCardsNotAvailable = false;
           this.custCardsAvailable = true;
           //get primary card detail
           for (let i = 0; i < customercards.length; i++) {
