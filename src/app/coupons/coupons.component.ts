@@ -102,7 +102,7 @@ export class CouponsComponent implements OnInit {
 	}
 
 	
-	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,public restApi:RestapiService,private http: HttpClient,private formBuilder: FormBuilder,public commonHelper: CommonHelper,public dialog: MatDialog,private sg: SimpleGlobal,private appConfigService: AppConfigService) { 
+	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private http: HttpClient,private formBuilder: FormBuilder,public commonHelper: CommonHelper,public dialog: MatDialog,private sg: SimpleGlobal,private appConfigService: AppConfigService) { 
 		this.assetPath=this.sg['assetPath']; 
 		this.domainPath=this.sg['domainPath'];
 		this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];

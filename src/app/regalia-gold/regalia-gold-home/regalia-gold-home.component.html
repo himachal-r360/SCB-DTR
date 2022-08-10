@@ -1,4 +1,56 @@
-<p>regalia-gold-home works!</p>
+
+
 
 <app-banners></app-banners>
-<app-travel></app-travel>
+<div class="container px-0 px-sm-2">
+    <div>
+        <h5 class="head_title px-2 px-sm-0">Book Travel & Stay</h5>
+        <div class="mb-30">
+            <app-travel></app-travel>
+        </div>
+    </div>
+</div>
+<div class="container"> 
+    <div>
+        <h5 class="head_title">Smartbuy Exclusive</h5>
+        <div class="mb-50">
+            <app-exclusive></app-exclusive>
+        </div>
+    </div>
+</div>
+
+<!-- Airmiles Banner -->
+<div class="" *ngIf="customer_login">
+    <div class="container">
+        <h5 class="head_title">Airmiles</h5>
+    </div>
+    <div class="banner_sec">
+        <div>
+            <div class="new_btn_position"><p class="new_show">New</p></div>
+            <img src="{{cdnUrl}}images/banners/airmiles/air01.png" alt="banner">
+            <div class="banner_content">
+                <p>Airmiles powered by <br/> Ethihad Airways, British Airways & more.</p>
+            </div>
+        </div>
+        <div class="py-3 text-center">
+            <a href="{{siteUrl}}regalia_gold/airmiles" target="_blank"><button class="btn btn-gradient-three try_nw_btn">TRY NOW</button></a>
+        </div>
+    </div>
+</div>
+
+<div class="container ">
+    <div>
+        <!-- <h5 class="head_title">Offers and Deals</h5> -->
+        <div class="mb-30">
+            <app-deals></app-deals>
+        </div>
+    </div>
+    <div>
+        <h5 class="head_title">Brands in Focus <span class="view_all"><a href="" class="ps-2">View All</a></span></h5>
+        <div class="mb-30">
+            <app-brands></app-brands>
+        </div>
+    </div>
+</div>
+
+

@@ -64,7 +64,7 @@ input::placeholder {
     opacity: 0.5;
 }
 
-.hidden {
+.hide {
  display: none;
 }
     .view_more_btn{
@@ -73,8 +73,8 @@ input::placeholder {
         text-align: center;
         width: 50%;
         margin: 10px auto;
-    }          
-    
+    }
+
 .heading_text{
     display: flex;
     align-items: baseline;
@@ -99,6 +99,9 @@ input::placeholder {
 }
 
 .booking-inner-box{
+    @media screen and (max-width:600px) {
+        padding: 10px;
+    }
     h6{
         font-weight: 700;
          margin-bottom: 0px;
@@ -131,6 +134,9 @@ input::placeholder {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        @media screen and (max-width:600px) {
+            gap: 20px;
+        }
     }
     .city_text, .time_text{
         font-size: 18px;
@@ -161,7 +167,7 @@ input::placeholder {
     color: #000000;
     text-align: center;
     padding: 15px;
-    margin: 15px 0px;    
+    margin: 15px 0px;
     p{
         font-size: 14px;
         margin: 0;
@@ -225,7 +231,7 @@ input::placeholder {
     :not(:first-child){
         border-top: none;
     }
-    
+
 }
 
 
@@ -250,7 +256,7 @@ input::placeholder {
         border: 1.8px solid #1d86ff1a;
         opacity: 1;
     }
-    
+
 }
 
 
@@ -263,10 +269,10 @@ input::placeholder {
     z-index: 4;
     .apply_fare{
         padding: 10px;
-        display: flex;
+        /* display: flex;
         justify-content: space-around;
         align-items: center;
-        text-align: center;
+        text-align: center; */
         border-bottom: 1px solid #00000030;
         p{
             margin: 0;
@@ -307,15 +313,16 @@ input::placeholder {
         display:flex;
         align-items: flex-end;
         min-height: calc(100% - 0px);
-
-        .modal-header{
-            border-bottom: 0px;
-            .modal-title{
-                font-family: 'opensans-bold';
-                font-size: 18px;
+        .modal-content{
+            border-radius: 15px 15px 0px 0px;
+            .modal-header{
+                border-bottom: 0px;
+                .modal-title{
+                    font-family: 'opensans-bold';
+                    font-size: 18px;
+                }
             }
         }
-        
     }
 }
 
@@ -328,4 +335,32 @@ input::placeholder {
     font-size: 15px;
     line-height: 20px;
     color: #FFFFFF;
+}
+.collapse_text{
+  font-family: 'opensans-regular';
+  font-weight:600;
+  font-size:14px;
+  color:#000;
+}
+.base_fare_collapse{
+  margin-top:-10px;
+  margin-left:-2px;
+}
+.collapse_row{
+padding:5px 0px;
+  p{
+    font-family: 'opensans-regular';
+    font-weight:300;
+    font-size:14px;
+    color:#000;
+  }
+}
+
+
+.flight_mlite_process{
+    @media screen and (max-width:600px) {
+        position: sticky;
+        top: 0px;
+        z-index: 3;
+    }
 }

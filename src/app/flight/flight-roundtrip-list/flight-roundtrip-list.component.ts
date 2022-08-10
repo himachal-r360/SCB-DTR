@@ -9,7 +9,9 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { Options } from '@angular-slider/ngx-slider';
 import { Location, ViewportScroller } from '@angular/common';
-
+import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 declare var $: any;
 
 @Component({
@@ -23,7 +25,10 @@ declare var $: any;
 export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDestroy {
   cdnUrl: any;
   @ViewChild('toCityInput') toCityInput!: ElementRef;
-
+  showMoreAirline = false;
+  showLessAirline = true;
+  showLessLayover = true;
+  showMoreLayover = false;
   flightList: any = [];
   ReturnflightList: any = [];
   flightIcons: any;
@@ -77,7 +82,9 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   isMobile:boolean= false
   math = Math;
   EMI_interest: number = 16;
+  EMIAvailableLimit: number = 3000;
   navItemActive:any;
+  dummyForLoader = Array(10).fill(0).map((x,i)=>i);
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -157,11 +164,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('itemsReturnContainer', { read: ViewContainerRef }) returnContainer: ViewContainerRef;
   @ViewChild('returnItem', { read: TemplateRef }) returnTemplate: TemplateRef<any>;
-  pageIndex: number = 1;
+  pageIndex: number = 26;
   ITEMS_RENDERED_AT_ONCE=25;
   nextIndex=0;
 
-  constructor(private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
+  constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     $(window).scroll(function(this) {
       if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
@@ -175,17 +182,18 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.isMobile = window.innerWidth < 991 ?  true : false;
   }
   ngOnInit(): void {
-  
+
        this.route.url.subscribe(url =>{
         $(".modal").hide();
         $('body').removeClass( "modal-open" );
          $("body").removeAttr("style");
-        $(".modal-backdrop").hide();
+        $(".modal-backdrop").remove();
         this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
     this.headerHideShow(null)
     this.getAirpotsList();
+        this.getCoupons();
     this.flightSearch();
      });
   }
@@ -201,7 +209,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       for (let n = this.pageIndex; n < this.nextIndex ; n++) {
         const context = {
           item: [this.flightList[n]]
-          
+
         };
         this.container.createEmbeddedView(this.template, context);
       }
@@ -221,7 +229,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         const context = {
           items: [this.ReturnflightList[n]]
         };
-        this.container.createEmbeddedView(this.template, context);
+        this.returnContainer.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
     }
@@ -229,23 +237,42 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   private intialData() {
     for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+      if(this.flightList[n] != undefined)
+    {
       const context = {
         item: [this.flightList[n]],
       };
+      // console.log(context , "onward");
+
       this.container.createEmbeddedView(this.template, context);
+    }
     }
   }
   private intialReturnData() {
-    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
-    const context = {
+    for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE; n++) {
+    if(this.ReturnflightList[n] != undefined)
+    {
+      const returnContext = {
         item: [this.ReturnflightList[n]],
       };
-      this.returnContainer.createEmbeddedView(this.returnTemplate, context);
-    
+      // console.log(returnContext , "return");
+
+      this.returnContainer.createEmbeddedView(this.returnTemplate, returnContext);
+
+    }
+
     }
   }
 
+  show_airline_more:number=0;
+  showmoreAirline() {
+   this.show_airline_more=1;
+  }
 
+    show_layover_more:number=0;
+  showmoreLayover() {
+   this.show_layover_more=1;
+  }
 
 
 
@@ -260,6 +287,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.fromCityName = this.queryFlightData.fromCity;
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
+        this.returnDate = new Date(this.queryFlightData.arrival);
         this.flightClassVal = this.queryFlightData.flightclass;
         this.adultsVal = this.queryFlightData.adults;
         this.childVal = this.queryFlightData.child;
@@ -272,7 +300,21 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
   }
 
+flightCoupons=[];
+getCoupons(){
+const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+var couponParam = {
+postData:this.EncrDecr.set(JSON.stringify(urlParams))
+};
 
+this.rest.getCouponsByService(couponParam).subscribe(results => {
+   if(results.status=="success"){
+   this.flightCoupons=results.data;
+   }
+
+});
+
+}
 
   //Hide show header
   headerHideShow(event:any) {
@@ -319,7 +361,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
-
+        this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
 
@@ -333,7 +375,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort((a: any, b: any) => a.totalFare - b.totalFare);
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare && a.splrtFareFlight==false  && b.splrtFareFlight==false )     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })
@@ -699,8 +741,15 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
 
       this.container.clear();
       this.returnContainer.clear();
-      this.intialData();
-      this.intialReturnData();
+      if(this.flightList.length > 0)
+      {
+        this.intialData();
+      }
+      if(this.ReturnflightList.length > 0)
+      {
+        this.intialReturnData();
+      }
+
     }
 
 
@@ -899,6 +948,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     // Return timing flight
     timingFilterReturnFlights(returnFlightList: any) {
       this.ReturnflightList = returnFlightList;
+      //console.log(this.ReturnflightList , "return");
       let updatedflightList: any = [];
       let isfilterMorningDepartures: any = false;
       let isfilterFlightTiming = false;
@@ -918,11 +968,15 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           isfilterMorningDepartures = true;
         }
       })
+      //console.log(this.flight_return_Timingsitems , "this.flight_return_Timingsitems");
+
       let isTimingFilterItems = this.flight_return_Timingsitems.filter((item: any) => {
         if (item.active == true) {
           return item;
         }
       })
+      //console.log(isTimingFilterItems , "isTimingFilterItems");
+
       if (isTimingFilterItems.length > 0) {
         isfilterFlightTiming = true;
       }
@@ -930,6 +984,10 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
         var filteredTimingArr: any[] = [];
         if (returnFlightList.length > 0) {
+          //console.log(returnFlightList , "returnFlightList");
+          //console.log(date2);
+          //console.log(date3);
+
           returnFlightList.filter((d: any) => {
             let singleFlightTiming = [];
             singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
@@ -1360,12 +1418,18 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
-  DisplayDetail()
+  DisplayDetail(flightKey:any,flights:any,item:any,event:any,type:string)
   {
-    if(this.isOnwardSelected == true || this.isReturnSelected == true)
-    {
+
+      if(type =='onward' && this.isOnwardSelected == false)
+      {
+      this.onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
+      }
+      if(type =='return' && this.isReturnSelected == false){
+        this.returnSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item}
+      }
       this.isDetailsShow = true;
-    }
+
   }
 
   changeFareRuleTab(event:any){
@@ -1435,7 +1499,7 @@ closeFlightDetailMobile(i:any){
     element.style.display = "none";
   }
 }
-  
+
   openMobileFilterSection()
   {
     var filterDiv = document.getElementById('sortMobileFilter');
@@ -1471,6 +1535,13 @@ closeFlightDetailMobile(i:any){
       }
       return item;
     });
+    this.priceSortingReturnFilteritems.filter((item:any)=>{
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    })
   }
   applySortingMobile() {
     let sortingBtn = document.getElementById('sortMobileFilter');
@@ -1491,4 +1562,5 @@ getLayoverHour(obj1: any, obj2: any) {
   }
   return dateHour;
 }
+
 }

@@ -16,11 +16,10 @@ import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-rou
 import { FlightIntListComponent } from './flight-int-list/flight-int-list.component';
 import { FlightSearchModule } from '../flight-search/flight-search.module';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
-
 import { AgePipe } from 'src/app/pipes/age.pipe';
-
 import { ListingComponent } from './multicity/listing/listing.component';
-
+import { FilterPipe } from 'src/app/shared/pipes/filterUnique.pipe';
+import { couponDiplayPipe } from 'src/app/shared/pipes/couponDiplay.pipe';
 import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
 
@@ -56,9 +55,7 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
-
-    FlightRoundtripListComponent,AgePipe, ListingComponent,FlightIntListComponent
-
+    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe,couponDiplayPipe,ListingComponent
 
   ],
   imports: [

@@ -98,6 +98,12 @@ export class RestapiService {
   getRegaliaGoldList ():Observable<any> {
     return this.http.get('assets/data/regalia_gold.json');
   }
+  getMilestoneDetail ():Observable<any> {
+    return this.http.get('assets/data/milestone.json');
+  }
+  availablePoints() :Observable<any>{
+    return this.http.get('assets/data/availablepoints.json');
+  }
   
     verifyDomain ():Observable<any> {
           
@@ -343,5 +349,11 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
     return this.http.post(this.endpoint+'suggest_items', param, config).pipe(map((response: any) => response));
     //}
   }
-
+    getCouponsByService (param):Observable<any> { 
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/getCouponsByService.json');
+    }else{
+	return this.http.post( this.endpoint+'getCouponsByService',param, config).pipe(map((response: any) => response));
+    }
+  }
 }
