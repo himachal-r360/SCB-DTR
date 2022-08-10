@@ -1,69 +1,19 @@
-<div class="container-no">
-    <!-- <h5 class="head_title">Brands in Focus</h5> -->
+<div class="container-no" *ngIf="foryouBrands.length > 0 ">
+    <h5 class="head_title">Brands in Focus</h5>
     <div class="trend_items_carousel mb-30">
         <owl-carousel-o [options]="brandOptions" class="partners_container">
-           <!--  <ng-template carouselSlide *ngFor="let brand of foryouBrands; let i = index">
-                <div>
-                    <a (click)="redirectUrl('instavouchers',1,brand.url)"> <img src="{{cdnUrl}}images/smartbuy/brands/svg/{{brand.image}}" alt="{{brand.title}}" height="60px"></a>
-                </div>
-            </ng-template> -->
-            <ng-template carouselSlide >
+            <ng-template carouselSlide *ngFor="let brand of foryouBrands; let i = index">
                 <div>
                     <a href="">
                         <div class="item_brand">
-                            <img src="{{cdnUrl}}images/smartbuy/brands/gold/indigo.svg" alt="">
+                            <a (click)="redirectUrl('instavouchers',1,brand.url)"><img src="{{cdnUrl}}images/smartbuy/brands/svg/{{brand.image}}" alt="{{brand.title}}"></a>
                         </div>
                     </a>
                 </div>
             </ng-template>
-            <ng-template carouselSlide >
-                <div>
-                    <a href="">
-                        <div class="item_brand ">
-                            <img src="{{cdnUrl}}images/smartbuy/brands/gold/allen.svg" alt="">
-                        </div>
-                    </a>
-                </div>
-            </ng-template>
-            <ng-template carouselSlide >
-                <div>
-                    <a href="">
-                        <div class="item_brand ">
-                            <img src="{{cdnUrl}}images/smartbuy/brands/gold/fab.svg" alt="">
-                        </div>
-                    </a>
-                </div>
-            </ng-template>
-            <ng-template carouselSlide >
-                <div>
-                    <a href="">
-                    <div class="item_brand ">
-                        <img src="{{cdnUrl}}images/smartbuy/brands/gold/basket.svg" alt="">
-                    </div>
-                    </a>
-                </div>
-            </ng-template>
-            <ng-template carouselSlide >
-                <div>
-                    <a href="">
-                        <div class="item_brand ">
-                            <img src="{{cdnUrl}}images/smartbuy/brands/gold/fbb.svg" alt="">
-                        </div>
-                    </a>
-                </div>
-            </ng-template>
-            <ng-template carouselSlide >
-                <div>
-                    <a href="">
-                        <div class="item_brand ">
-                            <img src="{{cdnUrl}}images/smartbuy/brands/gold/mmt.svg" alt="">
-                        </div>
-                    </a>
-                </div>
-            </ng-template>
-    
         </owl-carousel-o>
-
     </div>
 </div>
+<app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"
+    [redirectPopupHeader]="redirectPopupHeader" [redirectPopupImpmessage]="redirectPopupImpmessage" [redirectPopupMessage]="redirectPopupMessage"></app-redirect-popup>
 
