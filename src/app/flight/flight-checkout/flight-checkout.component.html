@@ -1,4 +1,4 @@
-<div class="flight_mlite_process">
+<div class="flight_mlite_process"  *ngIf="REWARD_CUSTOMERID !='0000'">
     <section class="mob-flights-listing" *ngIf="searchData && isMobile">
         <div class="container">
           <div class="row">
@@ -72,7 +72,7 @@
           </div>
         </section>
 </div>
-<main class="site-main">
+<main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'" >
   <!-- <div class="route-details row">
         <div class="col-2">
             <span class="material-icons">arrow_back_ios</span>
@@ -5206,11 +5206,10 @@ Please enter a valid expiry date</mat-error>
 
                     </li>
 
-                    <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                    <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3" >
                       <div class="fare-list-box">
                         <div class="fare-list-left">
                           <p>
-
                             {{selectedOnwardVendor.partnerName}} Convenience Fee
                           </p>
                         </div>
@@ -5267,10 +5266,15 @@ Please enter a valid expiry date</mat-error>
                         <div class="fare-list-left">
                           <h6 class="fw_7">Grand Total</h6>
                         </div>
-                        <div class="fare-list-right">
+                        <div class="fare-list-right" *ngIf="steps > 3">
                           <h6 class="fw_7">₹ {{totalCollectibleAmount|number}}</h6>
                           <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
                             {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                        </div>
+                             <div class="fare-list-right" *ngIf="steps < 4">
+                          <h6 class="fw_7">₹ {{(totalCollectibleAmount-partnerConvFee)|number}}</h6>
+                          <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI @
+                            {{calculateEMI((totalCollectibleAmount-partnerConvFee))|number: '.2'}}/month</p>
                         </div>
                       </div>
                     </li>
@@ -5290,7 +5294,7 @@ Please enter a valid expiry date</mat-error>
               </div>
             </div>
             <div *ngIf="steps==5 && !isMobile">
-              <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
+              <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                 [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
                 [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
                 (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
@@ -5454,7 +5458,7 @@ Please enter a valid expiry date</mat-error>
         </div>
         <div class="modal-body" >
 
-          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
+          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
             [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
             [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
             (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
@@ -5512,7 +5516,7 @@ Please enter a valid expiry date</mat-error>
                 </div>
               </li>
 
-              <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 2 ">
+              <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3 ">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
                     <p>
@@ -5554,15 +5558,15 @@ Please enter a valid expiry date</mat-error>
               <li class="fare-list-item">
                 <div class="fare-list-box pt-30">
                   <div class="fare-list-left">
-                    <h6 class="fw_7">Grand Total</h6>
+                    <h6 class="fw_7">Grand Total </h6>
                   </div>
-                  <div class="fare-list-right" *ngIf="steps < 3">
+                  <div class="fare-list-right" *ngIf="steps < 4">
                     <h6 class="fw_7">₹{{totalCollectibleAmount-partnerConvFee|number}}</h6>
-                    <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
+                    <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @
                       {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number: '.2'}}/month</p>
                   </div>
 
-                  <div class="fare-list-right" *ngIf="steps > 2">
+                  <div class="fare-list-right" *ngIf="steps > 3">
                     <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
                     <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
                       {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
