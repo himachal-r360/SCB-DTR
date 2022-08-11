@@ -2283,13 +2283,15 @@
                                   </div>
                                   <div class="fixedright-price">
                                       <h6>
-                                          ₹ {{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}
-                                          <span>EMI @{{calculateEMI(onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare) | number}}/month</span>
+                                          ₹ {{ sumval  |number}}
+                                          <span>EMI @{{calculateEMI(sumval) | number}}/month</span>
                                       </h6>
                                   </div>
                                   <div class="fixedright-otherinfo">
                                       <!--<span class="mainprice">₹ 5,000</span>
                                       <span class="price-off">10% off</span>-->
+                                      <span class="mainprice" *ngIf="sumval !=sumvalold" >₹ {{sumvalold|number}}</span>
+                                      <span class="price-off" *ngIf="sumval !=sumvalold">Discounted</span>
                                       <div class="ff-Viewfaredetails">
                                           <a href="javascript:;" class="rr-Viewfare">View Fare Details</a>
                                           <div class="hover-popover">
@@ -2308,7 +2310,7 @@
                                                   <hr class="m-0">
                                                   <div class="hover-popover-content-list popover-total">
                                                       <p>Total</p>
-                                                      <p>₹{{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}</p>
+                                                      <p>₹{{ sumval  |number}}</p>
                                                   </div>
                                               </div>
                                               <div class="hover-popover-footer">

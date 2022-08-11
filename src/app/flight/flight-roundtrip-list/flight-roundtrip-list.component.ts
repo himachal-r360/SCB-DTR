@@ -577,7 +577,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
               }
             })
           }
-          var flights = e.priceSummary.filter((d: any) => { if (d.refundStatus == 1) { return d; } }); // Refundable Fares Count
+          var flights = e.priceSummary.filter((d: any) => { if (d.splrtFareFlight==false && d.refundStatus == 1) { return d; } }); // Refundable Fares Count
           if (flights.length > 0) {
             this.RefundableFaresCount += 1;
             this.flight_PopularItems.filter((item: any) => {
@@ -586,7 +586,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
               }
             })
           }
-          var flights = e.priceSummary.filter((d: any) => { if (d.foodAllowance != null) { return d; } });// Meals Included Count
+          var flights = e.priceSummary.filter((d: any) => { if (d.splrtFareFlight==false && d.foodAllowance != null) { return d; } });// Meals Included Count
           if (flights.length > 0) {
             this.foodAllowanceCount += 1;
           }
@@ -1468,6 +1468,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   
   flightsChangeR:any; selectedChangeR:any; flightKeyChangeR:any; itemChangeR:any;eventChangeR:any;
   onSelectReturnSplrt:any;
+  sumval:any;sumvalold:any;  onward_combofareKey:any;return_combofareKey:any;splrtFlight:boolean=false;
  
   onSelectReturn(flightKey:any,flights:any,item:any,priceDump:any,event:any)
   {
@@ -1481,20 +1482,18 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }else{
         this.onSelectReturnSplrt=[];
         }
-        
-        /*
-        
-              
-  if(this.onSelectOnwardSplrt.length >0 && this.onSelectReturnSplrt.length>0){
         var returnFlightnumbers=[];  var onwardFlightnumbers=[];
-        var onwardAirline = onwardSelectedFlight.flights[0]['airline'];
-        var returnAirline =returnSelectedFlight.flights[0]['airline'];
+        var onwardAirline = this.onwardSelectedFlight.flights[0]['airline'];
+        var returnAirline =flights[0]['airline'];
         var splrt_status = 0; var eligibleCombo=0;
         var sumval;
+
+        var get_onward_price_new = this.onwardSelectedFlight.priceSummery.totalFare;
+        var selected_price_new = item.totalFare;
+        this.sumvalold = parseInt(get_onward_price_new) + parseInt(selected_price_new);
         
-        var get_onward_price_new = onwardSelectedFlight.priceSummery.totalFare;
-        var selected_price_new = returnSelectedFlight.priceSummery.totalFare;
-        var sumvalold = parseInt(get_onward_price_new) + parseInt(selected_price_new);
+          
+  if(this.onSelectOnwardSplrt.length >0 && this.onSelectReturnSplrt.length>0){
         
         if (onwardAirline == returnAirline) {
         splrt_status = 1;
@@ -1502,8 +1501,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
         if (onwardAirline == returnAirline && splrt_status == 1) {
         var onward_combofare = this.onSelectOnwardSplrt;
-         for (var i = 0; i < returnSelectedFlight.flights.length; i++)  {     returnFlightnumbers.push(returnSelectedFlight.flights[i]['flightNumber']);  }
-         for (var i = 0; i < onwardSelectedFlight.flights.length; i++)  {     onwardFlightnumbers.push(onwardSelectedFlight.flights[i]['flightNumber']);  }
+         for (var i = 0; i < flights.length; i++)  {     returnFlightnumbers.push(flights[i]['flightNumber']);  }
+         for (var i = 0; i < this.onwardSelectedFlight.flights.length; i++)  {     onwardFlightnumbers.push(this.onwardSelectedFlight.flights[i]['flightNumber']);  }
           
         if (returnFlightnumbers.length == 1) {
         onward_combofare = onward_combofare.filter(function(a) {
@@ -1539,14 +1538,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
         });
         if (onward_combofare.length > 0) {
-       this.onward_combofareKey=onward_combofare[0].clearTripFareKey;
+         this.onward_combofareKey=onward_combofare[0].clearTripFareKey;
         get_onward_price_new = onward_combofare[0].totalFare;
         eligibleCombo = 1;
         }
 
         }
         var return_combofare = this.onSelectReturnSplrt;
-        var comboairline =onwardSelectedFlight.flights[0]['carrier_id'];
+        var comboairline =this.onwardSelectedFlight.flights[0]['carrier_id'];
         if (comboairline == '6E' || comboairline == 'SG') { eligibleCombo = 1; }
         
         if (onwardFlightnumbers.length == 1 && eligibleCombo == 1) {
@@ -1591,34 +1590,21 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
     }
       
-      
-        var sumval_new = parseInt(get_onward_price_new) + parseInt(selected_price_new);
-
-        if (sumval_new < sumvalold && onwardAirline == returnAirline && splrt_status == 1) {
-        //$('#dom-selected-strike-disc').show();
-       // $('#splrtFlight').val(1);
-       sumval = sumval_new;
-        } else {
-       // $('#onward_combo').val(0);
-       // $('#return_combo').val(0);
-      //  $('#onward_combofareKey').val(tmp_onward_combofareKey);
-      //  $('#return_combofareKey').val(tmp_return_combofareKey);
-        sumval = sumvalold;
-        }
-      
-      
-      
-      
-         console.log(sumvalold);
-         console.log(sumval);
-
-  
- // console.log(this.onSelectOnwardSplrt);
-  //console.log(this.onSelectReturnSplrt);
   }
-  return;
-        
-    */    
+  
+     var sumval_new = parseInt(get_onward_price_new) + parseInt(selected_price_new);
+        if (sumval_new < this.sumvalold && onwardAirline == returnAirline && splrt_status == 1) {
+         this.splrtFlight=true;
+         this.sumval= sumval_new;
+        } else {
+          this.sumval= this.sumvalold;
+        this.onward_combofareKey='';
+        this.return_combofareKey='';
+        }
+
+               console.log(sumval_new);
+         console.log(this.sumvalold);
+         console.log(this.sumval);
         
         
         
@@ -1734,7 +1720,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   
 
-  onward_combofareKey:any;return_combofareKey:any;
+
   bookingSummary(onwardSelectedFlight: any, returnSelectedFlight: any) {
   
   
@@ -1742,10 +1728,11 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         "travel":"DOM",
         "travel_type":"R",
         "docKey": this.DocKey,
-        "onwardFlightKey": onwardSelectedFlight.flightKey,
-        "returnFlightKey": returnSelectedFlight.flightKey,
+        "onwardFlightKey": this.onward_combofareKey? this.onward_combofareKey : onwardSelectedFlight.flightKey,
+        "returnFlightKey": this.return_combofareKey? this.return_combofareKey : returnSelectedFlight.flightKey,
         "onwardFlights": onwardSelectedFlight.flights,
         "returnFlights": returnSelectedFlight.flights,
+        "splrtFlight": this.splrtFlight,
         "onwardPriceSummary": onwardSelectedFlight.priceSummery,
         "returnPriceSummary": returnSelectedFlight.priceSummery,
         "queryFlightData":this.queryFlightData

@@ -1507,6 +1507,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         "returnFlights":flights.returnflights ,
         "onwardPriceSummary": selected, 
         "returnPriceSummary": '', 
+          "splrtFlight": false,
         "queryFlightData":this.queryFlightData
         };
         let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
@@ -1532,6 +1533,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         "returnFlights":flights.returnflights ,
         "onwardPriceSummary": selected, 
         "returnPriceSummary": '', 
+          "splrtFlight": false,
         "queryFlightData":this.queryFlightData
         };
         let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);

@@ -1217,6 +1217,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         "returnFlights":'' ,
         "onwardPriceSummary": selected,
         "returnPriceSummary": '',
+         "splrtFlight": false,
         "queryFlightData":this.queryFlightData
         };
 
@@ -1245,6 +1246,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         "returnFlights":'' ,
         "onwardPriceSummary": selected,
         "returnPriceSummary": '',
+          "splrtFlight": false,
         "queryFlightData":this.queryFlightData
         };
 
