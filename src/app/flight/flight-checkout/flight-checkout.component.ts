@@ -2527,13 +2527,13 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       };
 
       this.fareData = {
-        totalFare: Number(this.totalCollectibleAmount) + Number(this.partnerConvFee),
+        totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
         "convenience_fee": 0,
         "partnerConvFee": this.partnerConvFee,
         "child": this.searchData.child,
         "adults": this.searchData.adults,
         "infants": this.searchData.infants,
-        "total": this.totalCollectibleAmount,
+        "total": Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
         "others": this.Tax,
         "totalbf": this.BaseFare,
         "coupon_code": this.coupon_code ? this.coupon_code : '',
@@ -2544,7 +2544,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         },
         "total_passengers": (this.maxAdults + this.maxChilds + this.maxInfants),
         "markup_fee": 0,
-        "partner_amount": this.totalCollectibleAmountFromPartnerResponse,
+        "partner_amount": Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
         "discount": this.coupon_amount,
         "voucher_amount": 0,
         "voucher_code": 0,
@@ -2561,7 +2561,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         "partnerName": this.partnerToken,
         "itineraryType": itineraryType,
         "itineraryId": "",
-        "price": this.totalCollectibleAmountFromPartnerResponse,
+        "price": this.totalCollectibleAmountFromPartnerResponse+ Number(this.partnerConvFee),
         "comboFare": "false",
         "origin": this.searchData.flightfrom,
         "destination": this.searchData.flightto,
@@ -2656,17 +2656,17 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
           this.totalCollectibleAmount = Number(setOrderAmount);
           this.totalCollectibleAmountFromPartnerResponse = this.totalCollectibleAmount;
-
+          this.totalCollectibleAmountFromPartnerResponseOrg= this.totalCollectibleAmount-Number(this.partnerConvFee);
 
 
           this.fareData = {
-            totalFare: Number(this.totalCollectibleAmount) + Number(this.partnerConvFee),
+            totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "convenience_fee": 0,
             "partnerConvFee": this.partnerConvFee,
             "child": this.searchData.child,
             "adults": this.searchData.adults,
             "infants": this.searchData.infants,
-            "total": this.totalCollectibleAmount,
+            "total": Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "others": this.Tax,
             "totalbf": this.BaseFare,
             "coupon_code": this.coupon_code ? this.coupon_code : '',
@@ -2677,16 +2677,16 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
             },
             "total_passengers": (this.maxAdults + this.maxChilds + this.maxInfants),
             "markup_fee": 0,
-            "partner_amount": this.totalCollectibleAmountFromPartnerResponse,
+            "partner_amount": Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "discount": this.coupon_amount,
             "voucher_amount": 0,
             "voucher_code": 0,
             "couponcode": "",
             "ticket_class": this.flightClasses[this.searchData.flightclass]
           };
+          console.log(this.new_fare); console.log(this.partnerConvFee); console.log(this.old_fare);
 
-
-          if ((this.new_fare - this.partnerConvFee) != this.old_fare) {
+          if (this.new_fare  != this.old_fare) {
             $('#infoprocess').modal('hide');
             setTimeout(() => {
               this.continueWithNewFareInterval = myInterval1;
