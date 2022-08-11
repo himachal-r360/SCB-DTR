@@ -219,7 +219,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   remove_Coupon: any;
   coupon_amount: number = 0;
   vas_amount: number = 0;
-  REWARD_CUSTOMERID: string;
+  REWARD_CUSTOMERID: string= '0000';
   REWARD_EMAILID: string;
   REWARD_MOBILE: string;
   REWARD_CUSTOMERNAME: string;
@@ -2303,8 +2303,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     this.passengerForm.markAllAsTouched();
 
 
-   console.log(this.passengerForm);
-
     if (this.passengerForm.invalid) {
       // console.log(this.passengerAdultFormCount);
       return;
@@ -2627,7 +2625,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
         this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
 
-        if (this.itinararyResponse['response'] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode'] == 200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"] == 200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"] == 200) {
+        if (this.itinararyResponse['response'] && this.itinararyResponse['response']['itineraryResponseDetails'] &&this.itinararyResponse['response']["pricingResponseDetails"] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode'] == 200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"] == 200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"] == 200) {
 
           if (this.partnerToken == 'Yatra') {
             this.pricingId = this.itinararyResponse['response']['itineraryResponseDetails']['pricingId'];
@@ -2716,11 +2714,10 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
     }
   }
-
+orderReferenceNumber:any;
   saveCheckout(myInterval1) {
     // console.log(this.flightSessionData);
     // console.log(this.flightInfo);
-    console.log('4');
     let fligthsOnward = [];
     let fligthsReturn = [];
     for (let i = 0; i < (this.flightSessionData.onwardFlights.length); i++) {
@@ -2873,9 +2870,10 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       "amd_url": "",
       "redirect_url": "",
       "retry_url": "",
+      "sessionKey":this.randomFlightDetailKey,
       "itineraryRequest": this.itineraryRequest
     };
-
+    this.orderReferenceNumber=this.itinararyResponse.response.orderId;
 
     var saveCheckoutData = {
       orderReferenceNumber: this.itinararyResponse.response.orderId,
@@ -2962,6 +2960,16 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
   moveTab(page) {
     this.gotoTop();
+    if(page<5){
+    this.totalCollectibleAmount=this.totalCollectibleAmount-this.coupon_amount;
+    this.coupon_amount=0;
+    }
+    
+    if(page<4){
+      this.totalCollectibleAmount=this.totalCollectibleAmount-this.partnerConvFee;
+    this.partnerConvFee=0;
+    }
+    
     if (page <= this.completedSteps) {
       this.steps = page;
       this.completedSteps = page;
@@ -2981,57 +2989,59 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     this.completedSteps = 5;
   }
 
-  continuePayment() {
 
-  }
 
   reciveflexiAmount(values) {
     this.showFlexipay = true;
     if (values[0].key == 15) {
       this.flexipaysummry = true;
       this.flexiDiscount = Number(values[0].value);
-      this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount) - Number(this.flexiDiscount);
-      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - Number(this.coupon_amount) - Number(this.flexiDiscount);
+      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - Number(this.coupon_amount);
       // console.log(this.sendflexiFare)
-      //sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
+      sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
     } else if (values[0].key !== 15) {
       this.flexipaysummry = false;
       this.flexiDiscount = 0;
       this.flexiIntrest = Number(values[0].value);
       this.flexiDiscount = 0;
-      this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - Number(this.coupon_amount);
       this.sendflexiFare = this.totalCollectibleAmount;
-      //sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
+      sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
     }
   }
 
   recivetotalFare($event) {
     this.flexipaysummry = false;
     this.flexiDiscount = 0;
-    this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+    this.totalCollectibleAmount = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - Number(this.coupon_amount);
 
   }
 
   /***----- APPLY COUPON (--parent--) ------***/
   receiveCouponDetails($event) {
+  
     if ($event.type == 0) {
       this.indexCoupon = $event.couponOptions;
       this.coupon_id = this.indexCoupon.coupon_id;
       this.coupon_name = this.indexCoupon.coupon_name;
       this.coupon_code = this.indexCoupon.coupon_code;
       this.coupon_amount = this.indexCoupon.coupon_amount;
-      this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee) - (Number(this.coupon_amount));
-      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
+      this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) - (Number(this.coupon_amount));
+      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - (Number(this.coupon_amount));
       sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
     } else {
       this.coupon_id = '';
       this.coupon_name = '';
       this.coupon_code = '';
       this.coupon_amount = 0;
-      this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee) - (Number(this.coupon_amount));
-      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
+      this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) - (Number(this.coupon_amount));
+      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - (Number(this.coupon_amount));
       sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
     }
+    
+
+    
   }
 
 
