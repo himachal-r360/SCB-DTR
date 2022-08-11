@@ -8,25 +8,25 @@
                             <div class="travel-select-box">
                                 <ul class="travel-list-ul">
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a active">
+                                        <a href="javascript:;" class="travel-list-a"  (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/flight.png" alt="">
                                             Flights
                                         </a>
                                     </li>
-                                    <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
+                                    <li class="travel-list-li" >
+                                        <a href="javascript:;"class="travel-list-a"  (click)="navBarLink('hotel')"  [ngClass]="navItemActive == 'hotel'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/trains.png" alt="">
                                             Trains
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
+                                        <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('bus')" [ngClass]="navItemActive == 'bus'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/bus.png" alt="">
                                             Bus
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
+                                        <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('train')"  [ngClass]="navItemActive == 'train'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/stays.png" alt="">
                                             Stays
                                         </a>
@@ -34,14 +34,17 @@
                                 </ul>
                             </div>
                         </div>
-                        <app-flight-search isViewPartner="true"></app-flight-search>
+                        <app-flight-search isViewPartner="true" *ngIf="navItemActive=='flight'" ></app-flight-search>
+                        <app-hotel-search isViewPartner="true" *ngIf="navItemActive=='hotel'" ></app-hotel-search>
+                        <app-bus-search isViewPartner="true" *ngIf="navItemActive=='bus'" ></app-bus-search>
+                        <app-train-search isViewPartner="true" *ngIf="navItemActive=='train'" ></app-train-search>
                     </div>
                 </div>
             </div>
         </div>
     </section>
  <!-- Continue Search -->
-    <section class="ContinueSearch-area mb-50" *ngIf="continueSearchVal && continueSearchVal.length>0">
+    <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='flight' && continueSearchVal && continueSearchVal.length>0">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit {
     {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/3.png'},
     {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
   ]
-
+ navItemActive:string='bus';
 
   constructor(
     public _styleManager: StyleManagerService,
@@ -175,6 +175,11 @@ export class HomeComponent implements OnInit {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
+  }
+  navBarLink(item){
+   
+   this.navItemActive=item;
+  
   }
 
   ConvertObjToQueryString(obj:any)
