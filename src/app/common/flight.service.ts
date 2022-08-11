@@ -87,9 +87,21 @@ export class FlightService {
 
 
 
-  getFlightInfo(param: any) {
+  getFlightInfo(param: any,searchData:any) {
     if (LOCALJSON == 'true') {
-      return this.http.get('assets/data/flightInfo.json');
+      if(searchData.travel=='DOM'){
+        if(searchData.flightdefault=='O')
+        return this.http.get('assets/data/flightInfo.json');
+        else
+        return this.http.get('assets/data/flightInfo-R.json');
+      }
+        if(searchData.travel=='INT'){
+          if(searchData.flightdefault=='O')
+        return this.http.get('assets/data/flightInfo-int.json');
+        else
+        return this.http.get('assets/data/flightInfo-int-R.json');
+      }
+    
     } else {
 
       return this.http.post(this.flightInfo, param, { headers: this.header })

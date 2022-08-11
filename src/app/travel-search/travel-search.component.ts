@@ -447,15 +447,15 @@ export class TravelSearchComponent implements OnInit {
         this.departure = event;
         this.departureMlite = moment(event).format('DD/MM/YYYY');
         this.minDateFlightToMlite=event;
+        if( this.showFlightReturn==true){
         var compare1 = new Date(event).getTime();
         var compare2 = new Date(this.arrival).getTime();
         if(compare1 > compare2){
         this.arrivalMlite=(moment(event).format('DD/MM/YYYY'));
-        
         this.arrival = event;
         this.searchFlightForm['controls']['arrival'].setValue(moment(event).format('DD/MM/YYYY'));
         }
-        
+       } 
         
       }else{
        this.arrival = event;

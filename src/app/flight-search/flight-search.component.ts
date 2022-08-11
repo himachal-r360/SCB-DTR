@@ -303,7 +303,7 @@ defaultFlightOptions: any[];
         this.toAirpotName = values.airport_name;
         this.toCityName = values.city;
          setTimeout(() => {
-        this.datePicker.open();
+       // this.datePicker.open();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
 
@@ -693,6 +693,7 @@ defaultFlightOptions: any[];
 
 
     if(this.navItemActive == 'Round Trip'){
+       this.minDateFlightToMlite=this.departureDate;
        this.flightData.controls["arrival"].setValidators(Validators.required);
        this.flightData.controls["arrival"].updateValueAndValidity();
     }else{

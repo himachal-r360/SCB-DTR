@@ -16,7 +16,7 @@
                   </p>
                 </div>
                 <div class="mob-listing-header-right">
-      
+
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
         </div>
     </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
-  
+
   <section class="flight-details-area mt-10">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
@@ -129,7 +129,7 @@
               <div class="Flight-One" *ngFor="let flights of flightOnwardDetails;let i = index">
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
-                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}"
+                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
                       class="flight-image mr-10">
                     <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                     <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -325,7 +325,7 @@
               <div class="Flight-One" *ngFor="let flights of flightReturnDetails;let i = index">
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
-                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}"
+                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
                       class="flight-image mr-10">
                     <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                     <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -510,8 +510,8 @@
               <div class="flight-extra-details">
 
                 <div class="rules-flight">
-                
-                
+
+
                     <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails"  *ngIf="cancellationPolicyOnward || baggageInfoOnward" >
                   <div class="rules-flight-items">
                       <div class="rules-flight-thumbe">
@@ -563,7 +563,7 @@
 
                   </ul>
 
-                  <div class="extra-tabs-ara">          
+                  <div class="extra-tabs-ara">
                   <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnward"           [ngClass]="{'extra-active': cancellationPolicyOnward  }">
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -694,7 +694,7 @@
                   </ul>
 
                   <div class="extra-tabs-ara">
-                    <div id="CancellationDetailsR" class="flight-extra-content-r" *ngIf="cancellationPolicyReturn"  
+                    <div id="CancellationDetailsR" class="flight-extra-content-r" *ngIf="cancellationPolicyReturn"
                       [ngClass]="{'extra-active': cancellationPolicyReturn  }">
                       <table class="table-bordered table-content w-100">
                         <tbody>
@@ -947,7 +947,12 @@
                                           <mat-error
                                             *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">
                                             Adult age should be above 12 years.</mat-error>
+                                            <mat-error *ngIf="passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).touched && passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).getError('younger')">
+                                              Please Enter Valid DOB
+                                            </mat-error>
                                         </mat-form-field>
+
+
                                       </div>
                                     </div>
 
@@ -963,6 +968,19 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
+
+                                              <mat-error
+                                              *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                              Please enter atleast 8 digits.</mat-error>
+
+                                              <mat-error
+                                              *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                              Cannot exceed more than 12 characters.</mat-error>
+
+                                              <mat-error
+                                              *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                              This field must contain only letters</mat-error>
+
                                           </mat-form-field>
 
                                         </div>
@@ -976,6 +994,9 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                  <mat-error
+                                  *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+                                  Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -989,6 +1010,9 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+
+                                              <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                                Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1133,6 +1157,9 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">
                                               Adult age should be above 12 years.</mat-error>
+                                              <mat-error *ngIf="passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).touched && passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).getError('younger')">
+                                                Please Enter Valid DOB
+                                              </mat-error>
                                           </mat-form-field>
                                         </div>
                                       </div>
@@ -1148,6 +1175,19 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                 Please enter passport number</mat-error>
+
+                                                <mat-error
+                                                *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                Please enter atleast 8 digits.</mat-error>
+
+                                                <mat-error
+                                                *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                Cannot exceed more than 12 characters.</mat-error>
+
+                                                <mat-error
+                                                *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                This field must contain only letters</mat-error>
+
                                             </mat-form-field>
 
                                           </div>
@@ -1161,6 +1201,9 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
                                                 Please enter passport issue date</mat-error>
+                                                <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -1174,6 +1217,8 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                                 Please enter passport issue date</mat-error>
+                                                <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter a valid issued date.</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -1301,6 +1346,11 @@
                                       <mat-error
                                         *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">Adult
                                         age should be above 12 years.</mat-error>
+
+                                        <mat-error *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
+                                          Please Enter Valid DOB
+                                        </mat-error>
+
                                     </mat-form-field>
 
                                   </div>
@@ -1316,6 +1366,19 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('minlength','adult_passport_num'+traveller)">
+                                          Please enter atleast 8 digits.</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+traveller)">
+                                          Cannot exceed more than 12 characters.</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('pattern','adult_passport_num'+traveller)">
+                                          This field must contain only letters</mat-error>
+
                                       </mat-form-field>
 
                                     </div>
@@ -1329,6 +1392,9 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+traveller)">
+                                          Please enter a valid expiry date</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -1342,6 +1408,10 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+
+                                      <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+traveller)">
+                                          Please enter a valid issued date.</mat-error>
+
                                       </mat-form-field>
                                     </div>
 
@@ -1477,6 +1547,11 @@
                                                   <mat-error
                                                     *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">
                                                     Adult age should be above 12 years.</mat-error>
+
+                                                    <mat-error *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
+                                                      Please Enter Valid DOB
+                                                    </mat-error>
+
                                                 </mat-form-field>
 
                                               </div>
@@ -1485,7 +1560,7 @@
 
 
 
-                                            <div> <button class="btn btn-primary"
+                                            <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('adult',traveller)">Add</button> </div>
                                           </div>
                                         </div>
@@ -1660,6 +1735,18 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
+
+                                        <mat-error
+                                        *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                        Please enter atleast 8 digits.</mat-error>
+
+                                        <mat-error
+                                        *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                        Cannot exceed more than 12 characters.</mat-error>
+
+                                        <mat-error
+                                        *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                        This field must contain only letters</mat-error>
                                           </mat-form-field>
 
                                         </div>
@@ -1673,6 +1760,10 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+
+                                              <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1686,6 +1777,8 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                                Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1842,6 +1935,19 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                                 Please enter passport number</mat-error>
+
+                                              <mat-error
+                                              *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                              Please enter atleast 8 digits.</mat-error>
+
+                                              <mat-error
+                                              *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                              Cannot exceed more than 12 characters.</mat-error>
+
+                                              <mat-error
+                                              *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                              This field must contain only letters</mat-error>
+
                                             </mat-form-field>
 
                                           </div>
@@ -1855,6 +1961,9 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
                                                 Please enter passport issue date</mat-error>
+                                                <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -1868,6 +1977,8 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
                                                 Please enter passport issue date</mat-error>
+                                                <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                                  Please enter a valid issued date.</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -2007,6 +2118,18 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
+
+                                      <mat-error
+                                      *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
+                                      Please enter atleast 8 digits.</mat-error>
+
+                                      <mat-error
+                                      *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
+                                      Cannot exceed more than 12 characters.</mat-error>
+
+                                      <mat-error
+                                      *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
+                                      This field must contain only letters</mat-error>
                                       </mat-form-field>
 
                                     </div>
@@ -2020,6 +2143,9 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+                                          <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -2033,6 +2159,8 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+                                          <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+traveller)">
+                                            Please enter a valid issued date.</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -2181,6 +2309,18 @@
                                                     <mat-error
                                                       *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
                                                       Please enter passport number</mat-error>
+
+                                                      <mat-error
+                                                      *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
+                                                      Please enter atleast 8 digits.</mat-error>
+
+                                                      <mat-error
+                                                      *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
+                                                      Cannot exceed more than 12 characters.</mat-error>
+
+                                                      <mat-error
+                                                      *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
+                                                      This field must contain only letters</mat-error>
                                                   </mat-form-field>
 
                                                 </div>
@@ -2194,6 +2334,9 @@
                                                     <mat-error
                                                       *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+traveller)">
                                                       Please enter passport issue date</mat-error>
+                                                      <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                                   </mat-form-field>
                                                 </div>
 
@@ -2207,6 +2350,9 @@
                                                     <mat-error
                                                       *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
                                                       Please enter passport issue date</mat-error>
+
+                                                      <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+traveller)">
+                                                        Please enter a valid issued date.</mat-error>
                                                   </mat-form-field>
                                                 </div>
 
@@ -2246,7 +2392,7 @@
 
                                               </div>
                                             </ng-container>
-                                            <div> <button class="btn btn-primary"
+                                            <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('child',traveller)">Add</button> </div>
                                           </div>
                                         </div>
@@ -2425,6 +2571,19 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('minlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                          Please enter atleast 8 digits.</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                          Cannot exceed more than 12 characters.</mat-error>
+
+                                          <mat-error
+                                          *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                          This field must contain only letters</mat-error>
+
                                           </mat-form-field>
 
                                         </div>
@@ -2438,6 +2597,9 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -2451,6 +2613,8 @@
                                             <mat-error
                                               *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                                Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -2607,6 +2771,18 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                                 Please enter passport number</mat-error>
+
+                                                <mat-error
+                                                *ngIf="passengerForm.hasError('minlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                                Please enter atleast 8 digits.</mat-error>
+
+                                                <mat-error
+                                                *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                                Cannot exceed more than 12 characters.</mat-error>
+
+                                                <mat-error
+                                                *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                                This field must contain only letters</mat-error>
                                             </mat-form-field>
 
                                           </div>
@@ -2620,6 +2796,9 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                                 Please enter passport issue date</mat-error>
+                                                <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -2633,6 +2812,8 @@
                                               <mat-error
                                                 *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
                                                 Please enter passport issue date</mat-error>
+                                                <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                                  Please enter a valid issued date.</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -2774,6 +2955,18 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
+
+                                      <mat-error
+                                      *ngIf="passengerForm.hasError('minlength','infant_passport_num'+traveller)">
+                                      Please enter atleast 8 digits.</mat-error>
+
+                                      <mat-error
+                                      *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+traveller)">
+                                      Cannot exceed more than 12 characters.</mat-error>
+
+                                      <mat-error
+                                      *ngIf="passengerForm.hasError('pattern','infant_passport_num'+traveller)">
+                                      This field must contain only letters</mat-error>
                                       </mat-form-field>
 
                                     </div>
@@ -2787,6 +2980,9 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+                                          <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -2800,6 +2996,8 @@
                                         <mat-error
                                           *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+traveller)">
                                           Please enter passport issue date</mat-error>
+                                          <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+traveller)">
+                                            Please enter a valid issued date.</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -2947,6 +3145,18 @@
                                                     <mat-error
                                                       *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">
                                                       Please enter passport number</mat-error>
+
+                                        <mat-error
+                                        *ngIf="passengerForm.hasError('minlength','infant_passport_num'+traveller)">
+                                        Please enter atleast 8 digits.</mat-error>
+
+                                        <mat-error
+                                        *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+traveller)">
+                                        Cannot exceed more than 12 characters.</mat-error>
+
+                                        <mat-error
+                                        *ngIf="passengerForm.hasError('pattern','infant_passport_num'+traveller)">
+                                        This field must contain only letters</mat-error>
                                                   </mat-form-field>
 
                                                 </div>
@@ -2960,6 +3170,9 @@
                                                     <mat-error
                                                       *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+traveller)">
                                                       Please enter passport issue date</mat-error>
+                                                      <mat-error
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                                   </mat-form-field>
                                                 </div>
 
@@ -2973,6 +3186,8 @@
                                                     <mat-error
                                                       *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+traveller)">
                                                       Please enter passport issue date</mat-error>
+                                                      <mat-error *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+traveller)">
+                                                        Please enter a valid issued date.</mat-error>
                                                   </mat-form-field>
                                                 </div>
 
@@ -3013,7 +3228,7 @@
                                               </div>
                                             </ng-container>
 
-                                            <div> <button class="btn btn-primary"
+                                            <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('infant',traveller)">Add</button> </div>
                                           </div>
                                         </div>
@@ -4261,7 +4476,7 @@
                 <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
                   <div class="Booking-Flight-name">
                     <div class="Booking-Flight-name-left">
-                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px"
+                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif"
                         alt="{{flights.airline}}" class="flight-image mr-10">
                       <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                       <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -4363,11 +4578,9 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                          class="mx-2" alt="">
+                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"        class="flight-image mx-2" alt="">
                         <img *ngIf="!return_airline_unique"
-                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif" width="40px"
-                          class="mx-2" alt="">
+                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"        class="flight-image mx-2" alt="">
                       </div>
                       <h6>
                         <span class="city_text">{{searchData.toCity}}</span>
@@ -4421,11 +4634,9 @@
 
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                          class="mx-2" alt="">
+                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"                  class="flight-image mx-2" alt="">
                         <img *ngIf="!return_airline_unique"
-                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif" width="40px"
-                          class="mx-2" alt="">
+                          src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"                class="flight-image mx-2" alt="">
                       </div>
                       <h6>
                         <span class="city_text">{{searchData.fromCity}}</span>
@@ -4482,8 +4693,7 @@
                 <div class="Flight-One flight_detail_review" *ngFor="let flights of flightReturnDetails;let i = index">
                   <div class="Booking-Flight-name">
                     <div class="Booking-Flight-name-left">
-                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px"
-                        alt="{{flights.airline}}" class="flight-image mr-10">
+                      <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif"               alt="{{flights.airline}}" class="flight-image mr-10">
                       <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                       <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
                     </div>
@@ -4549,7 +4759,7 @@
                   </div>
                   <div class="operated_by"
                     *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
-                    Operated by 
+                    Operated by
                     <span
                       *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                     <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
