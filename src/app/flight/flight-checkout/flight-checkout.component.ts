@@ -2964,12 +2964,12 @@ orderReferenceNumber:any;
     this.totalCollectibleAmount=this.totalCollectibleAmount-this.coupon_amount;
     this.coupon_amount=0;
     }
-    
+
     if(page<4){
       this.totalCollectibleAmount=this.totalCollectibleAmount-this.partnerConvFee;
     this.partnerConvFee=0;
     }
-    
+
     if (page <= this.completedSteps) {
       this.steps = page;
       this.completedSteps = page;
@@ -3020,7 +3020,7 @@ orderReferenceNumber:any;
 
   /***----- APPLY COUPON (--parent--) ------***/
   receiveCouponDetails($event) {
-  
+
     if ($event.type == 0) {
       this.indexCoupon = $event.couponOptions;
       this.coupon_id = this.indexCoupon.coupon_id;
@@ -3039,9 +3039,9 @@ orderReferenceNumber:any;
       this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - (Number(this.coupon_amount));
       sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
     }
-    
 
-    
+
+
   }
 
 
