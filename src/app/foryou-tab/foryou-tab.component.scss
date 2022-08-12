@@ -652,7 +652,7 @@ margin-top:-7px;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 20px;
+    padding: 0px 15px 10px;
     position: absolute;
     z-index: 1;
     top: 150%;
@@ -672,10 +672,10 @@ margin-top:-7px;
         font-family: 'opensans-medium';
         text-align: left;
         text-decoration: underline;
-        .down_arrow{
-            position: relative;
-            top: 8px;
-        }
+    }
+    .down_arrow{
+        position: relative;
+        top: 8px;
     }
     .points_sec{
         /* display: flex;
@@ -724,6 +724,30 @@ margin-top:-7px;
   }
 
   .unlockCardPopup{
+        @media screen and (max-width:600px) {
+            animation-name: slideInUp;
+            animation-duration: 200ms;
+            animation-timing-function: ease-in-out;
+        .modal-dialog{
+            margin: 0;
+            display:flex;
+            align-items: flex-end;
+            min-height: calc(100% - 0px);
+            .modal-content{
+                border-radius: 8px 8px 0px 0px;
+                .modal-body{
+                    padding:0px;
+                }
+                /* .modal-header{
+                    .modal-title{
+                        font-family: 'opensans-medium';
+                    }
+                } */
+            }
+    
+            }
+        }
+    
     .modal-content{
         border-radius: 8px;
     }
@@ -749,7 +773,7 @@ margin-top:-7px;
     }
     .cal_icn{
         position: absolute;
-        top: 16px;
+        top: 12px;
         right: 3%;
     }
     .resend_text{
