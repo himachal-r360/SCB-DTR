@@ -837,14 +837,14 @@
                             </div>
                         </div>
                         <div class="home-error d-flex">
-                            <mat-error class="w-50" *ngIf="submitted && Error('flightfrom', 'required')">
+                            <mat-error class="w-50" *ngIf="submitted && Error('leavingFrom', 'required')">
                                 Select departure
                             </mat-error>
         
-                            <mat-error *ngIf="submitted && Error('flightto', 'required')">
+                            <mat-error *ngIf="submitted && Error('goingTo', 'required')">
                                 Select arrival
                             </mat-error>
-                            <mat-error *ngIf="Error('flightto', 'MustMatch')">From and To cannot be same.</mat-error>
+                            <!-- <mat-error *ngIf="Error('flightto', 'MustMatch')">From and To cannot be same.</mat-error> -->
                         </div>
                     </div>
         
@@ -872,7 +872,7 @@
                                             <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
                                             <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                 <input matInput [min]="minDate" [matDatepicker]="picker"
-                                                    formControlName="depart{{item.multiCityArrCount}}" [(ngModel)]="depart"
+                                                    formControlName="depart{{item.multiCityArrCount}}" [(ngModel)]="item.depart"
                                                     (dateChange)="currentPeriodClicked($event , item)">
                                                 <mat-datepicker-toggle matSuffix [for]="picker">
                                                 </mat-datepicker-toggle>
@@ -1114,17 +1114,17 @@
                                 </div>
                             </div>
                             <div class="root-search close-multi-city-add">
-                                <button type="button" class="searchbn" (click)="flightSearch()" 
+                                <button type="button" class="searchbn" (click)="searchMulticityFlight()" 
                                 *ngIf="i == 0">Search</button>
-                                <a href="javascript:void(0);" class="multi-city-close-btn" *ngIf="i > 1">
+                                <a href="javascript:void(0);" class="multi-city-close-btn" *ngIf="i > 1" (click)="removeMulticity(item,i)">
                                     <img src="assets/images/icons/close_01.png" alt="">
                                 </a>
                             </div>
                        
                         </div>
-                        <mat-error *ngIf="dateValidation">
+                        <!-- <mat-error *ngIf="dateValidation">
                             Select departure
-                        </mat-error>
+                        </mat-error> -->
         
                     </div>
                 </ng-container>
@@ -1140,12 +1140,7 @@
                     </div>
                 </div>
             </form>
-            
-            <!-- <div class="root-search close-multi-city-add">
-                <a href="javascript:void(0);" class="multi-city-close-btn">
-                    <img src="assets/images/icons/close_01.png" alt="" />
-                </a>
-            </div>   -->
+
         </div>
 
         <!-- Multicity Block End-->

@@ -19,15 +19,38 @@ export class FlightMulticityComponent implements OnInit {
   }
 
   getQueryParamData(){
-    const params = this.route.snapshot.queryParams;
-    this.searchData = params
-    console.log(params, "params");
+    const urlParam = this.route.snapshot.queryParams;
+    this.searchData = urlParam;
+    var flightSearchArr=[];
+    for(var i=0;i<5;i++) // for generating array by object.
+    {
+      var objKeys=Object.keys(urlParam); // get all object Keys
+      var objSearch={};
+      for(var j=0;j<objKeys.length;j++)
+      {
+            
+            if(objKeys[j].indexOf("["+i+"]")>-1)
+            {
+                var objKey= objKeys[j].substring(0, objKeys[j].length-3);
+            var objKeyVal =urlParam[objKeys[j]];
+            objSearch[objKey]=objKeyVal;
+            }
+      }
+        console.log(objSearch)
+        if(objSearch!=null && objSearch!=undefined && Object.keys(objSearch).length){
+          flightSearchArr.push(objSearch); // Add object in array.
+        }
+    }
+    this.searchData = flightSearchArr;
+    console.log(flightSearchArr, "flightSearchArr");
   }
 
   flightSearch() {
     let searchObj = (this.searchData);
+    console.log(searchObj , "getMulticityList");
+    
     console.log(searchObj ,"searchObj");
-    this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
+    this.sub = this._flightService.getMulticityList(searchObj).subscribe((res: any) => {
       console.log(res , "response");
       // this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       // this.oneWayDate = res.responseDateTime;

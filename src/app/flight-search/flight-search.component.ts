@@ -184,8 +184,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   currentPeriodClicked(datePicker: any , item) {
     let date = datePicker.target.value
-    console.log(item, "date");
+    date = moment(date).format('YYYY-MM-DD')
     item.depart=date;
+    console.log(item.depart ,"item.depart");
+    
     /*
      let date = datePicker.target.value
      if(date && this.navItemActive !== "Round Trip"){
@@ -230,9 +232,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   searchAutoComplete($event, field, device, index:any) {
-    console.log(index);
-    console.log(field);
-    
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if ($event.timeStamp - this.lastKeypress > 0) {
@@ -315,7 +314,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.flightFromOptions = this.defaultFlightOptions;
       this.fromAirpotName = values.airport_name;
       this.fromCityName = values.city;
-      console.log(this.fromAirpotName);
       
       setTimeout(() => {
         let toCityDivElement: any = document.getElementById("toCityDiv");
@@ -326,7 +324,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   onToClick(values, device,index:any) {
-
     if (index != undefined || index != null) {
       values = values['_source'];
       this.multiCityArrayM[index-1]["toCity"]=values.city;  
@@ -481,7 +478,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   // Search flight
   sameCityValidation = false;
   flightSearch() {
-    console.log(this.multiCityArrayM,"multiCityArrayM");
     this.submitted = true;
     if (this.flightData.value.departure != "" && this.flightData.value.departure != undefined) {
       this.dateValidation = false;
@@ -510,7 +506,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     } else {
       this.flightData.get('travel').setValue('INT');
     }
-
     if (this.flightData.invalid || this.dateValidation == true) {
       return
     }
@@ -542,10 +537,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         url = "flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
         this.router.navigateByUrl(url);
       }
-      if(this.navItemActive == "Multicity") {
-        url = "flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.multiCityArrayM))
-        this.router.navigateByUrl(url)
-      }
+ 
     }
   }
 
@@ -784,13 +776,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   addMuticitySerchVal() {
-
       this.multiCityAdd();
       this.multiCityAdd();
-    
   }
+
   multiCityAdd() {
-    debugger;
     if ((this.multiCityArrayM.length) < (this.multiCityArrMaxCount)) {
       let multiCityObj={
         leavingFrom:'',
@@ -810,29 +800,13 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         channel:'Web',
         travel:'DOM',
         defaultType:'M',
-        
+        sortBy:'asc'
       }
-      this.multiCityArrayM.push(multiCityObj);
-      console.log(this.multiCityArrayM,"this.multiCityArrayM");
-      var i = Number(this.multiCityArrCount);
-      // let leavingFrom = this.multicityForm.leavingFrom;
-      // let goingTo = this.multicityForm.goingTo;
-      // let adults = this.flightData.value.adults;
-      // let child = this.flightData.value.child;
-      // let infants = this.flightData.value.infants;
-      // let channel = 'Web' ;
-      // let travel = 'DOM' ;
-      // let depart = multiCityObj.depart;
-      // let fromCity = this.multicityForm.fromCity;
-      // let toCity = this.multicityForm.toCity;
-      // let fromContry = this.multicityForm.fromContry;
-      // let toContry = this.multicityForm.fromContry;
-      // let fromAirportName = this.multicityForm.fromAirportName;
-      // let toAirportName = this.multicityForm.toAirportName;
-      // let classType = this.flightData.value.classType;
-      // let defaultType = 'M';
 
+      this.multiCityArrayM.push(multiCityObj);
+      console.log(this.multiCityArrayM , "this.multiCityArrayM");
       
+      var i = Number(this.multiCityArrCount);
       this.multicityForm.addControl('leavingFrom' + i, new FormControl(multiCityObj.leavingFrom, [Validators.required]));
       this.multicityForm.addControl('goingTo' + i, new FormControl(multiCityObj.goingTo, [Validators.required]));
       this.multicityForm.addControl('adults' + i, new FormControl(multiCityObj.adults));
@@ -849,49 +823,53 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.multicityForm.addControl('toAirportName' + i, new FormControl(multiCityObj.toAirportName));
       this.multicityForm.addControl('classType' + i, new FormControl(multiCityObj.classType));
       this.multicityForm.addControl('defaultType' + i, new FormControl(multiCityObj.defaultType));
-      // this.multicityForm.value.depart = this.multicityForm.value.depart.getFullYear() + '-' + (this.multicityForm.value.depart.getMonth() + 1) + '-' + this.multicityForm.value.depart.getDate();
-      console.log(this.multicityForm.value);
-      // if (this.searchData.travel == 'INT') {
-      //   this.passengerForm.addControl('adult_passport_num' + i, new FormControl('', [Validators.required]));
-      //   this.passengerForm.addControl('adult_passport_expiry_date' + i, new FormControl('', [Validators.required]));
-      //   this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required]));
-      //   this.passengerForm.addControl('adult_passport_issuing_country' + i, new FormControl('', [Validators.required]));
-      //   this.passengerForm.addControl('adult_pax_nationality' + i, new FormControl('', [Validators.required]));
-      //   // this.passengerForm.addControl('adult_pax_birthcountry' + i, new FormControl('', [Validators.required]));
-      //   // this.passengerForm.addControl('adult_dom_pax_nationality' + i, new FormControl('', [Validators.required]));
-
-
-      //   this.passengerForm['controls']['adult_passport_num' + i].setValue(adult_passport);
-      //   this.passengerForm['controls']['adult_passport_expiry_date' + i].setValue(adult_passport_expiry_date);
-      //   this.passengerForm['controls']['adult_passport_issue_date' + i].setValue(adult_passport_issue_date);
-      //   this.passengerForm['controls']['adult_passport_issuing_country' + i].setValue(adult_passport_issuing_country);
-      //   this.passengerForm['controls']['adult_pax_nationality' + i].setValue(adult_pax_nationality);
-      //   //this.passengerForm['controls']['adult_pax_birthcountry' + i].setValue(adult_pax_birthcountry);
-
-
-      //   this.passengerForm.controls['adult_passport_num' + i].updateValueAndValidity();
-      //   this.passengerForm.controls['adult_passport_expiry_date' + i].updateValueAndValidity();
-      //   this.passengerForm.controls['adult_passport_issue_date' + i].updateValueAndValidity();
-      //   this.passengerForm.controls['adult_passport_issuing_country' + i].updateValueAndValidity();
-      //   this.passengerForm.controls['adult_pax_nationality' + i].updateValueAndValidity();
-      //   // this.passengerForm.controls['adult_pax_birthcountry' + i].updateValueAndValidity();
-      //   //  this.passengerForm.controls['adult_dom_pax_nationality' + i].updateValueAndValidity();
-      // }
-
-
-
-
-      // this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
-      // this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
-      // this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
-      // this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-
-
-
+      this.multicityForm.addControl('sortBy' + i, new FormControl(multiCityObj.sortBy));
       this.multiCityArrCount++;
-
-
     }
+  }
+
+  removeMulticity(item:any,i:number){
+    console.log(i,"i");
+    let removeMulticityArr = this.multiCityArrayM.splice(i,1);
+    // var i = Number(this.multiCityArrCount);
+    // this.multicityForm.removeControl('leavingFrom' + i, new FormControl(item.leavingFrom, [Validators.required]));
+    // this.multicityForm.removeControl('goingTo' + i, new FormControl(item.goingTo, [Validators.required]));
+    // this.multicityForm.removeControl('adults' + i, new FormControl(item.adults));
+    // this.multicityForm.removeControl('child' + i, new FormControl(item.child));
+    // this.multicityForm.removeControl('infants' + i, new FormControl(item.infants));
+    // this.multicityForm.removeControl('channel' + i, new FormControl(item.channel));
+    // this.multicityForm.removeControl('travel' + i, new FormControl(item.travel));
+    // this.multicityForm.removeControl('depart' + i, new FormControl(item.depart, [Validators.required]));
+    // this.multicityForm.removeControl('fromCity' + i, new FormControl(item.fromCity));
+    // this.multicityForm.removeControl('toCity' + i, new FormControl(item.toCity));
+    // this.multicityForm.removeControl('fromContry' + i, new FormControl(item.fromContry));
+    // this.multicityForm.removeControl('toContry' + i, new FormControl(item.toContry));
+    // this.multicityForm.removeControl('fromAirportName' + i, new FormControl(item.fromAirportName));
+    // this.multicityForm.removeControl('toAirportName' + i, new FormControl(item.toAirportName));
+    // this.multicityForm.removeControl('classType' + i, new FormControl(item.classType));
+    // this.multicityForm.removeControl('defaultType' + i, new FormControl(item.defaultType));
+    // this.multicityForm.removeControl('sortBy' + i, new FormControl(item.sortBy));
+
+    // let removeMulticityArr = this.multiCityArrayM.splice(i,1);
+    // removeMulticityArr = this.multiCityArrayM;
+    
+    
+    console.log(removeMulticityArr , "pop arr");
+    
+  }
+
+  searchMulticityFlight(){
+    // debugger
+    // if(this.multicityForm.invalid) {
+    //   return
+    // }
+    // else {
+      let url;
+        url = "flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.multiCityArrayM))
+        this.router.navigateByUrl(url)
+    
+    // }
+
   }
 
 }

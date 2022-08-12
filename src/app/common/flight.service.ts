@@ -10,6 +10,7 @@ export class FlightService {
   flight = environment.url + "api/flightSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
   flightInfo = environment.url + "api/flightInfo";
+  multicityFlight = environment.url + "api/flightSearchMulticity";
   flightListData: any;
   flightListDate: any;
   flightsIcon = "assets/Json/airlines.json";
@@ -86,16 +87,18 @@ export class FlightService {
     return this.flightDetailsSubject.asObservable();
   }
 
-
-
   getFlightInfo(param: any) {
-   console.log(param);
+    console.log(param);
     if (LOCALJSON == 'true') {
       return this.http.get('assets/data/flightInfo-int.json');
     } else {
-
+      
       return this.http.post(this.flightInfo, param, { headers: this.header })
     }
   }
-
+  
+  getMulticityList(param:any){
+    let body = JSON.stringify(param);
+    return this.http.post(this.multicityFlight , body , { headers: this.header })
+  }
 }
