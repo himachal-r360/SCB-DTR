@@ -403,7 +403,24 @@ defaultFlightOptions: any[];
         this.navItemActive = "Round Trip"
       }
 
+     }else{
+
+        this.fromCityName='New Delhi';
+        this.toCityName='Mumbai';
+        this.fromAirpotName='Indira Gandhi Airport';
+        this.toAirpotName='Chatrapati Shivaji Airport';
+        
+        this.flightData['controls']['fromCity'].setValue('New Delhi');
+        this.flightData['controls']['toCity'].setValue('Mumbai');
+        this.flightData['controls']['flightfrom'].setValue('DEL');
+        this.flightData['controls']['flightto'].setValue('BOM');
+        this.flightData['controls']['fromContry'].setValue('IN');
+        this.flightData['controls']['fromAirportName'].setValue('Indira Gandhi Airport');
+        this.flightData['controls']['toContry'].setValue('IN');
+        this.flightData['controls']['toAirportName'].setValue('Chatrapati Shivaji Airport');
+    
     }
+
 
 
   }

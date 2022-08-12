@@ -30,7 +30,7 @@ import { CustomReuseStrategy } from './route-reuse-strategy';
 import { ToastrModule } from 'ngx-toastr';
 import { CssLoaderComponent } from './css-loader.component';
 import { BusSearchModule } from './bus-search/bus-search.module';
-
+import { TrainSearchModule } from './train-search/train-search.module';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -50,7 +50,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
  BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FlightModule,BusSearchModule,
+    FlightModule,BusSearchModule,TrainSearchModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -59,7 +59,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
       headerName: 'X-XSRF-TOKEN'
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
-    MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,BusSearchModule,
+    MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,BusSearchModule,TrainSearchModule,
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
@@ -69,7 +69,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
   ],
   exports:[SearchComponent],
    providers: [
-
    StyleManagerService,
    AppConfigService,
     {
