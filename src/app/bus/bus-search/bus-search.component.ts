@@ -335,9 +335,8 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
       this.busSearchCallBack(searchValue);
       localStorage.setItem('busLastSearch',JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
-      alert('Submitted'); return;
       let url;
-      url = "flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+      url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
       this.router.navigateByUrl(url);
     }
   }

@@ -31,7 +31,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { CssLoaderComponent } from './css-loader.component';
 import { BusSearchModule } from './bus/bus-search/bus-search.module';
 import { TrainSearchModule } from './train/train-search/train-search.module';
-
+import { BusModule } from './bus/bus.module';
+import { ListModule } from './bus/list-card/list-card.module';
+import { FilterModule } from './bus/filter/filter.module';
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -50,7 +52,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
  BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FlightModule,BusSearchModule,TrainSearchModule,
+    FlightModule,BusModule,ListModule,FilterModule,BusSearchModule,TrainSearchModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,

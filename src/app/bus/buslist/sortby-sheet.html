@@ -1,0 +1,20 @@
+<h6 mat-dialog-title class="sortby-h">Sort by</h6>
+<div mat-dialog-content class="sortby-list" style="margin-bottom: 60px;">
+  <ul> 
+    <li (click)="selectLi('rating')" [ngClass]="{'sortby-list-selected':optionSelected === 'rating'}"  >Rating</li>
+    <li (click)="selectLi('price-low-high')"  [ngClass]="{'sortby-list-selected':optionSelected === 'price-low-high'}">Price (Low to High)</li>
+    <li (click)="selectLi('price-high-low')"  [ngClass]="{'sortby-list-selected':optionSelected === 'price-high-low'}">Price (High to Low)</li>
+    <li (click)="selectLi('leave-early')"  [ngClass]="{'sortby-list-selected':optionSelected === 'leave-early'}">Leave Early</li>
+    <li (click)="selectLi('leave-late')"  [ngClass]="{'sortby-list-selected':optionSelected === 'leave-late'}">Leave Late</li>
+    <li (click)="selectLi('seats-availability')"  [ngClass]="{'sortby-list-selected':optionSelected === 'seats-availability'}">Seats Availability</li>
+  </ul>
+  <div class="position-fixed footer-sortbuy">
+    <button class="btn-footer" (click)="onNoClick($event)">CANCEL</button>
+    <button class="btn-footer-blue" *ngIf="domainName== 'SMARTBUY'" (click)="orderBy(optionSelected)" >APPLY</button>
+    <button class="btn-footer-blue" *ngIf="domainName== 'DINERS'" (click)="orderBy(optionSelected)" >APPLY</button>
+    <button  class="btn-footer-blue-infinia" *ngIf="domainName=='INFINIA'" (click)="orderBy(optionSelected)" >APPLY</button> 
+    <button  class="btn-footer-blue-regalia" *ngIf="domainName=='REGALIA'" (click)="orderBy(optionSelected)" >APPLY</button> 
+    <button  class="btn-footer-blue-corporate" *ngIf="domainName=='CORPORATE'" (click)="orderBy(optionSelected)" >APPLY</button>
+    <button  class="btn-footer-blue-business" *ngIf="domainName=='BUSINESS'" (click)="orderBy(optionSelected)" >APPLY</button>
+  </div>
+</div>
