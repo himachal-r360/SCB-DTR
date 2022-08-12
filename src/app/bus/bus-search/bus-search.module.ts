@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { TrainSearchComponent } from './train-search.component';
+import { BusSearchComponent } from './bus-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DirectiveModule } from '../directives/directive.module';
+import { DirectiveModule } from '../../directives/directive.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
-    TrainSearchComponent
+    BusSearchComponent
   ],
   imports: [
      CommonModule,
@@ -27,8 +27,8 @@ import { MatSelectModule } from '@angular/material/select';
     DirectiveModule
   ],
   providers: [MatDatepickerModule],
-  exports: [TrainSearchComponent  ],
+  exports: [BusSearchComponent  ],
   entryComponents: []
 })
 
-export class TrainSearchModule { }
+export class BusSearchModule { }

@@ -17,7 +17,15 @@ const routes: Routes = [
   {
     path:"compare-fly" , component:HomeComponent 
   },
-  
+    {
+    path:"compare-stay" , component:HomeComponent 
+  },
+    {
+    path:"bus" , component:HomeComponent 
+  },
+    {
+    path:"train" , component:HomeComponent 
+  },
     {
     path: 'partners',
     loadChildren: () => import('./partners/partners.module').then(m => m.PartnersModule)

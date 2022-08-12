@@ -12,10 +12,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import { FlightService } from '../common/flight.service';
+import { FlightService } from '../../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { SimpleGlobal } from 'ng2-simple-global';
-import {environment} from '../../environments/environment';
+import {environment} from '../../../environments/environment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
 import * as moment from 'moment';
@@ -34,9 +34,9 @@ export const MY_DATE_FORMATS = {
 
 
 @Component({
-  selector: 'app-train-search',
-  templateUrl: './train-search.component.html',
-  styleUrls: ['./train-search.component.css'],
+  selector: 'app-bus-search',
+  templateUrl: './bus-search.component.html',
+  styleUrls: ['./bus-search.component.css'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ],
@@ -44,7 +44,7 @@ export const MY_DATE_FORMATS = {
 })
 
 
-export class TrainSearchComponent implements OnInit,  OnDestroy {
+export class BusSearchComponent implements OnInit,  OnDestroy {
   @ViewChild('toCityInput') toCityInput!: ElementRef;
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
@@ -55,9 +55,9 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   fromStateName:any='From city';
   toStateName:any='From city';
   departureDate:any = "";
-  continueSearchTrain:any=[]
+  continueSearchBuss:any=[]
   submitted = false;
-   searchTrainForm: FormGroup;
+   searchBusForm: FormGroup;
         dateValidation: boolean = false;
         continueSearchVal:any;
         minDate = new Date();
@@ -79,15 +79,14 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
     public _styleManager: StyleManagerService,
     public route: ActivatedRoute,
       public router: Router,
-       private _trainService: FlightService,
       private formBuilder: FormBuilder,
-      private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService
+      private _busService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService
 
     ) {
       this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       
-          //Train Form
-      this.searchTrainForm = this.formBuilder.group({
+          //Bus Form
+      this.searchBusForm = this.formBuilder.group({
         searchFrom: ['', Validators.required],
         searchTo: ['', Validators.required],
         fromTravelCode: ['', Validators.required],
@@ -111,30 +110,29 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
      }, 10);
 
  	this.defaultTravelOptions=[
-	{"_source":{"name":"KSR BENGALURU","id":"0","code":"SBC"}},
-	{"_source":{"name":"CHENNAI CENTRAL","id":"0","code":"MAS"}},
-	{"_source":{"name":"HYDERABAD DECAN","id":"0","code":"HYB"}},
-	{"_source":{"name":"MUMBAI CENTRAL","id":"0","code":"MMCT"}},
-	{"_source":{"name":"NEW DELHI","id":"0","code":"NDLS"}},
-	{"_source":{"name":"KOLKATA","id":"0","code":"KOAA"}},
-	{"_source":{"name":"MANGALURU JN","id":"0","code":"MAJN"}},
-	{"_source":{"name":"PUNE JN","id":"0","code":"PUNE"}},
-	{"_source":{"name":"Tirupathi","id":"0","code":"TPTY"}},
-	{"_source":{"name":"GOHAD ROAD","id":"0","code":"GOA"}}
+	{"_source":{"stateId":"","name":"Bangalore","id":"3","state":"Karnataka"}},
+	{"_source":{"stateId":"","name":"Chennai","id":"102","state":"Tamilnadu"}},
+	{"_source":{"stateId":"","name":"Tirupathi","id":"1885","state":"Andhra Pradesh"}},
+	{"_source":{"stateId":"","name":"Pune","id":"626","state":"Maharashtra"}},
+	{"_source":{"stateId":"","name":"Mumbai","id":"649","state":"Maharashtra"}},
+	{"_source":{"stateId":"","name":"Mangalore","id":"489","state":"Karnataka"}},
+	{"_source":{"stateId":"","name":"Kolkata","id":"1308","state":"West Bengal"}},
+	{"_source":{"stateId":"","name":"Hyderabad","id":"6","state":"Telangana"}},
+	{"_source":{"stateId":"","name":"Goa","id":"615","state":"Goa"}},
+	{"_source":{"stateId":"","name":"Delhi","id":"1492","state":"New Delhi"}}
 	];
-	
        this.travelFromOptions= this.defaultTravelOptions;
        this.travelToOptions= this.defaultTravelOptions;
     }
 
   public Error = (controlName: string, errorName: string) => {
-    return this.searchTrainForm.controls[controlName].hasError(errorName);
+    return this.searchBusForm.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
          this.route.url.subscribe(url =>{
-   this._trainService.showHeader(true);
+   this._busService.showHeader(true);
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    let continueSearchValLs:any= localStorage.getItem('continueSearchTrain');
+    let continueSearchValLs:any= localStorage.getItem('continueSearchBus');
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
@@ -152,7 +150,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         if(this.queryText && this.queryText.length > 0){
         //Elastic Search
         let searchParam = {
-        searchDisplayForm: 'train',
+        searchDisplayForm: 'bus',
         queryText: this.queryText
         };
 
@@ -199,10 +197,11 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
   onFromClick(values,device) {
         values=values['_source'];
-        this.searchTrainForm['controls']['searchFrom'].setValue(values.name);
-        this.searchTrainForm['controls']['fromTravelCode'].setValue(values.code);
+        this.searchBusForm['controls']['searchFrom'].setValue(values.name);
+        this.searchBusForm['controls']['fromTravelCode'].setValue(values.id);
+                this.searchBusForm['controls']['fromState'].setValue(values.state);
         this.fromCityName=values.name;
-        this.fromStateName=values.code+' '+values.name;
+        this.fromStateName=values.state;
         this.travelFromOptions= this.defaultTravelOptions;
         
          setTimeout(() => {
@@ -215,10 +214,11 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
   onToClick(values,device) {
         values=values['_source'];
-        this.searchTrainForm['controls']['searchTo'].setValue(values.name);
-        this.searchTrainForm['controls']['toTravelCode'].setValue(values.code);
+        this.searchBusForm['controls']['searchTo'].setValue(values.name);
+        this.searchBusForm['controls']['toTravelCode'].setValue(values.id);
+                       this.searchBusForm['controls']['fromState'].setValue(values.state);
         this.toCityName=values.name;
-        this.toStateName=values.code+' '+values.name;
+        this.toStateName=values.state;
         this.travelToOptions= this.defaultTravelOptions;
         
      setTimeout(() => {
@@ -230,7 +230,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   
         minDateMlite =  new Date();
         openMliteDatePicker(field){
-        $('#train_departure_mlite').modal('show');
+        $('#bus_departure_mlite').modal('show');
         }
 
         onSelectMliteDate(event,field){
@@ -239,33 +239,33 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('trainLastSearch');
+   let lastSearch:any=localStorage.getItem('busLastSearch');
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.fromCityName=lastSearch.searchFrom;
         this.toCityName=lastSearch.searchTo;
         this.fromStateName=lastSearch.fromState;
         this.toStateName=lastSearch.toState;
-        this.searchTrainForm['controls']['searchFrom'].setValue(lastSearch.searchFrom);
-        this.searchTrainForm['controls']['searchTo'].setValue(lastSearch.searchTo);
-        this.searchTrainForm['controls']['fromTravelCode'].setValue(lastSearch.fromTravelCode);
-        this.searchTrainForm['controls']['toTravelCode'].setValue(lastSearch.toTravelCode);
-        this.searchTrainForm['controls']['fromState'].setValue(lastSearch.fromState);
-        this.searchTrainForm['controls']['toState'].setValue(lastSearch.toState);
+        this.searchBusForm['controls']['searchFrom'].setValue(lastSearch.searchFrom);
+        this.searchBusForm['controls']['searchTo'].setValue(lastSearch.searchTo);
+        this.searchBusForm['controls']['fromTravelCode'].setValue(lastSearch.fromTravelCode);
+        this.searchBusForm['controls']['toTravelCode'].setValue(lastSearch.toTravelCode);
+        this.searchBusForm['controls']['fromState'].setValue(lastSearch.fromState);
+        this.searchBusForm['controls']['toState'].setValue(lastSearch.toState);
         this.departureDate = new Date(lastSearch.departure);
-        this.searchTrainForm.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
+        this.searchBusForm.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
     }else{
         this.fromCityName='Delhi';
         this.toCityName='Mumbai';
         this.fromStateName='New Delhi';
         this.toStateName='Maharashtra';
-        this.searchTrainForm['controls']['searchFrom'].setValue('Delhi');
-        this.searchTrainForm['controls']['searchTo'].setValue('Mumbai');
-        this.searchTrainForm['controls']['fromTravelCode'].setValue(1492);
-        this.searchTrainForm['controls']['toTravelCode'].setValue(649);
+        this.searchBusForm['controls']['searchFrom'].setValue('Delhi');
+        this.searchBusForm['controls']['searchTo'].setValue('Mumbai');
+        this.searchBusForm['controls']['fromTravelCode'].setValue(1492);
+        this.searchBusForm['controls']['toTravelCode'].setValue(649);
         
-        this.searchTrainForm['controls']['fromState'].setValue('New Delhi');
-        this.searchTrainForm['controls']['toState'].setValue('Maharashtra');
+        this.searchBusForm['controls']['fromState'].setValue('New Delhi');
+        this.searchBusForm['controls']['toState'].setValue('Maharashtra');
     }
   }
   
@@ -273,67 +273,67 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   swap() {
       
         var FromData = {
-        searchFrom: this.searchTrainForm.value.searchFrom,
-        fromTravelCode:this.searchTrainForm.value.fromTravelCode,
-        fromState : this.searchTrainForm.value.fromState
+        searchFrom: this.searchBusForm.value.searchFrom,
+        fromTravelCode:this.searchBusForm.value.fromTravelCode,
+        fromState : this.searchBusForm.value.fromState
         }
 
-        this.searchTrainForm.get('searchFrom').setValue(this.searchTrainForm.value.searchTo );
-        this.searchTrainForm.get('fromTravelCode').setValue(this.searchTrainForm.value.toTravelCode );
-        this.searchTrainForm.get('fromState').setValue(this.searchTrainForm.value.toState );
+        this.searchBusForm.get('searchFrom').setValue(this.searchBusForm.value.searchTo );
+        this.searchBusForm.get('fromTravelCode').setValue(this.searchBusForm.value.toTravelCode );
+        this.searchBusForm.get('fromState').setValue(this.searchBusForm.value.toState );
        
-        this.fromCityName = this.searchTrainForm.value.searchTo;
-        this.fromStateName = this.searchTrainForm.value.toState;
+        this.fromCityName = this.searchBusForm.value.searchTo;
+        this.fromStateName = this.searchBusForm.value.toState;
 
-        this.searchTrainForm.get('searchTo').setValue(FromData.searchFrom );
-        this.searchTrainForm.get('toTravelCode').setValue(FromData.fromTravelCode );
-        this.searchTrainForm.get('toState').setValue(FromData.fromState );
+        this.searchBusForm.get('searchTo').setValue(FromData.searchFrom );
+        this.searchBusForm.get('toTravelCode').setValue(FromData.fromTravelCode );
+        this.searchBusForm.get('toState').setValue(FromData.fromState );
      
         this.toCityName =  FromData.searchFrom;
         this.toStateName = FromData.fromState;
 
   }
 
-  trainSearchCallBack(param:any){
+  busSearchCallBack(param:any){
       let searchValueAllobj=param;
       let continueSearch:any=localStorage.getItem('continueSearch');
       if(continueSearch==null){
-        this.continueSearchTrain=[];
+        this.continueSearchBuss=[];
       }
       if(continueSearch!=null && continueSearch.length>0){
-        this.continueSearchTrain=JSON.parse(continueSearch);
-        this.continueSearchTrain=this.continueSearchTrain.filter((item:any)=>{
+        this.continueSearchBuss=JSON.parse(continueSearch);
+        this.continueSearchBuss=this.continueSearchBuss.filter((item:any)=>{
           if(item.searchFrom!=searchValueAllobj.searchFrom || item.searchTo!=searchValueAllobj.searchTo)
           {
               return item;
           }
         })
       }
-      if(this.continueSearchTrain.length>3){
-        this.continueSearchTrain=this.continueSearchTrain.slice(0,3);
+      if(this.continueSearchBuss.length>3){
+        this.continueSearchBuss=this.continueSearchBuss.slice(0,3);
       }
-      this.continueSearchTrain.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchTrain));
+      this.continueSearchBuss.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+      localStorage.setItem('continueSearchBus',JSON.stringify(this.continueSearchBuss));
   }
 
 
   sameCityValidation = false;
-  trainSearch() {
+  busSearch() {
       this.submitted = true;
 
-        if(this.searchTrainForm.value.fromTravelCode!= this.searchTrainForm.value.toTravelCode){
+        if(this.searchBusForm.value.fromTravelCode!= this.searchBusForm.value.toTravelCode){
         this.sameCityValidation = false
         }
         else {
         this.sameCityValidation = true;
         }
 
-      if (this.searchTrainForm.invalid || this.sameCityValidation == true) {
+      if (this.searchBusForm.invalid || this.sameCityValidation == true) {
       return
      } else {
-      let searchValue = this.searchTrainForm.value;
-      this.trainSearchCallBack(searchValue);
-      localStorage.setItem('trainLastSearch',JSON.stringify(searchValue));
+      let searchValue = this.searchBusForm.value;
+      this.busSearchCallBack(searchValue);
+      localStorage.setItem('busLastSearch',JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       alert('Submitted'); return;
       let url;
