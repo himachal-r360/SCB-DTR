@@ -111,17 +111,18 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
      }, 10);
 
  	this.defaultTravelOptions=[
-	{"_source":{"stateId":"","name":"Bangalore","id":"3","state":"Karnataka"}},
-	{"_source":{"stateId":"","name":"Chennai","id":"102","state":"Tamilnadu"}},
-	{"_source":{"stateId":"","name":"Tirupathi","id":"1885","state":"Andhra Pradesh"}},
-	{"_source":{"stateId":"","name":"Pune","id":"626","state":"Maharashtra"}},
-	{"_source":{"stateId":"","name":"Mumbai","id":"649","state":"Maharashtra"}},
-	{"_source":{"stateId":"","name":"Mangalore","id":"489","state":"Karnataka"}},
-	{"_source":{"stateId":"","name":"Kolkata","id":"1308","state":"West Bengal"}},
-	{"_source":{"stateId":"","name":"Hyderabad","id":"6","state":"Telangana"}},
-	{"_source":{"stateId":"","name":"Goa","id":"615","state":"Goa"}},
-	{"_source":{"stateId":"","name":"Delhi","id":"1492","state":"New Delhi"}}
+	{"_source":{"name":"KSR BENGALURU","id":"0","code":"SBC"}},
+	{"_source":{"name":"CHENNAI CENTRAL","id":"0","code":"MAS"}},
+	{"_source":{"name":"HYDERABAD DECAN","id":"0","code":"HYB"}},
+	{"_source":{"name":"MUMBAI CENTRAL","id":"0","code":"MMCT"}},
+	{"_source":{"name":"NEW DELHI","id":"0","code":"NDLS"}},
+	{"_source":{"name":"KOLKATA","id":"0","code":"KOAA"}},
+	{"_source":{"name":"MANGALURU JN","id":"0","code":"MAJN"}},
+	{"_source":{"name":"PUNE JN","id":"0","code":"PUNE"}},
+	{"_source":{"name":"Tirupathi","id":"0","code":"TPTY"}},
+	{"_source":{"name":"GOHAD ROAD","id":"0","code":"GOA"}}
 	];
+	
        this.travelFromOptions= this.defaultTravelOptions;
        this.travelToOptions= this.defaultTravelOptions;
     }
@@ -199,9 +200,9 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   onFromClick(values,device) {
         values=values['_source'];
         this.searchTrainForm['controls']['searchFrom'].setValue(values.name);
-        this.searchTrainForm['controls']['fromTravelCode'].setValue(values.id);
+        this.searchTrainForm['controls']['fromTravelCode'].setValue(values.code);
         this.fromCityName=values.name;
-        this.fromStateName=values.state;
+        this.fromStateName=values.code+' '+values.name;
         this.travelFromOptions= this.defaultTravelOptions;
         
          setTimeout(() => {
@@ -215,9 +216,9 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   onToClick(values,device) {
         values=values['_source'];
         this.searchTrainForm['controls']['searchTo'].setValue(values.name);
-        this.searchTrainForm['controls']['toTravelCode'].setValue(values.id);
+        this.searchTrainForm['controls']['toTravelCode'].setValue(values.code);
         this.toCityName=values.name;
-        this.toStateName=values.state;
+        this.toStateName=values.code+' '+values.name;
         this.travelToOptions= this.defaultTravelOptions;
         
      setTimeout(() => {
