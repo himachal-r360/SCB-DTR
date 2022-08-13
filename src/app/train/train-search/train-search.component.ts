@@ -7,7 +7,7 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
-  ViewChild,Input, Output, EventEmitter
+  ViewChild,Input, Output, EventEmitter,Inject
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -18,6 +18,7 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
+import { APP_CONFIG, AppConfig} from '../../configs/app.config';
 import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -74,14 +75,16 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         defaultTravelOptions: any[];
         searchTravelFromHeader:string="Popular Cities";
         searchTravelToHeader:string="Popular Cities";
-
+    quotaList;
+        selectedQuota:any = 'GN';
+        quota:string = 'GN';;
   constructor(
     public _styleManager: StyleManagerService,
     public route: ActivatedRoute,
       public router: Router,
        private _trainService: FlightService,
       private formBuilder: FormBuilder,
-      private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService
+      private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService,@Inject(APP_CONFIG) appConfig: any
 
     ) {
       this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -94,7 +97,8 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         toTravelCode: ['', Validators.required],
         fromState: ['', Validators.required],
         toState: ['', Validators.required],
-        departure: ['', Validators.required]
+        departure: ['', Validators.required],
+        quota: ['GN', Validators.required]
 	}, {
        validators: MustMatch('fromTravelCode', 'toTravelCode')
      });
@@ -122,7 +126,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 	{"_source":{"name":"Tirupathi","id":"0","code":"TPTY"}},
 	{"_source":{"name":"GOHAD ROAD","id":"0","code":"GOA"}}
 	];
-	
+	  this.quotaList =AppConfig.IRCTC_List_Quota;
        this.travelFromOptions= this.defaultTravelOptions;
        this.travelToOptions= this.defaultTravelOptions;
     }
@@ -196,7 +200,14 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
       }
     }
 
-
+   quotaSelect(event,mobile){
+    $('.check-available').hide();
+    //if(mobile){
+     // this.quota =  event.tab.textLabel;
+    //}else{
+      this.quota = this.selectedQuota;
+   // }
+  }
   onFromClick(values,device) {
         values=values['_source'];
         this.searchTrainForm['controls']['searchFrom'].setValue(values.name);
@@ -321,6 +332,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   trainSearch() {
       this.submitted = true;
 
+
         if(this.searchTrainForm.value.fromTravelCode!= this.searchTrainForm.value.toTravelCode){
         this.sameCityValidation = false
         }
@@ -335,9 +347,8 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
       this.trainSearchCallBack(searchValue);
       localStorage.setItem('trainLastSearch',JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
-      alert('Submitted'); return;
       let url;
-      url = "flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+      url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
       this.router.navigateByUrl(url);
     }
   }

@@ -23,17 +23,17 @@ import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
 const routes: Routes = [
   {
-    path:"flight-list" ,component:FlightListComponent,data: {  shouldReuse: true, },
+    path:"flight-list" ,component:FlightListComponent,
   },
 
    {
-    path:"flight-checkout" ,component:FlightCheckoutComponent,data: {  shouldReuse: true, },
+    path:"flight-checkout" ,component:FlightCheckoutComponent,
   },
   {
-    path:"flight-roundtrip" ,component:FlightRoundtripListComponent,data: {  shouldReuse: true, },
+    path:"flight-roundtrip" ,component:FlightRoundtripListComponent,
   },
   {
-    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, },
+    path:"flight-int" ,component:FlightIntListComponent,
   }
 
 

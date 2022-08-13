@@ -182,7 +182,11 @@
                                             </div>
 
                                         </div>
-
+                                        <mat-form-field class="fligh-select-mat-field">
+                                        <mat-select formControlName="trainQuota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
+                                        <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
+                                        </mat-select>
+                                        </mat-form-field>
                                         <div class="col-lg-6">
                                             <div class="root-date">
                                             <!--Web Date Picker-->
@@ -213,7 +217,7 @@
                                                                         [matDatepicker]="picker"
                                                                         formControlName="departure"
                                                                         [(ngModel)]="departureDate"
-                                                                        (dateChange)="currentPeriodClicked($event)">
+                                                                       >
                                                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                                                     </mat-datepicker-toggle>
                                                                     <mat-datepicker #picker></mat-datepicker>

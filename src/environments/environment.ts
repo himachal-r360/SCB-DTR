@@ -33,7 +33,17 @@ export const environment = {
     siteKey: '6Lf7UL0cAAAAAIt_m-d24WG4mA1XFPHE8yVckc5S',
   },
 
-
+  API_URL_IRCTC:{
+ 'SMARTBUY': '//new.reward360.us/api/',
+ 'DINERS': '//new.reward360.us/diners/api/',
+ 'INFINIA'  : '//new.reward360.us/infinia/api/',
+ 'REGALIA': '//new.reward360.us/regalia/api/',
+ 'INFINIA_RESERVE'  : '//new.reward360.us/infinia_reserve/api/',
+ 'REGALIA_GOLD': '//new.reward360.us/regalia_gold/api/',
+ 'CORPORATE': '//new.reward360.us/corporate/api/',
+ 'BUSINESS': '//new.reward360.us/business/api/',
+  },
+  
   BUS_SITE_URL: {
     'SMARTBUY': 'http://new.reward360.us/lite/',
     'DINERS': 'http://new.reward360.us/lite/diners/',

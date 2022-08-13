@@ -8,7 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
-
+import {APP_CONFIG, AppConfig} from '../../configs/app.config';
 
 
 @NgModule({
@@ -26,7 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     DirectiveModule
   ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule, {provide: APP_CONFIG, useValue: AppConfig}],
   exports: [TrainSearchComponent  ],
   entryComponents: []
 })

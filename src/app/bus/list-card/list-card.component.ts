@@ -131,7 +131,6 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   this.showEmiBanner = this.serviceSettings.PAYSETTINGS[this.sg['domainName']]['RedBus'].EMI;
   this.show_earnpoints = this.serviceSettings.show_earnpoints;
   
-console.log('ddddddddddd');
   // override the route reuse strategy
   this.router.routeReuseStrategy.shouldReuseRoute = function() {
    return false;

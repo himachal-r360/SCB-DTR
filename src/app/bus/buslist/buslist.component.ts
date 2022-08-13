@@ -32,146 +32,128 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 
 export class BuslistComponent implements OnInit,OnDestroy {
 
-  isMobile:boolean= true;
-   loaderValue = 10;
-  loader = false;
-   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
+        isMobile:boolean= true;
+        dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
+        appConfig: any;cdnUrl: any;busUrl: any;
+        seatSeletedView = false;
+        Sortby: string = "Sort By";
+        properties = [BusHelper];
+        busResponse: BusResponse;
+        busSubscription: Subscription;
+        searchParam: any = [];
+        searchParamPreviousDay: any = [];
+        searchParamNextDay: any = [];
+        currentRtc: string;
+        submitted = false;
+        fromBusCode: string;
+        sbResponse: any = [];
+        toBusCode: string;
+        busfrom: string;
+        busto: string;
+        responses: any = [];
+        departure: string;
+        arrival: string;
+        selectedboarding: string = '';
+        selecteddropping: string = '';
+        busResults: any = [];
+        domainPath: string;
+        assetPath: string;
+        domainRedirect: string;
+        selected_count: boolean = false;
+        loading: boolean = true;
+        showSortbuy: boolean = false;
+        sortBy: string = 'rating';
+        BoardingPoint: boolean = false;
+        selectedRowId: number = -1;
+        availableClasses: any = [];
+        allAvailableClasses: any = [];
+        boardingpoints: any = [];
+        droppingpoints: any = [];
+        allboardingpoints: any = [];
+        allamenities: any = [];
+        alldroppingpoints: any = [];
+        amenities: any = [];
+        searchBusKey: any = [];
+        minValue: number = 0;
+        maxValue: number = 10000;
+        actualminValue: number = 0;
+        actualmaxValue: number = 10000;
+        minSeletedPriceValue: number = 0;
+        maxSeletedPriceValue: number = 10000;
+        departureTimeFilter: any[] = [{
+        'filterCode': 'BEFORE-6AM',
+        'filterValue': 'Before 6AM',
+        'selected': false
+        },
+        {
+        'filterCode': '6AM-12PM',
+        'filterValue': '6AM - 12PM',
+        'selected': false
+        },
+        {
+        'filterCode': '12PM-6PM',
+        'filterValue': '12AM - 6PM',
+        'selected': false
+        },
+        {
+        'filterCode': 'AFTER-6PM',
+        'filterValue': 'After 6PM',
+        'selected': false
+        }
+        ];
 
- appConfig: any;cdnUrl: any;busUrl: any;
- seatSeletedView = false;
- Sortby: string = "Sort By";
- showFilter = false;
- properties = [BusHelper];
- private buses = [];
- showTraveller = false;
- onHide = true;
- animal: string;
- name: string;
- busResponse: BusResponse;
- seatResponse: BusResponse;
- busSubscription: Subscription;
- searchParam: any = [];
- searchParamPreviousDay: any = [];
- searchParamNextDay: any = [];
- currentRtc: string;
- SeatForm: FormGroup;
- submitted = false;
- fromBusCode: string;
- sbResponse: any = [];
- toBusCode: string;
- busfrom: string;
- busto: string;
- responses: any = [];
- departure: string;
- arrival: string;
- flightclass: string;
- busdefault: string;
- selectedboarding: string = '';
- selecteddropping: string = '';
- busResults: any = [];
- domainPath: string;
- assetPath: string;
- domainRedirect: string;
- selected_count: boolean = false;
- loading: boolean = true;
- seatlayout: number = 0;
- showModifyForm: boolean = false;
- showNotification: boolean = true;
- showSortbuy: boolean = false;
- sortBy: string = 'rating';
- showFooterBox: boolean = false;
- seatstatus: boolean = false;
- BoardingPoint: boolean = false;
- selectedRowId: number = -1;
- availableClasses: any = [];
- allAvailableClasses: any = [];
- boardingpoints: any = [];
- droppingpoints: any = [];
- allboardingpoints: any = [];
- allamenities: any = [];
- alldroppingpoints: any = [];
- amenities: any = [];
- stationsdump: any = [];
- searchBusKey: any = [];
- minValue: number = 0;
- maxValue: number = 10000;
- actualminValue: number = 0;
- actualmaxValue: number = 10000;
- minSeletedPriceValue: number = 0;
- maxSeletedPriceValue: number = 10000;
- departureTimeFilter: any[] = [{
-   'filterCode': 'BEFORE-6AM',
-   'filterValue': 'Before 6AM',
-   'selected': false
-  },
-  {
-   'filterCode': '6AM-12PM',
-   'filterValue': '6AM - 12PM',
-   'selected': false
-  },
-  {
-   'filterCode': '12PM-6PM',
-   'filterValue': '12AM - 6PM',
-   'selected': false
-  },
-  {
-   'filterCode': 'AFTER-6PM',
-   'filterValue': 'After 6PM',
-   'selected': false
-  }
- ];
-
- arrivalTimeFilter: any[] = [{
-   'filterCode': 'BEFORE-6AM',
-   'filterValue': 'Before 6AM',
-   'selected': false
-  },
-  {
-   'filterCode': '6AM-12PM',
-   'filterValue': '6AM - 12PM',
-   'selected': false
-  },
-  {
-   'filterCode': '12AM-6PM',
-   'filterValue': '12AM - 6PM',
-   'selected': false
-  },
-  {
-   'filterCode': 'AFTER-6PM',
-   'filterValue': 'After 6PM',
-   'selected': false
-  }
- ];
- rtcFilter = {
-  'filterCode': 'rtc',
-  'selected': false
- }
- isrtc: boolean = false;
- filterDeparture = [];
- filterArrival = [];
- filterClasses = [];
- filterboardingpoints = [];
- filterdroppingpoints = [];
- filteramenities = [];
- params: any = [];
- operators: any = [];
- alloperators: any = [];
- filterOperators: any = [];
- searchDisplayForm: string = 'redbus';
- totalrtcseats: number = 0;
- totalrtc: any = [];
- rtctotal = [];
- departureTimeArr: any = [];
-searchArray:any = [];
-expiredDate: any = new Date();
-  serviceSettings:any;
-  domainName:any;
-	tag:any;
-  tracksearchObj:any;
- constructor(public rest:RestapiService,private busService: BusService, public dialog: MatDialog, private router: Router, private location: Location, private activeRoute: ActivatedRoute,
-  private activatedRoute: ActivatedRoute, private http: HttpClient, private changeDetector: ChangeDetectorRef, public commonHelper: CommonHelper, public busHelper: BusHelper, private sg: SimpleGlobal, private formBuilder: FormBuilder, private _bottomSheet: MatBottomSheet, private busfilter: BusfilterPipe, plocation: PlatformLocation, @Inject(APP_CONFIG) appConfig: any,private cookieService: CookieService,private titleService: Title,private appConfigService:AppConfigService,private _flightService: FlightService,public _styleManager: StyleManagerService) {
+        arrivalTimeFilter: any[] = [{
+        'filterCode': 'BEFORE-6AM',
+        'filterValue': 'Before 6AM',
+        'selected': false
+        },
+        {
+        'filterCode': '6AM-12PM',
+        'filterValue': '6AM - 12PM',
+        'selected': false
+        },
+        {
+        'filterCode': '12AM-6PM',
+        'filterValue': '12AM - 6PM',
+        'selected': false
+        },
+        {
+        'filterCode': 'AFTER-6PM',
+        'filterValue': 'After 6PM',
+        'selected': false
+        }
+        ];
+        rtcFilter = {
+        'filterCode': 'rtc',
+        'selected': false
+        }
+        isrtc: boolean = false;
+        filterDeparture = [];
+        filterArrival = [];
+        filterClasses = [];
+        filterboardingpoints = [];
+        filterdroppingpoints = [];
+        filteramenities = [];
+        params: any = [];
+        operators: any = [];
+        alloperators: any = [];
+        filterOperators: any = [];
+        searchDisplayForm: string = 'redbus';
+        totalrtcseats: number = 0;
+        totalrtc: any = [];
+        rtctotal = [];
+        departureTimeArr: any = [];
+        searchArray:any = [];
+        expiredDate: any = new Date();
+        serviceSettings:any;
+        domainName:any;
+        tag:any;
+        tracksearchObj:any;
+ constructor(public rest:RestapiService,private busService: BusService, public dialog: MatDialog, private router: Router, private location: Location,  private activatedRoute: ActivatedRoute, private http: HttpClient, private changeDetector: ChangeDetectorRef, public commonHelper: CommonHelper, public busHelper: BusHelper, private sg: SimpleGlobal, private formBuilder: FormBuilder, private _bottomSheet: MatBottomSheet, private busfilter: BusfilterPipe, plocation: PlatformLocation, @Inject(APP_CONFIG) appConfig: any,private cookieService: CookieService,private titleService: Title,private appConfigService:AppConfigService,private _flightService: FlightService,public _styleManager: StyleManagerService) {
   this.serviceSettings=this.appConfigService.getConfig();
+  
+  
     if(this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['BUS']!=1){
      this.router.navigate(['/**']);
    }
@@ -200,47 +182,37 @@ expiredDate: any = new Date();
         this.sortBy='price-low-high';
         }
   
-  this.params = this.activatedRoute.snapshot;
-  // override the route reuse strategy
-  this.router.routeReuseStrategy.shouldReuseRoute = function() {
-   return false;
-  };
-  this.assetPath = this.sg['domainPath'];
-  
-     this._styleManager.setScript('custom', `assets/js/custom.js`);
-        $(window).scroll(function(this) {
-        if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-          $('#endOfPage').trigger('click');
+        this.params = this.activatedRoute.snapshot;
+        // override the route reuse strategy
+        this.router.routeReuseStrategy.shouldReuseRoute = function() {
+        return false;
+        };
+        this.assetPath = this.sg['domainPath'];
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+
         }
-      });
-  
- }
-   ngOnDestroy(): void {
+        ngOnDestroy(): void {
         this._styleManager.removeScript('custom');
-  }
- 
- datePreviousStatus: boolean;
+        }
 
-
-@HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
-  this.isMobile = window.innerWidth < 991 ?  true : false;
-}
-
-
+        datePreviousStatus: boolean;
+        @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+        this.isMobile = window.innerWidth < 991 ?  true : false;
+        }
 
 
 ngOnInit(): void {
   this.titleService.setTitle('Home | RedBus');
         this.isMobile = window.innerWidth < 991 ?  true : false;
-        this.activeRoute.url.subscribe(url =>{
-       // this.resetPopups();
-        this.gotoTop();
-        this.loader = true;
+        this.activatedRoute.url.subscribe(url =>{
+        console.log('ddd');
+        this.moveTop();
+        this.loading = true;
         this.getQueryParamData(null);
         this.headerHideShow(null)
         this.getBuses();
         this.domainRedirect = environment.MAIN_SITE_URL +this.sg['domainPath']+ this.sg['domainPath'];
-        const queryParams = this.activeRoute.snapshot.queryParams;
+        const queryParams = this.activatedRoute.snapshot.queryParams;
         var datePipe = new DatePipe('en-US');
         var previousDay = new Date(this.departure);
         var departureTimestamp = previousDay.setDate(previousDay.getDate() - 1);
@@ -271,22 +243,19 @@ ngOnInit(): void {
         });
 
   }
-  searchData:any;
-  queryBusData:any;
   fromState:any;
   toState:any;
   getQueryParamData(paramObj: any) {
-    const params = this.activatedRoute.snapshot.queryParams;
-    this.queryBusData = params;
-    this.searchData = params;
-        this.fromBusCode = this.queryBusData.fromTravelCode;
-        this.toBusCode = this.queryBusData.toTravelCode;
-        this.busfrom = this.queryBusData.searchFrom;
-        this.busto = this.queryBusData.searchTo;
-        this.departure = this.queryBusData.departure;
-        this.tag = this.queryBusData.t;
-        this.fromState=this.queryBusData.fromState;
-        this.toState=this.queryBusData.toState;
+        const params = this.activatedRoute.snapshot.queryParams;
+        this.searchParam = params;
+        this.fromBusCode = this.searchParam.fromTravelCode;
+        this.toBusCode = this.searchParam.toTravelCode;
+        this.busfrom = this.searchParam.searchFrom;
+        this.busto = this.searchParam.searchTo;
+        this.departure = this.searchParam.departure;
+        this.tag = this.searchParam.t;
+        this.fromState=this.searchParam.fromState;
+        this.toState=this.searchParam.toState;
   }
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
@@ -296,8 +265,6 @@ ngOnInit(): void {
     this._flightService.showHeader(true);
     }
   }
- 
- 
  
  
  departureDate: any;departureStr: any;
@@ -358,41 +325,17 @@ ngOnInit(): void {
    queryParams: this.searchParamNextDay
   });
  }
- 
- 
-  gotoTop() {
-       window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-});
-  }
+ onFilter() {
+  //this.showFilter = !this.showFilter;
+  let body = document.getElementsByTagName('body')[0];
+  body.classList.add("noscroll"); //add the class
+ }
+
+ onTraveller() {
+//  this.onHide = false;
+ }
  getBuses() {
-  this.searchParam = {
-   fromBusCode: this.fromBusCode,
-   toBusCode: this.toBusCode,
-   departure: this.departure,
-   searchFrom:this.busfrom,
-   searchTo:this.busto,
-  };
-    var datePipe =new DatePipe('en-US'); 
-  var cDate=datePipe.transform(new Date(this.departure), 'EEE, dd LLL');
-//Set Cookie 
-	this.searchArray = {
-		searchFrom:this.busfrom,
-		searchTo:this.busto,
-		fromTravelCode:this.fromBusCode,
-		toTravelCode:this.toBusCode,
-		departure:this.departure,
-		cdeparture:cDate,
-	};
-
-// console.log(this.searchArray);
-
-  
-  this.searchParam.departure = datePipe.transform(this.searchParam.departure, 'yyyy-MM-dd');
   this.busSubscription = this.busService.getBuses((this.searchParam)).subscribe(data => {
-    this.loader=false;
     this.busResponse = < BusResponse > data;
     this.responses = {
      onwardtrips: this.busResponse['forwardTrips'],
@@ -496,17 +439,32 @@ ngOnInit(): void {
    return true;
   });
  } 
+  openMobileFilterSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
 
- onFilter() {
-  this.showFilter = !this.showFilter;
-  let body = document.getElementsByTagName('body')[0];
-  body.classList.add("noscroll"); //add the class
- }
+  }
 
- onTraveller() {
-  this.showTraveller = true;
-  this.onHide = false;
- }
+  CloseSortingSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+  onApplyFilter(){
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+
 
  filterrtc() {
   var resultrtc = [];
@@ -740,15 +698,11 @@ ngOnInit(): void {
  }
 
  moveTop() {
-  let scrollToTop = window.setInterval(() => {
-   let pos = window.pageYOffset;
-   if (pos > 0) {
-    window.scrollTo(0, pos - 20); // how far to scroll on each step
-   } else {
-    window.clearInterval(scrollToTop);
-   }
-  }, 16);
-
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
  }
  seatSelected(appt) {
   this.seatSeletedView = appt;

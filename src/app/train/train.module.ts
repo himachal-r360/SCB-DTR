@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BuslistComponent,BottomSortbySheet,ChromeExtBusDialog} from './buslist/buslist.component';
+import { TrainsComponent,BottomSortbySheet,ChromeExtBusDialog, BottomFilterSheet,seniorCitizenDilog } from './trains/trains.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes,RouteReuseStrategy } from '@angular/router';
 import { MaterialModule } from '../material.module';
@@ -9,24 +9,27 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
-import { BusSearchModule } from './bus-search/bus-search.module';
+import { TrainSearchModule } from './train-search/train-search.module';
 import { CustomReuseStrategy } from 'src/app/route-reuse-strategy';
 import { CountdownModule } from 'ngx-countdown';
-import { BottomSheetComponent } from './buslist/bottom-sheet/bottom-sheet.component';
 import { MatDialogModule } from '@angular/material/dialog';
+
+import { TrainscardModule } from './trains-card/trains-card.module';
+import { TrainsFilterModule } from './trains-filter/trains-filter.module';
+import { TrainsTravellerComponent } from './trains-traveller/travellers.component';
 import { BusHelper } from 'src/app/shared/utils/bus-helper';
 import {APP_CONFIG, AppConfig} from '../configs/app.config';
-import { ListModule } from './list-card/list-card.module';
-import { FilterModule } from './filter/filter.module';
-import { BusfilterPipe } from 'src/app/shared/pipes/busfilter.pipe';
-import { BusCheckoutComponent } from './bus-checkout/bus-checkout.component';
+import { IrctcfilterPipe } from 'src/app/shared/pipes/irctc/irctcfilter.pipe';
 import { DecimalPipe } from '@angular/common';
+
+//import { TrainsTravellerModule } from './smartbuy/irctc/trains/trains-traveller/travellers.module';
+
 const routes: Routes = [
   {
-    path:"bus/search" ,component:BuslistComponent,
+    path:"train/search" ,component:TrainsComponent,
   },
   {
-    path:"bus/checkout" ,component:BusCheckoutComponent,
+    path:"train/checkout" ,component:TrainsTravellerComponent,
   }
 
 
@@ -34,8 +37,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    BuslistComponent,BottomSortbySheet,BottomSheetComponent,ChromeExtBusDialog,BusfilterPipe,BusCheckoutComponent
+  declarations: [TrainsComponent,seniorCitizenDilog,
+    BottomSortbySheet,IrctcfilterPipe,ChromeExtBusDialog, BottomFilterSheet
 
   ],
   imports: [
@@ -45,9 +48,9 @@ const routes: Routes = [
         ReactiveFormsModule,
         MaterialModule,
         NgxSliderModule,
-        NgxSkeletonLoaderModule,BusSearchModule,
+        NgxSkeletonLoaderModule,TrainSearchModule,
         CouponsModule,PaymentModule,CountdownModule,
-        ListModule,FilterModule,
+        TrainscardModule,TrainsFilterModule,
         RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
@@ -56,7 +59,7 @@ const routes: Routes = [
   ],
   
   exports: [RouterModule],
-    entryComponents:[BottomSortbySheet,BottomSheetComponent,ChromeExtBusDialog],
+    entryComponents:[BottomSortbySheet,seniorCitizenDilog,ChromeExtBusDialog, BottomFilterSheet],
   providers: [
     {
       provide: RouteReuseStrategy,
@@ -65,4 +68,4 @@ const routes: Routes = [
      {provide: APP_CONFIG, useValue: AppConfig},
   ],
 })
-export class BusModule { }
+export class TrainModule { }
