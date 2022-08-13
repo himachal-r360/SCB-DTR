@@ -362,6 +362,7 @@ export class TrainsTravellerComponent implements OnInit {
         sessionStorage.removeItem("coupon_amount");
   setTimeout(() => {
     //Check Laravel Seesion
+
         if(this.sg['customerInfo']){
 		if(sessionStorage.getItem("channel")=="payzapp"){
 		var customerInfo = this.sg['customerInfo'];  
@@ -483,6 +484,7 @@ export class TrainsTravellerComponent implements OnInit {
                 this.getCustomerGstDetails();
               }
              }
+             
                 //get last IRCTC USER ID from cookie
                 if (this.cookieService.get('irctcuser') != "") {
                 var userId = this.cookieService.get('irctcuser');
