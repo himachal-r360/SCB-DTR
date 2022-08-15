@@ -1765,9 +1765,9 @@ new_fare: number = 0;
   changeFareRuleTabOnward(event:any){
     $('.flight-extra-content-onward').show();
     $('.flight-extra-content-return').hide();
-  
+
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-  
+
     if(this.cancellationPolicyOnward){
     var Element = document.getElementById("CancellationDetails");
     Element!.style.display = 'block';
@@ -1778,15 +1778,15 @@ new_fare: number = 0;
     Element!.style.display = 'block';
      $('.flight-extra-content-ob').addClass('flight-extra-tabs-active');
     }
-     
+
   }
 
     changeFareRuleTabReturn(event:any){
       $('.flight-extra-content-onward').hide();
     $('.flight-extra-content-return').show();
     $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
-    
-    
+
+
      if(this.cancellationPolicyReturn){
     var Element = document.getElementById("CancellationDetailsR");
     Element!.style.display = 'block';
@@ -1797,7 +1797,7 @@ new_fare: number = 0;
     Element!.style.display = 'block';
      $('.flight-extra-content-rb').addClass('flight-extra-tabs-active');
     }
-    
+
   }
 
 

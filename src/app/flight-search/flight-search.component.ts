@@ -10,7 +10,7 @@ import {
   ViewChild,Input, Output, EventEmitter
 
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -95,6 +95,10 @@ export class FlightSearchComponent implements OnInit,  OnDestroy {
   navItemActive:any;
   isShowPartner = false;
   sameCity;
+  multiCityArrCount = 1;
+  multiCityArrMaxCount = 5;
+  multiCityArrayM = [];
+  multicityForm:any = this._fb.group({});
 private lastKeypress = 0;
 private queryText = '';
 flightFromOptions: any[];
@@ -178,7 +182,11 @@ defaultFlightOptions: any[];
   }
 
 
-  currentPeriodClicked(datePicker:any){
+  currentPeriodClicked(datePicker:any  , item){
+    let date = datePicker.target.value
+    date = moment(date).format('YYYY-MM-DD')
+    item.depart=date;
+    console.log(item.depart ,"item.depart");
    /*
     let date = datePicker.target.value
     if(date && this.navItemActive !== "Round Trip"){
@@ -222,92 +230,132 @@ defaultFlightOptions: any[];
 }
 
 
-     searchAutoComplete($event,field,device) {
-       let keycode = $event.which;
-        if ($event.keyCode != 40 && $event.keyCode != 38 ){
-        if ($event.timeStamp - this.lastKeypress > 0) {
-        this.queryText = $event.target.value;
-        if(this.queryText && this.queryText.length > 0){
+searchAutoComplete($event, field, device, index:any) {
+  let keycode = $event.which;
+  if ($event.keyCode != 40 && $event.keyCode != 38) {
+    if ($event.timeStamp - this.lastKeypress > 0) {
+      this.queryText = $event.target.value;
+      if (this.queryText && this.queryText.length > 0) {
 
         let searchParam = {
-        searchDisplayForm: 'flights',
-        queryText: this.queryText
+          searchDisplayForm: 'flights',
+          queryText: this.queryText
         };
 
         this.es.esSearch(searchParam).subscribe(res => {
-        //On Enter Key Pressed
-         if(keycode==13){
-          if(res.hits.total > 0){
-                if(field=='fromCity'){
-                this.searchFlightFromHeader='Result';
+          //On Enter Key Pressed
+          if (keycode == 13) {
+            if (res.hits.total > 0) {
+              if (field == 'fromCity') {
+                this.searchFlightFromHeader = 'Result';
                 this.flightFromOptions = this.defaultFlightOptions;
-                this.onFromClick(res.hits.hits[0],device);
-                }else{
-                this.searchFlightToHeader='Result';
+                this.onFromClick(res.hits.hits[0], device,index);
+              } else {
+                this.searchFlightToHeader = 'Result';
                 this.flightToOptions = this.defaultFlightOptions;
-                this.onToClick(res.hits.hits[0],device);
-                }
+                this.onToClick(res.hits.hits[0], device,index);
+              }
 
-           }
-        }
+            }
+          }
 
-        if(field=='fromCity'){
-         this.searchFlightFromHeader='Result';
-        this.flightFromOptions=res.hits.hits;
-        }else{
-         this.searchFlightToHeader='Result';
-        this.flightToOptions=res.hits.hits;
-        }
+          if (field == 'fromCity') {
+            this.searchFlightFromHeader = 'Result';
+            this.flightFromOptions = res.hits.hits;
+          } else {
+            this.searchFlightToHeader = 'Result';
+            this.flightToOptions = res.hits.hits;
+          }
 
         });
 
 
-       }else{
+      } else {
 
-        if(field=='fromCity'){
-         this.flightFromOptions= this.defaultFlightOptions;
-         this.searchFlightFromHeader='Popular Cities';
-        }else{
-        this.flightToOptions= this.defaultFlightOptions;
-         this.searchFlightToHeader='Popular Cities';
+        if (field == 'fromCity') {
+          this.flightFromOptions = this.defaultFlightOptions;
+          this.searchFlightFromHeader = 'Popular Cities';
+        } else {
+          this.flightToOptions = this.defaultFlightOptions;
+          this.searchFlightToHeader = 'Popular Cities';
         }
 
-       }
       }
-     }
     }
-   onFromClick(values,device) {
-        values=values['_source'];
+  }
+}
+    onFromClick(values, device, index) {
+      if (index != undefined || index != null) {
+        values = values['_source'];
+        this.multiCityArrayM[index-1]["fromCity"]=values.city;
+        this.multiCityArrayM[index-1]["leavingFrom"]=values.airport_code;
+        this.multiCityArrayM[index-1]["fromContry"]=values.country_code;
+        this.multiCityArrayM[index-1]["fromAirportName"]=values.airport_name;
+        // this.multicityForm['controls']['fromCity'+index].setValue(values.city);
+        // this.multicityForm['controls']['leavingFrom'+index].setValue(values.airport_code);
+        // this.multicityForm['controls']['fromContry'].setValue(values.country_code);
+        // this.multicityForm['controls']['fromAirportName'].setValue(values.airport_name);
+        this.flightFromOptions = this.defaultFlightOptions;
+        this.fromAirpotName =  values.airport_name;
+        this.fromCityName = values.city;
+        setTimeout(() => {
+          let toCityDivElement: any = document.getElementById("toCityDiv");
+          toCityDivElement?.click();
+          this.toCityInput.nativeElement.focus();
+        }, 100);
+      }
+      else{
+        values = values['_source'];
         this.flightData['controls']['fromCity'].setValue(values.city);
         this.flightData['controls']['flightfrom'].setValue(values.airport_code);
         this.flightData['controls']['fromContry'].setValue(values.country_code);
         this.flightData['controls']['fromAirportName'].setValue(values.airport_name);
-        this.flightFromOptions= this.defaultFlightOptions;
+        this.flightFromOptions = this.defaultFlightOptions;
         this.fromAirpotName = values.airport_name;
         this.fromCityName = values.city;
 
         setTimeout(() => {
-        let toCityDivElement:any=document.getElementById("toCityDiv");
-        toCityDivElement?.click();
-        this.toCityInput.nativeElement.focus();
+          let toCityDivElement: any = document.getElementById("toCityDiv");
+          toCityDivElement?.click();
+          this.toCityInput.nativeElement.focus();
         }, 100);
+      }
+    }
 
-  }
-
-  onToClick(values,device) {
-        values=values['_source'];
+    onToClick(values, device,index:any) {
+      if (index != undefined || index != null) {
+        values = values['_source'];
+        this.multiCityArrayM[index-1]["toCity"]=values.city;
+        this.multiCityArrayM[index-1]["goingTo"]=values.airport_code;
+        this.multiCityArrayM[index-1]["toContry"]=values.country_code;
+        this.multiCityArrayM[index-1]["toAirportName"]=values.airport_name;
+        // this.multicityForm['controls']['fromCity'+index].setValue(values.city);
+        // this.multicityForm['controls']['leavingFrom'+index].setValue(values.airport_code);
+        // this.multicityForm['controls']['fromContry'].setValue(values.country_code);
+        // this.multicityForm['controls']['fromAirportName'].setValue(values.airport_name);
+        this.toAirpotName =  values.airport_name;
+        this.toCityName = values.city;
+        setTimeout(() => {
+          let toCityDivElement: any = document.getElementById("toCityDiv");
+          toCityDivElement?.click();
+          this.toCityInput.nativeElement.focus();
+        }, 100);
+       }
+       else{
+        values = values['_source'];
         this.flightData['controls']['toCity'].setValue(values.city);
         this.flightData['controls']['flightto'].setValue(values.airport_code);
         this.flightData['controls']['toContry'].setValue(values.country_code);
         this.flightData['controls']['toAirportName'].setValue(values.airport_name);
         this.toAirpotName = values.airport_name;
         this.toCityName = values.city;
-         setTimeout(() => {
-        this.datePicker.open();
-        $('.flight-to-data').addClass('flight-from-hide');
-      }, 100);
+        setTimeout(() => {
+          this.datePicker.open();
+          $('.flight-to-data').addClass('flight-from-hide');
+        }, 100);
+       }
 
-  }
+    }
          minDateFlightToMlite =  new Date();
           minDateMlite =  new Date();
    openMliteDatePicker(field,rtype){
@@ -507,6 +555,23 @@ defaultFlightOptions: any[];
       }
     return str.join("&");
   }
+
+  ConvertObjToQueryStringMutlticity(obj:any){
+    var strUrl="";
+    for(var i=0;i<obj.length;i++){
+      var str:any = [];
+      let obj1:any=obj[i];
+      for (var p in obj1){
+        if (obj1.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "["+i+"]=" + encodeURIComponent(obj1[p]));
+        }
+      }
+      strUrl=strUrl+"&"+str.join("&");
+    }
+    return strUrl
+
+  }
+
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
 
@@ -687,19 +752,25 @@ defaultFlightOptions: any[];
   getClassVal(val:any){
     this.flightData.value.flightclass =  val;
   }
-
-  navBarLink(navItem:any){
+  callMutlicityFunc = true;
+  navBarLink(navItem: any) {
     this.navItemActive = navItem;
-
-
-    if(this.navItemActive == 'Round Trip'){
-       this.flightData.controls["arrival"].setValidators(Validators.required);
-       this.flightData.controls["arrival"].updateValueAndValidity();
-    }else{
-        this.arrivalDate = '';
-        this.flightData.controls["arrival"].setValue('');
-        this.flightData.controls["arrival"].clearValidators();
-        this.flightData.controls["arrival"].updateValueAndValidity();
+    let datePickerArrival = document.getElementById('datePickerArrival');
+    let datePickerOpen = document.getElementById('datePickerOpen');
+    if (this.navItemActive == 'One Way') {
+      this.arrivalDate = '';
+    }
+    if (this.navItemActive == 'Multicity') {
+      datePickerOpen.classList.add('roundtrip-area-root-departure');
+      datePickerArrival.style.display = 'none'
+      if(this.callMutlicityFunc == true) {
+        this.addMuticitySerchVal()
+      }
+      this.callMutlicityFunc = false;
+    }
+    else {
+      datePickerOpen.classList.remove('roundtrip-area-root-departure');
+      datePickerArrival.style.display = ''
     }
   }
 
@@ -711,6 +782,101 @@ defaultFlightOptions: any[];
     this.isShowPartner = false;
   }
 
+  addMuticitySerchVal() {
+    this.multiCityAdd();
+    this.multiCityAdd();
+}
+multiCityAdd() {
+  if ((this.multiCityArrayM.length) < (this.multiCityArrMaxCount)) {
+    let multiCityObj={
+      leavingFrom:'',
+      goingTo:'',
+      adults:this.flightData.value.adults,
+      child:this.flightData.value.child,
+      infants:this.flightData.value.infants,
+      classType:this.flightData.value.flightclass,
+      multiCityArrCount:this.multiCityArrCount,
+      fromCity:this.fromCityName,
+      fromAirportName:this.fromAirpotName,
+      fromContry:this.multicityForm.fromContry,
+      toContry:this.multicityForm.toContry,
+      toCity:this.toCityName,
+      toAirportName:this.toAirpotName,
+      depart:this.multicityForm.value.depart,
+      channel:'Web',
+      travel:'DOM',
+      defaultType:'M',
+      sortBy:'asc'
+    }
+
+    this.multiCityArrayM.push(multiCityObj);
+    console.log(this.multiCityArrayM , "this.multiCityArrayM");
+
+    var i = Number(this.multiCityArrCount);
+    this.multicityForm.addControl('leavingFrom' + i, new FormControl(multiCityObj.leavingFrom, [Validators.required]));
+    this.multicityForm.addControl('goingTo' + i, new FormControl(multiCityObj.goingTo, [Validators.required]));
+    this.multicityForm.addControl('adults' + i, new FormControl(multiCityObj.adults));
+    this.multicityForm.addControl('child' + i, new FormControl(multiCityObj.child));
+    this.multicityForm.addControl('infants' + i, new FormControl(multiCityObj.infants));
+    this.multicityForm.addControl('channel' + i, new FormControl(multiCityObj.channel));
+    this.multicityForm.addControl('travel' + i, new FormControl(multiCityObj.travel));
+    this.multicityForm.addControl('depart' + i, new FormControl(multiCityObj.depart, [Validators.required]));
+    this.multicityForm.addControl('fromCity' + i, new FormControl(multiCityObj.fromCity));
+    this.multicityForm.addControl('toCity' + i, new FormControl(multiCityObj.toCity));
+    this.multicityForm.addControl('fromContry' + i, new FormControl(multiCityObj.fromContry));
+    this.multicityForm.addControl('toContry' + i, new FormControl(multiCityObj.toContry));
+    this.multicityForm.addControl('fromAirportName' + i, new FormControl(multiCityObj.fromAirportName));
+    this.multicityForm.addControl('toAirportName' + i, new FormControl(multiCityObj.toAirportName));
+    this.multicityForm.addControl('classType' + i, new FormControl(multiCityObj.classType));
+    this.multicityForm.addControl('defaultType' + i, new FormControl(multiCityObj.defaultType));
+    this.multicityForm.addControl('sortBy' + i, new FormControl(multiCityObj.sortBy));
+    this.multiCityArrCount++;
+  }
+}
+
+removeMulticity(item:any,i:number){
+  console.log(i,"i");
+  let removeMulticityArr = this.multiCityArrayM.splice(i,1);
+  // var i = Number(this.multiCityArrCount);
+  // this.multicityForm.removeControl('leavingFrom' + i, new FormControl(item.leavingFrom, [Validators.required]));
+  // this.multicityForm.removeControl('goingTo' + i, new FormControl(item.goingTo, [Validators.required]));
+  // this.multicityForm.removeControl('adults' + i, new FormControl(item.adults));
+  // this.multicityForm.removeControl('child' + i, new FormControl(item.child));
+  // this.multicityForm.removeControl('infants' + i, new FormControl(item.infants));
+  // this.multicityForm.removeControl('channel' + i, new FormControl(item.channel));
+  // this.multicityForm.removeControl('travel' + i, new FormControl(item.travel));
+  // this.multicityForm.removeControl('depart' + i, new FormControl(item.depart, [Validators.required]));
+  // this.multicityForm.removeControl('fromCity' + i, new FormControl(item.fromCity));
+  // this.multicityForm.removeControl('toCity' + i, new FormControl(item.toCity));
+  // this.multicityForm.removeControl('fromContry' + i, new FormControl(item.fromContry));
+  // this.multicityForm.removeControl('toContry' + i, new FormControl(item.toContry));
+  // this.multicityForm.removeControl('fromAirportName' + i, new FormControl(item.fromAirportName));
+  // this.multicityForm.removeControl('toAirportName' + i, new FormControl(item.toAirportName));
+  // this.multicityForm.removeControl('classType' + i, new FormControl(item.classType));
+  // this.multicityForm.removeControl('defaultType' + i, new FormControl(item.defaultType));
+  // this.multicityForm.removeControl('sortBy' + i, new FormControl(item.sortBy));
+
+  // let removeMulticityArr = this.multiCityArrayM.splice(i,1);
+  // removeMulticityArr = this.multiCityArrayM;
+
+
+  console.log(removeMulticityArr , "pop arr");
+
+}
+
+searchMulticityFlight(){
+  // debugger
+  // if(this.multicityForm.invalid) {
+  //   return
+  // }
+  // else {
+    let url;
+      url = "flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.multiCityArrayM))
+      this.router.navigateByUrl(url)
+
+  // }
+
+}
   FixedLengthDisplay(value:string)
   {
     if(this.isMobile)

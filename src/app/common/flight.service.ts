@@ -10,6 +10,7 @@ export class FlightService {
   flight = environment.url + "api/flightSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
   flightInfo = environment.url + "api/flightInfo";
+  multicityFlight = environment.url + "api/flightSearchMulticity";
   flightListData: any;
   flightListDate: any;
   flightsIcon = "assets/Json/airlines.json";
@@ -24,9 +25,9 @@ export class FlightService {
   headerHideShow = new BehaviorSubject<Boolean>(true);
   currentHeader = this.headerHideShow.asObservable();
 
-  
-  
-  
+
+
+
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) {
@@ -67,7 +68,7 @@ export class FlightService {
   getFlightIcon() {
     return this.http.get(this.flightsIcon);
   }
-  
+
   getCountryList(){
     return this.http.get(this.countryList);
   }
@@ -96,6 +97,11 @@ export class FlightService {
 
       return this.http.post(this.flightInfo, param, { headers: this.header })
     }
+  }
+
+  getMulticityList(param:any){
+    let body = JSON.stringify(param);
+    return this.http.post(this.multicityFlight , body , { headers: this.header })
   }
 
 }
