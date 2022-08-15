@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { FlightService } from 'src/app/common/flight.service';
   styleUrls: ['./flight-multicity.component.sass']
 })
 export class FlightMulticityComponent implements OnInit {
+
   sub?: Subscription;
   searchData:any;
   constructor(private route: ActivatedRoute,private _flightService:FlightService) { }
@@ -28,7 +29,7 @@ export class FlightMulticityComponent implements OnInit {
       var objSearch={};
       for(var j=0;j<objKeys.length;j++)
       {
-            
+
             if(objKeys[j].indexOf("["+i+"]")>-1)
             {
                 var objKey= objKeys[j].substring(0, objKeys[j].length-3);
@@ -48,7 +49,7 @@ export class FlightMulticityComponent implements OnInit {
   flightSearch() {
     let searchObj = (this.searchData);
     console.log(searchObj , "getMulticityList");
-    
+
     console.log(searchObj ,"searchObj");
     this.sub = this._flightService.getMulticityList(searchObj).subscribe((res: any) => {
       console.log(res , "response");

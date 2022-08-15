@@ -25,9 +25,9 @@ export class FlightService {
   headerHideShow = new BehaviorSubject<Boolean>(true);
   currentHeader = this.headerHideShow.asObservable();
 
-  
-  
-  
+
+
+
 
   header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   constructor(private http: HttpClient) {
@@ -68,7 +68,7 @@ export class FlightService {
   getFlightIcon() {
     return this.http.get(this.flightsIcon);
   }
-  
+
   getCountryList(){
     return this.http.get(this.countryList);
   }
@@ -90,15 +90,16 @@ export class FlightService {
   getFlightInfo(param: any) {
     console.log(param);
     if (LOCALJSON == 'true') {
-      return this.http.get('assets/data/flightInfo-int.json');
+      return this.http.get('assets/data/flightInfo.json');
     } else {
       
       return this.http.post(this.flightInfo, param, { headers: this.header })
     }
   }
-  
+
   getMulticityList(param:any){
     let body = JSON.stringify(param);
     return this.http.post(this.multicityFlight , body , { headers: this.header })
   }
+
 }

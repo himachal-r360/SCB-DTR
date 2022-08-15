@@ -254,7 +254,22 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6 col-12 text-end">
-                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0"><input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)"> <p class="invalid"><span class="material-icons pe-2 ">warning</span>  Tokenise and Save</p><span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i></span></div>
+                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0">
+                                                                                <span> 
+                                                                                    <p class="invalid">
+                                                                                        <span class="material-icons px-1">warning</span>
+                                                                                        <span class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="1" id="tokenization{{cardIndex}}" (change)="checkInfo($event,cardIndex)">
+                                                                                            <label class="form-check-label" for="tokenization{{cardIndex}}">
+                                                                                                 Tokenise & Save
+                                                                                            </label>
+                                                                                        </span>
+                                                                                        <!-- <input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)" class="mt-10"> 
+                                                                                        <span class="material-icons px-1" for="tokenization{{cardIndex}}">warning</span>  Tokenise and Save -->
+                                                                                    </p> 
+                                                                                </span>
+                                                                                <span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i> </span> 
+                                                                            </div>
                                                                             <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==1"><p class="valid"><span class="material-icons pe-2 ">lock</span> Secure now</p><input type="checkbox" name="tokenization" id="tokenization{{cardIndex}}" checked value="1" style="display:none;"></div>
                                                                         </div>
                                                                     </div>
@@ -1253,17 +1268,17 @@
                                                                                     <p>Please Choose a Tenure</p>
                                                                                 </div>
                                                                                 <div class="row" *ngIf="showflexipaydefaultsection && !fpGuestsession">
-                                                                                    <div *ngFor="let installment of flexiPayNewcalcArr;let i=index" class="col-12 col-md-6">
+                                                                                    <div *ngFor="let installment of flexiPayNewcalcArr;let i=index" class="col-6 col-sm-6">
                                                                                         <div class="w-flexpay-price" (click)="select(i)" [ngClass]="{'w-flexpay-active': selectedIndex == i, 'list-group-item': true}">
                                                                                             <label for="payFlexiemi-subOne{{installment.key}}" class="radio flexi_radio">
-                                                  <input type="radio" formControlName='flexiOptions' name="flexiOptions" id="payFlexiemi-subOne{{installment.key}}" class="hidden dc_emi_option" value="{{installment.key}}" (click)="calculateIntr(installment.key)"/>
-                                                        <span class="label d-none"></span>
-                                                        <div class="sub-info m-0">
-                                                        <p class="emi-duration"> {{installment.key}} days later</p>
-                                                        <p class="emi-tenure" *ngIf="installment.key==15; else intrest">No extra cost</p>
-                                                      </div>
-                                                      <ng-template #intrest><p class="emi-tenure">Interest = ₹{{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
-                                                  </label>
+                                                                                                 <input type="radio" formControlName='flexiOptions' name="flexiOptions" id="payFlexiemi-subOne{{installment.key}}" class="hidden dc_emi_option" value="{{installment.key}}" (click)="calculateIntr(installment.key)"/>
+                                                                                                    <span class="label d-none"></span>
+                                                                                                    <div class="sub-info m-0">
+                                                                                                    <p class="emi-duration"> {{installment.key}} days later</p>
+                                                                                                    <p class="emi-tenure" *ngIf="installment.key==15; else intrest">No extra cost</p>
+                                                                                                </div>
+                                                                                                <ng-template #intrest><p class="emi-tenure">Interest = ₹{{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
+                                                                                            </label>
                                                                                         </div>
                                                                                     </div>
                             
@@ -1333,12 +1348,14 @@
                                                                         </div>
                                                                       </div> -->
                                                                                                 </div>
-                                                                                                <div class="row w-flexipay-discount m-0" *ngIf="selectedperiod==15">
-                                                                                                    <div class="col-2 col-md-1 pr0">
-                                                                                                        <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
-                                                                                                    </div>
-                                                                                                    <div class="col-10 col-md-11">
-                                                                                                        <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">₹{{intrstopay | commaSeparator}}</span> Applied!</small>
+                                                                                                <div class="w-flexipay-discount mb-10">
+                                                                                                    <div class="row m-0" *ngIf="selectedperiod==15">
+                                                                                                        <div class="col-2 col-sm-2 pr-0">
+                                                                                                            <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
+                                                                                                        </div>
+                                                                                                        <div class="col-10 col-sm-10">
+                                                                                                            <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">₹{{intrstopay | commaSeparator}}</span> Applied!</small>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -1594,8 +1611,8 @@
  <div  align="center" id="faredata-error">Are you sure? If you do not tokenise your card prior to 30th September, you will have to re-enter the full card details while paying.</div>
 <div class="selectd-book-btn" style="text-align:center;">
 <div class="container row mt-4"> 
-       <div class="col-6"> <button type="button" class="btn-normal btn-animated btnyes" (click)="securemycard()" >Tokenise and Save</button> </div>
-       <div class="col-4"> <button type="button" class="btn btn-animated btnno"   (click)="nothanks()" >NO THANKS</button> </div>
+       <div class="col-md-6 col-12"> <button type="button" class="btn-normal btn-animated btnyes" (click)="securemycard()" >Tokenise and Save</button> </div>
+       <div class="col-md-4 col-12"> <button type="button" class="btn btn-animated btnno"   (click)="nothanks()" >NO THANKS</button> </div>
 </div>
 <input type="hidden" id="payinfoid" value="" />
 </div>
@@ -1607,14 +1624,14 @@
 
 
 <div class="modal fade pop_code" id="payinfo1" tabindex="-1" role="dialog" aria-labelledby="payinfo1"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered tokenise_popup" role="document">
         <div class="modal-content">
             <div class="modal-header pb-2 pr-0">
                 <button type="button" class="btn-close close-popupd" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-10">
                  <div class="text-center">
-        <img src="" alt="" class="img-fluid secure_img infocardimg" width="50%"> 
+        <img src="" alt="" class="img-fluid secure_img infocardimg mb-20" width="50%"> 
         <p class="title_visa pb-10">Please Tokenise & Save <span class="infocardtype"></span> card.</p>
         <p class="desc_visa">As per RBI guidelines, We will securely save your card through Tokenisation.</p>
       </div>

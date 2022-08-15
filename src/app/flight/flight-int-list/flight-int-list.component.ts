@@ -11,6 +11,9 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../../environments/environment';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { AppConfigService } from '../../app-config.service';
+import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
+import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -210,7 +213,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
    serviceSettings:any;     
   enableFlightServices:any;
   
-  constructor( private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor(public rest:RestapiService,private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
       this.serviceSettings=this.appConfigService.getConfig();
       this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
@@ -242,6 +245,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.headerHideShow(null)
         this.getAirpotsList();
         this.getAirlinesList();
+        this.getCoupons();
         this.flightSearch();
         });
         }
@@ -255,6 +259,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.fromCityName = this.queryFlightData.fromCity; 
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
+          this.returnDate = new Date(this.queryFlightData.arrival);
         this.flightClassVal = this.queryFlightData.flightclass;
         this.adultsVal = this.queryFlightData.adults;
         this.childVal = this.queryFlightData.child;
@@ -265,7 +270,21 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
         }
+flightCoupons=[];
+getCoupons(){
+const urlParams = {'client_token': 'HDFC243','service_id':'1'};
+var couponParam = {
+postData:this.EncrDecr.set(JSON.stringify(urlParams))
+};
 
+this.rest.getCouponsByService(couponParam).subscribe(results => { 
+   if(results.status=="success"){
+   this.flightCoupons=results.data;
+   }
+
+});
+
+}
   flightDetailsTab(obj: any, value: string, indx: number) {
     var dashboard_menu_type = value;
     $('.flight-extra-content').hide();
