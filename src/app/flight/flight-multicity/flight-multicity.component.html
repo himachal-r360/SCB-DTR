@@ -30,369 +30,230 @@
 
                       <div class="col-lg-12">
                           <div class="layout-box">
-                              <div class="layout-left">
-                                  <div class="filter-loaders animation-loader">
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext "></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext "></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext "></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext "></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext"></span>
-                                          </div>
-                                      </div>
-                                      <div class="filter-loader border-0">
-                                          <div class="filter-loader-content ">
-                                              <span class="filter-box-title mt-0 w-50"></span>
-                                              <span class="filter-box-subtext "></span>
-                                          </div>
-                                      </div>
+                            <div class="layout-left">
+                              <div class="filter-loaders animation-loader" *ngIf="loader">
+                                <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                                    <div class="filter-loader-content ">
+                                       <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                       <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                       <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                                  <div [hidden]="loader">
+                                    <div class="Filterslayout d-flex justify-content-between align-items-center" >
+                                      <h6 class="fs_16">Filters</h6>
+                                      <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
                                   </div>
-                                  <div class="">
-                                      <div class="Filterslayout d-flex justify-content-between align-items-center">
-                                          <h6 class="fs_16">Filters</h6>
-                                          <a href="" class="fs_13 text-color">Reset all</a>
+                                  <hr>
+                                  <div class="default-sidebar flight-sidebar" [hidden]="loader">
+                                      <div class="sidebar-widget search-widget">
+                                          <div class="widget-title">
+                                              <h6 class="">Popular Filters</h6>
+                                              <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
+                                          </div>
+                                          <div class="widget-content">
+                                              <ul class="category-list clearfix mt-2" id="popular-filters">
+
+                                                  <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                              <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                                          </label>
+                                                      </div>
+                                                  </li>
+
+                                              </ul>
+                                          </div>
                                       </div>
                                       <hr>
-                                      <div class="default-sidebar flight-sidebar">
-                                          <div class="sidebar-widget search-widget">
-                                              <div class="widget-title">
-                                                  <h6 class="">Populat Filters</h6>
-                                                  <a href="">Reset</a>
-                                              </div>
-                                              <div class="widget-content">
-                                                  <ul class="category-list clearfix mt-2">
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Refundable Fares (84)</span>
-                                                              </label>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" checked="checked" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Non-stop (23)</span>
-                                                              </label>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Morning Departures (66)</span>
-                                                              </label>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Meals Included</span>
-                                                              </label>
-                                                          </div>
-                                                      </li>
-                                                  </ul>
-                                              </div>
+                                      <div class="sidebar-widget partner-widget">
+                                          <div class="widget-title">
+                                              <h6 class="">Partners</h6>
+                                              <a href="javascript:void(0)" (click)="resetPartnerFlightsFilter()">Reset</a>
                                           </div>
-                                          <hr>
-                                          <div class="sidebar-widget flighttimings-widget">
-                                              <div class="widget-title">
-                                                  <h6 class="">Flight Timings</h6>
-                                                  <a href="">Reset</a>
-                                              </div>
-                                              <div class="widget-content">
-                                                  <p class="flighttimings-text">Departing flight (BOM-HYD)</p>
-                                                  <div class="flighttiming-content flight-departing">
-                                                      <div class="flighttiming-list">
-                                                          <img src="assets/images/icons/timings/1.png" alt="">
-                                                          <p>00-06</p>
-                                                      </div>
-                                                      <div class="flighttiming-list active">
-                                                          <img src="assets/images/icons/timings/2.png" alt="">
-                                                          <p>06-12</p>
-                                                      </div>
-                                                      <div class="flighttiming-list">
-                                                          <img src="assets/images/icons/timings/3.png" alt="">
-                                                          <p>12-18</p>
-                                                      </div>
-                                                      <div class="flighttiming-list">
-                                                          <img src="assets/images/icons/timings/4.png" alt="">
-                                                          <p>18-00</p>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <hr>
-                                          <div class="sidebar-widget Price-widget">
-                                              <div class="widget-title">
-                                                  <h6 class="">Price</h6>
-                                                  <a href="">Reset</a>
-                                              </div>
-                                              <div class="widget-content mt-10 mb-30 price-widget-content">
-                                                  <div style="margin:0 0 20px 0">
-                                                      <input type="number" min="0" max="9900" oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
-                                                      <span class="ms-3 me-3">-</span>
-                                                      <input type="number" min="0" max="10000" oninput="validity.valid||(value='10000');" id="max_price" class="price-range-field" />
-                                                  </div>
-                                                  <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
-                                              </div>
-                                          </div>
-                                          <hr>
-                                          <div class="sidebar-widget stops-widget">
-                                              <div class="widget-title">
-                                                  <h6 class="">Stops</h6>
-                                                  <a href="">Reset</a>
-                                              </div>
-                                              <div class="widget-content">
-                                                  <div class="Stops-content">
-                                                      <div class="Stops-list">
-                                                          <p>No <br> stops</p>
-                                                      </div>
-                                                      <div class="Stops-list active">
-                                                          <p>1 <br> stops</p>
-                                                      </div>
-                                                      <div class="Stops-list">
-                                                          <p>2+ <br> stops</p>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <hr>
-                                          <div class="sidebar-widget Airlines-widget">
-                                              <div class="widget-title">
-                                                  <h6 class="">Airlines</h6>
-                                                  <a href="">Reset</a>
-                                              </div>
-                                              <div class="widget-content">
-                                                  <ul class="category-list clearfix mt-2">
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Indigo (84)</span>
-                                                              </label>
-                                                              <p>&#8377;5,252</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" checked="checked" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">SpiceJet (23)</span>
-                                                              </label>
-                                                              <p>&#8377;6,356</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Air India (66)</span>
-                                                              </label>
-                                                              <p>&#8377;7,356</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Go First (12)</span>
-                                                              </label>
-                                                              <p>&#8377;9,356</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Vistara (34)</span>
-                                                              </label>
-                                                              <p>&#8377;9,525</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Air Asia (24)</span>
-                                                              </label>
-                                                              <p>&#8377;10,110</p>
-                                                          </div>
-                                                      </li>
-                                                  </ul>
-                                                  <a href="#" class="widget-content-more ml-20">+2 more</a>
-                                              </div>
-                                          </div>
-                                          <hr>
-                                          <div class="sidebar-widget stopover-widget">
-                                              <div class="widget-title">
-                                                  <h6 class="">Stopover</h6>
-                                                  <a href="">Reset</a>
-                                              </div>
-                                              <div class="widget-content mt-20 mb-20">
-                                                  <div class="price-slider"></div>
-                                                  <div class="Stopover-value">
-                                                      <p class="price-value"></p>
-                                                      <p class="price-value2"></p>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <hr>
-                                          <div class="sidebar-widget layover-airports-widget">
-                                              <div class="widget-title">
-                                                  <h6 class="">Layover Airports</h6>
-                                                  <a href="">Reset</a>
-                                              </div>
-                                              <div class="widget-content">
-                                                  <ul class="category-list clearfix mt-2">
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Chennai Airport</span>
-                                                              </label>
-                                                              <p>&#8377;5,252</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" checked="checked" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Kempegowda Internat</span>
-                                                              </label>
-                                                              <p>&#8377;6,356</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Jabalpur</span>
-                                                              </label>
-                                                              <p>&#8377;7,356</p>
-                                                          </div>
-                                                      </li>
-                                                      <li class="custom-check-box">
-                                                          <div class="custom-controls-stacked">
-                                                              <label class="custom-control material-checkbox">
-                                                                  <input type="checkbox" class="material-control-input" />
-                                                                  <span class="material-control-indicator"></span>
-                                                                  <span class="description">Chatrapati Shivaji</span>
-                                                              </label>
-                                                              <p>&#8377;9,356</p>
-                                                          </div>
-                                                      </li>
-                                                  </ul>
-                                              </div>
-                                          </div>
+                                          <div class="widget-content" id="airline_list">
+                                              <ul class="category-list clearfix mt-2" >
 
+                                                  <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:0:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox" >
+                                                              <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{partnerItem.partnerName}}</span>
+                                                          </label>
+                                                      </div>
+                                                  </li>
+                                                  <ng-container *ngIf="show_airline_more">
+                                                  <li  class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox" >
+                                                              <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{partnerItem.partnerName}}</span>
+                                                          </label>
+                                                      </div>
+                                                  </li>
+                                                  </ng-container>
+                                              </ul>
+
+                                          </div>
                                       </div>
+                                      <hr>
+                                      <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                          <div class="widget-title">
+                                              <h6 class="">Flight Timings</h6>
+                                              <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
+                                          </div>
+                                          <div class="widget-content">
+                                              <p class="flighttimings-text">Departing flight ( {{selectedTripData.fromCity}} - {{selectedTripData.toCity}})</p>
+                                              <div class="flighttiming-content flight-departing">
+                                                  <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}"
+                                                  (click)="FlightTimingsFilterFlightData(timingsItems)">
+                                                      <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                      <p [innerHTML]="timingsItems.value"></p>
+                                                  </div>
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <hr>
+                                      <div class="sidebar-widget Price-widget" >
+                                          <div class="widget-title">
+                                              <h6 class="">Price</h6>
+                                              <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
+                                          </div>
+                                          <div class="widget-content mt-10 mb-30 price-widget-content">
+                                              <div style="margin:0 0 20px 0">
+                                                  <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice"  id="min_price" class="price-range-field" />
+                                                  <span class="ms-3 me-3">-</span>
+                                                  <input type="number" min="0"  [(ngModel)]="maxPrice" [max]="resetMaxPrice"  id="max_price" class="price-range-field" />
+                                              </div>
+                                              <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"
+                                              (valueChange)="onMinValueChange($event)"
+                                                (highValueChange)="onMaxValueChange($event)"
+                                              ></ngx-slider>
+
+                                          </div>
+                                      </div>
+                                      <hr>
+                                      <div class="sidebar-widget stops-widget" id="Flight_Stops">
+                                          <div class="widget-title">
+                                              <h6 class="">Stops</h6>
+                                              <a href="javascript:void(0)" (click)="resetFlightStopsFilter()">Reset</a>
+                                          </div>
+                                          <div class="widget-content"  >
+                                              <div class="Stops-content" >
+                                                  <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)"
+                                                  [innerHTML]="FlightStopitem.value">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <hr>
+                                      <div class="sidebar-widget Airlines-widget">
+                                          <div class="widget-title">
+                                              <h6 class="">Airlines</h6>
+                                              <a href="javascript:void(0)" (click)="resetAirlineFlightsFilter()">Reset</a>
+                                          </div>
+                                          <div class="widget-content" id="airline_list">
+                                              <ul class="category-list clearfix mt-2" >
+
+                                                  <li class="custom-check-box" *ngFor="let airlineItem of airlines | slice:0:5; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox" >
+                                                              <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                          </label>
+                                                          <p>&#8377;{{airlineItem.price}}</p>
+                                                      </div>
+                                                  </li>
+                                                  <ng-container *ngIf="show_airline_more">
+                                                  <li  class="custom-check-box" *ngFor="let airlineItem of airlines | slice:5; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox" >
+                                                              <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                          </label>
+                                                          <p>&#8377;{{airlineItem.price}}</p>
+                                                      </div>
+                                                  </li>
+                                                  </ng-container>
+                                              </ul>
+                                              <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
+                                          </div>
+                                      </div>
+                                      <hr>
+                                      <div class="sidebar-widget stopover-widget">
+                                          <div class="widget-title">
+                                              <h6 class="">Stopover</h6>
+                                              <a href="javascript:void(0)" (click)="resetStopOverFilter()">Reset</a>
+                                          </div>
+                                          <div class="widget-content mt-20 mb-20">
+                                              <!-- <input type="text" class="js-range-slider" name="my_range" value="" /> -->
+
+                                              <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver"
+                                               [options]="optionsStopOver"
+                                               (valueChange)="onMinStopOverChange($event)"
+                                               (highValueChange)="onMaxStopOverChange($event)"
+                                              ></ngx-slider>
+                                              <!-- <div class="price-slider"></div> -->
+                                              <div class="Stopover-value">
+                                                  <p class="price-value" >{{minStopOver}} hrs</p>
+                                                  <p class="price-value2">{{maxStopOver}} hrs</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <hr>
+              <!-- lay over airport list -->
+                                      <div class="sidebar-widget layover-airports-widget">
+                                          <div class="widget-title">
+                                              <h6 class="">Layover Airports</h6>
+                                              <a href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
+                                          </div>
+                                          <div class="widget-content" id="layover_airport">
+                                              <ul class="category-list clearfix mt-2" >
+
+                                                  <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr | slice:0:5; let i = index " [ngClass]="{'active': layoverItem.active}">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                          </label>
+                                                          <p>&#8377;{{layoverItem.price}}</p>
+                                                      </div>
+                                                  </li>
+                                                  <ng-container *ngIf="show_layover_more">
+                                                         <li class="custom-check-box"  *ngFor="let layoverItem of layOverFilterArr | slice:5; let i = index " [ngClass]="{'active': layoverItem.active}">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                          </label>
+                                                          <p>&#8377;{{layoverItem.price}}</p>
+                                                      </div>
+                                                  </li>
+                                                  </ng-container>
+                                              </ul>
+                                                <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
+                                          </div>
+                                      </div>
+                                      <hr>
+
+                                  </div>
                                   </div>
 
-                              </div>
+
+                          </div>
                               <div class="layout-right">
 
                                   <div class="Sector-area" id="Sector-area">
@@ -680,7 +541,7 @@
                                                         <div class="extra-tabs-details FlightDetails-box">
                                                             <div class="extra-tabs-details-top">
                                                                 <div class="extra-tabs-left">
-                                                                    <p>Depart <span class="ms-2 me-2">|</span>{{fromCityName}} to {{toCityName}}</p>
+                                                                    <p>Depart <span class="ms-2 me-2">|</span>{{selectedTripData.fromCity}} to {{selectedTripData.toCity}}</p>
                                                                 </div>
 
                                                             </div>
