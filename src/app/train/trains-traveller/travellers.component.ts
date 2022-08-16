@@ -1,4 +1,5 @@
 import { Component, OnInit, NgModule, ChangeDetectorRef, ElementRef, Inject, ɵConsole, Input, Output, EventEmitter } from '@angular/core';
+import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { FormControl } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,6 +36,7 @@ import alertify from 'alertifyjs';
 })
 export class TrainsTravellerComponent implements OnInit {
     steps:number=1;
+      completedSteps = 1;
     childBerthMandatory:any;
     serviceId:string='IRCTC';
     template: string = '<div class="app-loading-new"><div class="logo"></div></div>'
@@ -315,7 +317,7 @@ export class TrainsTravellerComponent implements OnInit {
             this.masterClasses= AppConfig.IRCTC_Classes;
         this.masterQuota = AppConfig.IRCTC_Quota;
     }
-
+    customerInfo:any;
     ngOnInit() {
     
          this.titleService.setTitle('Home | IRCTC');
@@ -365,7 +367,8 @@ export class TrainsTravellerComponent implements OnInit {
 
         if(this.sg['customerInfo']){
 		if(sessionStorage.getItem("channel")=="payzapp"){
-		var customerInfo = this.sg['customerInfo'];  
+		var customerInfo = this.sg['customerInfo']; 
+		this.customerInfo= customerInfo;
 		this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
 		setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
 		this.REWARD_CUSTOMERID = '0000';
@@ -373,17 +376,18 @@ export class TrainsTravellerComponent implements OnInit {
 		this.REWARD_MOBILE = '';
 		this.REWARD_CUSTOMERNAME = '';
                 //get last IRCTC USER ID from cookie
-                if (this.cookieService.get('irctcuser') != "") {
+               /* if (this.cookieService.get('irctcuser') != "") {
                 var userId = this.cookieService.get('irctcuser');
                 this.IRCTCUserId = JSON.parse(atob(userId));
                  this.idForm['controls']['userID'].setValue(this.IRCTCUserId);
                  this.submitBookingInfo();
                 }else{
                 this.showIrctcLogin();
-                }
+                }*/
              
 		}else{
 		 var customerInfo = this.sg['customerInfo'];
+		 this.customerInfo= customerInfo;
             if(customerInfo["org_session"]==1){
              
             // console.log(customerInfo)
@@ -446,21 +450,6 @@ export class TrainsTravellerComponent implements OnInit {
                 let cardData = data;
                 let newCardArr = [];
                 this.savedCards = data;
-                /* if(this.domainName != "SMARTBUY"){
-                for(var i=0;i<cardData.length;i++){
-                if(cardData[i].type == this.domainName){
-                newCardArr.push({"bin":cardData[i].bin,"card_display_name":cardData[i].card_display_name,
-                "card_id":cardData[i].card_id,"id":cardData[i].id,"type":cardData[i].type})
-                this.savedCards = newCardArr;
-                }else{
-                this.savedCards = [];
-                }
-                }
-                }else{
-                this.savedCards = cardData;
-                }*/
-
-                // this.savedCards = data;
                 });
 
                 //check flexipay eligible
@@ -486,14 +475,14 @@ export class TrainsTravellerComponent implements OnInit {
              }
              
                 //get last IRCTC USER ID from cookie
-                if (this.cookieService.get('irctcuser') != "") {
+               /* if (this.cookieService.get('irctcuser') != "") {
                 var userId = this.cookieService.get('irctcuser');
                 this.IRCTCUserId = JSON.parse(atob(userId));
                  this.idForm['controls']['userID'].setValue(this.IRCTCUserId);
                  this.submitBookingInfo();
                 }else{
                 this.showIrctcLogin();
-                }
+                }*/
              
                
             } else {
@@ -566,8 +555,28 @@ export class TrainsTravellerComponent implements OnInit {
     $('#irctc-login-popup').trigger('click');
     
     }
-    
-
+    sendTrainDetails(){
+         this.gotoTop();
+    this.completedSteps = 2;
+    this.steps = 2;
+    }
+    continueTravellerDetails(){
+             this.gotoTop();
+    this.completedSteps = 3;
+    this.steps = 3;
+    }
+    continueReviewBooking(){
+                this.gotoTop();
+    this.completedSteps = 4;
+    this.steps = 4; 
+    }
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
     expandItemsAdult() {
         if(this.isAdultExpanded == false){
           this.isAdultExpanded = true;
@@ -597,7 +606,51 @@ export class TrainsTravellerComponent implements OnInit {
 
     }
 
-    
+    goBack() {
+    this.resetPopups();
+    this.router.navigateByUrl('/');
+  }  
+  resetPopups(){
+  
+  }
+    moveTab(page) {
+    this.gotoTop();
+    if(page<4){
+    this.totalCollectibleAmount=this.totalCollectibleAmountFromPartnerResponse;
+    this.coupon_amount=0;
+    }
+
+ 
+
+    if (page <= this.completedSteps) {
+      this.steps = page;
+      this.completedSteps = page;
+    }
+  }
+  
+  bookingSessionExpires(e: CountdownEvent) {
+
+    if (e.action == 'done') {
+   //  $('#bookingprocessExpires').modal('show');
+    }
+  }
+  
+    isCollapseBasefare: boolean = false;
+  isCollapseDiscount: boolean = false;
+  isCollapseVas: boolean = false;
+  isCollapse: boolean = false;
+    isCollapseShow(identifyCollpase) {
+    if (identifyCollpase == 'BaseFare') {
+      this.isCollapseBasefare = !this.isCollapseBasefare;
+    } else if (identifyCollpase == 'vas') {
+      this.isCollapseVas = !this.isCollapseVas;
+    } else if (identifyCollpase == 'discount') {
+      this.isCollapseDiscount = !this.isCollapseDiscount;
+    } else {
+      this.isCollapse = !this.isCollapse;
+    }
+
+  }
 saveTravellerConsent(){
   alertify.alert('I give consent to Reward360 to store personal information which I am entering on my own accord to facilitate convenience in future for quick data entry while undertaking transaction completion across all/diverse merchant offering on Reward360 hosted platform. This information includes Title, First Name, Last Name, Date of Birth, Mobile Number, Gender, Email ID, Passport Details and GST details. I understand that this information is not being stored by HDFC Bank under any facility and HDFC Bank will not be held responsible should any issue arise related to this data storage.').setHeader('<b>Save this traveller for your future travel</b>') ;
 }
