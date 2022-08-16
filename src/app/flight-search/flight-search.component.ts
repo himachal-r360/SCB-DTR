@@ -20,6 +20,7 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../environments/environment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
+import { AppConfigService } from '../app-config.service';
 import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -128,8 +129,10 @@ defaultFlightOptions: any[];
   }, {
     validators: MustMatch('flightfrom', 'flightto')
 });
+  enableFlightServices:any;
+   serviceSettings:any;
   constructor(
-    public _styleManager: StyleManagerService,
+    public _styleManager: StyleManagerService, private appConfigService:AppConfigService,
     public route: ActivatedRoute,
       public router: Router,
       private _fb: FormBuilder,
@@ -137,6 +140,8 @@ defaultFlightOptions: any[];
 
     ) {
       this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+       this.serviceSettings=this.appConfigService.getConfig();
+        this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
       window.onresize = (e) =>
       {
           //ngZone.run will help to run change detection
