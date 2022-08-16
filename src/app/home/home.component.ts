@@ -238,7 +238,7 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl(url);
     }
     }else{
-      let     url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
+      let url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
           this.router.navigateByUrl(url);
 
        }
