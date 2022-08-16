@@ -87,14 +87,12 @@ export class FlightService {
     return this.flightDetailsSubject.asObservable();
   }
 
-
-
   getFlightInfo(param: any) {
-   console.log(param);
+    console.log(param);
     if (LOCALJSON == 'true') {
       return this.http.get('assets/data/flightInfo.json');
     } else {
-
+      
       return this.http.post(this.flightInfo, param, { headers: this.header })
     }
   }
