@@ -339,6 +339,7 @@ searchAutoComplete($event, field, device, index:any) {
         setTimeout(() => {
           let datePickerMulticity  = document.getElementById('datePickerMulticity_' + index);
           datePickerMulticity.click();
+          this.autoFillMutlicityVal();
           $('.flight-to-data').addClass('flight-from-hide');
         }, 100);
        }
@@ -841,7 +842,6 @@ multiCityAdd() {
     }
 
     this.multiCityArrayM.push(multiCityObj);
-    
     var i = Number(this.multiCityArrCount);
     this.multicityForm.addControl('leavingFrom' + i, new FormControl(multiCityObj.leavingFrom, [Validators.required]));
     this.multicityForm.addControl('goingTo' + i, new FormControl(multiCityObj.goingTo, [Validators.required]));
@@ -861,6 +861,9 @@ multiCityAdd() {
     this.multicityForm.addControl('defaultType' + i, new FormControl(multiCityObj.defaultType));
     this.multicityForm.addControl('sortBy' + i, new FormControl(multiCityObj.sortBy));
     this.multiCityArrCount++;
+    if(this.multiCityArrayM.length > 2){
+      this.autoFillMutlicityVal();
+    }
   }
 }
 
@@ -899,6 +902,38 @@ searchMulticityFlight(){
       return value;
   }
 
+}
+
+autoFillMutlicityVal(){
+  this.multiCityArrayM[1].fromCity = this.multiCityArrayM[0].toCity;
+  this.multiCityArrayM[1].leavingFrom = this.multiCityArrayM[0].goingTo;
+  this.multiCityArrayM[1].fromAirportName = this.multiCityArrayM[0].toAirportName;
+  this.multiCityArrayM[1].fromContry = this.multiCityArrayM[0].toContry;
+  if(this.multiCityArrayM[2] != null){
+    this.multiCityArrayM[2].fromCity = this.multiCityArrayM[1].toCity;
+    this.multiCityArrayM[2].leavingFrom = this.multiCityArrayM[1].goingTo;
+    this.multiCityArrayM[2].fromAirportName = this.multiCityArrayM[1].toAirportName;
+    this.multiCityArrayM[2].fromContry = this.multiCityArrayM[1].toContry;
+  }
+  if(this.multiCityArrayM[3] != null){
+    this.multiCityArrayM[3].fromCity = this.multiCityArrayM[2].toCity;
+    this.multiCityArrayM[3].leavingFrom = this.multiCityArrayM[2].goingTo;
+    this.multiCityArrayM[3].fromAirportName = this.multiCityArrayM[2].toAirportName;
+    this.multiCityArrayM[3].fromContry = this.multiCityArrayM[2].toContry;
+    
+  }   
+  if(this.multiCityArrayM[4] !=null){
+    this.multiCityArrayM[4].fromCity = this.multiCityArrayM[3].toCity;
+    this.multiCityArrayM[4].leavingFrom = this.multiCityArrayM[3].goingTo;
+    this.multiCityArrayM[4].fromAirportName = this.multiCityArrayM[3].toAirportName;
+    this.multiCityArrayM[4].fromContry = this.multiCityArrayM[3].toContry;
+  } 
+  if(this.multiCityArrayM[5] !=null){
+    this.multiCityArrayM[5].fromCity = this.multiCityArrayM[4].toCity;
+    this.multiCityArrayM[5].leavingFrom = this.multiCityArrayM[4].goingTo;
+    this.multiCityArrayM[5].fromAirportName = this.multiCityArrayM[4].toAirportName;
+    this.multiCityArrayM[5].fromContry = this.multiCityArrayM[4].toContry;
+  }
 }
 }
 export function MustMatch(controlName: any, matchingControlName: any) {
