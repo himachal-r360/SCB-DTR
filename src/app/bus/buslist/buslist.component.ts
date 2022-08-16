@@ -205,7 +205,6 @@ ngOnInit(): void {
   this.titleService.setTitle('Home | RedBus');
         this.isMobile = window.innerWidth < 991 ?  true : false;
         this.activatedRoute.url.subscribe(url =>{
-        console.log('ddd');
         this.moveTop();
         this.loading = true;
         this.getQueryParamData(null);

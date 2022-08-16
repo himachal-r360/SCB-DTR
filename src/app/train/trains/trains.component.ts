@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject,ViewContainerRef } from '@angular/core';
+import { Component, OnInit,Inject, ChangeDetectorRef, Output,EventEmitter,HostListener,OnDestroy,ViewChild } from '@angular/core';
 import { IrctcApiService} from 'src/app/shared/services/irctc.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { trainResponse } from 'src/app/entites/train-response';
@@ -29,6 +29,9 @@ export interface DialogData {
   styleUrls: ['./trains.component.scss']
 })
 export class TrainsComponent implements OnInit {
+
+  isMobile:boolean= true;
+        dummyForLoader = Array(10).fill(0).map((x,i)=>i);
           domainName:any;
           searchdate:any;
           avltrains:any;
@@ -177,10 +180,16 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
   return false;
  };
  this.assetPath = this.sg['domainPath'];
+       
+ 
    }
+   
+      @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+        this.isMobile = window.innerWidth < 991 ?  true : false;
+        }
   ngOnInit() {
      this.titleService.setTitle('Home | IRCTC');
-    
+      this.isMobile = window.innerWidth < 991 ?  true : false;
      this.selectedQuota = 'GN';
      this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
      const queryParams = this.activeRoute.snapshot.queryParams;
@@ -219,7 +228,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
           this.rest.updateCardDetails(this.customerInfo);
          if(this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && ( this.customerInfo['ccustomer'].points_available!=undefined || this.customerInfo['ccustomer'].points_available!=null))
           this.customeravailablepoints=(Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN'); 
-          this.initiateCards();
+          //this.initiateCards();
           
           
          }
@@ -245,7 +254,13 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       this.rest.trackEvents( track_body).subscribe(result => {});
   }
   
-  
+   moveTop() {
+       window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+});
+ }
      initiateCards(){
         this.show_earnpoints = this.serviceSettings.show_earnpoints;
         let service_value=this.serviceSettings.savingCalculator;
@@ -274,6 +289,31 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         }
         }
      }
+       openMobileFilterSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
+
+  }
+
+  CloseSortingSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+  onApplyFilter(){
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
   	getCardDetails(){ 
 		const urlParams = new HttpParams()
 		.set('postData', 'XXXXX')
