@@ -87,8 +87,8 @@ public modeselectTrending= 'All';
   bannerSlide:number=1;
   poweredByPartners:[];
   angForm: FormGroup;
-  points_available :any;
-
+  IsPointsCardDetails:boolean=true;
+  IsPointsCardDetailsModel:boolean=false;
 
   constructor(private spinnerService: NgxSpinnerService,public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService,private fb: FormBuilder) {
      this._flightService.showHeader(true);
@@ -120,7 +120,6 @@ public modeselectTrending= 'All';
    // this._styleManager.removeScript('owl');
   }
    createForm() {
-   console.log("bbbb")
     this.angForm = this.fb.group({
        mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
        last_4_digit: ['', [Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
@@ -928,13 +927,12 @@ public modeselectTrending= 'All';
         }
         document.getElementById('unlockCardPopup').click();
         this.rest.AvailablePoints(URLparams).subscribe(res => {
-         // this.IsmodelShow=true;
-         //this.IsgoldCardDetails=false;
-         //this.IsgoldCardDetailsModel=true;
+         this.IsPointsCardDetails=false;
+         this.IsPointsCardDetailsModel=true;
           this.angForm.reset();
           this.spinnerService.show();  
           if(res.status=="true"){
-              this.points_available=res.points_available;
+              this.customeravailablepoints=res.points_available;
            }
          }); 
     }

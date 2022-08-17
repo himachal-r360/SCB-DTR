@@ -68,7 +68,7 @@
             <div class="col-lg-6 col-sm-12" *ngIf="isLogged==true">
 
                 <div class="row mb-3">
-                    <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints">
+                    <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints"  [hidden]="IsPointsCardDetails">
                         <div class="card_points_info">
                             <div>
                                 <div class="card_select">
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12" *ngIf="isLogged">
+                    <div class="col-sm-12" *ngIf="isLogged" [hidden]="IsPointsCardDetailsModel">
                         <div class="unlock_card">
                             <div class="">
                                  <img src="{{cdnUrl}}images/smartbuy/icons/coin-icn.svg" alt="" class="img-fluid">
@@ -851,8 +851,8 @@
                         <button type="button" class="btn cancel_btn" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary verify_btn" [disabled]="!angForm.valid">Verify</button>
                       </div>
-                      <p>Form value: {{ angForm.value | json }}</p>
-                      <p>Form status: {{ angForm.status | json }}</p>
+                      <!-- <p>Form value: {{ angForm.value | json }}</p>
+                      <p>Form status: {{ angForm.status | json }}</p> -->
                   </form>
                  
             </div>
