@@ -19,7 +19,7 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 import { FlightService } from '../common/flight.service';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
-
+import { createMask } from '@ngneat/input-mask';
 declare var $: any;
 @Component({
   selector: 'app-foryou-tab',
@@ -114,7 +114,11 @@ public modeselectTrending= 'All';
      //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
     
   }
-  
+   public mask = {
+     guide: true,
+     showMask : true,
+     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
+   };
    ngOnDestroy() {
    // this._styleManager.removeStyle('owl-default');
    // this._styleManager.removeScript('owl');

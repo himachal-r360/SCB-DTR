@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
+import { createMask } from '@ngneat/input-mask';
 @Component({
   selector: 'app-banners',
   templateUrl: './banners.component.html',
@@ -25,6 +26,11 @@ export class BannersComponent implements OnInit {
 
    this.createForm();
  }
+  public mask = {
+    guide: true,
+    showMask : true,
+    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
+  };
   angForm: FormGroup;
   mainBanners:any[];
   serviceSettings: any;
