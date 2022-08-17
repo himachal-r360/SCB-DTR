@@ -346,9 +346,13 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
+      this.flightList.forEach((z:any)=>{
+        z.isTimeLess = this.IsTimeDiffLess(z.flights)
+      });
       this.ReturnflightList = this.ascPriceSummaryFlighs(res.response.returnFlights);
       this.ReturnflightList.forEach((z:any)=>{
-        z.disabled = false
+        z.disabled = false,
+        z.isTimeLess = this.IsTimeDiffLess(z.flights)
       });
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
@@ -1561,6 +1565,27 @@ getLayoverHour(obj1: any, obj2: any) {
     dateHour = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
   }
   return dateHour;
+}
+
+IsTimeDiffLess(flights:any)
+{
+ var disable = false;
+ if(flights.length > 1)
+ {
+  for(var i =0 ; i< (flights.length -1); i++)
+  {
+    var diff = new Date(flights[i+1].departureDateTime).valueOf() -new Date(flights[i].arrivalDateTime).valueOf();
+    var diffInHours = diff/1000/60/60;
+
+    if(diffInHours <= 2)
+    {
+      disable = true;
+      break;
+    }
+  }
+
+ }
+ return disable;
 }
 
 }
