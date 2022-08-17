@@ -946,7 +946,7 @@ public modeselectTrending= 'All';
           "user_id":this.customerInfo["id"],
           'modal':'REWARD',
           'type' : 'available_points',
-          'clientToken':'SMARTBUY',
+          'clientToken':this.sg['domainName'],
           'services_id':7,
           'partner_id':1,
         }
