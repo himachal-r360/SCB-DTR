@@ -92,13 +92,14 @@ export class FlightService {
     if (LOCALJSON == 'true') {
       return this.http.get('assets/data/flightInfo.json');
     } else {
-      
+
       return this.http.post(this.flightInfo, param, { headers: this.header })
     }
   }
 
   getMulticityList(param:any){
     let body = JSON.stringify(param);
+    console.log(body)
     return this.http.post(this.multicityFlight , body , { headers: this.header })
   }
 
