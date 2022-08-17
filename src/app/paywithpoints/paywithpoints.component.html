@@ -50,17 +50,26 @@
                   </div>
               </div>
             </div>
+            <form [formGroup]="Formotp" (ngSubmit)="generateVoucherOtp()">
             <div class="col-md-12">
               <p>Please note that you can pay maximum {{redemption_value}}% of the transaction amount through Points i.e,<br>
-              &#8377; <span>{{orderamount* (redemption_value/100)}}</span> ({{redemption_value}}% of &#8377;<span>{{orderamount}}</span>) only. Balance amount should be paid by Card or Account. </p><br>
-                <p ><input checked="" name="" type="checkbox"><label class="checkbox xs-check-font">By Redeeming points you agree to our
-                  <a href="https://smartbuyuat.reward360.us/corporate/terms_conditions" target="_blank">Terms and Conditions</a></label>
-                </p>
+              &#8377; <span>{{orderamount* (redemption_value/100)}}</span> ({{redemption_value}}% of &#8377;<span>{{orderamount}}</span>) only. Balance amount should be paid by Card or Account. </p>
+               <div class="form-check pt-10">
+                <input class="form-check-input" [(ngModel)]="otpaccepted" type="checkbox" formControlName="termsconditionvoucher" name="termsconditionvoucher" id="termsconditionvoucher">
+                <label class="form-check-label xs-check-font" for="termsconditionvoucher" >
+                    By Redeeming points you agree to our <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> Terms and Conditions
+                </label>
+                <div *ngIf="submittedotpform && Formotp.controls.termsconditionvoucher.errors" class="error">
+                                <small *ngIf="Formotp.controls.termsconditionvoucher.errors.required || Formotp.controls.termsconditionvoucher.errors.pattern">Please accept Terms and Conditions</small>
+                            </div>
+            </div>
+               
               
-              <div class="col-12">
-                <button type="" class="btn btn-primary" id="header_submit3" (click)="generateVoucherOtp()">Get OTP</button>
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary w-50" id="header_submit3">Get OTP</button>
               </div>
             </div>
+          </form>
           </div>
         </div>
     
@@ -69,7 +78,7 @@
 </div>
 <div class="container payment_cnt" *ngIf="voucherOtp">
   <div class="col-12">
-<form [formGroup]="Form3" (ngSubmit)="OTPVerification()">
+<form [formGroup]="Formotpvalidate" (ngSubmit)="OTPVerification()">
         <div class="redeem-verification-section">
             <p class="ver-info pb-4">OTP has been generated successfully and sent to your HDFC Bank registered Email ID/Mobile Number</p>
             <div class="row">
@@ -89,9 +98,9 @@
                                 <countdown #cd1 [config]="{ leftTime: 900, format: 'mm:ss'}" (finished)="onFinishedTimer()" (event)="handleEvent($event,cd1)"></countdown>
                             </span> Mintues Left</p>
                         </div>
-                        <div *ngIf="submittedForm1 && Form1.controls['otp']['errors']" class="error">
-                                <small *ngIf="Form1.hasError('required','otp')">Please enter OTP.</small>
-                                <small *ngIf="Form1.hasError('pattern','otp')">Please enter a valid OTP.</small>
+                        <div *ngIf="submittedFormotpvalidate && Formotpvalidate.controls.otp.errors" class="error">
+                                <small *ngIf="Formotpvalidate.controls.otp.errors.required">Please enter OTP.</small>
+                                <small *ngIf="Formotpvalidate.controls.otp.errors.pattern">Please enter a valid OTP.</small>
                         </div>
                     </div>
                 </div>
@@ -101,7 +110,7 @@
                     <button type="submit" class="w-50 btn btn-primary redeem-active-btn nxt-redeem-success" data-dismiss="modal">Done</button>
                 </div>
                 <div class="col-xs-6">
-                    <button class="w-50 btn btn-primary ml-3 redeem-default-btn" data-dismiss="modal" (click)="closeDialog()">Cancel</button>
+                    <button class="w-50 btn  ml-3 redeem-default-btn" data-dismiss="modal" (click)="closeotp()">Cancel</button>
                 </div>
                
             </div>
@@ -110,9 +119,11 @@
   </div>
 </div>
 <div class="container payment_cnt">
-  <div class="col-12">
+  <div class="row">
     <div class="col-6"><img src="{{cdnUrl}}images/smartbuy/icons/payment/voucher.png" alt="Voucher"> Have a Voucher?</div>
-    <div class="col-6 pay-right" (click)="voucherForm()" *ngIf="!voucherapplyform">Apply Voucher</div>
+    <div class="col-6 text-right" >
+      <div (click)="voucherForm()" *ngIf="!voucherapplyform" class="voucher_apply">Apply Voucher</div>
+    </div>
   </div>
   <div class="col-12" *ngIf="voucherapplyform">
       <p>Please enter the below details to redeem Points</p>
@@ -174,15 +185,83 @@
                                 <small *ngIf="voucherForm1.hasError('pattern','applyvouchercode')">Please enter a valid voucher code.</small>
                         </div>
                     </div>
-                </div>        
-                <button type="submit" class="btn btn-primary my-3" (click)="applyVoucher">VALIDATE</button>
+                </div>   
+                <div class="text-right">     
+                
+                <button type="button" class="btn  my-3 voucher_apply" (click)="applyVoucherCancel()">Cancel</button>
+                <button type="submit" class="btn btn-primary my-3 w-25" (click)="applyVoucher()"><a href="javascript:;">Apply</a></button>
+                </div>
         </div>
     </form>
   </div>
 </div>
 <div class="container payment_cnt">
-  <div class="col-12">
+  <div class="row">
     <div class="col-6"><img src="{{cdnUrl}}images/smartbuy/icons/payment/new_card.png" alt="Voucher"> Would you like use another card</div>
-    <div class="col-6 pay-right">Add Card</div>
+    <div class="col-6 text-right">
+      <div (click)="addCardform()" *ngIf="!voucheraddform" class="voucher_apply">Add Card</div>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="voucheraddform">
+     
+      <form  [formGroup]="cardaddForm1" (ngSubmit)="addcardform()">
+        <div class="my-3">
+            <!-- <h6 class="w-80">{{data.popup}} Please Enter Your Credit Card Details</h6> -->
+                <!-- <div> -->
+                    <div class="voucher-code-entry card-num-edit">
+                        
+                        <div class="row">
+                        <div class="col-4 ">
+                            <div class="row two-inputs">
+                                <div class="col-md-6  p-0">
+                                    <input class="cus-input" type="text" formControlName="first4digit" placeholder="123456789" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="9" autofocus="on">
+                                </div>
+                                <div class="col-3 pl-0 py-2">
+                                    <span class="crad_x">XXX</span>
+                                </div>
+                                <div class="col-3 p-0">
+                                    <input class="cus-input" type="text" formControlName="last4digit" placeholder="1234" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="4">
+                                </div>
+                            </div>
+                            <div class="small-gray-text">First 9 digits and last 4 digits</div>
+                              <div *ngIf="(submitted1 && voucherForm1.controls.first4digit.errors) || (submitted1 && voucherForm1.controls.last4digit.errors)" class="error">
+                            <small *ngIf="voucherForm1.hasError('required','first4digit') || voucherForm1.hasError('required','last4digit')">Please enter first 9 Digits and last 4 digits is required.</small>
+                            <small *ngIf="voucherForm1.hasError('pattern','first4digit') || voucherForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
+                        </div>
+                        <div *ngIf="submitted1 && voucherForm1.get('first4digit').dirty" class="error">
+                            <small *ngIf="voucherForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
+                        </div>
+                        </div>
+                      
+                    <!-- </div> -->
+                    <div class="voucher-code-entry col-4">
+                        <!-- <div class="small-gray-text"> <small style="color: #aaa;font-size: 10px;">Registered with HDFC bank</small></div> -->
+                        <input type="text" formControlName="applymobile" [(ngModel)]="customermobile" [value]="customermobile" autocomplete="nope" name="applymobile"  maxlength="10" (keypress)="numberInput($event);AvoidSpace($event)" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" placeholder="Mobile Number">
+
+                        <div *ngIf="submitted1 && voucherForm1.controls['applymobile']['errors']" class="error">
+                                <small *ngIf="voucherForm1.hasError('required','applymobile')">Please enter the registered mobile number.</small>
+                                <small *ngIf="voucherForm1.hasError('pattern','applymobile')">Please enter a valid 10 digits mobile number.</small>
+                        </div>
+                        <div class="small-gray-text">Registered with HDFC bank</div>
+                    </div>
+                    <div class="voucher-code-entry date-section col-4">
+                            <!-- <input id="applydate1"  type="text" autocomplete="off" placeholder="dd/mm/yyyy" > -->
+                            <input matInput [matDatepicker]="picker1" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob"> 
+                            <mat-datepicker-toggle matSuffix [for]="picker1" class="date-icon"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <div *ngIf="submitted1 && voucherForm1.controls['dob']['errors']" class="error">
+                                <small *ngIf="voucherForm1.hasError('required','dob')">Please enter date of birth.</small>
+                            </div>
+                    </div>
+                  </div>
+                  
+                </div>   
+                <div class="text-right">     
+                
+                <button type="button" class="btn  my-3 voucher_apply" (click)="addCardCancel()">Cancel</button>
+                <button type="submit" class="btn btn-primary my-3 w-25" (click)="addCard()"><a href="javascript:;">Add</a></button>
+                </div>
+        </div>
+    </form>
   </div>
 </div>

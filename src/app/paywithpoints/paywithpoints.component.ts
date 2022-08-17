@@ -58,17 +58,24 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  redemptionMsg:any;
  redemption_value:any;
  voucherOtp:Boolean=false;
+ otpaccepted:Boolean=false;
  voucherapplyform:Boolean=false;
+ voucheraddform:Boolean=false;
  voucherslider:Boolean=true;
- submittedForm3:Boolean=false;
- Form3: FormGroup;
+ submittedFormotpvalidate:Boolean=false;
+ submittedotpform:Boolean=false;
+ Formotpvalidate: FormGroup;
+ Formotp: FormGroup;
  voucherForm1: FormGroup;
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.getCustomerCards();
-    this.Form3 = this.formBuilder.group({
+    this.Formotpvalidate = this.formBuilder.group({
           otp:['', [Validators.required,Validators.pattern("^[0-9]*$")]]
+        });
+    this.Formotp = this.formBuilder.group({
+          termsconditionvoucher:['', [Validators.required,Validators.pattern('true')]]
         });
      this.voucherForm1 = this.formBuilder.group({
           first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
@@ -204,7 +211,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
     ngOnChanges(changes: SimpleChanges): void {
     this.orderamount= Number(this.payTotalFare);
-    this.orderamount = this.orderamount - this.value;
+    // this.orderamount = this.orderamount - this.value;
     this.setSlider();
   }
     getCustomerCards(){
@@ -236,11 +243,16 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
 
          
       }
+      var max_value_redemption = (Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100);
+      if(max_value<max_value_redemption){
+        max_value_redemption = max_value;
+      }
+
        let opts: Options = {
-                  floor: 0,
-                  ceil: (Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100),
+                  floor: min_value,
+                  ceil: max_value_redemption,
             };
-            this.value = 0;
+            this.value = min_value;
              this.options = opts;
   }
   checkAvailablePointsforSavedCard(){ 
@@ -290,8 +302,29 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
   voucherForm(){
     this.voucherOtp = false;
+    this.voucheraddform = false;
     this.voucherslider = false;
     this.voucherapplyform = true;
+  }
+  addCardform(){
+    this.voucherOtp = false;
+    this.voucheraddform = true;
+    this.voucherslider = false;
+    this.voucherapplyform = false;
+  }
+  addCardCancel(){
+    this.voucherOtp = false;
+    this.voucheraddform = false;
+    this.voucherslider = true;
+    this.voucherapplyform = false;
+    
+  }
+  closeotp(){
+    this.voucherOtp = false;
+    this.voucheraddform = false;
+    this.voucherslider = true;
+    this.voucherapplyform = false;
+    
   }
 
   selectedCard(id){
@@ -306,16 +339,17 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
  
   generateVoucherOtp(){
+    this.submittedotpform=true;
+    if (this.Formotp.status !='VALID') {
+      return;
+    }else{
+      this.submittedotpform=false;
+      this.otpaccepted = false;
     //need to change as per api
     var request = {
       "takecard":this.selectedCardDetails.id,
-      "type":"available_points",
-      "bin":"",
-      "clientToken":this.sg['domainName'].toUpperCase(),
+      "amount":this.orderamount,
       "ctype":this.ctype,
-      "modal":"DIGITAL",
-      "noopt": 1,
-      // "customer_id":this.customerInfo["customerid"],
       "programName":this.sg['domainName'],
       "_token":this.XSRFTOKEN
     };
@@ -332,16 +366,17 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherslider = true;
         }
     }), (err: HttpErrorResponse) => {
-      var message = 'Something went wrong';
-      alert(message);
+      this.voucherOtp = false;
+      this.voucherslider = true;
       this.errorMsg0="";
       
     };
+  }
     
   }
    OTPVerification(){
-    this.submittedForm3=true;
-    if (this.Form3.status !='VALID') {
+    this.submittedFormotpvalidate=true;
+    if (this.Formotpvalidate.status !='VALID') {
       return;
     }else{
       console.log('validated');
@@ -403,6 +438,32 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         console.log(dobStr);
         console.log(applyvouchercode);*/
 
+    }
+  }
+  applyVoucherCancel(){
+    this.voucheraddform = false;
+    this.voucherOtp = false;
+    this.voucherslider = true;
+    this.voucherapplyform = false;
+  }
+    AvoidSpace($event) {
+    var keycode = $event.which;
+    if (keycode == 32)
+    event.preventDefault();
+  }
+  numberInput($event) {
+    var keycode = $event.which;
+    if (!(keycode >= 48 && keycode <= 57)) {
+      event.preventDefault();
+    }
+  }
+  /*special char & rupee symbol ( Rs.)*/
+  specialcharInput($event) {
+    var keycode = $event.which;
+    if ((keycode >= 33 && keycode <= 47) || (keycode >= 91 && keycode <= 96) || (keycode >= 58 && keycode <= 64) ||
+    (keycode >= 123 && keycode <= 126) || (keycode == 8377) || (keycode == 8364) || (keycode == 128) || (keycode == 163) ||
+    (keycode == 165)){
+      event.preventDefault();
     }
   }
 
