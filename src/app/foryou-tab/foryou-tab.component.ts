@@ -17,6 +17,8 @@ import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { FlightService } from '../common/flight.service';
+import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var $: any;
 @Component({
@@ -84,8 +86,11 @@ public modeselectTrending= 'All';
   cookie_redirectNavigation: boolean = false;
   bannerSlide:number=1;
   poweredByPartners:[];
+  angForm: FormGroup;
+  points_available :any;
 
-  constructor(public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService) {
+
+  constructor(private spinnerService: NgxSpinnerService,public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService,private fb: FormBuilder) {
      this._flightService.showHeader(true);
    
     this.serviceSettings = this.appConfigService.getConfig();
@@ -100,21 +105,28 @@ public modeselectTrending= 'All';
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
     //console.log((this.poweredByPartners));
-
+    
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
     
     // this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
      //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
-
+    
   }
   
    ngOnDestroy() {
    // this._styleManager.removeStyle('owl-default');
    // this._styleManager.removeScript('owl');
   }
-  
+   createForm() {
+   console.log("bbbb")
+    this.angForm = this.fb.group({
+       mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
+       last_4_digit: ['', [Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
+       dob: ['', Validators.required ]
+    });
+  }
  loadTopBanner(l) {
         window.scrollTo(0, 0);
         setTimeout(function () {
@@ -213,7 +225,7 @@ public modeselectTrending= 'All';
 
   ngOnInit() {
     
-
+      this.createForm();
      setTimeout(() => {
      
      
@@ -253,11 +265,7 @@ public modeselectTrending= 'All';
                this.sg['card_variant'] = 'Other Credit/Debit Card';
           }
         
-      }
-     // console.log(this.sg['customerInfo']);
-    //  console.log(this.customerInfo);
-    //   console.log(this.isLogged);
-      
+      }  
          //Top Banner
     var getBannerParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], type: 'foryou-top' })) };
     this.rest.getBanner(JSON.stringify(getBannerParam)).subscribe(result => {
@@ -344,7 +352,7 @@ public modeselectTrending= 'All';
               }
 
             } else {
-
+              
               var get_value = JSON.parse(item);
               if (data == 'busLastSearch' && localStorage.getItem('busLastSearch') !== null) {
 
@@ -390,9 +398,9 @@ public modeselectTrending= 'All';
 
             }
             if (date == undefined) { var dates = new Date(); var date = moment(dates).format('ddd, MMM Do'); }
-        
+          
+        //  if(searchFrom!=undefined){
           var from =   searchFrom.split('(');  
-
           if(type=='hotel') { var from =   searchFrom; var searfrom = from; } else { var from =   searchFrom.split('(');  var searfrom = from[0]; }
 
           if(type=='hotel') { var to =   searchTo; var searto = to; } else { var to =   searchTo.split('(');  var searto = to[0]; }
@@ -406,11 +414,11 @@ public modeselectTrending= 'All';
               Redirecturl: url
             });
           });
-          this.cookie_all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-         
+          this.cookie_all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); 
           this.recentsearchData = this.cookie_all.slice(0, 2);
           this.recentsearchDataAll = this.cookie_all.slice(0, 4);
-          
+
+         // }
         }
         
         if (typeof this.recentsearchData != undefined || this.recentsearchData.length == 0 || typeof result.result[0].foryouRecentSearch != undefined) {
@@ -902,6 +910,34 @@ public modeselectTrending= 'All';
       this.document.location.href = environment.MAIN_SITE_URL + url;
     }
   }
+  onSubmit(){
+       //$("#unlockCardPopup").modal("hide");
+       
+       this.customerInfo = this.sg['customerInfo'];
+       console.log(this.customerInfo);
+       
+       let URLparams = {
+          "mobile": this.angForm.controls['mobile_no'].value,
+          "customer_id": this.customerInfo["customerid"],
+          "programName":this.sg['domainName'],
+          "last4digit":this.angForm.controls['mobile_no'].value,
+          "_token":this.customerInfo["XSRF-TOKEN"],
+          "DOB":this.angForm.controls['dob'].value,
+          "savecard":1,
+          "user_id":this.customerInfo["id"],
+        }
+        document.getElementById('unlockCardPopup').click();
+        this.rest.AvailablePoints(URLparams).subscribe(res => {
+         // this.IsmodelShow=true;
+         //this.IsgoldCardDetails=false;
+         //this.IsgoldCardDetailsModel=true;
+          this.angForm.reset();
+          this.spinnerService.show();  
+          if(res.status=="true"){
+              this.points_available=res.points_available;
+           }
+         }); 
+    }
 
 }
 
