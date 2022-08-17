@@ -540,7 +540,7 @@ searchAutoComplete($event, field, device, index:any) {
 
       this.flightSearchCallBack(searchValue);
 
-      localStorage.setItem('flightLastSearch',JSON.stringify(searchValue));
+      localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
 
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 

@@ -296,7 +296,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
 
   busSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearch');
+      let continueSearch:any=localStorage.getItem('continueSearchBus');
       if(continueSearch==null){
         this.continueSearchBuss=[];
       }

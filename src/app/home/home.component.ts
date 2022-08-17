@@ -202,7 +202,7 @@ export class HomeComponent implements OnInit {
         if(continueSearchValBusParse!=null){
         this.continueSearchValBus =JSON.parse(continueSearchValBusParse);
         }
-           let continueSearchValTrainParse:any= localStorage.getItem('continueSearchBus');
+           let continueSearchValTrainParse:any= localStorage.getItem('continueSearchTrain');
         if(continueSearchValTrainParse!=null){
         this.continueSearchValTrain =JSON.parse(continueSearchValTrainParse);
         }    
@@ -246,11 +246,13 @@ export class HomeComponent implements OnInit {
   }
 
   continueSearchBus(param:any){
-  
+     let  url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
+      this.router.navigateByUrl(url);
 
   }
   continueSearchTrain(param:any){
-  
+    let  url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
+      this.router.navigateByUrl(url);
 
   }
 }
