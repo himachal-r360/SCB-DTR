@@ -89,6 +89,8 @@ public modeselectTrending= 'All';
   angForm: FormGroup;
   IsPointsCardDetails:boolean=true;
   IsPointsCardDetailsModel:boolean=false;
+  IsCardError:boolean=true;
+  CardErrorMsg:any;
 
   constructor(private spinnerService: NgxSpinnerService,public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService,private fb: FormBuilder) {
      this._flightService.showHeader(true);
@@ -233,6 +235,8 @@ public modeselectTrending= 'All';
      
      
     //Check Laravel Seesion
+        console.log('customerInfo');   
+        console.log(this.sg['customerInfo']);
         if(this.sg['customerInfo']){
          var customer_cookie;
           if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
@@ -257,8 +261,11 @@ public modeselectTrending= 'All';
           this.isLogged = true;
           this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
           this.rest.updateCardDetails(this.customerInfo);
-          if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null))
+          if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
+            this.IsPointsCardDetails=false;
+            this.IsPointsCardDetailsModel=true;
+           }
           //this.initiateCards();
              }
 
@@ -914,30 +921,45 @@ public modeselectTrending= 'All';
     }
   }
   onSubmit(){
-       //$("#unlockCardPopup").modal("hide");
-       
+       this.angForm.markAllAsTouched();
+       if (this.angForm.invalid){
+         return false; 
+       }
        this.customerInfo = this.sg['customerInfo'];
        console.log(this.customerInfo);
-       
+       this.IsCardError=true;
        let URLparams = {
           "mobile": this.angForm.controls['mobile_no'].value,
           "customer_id": this.customerInfo["customerid"],
           "programName":this.sg['domainName'],
-          "last4digit":this.angForm.controls['mobile_no'].value,
+          "last4digit":this.angForm.controls['last_4_digit'].value,
           "_token":this.customerInfo["XSRF-TOKEN"],
           "DOB":this.angForm.controls['dob'].value,
           "savecard":1,
           "user_id":this.customerInfo["id"],
+          'modal':'REWARD',
+          'type' : 'available_points',
+          'clientToken':'SMARTBUY',
+          'services_id':7,
+          'partner_id':1,
         }
-        document.getElementById('unlockCardPopup').click();
-        this.rest.AvailablePoints(URLparams).subscribe(res => {
-         this.IsPointsCardDetails=false;
-         this.IsPointsCardDetailsModel=true;
-          this.angForm.reset();
-          this.spinnerService.show();  
-          if(res.status=="true"){
-              this.customeravailablepoints=res.points_available;
-           }
+        var EncURLparams = {
+          postData: this.EncrDecr.set(JSON.stringify(URLparams))
+        };
+        this.rest.AvailablePoints(EncURLparams).subscribe(res => {
+         console.log(res); 
+         if(res.error_code=="100"){
+            document.getElementById('unlockCardPopup').click();
+            this.IsPointsCardDetails=false;
+            this.IsPointsCardDetailsModel=true;
+            this.angForm.reset();
+            this.spinnerService.show();  
+            this.customeravailablepoints=res.points_available;
+          }else{
+               this.IsCardError=false;
+               this.CardErrorMsg=res.message;
+          }   
+
          }); 
     }
 
