@@ -97,11 +97,23 @@ export class RestapiService {
   getRegaliaGoldList ():Observable<any> {
     return this.http.get('assets/data/regalia_gold.json');
   }
-  getMilestoneDetail ():Observable<any> {
-    return this.http.get('assets/data/milestone.json');
+  getMilestoneDetail (param:any):Observable<any> {
+        if(LOCALJSON=='true'){
+          return this.http.get('assets/data/milestone.json');
+          //return this.http.post('http://offers.smartbuylocal.reward360.us/api/get_milestone_details',param, config).pipe(map((response: any) => response));
+        }else{
+          return this.http.post(MAIN_SITE_URL+this.domainPath+'get_milestone_details',param, config).pipe(map((response: any) => response));
+        }
   }
-  availablePoints() :Observable<any>{
-    return this.http.get('assets/data/availablepoints.json');
+  AvailablePoints(param){
+      //console.log(param);
+    //return this.http.post(this.endpoint+'availablepoints', param, config).pipe(map((response:any) => response));
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/availablepoints.json').pipe(map((response:any) => response));
+    }
+    else{
+      return this.http.post(this.endpoint+'availablepoints', param, config).pipe(map((response:any) => response));
+    }
   }
   
     verifyDomain ():Observable<any> {

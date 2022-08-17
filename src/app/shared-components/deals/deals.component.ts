@@ -15,7 +15,6 @@ export class DealsComponent implements OnInit {
 
   constructor(public rest: RestapiService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService,private EncrDecr: EncrDecrService) {
     
-    console.log(this.sg);
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl;
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -73,6 +72,7 @@ export class DealsComponent implements OnInit {
   //Get Deals
   getDeals(){
     var getDealParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: 'All', sub_category: 'All'})) };
+    console.log(this.sg['domainName']);
     this.rest.getDeals(JSON.stringify(getDealParam)).subscribe(result => {
       if (result.status == 'success') {
         this.showDealList = true;
