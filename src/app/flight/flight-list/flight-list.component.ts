@@ -239,7 +239,7 @@ ngOnInit(): void {
         this.gotoTop();
     this.loader = true;
     this.getQueryParamData(null);
-    this.headerHideShow(null)
+    this.headerHideShow(null);
     this.getAirpotsNameList();
     this.getAirlinesIconList();
     this.getCoupons();

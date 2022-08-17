@@ -17,8 +17,8 @@ import { AppConfigService } from '../../app-config.service';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { DOCUMENT } from '@angular/common';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
-import { PayService } from 'src/app/shared/services/pay.service'
 import * as moment from 'moment';
+import { FlightService } from 'src/app/common/flight.service';
 export interface DialogData {
   animal: string;
   name: string;
@@ -129,9 +129,9 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         repeatBookingData:any = [];
         passParam:any = [];
     
-  constructor(@Inject(DOCUMENT) private document: any,public rest:RestapiService,private activeRoute: ActivatedRoute,private _bottomSheet: MatBottomSheet,private irctcService: IrctcApiService,
+  constructor(private _flightService: FlightService,@Inject(DOCUMENT) private document: any,public rest:RestapiService,private _bottomSheet: MatBottomSheet,private irctcService: IrctcApiService,
     public dialog: MatDialog,public commonHelper: CommonHelper,  private activatedRoute: ActivatedRoute,private sg: SimpleGlobal, 
-    private location: Location,private router: Router,@Inject(APP_CONFIG) appConfig: any,private titleService: Title,private appConfigService:AppConfigService,private EncrDecr: EncrDecrService,private pay: PayService) { 
+    private location: Location,private router: Router,@Inject(APP_CONFIG) appConfig: any,private titleService: Title,private appConfigService:AppConfigService,private EncrDecr: EncrDecrService) { 
       this.serviceSettings=this.appConfigService.getConfig();
       if(this.serviceSettings['new_ui_ux']==0 && this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['TRAIN']!=1){
      this.router.navigate(['/**']);
@@ -189,10 +189,16 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         }
   ngOnInit() {
      this.titleService.setTitle('Home | IRCTC');
-      this.isMobile = window.innerWidth < 991 ?  true : false;
+       this.isMobile = window.innerWidth < 991 ?  true : false;
+     this.activatedRoute.url.subscribe(url =>{
+     
+        this.resetPopups();
+        this.moveTop();
+        this.loading = true;
+      this.headerHideShow(null);
      this.selectedQuota = 'GN';
      this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
-     const queryParams = this.activeRoute.snapshot.queryParams;
+     const queryParams = this.activatedRoute.snapshot.queryParams;
      var datePipe = new DatePipe('en-US');
      var previousDay = new Date(this.journeyDate);
      var departureTimestamp = previousDay.setDate(previousDay.getDate() - 1);
@@ -252,6 +258,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
      
       const track_body: string = trackUrlParams.toString();
       this.rest.trackEvents( track_body).subscribe(result => {});
+       });
   }
   
    moveTop() {
@@ -261,34 +268,22 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       behavior: 'smooth'
 });
  }
-     initiateCards(){
-        this.show_earnpoints = this.serviceSettings.show_earnpoints;
-        let service_value=this.serviceSettings.savingCalculator;
-        this.cardType=this.sg['card_variant'];
-        this.c_value=service_value[this.cardType]['Amazon Shopping'];
-   
-       this.saveCard=AppConfig.saveCard;
-        if(this.saveCard==1){
-        this.getCardDetails();		//fetch card details for normal login
-        //UPDATE AVAILABLE POINTS 
-        if(this.custCardsAvailable==true){
-        this.pay.updateavaliablepoints().subscribe(res => {
-	        if(res['points_available'] && (res['points_available']!=undefined || res['points_available']!=null)){
-		        this.customeravailablepoints = res['points_available'].toLocaleString('en-IN'); 
-	        }else{
-                let msg="Points not updated";
-                if(res['message']!=undefined)
-                {
-                msg=res['message'];
-                }
-	        }
-        }), (err: HttpErrorResponse) => {
-	        var message = 'Something went wrong';
-	        console.log(message);
-        };
+ 
+   headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
+    }
+  }
+ 
+         resetPopups(){
+        $(".modal").hide();
+        $("body").removeAttr("style");
+        $(".modal-backdrop").remove();
         }
-        }
-     }
+
        openMobileFilterSection()
   {
     var filterDiv = document.getElementById('sortMobileFilter');
@@ -345,46 +340,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
 			console.log(message);
 		};
 	}
-       selectedCard(e){
-	this.selectedCardDetails=this.customercards[e.target.value].id;
-	this.selectedCardValue=this.customercards[e.target.value].card;
-	this.checkAvailablePointsforSavedCard();
-     }
-     
-       	checkAvailablePointsforSavedCard(){
-		var request = {
-			"takecard":this.selectedCardDetails,
-			"type":"available_points",
-			"bin":"",
-			"clientToken":this.sg['domainName'].toUpperCase(),
-			"ctype":'redbus',
-			"modal":"DIGITAL",
-			"noopt": 1,
-			"customer_id":this.customerInfo["customerid"],
-			"programName":this.sg['domainName'],
-			"_token":this.XSRFTOKEN
-		};
-		var passData = {
-		  postData: this.EncrDecr.set(JSON.stringify(request))
-		};
-		this.pay.getcustomercardpoints(passData).subscribe(response => {
-			if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
-			{
-				this.errorMsg0=""
-				this.customeravailablepoints=(Number(this.response1['points_available'])).toLocaleString('en-IN'); 
-				
-			}else{
-				this.errorMsg0="Something went wrong";
-				if(this.response1['message']!=undefined)
-				{
-					this.errorMsg0=this.response1['message'];
-				}
-			}
-		}), (err: HttpErrorResponse) => {
-			var message = 'Something went wrong';
-			this.errorMsg0="";
-		};
-	}  
+
      
     goTo(path){
      this.router.navigate([this.sg['domainPath']+path]);
