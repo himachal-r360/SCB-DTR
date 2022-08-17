@@ -208,22 +208,31 @@ nextIndex=0;
     console.log(searchObj ,"searchObj");
     this.sub = this._flightService.getMulticityList(searchObj).subscribe((res: any) => {
       console.log(res , "response");
-      this.WithoutFilterFlightList = res.response.journeys;
-      this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
-      this.flightListWithOutFilter = this.flightList;
-      this.DocKey = res.response.docKey;
-      console.log(this.flightList)
-      this.getAirlinelist();
-      if (this.flightList.length > 0) {
-        this.GetMinAndMaxPriceForFilter();
-        // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-        // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
-         this.sliderRange(this, this.minPrice, this.maxPrice);
-       }
-      // console.log(this.flightList,"this.flightList");
-       this.getAirlinelist();
-       this.loader = false;
-       this.popularFilterFlightData();
+      if(res.response.journeys)
+      {
+        this.WithoutFilterFlightList = res.response.journeys;
+        this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
+        this.flightList.forEach((z:any)=>{
+          z.isTimeLess = this.IsTimeDiffLess(z.flights)
+        });
+        this.flightListWithOutFilter = this.flightList;
+        this.DocKey = res.response.docKey;
+        console.log(this.flightList)
+        this.getAirlinelist();
+        if (this.flightList.length > 0) {
+          this.GetMinAndMaxPriceForFilter();
+          // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+          // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+           this.sliderRange(this, this.minPrice, this.maxPrice);
+         }
+        // console.log(this.flightList,"this.flightList");
+         this.getAirlinelist();
+         this.loader = false;
+         this.popularFilterFlightData();
+      }
+      else{
+        this.loader = false;
+      }
 
     }, (error) => { console.log(error) });
 
@@ -246,6 +255,9 @@ nextIndex=0;
     this.selectedTrip = i;
     this.flightList = [];
     this.flightList = this.WithoutFilterFlightList[i].sectors;
+    this.flightList.forEach((z:any)=>{
+      z.isTimeLess = this.IsTimeDiffLess(z.flights)
+    });
     this.flightListWithOutFilter = this.flightList;
     this.popularFilterFlightData();
   }
@@ -1150,5 +1162,26 @@ openMobileFilterSection()
       filterDiv.style.display = 'none';
     }
     this.popularFilterFlightData();
+  }
+
+  IsTimeDiffLess(flights:any)
+  {
+   var disable = false;
+   if(flights.length > 1)
+   {
+    for(var i =0 ; i< (flights.length -1); i++)
+    {
+      var diff = new Date(flights[i+1].departureDateTime).valueOf() -new Date(flights[i].arrivalDateTime).valueOf();
+      var diffInHours = diff/1000/60/60;
+
+      if(diffInHours <= 2)
+      {
+        disable = true;
+        break;
+      }
+    }
+
+   }
+   return disable;
   }
 }
