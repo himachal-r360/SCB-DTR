@@ -189,9 +189,79 @@
         </div>
     </section>
     
-    
+            <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='train' && continueSearchValTrain && continueSearchValTrain.length>0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Continue Your Search</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- continue search website view  -->
+                <ng-container *ngIf="isMobile == false">
+                    <div class="col-md-3" *ngFor="let continue of continueSearchValTrain; let i = index">
+                        <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearchTrain(continue)">
+                            <div class="Continuesearch-items ">
+                                <div class="Continuesearch-items-text">
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchFrom}}</h6>
+                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                    </div>
+                                    <div class="Continuesearch-image">
+                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.png"
+                                            alt="">
+                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png" alt="">
+                                    </div>
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchTo}}</h6>
+                                    </div>
+                                </div>
+                                <div class="Continuesearch-items-actions">
+                                    <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ng-container>
+                <!-- continue search mobile view  -->
+                <div class="box-item" *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let continue of continueSearchValTrain; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearchTrain(continue)">
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchFrom}}</h6>
+                                                <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img *ngIf="!continue.arrival"
+                                                    src="{{cdnUrl}}/images/icons/next-active.png" alt="">
+                                                <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png"
+                                                    alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchTo}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Trending Routes -->
-    <section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight'">
+    <section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -415,7 +485,7 @@
     </section>
 
     <!-- Popular International  Flight Routes -->
-    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
+    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

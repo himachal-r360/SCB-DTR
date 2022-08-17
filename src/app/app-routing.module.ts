@@ -31,6 +31,14 @@ const routes: Routes = [
   },
   
   {
+
+    path: 'flights',
+    loadChildren: () => import('./flight/flight.module').then(m => m.FlightModule)
+  },
+  
+
+  {
+
     path: 'foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   },

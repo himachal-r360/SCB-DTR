@@ -385,11 +385,22 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
+<<<<<<< HEAD
                                                               <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,list.priceSummary,$event)">Select</a>
+=======
+                                                              <button  class="button-style onwardbuttons {{list.flightKey}}" id="selectedOnward_{{i}}_{{j}}" [disabled]="list.isTimeLess" [ngClass]="{'disable-partner':list.isTimeLess}"  (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
+>>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
                                                           </div>
                                                       </div>
 
                                                   </div>
+                                                  <div class="round-options-list-bottom" *ngIf="list.isTimeLess">
+                                                    <div class="round-extra">
+                                                    </div>
+                                                    <span class="difference-error">
+                                                      2 hours diiference required for selecting this flight
+                                                    </span>
+                                                </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
                                                           <!--<ul class="extra-tabs-right-ul">
@@ -555,10 +566,21 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
+<<<<<<< HEAD
                                                               <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event)" >Select</button>
+=======
+                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled || list.isTimeLess"  [ngClass]="{'disable-partner':list.disabled || list.isTimeLess}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)" >Select</button>
+>>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
                                                           </div>
                                                       </div>
                                                   </div>
+                                                  <div class="round-options-list-bottom" *ngIf="list.isTimeLess">
+                                                    <div class="round-extra">
+                                                    </div>
+                                                    <span class="difference-error">
+                                                      2 hours diiference required for selecting this file
+                                                    </span>
+                                                </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
                                                           <!--<ul class="extra-tabs-right-ul">
@@ -746,7 +768,11 @@
                                                   <h6>₹ {{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking-Selected">
+<<<<<<< HEAD
                                                   <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
+=======
+                                                  <button [disabled]="list.isTimeLess" [ngClass]="{'disable-partner':list.isTimeLess}" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
+>>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom"  >
@@ -1165,7 +1191,11 @@
                                                   <h6>₹{{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking-Selected">
+<<<<<<< HEAD
                                                   <button class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
+=======
+                                                  <button class="button-style returnButtons"  [disabled]="item.disabled || list.isTimeLess" [ngClass]="{'disable-partner':item.disabled ||list.isTimeLess}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
+>>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom" >

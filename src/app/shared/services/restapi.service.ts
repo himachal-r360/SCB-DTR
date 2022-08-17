@@ -82,6 +82,7 @@ export class RestapiService {
     }
     }
   }
+
   getDealsOffers ():Observable<any> {
     if(LOCALJSON=='true'){
       return this.http.get('assets/data/getDealsandoffers.json');
@@ -298,6 +299,13 @@ createItinerary(param){
     }
     
   }
+    getCards(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/checckcsrf.json').pipe(map((response:any) => response));
+  }else{
+    return this.http.post(this.endpoint+'getcustomercard', param, config).pipe(map((response:any) => response));
+  }
+}
   
  getFlexipayDetails ():Observable<any> {
       return this.http.post(this.endpoint+'get-flexipay-details', config).pipe(map((response: any) => response));  

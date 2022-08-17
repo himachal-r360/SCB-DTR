@@ -31,6 +31,16 @@ API_URL:{
   'IS_MAIN':0,
   
   
+  API_URL_IRCTC:{
+ 'SMARTBUY': '//smartbuydev.reward360.in/api/',
+ 'DINERS': '//smartbuydev.reward360.in/diners/api/',
+ 'INFINIA'  : '//smartbuydev.reward360.in/infinia/api/',
+ 'REGALIA': '//smartbuydev.reward360.in/regalia/api/',
+ 'INFINIA_RESERVE'  : '//smartbuydev.reward360.in/infinia_reserve/api/',
+ 'REGALIA_GOLD': '//smartbuydev.reward360.in/regalia_gold/api/',
+ 'CORPORATE': '//smartbuydev.reward360.in/corporate/api/',
+ 'BUSINESS': '//smartbuydev.reward360.in/business/api/',
+  },
   
   BUS_SITE_URL:{
  'SMARTBUY': 'https://smartbuydev.reward360.in/lite/',

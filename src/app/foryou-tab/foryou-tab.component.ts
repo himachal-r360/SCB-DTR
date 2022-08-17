@@ -307,21 +307,21 @@ public modeselectTrending= 'All';
         }
         
         var allCookies_key = [];
-        if (localStorage.getItem('flightLastSearch') !== null) allCookies_key.push('flightLastSearch');
+        if (localStorage.getItem('flightLastSearchNew') !== null) allCookies_key.push('flightLastSearchNew');
         if (localStorage.getItem('HotelRecentSearch') !== null) allCookies_key.push('HotelRecentSearch');
-        if (localStorage.getItem('busLastSearch') !== null) allCookies_key.push('busLastSearch');
-        if (localStorage.getItem('trainLastSearch') !== null) allCookies_key.push('trainLastSearch');
+        if (localStorage.getItem('busLastSearchNew') !== null) allCookies_key.push('busLastSearchNew');
+        if (localStorage.getItem('trainLastSearchNewNewNewNew') !== null) allCookies_key.push('trainLastSearchNewNewNewNew');
 
-        if (localStorage.getItem('flightLastSearch') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearch') !== null || localStorage.getItem('trainLastSearch') !== null) {
+        if (localStorage.getItem('flightLastSearchNew') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearchNew') !== null || localStorage.getItem('trainLastSearchNewNewNewNew') !== null) {
 
           Object.values(allCookies_key).forEach(data => {
 
             let item = localStorage.getItem(data);
            
 
-            if (data == 'flightLastSearch' || data == 'HotelRecentSearch') {
+            if (data == 'flightLastSearchNew' || data == 'HotelRecentSearch') {
 
-              if (data == 'flightLastSearch' && localStorage.getItem('flightLastSearch') !== null) {
+              if (data == 'flightLastSearchNew' && localStorage.getItem('flightLastSearchNew') !== null) {
                let url;
                var searchValue = JSON.parse(item);
                
@@ -371,7 +371,7 @@ public modeselectTrending= 'All';
             } else {
               
               var get_value = JSON.parse(item);
-              if (data == 'busLastSearch' && localStorage.getItem('busLastSearch') !== null) {
+              if (data == 'busLastSearchNew' && localStorage.getItem('busLastSearchNew') !== null) {
 
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
@@ -391,7 +391,7 @@ public modeselectTrending= 'All';
                 var searchFrom = get_value.searchFrom;
                 var searchTo = get_value.searchTo;
               }
-              else if (data == 'trainLastSearch' && localStorage.getItem('trainLastSearch') !== null) {
+              else if (data == 'trainLastSearchNewNewNewNew' && localStorage.getItem('trainLastSearchNewNewNewNew') !== null) {
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');

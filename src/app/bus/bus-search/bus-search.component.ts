@@ -239,7 +239,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
 
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('busLastSearch');
+   let lastSearch:any=localStorage.getItem('busLastSearchNew');
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.fromCityName=lastSearch.searchFrom;
@@ -296,7 +296,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
 
   busSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearch');
+      let continueSearch:any=localStorage.getItem('continueSearchBus');
       if(continueSearch==null){
         this.continueSearchBuss=[];
       }
@@ -333,7 +333,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
      } else {
       let searchValue = this.searchBusForm.value;
       this.busSearchCallBack(searchValue);
-      localStorage.setItem('busLastSearch',JSON.stringify(searchValue));
+      localStorage.setItem('busLastSearchNew',JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       let url;
       url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));

@@ -27,7 +27,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { type } from 'os';
 import alertify from 'alertifyjs';
-
+import { FlightService } from 'src/app/common/flight.service';
 
 @Component({
     selector: 'app-travellerstrain',
@@ -44,6 +44,7 @@ export class TrainsTravellerComponent implements OnInit {
     journeyDateactual: any;
     journeyDateactualstr: any;
     journeyArrivalDate: any;
+    showFareSummary = false;
     validateUser: boolean = true;
     passengerReservationChoice: number = 99;
     travelInsuranceOpted: boolean = false;
@@ -83,9 +84,6 @@ export class TrainsTravellerComponent implements OnInit {
     response: any = [];
     IRCTCUserError: any;
     userValidError: boolean = false;
-    openDefaultInfoTab: boolean = true;
-    openTravellerInfoTab: boolean = false;
-    openPaymentTab: boolean = false;
     stationNames: any;
     scheduleParam: any;
     reqData: any;
@@ -114,12 +112,7 @@ export class TrainsTravellerComponent implements OnInit {
     coachNoPattern = /^(([a-zA-Z]{1})([0-9]{1,3}))/;
     //coachNoPattern= /^([a-zA-Z])([0-9]{1,3})/;
     travellers = []; children = [];
-    travellersArray = []; 
-    childrenArray = [];
-    
-    travellersArrayM = []; 
-    childrenArrayM = [];
-    
+    travellersArray = []; childrenArray = [];
     travellersFilledArray = [];    infanttravellersFilledArray = [];
     seniorCitizenStatus: boolean = false;
     seniorCitizenStatusAddMore: any[] = [false];
@@ -230,9 +223,6 @@ export class TrainsTravellerComponent implements OnInit {
     showgst: boolean = true;
     masterBerth: any[];
     masterFood: any[];
-    masterClasses: any[];
-    masterQuota: any[];
-    
     ladiesQuotaTrue: boolean=false;
     stationsdump: any[];
     fromstnDesc: string;
@@ -245,6 +235,7 @@ export class TrainsTravellerComponent implements OnInit {
     availFlag1: number = 0;
     forgoFiftyFlag1: number = 0;
     forgoFullFlag1: number = 0;
+    showoffer:boolean=false;
     isFlexipayEligibleFlag:boolean = false;
     flexipaysummry:boolean;
     flexiDiscount:any;
@@ -258,11 +249,11 @@ export class TrainsTravellerComponent implements OnInit {
     serviceSettings:any;
     traveldate:any;
     boardingstnName:any;
-    travelDuration:any;
     saveTravllerShow:boolean=false;
     travellerlist:any;
     adulttravellerlist:any;
-    checkPaxCount:any;
+    infanttravellerlist:any;
+    checkPaxCount:any;checkinfantPaxCount:any;
     savePaxcount:any=0;
     savecustomerResp:any;
     GSTList:any=[];
@@ -292,20 +283,21 @@ export class TrainsTravellerComponent implements OnInit {
     cityResp;any;
     destState:any;
     destpincodeError:any;
-    idButtonActive: boolean = false;
     foreignPassDOBArr:any[]=[];
     isExpanded:boolean = false;
     isAdultExpanded:boolean = false;
     isInfantExpanded:boolean = false;
     isGstExpanded:boolean = false;
      enablesavedTraveller:number=0;
-    constructor(private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
+     customerInfo:any;
+       isMobile:boolean= true;
+    constructor(private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
         this.serviceSettings=this.appConfigService.getConfig();
         this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
         this.domainName = this.sg['domainName'];
         this.trainItenararyCovidPopup = this.serviceSettings.trainItenararyCovidPopup;
 
-        if (this.serviceSettings['new_ui_ux']==0 && this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['TRAIN'] != 1) {
+        if (this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['TRAIN'] != 1) {
             this.router.navigate([ '/**']);
         }
         this.stationsdump = require('src/assets/data/stations.json');
@@ -314,26 +306,24 @@ export class TrainsTravellerComponent implements OnInit {
         this.whatsappFeature =this.serviceSettings.whatsappFeature;
         this.enableGST = this.serviceSettings.enableSavedGST;
         this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
-            this.masterClasses= AppConfig.IRCTC_Classes;
-        this.masterQuota = AppConfig.IRCTC_Quota;
     }
-    customerInfo:any;
+
     ngOnInit() {
-    
          this.titleService.setTitle('Home | IRCTC');
         var datePipe = new DatePipe('en-US');
         this.masterBerth = AppConfig.IRCTC_Berth;
         this.masterFood = AppConfig.IRCTC_Food;
-        
-         const userGroup: FormGroup = new FormGroup({});
 
-        userGroup.addControl('userID', new FormControl('', [Validators.required, Validators.pattern("^[0-9a-zA-Z_]+$"), Validators.minLength(2)]));
-        this.idForm = userGroup;
-
-    
+     this.isMobile = window.innerWidth < 991 ?  true : false;
+     this.activatedRoute.url.subscribe(url =>{
+      this.headerHideShow(null);
+           
+        this.resetPopups();
+        this.moveTop();
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
+        
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
      
         this.journeyDateactual =  datePipe.transform(jdate, 'yyyy-MM-dd', 'en-ES');
@@ -362,34 +352,23 @@ export class TrainsTravellerComponent implements OnInit {
 
         /*** SESSION */
         sessionStorage.removeItem("coupon_amount");
-  setTimeout(() => {
-    //Check Laravel Seesion
 
+        setTimeout(() => {
+    //Check Laravel Seesion
         if(this.sg['customerInfo']){
 		if(sessionStorage.getItem("channel")=="payzapp"){
-		var customerInfo = this.sg['customerInfo']; 
-		this.customerInfo= customerInfo;
+		 var customerInfo = this.sg['customerInfo'];
+		 this.customerInfo=customerInfo;
 		this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
 		setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
 		this.REWARD_CUSTOMERID = '0000';
 		this.REWARD_EMAILID = '';
 		this.REWARD_MOBILE = '';
 		this.REWARD_CUSTOMERNAME = '';
-                //get last IRCTC USER ID from cookie
-               /* if (this.cookieService.get('irctcuser') != "") {
-                var userId = this.cookieService.get('irctcuser');
-                this.IRCTCUserId = JSON.parse(atob(userId));
-                 this.idForm['controls']['userID'].setValue(this.IRCTCUserId);
-                 this.submitBookingInfo();
-                }else{
-                this.showIrctcLogin();
-                }*/
-             
 		}else{
-		 var customerInfo = this.sg['customerInfo'];
-		 this.customerInfo= customerInfo;
-            if(customerInfo["org_session"]==1){
-             
+		  var customerInfo = this.sg['customerInfo'];
+		   this.customerInfo=customerInfo;
+             if(customerInfo["org_session"]==1){
             // console.log(customerInfo)
               setTimeout(function () { this.validateUser = false; }.bind(this), 1000);
              if(customerInfo["guestLogin"]==true){
@@ -413,6 +392,8 @@ export class TrainsTravellerComponent implements OnInit {
                 let body: string = urlSearchParams.toString();
 
                 this.passengerForm.patchValue({
+                    passengerName: '',
+                    passengerLastName0: customerInfo["lastname"],
                     passengerMobile: customerInfo["mobile"],
                     passengerEmail: customerInfo["email"]
                 });
@@ -447,9 +428,11 @@ export class TrainsTravellerComponent implements OnInit {
 
 
                 this.rest.getSaveCards(saveCardParam).subscribe(data => {
-                let cardData = data;
-                let newCardArr = [];
-                this.savedCards = data;
+                    let cardData = data;
+                    let newCardArr = [];
+       this.savedCards = data;
+
+                    
                 });
 
                 //check flexipay eligible
@@ -473,18 +456,6 @@ export class TrainsTravellerComponent implements OnInit {
                 this.getCustomerGstDetails();
               }
              }
-             
-                //get last IRCTC USER ID from cookie
-               /* if (this.cookieService.get('irctcuser') != "") {
-                var userId = this.cookieService.get('irctcuser');
-                this.IRCTCUserId = JSON.parse(atob(userId));
-                 this.idForm['controls']['userID'].setValue(this.IRCTCUserId);
-                 this.submitBookingInfo();
-                }else{
-                this.showIrctcLogin();
-                }*/
-             
-               
             } else {
                 setTimeout(function () { this.validateUser = false; }.bind(this), 1000);
                 this.REWARD_CUSTOMERID = '0000';
@@ -496,7 +467,8 @@ export class TrainsTravellerComponent implements OnInit {
                     this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
             }
           }  
-        }else {
+        
+          }else{
             setTimeout(function () { this.validateUser = false; }.bind(this), 1000);
             this.REWARD_CUSTOMERID = '0000';
             this.REWARD_EMAILID = '';
@@ -505,11 +477,51 @@ export class TrainsTravellerComponent implements OnInit {
             this.XSRFTOKEN = 'NULL';
             if (environment.localInstance == 0)
                 this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
-         }
-     }, 50);
+          }
+  
+    }, 50);
 
         /***SESSION ends */
+
+        const userGroup: FormGroup = new FormGroup({});
+
+        userGroup.addControl('userID', new FormControl('', [Validators.required, Validators.pattern("^[0-9a-zA-Z_]+$"), Validators.minLength(2)]));
+        userGroup.addControl('boardingStation', new FormControl('', [Validators.required]));
+        this.idForm = userGroup;
+
         const jobGroup: FormGroup = new FormGroup({});
+        jobGroup.addControl('passengerName0', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength), Validators.maxLength(this.maxNameLength)]));
+        jobGroup.addControl('passengerGender0', new FormControl(''));
+        jobGroup.addControl('passengerAge0', new FormControl(''));
+        jobGroup.addControl('passengerBerthChoice0', new FormControl(''));
+        jobGroup.addControl('passengerNationality0', new FormControl(''));
+        jobGroup.addControl('passengerTravelDocument0', new FormControl(''));
+        jobGroup.addControl('passengerTravelDocCardNo0', new FormControl(''));
+        jobGroup.addControl('passengerSeniorCitizen0', new FormControl(''));
+        jobGroup.addControl('optChildBerth0', new FormControl(''));
+        jobGroup.addControl('optBedRoll0', new FormControl(''));
+        jobGroup.addControl('saveTraveller',new FormControl(''));
+        jobGroup.addControl('passengerAutoUpgradation', new FormControl(''));
+        jobGroup.addControl('vikalpInSpecialTrainsAccomFlag', new FormControl(''));
+        jobGroup.addControl('foreignPassengerDOB0', new FormControl(''));
+
+        jobGroup.addControl('passengerReservationCh', new FormControl(''));
+        jobGroup.addControl('coachId', new FormControl(''));
+
+        jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE));
+        jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID));
+        jobGroup.addControl('whatsappFlag', new FormControl('1'));
+        jobGroup.addControl('passengerAgree', new FormControl(''));
+
+        jobGroup.addControl('gstNumber', new FormControl());
+        jobGroup.addControl('gstBusinessName', new FormControl());
+        jobGroup.addControl('gstAddress', new FormControl());
+        jobGroup.addControl('gstCity', new FormControl());
+        jobGroup.addControl('gstPincode', new FormControl());
+        jobGroup.addControl('gstState', new FormControl());
+
+        jobGroup.addControl('saveGST', new FormControl('1'));
+        
         jobGroup.addControl('destAddressOne',new FormControl(''));
         jobGroup.addControl('destAddressTwo',new FormControl(''));
         jobGroup.addControl('destAddressThree',new FormControl(''));
@@ -517,66 +529,28 @@ export class TrainsTravellerComponent implements OnInit {
         jobGroup.addControl('destAddressState',new FormControl(''));
         jobGroup.addControl('destAddressCity',new FormControl(''));
         jobGroup.addControl('destAddressPost',new FormControl(''));
-        jobGroup.addControl('boardingStation', new FormControl('', [Validators.required]));
         this.passengerForm = jobGroup;
-        
-       
-        jobGroup.addControl('saveTraveller',new FormControl(''));
-        jobGroup.addControl('passengerAutoUpgradation', new FormControl(0));
-        jobGroup.addControl('AdditionalPreference', new FormControl(0));
-        jobGroup.addControl('vikalpInSpecialTrainsAccomFlag', new FormControl(''));
-        jobGroup.addControl('foreignPassengerDOB0', new FormControl(''));
-
-        jobGroup.addControl('passengerReservationCh', new FormControl(''));
-        jobGroup.addControl('coachId', new FormControl(''));
-        
-        jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE));
-        jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID));
-        jobGroup.addControl('whatsappFlag', new FormControl('1'));
-        //jobGroup.addControl('passengerAgree', new FormControl(''));
-
-         jobGroup.addControl('gstNumber', new FormControl());
-        jobGroup.addControl('gstBusinessName', new FormControl());
-        jobGroup.addControl('gstAddress', new FormControl());
-        jobGroup.addControl('gstCity', new FormControl());
-        jobGroup.addControl('gstPincode', new FormControl());
-        jobGroup.addControl('gstState', new FormControl());
-        
-
-        jobGroup.addControl('saveGST', new FormControl('1'));
    
+ 	    this.travellersArray.push(0);
         this.seniorCitizenStatus = false;
         this.boardingStations();
         this.getTrains();
+
+        //get last IRCTC USER ID from cookie
+        if (this.cookieService.get('user') != "") {
+            var userId = this.cookieService.get('user');
+            this.IRCTCUserId = JSON.parse(atob(userId));
+        }
+       }); 
         
     }
-    
-    showIrctcLogin(){
-    $('#irctc-login-popup').trigger('click');
-    
-    }
-    sendTrainDetails(){
-         this.gotoTop();
-    this.completedSteps = 2;
-    this.steps = 2;
-    }
-    continueTravellerDetails(){
-             this.gotoTop();
-    this.completedSteps = 3;
-    this.steps = 3;
-    }
-    continueReviewBooking(){
-                this.gotoTop();
-    this.completedSteps = 4;
-    this.steps = 4; 
-    }
-  gotoTop() {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
+    expandItems() {
+        if(this.isExpanded == false){
+          this.isExpanded = true;
+        }else if(this.isExpanded == true){
+          this.isExpanded = false;
+        }
+      }
     expandItemsAdult() {
         if(this.isAdultExpanded == false){
           this.isAdultExpanded = true;
@@ -584,7 +558,20 @@ export class TrainsTravellerComponent implements OnInit {
           this.isAdultExpanded = false;
         }
       }
-
+     expandItemsInfant() {
+        if(this.isInfantExpanded == false){
+          this.isInfantExpanded = true;
+        }else if(this.isInfantExpanded == true){
+          this.isInfantExpanded = false;
+        }
+      }
+      gstExpandItems() {
+        if(this.isGstExpanded == false){
+          this.isGstExpanded = true;
+        }else if(this.isGstExpanded == true){
+          this.isGstExpanded = false;
+        }
+      }
     convertToUpperCase($event) {
         $event.target.value = $event.target.value.toUpperCase();
     }
@@ -606,55 +593,24 @@ export class TrainsTravellerComponent implements OnInit {
 
     }
 
-    goBack() {
-    this.resetPopups();
-    this.router.navigateByUrl('/');
-  }  
-  resetPopups(){
-  
-  }
-    moveTab(page) {
-    this.gotoTop();
-    if(page<4){
-    this.totalCollectibleAmount=this.totalCollectibleAmountFromPartnerResponse;
-    this.coupon_amount=0;
+   headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
     }
-
+  }
  
-
-    if (page <= this.completedSteps) {
-      this.steps = page;
-      this.completedSteps = page;
-    }
-  }
-  
-  bookingSessionExpires(e: CountdownEvent) {
-
-    if (e.action == 'done') {
-   //  $('#bookingprocessExpires').modal('show');
-    }
-  }
-  
-    isCollapseBasefare: boolean = false;
-  isCollapseDiscount: boolean = false;
-  isCollapseVas: boolean = false;
-  isCollapse: boolean = false;
-    isCollapseShow(identifyCollpase) {
-    if (identifyCollpase == 'BaseFare') {
-      this.isCollapseBasefare = !this.isCollapseBasefare;
-    } else if (identifyCollpase == 'vas') {
-      this.isCollapseVas = !this.isCollapseVas;
-    } else if (identifyCollpase == 'discount') {
-      this.isCollapseDiscount = !this.isCollapseDiscount;
-    } else {
-      this.isCollapse = !this.isCollapse;
-    }
-
-  }
+         resetPopups(){
+        $(".modal").hide();
+        $("body").removeAttr("style");
+        $(".modal-backdrop").remove();
+        }
+    
 saveTravellerConsent(){
   alertify.alert('I give consent to Reward360 to store personal information which I am entering on my own accord to facilitate convenience in future for quick data entry while undertaking transaction completion across all/diverse merchant offering on Reward360 hosted platform. This information includes Title, First Name, Last Name, Date of Birth, Mobile Number, Gender, Email ID, Passport Details and GST details. I understand that this information is not being stored by HDFC Bank under any facility and HDFC Bank will not be held responsible should any issue arise related to this data storage.').setHeader('<b>Save this traveller for your future travel</b>') ;
 }
-
 
 saveGSTConsent(){
   alertify.alert('I give consent to Reward360 to store personal information which I am entering on my own accord to facilitate convenience in future for quick data entry while undertaking transaction completion across all/diverse merchant offering on Reward360 hosted platform. This information includes Title, First Name, Last Name, Date of Birth, Mobile Number, Gender, Email ID, Passport Details and GST details. I understand that this information is not being stored by HDFC Bank under any facility and HDFC Bank will not be held responsible should any issue arise related to this data storage.').setHeader('<b>Save this GST for your future travel</b>') ;
@@ -698,7 +654,6 @@ saveGSTConsent(){
             }
         });
     }
-    
     /*--------------------------------------BOOKING INFORMATION SECTION starts------------------------------------------------------------------***/
     errorInvalid: number = 1;
     expiredDate: any = new Date();
@@ -712,15 +667,11 @@ saveGSTConsent(){
         });
         passportdialog.afterClosed().subscribe(result => {
             if(result == 0){
-                this.openTravellerInfoTab = false;
-                this.openDefaultInfoTab = true;
                 this.resetPassword();
-                this.idButtonActive = false;
             }else if(result == 1){
-                this.openTravellerInfoTab = true;
-                this.openDefaultInfoTab = false;
-                // this.submitBookingInfo();
-                this.idButtonActive = true;
+                this.gotoTop();
+                this.completedSteps = 2;
+                this.steps = 2;
             }
              
         });
@@ -728,17 +679,51 @@ saveGSTConsent(){
 
 
 
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+    goBack() {
+    this.resetPopups();
+    this.router.navigateByUrl('/');
+  }  
+
+    moveTab(page) {
+    this.gotoTop();
+    if(page<4){
+    this.totalCollectibleAmount=this.totalCollectibleAmountFromPartnerResponse;
+    this.coupon_amount=0;
+    }
+
+ 
+
+    if (page <= this.completedSteps) {
+      this.steps = page;
+      this.completedSteps = page;
+    }
+  }
+  
+  bookingSessionExpires(e: CountdownEvent) {
+
+    if (e.action == 'done') {
+   //  $('#bookingprocessExpires').modal('show');
+    }
+  }
+
     submitBookingInfo() {
+       
          if (this.idForm.invalid ) {
          return;
          }else{
-          this.idButtonActive = true;
         var IRCTCUserId = this.idForm.controls['userID']['value'];
         this.spinnerService.show();
         if (IRCTCUserId != "" && IRCTCUserId != undefined && IRCTCUserId != null) {
             //set IRCTC userid in cookie
             this.expiredDate.setDate(this.expiredDate.getDate() + 90);
-            this.cookieService.set('irctcuser', btoa(JSON.stringify(IRCTCUserId)), this.expiredDate, '/','',true);
+            this.cookieService.set('user', btoa(JSON.stringify(IRCTCUserId)), this.expiredDate, '/','',true);
 
             this.userIdParam = {
                 "userLoginId": IRCTCUserId
@@ -759,13 +744,10 @@ saveGSTConsent(){
                     if(indexofsearchValue !== -1) { //**VALID & VERIFIED USER */
                         this.wsUserLogin = this.response.partnerResponse.userId;
                         this.userValidError = false;
-                        this.openTravellerInfoTab = false;
-                        this.openDefaultInfoTab = true;
                         this.errorInvalid = 0;
                         this.passengerForm.clearValidators();
                         this.passengerForm.updateValueAndValidity();
                         this.checkpassword();
-                        this.idButtonActive = true;
 
                     let trackUrlParams = new HttpParams()
                     .set('current_url', window.location.href)
@@ -779,36 +761,24 @@ saveGSTConsent(){
                     } else if (indexofsearchValue == -1) {//**NOT VERIFIED USER */
                         this.IRCTCUserError = "User not verified.Please re-enter";
                         this.userValidError = true;
-                        this.openTravellerInfoTab = false;
-                        this.openDefaultInfoTab = true;
                         this.submittedUserInfoForm = false;
                         this.errorInvalid = 1;
-                        this.idButtonActive = false;
                     } else {
                         this.IRCTCUserError = "User not verified.Please re-enter";
                         this.userValidError = true;
-                        this.openTravellerInfoTab = false;
-                        this.openDefaultInfoTab = true;
                         this.submittedUserInfoForm = false;
                         this.errorInvalid = 1;
-                        this.idButtonActive = false;
                     }
                 } else if (this.response.partnerResponse.error) {
                     this.IRCTCUserError = this.response.partnerResponse.error;
                     this.userValidError = true;
-                    this.openTravellerInfoTab = false;
-                    this.openDefaultInfoTab = true;
                     this.submittedUserInfoForm = false;
                     this.errorInvalid = 1;
-                    this.idButtonActive = false;
                 } else {
                     this.IRCTCUserError = "User not valid.Please re-enter";
                     this.userValidError = true;
-                    this.openTravellerInfoTab = false;
-                    this.openDefaultInfoTab = true;
                     this.submittedUserInfoForm = false;
                     this.errorInvalid = 1;
-                    this.idButtonActive = false;
                 }
                 this.validateBookingInfoForm();
             }, (err: HttpErrorResponse) => {
@@ -824,21 +794,15 @@ saveGSTConsent(){
                     }
                 });
                 this.userValidError = true;
-                this.openTravellerInfoTab = false;
-                this.openDefaultInfoTab = true;
                 this.submittedUserInfoForm = false;
                 this.errorInvalid = 1;
-                this.idButtonActive = false;
             });
         } else {
             this.spinnerService.hide();
             this.userValidError = true;
-            this.openTravellerInfoTab = false;
-            this.openDefaultInfoTab = true;
             this.submittedUserInfoForm = false;
             this.errorInvalid = 1;
             this.validateBookingInfoForm();
-            this.idButtonActive = false;
         }
       this.resetFormValidation();
       }
@@ -851,12 +815,12 @@ saveGSTConsent(){
             return;
         } else {
             this.errorInvalid = 0;
-            this.openTravellerInfoTab = false;
             this.getfareEnquiry();
         }
     }
 
     boardingStations() {
+       
         this.traindate = this.seacthResult.searchHistory.journeyDate;
         this.fromstn = this.seacthResult.selectedTrain.fromStnCode;
         this.tostn = this.seacthResult.selectedTrain.toStnCode;
@@ -895,6 +859,7 @@ saveGSTConsent(){
 	this.stationNames=tmp;
 	}
             
+            
             this.defaultBoardingStation = this.stationNames[0]['stnNameCode'];
             this.trainSchedlue(this.defaultBoardingStation);
              this.spinnerService.hide();
@@ -912,7 +877,7 @@ saveGSTConsent(){
         });
     }
     trainSchedlue(stationName) {
-    
+       
         if (stationName != '') {
             let stationCode = stationName.split(" - ");
             this.scheduleParam = {
@@ -942,17 +907,6 @@ saveGSTConsent(){
                         else{
                             this.traveldate = new Date(convDate.add(differenceDate,'d'));  
                         }
-                        
-                        
-    
-                var startTime = moment(moment(this.traveldate).format('DD-MM-YYYY')+' '+this.scheduletime, 'DD-MM-YYYY hh:mm');
-                var endTime = moment(moment(this.journeyArrivalDate).format('DD-MM-YYYY')+' '+this.arrivalTime, 'DD-MM-YYYY hh:mm');
-
-                var duration = moment.duration(endTime.diff(startTime));
-                var hours = duration.asMinutes();
-                this.travelDuration= Math.floor(hours / 60)+' hrs '+hours % 60+' mins';
-  
-                        
                     }
                 }
             });
@@ -1020,136 +974,26 @@ saveGSTConsent(){
         }, 16);
 
     }
-    
-    saveTravellerId=[]; saveChildTravellerId=[];
-        /**--------------------------------------SAVED TRAVELLER ------------------------------------------------------------------------ */
-    checksavedtraveller(){
-        let checksavedtravConfig = this.serviceSettings.enablesavedTraveller
-        if(checksavedtravConfig == 1){
-            this.saveTravllerShow = true;
-            var requestParams = {
-            'customerId':this.REWARD_CUSTOMERID
-            };
-
-            var postsavedTravellers = {
-            postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
-            };
-
-            this.rest.getCustomertravellerInfo(postsavedTravellers).subscribe(response =>{
-                // let respData = JSON.parse(this.EncrDecr.get(response.result ));
-                let resp = response['errorcode']; 
-                if(response['errorcode'] == 0){
-
-                if(response['value'].length > 0){
-                response['value'] =   response['value'].sort(function (a, b) {
-                var x = a['age']; var y = b['age'];
-                return ((x > y) ? -1 : ((x < y) ? 1 : 0));
-                });
-                }
-                this.travellerlist = response['value'];
-                
-                
-		this.adulttravellerlist =  this.travellerlist.filter(function(tra) {
-		return tra.age > 1;
-		});
-		
-		
-                for(let i=0;i<this.travellerlist.length;i++){
-                if(this.adulttravellerlist[i].age > 4)
-                this.saveTravellerId[this.adulttravellerlist[i].id]=-1
-                else
-                this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
-                }
-	                
-                this.checkPaxCount = this.adulttravellerlist.length;
-                }
-            }),(err:HttpErrorResponse)=>{
-               console.log('Something went wrong !');
-            
-            }
-        }
-    }
-    
-    
 
     passengerFormCount: number = 1;
-    currentId: any;
-    
-    clickPassenger($event,passenger,checkboxIndex) {
-      if($event.target.checked){
-      if(passenger.age > 4)
-      this.addTraveller(passenger,checkboxIndex);
-      else
-       this.addChild(passenger,checkboxIndex);
-      }else{
-        if(passenger.age > 4){
-         this.currentId=$('#passengerBoxId_'+checkboxIndex).val();
-        this.removeTraveller(parseInt(this.currentId),checkboxIndex);
-        } else{
-        this.currentId=$('#passengerChildBoxId_'+checkboxIndex).val();
-        this.removeChild(parseInt(this.currentId),checkboxIndex);
-        }
-      
-      }
-    }
-    
-     editPassenger(passenger,checkboxIndex) {
-      if(passenger.age > 4)
-      this.addTraveller(passenger,checkboxIndex);
-      else
-       this.addChild(passenger,checkboxIndex);
-    }
-    
-       manualAddTraveller(type){
-        if(type==1)
-        this.addTraveller(-1,-1);
-        else
-        this.addChild(-1,-1);
-       }
-    
-    
-    addTraveller(passenger,checkboxIndex) {
-           if ((this.travellersArray.length ) < (this.maxPassengers)) {
+    addTraveller() {
+
+        if ((this.travellersArray.length ) < (this.maxPassengers)) {
             this.travellers.push(this.travellersArray.length);
             this.travellersArray.push(this.passengerFormCount);
-            
-             if(checkboxIndex ==-1)
-            this.travellersArrayM.push(this.passengerFormCount);
 
             var i = Number(this.passengerFormCount);
-            
-            if(checkboxIndex !=-1)
-            this.saveTravellerId[checkboxIndex]=i;
-            
-                var gender=""; var arrAge = "";  var passengerName = "";
-                
-                if(checkboxIndex !=-1){
-                if((passenger.gender == 'M') || (passenger.gender == 'Male')) {
-                gender = 'M'
-                }else if((passenger.gender == 'F') || (passenger.gender == 'Female')){
-                gender = 'F';
-                }
 
-               
-                if(passenger.age != undefined){
-                arrAge = passenger.age;
-                }else{
-                arrAge = this.travellersFilledArray[i].age;
-                }
-                
-                passengerName=passenger.firstName+' '+passenger.lastName;
-                
-                }
- 
             this.defaultCountryArr[i] = "IN";
-            this.passengerForm.addControl('passengerName' + i, new FormControl(passengerName, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength), Validators.maxLength(this.maxNameLength)]));
+            this.passengerForm.addControl('passengerName' + i, new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength), Validators.maxLength(this.maxNameLength)]));
             this.passengerForm.addControl('passengerGender' + i, new FormControl('', Validators.required));
             this.passengerForm.addControl('passengerAge' + i, new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(5), Validators.max(125)]));
             this.passengerForm.addControl('passengerNationality' + i, new FormControl('', Validators.required));
+            //this.passengerForm.addControl('saveTraveller' + i, new FormControl('1'));
 
             this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
             this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
-           // this.passengerForm.controls['passengerAgree'].setValidators([Validators.required, Validators.pattern('true')]);
+            this.passengerForm.controls['passengerAgree'].setValidators([Validators.required, Validators.pattern('true')]);
 
 
             this.passengerForm.controls['passengerName' + i].updateValueAndValidity();
@@ -1158,25 +1002,22 @@ saveGSTConsent(){
             this.passengerForm.controls['passengerNationality' + i].updateValueAndValidity();
             this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
             this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-           // this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
+            this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
             this.passengerForm.addControl('passengerBerthChoice' + i, new FormControl(''));
-           
-           
-           
-        if (this.foodChoiceEnabled)
-        this.passengerForm.addControl('passengerMealPreference' + i, new FormControl('', [Validators.required]));
-        else
-        this.passengerForm.addControl('passengerMealPreference' + i, new FormControl(''));
-
-        this.passengerForm.addControl('passengerSeniorCitizen' + i, new FormControl(''));
-
-        this.passengerForm.addControl('optChildBerth' + i, new FormControl(''));
-        this.passengerForm.addControl('optBedRoll' + i, new FormControl(''));
 
 
-        this.passengerForm['controls']['passengerGender'+i].setValue(gender);
-        this.passengerForm['controls']['passengerAge'+i].setValue(arrAge);
-        this.genderSelectArr[i]=gender;
+            if (this.foodChoiceEnabled)
+                this.passengerForm.addControl('passengerMealPreference' + i, new FormControl('', [Validators.required]));
+            else
+                this.passengerForm.addControl('passengerMealPreference' + i, new FormControl(''));
+
+            this.passengerForm.addControl('passengerSeniorCitizen' + i, new FormControl(''));
+
+            this.passengerForm.addControl('optChildBerth' + i, new FormControl(''));
+            this.passengerForm.addControl('optBedRoll' + i, new FormControl(''));
+
+
+            //this.passengerForm.addControl('seniorCitizenStatus'+i, new FormControl('', Validators.required));
 
 
             if (this.travelInsuranceOpted == true) {
@@ -1192,22 +1033,21 @@ saveGSTConsent(){
             this.reservationCharge = this.seacthResult.fareData.reservationCharge * (Number(this.travellersArray.length) + 1);
             this.superfastCharge = this.seacthResult.fareData.superfastCharge * (Number(this.travellersArray.length) + 1);
             this.dynamicFare = this.seacthResult.fareData.dynamicFare * (Number(this.travellersArray.length) + 1);
+            // this.travel_ins_charge=Number(this.travel_ins_charge) * (Number(this.travellersArray.length)+1);
             this.travel_ins_charge_tax = this.seacthResult.fareData.travelInsuranceServiceTax * (Number(this.travellersArray.length) + 1);
             this.wp_charge = this.seacthResult.fareData.wpServiceCharge * (Number(this.travellersArray.length) + 1);
             this.wp_charge_tax = this.seacthResult.fareData.wpServiceTax * (Number(this.travellersArray.length) + 1);
             this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
             this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
             this.passengerFormCount++;
-            
-             if(checkboxIndex !=-1){
-               $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
-             $('#passengerBox_'+checkboxIndex).removeClass('hidden');
-             }
+
+            for(let i=0;i<this.checkPaxCount;i++){
+                this.disableCheckbox[i]=false;
+                if(this.modalcheckedvalue[i] != true){
+                    this.modalcheckedvalue[i] = false;
+                }
+            }
         } else {
-         if(checkboxIndex !=-1){
-          $('#passengerBox_'+checkboxIndex).addClass('hidden');
-          $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
-         } 
             var message = 'Maximum passengers cannot be more than ' + this.maxPassengers;
             const dialogRef = this.dialog.open(ConfirmationDialog, {
                 disableClose: true,
@@ -1220,31 +1060,19 @@ saveGSTConsent(){
             });
         }
 
+
+
+        //this.submitted = false;
+
     }
-    
-    
-    
-    removeTraveller(val,checkboxIndex) {
-    
-    
+    removeTraveller(val) {
         var passengerName = this.passengerForm.controls['passengerName' + val]['value'];
+
         const index = this.travellersArray.indexOf(val, 0);
-         if(checkboxIndex !=-1)
-     $('#passengerBox_'+checkboxIndex).addClass('hidden');
+
         if (index > -1) {
             this.travellersArray.splice(index, 1);
         }
-        
-        
-        if(checkboxIndex ==-1){
-        const index1 = this.travellersArrayM.indexOf(val, 0); 
-        if (index1 > -1) {
-        this.travellersArrayM.splice(index1, 1);
-        }
-
-        }
-
-        
         
         if (this.travellerlist.length > 0) {
             var trvList = [];
@@ -1305,56 +1133,29 @@ saveGSTConsent(){
 
     }
     childCount: number = 1;
-    addChild(passenger,checkboxIndex) {
-    
-    
+    addChild() {
         if ((this.childrenArray.length + 1) <= (this.maxInfants)) {
-        
-            if(checkboxIndex ==-1)
-            this.childrenArrayM.push(this.childCount);
-        
             this.childrenArray.push(this.childCount);
             var i = Number(this.childCount);
-            
-            if(checkboxIndex !=-1)
-            this.saveChildTravellerId[checkboxIndex]=i;
-            
-            var gender=""; var arrAge = ""; var childpassenger = "";
-           if(passenger !=-1){
-              
-                if((passenger.gender == 'M') || (passenger.gender == 'Male')) {
-                gender = 'M'
-                }else if((passenger.gender == 'F') || (passenger.gender == 'Female')){
-                gender = 'F';
-                }
-               
-                if(passenger.age != undefined){
-                arrAge = passenger.age;
-                }else{
-                arrAge = passenger.age;
-                }
-             childpassenger=passenger.firstName+' '+passenger.lastName;
-            }    
-            
-            this.passengerForm.addControl('childName' + i, new FormControl(childpassenger, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength)]));
-            this.passengerForm.addControl('childGender' + i, new FormControl(gender, Validators.required));
-            this.passengerForm.addControl('childAge' + i, new FormControl(arrAge, Validators.required));
+            this.passengerForm.addControl('childName' + i, new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength)]));
+            this.passengerForm.addControl('childGender' + i, new FormControl('', Validators.required));
+            this.passengerForm.addControl('childAge' + i, new FormControl('', Validators.required));
             // this.passengerForm.addControl('saveTravellerInfant' + i, new FormControl('1'));
             
             this.passengerForm.controls['childName' + i].updateValueAndValidity();
             this.passengerForm.controls['childGender' + i].updateValueAndValidity();
             this.passengerForm.controls['childAge' + i].updateValueAndValidity();
             this.childCount++;
-              if(checkboxIndex !=-1){
-           $('#passengerBox_'+checkboxIndex).removeClass('hidden');
-           $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
-           }
+            
+              for(let i=0;i<this.checkinfantPaxCount;i++){
+                this.disableCheckboxInfant[i]=false;
+                if(this.modalcheckedvalueInfant[i] != true){
+                    this.modalcheckedvalueInfant[i] = false;
+                }
+            }
+            
             
         } else {
-          if(checkboxIndex !=-1){
-          $('#passengerBox_'+checkboxIndex).addClass('hidden');
-          $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
-          }
             var message = 'Maximum Infants cannot be more than ' + this.maxInfants;
             const dialogRef = this.dialog.open(ConfirmationDialog, {
                 disableClose: true,
@@ -1368,27 +1169,12 @@ saveGSTConsent(){
             //this.childCount = Number(this.maxInfants)+1;
         }
     }
-    
-    
-    removeChild(val,checkboxIndex) {
+    removeChild(val) {
         var passengerName = this.passengerForm.controls['childName' + val]['value'];
-         if(checkboxIndex !=-1)
-         $('#passengerBox_'+checkboxIndex).addClass('hidden');
- 
- 
- 
+
         const index = this.childrenArray.indexOf(val, 0); 
         if (index > -1) {
             this.childrenArray.splice(index, 1);
-        }
-        
-        
-        if(checkboxIndex ==-1){
-        const index1 = this.childrenArrayM.indexOf(val, 0); 
-        if (index1 > -1) {
-        this.childrenArrayM.splice(index1, 1);
-        }
-
         }
 
         if (this.travellerlist.length > 0) {
@@ -1413,6 +1199,7 @@ saveGSTConsent(){
         this.passengerForm.removeControl('childAge' + val);
 
         this.passengerForm.clearValidators();
+        this.passengerForm.updateValueAndValidity();
         this.childCount--;
         this.children.splice(val, 1);
 
@@ -1425,6 +1212,7 @@ saveGSTConsent(){
     }
 
     getfareEnquiry() {
+       
         this.traindate = this.seacthResult.searchHistory.journeyDate;
         this.trainDateStr = this.traindate.replace(/-/g, "");
         this.fromstn = this.seacthResult.selectedTrain.fromStnCode;
@@ -1567,11 +1355,24 @@ saveGSTConsent(){
                     this.defaultCountry = "IN";
                 });
 
+                this.passengerForm.controls['passengerName0'].setValidators([Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength), Validators.maxLength(this.maxNameLength)]);
+                this.passengerForm.controls['passengerGender0'].setValidators([Validators.required]);
+                this.passengerForm.controls['passengerAge0'].setValidators([Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(5), Validators.max(125)]);
+                this.passengerForm.controls['passengerNationality0'].setValidators([Validators.required]);
 
+
+                this.passengerForm.controls['passengerMobile'].setValidators([Validators.required, Validators.pattern("^[6-9][0-9]{9}$"), Validators.minLength(10)]);
+                this.passengerForm.controls['passengerEmail'].setValidators([Validators.required, Validators.pattern(this.emailPattern)]);
+                this.passengerForm.controls['passengerAgree'].setValidators([Validators.required, Validators.pattern('true')]);
+
+                this.passengerForm.controls['passengerName0'].updateValueAndValidity();
+                this.passengerForm.controls['passengerGender0'].updateValueAndValidity();
+                this.passengerForm.controls['passengerAge0'].updateValueAndValidity();
+                this.passengerForm.controls['passengerNationality0'].updateValueAndValidity();
 
                 this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
                 this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-                //this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
+                this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
 
                 let trackUrlParams = new HttpParams()
                 .set('current_url', window.location.href)
@@ -1611,25 +1412,24 @@ saveGSTConsent(){
 
     seniorCitizenArr(genderSelectArr, i) {
         this.genderArr[i] = genderSelectArr;
-        let age = this.passengerForm.controls['passengerAge' + i].value;
-        let genderArr = this.passengerForm.controls['passengerGender' + i].value;
-       
-        if (this.genderArr[i]== 'M') {
-            if ((Number(age) >= Number(this.srctzMenAge))) {
+        
+        
+        if (this.genderArr[i] == 'M') {
+            if ((Number(this.age) >= Number(this.srctzMenAge))) {
                 this.seniorCitizenEnabledArr[i] = true;
             } else {
                 this.seniorCitizenEnabledArr[i] = false;
 
             }
         } else if (this.genderArr[i] == 'F') {
-            if ((Number(age) >= Number(this.srctzWomenAge))) {
+            if ((Number(this.age) >= Number(this.srctzWomenAge))) {
                 this.seniorCitizenEnabledArr[i] = true;
             } else {
                 this.seniorCitizenEnabledArr[i] = false;
 
             }
         } else if (this.genderArr[i] == 'T') {
-            if ((Number(age) >= Number(this.srctzTransgenderAge))) {
+            if ((Number(this.age) >= Number(this.srctzTransgenderAge))) {
                 this.seniorCitizenEnabledArr[i] = true;
             } else {
                 this.seniorCitizenEnabledArr[i] = false;
@@ -1644,7 +1444,6 @@ saveGSTConsent(){
         this.maxAgeLimitArr(i);
     }
     maxAgeLimitArr(i) {
-    
         let age = this.passengerForm.controls['passengerAge' + i].value;
         if (this.quota == "LD" && (this.genderArr[i] == "M" || this.genderArr[i] == "T") && Number(age) > Number(this.maxChildAge)) {
 
@@ -1697,7 +1496,7 @@ saveGSTConsent(){
                 this.passengerForm.controls['passengerSeniorCitizen'+i].clearValidators();
                 this.passengerForm.controls['passengerSeniorCitizen' + i].updateValueAndValidity();
                 this.passengerForm['controls']['passengerSeniorCitizen' + i].setValue('');
-                //this.resetFormValidation();
+                this.resetFormValidation();
                
             }
         } else if (this.genderArr[i] == 'F') {
@@ -1711,7 +1510,7 @@ saveGSTConsent(){
                 this.passengerForm.controls['passengerSeniorCitizen'+i].clearValidators();
                 this.passengerForm.controls['passengerSeniorCitizen' + i].updateValueAndValidity();
                 this.passengerForm['controls']['passengerSeniorCitizen' + i].setValue('');
-                //this.resetFormValidation();
+                this.resetFormValidation();
                   }
         } else if (this.genderArr[i] == 'T') {
             if ((Number(age) >= Number(this.srctzTransgenderAge) && (this.defaultCountryArr[i] == "IN"))&& this.fareEnqResponse['partnerResponse']['bkgCfg'].seniorCitizenApplicable == 'true') {
@@ -1723,7 +1522,7 @@ saveGSTConsent(){
                 this.passengerForm.controls['passengerSeniorCitizen'+i].clearValidators();
                 this.passengerForm.controls['passengerSeniorCitizen' + i].updateValueAndValidity();
                 this.passengerForm['controls']['passengerSeniorCitizen' + i].setValue('');
-               // this.resetFormValidation();
+                this.resetFormValidation();
             }
         } else {
             this.seniorCitizenEnabledArr[i] = false;
@@ -1865,27 +1664,6 @@ saveGSTConsent(){
             }
         }
     }
-    
-      gstNumberCheck(event) {
-        let inputVal: string = event.target.value;
-        var characterReg = /^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$/;
-        console.log(characterReg.test(inputVal));
-        if(characterReg.test(inputVal)) {
-        this.gstshow=true;
-        this.gstSelected=true;
-        }else{
-        this.gstshow=false;
-        this.gstSelected=false;
-        }
-
-      }
-      gstExpandItems() {
-        if(this.isGstExpanded == false){
-          this.isGstExpanded = true;
-        }else if(this.isGstExpanded == true){
-          this.isGstExpanded = false;
-        }
-      }
     gstToggle() {   
         this.gstshow = !this.gstshow;
         this.gstSelected = !this.gstSelected;
@@ -1903,15 +1681,15 @@ saveGSTConsent(){
         this.passengerForm.controls['gstState'].updateValueAndValidity();
         this.passengerForm.get('saveGST').clearValidators();
         this.passengerForm.controls['saveGST'].updateValueAndValidity();
+       
 
-
-        this.passengerForm['controls']['gstNumber'].setValue('');
-        this.passengerForm['controls']['gstBusinessName'].setValue('');
-        this.passengerForm['controls']['gstAddress'].setValue('');
-        this.passengerForm['controls']['gstCity'].setValue('');
-        this.passengerForm['controls']['gstPincode'].setValue('');
-        this.passengerForm['controls']['gstState'].setValue('');
-        this.passengerForm['controls']['saveGST'].setValue('');
+            this.passengerForm['controls']['gstNumber'].setValue('');
+            this.passengerForm['controls']['gstBusinessName'].setValue('');
+            this.passengerForm['controls']['gstAddress'].setValue('');
+            this.passengerForm['controls']['gstCity'].setValue('');
+            this.passengerForm['controls']['gstPincode'].setValue('');
+            this.passengerForm['controls']['gstState'].setValue('');
+              this.passengerForm['controls']['saveGST'].setValue('');
     }
    
 gstReset(){
@@ -1946,12 +1724,12 @@ gstReset(){
     }
     
        this.selectedCheckboxInfant = [];
- /*     this.infanttravellersFilledArray = [];
+      this.infanttravellersFilledArray = [];
     for(let i=0;i<this.checkinfantPaxCount;i++){
       this.disableCheckboxInfant[i]=false;
       this.modalcheckedvalueInfant[i]=false;
     }
-    */
+    
       
     if (this.travellersArray.length > 0) {
         for (let i of this.childrenArray) {
@@ -1975,7 +1753,6 @@ gstReset(){
 
     checkData:string = "0";
     showDatepickerforDOB:boolean = false;
-    
     checkforeign(){
            
             for (let i of this.travellersArray) {
@@ -1996,17 +1773,16 @@ gstReset(){
                     data: { messageData: message, }
                 });
                 passportdialog.afterClosed().subscribe(result => {
-                    this.captureInsurence();
+                    this.createTrainItinerary1();
                 });
             }  
             else
-            this.captureInsurence();
+            this.createTrainItinerary1();
             
     }
 
-    submitPassengerForm() {
+    createTrainItinerary() {
         this.submitted = true;
-        this.idButtonActive = false;
         if (this.gstSelected == true) {
             this.passengerForm.controls['gstNumber'].setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$'), Validators.minLength(15)]);
             this.passengerForm.controls['gstBusinessName'].setValidators([Validators.required, Validators.pattern("^[a-z A-Z 0-9]*$"), Validators.minLength(2)]);
@@ -2035,24 +1811,21 @@ gstReset(){
             this.passengerForm.controls['gstState'].updateValueAndValidity();
         }
 
-
+        this.generateTrainItinerary();
         if (this.passengerForm.invalid || this.error == 1) {
             return;
         } else {
+         this.continueReviewBooking();
+        }
+
+    }
+    
+
+    
+        continueReviewBooking(){
         
-           if(this.travellersArray.length < 1){
-                const dialogRef = this.dialog.open(ConfirmationDialog, {
-                disableClose: true,
-                width: '600px',
-                id: 'messageforMliteDialog',
-                data: {
-                errorDialog: true,
-                messageData: 'Please choose atleast 1 passenger'
-                }
-                });
-                return;
-          }
-                    
+           if( this.enablesavedTraveller==1)
+            this.saveTravellerFunc();
            
             if (this.availFlag == 1 || this.forgoFiftyFlag == 1 || this.forgoFullFlag == 1 || this.availFlag1 == 1 || this.forgoFiftyFlag1 == 1 || this.forgoFullFlag1 == 1) {
                 var message;
@@ -2073,19 +1846,20 @@ gstReset(){
                     showC = false;
                 }
 
-                let dialogRef = this.dialog.open(ConfirmationDialogNew, {
+
+            let dialogRef = this.dialog.open(ConfirmationDialogNew, {
                     disableClose: true,
                     width: '850px',
                     data: { messageData: message, showC: showC }
                 });
 
                 dialogRef.afterClosed().subscribe(result => {
-                if (result == 1) {
-                        this.captureInsurence();
-                }
-              });
+                    if (result == 1) {
+                        this.createTrainItinerary1();
+                    }
+                });
             } else {
-                    if(this.showTravelDocumentAddMore == [true]){
+                   if(this.showTravelDocumentAddMore == [true]){
                         let message = "Foreigner should carry the same passport while travelling.";
                         let dialogRef = this.dialog.open(passportDialog, {
                             disableClose: true,
@@ -2095,14 +1869,15 @@ gstReset(){
                     }
 
                     this.checkforeign();
-                    
+                 
             }
-
+        
+        
+     
         }
-    }
-    
-    passengerReview(){
-    
+        
+        
+    opencovidconfirmationDialog(): void {
         if(this.trainItenararyCovidPopup ==1){
         const dialogRef = this.dialog.open(covidconfirmation, {
           autoFocus: false,
@@ -2113,61 +1888,62 @@ gstReset(){
 
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                this.movePaymentPage();
+                      this.gotoTop();
+        this.completedSteps = 4;
+        this.steps = 4;
             }
            });
         }else{
-            this.movePaymentPage(); 
+                   this.gotoTop();
+        this.completedSteps = 4;
+        this.steps = 4;
         }
-    
-    
     }
 
 
-//Traveller insurance popup
-    captureInsurence() {
+
+
+    createTrainItinerary1() {
+        
         if(this.travelInsuranceEnabled=='true'){
+        
+        //traveller insurance popup
         const dialogTravel = this.dialog.open(TravelInsuranceDialog, {
             disableClose: true,
             width: '600px',
             id: 'messageforMliteDialog',
         });
          dialogTravel.afterClosed().subscribe(result => {
+
             if (result == '1') {
                 this.travelInsuranceOpted = true;
-                this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length));
-                this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length));
-                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
+                this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+                this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
                
             } else {
                 this.travelInsuranceOpted = false;
                 this.travel_ins_charge = 0;
                 this.travel_ins_charge_tax = 0;
-                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
                 
             }
-        this.generateTrainItinerary();
-        if( this.enablesavedTraveller==1)
-        this.saveTravellerFunc();    
- 	this.steps = 2;
- 	this.coupon_amount=0;
+ 	 this.createTrainItinerary2();
         });
+        
        
         }else{
 	this.travelInsuranceOpted = false;
 	this.travel_ins_charge = 0;
 	this.travel_ins_charge_tax = 0;
-	this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
-        this.generateTrainItinerary();
-        if( this.enablesavedTraveller==1)
-        this.saveTravellerFunc(); 
-        this.steps = 2;
-        this.coupon_amount=0;
+	this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        
+         this.createTrainItinerary2();
         } 
 
     }
+    createTrainItinerary2 (){
     
-    movePaymentPage (){
             this.error = 0;
             this.generateTrainItinerary();
             this.spinnerService.show();
@@ -2180,14 +1956,15 @@ gstReset(){
                 let dData = JSON.parse(this.EncrDecr.get(response.result));
                 this.fareEnqueryMultiplePassengers = <fareEnqueryMultiplePassengers>dData;
                 var partnerResponse = (this.fareEnqueryMultiplePassengers.partnerResponse);
-               // console.log(this.passengerItineraryDetails); 
-               //console.log(this.fareEnqueryMultiplePassengers);
                 if (this.fareEnqueryMultiplePassengers.errorcode == 0 && !this.fareEnqueryMultiplePassengers.partnerResponse.errorMessage) {
                     this.irctcData = this.passengerItineraryDetails;
                     this.clientTransactionId = partnerResponse.clientTransactionId;
                     this.orderReferenceNumber = partnerResponse.orderReferenceNumber;
                     this.buttonstatus = false;
-                    this.openPaymentTab = true;
+                       this.gotoTop();
+                      this.completedSteps = 4;
+                      this.steps = 4; 
+                    
                     this.flexipaysummry = false;
                     var whatsappFlag;
                     if (this.whatsappFeature == 1)
@@ -2202,18 +1979,7 @@ gstReset(){
                     }
 
                     if (typeof partnerResponse.baseFare === "undefined") { } else {
-                    
-                              
-                        /*if(partnerResponse.convienceChargesEnable==false){
-                         this.convienceChargesEnable=partnerResponse.convienceChargesEnable;
-                         this.convienceChargesEnabledValue=partnerResponse.agent_charges;
-                         this.convenience_fee = 0;
-                        }else{
-                        this.convenience_fee = partnerResponse.agent_charges;
-                        this.convienceChargesEnable=partnerResponse.convienceChargesEnable;
-                        this.convienceChargesEnabledValue=partnerResponse.agent_charges;
-                        }*/
-                        
+                                        
                          this.convienceChargesEnable=partnerResponse.convienceChargesEnable;
                          this.agent_charges=partnerResponse.agent_charges;
                          this.campiagn_agent_charges=partnerResponse.campiagn_agent_charges;
@@ -2224,7 +1990,8 @@ gstReset(){
                          this.convenience_fee =(this.agent_charges -this.campiagn_agent_charges) ;
                         else
                         this.convenience_fee = this.agent_charges;
-                                              
+                        
+                       
                        
                         
                         //FARE DETAILS CALCULATION
@@ -2269,6 +2036,7 @@ gstReset(){
                     sessionStorage.setItem(this.searchTrainKey + '-contactDetails', this.EncrDecr.set(JSON.stringify(this.contactDetails)));
                     this.spinnerService.hide();
                     this.buttonstatus = true;
+                    this.showFareSummary = true;
 
                     let trackUrlParams = new HttpParams()
                     .set('current_url', window.location.href)
@@ -2278,12 +2046,14 @@ gstReset(){
 
                     const track_body: string = trackUrlParams.toString();
                      this.rest.trackEvents( track_body).subscribe(result => {});
-                 this.steps =3;
+                     
+                        this.gotoTop();
+                        this.completedSteps = 3;
+                        this.steps = 3;
+
                 } else {
-                    this.steps = 2;
+                    this.showFareSummary = false;
                     this.spinnerService.hide();
-                    this.openTravellerInfoTab = true;
-                    this.openPaymentTab = false;
                     this.buttonstatus = true;
                     var message;
                     if (this.fareEnqueryMultiplePassengers.partnerResponse.errorMessage)
@@ -2304,7 +2074,6 @@ gstReset(){
 
             }), (err: HttpErrorResponse) => {
                 this.spinnerService.hide();
-                this.openPaymentTab = false; this.openTravellerInfoTab = true;
                 var message = 'Something went wrong';
                 this.dialog.open(ErrorDialog, {
                     disableClose: true,
@@ -2377,7 +2146,7 @@ gstReset(){
         this.journeyClass = this.seacthResult.journeyClass;
         this.journeyQuota = this.seacthResult.journeyQuota;
 
-        var boardingStation = this.passengerForm.controls['boardingStation']['value'];
+        var boardingStation = this.idForm.controls['boardingStation']['value'];
         var boardingStationSplit = boardingStation.split(" - ");
 
 
@@ -2408,7 +2177,7 @@ gstReset(){
         //AutoUpgradeflag
         var passengerAutoUpgradation: string;
         if (this.passengerForm.controls['passengerAutoUpgradation']) {
-            if (this.passengerForm.controls['passengerAutoUpgradation']['value'] == 1) {
+            if (this.passengerForm.controls['passengerAutoUpgradation']['value'] == true) {
                 passengerAutoUpgradation = "true";
             } else {
                 passengerAutoUpgradation = "false";
@@ -2422,7 +2191,7 @@ gstReset(){
         var optBedRoll: any;
         var coachId: any;
 
-        coachId=this.passengerForm.controls['coachId']['value'];
+
 
         var travellerList = [];
          var ii=1;
@@ -2634,6 +2403,7 @@ gstReset(){
             travelInsurenceChargs: (Number(this.travel_ins_charge) + Number(this.travel_ins_charge_tax)),
 
         }
+
         this.passengerItineraryDetails = {
             "trainName": this.trainName,
             "toStn": this.tostn,
@@ -2651,7 +2421,7 @@ gstReset(){
             "infantList": infantList,
             "gstDetails": this.gstDetails,
             "reservationChoice": this.passengerReservationChoice,
-            "coachId": coachId,
+            "coachId": this.passengerForm.controls['coachId']['value'],
             "paymentEnqFlag": "Y",
             "masterId": "",
             "moreThanOneDay": "False",
@@ -2687,7 +2457,8 @@ gstReset(){
             "campiagn_agent_charges":this.campiagn_agent_charges,
             "tktAddress": passDestAddressDetails
         };
-console.log(this.passengerItineraryDetails);
+        
+
         let trackUrlParams = new HttpParams()
         .set('current_url', window.location.href)
         .set('category', 'IRCTC')
@@ -2708,8 +2479,6 @@ console.log(this.passengerItineraryDetails);
     openBottomSheet() {
 
         this._bottomSheet.open(BottomSheetComponent, {
-            
-            panelClass: 'train_fare_details',                     
             data: {
                 trainName: this.trainName,
                 trainNo: this.seacthResult.selectedTrain.trainNumber,
@@ -2741,7 +2510,7 @@ console.log(this.passengerItineraryDetails);
                 journeyArrivalDate: this.journeyArrivalDate,
                 convienceChargesEnable:this.convienceChargesEnable,
                 agent_charges:this.agent_charges,
-                campiagn_agent_charges:this.campiagn_agent_charges,
+                campiagn_agent_charges:this.campiagn_agent_charges                        
 
             }
         });
@@ -2907,15 +2676,13 @@ if(Array.isArray(this.cityResp.partnerResponse.cityList) && !(this.cityResp.part
 
     /*** ---------------------------------TRAVELLER INFORMATION SECTION ends-----------------------------------------------------------------***/
     addPreferenceSelected: boolean;
-    autoUpgrade($event) {
+    addToggle($event) {
         this.addshow = !this.addshow;
         this.addPreferenceSelected = $event.target.checked;
         if (this.addPreferenceSelected == true) {
-             this.passengerForm['controls']['passengerAutoUpgradation'].setValue(1);
             this.passengerForm.controls['coachId'].setValidators([Validators.pattern("^(([a-zA-Z]{1})([0-9]{1,3}))"),Validators.maxLength(4)]);
             this.passengerForm.controls['coachId'].updateValueAndValidity();
         } else {
-          this.passengerForm['controls']['passengerAutoUpgradation'].setValue(0);
             this.passengerForm.get('coachId').clearValidators();
             this.passengerForm.controls['coachId'].updateValueAndValidity();
         }
@@ -2984,42 +2751,10 @@ recivetotalFare($event){
         this.pgCharges = $event;
 
     }
-    scheduleData:any;  
-  getSchedule(val){
-    let scheduleParam = {
-      "journeyDate": this.seacthResult.searchHistory.journeyDate.replace(/-/g, ""),
-      "startingStationCode": this.seacthResult.searchHistory.frmStn,
-      "trainNo": val
-  };
-    this._irctc.trainSchedlueDto(scheduleParam).subscribe(resp => {
-        this.scheduleData = (resp.partnerResponse);
-    });
 
-  }
-   goBackSteps(steps){
-    if(steps==1){
-    this.totalCollectibleAmount=this.totalCollectibleAmountFromPartnerResponse;
-    this.coupon_amount=0;
-    }
-    this.steps=steps;
-    
-   }
 
     goback() {
-        //this.location.back();
-        
-        let searchParamPreviousDay = {
-        searchFrom: this.seacthResult.searchHistory.travalfrom,
-        searchTo:  this.seacthResult.searchHistory.travalto,
-        fromTravelCode:  this.seacthResult.searchHistory.frmStn,
-        toTravelCode:  this.seacthResult.searchHistory.toStn,
-        departure: this.seacthResult.searchHistory.journeyDate
-        };
-        this.router.navigate([this.sg['domainPath']+'trains/list'], {
-        queryParams: searchParamPreviousDay
-        });
-        
-        
+        this.location.back();
     }
     openDialog() {
         const errmsg = [];
@@ -3132,9 +2867,344 @@ recivetotalFare($event){
     }
 }
 
+    /**--------------------------------------SAVED TRAVELLER ------------------------------------------------------------------------ */
+    checksavedtraveller(){
+        let checksavedtravConfig = this.serviceSettings.enablesavedTraveller
+        if(checksavedtravConfig == 1){
+            this.saveTravllerShow = true;
+            var requestParams = {
+            'customerId':this.REWARD_CUSTOMERID
+            };
 
+            var postsavedTravellers = {
+            postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
+            };
+
+            this.rest.getCustomertravellerInfo(postsavedTravellers).subscribe(response =>{
+                // let respData = JSON.parse(this.EncrDecr.get(response.result ));
+                let resp = response['errorcode']; 
+                if(response['errorcode'] == 0){
+
+                if(response['value'].length > 0){
+                response['value'] =   response['value'].sort(function (a, b) {
+                var x = a['id']; var y = b['id'];
+                return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+                });
+                }
+                this.travellerlist = response['value'];
+                
+                
+		this.adulttravellerlist =  this.travellerlist.filter(function(tra) {
+		return tra.age > 4;
+		});
+
+		this.infanttravellerlist=  this.travellerlist.filter(function(tra) {
+		return tra.age <= 4;
+		});
+                
+                this.checkPaxCount = this.adulttravellerlist.length;
+                this.checkinfantPaxCount = this.infanttravellerlist.length;
+                
+                for(let i=0;i<this.checkPaxCount;i++){
+                this.disableCheckbox[i]=false;
+                this.modalcheckedvalue[i] = false;
+                }
+                
+                
+                for(let i=0;i<this.checkinfantPaxCount;i++){
+                this.disableCheckboxInfant[i]=false;
+                this.modalcheckedvalueInfant[i] = false;
+                }
+                
+                
+                }
+            }),(err:HttpErrorResponse)=>{
+                var message='Something went wrong !';
+                const dialogRef=this.dialog.open(ConfirmationDialog, {
+                    disableClose: true,
+                    width: '600px',
+                    id: 'messageforMliteDialog',
+                    data: {
+                        messageData: message
+                    }
+            });
+            }
+        }
+    }
+    
+      fillupPaxOncheckboxChildren($event,data,checkboxIndex){ 
+        if($event.target.checked){
+            this.modalcheckedvalueInfant[checkboxIndex]=true;
+            if(!(this.selectedCheckboxInfant.includes(checkboxIndex))){
+                this.selectedCheckboxInfant.push(checkboxIndex);
+            }  
+        var slectedCheckboxCount = this.modalcheckedvalueInfant.filter(x => x === true).length;
+        if(slectedCheckboxCount > this.childrenArray.length){
+            this.modalcheckedvalueInfant[checkboxIndex]=false;
+            this.disableCheckboxInfant[checkboxIndex]=true;
+            this.selectedCheckboxInfant.splice(checkboxIndex,1);
+        }
+
+       this.infanttravellersFilledArray.push({ 
+        "sno":        data.id,
+        "firstName":  data.firstName,
+        "lastName":   data.lastName,
+        "age":        data.age,
+        "gender":     data.gender,
+        "name": data.firstName + " "+ data.lastName
+      });
+      
+        var travellersArrayLength = this.infanttravellersFilledArray.length;
+        var isFilledData = false;
+
+        for(var i=0;i<=this.childrenArray.length;i++){
+
+            if(this.passengerForm.controls['childName' + this.childrenArray[i]] != undefined && this.passengerForm['controls']['childName' + this.childrenArray[i]].value==""){
+
+            isFilledData = true;
+
+                var gender;
+                if((this.infanttravellersFilledArray[travellersArrayLength-1].gender == 'M') || (this.infanttravellersFilledArray[travellersArrayLength-1].gender == 'Male')) {
+                    gender = 'M'
+                }else if((this.infanttravellersFilledArray[travellersArrayLength-1].gender == 'F') || (this.infanttravellersFilledArray[travellersArrayLength-1].gender == 'Female')){
+                    gender = 'F';
+                }
+                
+                var arrFirstName = "";
+                var arrLastName = "";
+                if(this.infanttravellersFilledArray[travellersArrayLength-1].firstName != undefined){
+                    arrFirstName = this.infanttravellersFilledArray[travellersArrayLength-1].firstName;
+                }else{
+                    arrFirstName = this.infanttravellersFilledArray[i].firstName;
+                }
+                if(this.infanttravellersFilledArray[travellersArrayLength-1].lastName != undefined){
+                    arrLastName = this.infanttravellersFilledArray[travellersArrayLength-1].lastName;
+                }else{
+                    arrLastName = this.infanttravellersFilledArray[i].lastName;
+                }
+                var arrAge = "";
+                if(this.infanttravellersFilledArray[travellersArrayLength-1].age != undefined){
+                    arrAge = this.infanttravellersFilledArray[travellersArrayLength-1].age;
+                }else{
+                    arrAge = this.infanttravellersFilledArray[i].age;
+                }
+                this.passengerForm['controls']['childName'+this.childrenArray[i]].setValue(arrFirstName+" "+arrLastName);
+                this.passengerForm['controls']['childGender'+this.childrenArray[i]].setValue(gender);
+                this.passengerForm['controls']['childAge'+this.childrenArray[i]].setValue(arrAge);
+                this.passengerForm.controls['childAge'+this.childrenArray[i]].updateValueAndValidity();
+                break;
+
+            }
+
+            
+          }
+         if(isFilledData == false){
+
+                $event.target.checked = false;
+              this.modalcheckedvalueInfant[checkboxIndex]=false;
+                this.selectedCheckboxInfant = this.arrayRemove(this.selectedCheckboxInfant, checkboxIndex);
+                this.disableCheckboxInfant[checkboxIndex]=true;
+                this.selectedCheckboxInfant.splice(checkboxIndex,1);
+               
+                this.infanttravellersFilledArray = this.arrayRemove(this.infanttravellersFilledArray, {  
+                    "sno":        data.id, 
+                    "firstName":  data.firstName,
+                    "lastName":   data.lastName,
+                    "age":        data.age,
+                    "gender":     data.gender,
+                    "name":       data.firstName + " "+ data.lastName
+                  });
+            }
+        }else{
+            this.modalcheckedvalueInfant[checkboxIndex]=false;
+            this.selectedCheckboxInfant = this.arrayRemove(this.selectedCheckboxInfant, checkboxIndex);
+       
+        this.infanttravellersFilledArray = this.arrayRemove(this.infanttravellersFilledArray, {  
+            "sno":        data.id, 
+            "firstName":  data.firstName,
+            "lastName":   data.lastName,
+            "age":        data.age,
+            "gender":     data.gender,
+            "name":       data.firstName + " "+ data.lastName
+          });
+          for(var i=0;i<=this.childrenArray.length;i++){
+            if(this.passengerForm.controls['childName' + i] != undefined && (this.passengerForm.controls['childName' + i].value==(data.firstName+" "+data.lastName))){
+
+            this.passengerForm['controls']['childName'+i].setValue("");
+            this.passengerForm['controls']['childGender'+i].setValue("");
+            this.passengerForm['controls']['childAge'+i].setValue("");
+            break;
+            }
+          }
+        }
+
+        if(this.selectedCheckboxInfant.length == this.childrenArray.length){
+            for(let i=0;i<this.checkinfantPaxCount;i++){
+                if(this.selectedCheckboxInfant.includes(i)){
+                    this.disableCheckboxInfant[i]=false; 
+                }else{
+                    this.disableCheckboxInfant[i]=true;
+                }
+            }
+        } else {
+            for(let i=0;i<this.checkinfantPaxCount;i++){
+                this.disableCheckboxInfant[i]=false;
+            }
+        }
+    }
+    
+    fillupPaxOncheckbox($event,data,checkboxIndex){ 
+       
+        if($event.target.checked){
+            this.modalcheckedvalue[checkboxIndex]=true;
+            if(!(this.selectedCheckbox.includes(checkboxIndex))){
+                this.selectedCheckbox.push(checkboxIndex);
+        }  
+        var slectedCheckboxCount = this.modalcheckedvalue.filter(x => x === true).length;
+        if(slectedCheckboxCount > this.travellersArray.length){
+            this.modalcheckedvalue[checkboxIndex]=false;
+            this.disableCheckbox[checkboxIndex]=true;
+            this.selectedCheckbox.splice(checkboxIndex,1);
+        }
+
+        // if ((this.travellersFilledArray.length ) < (this.travellersArray.length)) {
+            // this.travellersFilledArray.push(data.id);
+       // }
+       this.travellersFilledArray.push({ 
+        "sno":        data.id,
+        "firstName":  data.firstName,
+        "lastName":   data.lastName,
+        "age":        data.age,
+        "gender":     data.gender,
+        "name": data.firstName + " "+ data.lastName
+      });
+        var travellersArrayLength = this.travellersFilledArray.length;
+        var isFilledData = false;
+        for(var i=0;i<=this.travellersArray.length;i++){
+            if(this.passengerForm.controls['passengerName' + this.travellersArray[i]] != undefined && this.passengerForm['controls']['passengerName' + this.travellersArray[i]].value==""){
+            isFilledData = true;
+                var gender;
+                if((this.travellersFilledArray[travellersArrayLength-1].gender == 'M') || (this.travellersFilledArray[travellersArrayLength-1].gender == 'Male')) {
+                    gender = 'M'
+                }else if((this.travellersFilledArray[travellersArrayLength-1].gender == 'F') || (this.travellersFilledArray[travellersArrayLength-1].gender == 'Female')){
+                    gender = 'F';
+                }
+                var arrFirstName = "";
+                var arrLastName = "";
+                if(this.travellersFilledArray[travellersArrayLength-1].firstName != undefined){
+                    arrFirstName = this.travellersFilledArray[travellersArrayLength-1].firstName;
+                }else{
+                    arrFirstName = this.travellersFilledArray[i].firstName;
+                }
+                if(this.travellersFilledArray[travellersArrayLength-1].lastName != undefined){
+                    arrLastName = this.travellersFilledArray[travellersArrayLength-1].lastName;
+                }else{
+                    arrLastName = this.travellersFilledArray[i].lastName;
+                }
+                var arrAge = "";
+                if(this.travellersFilledArray[travellersArrayLength-1].age != undefined){
+                    arrAge = this.travellersFilledArray[travellersArrayLength-1].age;
+                }else{
+                    arrAge = this.travellersFilledArray[i].age;
+                }
+                this.passengerForm['controls']['passengerName'+this.travellersArray[i]].setValue(arrFirstName+" "+arrLastName);
+                this.passengerForm['controls']['passengerGender'+this.travellersArray[i]].setValue(gender);
+                this.passengerForm['controls']['passengerAge'+this.travellersArray[i]].setValue(arrAge);
+                this.passengerForm.controls['passengerAge'+this.travellersArray[i]].updateValueAndValidity();
+                this.seniorCitizenArr(gender, this.travellersArray[i])
+                break;
+            }
+            
+          }
+         if(isFilledData == false){
+                $event.target.checked = false;
+              this.modalcheckedvalue[checkboxIndex]=false;
+                this.selectedCheckbox = this.arrayRemove(this.selectedCheckbox, checkboxIndex);
+                this.disableCheckbox[checkboxIndex]=true;
+                this.selectedCheckbox.splice(checkboxIndex,1);
+               
+                this.travellersFilledArray = this.arrayRemove(this.travellersFilledArray, {  
+                    "sno":        data.id, 
+                    "firstName":  data.firstName,
+                    "lastName":   data.lastName,
+                    "age":        data.age,
+                    "gender":     data.gender,
+                    "name":       data.firstName + " "+ data.lastName
+                  });
+            }
+        }else{
+            this.modalcheckedvalue[checkboxIndex]=false;
+            this.selectedCheckbox = this.arrayRemove(this.selectedCheckbox, checkboxIndex);
+        // const index = this.travellersFilledArray.indexOf(data.id, 0);
+        //     if (index > -1) {
+        //         this.travellersFilledArray.splice(index, 1);
+        //     }
+        this.travellersFilledArray = this.arrayRemove(this.travellersFilledArray, {  
+            "sno":        data.id, 
+            "firstName":  data.firstName,
+            "lastName":   data.lastName,
+            "age":        data.age,
+            "gender":     data.gender,
+            "name":       data.firstName + " "+ data.lastName
+          });
+          for(var i=0;i<=this.travellersArray.length;i++){
+            if(this.passengerForm.controls['passengerName' + i] != undefined && (this.passengerForm.controls['passengerName' + i].value==(data.firstName+" "+data.lastName))){
+
+            this.passengerForm['controls']['passengerName'+i].setValue("");
+            this.passengerForm['controls']['passengerGender'+i].setValue("");
+            this.passengerForm['controls']['passengerAge'+i].setValue("");
+            break;
+            }
+          }
+        }
+        //this.fillupPaxOncheckboxData();
+
+        if(this.selectedCheckbox.length == this.travellersArray.length){
+            for(let i=0;i<this.checkPaxCount;i++){
+                if(this.selectedCheckbox.includes(i)){
+                    this.disableCheckbox[i]=false; 
+                    // this.modalcheckedvalue[i] = true; 
+                }else{
+                    this.disableCheckbox[i]=true;
+                    // this.modalcheckedvalue[i] = false;
+                }
+            }
+        } else {
+            for(let i=0;i<this.checkPaxCount;i++){
+                this.disableCheckbox[i]=false;
+                // this.modalcheckedvalue[i] = false;
+            }
+        }
+    }
     
     
+    
+    
+    
+    
+    
+    
+    fillupPaxOncheckboxData(){
+        let inc=0;
+        for (let i of this.travellersArray) {     
+            var result = this.travellerlist.filter((x)=>x.id === this.travellersFilledArray[inc]);
+            
+        if(result.length >0){
+            let gender = result[0].gender
+            this.passengerForm['controls']['passengerName'+i].setValue(result[0].firstName+" "+result[0].lastName);
+            this.passengerForm['controls']['passengerGender'+i].setValue(result[0].gender);
+            this.passengerForm['controls']['passengerAge'+i].setValue(result[0].age);
+            this.passengerForm.controls['passengerAge'+i].updateValueAndValidity();
+            this.seniorCitizenArr(gender, i)
+        }else{
+            this.passengerForm['controls']['passengerName'+i].setValue("");
+            this.passengerForm['controls']['passengerGender'+i].setValue("");
+            this.passengerForm['controls']['passengerAge'+i].setValue("");
+            }
+            inc++;
+        }
+    
+    }
     arrayRemove(arr, value) {
         return arr.filter(item => item !== item); 
     }
@@ -3598,7 +3668,7 @@ export class BottomSheetComponent implements OnInit {
     constructor(private _bottomSheet: MatBottomSheet, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, @Inject(APP_CONFIG) appConfig: any) {
         this.appConfig = appConfig;
         this.cdnUrl = environment.cdnUrl;
-        console.log(data);
+        
     }
     closeBottomSheet(): void {
         this._bottomSheet.dismiss();
@@ -3862,7 +3932,6 @@ export class userIDforgot {
         }
 
     onYesClick(): void {
-           $('#irctclogin-close').trigger('click');
         this.dialogRef1.close(1);
     }
     onNoClick():void{
@@ -3891,5 +3960,3 @@ export class userIDforgot {
       }
   
   }
-
-
