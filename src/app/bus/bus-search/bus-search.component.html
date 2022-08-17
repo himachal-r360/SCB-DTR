@@ -2,12 +2,11 @@
                             <div class="travel-select-data-area">
                                     <div class="travel-data">
                                     <div class="row g-2">
-                                        <div class="col-lg-6">
-                                            <div class="select-root-area">
-                                                <div class="select-root-left" appDropdown>
+                                        <div class="col-lg-8">
+                                            <div class="select-root-area m_height_from_to">
+                                                <div class="select-root-left h_lft_div" appDropdown>
                                                     <span class="select-roottitle">FROM</span>
-                                                    <h5 class="fw_6 ">{{fromCityName}}</h5>
-                                                    <span class="select-roottitle">{{fromStateName}}</span>
+                                                    <h5 class="fw_6 ">{{fromCityName}}, <span class="gray_txt_highlight">{{fromStateName}}</span></h5>
                                         <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('fromTravelCode', 'required')">
                                         <small   class="validate-msg">Please select to city</small>
                                         </div>
@@ -101,13 +100,12 @@
 
                                                 </div>
 
-                                                <div class="select-root-icons" (click)="swap()">
+                                                <div class="select-root-icons bus_seperater" (click)="swap()">
                                                     <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                                                 </div>
-                                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
+                                                <div class="select-root-right h_rgt_div" appDropdown #toCityDiv id="toCityDiv">
                                                     <span class="select-roottitle">TO</span>
-                                                    <h5 class="fw_6 ">{{toCityName}}</h5>
-                                                    <span class="select-roottitle">{{toStateName}}</span>
+                                                    <h5 class="fw_6 ">{{toCityName}}, <span class="gray_txt_highlight">{{toStateName}}</span></h5>
                                                                                                      <div class="error_msg w-50"  *ngIf="!isMobile && submitted && Error('toTravelCode', 'required')" >
                                 <small class="validate-msg">Please select to city</small>
                                 </div>
@@ -184,16 +182,16 @@
 
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="root-date">
                                             <!--Web Date Picker-->
                                             <div class="select-root-area" *ngIf="!isMobile">
                                                     <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
-                                                 <div class="area-root-departure " (click)="picker.open()"
+                                                 <div class="area-root-departure departure_div" (click)="picker.open()"
                                                             id="datePickerOpen">
 
-                                                            <div class="select-root-departure departure-date">
-                                                                <span class="select-roottitle">DEPARTURE</span>
+                                                            <div class="select-root-departure departure-date m_height">
+                                                                <p class="select-roottitle">DEPARTURE</p>
                                                                 <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
 
                                                                     <span class="select-roottitle d-block w-100" *ngIf="departureDate=='' ||departureDate==undefined">Select Departure</span>
@@ -308,3 +306,8 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="sponsar_logo">Powered By: <img src="{{cdnUrl}}/images/smartbuy/partner/48/svg/redbus.svg" class="ms-2"></p>
+                            </div>
+                        </div>
