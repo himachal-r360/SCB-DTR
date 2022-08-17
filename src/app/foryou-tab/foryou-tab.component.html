@@ -68,29 +68,22 @@
             <div class="col-lg-6 col-sm-12" *ngIf="isLogged==true">
 
                 <div class="row mb-3">
-                    <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints"  [hidden]="IsPointsCardDetails">
+                    <!-- <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints"  [hidden]="IsPointsCardDetails"> -->
+                      <div class="col-sm-12"  [hidden]="IsPointsCardDetails">  
                         <div class="card_points_info">
-                            <div>
+                            <!-- <div>
                                 <div class="card_select">
                                     <select (change)="selectedCard($event)">
                                         <option *ngFor="let each of customercards" value="{{each.id}}"   >{{each.card}}</option>
                                     </select>
-                                    <!--<div class="d-inline-block pl-4"><a href="">View Details</a></div>-->
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="points_section">
-                                <!--<div class="counter_points">
-                                    <p><i class="fa fa-rupee"></i>XXXXX</p>
-                                    <p>saved in XXXXX</p>
-                                </div>-->
                                 <div class="counter_points">
                                     <p>{{customeravailablepoints}}</p>
                                     <p>Reward points</p>
                                 </div>
-                                <!--<div class="counter_points">
-                                    <p>XXXXX <span class="total_points">/XXXXX</span></p>
-                                    <p>Points expiring</p>
-                                </div>-->
+                                
                                 <div class="voucher-code-entry">
                                     <div class="redeem_error">
                                         <small>{{errorMsg0}}</small>

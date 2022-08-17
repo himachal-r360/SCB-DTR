@@ -255,7 +255,7 @@ public modeselectTrending= 'All';
           this.rest.updateCardDetails(this.customerInfo);
           if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null))
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
-          this.initiateCards();
+          //this.initiateCards();
              }
 
           }else{
