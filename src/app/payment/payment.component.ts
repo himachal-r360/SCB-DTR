@@ -438,17 +438,17 @@ pgSettingsCYBERToken:number=0;
 			dialogDcemi.afterClosed().subscribe(result => {
 				if(result!=undefined){ 
 						var customerMobile = result;
-						var checkEligibleParams = {
-			                 'client_token': 'HDFC243',
-			                 'mobile': customerMobile,
-			            };
-                        var postCheckEligibleParam = {
-                            postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
-                        };
-                        this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {	
-                            if (results.result) {
+						var checkEligibleParams = {
+			                 'client_token': 'HDFC243',
+			                 'mobile': customerMobile,
+			            };
+                        var postCheckEligibleParam = {
+                            postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
+                        };
+                        this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {	
+                            if (results.result) {
 								this.REWARD_MOBILE=customerMobile;
-                                let result = JSON.parse(this.EncrDecr.get(results.result));
+                                let result = JSON.parse(this.EncrDecr.get(results.result));
 								//console.log(result.eligible);
 								if(result.eligible){
 									let shadesEl=document.querySelector('#payDebitEmiOption'); 
@@ -463,8 +463,8 @@ pgSettingsCYBERToken:number=0;
 									var message="You are not eligible for Debit Card EMI payment";
 									alert(message);
 								}
-                            }
-                        });
+                            }
+                        });
 				}else{
 					//this.showDebitEMI=true;
 				}
@@ -673,13 +673,13 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 				couponCaptcha: new FormControl({value: '', disabled: true},[Validators.required])
 			});
 			
-			       const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
-                if(cookieExistsp){  
-                  this.payzrestriction=true;
-                setTimeout(()=>{
-                   $('#payzappCard').trigger('click');
-                    $('html,body').animate({ scrollTop: 9999 }, 'slow');
-                  });	
+			       const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+                if(cookieExistsp){  
+                  this.payzrestriction=true;
+                setTimeout(()=>{
+                   $('#payzappCard').trigger('click');
+                    $('html,body').animate({ scrollTop: 9999 }, 'slow');
+                  });	
         }
 
 	}
@@ -1743,7 +1743,7 @@ calldialog(event) {
 			this.showProceedPayment=true;
 			if(this.payTotalFare>0){
 				this.PayNoAmtStatus=false;
-				this.redeemtext='You have successfully redeemed '+this.RedeemPoints+' points for <b>Rs. '+this.RedeemAmount+'</b>.</br> Please pay the remaining balance <b>Rs. '+this.payTotalFare.toFixed(2)+'</b> through card.';
+				this.redeemtext='You have successfully redeemed '+this.RedeemPoints+' points for <b>Rs. '+this.RedeemAmount+'</b>.</br> Please pay the remaining balance <b>Rs. '+this.payTotalFare.toFixed(2)+'</b> through card.';
 
 				this.flexiamnt = (this.payTotalFare);
         this.flexipayArrDefault = this.commonHelper.flexipayIntcalc(this.payTotalFare);
@@ -1755,7 +1755,7 @@ calldialog(event) {
 
 				this.PayNoAmtStatus=true;
 				this.showAllPayment=false;
-				this.redeemtext='You have successfully redeemed '+this.RedeemPoints+' points for Rs. <b>'+this.RedeemAmount+'</b>. Continue for booking.';
+				this.redeemtext='You have successfully redeemed '+this.RedeemPoints+' points for Rs. <b>'+this.RedeemAmount+'</b>. Continue for booking.';
 			}
 			
 		}
@@ -2364,8 +2364,8 @@ export class dcemiDialog {
 	  this.customerInfo=data.customerInfo;
 	}
 	ngOnInit() {
-	  this.REWARD_EMAILID = this.customerInfo["email"];
-	  this.REWARD_MOBILE = Number(this.customerInfo["mobile"]);
+	  this.REWARD_EMAILID = this.customerInfo["email"];
+	  this.REWARD_MOBILE = Number(this.customerInfo["mobile"]);
   
 	  const Form1: FormGroup = new FormGroup({});
 	  Form1.addControl('mobileNo', new FormControl('',[Validators.required, Validators.pattern("^[6-9][0-9]{9}$")]));
@@ -2373,8 +2373,8 @@ export class dcemiDialog {
 	  //pop-up will close after 10 mins(600000) 
 	  
 	  interval(600000).subscribe(x => {
-		    this.dialogClose();
-	  });
+		    this.dialogClose();
+	  });
 	}
 	AvoidSpace($event) {
 	  var keycode = $event.which;
@@ -2507,8 +2507,8 @@ export class PaywithpointsDialog {
 			this.Balfare = data.payTotalFare;
 			this.payActualFare = data.payActualFare;
 			this.ctype = data.ctype;
-			this.REWARD_EMAILID = this.customerInfo["email"];
-			this.REWARD_MOBILE = this.customerInfo["mobile"];
+			this.REWARD_EMAILID = this.customerInfo["email"];
+			this.REWARD_MOBILE = this.customerInfo["mobile"];
 			this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
 			this.customermobile = this.REWARD_MOBILE;
 			this.serviceId=data.serviceId;

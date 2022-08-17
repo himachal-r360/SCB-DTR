@@ -17,11 +17,14 @@ import { FlightIntListComponent } from './flight-int-list/flight-int-list.compon
 import { FlightSearchModule } from '../flight-search/flight-search.module';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { AgePipe } from 'src/app/pipes/age.pipe';
+import { ListingComponent } from './multicity/listing/listing.component';
 import { FilterPipe } from 'src/app/shared/pipes/filterUnique.pipe';
 import { couponDiplayPipe } from 'src/app/shared/pipes/couponDiplay.pipe';
 import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
+
 import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
+
 const routes: Routes = [
   {
     path:"flight-list" ,component:FlightListComponent,
@@ -34,10 +37,16 @@ const routes: Routes = [
     path:"flight-roundtrip" ,component:FlightRoundtripListComponent,
   },
   {
-    path:"flight-int" ,component:FlightIntListComponent,
+    path:"multicity" ,component:ListingComponent
+  },
+  {
+
+    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, },
+
   },
   {
     path:"flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
+
   }
 
 
@@ -49,7 +58,11 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
+<<<<<<< HEAD
+    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe,couponDiplayPipe,ListingComponent
+=======
     FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe
+>>>>>>> 1241882c3dda59283967347f1302af0acd675b86
 
   ],
   imports: [
