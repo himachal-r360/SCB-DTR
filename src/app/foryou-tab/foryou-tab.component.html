@@ -797,7 +797,7 @@
             <div>
                 <form [formGroup]="angForm" novalidate (ngSubmit)="onSubmit()">
                     <div class="mb-3">
-                      <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number" formControlName="mobile_no">
+                      <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number" formControlName="mobile_no" (keypress)="onlyNumberKey($event,10)">
                       <div *ngIf="angForm.controls['mobile_no'].invalid && (angForm.controls['mobile_no'].dirty || angForm.controls['mobile_no'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['mobile_no'].errors.required" max-length="10">
                             Mobile Number is required
@@ -814,7 +814,7 @@
                       </div>
                     </div>
                     <div class="mb-3">
-                      <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card" formControlName="last_4_digit">
+                      <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card" formControlName="last_4_digit" (keypress)="onlyNumberKey($event,4)">
                       <div *ngIf="angForm.controls['last_4_digit'].invalid && (angForm.controls['last_4_digit'].dirty || angForm.controls['last_4_digit'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['last_4_digit'].errors.required">
                             Last 4 digit of the card is required
@@ -831,7 +831,7 @@
                       </div>
                     </div>
                     <div class="mb-3 position-relative">
-                        <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask">
+                        <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask" (keypress)="onlyNumberKey($event,18)">
                         <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
                         <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
                             <div *ngIf="angForm.controls['dob'].errors.required">

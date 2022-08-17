@@ -125,6 +125,13 @@ public modeselectTrending= 'All';
    // this._styleManager.removeStyle('owl-default');
    // this._styleManager.removeScript('owl');
   }
+  onlyNumberKey(event,maxlenth) {
+      console.log($(event.target).prop('value').length);
+      if($(event.target).prop('value').length>=maxlenth){
+        return false;
+       } 
+      return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+  }
    createForm() {
     this.angForm = this.fb.group({
        mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
