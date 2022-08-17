@@ -1,0 +1,372 @@
+
+<!-- Web fare Details -->
+<div class="d-none d-md-block">
+    <button type="button" class="close" data-dismiss="modal" (click)="closeBottomSheet()">×</button>
+    <div class="fare_details">
+        <div>
+            <p class="book_text">Booking Via <img src="{{cdnUrl}}images/smartbuy/partner/48/irctc.png" alt="logo_partner"></p>
+        </div>
+        <div class="row">
+            <div class="col-8 bor-right">
+                <div class="row">
+                    <!-- <div class="col-3">
+                        <div class="">
+                            <img src="" alt="place">
+                        </div>
+                    </div> -->
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <p class="train_name">{{data.trainName | titlecase }} ({{data.trainNo}})</p>
+                            <p class="start_place">{{data.from | titlecase }}</p>
+                            <p class="map_link"><a href="">Show on map</a></p>
+                           
+                        </div>
+                        <div>
+                            <p class="detail_edit">Booking Details <!--<span class="pl-2"><a href="">Edit</a></span>--></p>
+                        </div>
+                        <div>
+                            <div class="details_info">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div>
+                                            <p class="title_head"></p>
+                                            <p class="train-sta">{{data.from}} </p>
+                                            <p class="train-time">{{data.departureTime}} ({{data.journeyDateactual | date:'EEE, d MMM'}})</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div>
+                                            <p class="title_head"></p>
+                                            <p class="train-sta">{{data.to}}</p>
+                                            <p class="train-time">{{data.arrivalTime}} ({{data.journeyArrivalDate | date:'EEE, d MMM'}})</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div>
+                                            <p class="title_head"></p>
+                                            <p class="train-sta">{{data.enqClass}} {{data.quota}} | <span>{{((data.passengerCount.length))}} Traveller(s) </span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <!-- <div class="inclu_sec">
+                                    <p class="">Inclusions</p>
+                                    <ul>
+                                        <li><span><img src="" alt="icon"></span><span class="pl-2">Breakfat and Dinner included</span></li>
+                                        <li><span><img src="" alt="icon"></span><span class="pl-2">Breakfat and Dinner included</span></li>
+                                        <li><span><img src="" alt="icon"></span><span class="pl-2">Breakfat and Dinner included</span></li>
+
+                                    </ul>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    <div class="fare-details-right">
+                        <p class="fare-heading">Fare Summary</p>
+                        <div class="p-3">
+                            <div>
+                                <div class="fare-total row below_bor_line">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Ticket Fare </p>
+                                        <p class="pass_count" *ngIf="data.passengerCount.length==0"  >(Adult x 1)</p>
+                                         <p class="pass_count" *ngIf="data.passengerCount.length >0"  >(Adult x {{data.passengerCount.length}})</p>
+
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{(data.totalTicketFare-0) | number : '1.2-2'}}</p>
+                                        <p class="pass_count_value text-right"  *ngIf="data.passengerCount.length==0" >( <i class="fa fa-rupee-sign"></i>{{(data.totalTicketFare-0) | number : '1.2-2'}} x 1)</p>
+                                        <p class="pass_count_value text-right"  *ngIf="data.passengerCount.length >1 "  >( <i class="fa fa-rupee-sign"></i>{{(data.totalTicketFare-0) | number : '1.2-2'}} x {{data.passengerCount.length}})</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Travel Insurance Charges <span class="gst_text">(Incl. of GST)</span> </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{((data.travel_ins_charge-0)+(data.travel_ins_charge_tax-0)) | number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.wp_charge>0.00">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Convenience Fee <span class="gst_text">(Incl. of GST)</span></p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{(data.wp_charge-0)+(data.wp_charge_tax-0) | number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+            
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.campiagn_agent_charges==0">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">SmartBuy Charges <span class="gst_text">(Incl. of GST)</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i><b class="value-free">Rs. {{data.agent_charges | number : '1.2-2'}}</b> <span class="text-free">FREE</span></p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.campiagn_agent_charges < data.agent_charges  && data.campiagn_agent_charges != 0">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">SmartBuy Charges <span class="gst_text">(Incl. of GST)</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i><b class="value-free">Rs. {{data.agent_charges | number : '1.2-2'}}</b> <span class="text-free"><i class="fa fa-rupee-sign"></i>Rs. {{data.campiagn_agent_charges| number : '1.2-2'}}</span></p>
+                                    </div>
+                                </div>
+            
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.campiagn_agent_charges == data.agent_charges">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">SmartBuy Charges <span class="gst_text">(Incl. of GST)</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.agent_charges| number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.pgCharges>0.00">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">PG Charges
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.pgCharges| number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.coupon_amount>0.00">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Discount
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.coupon_amount| number : '1.2'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <hr>
+                            <div class="clearfix"></div>
+                            <div class="total-charges row">
+                                <div class="col-6">
+                                    <p class="grand_price">Grand Total</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="final-amount fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.totalCollectibleAmount| number : '1.2-2'}}</p>
+                                    <!--<p class="emi_text">EMI @ <b>₹789</b>/month</p>-->
+                                </div>
+                            </div>
+                            <div class="extra_btn" >
+                                <div class="my-4" *ngIf="data.coupon_amount>0.00">
+                                    <p class="promo_text">{{((data.coupon_amount / (data.totalCollectibleAmount+data.coupon_amount)) * 100) | number : '1.0-0' }}% discount on base fare applied</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary radius_8 fw-600" style="text-transform: capitalize;">Book Now</button>
+                                </div>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Mobile fare details -->
+
+<div class="d-block d-sm-block d-md-none">
+    <button type="button" class="close" data-dismiss="modal" (click)="closeBottomSheet()">×</button>
+    <div class="fare_details">
+        <div>
+            <p class="book_text">Booking Via <img src="{{cdnUrl}}images/smartbuy/partner/48/irctc.png" alt="logo_partner"></p>
+        </div>
+        <div class="row">
+            <div class="col-12 bor-right">
+                <div class="row">
+                    <!-- <div class="col-3">
+                        <div class="">
+                            <img src="" alt="place">
+                        </div>
+                    </div> -->
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <p class="train_name">{{data.trainName | titlecase }} ({{data.trainNo}})</p>
+                            <p class="start_place">{{data.from | titlecase }}</p>
+                            <p class="map_link"><a href="">Show on map</a></p>
+                           
+                        </div>
+                        <div>
+                            <p class="detail_edit">Booking Details <!--<span class="pl-2"><a href="">Edit</a></span>--></p>
+                        </div>
+                        <div>
+                            <div class="details_info">
+                                <div class="row">
+                                    <div class="col-12 text-center mb-3">
+                                        <div>
+                                            <p class="title_head"></p>
+                                            <p class="train-sta">{{data.from}} </p>
+                                            <p class="train-time">{{data.departureTime}} ({{data.journeyDateactual | date:'EEE, d MMM'}})</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center mb-3">
+                                        <div>
+                                            <p class="title_head"></p>
+                                            <p class="train-sta">{{data.to}}</p>
+                                            <p class="train-time">{{data.arrivalTime}} ({{data.journeyArrivalDate | date:'EEE, d MMM'}})</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <div>
+                                            <p class="title_head"></p>
+                                            <p class="train-sta">{{data.enqClass}} {{data.quota}} | <span>{{((data.passengerCount.length))}} Traveller(s) </span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="">
+                                <div class="inclu_sec">
+                                    <p class="">Inclusions</p>
+                                    <ul>
+                                        <li><span><img src="" alt="icon"></span><span class="pl-2">Breakfat and Dinner included</span></li>
+                                        <li><span><img src="" alt="icon"></span><span class="pl-2">Breakfat and Dinner included</span></li>
+                                        <li><span><img src="" alt="icon"></span><span class="pl-2">Breakfat and Dinner included</span></li>
+
+                                    </ul>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div>
+                    <div class="fare-details-right">
+                        <p class="fare-heading">Fare Summary</p>
+                        <div class="p-2 pt-3">
+                            <div>
+                                <div class="fare-total row below_bor_line">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Ticket Fare </p>
+                                        <p class="pass_count" *ngIf="data.passengerCount.length ==0 "  >(Adult x 1)</p>
+                                        <p class="pass_count" *ngIf="data.passengerCount.length >1 "  >(Adult x {{data.passengerCount.length}})</p>
+
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{(data.totalTicketFare-0) | number : '1.2-2'}}</p>
+                                        <p class="pass_count_value text-right" *ngIf="data.passengerCount.length ==0 ">( <i class="fa fa-rupee-sign"></i>{{(data.totalTicketFare-0) | number : '1.2-2'}} x 1)</p>
+                                        <p class="pass_count_value text-right" *ngIf="data.passengerCount.length >0 ">( <i class="fa fa-rupee-sign"></i>{{(data.totalTicketFare-0) | number : '1.2-2'}} x {{data.passengerCount.length}})</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Travel Insurance Charges <span class="gst_text">(Incl. of GST)</span> </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{((data.travel_ins_charge-0)+(data.travel_ins_charge_tax-0)) | number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.wp_charge>0.00">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Convenience Fee <span class="gst_text">(Incl. of GST)</span></p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{(data.wp_charge-0)+(data.wp_charge_tax-0) | number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+            
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.campiagn_agent_charges==0">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">SmartBuy Charges <span class="gst_text">(Incl. of GST)</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i><b class="value-free">Rs. {{data.agent_charges | number : '1.2-2'}}</b> <span class="text-free">FREE</span></p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.campiagn_agent_charges < data.agent_charges  && data.campiagn_agent_charges != 0">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">SmartBuy Charges <span class="gst_text">(Incl. of GST)</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i><b class="value-free">Rs. {{data.agent_charges | number : '1.2-2'}}</b> <span class="text-free"><i class="fa fa-rupee-sign"></i>Rs. {{data.campiagn_agent_charges| number : '1.2-2'}}</span></p>
+                                    </div>
+                                </div>
+            
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.campiagn_agent_charges == data.agent_charges">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">SmartBuy Charges <span class="gst_text">(Incl. of GST)</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.agent_charges| number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.pgCharges>0.00">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">PG Charges
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.pgCharges| number : '1.2-2'}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="fare-total row below-bor irctc" *ngIf="data.coupon_amount>0.00">
+                                    <div class="col-7 col-md-6">
+                                        <p class="fare_title">Discount
+                                        </p>
+                                    </div>
+                                    <div class="col-5 col-md-6">
+                                        <p class="fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.coupon_amount| number : '1.2'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <hr>
+                            <div class="clearfix"></div>
+                            <div class="total-charges row">
+                                <div class="col-6">
+                                    <p class="grand_price">Grand Total</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="final-amount fare_value"><i class="fa fa-rupee-sign"></i>Rs. {{data.totalCollectibleAmount| number : '1.2-2'}}</p>
+                                    <!--<p class="emi_text">EMI @ <b>₹789</b>/month</p>-->
+                                </div>
+                            </div>
+                            <div class="extra_btn"  >
+                                <div class="my-4" *ngIf="data.coupon_amount>0.00">
+                                    <p class="promo_text">{{((data.coupon_amount / (data.totalCollectibleAmount+data.coupon_amount)) * 100) | number : '1.0-0' }}% discount on base fare applied</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary radius_8 fw-600" style="text-transform: capitalize;">Book Now</button>
+                                </div>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

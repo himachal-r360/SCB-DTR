@@ -536,6 +536,7 @@ export class CouponsComponent implements OnInit {
 		this.coupon_amount =0; 
 		this.couponApplied=false;
 		this.couponError='';
+		$('#promo_code').val('');
 		couponUpdatedArray = {type: 1, couponOptions: this.couponOptions}; 
 		this.sendCouponEvent.emit(couponUpdatedArray);
 		

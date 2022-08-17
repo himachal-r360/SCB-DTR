@@ -13,6 +13,165 @@ intrest:any;
    }
     
 
+getavlableqBerths(value: any){
+  var values = [];
+  for(let val of value){ //console.log(val.quotaList)
+    if(val instanceof Array){
+      for( let berthVal of val)
+      values.push({'berthCode': berthVal,'berthName': AppConfig.IRCTC_Quota[berthVal],'selected':false}); 
+    } else {
+      values.push({'berthCode':val,'berthName':AppConfig.IRCTC_Quota[val],'selected':false})
+    }
+  }
+
+    // Remove the duplicate elements
+  	var prev = {};
+	var filteredData = values.filter( function(arr) {
+	  var key = arr.berthCode;
+	  if (prev[key])
+	    return false;
+	  return (prev[key] = true);
+	});
+
+
+    filteredData.sort(function(a, b){return a.berthCode-b.berthCode});
+    return filteredData;
+}
+
+
+getAvailableClasses(value: any){
+ var values = [];
+	for (let val of value) {
+	if (val.avlClasses instanceof Array) {
+	   for (let classval of val.avlClasses) 
+		values.push({'classCode':classval ,'className':AppConfig.IRCTC_Classes[classval],'selected':false});
+	} else {
+	 values.push({'classCode':val.avlClasses,'className':AppConfig.IRCTC_Classes[val.avlClasses],'selected':false});
+	}
+	}
+    // Remove the duplicate elements
+  	var prev = {};
+	var filteredData = values.filter( function(arr) {
+	  var key = arr.classCode;
+	  if (prev[key])
+	    return false;
+	  return (prev[key] = true);
+	});
+
+
+    filteredData.sort(function(a, b){return a.classCode-b.classCode});
+    return filteredData;
+}
+
+getavlablequota(value: any){
+  var values = [];
+  for(let val of value){ //console.log(val)
+    if(val == "GN" || val == "TQ" || val == "LD" || val == "SS"){
+    if(val instanceof Array){
+      for( let quotaVal of val) 
+      values.push({'quotaCode': quotaVal,'quotaName': AppConfig.IRCTC_Quota[quotaVal],'selected':false}); 
+    } else {
+      values.push({'quotaCode':val,'quotaName':AppConfig.IRCTC_Quota[val],'selected':false})
+    }
+  }
+}
+
+    // Remove the duplicate elements
+  	var prev = {};
+	var filteredData = values.filter( function(arr) {
+	  var key = arr.quotaCode;
+	  if (prev[key])
+	    return false;
+	  return (prev[key] = true);
+	});
+
+
+    filteredData.sort(function(a, b){return a.quotaCode-b.quotaCode});
+    return filteredData;
+}
+
+
+
+getTrainTypes(value: any){
+ var values = [];
+	for (let val of value) {
+	if (val.trainType instanceof Array) {
+	   for (let ttype of val.trainType) 
+		values.push({'trainTypeCode':ttype,trainTypeName:AppConfig.IRCTC_Traintypes[ttype],'selected':false});
+	} else {
+	 values.push({'trainTypeCode':val.trainType,trainTypeName:AppConfig.IRCTC_Traintypes[val.trainType],'selected':false});
+	}
+	}
+
+
+    // Remove the duplicate elements
+  	var prev = {};
+	var filteredData = values.filter( function(arr) {
+	  var key = arr.trainTypeCode;
+	  if (prev[key])
+	    return false;
+	  return (prev[key] = true);
+	});
+
+    filteredData.sort(function(a, b){return a.trainTypeCode-b.trainTypeCode});
+    return filteredData;
+}
+
+getStations(value: any,fieldvalue:any,stationdump:any){
+        var values = [];
+	for (let val of value) {
+	 values.push({'stationCode':val[fieldvalue],'stationName':stationdump[val[fieldvalue]]+' ('+val[fieldvalue]+')','selected':false});
+	}
+
+
+    // Remove the duplicate elements
+  	var prev = {};
+	var filteredData = values.filter( function(arr) {
+	  var key = arr.stationCode;
+	  if (prev[key])
+	    return false;
+	  return (prev[key] = true);
+	});
+
+
+    filteredData.sort(function(a, b){return a.stationCode-b.stationCode});
+    return filteredData;
+}
+ departOn(train: any) {
+  var values = [];
+	if(train.runningSun=='Y') values.push('Sun');
+	if(train.runningMon=='Y') values.push('Mon');
+	if(train.runningTue=='Y') values.push('Tue');
+	if(train.runningWed=='Y') values.push('Wed');
+	if(train.runningThu=='Y') values.push('Thu');
+	if(train.runningFri=='Y') values.push('Fri');
+  if(train.runningSat=='Y') values.push('Sat');
+  
+        if(values.length==7){ return 'All Days';
+
+        }else if(values.length==1){ return values[0]+' Only';
+        }else{
+	var str= values.join(", ");
+        return str.replace(/,(?=[^,]*$)/, ' &');
+        }
+}
+
+departoncheck(train:any,runningday:any){
+  var avlDays = [];
+   //var checkday = new Date().toLocaleString('en-us', {  weekday: 'long' });
+  //console.log(checkday);
+  for(var i=0;i< train.length;i +=1){ 
+    if(train[i].runningThu === 'Y' && runningday == 'Thursday') avlDays.push(train[i]);
+    if(train[i].runningSun === 'Y' && runningday == 'Sunday') avlDays.push(train[i]);
+    if(train[i].runningMon === 'Y' && runningday == 'Monday') avlDays.push(train[i]);
+    if(train[i].runningTue === 'Y' && runningday == 'Tuesday') avlDays.push(train[i]);
+    if(train[i].runningWed === 'Y' && runningday == 'Wednesday') avlDays.push(train[i]);
+    if(train[i].runningFri === 'Y' && runningday == 'Friday') avlDays.push(train[i]);
+    if(train[i].runningSat === 'Y' && runningday == 'Saturday') avlDays.push(train[i]);
+  }
+//  console.log(avlDays);
+return avlDays;
+}
 
 emiLogic(amount: number)
     {
@@ -49,7 +208,34 @@ emiLogic(amount: number)
       return emiArray ;
 
     }
-    
+   getTrainArrivalDate(journeyDate: any,duration:any)
+    {  
+      var d =  (new Date (new Date().toDateString() + ' ' + duration));
+      var hour = d.getHours()
+      var min = d.getMinutes()
+
+    var m = moment(journeyDate+" "+duration).add(hour, 'hour').add(min, 'minute').format('DD MMM');
+   return m;
+   
+    }
+
+   getFormattedDate(journeyDate: any)
+    {
+    var m = moment(journeyDate).format('DD MMM YYYY');
+   return m;
+    }
+   getFormattedDateTrain(journeyDate: any)
+    {
+    var res = journeyDate.split("-"); 
+    var condata;
+    //console.log((res[0]).length);
+    if((res[0]).length == 1){
+      condata = "0"+res[0];
+    }else condata = res[0];
+    // console.log(condata);
+    var m = moment(res[2]+"/"+res[1]+"/"+condata).format('DD MMM YYYY');
+    return m;
+    }    
     
 emiDebitLogic(amount: number)
     {
