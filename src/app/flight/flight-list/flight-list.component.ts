@@ -177,7 +177,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
              return false;
               }else{
              this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
-             
+
              if(this.nextIndex > this.flightList.length){
              this.nextIndex=this.flightList.length;
              }
@@ -318,7 +318,7 @@ var couponParam = {
 postData:this.EncrDecr.set(JSON.stringify(urlParams))
 };
 
-this.rest.getCouponsByService(couponParam).subscribe(results => { 
+this.rest.getCouponsByService(couponParam).subscribe(results => {
    if(results.status=="success"){
    this.flightCoupons=results.data;
    }
@@ -1001,6 +1001,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.DocKey = res.response.docKey;
       // this.flightList = res.response.onwardFlights;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
+      this.flightList.forEach((z:any)=>{
+        z.isTimeLess = this.IsTimeDiffLess(z.flights)
+      });
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
@@ -1341,4 +1344,24 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   }
 
+  IsTimeDiffLess(flights:any)
+  {
+   var disable = false;
+   if(flights.length > 1)
+   {
+    for(var i =0 ; i< (flights.length -1); i++)
+    {
+      var diff = new Date(flights[i+1].departureDateTime).valueOf() -new Date(flights[i].arrivalDateTime).valueOf();
+      var diffInHours = diff/1000/60/60;
+
+      if(diffInHours <= 2)
+      {
+        disable = true;
+        break;
+      }
+    }
+
+   }
+   return disable;
+  }
 }

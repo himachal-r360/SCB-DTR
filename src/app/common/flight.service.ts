@@ -105,7 +105,7 @@ export class FlightService {
       }
     
     } else {
-      
+
       return this.http.post(this.flightInfo, param, { headers: this.header })
     }
   }
@@ -123,6 +123,7 @@ export class FlightService {
 
   getMulticityList(param:any){
     let body = JSON.stringify(param);
+    console.log(body)
     return this.http.post(this.multicityFlight , body , { headers: this.header })
   }
 

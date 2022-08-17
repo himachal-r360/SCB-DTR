@@ -127,7 +127,6 @@ nextIndex=0;
 
 
  private intialData() {
-  this.loader = true;
     for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
       if(this.flightList[n] != undefined)
       {
@@ -139,7 +138,6 @@ nextIndex=0;
       }
 
     }
-    this.loader = false;
     //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
     //  this.gotoTop();
 }
@@ -210,21 +208,31 @@ nextIndex=0;
     console.log(searchObj ,"searchObj");
     this.sub = this._flightService.getMulticityList(searchObj).subscribe((res: any) => {
       console.log(res , "response");
-      this.WithoutFilterFlightList = res.response.journeys;
-      this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
-      this.flightListWithOutFilter = this.flightList;
-      this.DocKey = res.response.docKey;
-      console.log(this.flightList)
-      this.getAirlinelist();
-      if (this.flightList.length > 0) {
-        this.GetMinAndMaxPriceForFilter();
-        // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-        // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
-         this.sliderRange(this, this.minPrice, this.maxPrice);
-       }
-      // console.log(this.flightList,"this.flightList");
-       this.getAirlinelist();
-       this.popularFilterFlightData();
+      if(res.response.journeys)
+      {
+        this.WithoutFilterFlightList = res.response.journeys;
+        this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
+        this.flightList.forEach((z:any)=>{
+          z.isTimeLess = this.IsTimeDiffLess(z.flights)
+        });
+        this.flightListWithOutFilter = this.flightList;
+        this.DocKey = res.response.docKey;
+        console.log(this.flightList)
+        this.getAirlinelist();
+        if (this.flightList.length > 0) {
+          this.GetMinAndMaxPriceForFilter();
+          // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+          // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+           this.sliderRange(this, this.minPrice, this.maxPrice);
+         }
+        // console.log(this.flightList,"this.flightList");
+         this.getAirlinelist();
+         this.loader = false;
+         this.popularFilterFlightData();
+      }
+      else{
+        this.loader = false;
+      }
 
     }, (error) => { console.log(error) });
 
@@ -247,6 +255,9 @@ nextIndex=0;
     this.selectedTrip = i;
     this.flightList = [];
     this.flightList = this.WithoutFilterFlightList[i].sectors;
+    this.flightList.forEach((z:any)=>{
+      z.isTimeLess = this.IsTimeDiffLess(z.flights)
+    });
     this.flightListWithOutFilter = this.flightList;
     this.popularFilterFlightData();
   }
@@ -579,6 +590,9 @@ popularFilterFlightData() {
       {
         this.container.clear();
         this.intialData();
+      }
+      else{
+        this.loader = false;
       }
 
 }
@@ -1051,5 +1065,123 @@ resetAllFilters() {
     {
       this.popularFilterFlightData();
     }
+  }
+
+  flightAcsDescFilterFlightData(event: any) {
+    let selectedVal = event.target.value;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    })
+    this.popularFilterFlightData();
+  }
+
+  OpenPartner(i:number)
+  {
+        $(".mob-items-book-list").css('display','none')
+        var SelectedElement = document.getElementById('CompareToFly_'+i);
+        if(SelectedElement)
+        {
+          SelectedElement.style.display = 'block';
+        }
+  }
+  searchNonStop(item: any) {
+    this.toggleStopsFilteritems.filter((itemp: any) => {
+      itemp.active = false;
+      return itemp;
+    })
+    item.active = !item.active;
+    if (item.name == "no_stops" && item.active == true) {
+      this.stopsFilteritems.filter((itemp: any) => {
+        if (item.name == "no_stops" && itemp.name == "no_stops" && item.active == true) {
+          itemp.active = true;
+        }
+      })
+    }
+    else if (item.name == "All_Flights") {
+      this.stopsFilteritems.filter((itemp: any) => {
+        if (itemp.name == "no_stops") {
+          itemp.active = false;
+        }
+      })
+    }
+    this.popularFilterFlightData();
+  }
+
+  openFlightDetailMobile(i:any,title:any){
+    let flightDetail = document.getElementById('flightDetailMobile_' + i);
+    let cancellation:any = document.getElementById('collapseTwo-fd_'+ i);
+    let baggage:any = document.getElementById('collapseThree-fd_'+ i);
+    let fareRules:any = document.getElementById('collapsefour-fd_'+ i);
+    if(flightDetail && title == 'flightdetail') {
+      flightDetail.style.display = "block";
+    }
+    if(cancellation && title == 'cancellation'){
+      cancellation.classList.toggle("show");
+    }
+    if(baggage && title == 'baggagepolicy') {
+      baggage.classList.toggle("show");
+    }
+    if(fareRules && title == 'farerules'){
+      fareRules.classList.toggle("show");
+    }
+}
+
+closeFlightDetailMobile(i:any){
+  let element = document.getElementById('flightDetailMobile_' + i);
+  if(element) {
+    element.style.display = "none";
+  }
+
+}
+openMobileFilterSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
+
+  }
+
+  CloseSortingSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+  onApplyFilter(){
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
+
+  IsTimeDiffLess(flights:any)
+  {
+   var disable = false;
+   if(flights.length > 1)
+   {
+    for(var i =0 ; i< (flights.length -1); i++)
+    {
+      var diff = new Date(flights[i+1].departureDateTime).valueOf() -new Date(flights[i].arrivalDateTime).valueOf();
+      var diffInHours = diff/1000/60/60;
+
+      if(diffInHours <= 2)
+      {
+        disable = true;
+        break;
+      }
+    }
+
+   }
+   return disable;
   }
 }
