@@ -14,7 +14,7 @@ import { AppConfigService } from '../../app-config.service';
 import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
-
+import { formatNumber } from '@angular/common';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -233,10 +233,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         ngOnInit(): void {
         this.isMobile = window.innerWidth < 991 ?  true : false;
         this.route.url.subscribe(url =>{
-        $(".modal").hide();
-        $('body').removeClass( "modal-open" );
-         $("body").removeAttr("style");
-        $(".modal-backdrop").remove();
+        this.resetPopups();
         this.gotoTop();
         this.loader = true;
         this.getQueryParamData(null);
@@ -283,6 +280,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 });
 
 }
+
+        resetPopups(){
+        $('#flightChange').modal('hide');
+        $(".modal").hide();
+        $("body").removeAttr("style");
+        $(".modal-backdrop").remove();
+        }
+
   flightDetailsTab(obj: any, value: string, indx: number) {
     var dashboard_menu_type = value;
     $('.flight-extra-content').hide();
@@ -1439,10 +1444,60 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     return dateHour;
   }
 
+  flightChangeDisplay:any;
+  flightsChange:any; selectedChange:any; flightKeyChange:any;
   bookingSummary(flights: any, selected: any, flightKey: any) {
-    //console.log(this.searchData);return;
+       let departureAirportUser=this.searchData.flightfrom;
+        let arrivalAirportUser=this.searchData.flightto;
+
+        let departureAirportSelected=flights.onwardflights[0]['departureAirport'];
+        let arrivalAirportSelected=flights.onwardflights[flights.onwardflights.length-1]['arrivalAirport'];
+        this.flightsChange=flights;
+        this.selectedChange=selected;
+         this.flightKeyChange=flightKey;
+
+        if (departureAirportSelected != departureAirportUser) {
+        this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[departureAirportUser ].city + ". Cheapest flight at ₹"+formatNumber(selected.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[departureAirportSelected ].airport_name+ ', ' +this.airportsNameJson[departureAirportSelected ].city + ' (' + departureAirportSelected + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelected ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ').';
+        $('#flightChange').modal('show');
+        return;
+        }
+
+
+        if (arrivalAirportSelected != arrivalAirportUser) {
+        this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[arrivalAirportUser ].city + ". Cheapest flight at ₹"+formatNumber(selected.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[arrivalAirportSelected ].airport_name+ ', ' +this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelected ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ').';
+        $('#flightChange').modal('show');
+        return;
+        }
+        
+       if(this.searchData.flightdefault=='R'){
+        let departureAirportUserR=this.searchData.flightto;
+        let arrivalAirportUserR=this.searchData.flightfrom;
+
+        let departureAirportSelectedR=flights.returnflights[0]['departureAirport'];
+        let arrivalAirportSelectedR=flights.returnflights[flights.returnflights.length-1]['arrivalAirport'];
+        this.flightsChange=flights;
+        this.selectedChange=selected;
+        this.flightKeyChange=flightKey;
+
+        if (departureAirportSelectedR != departureAirportUserR) {
+        this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[departureAirportUserR ].city + ". Cheapest flight at ₹"+formatNumber(selected.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[departureAirportSelectedR ].airport_name+ ', ' +this.airportsNameJson[departureAirportSelectedR ].city + ' (' + departureAirportSelectedR + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelectedR ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelectedR ].city + ' (' + arrivalAirportSelectedR + ').';
+        $('#flightChange').modal('show');
+        return;
+        }
+
+
+        if (arrivalAirportSelectedR != arrivalAirportUserR) {
+        this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[arrivalAirportUserR ].city + ". Cheapest flight at ₹"+formatNumber(selected.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[arrivalAirportSelectedR ].airport_name+ ', ' +this.airportsNameJson[arrivalAirportSelectedR ].city + ' (' + arrivalAirportSelectedR + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelectedR ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelectedR ].city + ' (' + arrivalAirportSelectedR + ').';
+        $('#flightChange').modal('show');
+        return;
+        }
+       
+       
+       
+       }
     
-      let flightDetailsArr: any = { 
+    
+        let flightDetailsArr: any = { 
         "travel":"INT",
         "travel_type":this.searchData.flightdefault,
         "docKey": this.DocKey,
@@ -1452,19 +1507,45 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         "returnFlights":flights.returnflights ,
         "onwardPriceSummary": selected, 
         "returnPriceSummary": '', 
+          "splrtFlight": false,
         "queryFlightData":this.queryFlightData
         };
-    let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
-    sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
-    //this._flightService.setFlightsDetails(flightDetailsArr);
-    let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
-   
+        let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
+        sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
+        //this._flightService.setFlightsDetails(flightDetailsArr);
+        let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
+
         setTimeout(() => {
-                this.router.navigateByUrl(url);
-                }, 10);  
+        this.router.navigateByUrl(url);
+        }, 10);  
 
   }
+  
+  bookingSummaryContinue(flights: any, selected: any, flightKey: any) {
+    $('#flightChange').modal('hide');
+       let flightDetailsArr: any = { 
+        "travel":"INT",
+        "travel_type":this.searchData.flightdefault,
+        "docKey": this.DocKey,
+        "onwardFlightKey": flightKey,
+        "returnFlightKey": '',
+        "onwardFlights": flights.onwardflights,
+        "returnFlights":flights.returnflights ,
+        "onwardPriceSummary": selected, 
+        "returnPriceSummary": '', 
+          "splrtFlight": false,
+        "queryFlightData":this.queryFlightData
+        };
+        let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
+        sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
+        //this._flightService.setFlightsDetails(flightDetailsArr);
+        let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
 
+        setTimeout(() => {
+        this.router.navigateByUrl(url);
+        }, 10);  
+
+  }
 
 
   gotoTop() {

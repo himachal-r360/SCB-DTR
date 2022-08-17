@@ -1266,11 +1266,7 @@ payNow(ptype){
 		var passData;
 	
 		passData=this.passData;
-		
-		console.log(atob(this.passFareData));
-
 		let fareD= JSON.parse(atob(this.passFareData));
-		 console.log(fareD)
 		// let df_fareData = this.EncrDecr.set(JSON.stringify(fareD))
 
 		this.submittedPayForm=true;

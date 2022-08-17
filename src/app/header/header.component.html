@@ -168,7 +168,7 @@
                                                     <p>Currently, there are no notifications for you!</p>
                                                     <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
                                                 </div>
-                                                <div class="modal-header push-modal-new-head">
+                                                <div class="modal-header push-modal-new-head" *ngIf="pushcountavail">
                                                     <h6 class="modal-title " *ngIf="enablePushTitle==false ">Push Notification Box </h6>
                                                     <p class="modal-title push-modal-head" *ngIf="enablePushTitle==true ">Notifications </p>
                                                     <p *ngIf="enablePushTitle==true " class="push-not-font">Push on notifications enabled. Device now setup to receive push notifications</p>
@@ -749,7 +749,7 @@
                                                 <p>Currently, there are no notifications for you!</p>
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
                                             </div>
-                                            <div class="modal-header push-modal-new-head">
+                                            <div class="modal-header push-modal-new-head" *ngIf="pushcountavail">
                                                 <h6 class="modal-title " *ngIf="enablePushTitle==false ">Push Notification Box </h6>
                                                 <p class="modal-title push-modal-head" *ngIf="enablePushTitle==true ">Notifications </p>
                                                 <p *ngIf="enablePushTitle==true " class="push-not-font">Push on notifications enabled. Device now setup to receive push notifications</p>
@@ -928,6 +928,7 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="hdr_privilege_card">
+                                                        <a href="">
                                                         <div class="row cntnt_center">
                                                             <div class="col-sm-4">
                                                                 <div class="privilege_img_div">
@@ -942,10 +943,12 @@
                                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/rg_arrw_icn.svg">
                                                             </div>
                                                         </div>
+                                                    </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="hdr_privilege_card">
+                                                        <a href="">
                                                         <div class="row cntnt_center">
                                                             <div class="col-sm-4">
                                                                 <div class="privilege_img_div">
@@ -960,6 +963,7 @@
                                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/rg_arrw_icn.svg">
                                                             </div>
                                                         </div>
+                                                    </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1068,6 +1072,7 @@
                         <div class="row">
                             <div class="col-sm-6" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                                 <div class="hdr_travel">
+                                    <a href="javascript:;" (click)="clickUrl('compare-fly')" >
                                     <div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
@@ -1082,11 +1087,13 @@
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             </div>
                               
                             <div class="col-sm-6" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
                                 <div class="hdr_travel">
+                                    <a href="javascript:;" (click)="goTo('train')">
                                     <div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
@@ -1101,11 +1108,13 @@
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             </div>
 
                             <div class="col-sm-6" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                 <div class="hdr_travel">
+                                    <a href="javascript:;" (click)="clickUrl('compare-stay')">
                                     <div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
@@ -1120,11 +1129,13 @@
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             </div>
 
                             <div class="col-sm-6" *ngIf="DOMAIN_SETTINGS.BUS==1">
                                 <div class="hdr_travel">
+                                    <a href="javascript:;" (click)="goTo('bus')" >
                                     <div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
@@ -1139,11 +1150,13 @@
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
+                                    <a href="javascript:;">
                                     <div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
@@ -1158,6 +1171,7 @@
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             </div>
                         </div>
@@ -2116,17 +2130,52 @@
                             </ul>
                         </div>
                         <div class="brand_list">
-                            <p>Top Brands</p>
+                            <p>Our Partners</p>
+
                             <div class="img_sec">
+
                                 <div>
+
                                     <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/emt.svg">
+
                                 </div>
+
                                 <div>
+
                                     <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/cleartrip.svg">
+
                                 </div>
+
                                 <div>
+
                                     <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/Yatra.svg">
+
                                 </div>
+
+                                <div>
+
+                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/goibibo.svg">
+
+                                </div>
+
+                                <div>
+
+                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/redbus.svg">
+
+                                </div>
+
+                                <div>
+
+                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/irctc.svg">
+
+                                </div>
+
+                                <div>
+
+                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/mmt.svg">
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -2393,13 +2442,14 @@
 <div class="before_log_m" *ngIf="guestLogin==true &&  customerLogin==false && payzrestriction==false">
 
     <div>
-        <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
+        <a class="m_login_btn" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
     </div>
 </div>
 <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false  && payzrestriction==false">
 
     <div>
-        <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
+        <!-- <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a> -->
+        <a class="m_login_btn" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
     </div>
 </div>
 
@@ -2845,6 +2895,7 @@
                 <div class="row mt-4">
                 <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -2858,10 +2909,12 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -2875,10 +2928,12 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -2892,6 +2947,7 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -2906,6 +2962,7 @@
                 <div class="row mt-4">
                 <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -2919,10 +2976,12 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -2936,10 +2995,12 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -2953,10 +3014,12 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -2970,6 +3033,7 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
 
@@ -3045,6 +3109,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="hdr_travel">
+                                                <a href="">
                                                 <div class="row cntnt_center">
                                                     <div class="col-2">
                                                         <div class="circular_div">
@@ -3059,6 +3124,7 @@
                                                         <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
         
@@ -3072,22 +3138,24 @@
                 <div  class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Switch to</span></div>
 
                 <div class="row mt-4">
-                                        <div class="col-12">
+                                        <div class="col-10">
                                             <div class="hdr_privilege_card">
+                                                <a href="">
                                                 <div class="row cntnt_center">
-                                                    <div class="col-4">
+                                                    <div class="col-3">
                                                         <div class="m_privilege_img_div">
                                                             <img src="{{cdnUrl}}images/smartbuy/icons/privilege_card1.svg" class="privilege_img">
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 pl-0">
+                                                    <div class="col-7">
                                                         <p class="privilege_text_highlight mb-0 ">Regalia</p>
                                                         <p class="privilege_text">xxx 1234</p>
                                                     </div>
-                                                    <div class="col-2 pdng_lft_0">
-                                                        <img src="{{cdnUrl}}images/smartbuy/icons/arrw_icn.svg" width="15px" height="15px">
+                                                    <div class="col-2 pl-0">
+                                                        <img src="{{cdnUrl}}images/smartbuy/icons/right_icon.svg" width="13px" height="13px">
                                                     </div>
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
 
@@ -3147,7 +3215,7 @@
                 <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
             </div>
 
-            <div class="modal-header">
+            <div class="modal-header" *ngIf="pushcountavail">
                 <h5 class="modal-title" id="pushNotifiModalLabel">Notifications</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

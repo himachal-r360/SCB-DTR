@@ -30,6 +30,9 @@ declare var $: any;
 export class HomeComponent implements OnInit {
   cdnUrl: any;
   continueSearchVal:any;
+        continueSearchValBus:any;
+        continueSearchValTrain:any;
+        continueSearchValHotel:any;
   windowItem = window;
   isMobile:boolean = false;
   customOptions: OwlOptions = {
@@ -146,7 +149,7 @@ export class HomeComponent implements OnInit {
     {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/3.png'},
     {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
   ]
-
+ navItemActive:string='flight';
 
   constructor(
     public _styleManager: StyleManagerService,
@@ -155,6 +158,25 @@ export class HomeComponent implements OnInit {
 
     ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    if(router.url){
+        switch (router.url) {
+        case ('/compare-fly'):
+        this.navItemActive = 'flight';
+        break;
+        case ('/compare-stay'):
+        this.navItemActive = 'hotel';
+        break;
+        case ('/bus'):
+        this.navItemActive = 'bus';
+        break;
+        case ('/train'):
+        this.navItemActive = 'train';
+        break;
+        default:
+        this.navItemActive = 'flight';
+        break;
+        }  
+     }
       window.onresize = (e) =>
       {
           //ngZone.run will help to run change detection
@@ -171,10 +193,26 @@ export class HomeComponent implements OnInit {
     this._flightService.showHeader(true);
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
+    
     let continueSearchValLs:any= localStorage.getItem('continueSearch');
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
+        let continueSearchValBusParse:any= localStorage.getItem('continueSearchBus');
+        if(continueSearchValBusParse!=null){
+        this.continueSearchValBus =JSON.parse(continueSearchValBusParse);
+        }
+           let continueSearchValTrainParse:any= localStorage.getItem('continueSearchBus');
+        if(continueSearchValTrainParse!=null){
+        this.continueSearchValTrain =JSON.parse(continueSearchValTrainParse);
+        }    
+    
+    
+  }
+  navBarLink(item){
+   
+   this.navItemActive=item;
+  
   }
 
   ConvertObjToQueryString(obj:any)
@@ -200,13 +238,19 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl(url);
     }
     }else{
-      let     url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
+      let url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
           this.router.navigateByUrl(url);
 
        }
 
   }
 
+  continueSearchBus(param:any){
+  
 
+  }
+  continueSearchTrain(param:any){
+  
 
+  }
 }

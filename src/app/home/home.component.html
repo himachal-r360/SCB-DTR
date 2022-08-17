@@ -8,25 +8,25 @@
                             <div class="travel-select-box">
                                 <ul class="travel-list-ul">
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a active">
+                                        <a href="javascript:;" class="travel-list-a"  (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/flight.png" alt="">
                                             Flights
                                         </a>
                                     </li>
-                                    <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
+                                    <li class="travel-list-li" >
+                                        <a href="javascript:;"class="travel-list-a"  (click)="navBarLink('train')"  [ngClass]="navItemActive == 'train'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/trains.png" alt="">
                                             Trains
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
+                                        <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('bus')" [ngClass]="navItemActive == 'bus'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/bus.png" alt="">
                                             Bus
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
+                                        <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('hotel')"  [ngClass]="navItemActive == 'hotel'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/stays.png" alt="">
                                             Stays
                                         </a>
@@ -34,14 +34,17 @@
                                 </ul>
                             </div>
                         </div>
-                        <app-flight-search isViewPartner="true"></app-flight-search>
+                        <app-flight-search isViewPartner="true" *ngIf="navItemActive=='flight'" ></app-flight-search>
+                        <app-hotel-search isViewPartner="true" *ngIf="navItemActive=='hotel'" ></app-hotel-search>
+                        <app-bus-search isViewPartner="true" *ngIf="navItemActive=='bus'" ></app-bus-search>
+                        <app-train-search isViewPartner="true" *ngIf="navItemActive=='train'" ></app-train-search>
                     </div>
                 </div>
             </div>
         </div>
     </section>
  <!-- Continue Search -->
-    <section class="ContinueSearch-area mb-50" *ngIf="continueSearchVal && continueSearchVal.length>0">
+    <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='flight' && continueSearchVal && continueSearchVal.length>0">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -113,8 +116,82 @@
             </div>
         </div>
     </section>
+    
+        <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='bus' && continueSearchValBus && continueSearchValBus.length>0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Continue Your Search</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- continue search website view  -->
+                <ng-container *ngIf="isMobile == false">
+                    <div class="col-md-3" *ngFor="let continue of continueSearchValBus; let i = index">
+                        <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearchBus(continue)">
+                            <div class="Continuesearch-items ">
+                                <div class="Continuesearch-items-text">
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchFrom}}</h6>
+                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                    </div>
+                                    <div class="Continuesearch-image">
+                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.png"
+                                            alt="">
+                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png" alt="">
+                                    </div>
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchTo}}</h6>
+                                    </div>
+                                </div>
+                                <div class="Continuesearch-items-actions">
+                                    <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ng-container>
+                <!-- continue search mobile view  -->
+                <div class="box-item" *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let continue of continueSearchValBus; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearchBus(continue)">
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchFrom}}</h6>
+                                                <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img *ngIf="!continue.arrival"
+                                                    src="{{cdnUrl}}/images/icons/next-active.png" alt="">
+                                                <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png"
+                                                    alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchTo}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
     <!-- Trending Routes -->
-    <section class="TrendingRoutes-area mb-50">
+    <section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -186,7 +263,7 @@
    
 
     <!-- Popular Domestic Flight Routes -->
-    <section class="popular-Domestic-area mb-50">
+    <section class="popular-Domestic-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -262,7 +339,7 @@
     </section>
 
     <!-- Popular International  Flight Routes -->
-    <section class="popular-International-area mb-50">
+    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -338,7 +415,7 @@
     </section>
 
     <!-- Popular International  Flight Routes -->
-    <section class="popular-International-area mb-50">
+    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

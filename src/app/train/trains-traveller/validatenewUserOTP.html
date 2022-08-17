@@ -1,0 +1,109 @@
+
+<!-- Reset Password IRCTC   step 1 of 1 -->
+  <ng-container>
+      <form [formGroup]="Form2Submit" name="Form2Submit">
+        <div class="col-md-12" *ngIf="step1">
+            <div class="my-2">
+                <div class="title-for">OTP verification</div>
+                <p class="sub_title-for">We’ll help you to verify your OTP and get back on track.</p>
+                <p class="sub_title-for my-2">STEP 1 OF 2 </p>
+              </div>
+              <div class="row">
+              <div class="col-md-6">
+                  <mat-form-field>
+                      <input matInput placeholder="IRCTC Authorised Partner User ID" maxlength="35" autocomplete="off"  formControlName="userID" (keypress)="AvoidSpace($event)">
+                    </mat-form-field>
+                    <div *ngIf="submittedForm2 && Form2Submit.controls['userID']['errors']" class="error">
+                        <small *ngIf="Form2Submit.controls['userID']['errors']['required']">Please enter user id.</small>
+                        <small *ngIf="Form2Submit.controls['userID']['errors']['pattern']">Please enter valid user id.</small>
+                        <small *ngIf="Form2Submit.controls['userID']['errors']['minlength']">Please enter atleast 3 characters.</small>
+                    </div>
+              </div>
+              </div>
+              <div class="">
+                  <div class="xs-center my-3">
+                      <button class="btn-c btn-primary my-2" (click)="nextStep()" >Next</button>
+                      <a class="btn-b btn my-2" (click)="goback()">Go Back</a>
+                    </div>
+              </div>
+        </div>
+
+      <!-- Reset Password IRCTC   step 2 of 2 -->
+      <div class="col-md-12" *ngIf="step2">
+        <div class="my-2">
+            <div class="title-for">OTP verification</div>
+            <p class="sub_title-for">We’ll help you to verify your OTP and get back on track.</p>
+            <p class="sub_title-for my-2">STEP 2 OF 2 </p>
+            <p class="otp-mobile">{{OTPmessage}}</p> 
+             <!-- <b>89** ***789</b> -->
+            <!-- {{OTPmessage}}  -->
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input matInput placeholder="OTP" (keypress)="numberInput($event)" formControlName="smsOTP">
+                  </mat-form-field>
+                
+                  <div *ngIf="submittedForm3 && Form2Submit.controls['smsOTP']['errors']" class="error">
+                      <small *ngIf="Form2Submit.controls['smsOTP']['errors']['required']">Please enter SMS OTP.</small>
+                      <small *ngIf="Form2Submit.controls['smsOTP']['errors']['pattern']">Please enter a valid OTP.</small>
+                    </div>
+            </div>
+         
+
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input matInput placeholder="Email OTP" (keypress)="numberInput($event)" formControlName="emailOTP">
+                  </mat-form-field>
+                  <div *ngIf="submittedForm3 && Form2Submit.controls['emailOTP']['errors']" class="error">
+                      <small *ngIf="Form2Submit.controls['emailOTP']['errors']['required']">Please enter Email OTP.</small>
+                      <small *ngIf="Form2Submit.controls['emailOTP']['errors']['pattern']">Please enter a valid OTP.</small>
+                    </div>
+            </div>
+        </div>
+        <div class="my-3">
+            <div class="row">
+                <div class="xs-center ">
+
+                    <button class="btn-c btn-primary my-3" style="width: 145px;" (click)="verifyOTP()">Update Password</button> 
+                    <a class="btn-b btn my-3" (click)="gotoStep1()">Go Back</a>
+                    <!-- <button class="btn-c btn-primary" style="width: 145px;" (click)="goback()">Close</button> -->
+                  </div>
+            </div>
+        </div>
+      </div>
+      </form>
+      <!-- Reset Successful to Forgot User Id popup  -->
+  <div class="col-md-12 text-center"  *ngIf="verifySuccess">
+    <div class="my-2">
+        <div class="text-center">
+          <img src="{{cdnUrl}}images/donegreen.svg">
+          <p class="title-for">{{dialogmsg}}</p>
+          <p class="sub_title-for">{{apimessage}}</p> 
+        </div>
+      </div>
+      <button class="btn-c btn-primary m-0 my-3" style="width: 145px;" (click)="goback()">Close</button>
+</div>
+
+ <!-- Reset Fail to Forgot User Id popup  -->
+ <div class="col-md-12 text-center"  *ngIf="verifyFail">
+    <div class="my-2">
+        <div class="text-center">
+          <img src="{{cdnUrl}}images/alert.png">
+          <p class="title-for">{{dialogmsg}}</p>
+          <p class="sub_title-for">{{apimessage}}</p> 
+        </div>
+      </div>
+      <button class="btn-c btn-primary m-0 my-3" style="width: 145px;" (click)="goback()">Close</button>
+</div>
+  </ng-container>
+
+ 
+
+
+
+
+
+
+
+

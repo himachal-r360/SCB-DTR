@@ -177,22 +177,6 @@
             margin-top:5px;
             margin-bottom:5px;
         }
-        .round_div{
-            padding:5px;
-            border-radius:50%;
-            width:20px;
-            height:20px;
-            float:right;
-            background: #CF8D56;
-            @media screen and (max-width:600px){
-                margin-top: -0.35rem;
-                margin-right: -0.03rem;
-            }
-            @media screen and (max-width:360px){
-                margin-top: -1.4rem;
-                margin-right: 0.29rem;
-            }
-        }  
        
     }
     .welcome_bnfts_collapse_cntnt{
@@ -219,26 +203,36 @@
     &::after {
         content: "\002B";
         color: #fff;
-        float:right;
         position:absolute;
         top:10px;
         right:24px;
+        line-height: 18px;
         font-family: 'FontAwesome';
         font-weight:900;
-        font-size:20px;
+        font-size:18px;
+            border-radius:50%;
+            width:18px;
+            height:18px;
+            background: #CF8D56;
+            text-align:center;
     }  
 } 
 .welcome_bnfts_collapse[aria-expanded="true"] {
     &::after {
         content: "\002D";
         color: #fff;
-        float:right;
         position:absolute;
-        top:8px;
-        right:25px;
+        top:10px;
+        right:24px;
+        line-height: 16px;
         font-family: 'FontAwesome';
         font-weight:900;
-        font-size:30px;
+        font-size:18px;
+            border-radius:50%;
+            width:18px;
+            height:18px;
+            background: #CF8D56;
+            text-align: center;
     }
 }
 
@@ -302,22 +296,6 @@
 }
 
 
-.panel-title {
-	&::after {
-		content: "\f107";
-		color: #CF8D56;
-		top: -2px;
-		right: 55px;
-		position: absolute;
-		font-family: 'FontAwesome';
-	}
-}
-.panel-title[aria-expanded="true"] {
-	&::after {
-		content: "\f106";
-	}
-}
-
 .p_dot:before {
     content:"• ";
 }
@@ -380,6 +358,18 @@
                     padding-top:0px;
                     padding-bottom:0px;
                 }
+                .welcome_bnfts_collapse{
+                    &::after {
+                        top:14px;
+                    }
+                }
+                .welcome_bnfts_collapse[aria-expanded="true"] {
+                    &::after {
+                        top:14px;
+                        line-height: 15px;
+                    }
+                }
+                
 }
 @media screen and (max-width:360px){
         .milestone_round_div{

@@ -26,9 +26,9 @@
                     <div class="filter-loaders animation-loader" *ngIf="loader">
                       <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                               <div class="filter-loader-content ">
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                                     <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px', width:'25%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px', width:'50%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '25px', width:'100%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                           </div>
                       </div>
 
@@ -315,11 +315,11 @@
                            <div class="flight-listing-area" *ngIf="loader" >
                           <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content w-100">
-                                <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                                <span class="float-right" style="width:90%;" > 
-                                <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
-                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <span style="width:15%;"><ngx-skeleton-loader  [theme]="{ width: '100px', height: '100px' }"></ngx-skeleton-loader></span>
+                                <span class="float-right" style="width:85%;" >
+                               <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '30px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 </span>
                                 </div>  
                           </div>
@@ -973,10 +973,10 @@
               <div  class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                           <div class="filter-loader-content w-100">
                               <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                              <span class="w-75 float-right"> 
-                              <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                               <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
-                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                             <span class="w-75 float-right">
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                </span>
                           </div>
                       </div>
@@ -1870,5 +1870,24 @@
 
 
 
-
+<div class="modal fade bookingprocess" id="flightChange" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+           <div >
+          <h5 class="mt-20 text-center"><b>Confirm</b></h5>
+        </div>
+      <div class="modal-body" >
+        <div class="p-20">
+          <div class="text-center">
+            <p class="line_height_30 ">{{flightChangeDisplay}}</p>
+          </div>
+          <div class="mt-20">
+            <a  class="btn w-50" data-bs-dismiss="modal" aria-label="Close" >Cancel</a><button type="button" (click)="bookingSummaryContinue(flightsChange,selectedChange,flightKeyChange)" class="btn btn-primary w-50" >Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 

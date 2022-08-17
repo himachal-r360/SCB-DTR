@@ -11,7 +11,6 @@ import { HomeModule } from './home/home.module';
 import { FlightSearchModule } from './flight-search/flight-search.module';
 import { HttpClientModule,HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SearchComponent } from './core/search/search.component';
 import { AppConfigService } from './app-config.service';
 import {APP_CONFIG, AppConfig} from './configs/app.config';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -29,7 +28,13 @@ import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { CustomReuseStrategy } from './route-reuse-strategy';
 import { ToastrModule } from 'ngx-toastr';
 import { CssLoaderComponent } from './css-loader.component';
-
+import { BusSearchModule } from './bus/bus-search/bus-search.module';
+import { TrainSearchModule } from './train/train-search/train-search.module';
+import { BusModule } from './bus/bus.module';
+import { ListModule } from './bus/list-card/list-card.module';
+import { FilterModule } from './bus/filter/filter.module';
+import { TrainModule } from './train/train.module';
+import { TrainsTravellerModule } from './train/trains-traveller/travellers.module';
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -40,7 +45,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent,
     AlertDialogComponent,CssLoaderComponent
 
   ],
@@ -48,7 +52,8 @@ export function appInitializerFn(appConfig: AppConfigService) {
  BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FlightModule,
+    FlightModule,BusModule,ListModule,FilterModule,BusSearchModule,TrainSearchModule,
+    TrainModule,TrainsTravellerModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -57,7 +62,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
       headerName: 'X-XSRF-TOKEN'
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
-    MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,
+    MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,BusSearchModule,TrainSearchModule,
     BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
@@ -65,9 +70,8 @@ export function appInitializerFn(appConfig: AppConfigService) {
     ToastrModule.forRoot()
 
   ],
-  exports:[SearchComponent],
+  exports:[],
    providers: [
-
    StyleManagerService,
    AppConfigService,
     {
