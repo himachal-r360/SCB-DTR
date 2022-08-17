@@ -963,7 +963,7 @@ check_traveller_count(type) {
 
 
           //Flights
-      lastFlightSearch=localStorage.getItem('flightLastSearch');
+      lastFlightSearch=localStorage.getItem('flightLastSearchNew');
        const lastFlightSearchValue=JSON.parse(lastFlightSearch);
        
         if(lastFlightSearchValue){
@@ -1128,7 +1128,7 @@ check_traveller_count(type) {
 
 
         //Bus
-        lastBusSearch=localStorage.getItem('busLastSearch');
+        lastBusSearch=localStorage.getItem('busLastSearchNew');
        const lastBusSearchValue=JSON.parse(lastBusSearch);
         if(lastBusSearchValue){
          this.busFromText=lastBusSearchValue.searchFrom;
@@ -1178,7 +1178,7 @@ check_traveller_count(type) {
                 
         }
         //Train
-         lastTrainSearch=localStorage.getItem('trainLastSearch');
+         lastTrainSearch=localStorage.getItem('trainLastSearchNewNewNewNewNewNew');
         const lastTrainSearchValue=JSON.parse(lastTrainSearch);
         if(lastTrainSearchValue){
 
@@ -1502,7 +1502,7 @@ console.log(this.searchFlightForm);
 
         this.flightSearchCallBack(searchValue);
 
-        localStorage.setItem('flightLastSearch',JSON.stringify(searchValue));
+        localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
 
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
@@ -1696,7 +1696,7 @@ console.log(this.searchFlightForm);
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('busLastSearch', JSON.stringify(this.searchArray));
+        localStorage.setItem('busLastSearchNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -1778,7 +1778,7 @@ console.log(this.searchFlightForm);
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('trainLastSearch', JSON.stringify(this.searchArray));
+        localStorage.setItem('trainLastSearchNewNewNewNewNewNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){

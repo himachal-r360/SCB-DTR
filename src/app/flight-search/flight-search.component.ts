@@ -402,7 +402,7 @@ searchAutoComplete($event, field, device, index:any) {
   infantsVal:any
   flightFromInput:any;
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('flightLastSearch');
+   let lastSearch:any=localStorage.getItem('flightLastSearchNew');
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);

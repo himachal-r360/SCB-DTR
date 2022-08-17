@@ -250,7 +250,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('trainLastSearch');
+   let lastSearch:any=localStorage.getItem('trainLastSearchNew');
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.fromCityName=lastSearch.searchFrom;
@@ -345,7 +345,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
      } else {
       let searchValue = this.searchTrainForm.value;
       this.trainSearchCallBack(searchValue);
-      localStorage.setItem('trainLastSearch',JSON.stringify(searchValue));
+      localStorage.setItem('trainLastSearchNew',JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       let url;
       url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
