@@ -18,11 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxCaptchaModule } from 'ngx-captcha';
-
-
-
-
-
+import { TextMaskModule } from 'angular2-text-mask';
 @NgModule({
   declarations: [
     BannersComponent,
@@ -34,6 +30,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
   
   ],
   imports: [
+    TextMaskModule,
     CommonModule,
     MaterialModule,
     CarouselModule,
