@@ -127,7 +127,6 @@ nextIndex=0;
 
 
  private intialData() {
-  this.loader = true;
     for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
       if(this.flightList[n] != undefined)
       {
@@ -139,7 +138,6 @@ nextIndex=0;
       }
 
     }
-    this.loader = false;
     //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
     //  this.gotoTop();
 }
@@ -224,6 +222,7 @@ nextIndex=0;
        }
       // console.log(this.flightList,"this.flightList");
        this.getAirlinelist();
+       this.loader = false;
        this.popularFilterFlightData();
 
     }, (error) => { console.log(error) });
@@ -579,6 +578,9 @@ popularFilterFlightData() {
       {
         this.container.clear();
         this.intialData();
+      }
+      else{
+        this.loader = false;
       }
 
 }
@@ -1051,5 +1053,102 @@ resetAllFilters() {
     {
       this.popularFilterFlightData();
     }
+  }
+
+  flightAcsDescFilterFlightData(event: any) {
+    let selectedVal = event.target.value;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    })
+    this.popularFilterFlightData();
+  }
+
+  OpenPartner(i:number)
+  {
+        $(".mob-items-book-list").css('display','none')
+        var SelectedElement = document.getElementById('CompareToFly_'+i);
+        if(SelectedElement)
+        {
+          SelectedElement.style.display = 'block';
+        }
+  }
+  searchNonStop(item: any) {
+    this.toggleStopsFilteritems.filter((itemp: any) => {
+      itemp.active = false;
+      return itemp;
+    })
+    item.active = !item.active;
+    if (item.name == "no_stops" && item.active == true) {
+      this.stopsFilteritems.filter((itemp: any) => {
+        if (item.name == "no_stops" && itemp.name == "no_stops" && item.active == true) {
+          itemp.active = true;
+        }
+      })
+    }
+    else if (item.name == "All_Flights") {
+      this.stopsFilteritems.filter((itemp: any) => {
+        if (itemp.name == "no_stops") {
+          itemp.active = false;
+        }
+      })
+    }
+    this.popularFilterFlightData();
+  }
+
+  openFlightDetailMobile(i:any,title:any){
+    let flightDetail = document.getElementById('flightDetailMobile_' + i);
+    let cancellation:any = document.getElementById('collapseTwo-fd_'+ i);
+    let baggage:any = document.getElementById('collapseThree-fd_'+ i);
+    let fareRules:any = document.getElementById('collapsefour-fd_'+ i);
+    if(flightDetail && title == 'flightdetail') {
+      flightDetail.style.display = "block";
+    }
+    if(cancellation && title == 'cancellation'){
+      cancellation.classList.toggle("show");
+    }
+    if(baggage && title == 'baggagepolicy') {
+      baggage.classList.toggle("show");
+    }
+    if(fareRules && title == 'farerules'){
+      fareRules.classList.toggle("show");
+    }
+}
+
+closeFlightDetailMobile(i:any){
+  let element = document.getElementById('flightDetailMobile_' + i);
+  if(element) {
+    element.style.display = "none";
+  }
+
+}
+openMobileFilterSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
+
+  }
+
+  CloseSortingSection()
+  {
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
+  onApplyFilter(){
+    var filterDiv = document.getElementById('sortMobileFilter');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+    this.popularFilterFlightData();
   }
 }
