@@ -48,13 +48,13 @@
   </div>
   <!-- Card Details -->
   <div>
-    <div class="card_details">
+    <div class="card_details" *ngIf="isLogged">
       <div class="row">
         <div class="col-sm-6 p-0">
           <!-- nocard Details -->
 
           <div class="col-sm-12">
-            <div class="unlock_card goldCardDetails" *ngIf="isLogged" [hidden]="IsgoldCardDetailsModel">
+            <div class="unlock_card goldCardDetails" [hidden]="IsgoldCardDetailsModel">
                 <div class="">
                      <img src="{{cdnUrl}}images/smartbuy/icons/coin-icn.svg" alt="" class="img-fluid">
                 </div>
@@ -93,7 +93,7 @@
             </div>
         </div>
 
-          <div class="goldCardDetails" *ngIf="isLogged" [hidden]="IsgoldCardDetails">
+          <div class="goldCardDetails" [hidden]="IsgoldCardDetails">
               <div class="bg_place">
                 <p class="card_name">Regalia Gold Card xx10101 <span><a href="#">View Details</a></span></p>
                   <div class="row">
@@ -161,7 +161,7 @@
   <!-- Recent Search Gold -->
 
   <div>
-    <div class="recent_search">
+    <div class="recent_search" *ngIf="isLogged">
       <div class="row">
         <div class="col-sm-2">
           <div class="text_rec">
