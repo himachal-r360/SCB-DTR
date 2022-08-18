@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path:"flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
 
+  },
+  {
+    path:"flight-checkout/retry" ,component:FlightCheckoutComponent,
+
   }
 
 
