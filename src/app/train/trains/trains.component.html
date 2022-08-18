@@ -6,7 +6,7 @@
                     <app-train-search modifySearch="true"  isViewPartner="false"></app-train-search>
                  </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-12">
                   <div class="flight-partners">
                       <p>Powered By:</p>
@@ -18,7 +18,7 @@
                       </ul>
                   </div>
               </div>
-          </div>
+          </div> -->
           
           <!-- Availability Pop Up Code  -->
 <div class="modal fade train-availability" tabindex="-1" role="dialog" aria-labelledby="train-availability" aria-hidden="true">
@@ -213,7 +213,7 @@
                 </div>
 
                     <div class="layout-right">
-                        <div class="flightsfound" [hidden]="loading">
+                        <div class="train-found" [hidden]="loading">
                             <div class="flight-tosearch">
                                  <div class="flight-search-filters-left" >
 
@@ -231,17 +231,17 @@
                                 <mat-option *ngFor = "let quota of avlQuota " [value]="quota.quotaCode"><span>{{quota.quotaName}}</span></mat-option>
                                 </mat-select>
                                 </mat-form-field>
-                  <p class="train-avi-info" data-bs-toggle="modal" data-bs-target=".train-availability">Availability <span class="avi-icon"></span></p>
+                                     <p class="train-avi-info" data-bs-toggle="modal" data-bs-target=".train-availability"> <i class="fa fa-exclamation-circle pe-2" aria-hidden="true"></i> Availability </p>
                                 </div>
                       
 
                                 <div class="flight-search-filters-right">
                                 
                                 <mat-form-field>
-                                <mat-select placeholder="Selected Quota" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
-                                <mat-option  *ngIf = "avlQuota.length != 0" value="leave-early"><span>Early Departure</span></mat-option>
-                                <mat-option  *ngIf = "avlQuota.length != 0" value="leave-late"><span>Late Departure</span></mat-option>
-                                </mat-select>
+                                    <mat-select placeholder="Selected Quota" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
+                                        <mat-option  *ngIf = "avlQuota.length != 0" value="leave-early"><span>Early Departure</span></mat-option>
+                                        <mat-option  *ngIf = "avlQuota.length != 0" value="leave-late"><span>Late Departure</span></mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                          
                                 </div>

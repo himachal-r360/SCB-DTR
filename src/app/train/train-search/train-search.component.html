@@ -182,17 +182,36 @@
                                             </div>
 
                                         </div>
-                                        <mat-form-field class="fligh-select-mat-field">
-                                        <mat-select formControlName="quota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
-                                        <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
-                                        </mat-select>
-                                        </mat-form-field>
+                                       
                                         <div class="col-lg-6">
                                             <div class="root-date">
+
+                                                    <div class="select-root-area" >
+                                                        <div class="select-dep-ret " >
+                                                             <div class="area-root-departure train-area-root">
+    
+                                                                <div class="select-root-departure departure-date">
+                                                                    <span class="select-roottitle">Class</span>
+                                                                    
+                                                                        <mat-form-field class="train-selectClass-mat-field">
+                                                                            <mat-select formControlName="quota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
+                                                                            <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                                    
+
+                                                                    <span class="select-roottitle">{{selectedQuota}}</span>
+    
+                                                                </div>
+    
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                
                                             <!--Web Date Picker-->
-                                            <div class="select-root-area" *ngIf="!isMobile">
+                                                <div class="select-root-area" *ngIf="!isMobile">
                                                     <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
-                                                 <div class="area-root-departure " (click)="picker.open()"
+                                                         <div class="area-root-departure train-area-root " (click)="picker.open()"
                                                             id="datePickerOpen">
 
                                                             <div class="select-root-departure departure-date">
@@ -223,8 +242,7 @@
                                                                     <mat-datepicker #picker></mat-datepicker>
                                                                 </mat-form-field>
                                                             </div>
-                                                        </div>
-                                              
+                                                         </div>
                                                     </div>
                                                 </div>
                                             <!--Web Date Picker-->
@@ -242,13 +260,13 @@
                                                                     *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                                                     }}</span>
 
-          <div class="mt-30"  *ngIf="submitted && Error('departure', 'required')" >
-                                        <small class="validate-msg" >Please select departure date</small>
-                                        </div>
+                                                                <div class="mt-30"  *ngIf="submitted && Error('departure', 'required')" >
+                                                                <small class="validate-msg" >Please select departure date</small>
+                                                                </div>
 
                                                             </div>
 
-                                                            <div class="select-root-date"                    style="position: relative; left: 0;">
+                                                            <div class="select-root-date" style="position: relative; left: 0;">
                                                                 <i   class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
                                                                 <mat-form-field       style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                                 <input  matInput   [(ngModel)]="departureDate"   autocomplete="off"  readonly formControlName="departure"  id="departure" >
@@ -311,3 +329,9 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="sponsor_logo">Powered By: <img src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg" class="ms-2"></p>
+                            </div>
+                        </div>
