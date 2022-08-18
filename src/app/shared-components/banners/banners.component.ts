@@ -46,6 +46,10 @@ export class BannersComponent implements OnInit {
   IsgoldCardDetailsModel:boolean=false;
   is_wb_progressbar:boolean=false;
   is_mb_progressbar:boolean=false;
+  IsCardError:boolean=true;
+  CardErrorMsg:any;
+  customeravailablepoints: any;
+  isLogged: Boolean;
   ngOnInit(): void {
 
     this.rest.getRegaliaGoldList().subscribe(res => {
@@ -108,31 +112,42 @@ HotelRecentSearch(){
  }
 }
 onSubmit(){
-     //$("#unlockCardPopup").modal("hide");
-     
-     this.customerInfo = this.sg['customerInfo'];
-     console.log(this.customerInfo);
-     
-     let URLparams = {
-        "mobile": this.angForm.controls['mobile_no'].value,
-        "customer_id": this.customerInfo["customerid"],
-        "programName":this.sg['domainName'],
-        "last4digit":this.angForm.controls['mobile_no'].value,
-        "_token":this.customerInfo["XSRF-TOKEN"],
-        "DOB":this.angForm.controls['dob'].value,
-        "savecard":1,
-        "user_id":this.customerInfo["id"],
-      }
-      document.getElementById('unlockCardPopup').click();
-      this.rest.AvailablePoints(URLparams).subscribe(res => {
-       // this.IsmodelShow=true;
-       this.IsgoldCardDetails=false;
-       this.IsgoldCardDetailsModel=true;
-        this.angForm.reset();
-        this.spinnerService.show();  
-        if(res.status=="true"){
-            this.points_available=res.points_available;
-         }
+     this.angForm.markAllAsTouched();
+     if (this.angForm.invalid){
+       return false; 
+     }
+     this.customerInfo = this.sg['customerInfo']; 
+      let URLparams = {
+         "mobile": this.angForm.controls['mobile_no'].value,
+         "customer_id": this.customerInfo["customerid"],
+         "programName":this.sg['domainName'],
+         "last4digit":this.angForm.controls['last_4_digit'].value,
+         "_token":this.customerInfo["XSRF-TOKEN"],
+         "DOB":this.angForm.controls['dob'].value,
+         "savecard":1,
+         "user_id":this.customerInfo["id"],
+         'modal':'REWARD',
+         'type' : 'available_points',
+         'clientToken':this.sg['domainName'],
+         'services_id':7,
+         'partner_id':1,
+       }
+       var EncURLparams = {
+         postData: this.EncrDecr.set(JSON.stringify(URLparams))
+       };
+      this.rest.AvailablePoints(EncURLparams).subscribe(res => {
+         if(res.error_code=="100"){
+            document.getElementById('unlockCardPopup').click();
+            this.IsgoldCardDetails=false;
+            this.IsgoldCardDetailsModel=true;
+            this.angForm.reset();
+            this.spinnerService.show();  
+            this.customeravailablepoints=res.points_available;
+          }else{
+               this.IsCardError=false;
+               this.CardErrorMsg=res.message;
+          }    
+
        }); 
   }
 }

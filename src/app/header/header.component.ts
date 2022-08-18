@@ -82,6 +82,7 @@ export class HeaderComponent implements OnInit {
         public guestLogin: boolean=false;
         showSearchBoxTop: boolean=false;
         domainRedirect: string;
+        sub_domain_redirection_url:string;
         menuParam:any = [];
         showSearchBox = false;
         showdcEMI= false;
@@ -749,6 +750,7 @@ closeCookieConsent(value){
   
   ngOnInit() {
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
+    this.sub_domain_redirection_url=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/';
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
    
@@ -1230,6 +1232,19 @@ this.customerLogin=true;*/
       this.navbarOpen =false;
     }
     
+     clickUrlmilestone(url){
+     if(environment.IS_MAIN==1){
+      const current = new Date();
+        this.redirectPopupTriggerTimestamp=current.getTime();
+        this.redirectPopupTrigger=1;
+        this.redirectPopup=2;
+        this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url;
+     }else{
+     this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'/'+url;
+     }
+      this.navbarOpen =false;
+    }
+    
     goTo(path){
      if(environment.IS_MAIN==1){
         const current = new Date();
@@ -1336,6 +1351,7 @@ export class DisclaimerBottomSheetComponent implements OnInit {
   
         this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
         this.domainRedirect=data.redirectUrl;
+
   }
  ngOnInit() {}
   closeSheet() {
