@@ -191,15 +191,17 @@
         <span *ngIf="fastestTrain==train.trainNumber">Fastest</span>
         <span *ngIf="rowvalue==0">Most Popular</span>
     </div>
-    <div class="d-none d-sm-block">
-        <div class="row">
-            <div class="col-md-4">
+
+    <div class="d-none d-sm-block web_code">
+        <div class="row mb-30">
+            <div class="col-md-7">
                 <div class="label-name-w">
-                    <span class="irctc-junction-view">{{train.trainName|titlecase}}</span><span class="f-16"> ({{train.trainNumber}})</span>
-                    
+                    <span class="irctc-junction-view">{{train.trainName|titlecase}}</span><span class="train_num"> ({{train.trainNumber}})</span>
                 </div>
+            </div>
+            <div class="col-md-5 text-right">
                 <div class="available-status w-m-36 ">
-                    <span class="text-small-gray" style="color:#888888;">Runs on:</span>
+                    <span class="text-small-gray" style="color:#555555;">Runs on:</span>
                     <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
                     <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
                     <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
@@ -209,9 +211,27 @@
                     <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
                 </div>
             </div>
-            <div class="col-md-4 p0-cut p0">
+        </div>
+        <div class="row">
+            <div class="col-md-8">
                 <div class="trainTimeInfo">
-                    <div class="trainCode">
+                    <div class="">
+                        <p><span class="time">{{train.departureTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
+                        <p class="place">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
+                    </div>
+                    <div>
+                        <div class="duration_train">
+                            <p class="dur_time">{{commonHelper.trainDuration(train.duration)}}</p>
+                            <div class="range"></div>
+                            <p class="route" [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber)" data-bs-toggle="modal">Show Route</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p><span class="time">{{train.arrivalTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
+                        <p class="place">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
+                    </div>
+
+                   <!--  <div class="trainCode">
                         ({{train.fromStnCode}})
                     </div>
                     <div class="fromStn">
@@ -234,15 +254,17 @@
                     </div>
                     <div class="trainCode">
                         ({{train.toStnCode}})
-                    </div>
+                    </div> -->
                 </div>
-                    </div>
+            </div>
             <div class="col-md-4 text-right pt-m-15">
-                <button class="btn-outline w-70 radius_8 w-m-100" 
+                <button class="btn btn-primary-outline" 
                 (click)="onAvailable(train,avlClasses[0])">Check Availability</button> 
             </div> 
         </div>
     </div>
+
+
     <!-- Mlite code  -->
     <div class="d-block d-sm-none">
         <div class="row">
@@ -305,7 +327,7 @@
   
 
     <div class="row check-available d-none d-sm-block" id="check-available{{train.trainNumber}}" *ngIf="showAvailable  && !isMobile" > 
-        <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)"  [(selectedIndex)]="selectedIndex">
+        <mat-tab-group class="p-0 train_mat_tabGroup" animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)"  [(selectedIndex)]="selectedIndex">
           <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}"  >
            
                 <div class="tier"  *ngFor="let dayList of avlDayList ;" > 
