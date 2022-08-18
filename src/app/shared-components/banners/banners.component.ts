@@ -50,12 +50,51 @@ export class BannersComponent implements OnInit {
   CardErrorMsg:any;
   customeravailablepoints: any;
   isLogged: Boolean;
+  XSRFTOKEN: string;
   ngOnInit(): void {
+    
+      if(this.sg['customerInfo']){
+       var customer_cookie;
+        if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
+        
+        if(customer_cookie == 1){
+             this.customerInfo = this.sg['customerInfo'];
+                
+           if(this.customerInfo["guestLogin"]==true){
+            this.isLogged = false;
+           }else{
+            this.isLogged = true;
+          if (this.customerInfo.hasOwnProperty('ccustomer')) {
+          if (this.customerInfo['ccustomer'].card_variant)
+            this.sg['card_variant'] = this.customerInfo['ccustomer'].card_variant;
+          else
+            this.sg['card_variant'] = 'Other Credit/Debit Card';
+        } else {
+          this.sg['card_variant'] = 'Other Credit/Debit Card';
+        }
 
+
+        this.isLogged = true;
+        this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
+        this.rest.updateCardDetails(this.customerInfo);
+        if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
+          this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
+          this.IsgoldCardDetails=false;
+          this.IsgoldCardDetailsModel=true;
+         }
+        //this.initiateCards();
+           }
+
+        }else{
+            this.customerInfo =[];
+            this.isLogged = false;
+             this.sg['card_variant'] = 'Other Credit/Debit Card';
+        }
+      
+    }   
     this.rest.getRegaliaGoldList().subscribe(res => {
       this.mainBanners = res.mainBanners.diners;
     });
-     console.log("tESTT");
      console.log(this.sg);
      var params_arg = {
       _token:this.sg['customerInfo']['XSRF-TOKEN']
