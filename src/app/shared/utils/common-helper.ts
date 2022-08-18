@@ -236,7 +236,13 @@ emiLogic(amount: number)
     var m = moment(res[2]+"/"+res[1]+"/"+condata).format('DD MMM YYYY');
     return m;
     }    
-    
+     timeDifferMin(startDate: any,endDate: any) {
+	var ms=moment(startDate,"YYYY-MM-DDTHH:mm:ss").diff(moment(endDate,"YYYY-MM-DDTHH:mm:ss"));
+	var d = moment.duration(ms);
+	var s = Math.floor(d.asHours())+' h ' + moment.utc(ms).format("mm")+ ' m';
+	return s;
+}
+
 emiDebitLogic(amount: number)
     {
 
