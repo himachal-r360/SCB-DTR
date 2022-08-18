@@ -1227,7 +1227,9 @@ this.customerLogin=true;*/
         this.redirectPopup=2;
         this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url;
      }else{
-     window.open(this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url,"_blank");
+  
+      window.open(this.serviceSettings.sub_domain_redirection_url+'/'+url,"_blank");
+     //window.open(this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url,"_blank");
      }
       this.navbarOpen =false;
     }
