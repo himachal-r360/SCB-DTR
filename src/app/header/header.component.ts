@@ -1172,7 +1172,7 @@ this.customerLogin=true;*/
         this.redirectPopupUrl= this.domainRedirect+'insta-redirection/shopredirectLink?u='+(window.btoa(url));
          this.redirectPopup=1;
         }else{
-        this.redirectPopupUrl= this.domainRedirect+'popup-redirection/'+partner ;
+        this.redirectPopupUrl= this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'popup-redirection/'+partner ;
          this.redirectPopup=1;
         } 
     
