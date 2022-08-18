@@ -512,8 +512,7 @@ export class TrainsTravellerComponent implements OnInit {
         jobGroup.addControl('destAddressState',new FormControl(''));
         jobGroup.addControl('destAddressCity',new FormControl(''));
         jobGroup.addControl('destAddressPost',new FormControl(''));
-        jobGroup.addControl('boardingStation', new FormControl('', [Validators.required]));
-        this.passengerForm = jobGroup;
+      
         
        
         jobGroup.addControl('saveTraveller',new FormControl(''));
@@ -539,7 +538,8 @@ export class TrainsTravellerComponent implements OnInit {
         
 
         jobGroup.addControl('saveGST', new FormControl('1'));
-   
+        this.passengerForm = jobGroup;
+     
         this.seniorCitizenStatus = false;
         this.boardingStations();
         this.getTrains();

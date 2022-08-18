@@ -334,8 +334,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
 
  onSeats(tripId, rowvalue, bus, mobile = false) {
-  // $(".amenities-list").hide(); 
-  // $(".hideBtn").click();
+  this.loading = true;
   this.showAmenities = false;
   this.showCancellation = false;
   this.showDropping = false;
@@ -344,7 +343,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   this.totalfare = 0;
   this.seatdetails = [];
   this.selectedseats = [];
-  this.loading = true;
+ 
   //this.showSeats = !this.showSeats;
   this.onDropping(bus.boardingTimes, bus.droppingTimes);
   if (mobile == false) {

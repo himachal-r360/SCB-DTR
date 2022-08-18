@@ -13,6 +13,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {ConfirmationDialog} from './list-card.component';
 import { RemovespacePipe } from 'src/app/shared/pipes/removespace.pipe';
 import { CommonfunctionModule } from 'src/app/common.module';
+import { LoaderModule } from 'src/app/shared/loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { CommonfunctionModule } from 'src/app/common.module';
     MatDialogModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    CommonfunctionModule
+    CommonfunctionModule,LoaderModule
   ],
   entryComponents: [ConfirmationDialog,],
   providers: [],
