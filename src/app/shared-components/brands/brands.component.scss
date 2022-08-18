@@ -1,0 +1,79 @@
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.head_title{
+    color: #000000;
+    font-family: 'opensans-light';
+    font-size: 40px;
+    margin: 20px 0;
+}
+
+.item_brand{
+    text-align: center;
+    width: 100%;
+    height: 120px;
+    @media screen and (max-width: 600px) {
+        height: auto;
+    }
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    }
+
+}
+.partners_container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+     /* flex-wrap: nowrap; */
+    flex-wrap: nowrap;
+    padding: 10px 0px 1.5em;
+    margin-bottom: 10px;
+    @media screen and (max-width: 575.98px) {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 5px 0px 0px;
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    div {
+        /* flex: 2 0 21%; */
+        background-color: #ffffff;
+        border-radius: 8px;
+        width: 100%;
+        height: 100px;
+        @include flex;
+        padding: 10px;
+        img {
+            width: auto;
+            padding: 10px;
+        }
+    }
+}
+/* .indigo_sec{
+    background: #000000;
+
+}
+.allen_sec{
+
+}
+.fab_sec{
+
+}
+.basket_sec{
+
+}
+.fbb_sec{
+
+}
+.mmt_sec{
+
+} */

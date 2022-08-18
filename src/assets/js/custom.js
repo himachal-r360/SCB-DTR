@@ -1,8 +1,8 @@
 /*
 --------------------------------------------------------------------------------------------------------
-* Project    :                                                                                         *
-* Author     : piyush Tapaniya | +91 83060 05795                                                       *
-* Support    : piyush.tapaniya90@gmail.com                                                             *
+*  Project    :  Reward 360                                                                                         *
+* Author     : Vikas Mishra | Shachi Mehta                                                       *
+* Support    :                                                               *
 *-------------------------------------------------------------------------------------------------------
 NOTE: This file contains all scripts for the actual Template.
 */
@@ -88,6 +88,9 @@ $(document).ready(function($) {
         $(".Add-Card-btn").hide();
         $(".add-card-form").show();
     });
+
+
+    
 
 
     var owlslider = jQuery(".carousel-search-date");
@@ -192,4 +195,20 @@ $(document).ready(function($) {
     $(window).on("load",function(){
         $(".content").mCustomScrollbar();
     });
+
+  function  arrayCompare(arr_1, arr_2) {
+    var equal = arr_1.length == arr_2.length; // if array sizes mismatches, then we assume, that they are not equal
+    if (equal) {
+        $.each(arr_1, function(foo, val) {
+            if (!equal) return false;
+            if ($.inArray(val, arr_2) == -1) {
+                equal = false;
+            } else {
+                equal = true;
+            }
+        });
+    }
+    return equal;
+} 
 });
+

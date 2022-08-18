@@ -1,0 +1,258 @@
+<ng-container>
+    <ng-container *ngIf="data.errorDialog">
+      <mat-dialog-content >
+      <p class="py-2"><i class="material-icons" style="font-size: 50px;"> error </i> <br/> <span class="text-dark">{{data.messageData}}</span></p>
+      <button class="btn btn-outline-primary my-3" (click)="onYesClick()" tabindex="1" >Ok</button>
+      </mat-dialog-content>
+    </ng-container>
+
+
+<!-- Forgot User ID IRCTC   -->
+  <div class="col-md-12 IE-mat-width" *ngIf="data.forgotUserIdDialog">
+      <mat-dialog-content >
+      <div *ngIf="step4">
+        <form [formGroup]="Form1Submit" name="Form1Submit" (ngSubmit)="forgotDetailsFormSubmit()">
+          <div class="my-2">
+              <div class="title-for">Forgot User ID</div>
+              <p class="sub_title-for">Please enter your details</p>
+            </div>
+            <div class="row">
+              
+            <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput placeholder="Registered Email ID" formControlName="email">
+                </mat-form-field>
+                <div *ngIf="submittedForm1 && Form1Submit.controls.email.errors" class="error text-left">
+                  <small *ngIf="Form1Submit.controls.email.errors.required">Please enter email address.</small>
+                  <small *ngIf="Form1Submit.controls.email.errors.pattern">Please enter a valid email id.</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <!-- <input matInput placeholder="Date of Birth" formControlName="dob"> -->
+                </mat-form-field>
+                <div *ngIf="submittedForm1 && Form1Submit.controls['dob']['errors']" class="error text-left">
+                  <small *ngIf="Form1Submit.controls['dob']['errors']['required']">Please enter dob.</small>
+                </div>
+            </div>
+            </div>
+            <div>
+                <div class="captcha my-4">
+                    <!-- <h6>captcha</h6>
+                    <img src="https://via.placeholder.com/200x80" alt="captcha"> -->
+                        <ngx-recaptcha2 #captchaElem
+                          [siteKey]="siteKey"
+                          [size]="size"
+                          [hl]="lang"
+                          [theme]="theme"
+                          [type]="type"
+                          formControlName="recaptcha1">
+                        </ngx-recaptcha2>
+                        <div *ngIf="submittedForm1 && Form1Submit.controls['recaptcha1']['errors']" class="error my-1 text-left">
+                            <small *ngIf="Form1Submit.controls['recaptcha1']['errors']['required']">Please enter captcha.</small>
+                        </div> 
+                    </div>
+                    
+                    <div class="xs-center my-4">
+                        <button class="btn-c btn-primary my-2">Submit</button>
+                        <a class="btn-b btn my-2" (click)="goback()">cancel</a>
+                      </div>
+            </div>
+        </form>
+      </div>
+    </mat-dialog-content>
+  </div>
+
+
+<!-- Reset Password IRCTC   step 1 of 1 -->
+  <ng-container *ngIf="data.resetPasswordDialog">
+      <form [formGroup]="Form2Submit" name="Form2Submit">
+        <div class="col-md-12 IE-mat-width" *ngIf="step1">
+            <div class="my-2">
+                <div class="title-for">Reset Password</div>
+                <p class="sub_title-for">We’ll help you reset it and get back on track.</p>
+                <p class="sub_title-for my-2">STEP 1 OF 2 </p>
+              </div>
+              <div class="row">
+              <div class="col-md-6">
+                  <mat-form-field>
+                      <input matInput placeholder="IRCTC Authorised Partner" maxlength="35" autocomplete="off" (keypress)="AvoidSpace($event)" formControlName="userID">
+                    </mat-form-field>
+                    <div *ngIf="submittedForm2 && Form2Submit.controls['userID']['errors']" class="error text-left">
+                        <small *ngIf="Form2Submit.controls['userID']['errors']['required']">Please enter user id.</small>
+                        <small *ngIf="Form2Submit.controls['userID']['errors']['pattern']">Please enter valid user id.</small>
+                        <small *ngIf="Form2Submit.controls['userID']['errors']['minlength']">Please enter atleast 3 characters.</small>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <mat-form-field >
+                      <input matInput placeholder="Mobile Number" (keypress)="numberInput($event)" autocomplete="off" maxlength="10" formControlName="mobileNo">
+                    </mat-form-field>
+                    <div *ngIf="submittedForm2 && Form2Submit.controls.mobileNo.errors" class="error text-left">
+                      <small *ngIf="Form2Submit.controls.mobileNo.errors.required">Please enter mobile number.</small>
+                      <small *ngIf="Form2Submit.controls.mobileNo.errors.pattern">Please enter valid ten digits mobile number.</small>
+                      <small *ngIf="Form2Submit.controls.mobileNo.errors.minlength">Please enter min 10 Digits.</small>
+                    </div>
+              </div>
+              <!-- <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [max]="maxDate" placeholder="Date of Birth" readonly="true" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <div *ngIf="submittedForm2 && Form2Submit.controls['dob']['errors']" class="error">
+                    <small *ngIf="Form2Submit.controls['dob']['errors']['required']">Please enter dob.</small>
+                  </div>
+              </div> -->
+              <div class="col-12">
+                  <div>
+                      <div class="captcha my-4">
+                          <!-- <h6>captcha</h6>
+                          <img src="https://via.placeholder.com/200x80" alt="captcha"> -->
+                          <ngx-recaptcha2 #captchaElem
+                            [siteKey]="siteKey"
+                            [size]="size"
+                            [hl]="lang"
+                            [theme]="theme"
+                            [type]="type"
+                            formControlName="recaptcha2">
+                          </ngx-recaptcha2>
+                        <div *ngIf="submittedForm2 && Form2Submit.controls['recaptcha2']['errors']" class="error my-1">
+                            <small *ngIf="Form2Submit.controls['recaptcha2']['errors']['required']">Please enter captcha.</small>
+                        </div> 
+                          </div>
+                  </div>
+              </div>
+              </div>
+              <div class="">
+                  <div class="xs-center my-3">
+                      <button class="btn-c btn-primary my-2" (click)="nextStep()" >Next</button>
+                      <a class="btn-b btn my-2" (click)="goback()">Go Back</a>
+                    </div>
+              </div>
+        </div>
+
+      <!-- Reset Password IRCTC   step 2 of 2 -->
+        <div class="col-md-12" *ngIf="step2">
+          <div class="my-2">
+              <div class="title-for">Reset Password</div>
+              <p class="sub_title-for">We’ll help you reset it and get back on track.</p>
+              <p class="sub_title-for my-2">STEP 2 OF 2 </p>
+              <p class="otp-mobile">{{OTPmessage}}</p> 
+               <!-- <b>89** ***789</b> -->
+              <!-- {{OTPmessage}}  -->
+            </div>
+            <!-- <div class="row">
+              <div class="col-md-6">
+                  <mat-form-field>
+                      <input matInput placeholder="OTP" (keypress)="numberInput($event)" formControlName="smsOTP">
+                    </mat-form-field>
+                  
+                    <div *ngIf="submittedForm3 && Form2Submit.controls['smsOTP']['errors']" class="error">
+                        <small *ngIf="Form2Submit.controls['smsOTP']['errors']['required']">Please enter SMS OTP.</small>
+                        <small *ngIf="Form2Submit.controls['smsOTP']['errors']['pattern']">Please enter a valid OTP.</small>
+                      </div>
+              </div>
+            </div> -->
+
+              <!-- <div class="col-md-6">
+                  <mat-form-field>
+                      <input matInput placeholder="Email OTP" (keypress)="numberInput($event)" formControlName="emailOTP">
+                    </mat-form-field>
+                    <div *ngIf="submittedForm3 && Form2Submit.controls['emailOTP']['errors']" class="error">
+                        <small *ngIf="Form2Submit.controls['emailOTP']['errors']['required']">Please enter Email OTP.</small>
+                        <small *ngIf="Form2Submit.controls['emailOTP']['errors']['pattern']">Please enter a valid OTP.</small>
+                      </div>
+              </div>
+            </div> -->
+            <!-- <div class="row">
+              <div class="col-md-6">
+                  <mat-form-field>
+                      <input matInput type="password" placeholder="New Password" maxlength="15" formControlName="newPassword">
+                    </mat-form-field>
+                    <div *ngIf="submittedForm3 && Form2Submit.controls['newPassword']['errors']" class="error">
+                        <small *ngIf="Form2Submit.controls['newPassword']['errors']['required']">Please enter a new password.</small>
+                        <small *ngIf="Form2Submit.controls['newPassword']['errors']['pattern']">Please enter valid password.</small>
+                        <small *ngIf="Form2Submit.controls['newPassword']['errors']['minlength']">Please enter atleast 6 characters.</small>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <mat-form-field>
+                      <input matInput placeholder="Confirm Password" maxlength="15" (keyup)="validateConfirmPassword()" formControlName="confirmPassword">
+                    </mat-form-field>
+                    <div *ngIf="submittedForm3 && Form2Submit.controls['confirmPassword']['errors']" class="error">
+                        <small *ngIf="Form2Submit.controls['confirmPassword']['errors']['required']">Please enter confirm password.</small>
+                    </div>
+                    <div class="error" *ngIf="cnfPassValidError">
+                        <small>{{cnfPassValidErrorMsg}}</small>
+                    </div>
+              </div>
+              <div class="col-md-8">
+                <p class="sub_title-for">Between 8 - 15 characters. 
+                    Must contain at least one number, one small, and one capital letter.</p>
+              </div>
+            </div> -->
+            <div class="my-3">
+                <div class="row">
+                   <div class="col-12 col-md-6 offset-md-3">
+                      <div class="xs-center ">
+
+                          <!-- <button class="btn-c btn-primary my-3" style="width: 145px;" (click)="resetPasswordFormSubmit()">Update Password</button>
+                          <a class="btn-b btn my-3" (click)="gotoStep1()">Go Back</a> -->
+                          <button class="btn-c btn-primary m-0 mb-2" style="width: 145px;" (click)="goback()">Close</button>
+                          <!-- <a class="btn-b btn" (click)="gotoStep1()">Go Back</a> -->
+                        </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+
+      </form>
+  </ng-container>
+
+ 
+  <!-- Reset Successful to Forgot User Id popup  -->
+  <div class="col-md-12"  *ngIf="verifySuccess">
+      <div class="my-2">
+          <div class="text-center">
+            <img src="{{cdnUrl}}images/donegreen.svg">
+            <p class="title-for">{{dialogmsg}}</p>
+            <p class="sub_title-for">{{apimessage}}</p> 
+          </div>
+        </div>
+            <button class="btn-c btn-primary" style="width: 145px;" (click)="goback()">Close</button>
+  </div>
+
+   <!-- Reset Fail to Forgot User Id popup  -->
+   <div class="col-md-12"  *ngIf="verifyFail">
+      <div class="my-2">
+          <div class="text-center">
+            <img src="{{cdnUrl}}images/alert.png">
+            <p class="title-for">{{dialogmsg}}</p>
+            <p class="sub_title-for">{{apimessage}}</p> 
+          </div>
+        </div>
+        <button class="btn-c btn-primary m-0 mb-2" style="width: 145px;" (click)="goback()">Close</button>
+  </div>
+  <!-- Forgot Shared User ID to Email popup  -->
+
+  <!-- <div class="col-md-12">
+      <div class="my-2">
+          <div class="text-center">
+            <img src="{{cdnUrl}}images/donegreen.svg">
+            <p class="title-for">User ID shared</p>
+            <p class="sub_title-for"> Your User ID has been sent to your Registered <br/> Email ID : m**********h@gmail.com </p>
+          </div>
+        </div>
+  </div> -->
+</ng-container>
+
+
+
+
+
+
+

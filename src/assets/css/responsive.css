@@ -1,8 +1,8 @@
 /*
 --------------------------------------------------------------------------------------------------------
-* Project    :                                                                                         *
-* Author     : piyush Tapaniya | +91 83060 05795                                                       *
-* Support    : piyush.tapaniya90@gmail.com                                                             *
+*  Project    :  Reward 360                                                                                         *
+* Author     : Vikas Mishra | Shachi Mehta                                                       *
+* Support    :                                                               *
 *-------------------------------------------------------------------------------------------------------
 NOTE: This is main stylesheet of template, This file contains the styling for the actual Template. */
 
@@ -108,7 +108,26 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         grid-template-columns: repeat(3, 1fr);
     }
 
+    .mat-datepicker-content-container {
+      position: fixed;
+      bottom: 0;
+      background: #fff;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      left: 0;
+      border-radius: 15px 15px 0 0;
+  }
 
+  .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+      opacity: 1;
+     /* background: #b3b3b3;*/
+  }
+
+  .mat-datepicker-content .mat-calendar {
+      width: 100% !important;
+      height: auto !important;
+  }
 
 
     .navbar-brand img {
@@ -149,8 +168,8 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     }
 
     .travel-select-trip-ul span.selectway {
-        padding: 4px 12px;
-        font-size: 11px;
+        padding: 4px 12px !important;
+        font-size: 11px !important;
     }
 
     .m-none, .select-dep-ret .area-root-reutrn {
@@ -224,25 +243,25 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     .flight-from-data,
     .flight-to-data {
         position: fixed !important;
-        bottom: 0;
+        bottom: 0 !important;
         top: inherit !important;
         left: 0;
         right: 0;
         max-width: 100% !important;
         width: 100%;
-        height: calc(100vh - 0px);
-        border-radius: 0;
+        height: calc(100vh - 0px) !important;
+        border-radius: 0 !important;
         background: #b3b3b3 !important;
         justify-content: flex-end;
         align-items: center;
         flex-wrap: nowrap;
         flex-direction: column;
-        width: 100%;
+        width: 100% !important;
         display: flex;
     }
     .flight-from-data-ul {
-        max-height: 100%;
-        overflow: auto;
+        max-height: 100% !important;
+        overflow: auto !important;
         height: calc(100% - 30%);
         background: #fff;
         width: 100%;
@@ -286,8 +305,8 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     }
 
     .mob-title{
-        display: inline-flex;
-        width: 100%;
+        display: inline-flex !important;
+        width: 100% !important;
     }
     .flight-from-data-search {
         display: none;
@@ -332,16 +351,16 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         display: none;
     }
     .Preferred-data {
-        position: fixed !important;
-        bottom: 0 !important;
-        top: inherit  !important;
+        position: fixed;
+        bottom: 0;
+        top: inherit;
         left: 0;
         right: 0;
-        max-width: 100%  !important;
-        width: 100% !important;
-        height: calc(100vh - 0px)  !important;
-        border-radius: 0  !important;
-        background: #b3b3b3  !important;
+        max-width: 100%;
+        width: 100%;
+        height: calc(100vh - 0px);
+        border-radius: 0;
+        background: #b3b3b3;
         justify-content: flex-end;
         align-items: center;
         flex-wrap: nowrap;
@@ -361,6 +380,8 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         max-height: 290px;
         height: 290px;
         background: #fff;
+        padding: 8px 15px;
+
     }
 
     .Preferred-search input {
@@ -374,7 +395,7 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
         display: inline-block;
     }
 
-    .root-date { 
+    .root-date {
         gap: 8px;
     }
 
@@ -384,9 +405,82 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     .preferred-airline-hide{
         display: inline-flex;
     }
-    
-} 
- 
+
+
+
+    .bradcome-area, .flight-listing-area{
+        display: none;
+    }
+    .mob-flights-listing{
+        display: block;
+    }
+    .mob-main {
+        /* margin-top: -54px; */
+        z-index: 10;
+        position: relative;
+        background: #fff;
+    }
+
+
+    .bookingprocess .modal-dialog.modal-dialog-centered {
+        align-items: flex-end;
+        margin: 0;
+        min-height: calc(100% - 0px);
+    }
+    .bookingprocess .bookingprocess-content {
+        padding: 15px;
+    }
+    .bookingprocess .modal-body {
+        padding: 15px !important;
+    }
+    .bookingprocess-title h5 br{
+        display: none;
+    }
+
+
+
+    .tabs-depart-left,.tabs-depart-right {
+        width: 100% !important;
+    }
+    .tabs-depart-times {
+        width: 50%;
+    }
+    .tabs-depart-total {
+        margin: 5px 25px !important;
+        width: 170px;
+        text-align: center;
+    }
+    .tabs-depart-right {
+        margin-top: 10px;
+        display: inline-flex;
+    }
+
+    .popular-flight-slider .owl-nav,.Exciting-Offers-slider .owl-nav{
+        display: none;
+    }
+
+    .popular-routes-list-ul {
+        align-items: center;
+        display: inline-block !important;
+        white-space: nowrap !important;
+        overflow-x: scroll;
+        width: 100%;
+    }
+    .popular-routes-list-ul li {
+        display: inline-block;
+        position: relative;
+    }
+
+    .mob-Preferred-OTA-Partner-area{
+        display: block;
+    }
+    .flight-from-name h6 {
+        font-size: 16px;
+    }
+
+
+}
+
 @media only screen and (max-width: 767px) {
     .mtb-90 {
         margin-top: 30px !important;
@@ -468,6 +562,12 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
     .brands-grid.grid-4 {
         grid-template-columns: repeat(2, 1fr);
     }
+    .select-root-area .select-roottitle {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+  }
 
 }
 

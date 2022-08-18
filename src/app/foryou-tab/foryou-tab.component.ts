@@ -16,8 +16,10 @@ import { MatBottomSheet, MatBottomSheetRef, MatBottomSheetConfig } from '@angula
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
-
-
+import { FlightService } from '../common/flight.service';
+import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner";
+import { createMask } from '@ngneat/input-mask';
 declare var $: any;
 @Component({
   selector: 'app-foryou-tab',
@@ -38,6 +40,7 @@ public modeselectTrending= 'All';
   customerInfo: any[];
   saveCard: any;
   custCardsAvailable: Boolean;
+  custCardsNotAvailable: Boolean = true;
   customercards: any; primaryCust: any;
   selectedCardDetails: any;
   customeravailablepoints: any;
@@ -83,8 +86,15 @@ public modeselectTrending= 'All';
   cookie_redirectNavigation: boolean = false;
   bannerSlide:number=1;
   poweredByPartners:[];
+  angForm: FormGroup;
+  IsPointsCardDetails:boolean=true;
+  IsPointsCardDetailsModel:boolean=false;
+  IsCardError:boolean=true;
+  CardErrorMsg:any;
 
-  constructor(public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private spinnerService: NgxSpinnerService,public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService,private fb: FormBuilder) {
+     this._flightService.showHeader(true);
+   
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl;
     this.cdnDealUrl = environment.cdnDealUrl;
@@ -96,22 +106,39 @@ public modeselectTrending= 'All';
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
-    console.log((this.poweredByPartners));
-
+    //console.log((this.poweredByPartners));
+    
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
     
-     this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
-     this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
-
+    // this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
+     //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
+    
   }
-  
+   public mask = {
+     guide: true,
+     showMask : true,
+     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
+   };
    ngOnDestroy() {
-    this._styleManager.removeStyle('owl-default');
-    this._styleManager.removeScript('owl');
+   // this._styleManager.removeStyle('owl-default');
+   // this._styleManager.removeScript('owl');
   }
-  
+  onlyNumberKey(event,maxlenth) {
+      console.log($(event.target).prop('value').length);
+      if($(event.target).prop('value').length>=maxlenth){
+        return false;
+       } 
+      return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+  }
+   createForm() {
+    this.angForm = this.fb.group({
+       mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
+       last_4_digit: ['', [Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
+       dob: ['', Validators.required ]
+    });
+  }
  loadTopBanner(l) {
         window.scrollTo(0, 0);
         setTimeout(function () {
@@ -210,11 +237,13 @@ public modeselectTrending= 'All';
 
   ngOnInit() {
     
-
+      this.createForm();
      setTimeout(() => {
      
      
     //Check Laravel Seesion
+        console.log('customerInfo');   
+        console.log(this.sg['customerInfo']);
         if(this.sg['customerInfo']){
          var customer_cookie;
           if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
@@ -239,9 +268,12 @@ public modeselectTrending= 'All';
           this.isLogged = true;
           this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
           this.rest.updateCardDetails(this.customerInfo);
-          if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null))
+          if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
-          this.initiateCards();
+            this.IsPointsCardDetails=false;
+            this.IsPointsCardDetailsModel=true;
+           }
+          //this.initiateCards();
              }
 
           }else{
@@ -250,11 +282,7 @@ public modeselectTrending= 'All';
                this.sg['card_variant'] = 'Other Credit/Debit Card';
           }
         
-      }
-     // console.log(this.sg['customerInfo']);
-    //  console.log(this.customerInfo);
-    //   console.log(this.isLogged);
-      
+      }  
          //Top Banner
     var getBannerParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], type: 'foryou-top' })) };
     this.rest.getBanner(JSON.stringify(getBannerParam)).subscribe(result => {
@@ -279,44 +307,42 @@ public modeselectTrending= 'All';
         }
         
         var allCookies_key = [];
-        if (localStorage.getItem('FlightRecentSearch') !== null) allCookies_key.push('FlightRecentSearch');
+        if (localStorage.getItem('flightLastSearchNew') !== null) allCookies_key.push('flightLastSearchNew');
         if (localStorage.getItem('HotelRecentSearch') !== null) allCookies_key.push('HotelRecentSearch');
-        if (localStorage.getItem('busLastSearch') !== null) allCookies_key.push('busLastSearch');
-        if (localStorage.getItem('trainLastSearch') !== null) allCookies_key.push('trainLastSearch');
+        if (localStorage.getItem('busLastSearchNew') !== null) allCookies_key.push('busLastSearchNew');
+        if (localStorage.getItem('trainLastSearchNewNewNewNew') !== null) allCookies_key.push('trainLastSearchNewNewNewNew');
 
-        if (localStorage.getItem('FlightRecentSearch') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearch') !== null || localStorage.getItem('trainLastSearch') !== null) {
+        if (localStorage.getItem('flightLastSearchNew') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearchNew') !== null || localStorage.getItem('trainLastSearchNewNewNewNew') !== null) {
 
           Object.values(allCookies_key).forEach(data => {
 
             let item = localStorage.getItem(data);
+           
 
-            if (data == 'FlightRecentSearch' || data == 'HotelRecentSearch') {
+            if (data == 'flightLastSearchNew' || data == 'HotelRecentSearch') {
 
-              if (data == 'FlightRecentSearch' && localStorage.getItem('FlightRecentSearch') !== null) {
-
-                var get_valueall = atob(item);
-                var get_value = JSON.parse(get_valueall).slice(-1)[0];
-
-                var dateformat = get_value.flightdeparture;
+              if (data == 'flightLastSearchNew' && localStorage.getItem('flightLastSearchNew') !== null) {
+               let url;
+               var searchValue = JSON.parse(item);
+               
+                var type = 'flight';
+                var searchFrom = searchValue.fromCity;
+                var searchTo = searchValue.toCity;
+                
+                var dateformat = searchValue.departure;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');
-
-                var type = 'flight';
-
-                var searchFrom = get_value.flightfrom;
-                var searchTo = get_value.flightto;
-
-                let diff = new Date().getTime() - strdate.getTime();
-
-                if (diff > 0) {
-
-                  var url = this.domainRedirect + 'compare-fly';
-
-                } else {
-
-                  var url = this.domainRedirect + 'flights/search?Default=' + get_value.Default + '&adults=' + get_value.adults + '&child=' + get_value.child + '&class=' + get_value.class + '&fcode=' + get_value.fcode + '&flightdeparture=' + get_value.flightdeparture + '&flightfrom=' + get_value.flightfrom + '&flightreturn=' + get_value.flightreturn + '&flightto=' + get_value.flightto + '&infants=' + get_value.infants + '&tcode=' + get_value.tcode + '&t=ZWFybg==';
-
+                
+               if(searchValue.fromContry=='IN' && searchValue.toContry=='IN' ){    
+                if(searchValue.arrival == "" || searchValue.arrival == undefined || searchValue.arrival == null ){
+                 url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
                 }
+                else {
+                 url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
+                }
+               }else{
+                url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+             }
 
               }
               else if (data == 'HotelRecentSearch' && localStorage.getItem('HotelRecentSearch') !== null) {
@@ -343,9 +369,9 @@ public modeselectTrending= 'All';
               }
 
             } else {
-
+              
               var get_value = JSON.parse(item);
-              if (data == 'busLastSearch' && localStorage.getItem('busLastSearch') !== null) {
+              if (data == 'busLastSearchNew' && localStorage.getItem('busLastSearchNew') !== null) {
 
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
@@ -365,7 +391,7 @@ public modeselectTrending= 'All';
                 var searchFrom = get_value.searchFrom;
                 var searchTo = get_value.searchTo;
               }
-              else if (data == 'trainLastSearch' && localStorage.getItem('trainLastSearch') !== null) {
+              else if (data == 'trainLastSearchNewNewNewNew' && localStorage.getItem('trainLastSearchNewNewNewNew') !== null) {
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');
@@ -389,9 +415,9 @@ public modeselectTrending= 'All';
 
             }
             if (date == undefined) { var dates = new Date(); var date = moment(dates).format('ddd, MMM Do'); }
-        
+          
+        //  if(searchFrom!=undefined){
           var from =   searchFrom.split('(');  
-
           if(type=='hotel') { var from =   searchFrom; var searfrom = from; } else { var from =   searchFrom.split('(');  var searfrom = from[0]; }
 
           if(type=='hotel') { var to =   searchTo; var searto = to; } else { var to =   searchTo.split('(');  var searto = to[0]; }
@@ -405,11 +431,11 @@ public modeselectTrending= 'All';
               Redirecturl: url
             });
           });
-          this.cookie_all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-         
+          this.cookie_all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); 
           this.recentsearchData = this.cookie_all.slice(0, 2);
           this.recentsearchDataAll = this.cookie_all.slice(0, 4);
-          
+
+         // }
         }
         
         if (typeof this.recentsearchData != undefined || this.recentsearchData.length == 0 || typeof result.result[0].foryouRecentSearch != undefined) {
@@ -496,7 +522,7 @@ public modeselectTrending= 'All';
         this.topDealCategory= result.result['aggregations']['category_filter']['buckets'];
         }
         
-        if(result.result['sub_aggregations']['sub_category_filter']){
+        if(result.result['sub_aggregations'] && result.result['sub_aggregations']['sub_category_filter']){
         this.topDealSubCategory= result.result['sub_aggregations']['sub_category_filter']['buckets'];
         }
       } else {
@@ -521,7 +547,17 @@ public modeselectTrending= 'All';
   showBlock(blockno) {
     this.showBlockno = blockno;
   }
- 
+   ConvertObjToQueryString(obj:any)
+  {
+
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
+  }
+
  goToNew(path){
      if(environment.IS_MAIN==1){
         const current = new Date();
@@ -555,6 +591,7 @@ public modeselectTrending= 'All';
     if (this.saveCard == 1) {
       this.getCardDetails();		//fetch card details for normal login
       //UPDATE AVAILABLE POINTS 
+      this.custCardsNotAvailable == false;
       if (this.custCardsAvailable == true) {
         this.pay.updateavaliablepoints().subscribe(res => {
           if (res['points_available'] && (res['points_available'] != undefined || res['points_available'] != null)) {
@@ -704,6 +741,7 @@ public modeselectTrending= 'All';
         let customercards = response.customercards;
         this.customercards = customercards;
         if (customercards.length > 0) {
+          this.custCardsNotAvailable = false;
           this.custCardsAvailable = true;
           //get primary card detail
           for (let i = 0; i < customercards.length; i++) {
@@ -889,6 +927,48 @@ public modeselectTrending= 'All';
       this.document.location.href = environment.MAIN_SITE_URL + url;
     }
   }
+  onSubmit(){
+       this.angForm.markAllAsTouched();
+       if (this.angForm.invalid){
+         return false; 
+       }
+       this.customerInfo = this.sg['customerInfo'];
+       console.log(this.customerInfo);
+       this.IsCardError=true;
+       let URLparams = {
+          "mobile": this.angForm.controls['mobile_no'].value,
+          "customer_id": this.customerInfo["customerid"],
+          "programName":this.sg['domainName'],
+          "last4digit":this.angForm.controls['last_4_digit'].value,
+          "_token":this.customerInfo["XSRF-TOKEN"],
+          "DOB":this.angForm.controls['dob'].value,
+          "savecard":1,
+          "user_id":this.customerInfo["id"],
+          'modal':'REWARD',
+          'type' : 'available_points',
+          'clientToken':this.sg['domainName'],
+          'services_id':7,
+          'partner_id':1,
+        }
+        var EncURLparams = {
+          postData: this.EncrDecr.set(JSON.stringify(URLparams))
+        };
+        this.rest.AvailablePoints(EncURLparams).subscribe(res => {
+         console.log(res); 
+         if(res.error_code=="100"){
+            document.getElementById('unlockCardPopup').click();
+            this.IsPointsCardDetails=false;
+            this.IsPointsCardDetailsModel=true;
+            this.angForm.reset();
+            this.spinnerService.show();  
+            this.customeravailablepoints=res.points_available;
+          }else{
+               this.IsCardError=false;
+               this.CardErrorMsg=res.message;
+          }   
+
+         }); 
+    }
 
 }
 

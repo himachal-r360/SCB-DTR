@@ -3,7 +3,11 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap ,shareReplay} from 'rxjs/operators';
 import {AppConfig} from '../../configs/app.config';
+import {getTrains} from '../../shared/interfaces/getTrains';
 //import { URLSearchParams } from '@angular/http';
+import {getTrainFare} from '../../shared/interfaces/getTrainFare';
+import {fareEnqueryMultiplePassengers} from '../../shared/interfaces/fareEnqueryMultiplePassengers';
+import {irctcUserStatus} from '../../shared/interfaces/irctcUserStatus';
 import {environment} from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -65,18 +69,148 @@ let urlToSplit =this.location.path();
 	}
 
   this.endpoint = environment.API_URL[this.domainName];
-  this.endpoint_irctc = environment.API_URL[this.domainName];
+  this.endpoint_irctc = environment.API_URL_IRCTC[this.domainName];
 
   this.serviceSettings=this.appConfigService.getConfig();
   this.hammockUrl = this.serviceSettings.HAMMOCK_URL;
   
   }
 
+  getTrains (param): Observable<getTrains> {
 
-findCity(param): Observable<any> {
-     return this.http.get('assets/data/city.json').pipe(map((response: any) => response));
-     
+      if(LOCALJSON=='true'){
+    return this.http.get('assets/data/trainBwStns.json').pipe(map((response: any) => response));
+     }else if(hammock=='true'){
+	return this.http.post(this.hammockUrl+'trainBwStns', param, config).pipe(map((response: any) => response));
+     }else{
+     return this.http.post(this.endpoint+'enquiry/trainBwStns', param, config).pipe(map((response: any) => response));
+     } 
+  }
+
+  getTrainFare (param): Observable<getTrainFare> {
+   if(LOCALJSON=='true'){
+     return this.http.get('assets/data/fareEnquery.json').pipe(map((response: any) => response));
+    }else if(hammock=='true'){
+	return this.http.post(this.hammockUrl+'fareEnquery', param, config).pipe(map((response: any) => response));
+     }else{
+      return this.http.post(this.endpoint+'enquiry/fareEnquery', param, config).pipe(map((response: any) => response));
+     }
+  }
+
+  fareEnqueryMultiplePassengers (param): Observable<fareEnqueryMultiplePassengers> {
+    if(LOCALJSON=='true'){
+     return this.http.get('assets/data/fareEnqueryMultiplePassengersResponse.json').pipe(map((response: any) => response));
+    }else if(hammock=='true'){
+	return this.http.post(this.hammockUrl+'fareEnqueryMultiplePassengers', param, config).pipe(map((response: any) => response));
+     }else{
+  	return this.http.post(this.endpoint+'enquiry/fareEnqueryMultiplePassengers', param, config).pipe(map((response: any) => response));
+     }
+  }
+
+
+isIRCTCUser(param): Observable<irctcUserStatus> {
+     if(LOCALJSON=='true'){
+        return this.http.get('assets/data/isIRCTCUser.json').pipe(map((response: any) => response));
+        //    }else if(hammock=='true'){
+        // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+     }else{
+        return this.http.post(this.endpoint_irctc+'trains/user/userStatus', param, config).pipe(map((response: any) => response));
+     }
+ }
+ checkUsername(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/checkUsername.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/checkUsername', param, config).pipe(map((response: any) => response));
+  }
 }
+
+findPin(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/pin.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/pin', param, config).pipe(map((response: any) => response));
+  }
+}
+findCity(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/city.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/pin', param, config).pipe(map((response: any) => response));
+  }
+}
+
+findpost(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/post.json').pipe(map((response: any) => response));
+    //    }else if(hammock=='true'){
+    // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+ }else{
+    return this.http.post(this.endpoint_irctc+'trains/user/pin', param, config).pipe(map((response: any) => response));
+ }
+}
+
+userRegister(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/userRegister.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/userRegister', param, config).pipe(map((response: any) => response));
+  }
+}
+forgotDetails(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/forgotDetails.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/forgotDetails', param, config).pipe(map((response: any) => response));
+  }
+}
+
+forgotPassword(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/forgotPassword.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/forgotDetails', param, config).pipe(map((response: any) => response));
+  }
+}
+
+verifyOTP(param): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/verifyOTP.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/verifyOTP', param, config).pipe(map((response: any) => response));
+  }
+}
+newsandalert(): Observable<irctcUserStatus> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/newsandalert.json').pipe(map((response: any) => response));
+     //    }else if(hammock=='true'){
+     // return this.http.post(this.hammockUrl+'userStatus', param, config).pipe(map((response: any) => response));
+  }else{
+     return this.http.post(this.endpoint_irctc+'trains/user/newsandalert', config).pipe(map((response: any) => response));
+  }
+}
+
+isCardValid(param): Observable<any> {
+    if(LOCALJSON=='true'){
+ 	return this.http.get('assets/data/isCardValid.json').pipe(map((response: any) => response));
+     }else{
+  	return this.http.post(MAIN_SITE_URL +this.sg['domainPath']+'card_validate', param, config).pipe(map((response: any) => response));
+     }
+ }
 
 private handleError<T> (operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {

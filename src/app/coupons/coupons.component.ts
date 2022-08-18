@@ -31,6 +31,7 @@ export class CouponsComponent implements OnInit {
         showoffer:boolean=false;
         assetPath:string;
         @Input() passSessionKey;
+        @Input() orderReferenceNumber;
         domainPath:string;
         appConfig: any;
         domainRedirect: string;
@@ -68,7 +69,6 @@ export class CouponsComponent implements OnInit {
        
         isLoggedIn:boolean=false;
         
-        orderReferenceNumber:string;
         ctype:string;
         payTotalFare;
         payActualFare;
@@ -102,7 +102,7 @@ export class CouponsComponent implements OnInit {
 	}
 
 	
-	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,public restApi:RestapiService,private http: HttpClient,private formBuilder: FormBuilder,public commonHelper: CommonHelper,public dialog: MatDialog,private sg: SimpleGlobal,private appConfigService: AppConfigService) { 
+	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private http: HttpClient,private formBuilder: FormBuilder,public commonHelper: CommonHelper,public dialog: MatDialog,private sg: SimpleGlobal,private appConfigService: AppConfigService) { 
 		this.assetPath=this.sg['assetPath']; 
 		this.domainPath=this.sg['domainPath'];
 		this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -128,6 +128,7 @@ export class CouponsComponent implements OnInit {
 	getCoupons(){
 		var couponMinValCheckArr = [];
 			const urlParams = {'client_token': 'HDFC243','service_name':this.serviceToken,'partner_name':this.partnerToken};
+			
 			var couponParam = {
 			postData:this.EncrDecr.set(JSON.stringify(urlParams))
 			};
@@ -237,7 +238,7 @@ export class CouponsComponent implements OnInit {
 			'client_token': 'HDFC243',
 			'service_name':this.serviceToken,'partner_name':this.partnerToken,
 			'order_amount': this.payActualFare,
-			'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),	
+			'orderReferenceNumber': this.orderReferenceNumber,	
 			'coupon_code':couponArray.coupon_code,
 			'coupon_status':couponArray.status,
 			'g-recaptcha-response':this.verifiedCaptcha,
@@ -348,7 +349,7 @@ export class CouponsComponent implements OnInit {
 					'order_amount':Math.round(this.payActualFare),
 					'coupon_code':couponCode,
 					'bookingRefNumber':sessionStorage.getItem(this.passSessionKey+'-clientTransactionId'),
-					'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
+					'orderReferenceNumber': this.orderReferenceNumber,
 					'coupon_status':0,
 					'g-recaptcha-response':this.verifiedCaptcha,
 					'customer_id':this.customerInfo['id']
@@ -419,7 +420,7 @@ export class CouponsComponent implements OnInit {
 						'client_token': 'HDFC243',
 						'service_name':this.serviceToken,'partner_name':this.partnerToken,
 						'order_amount': this.payActualFare,
-						'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),	
+						'orderReferenceNumber': this.orderReferenceNumber,	
 						'coupon_code':couponCode.toUpperCase(),
 						'coupon_status':'',
 						'g-recaptcha-response':this.verifiedCaptcha,
@@ -522,7 +523,7 @@ export class CouponsComponent implements OnInit {
 		var vcouponParam = {'client_token': 'HDFC243',
 		'coupon_code':couponCode,
 		'bookingRefNumber':sessionStorage.getItem(this.passSessionKey+'-clientTransactionId'),
-		'orderReferenceNumber':sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
+		'orderReferenceNumber':this.orderReferenceNumber,
 		};
 		var vcouponApplyParam = {
 		postData:this.EncrDecr.set(JSON.stringify(vcouponParam))
@@ -535,6 +536,7 @@ export class CouponsComponent implements OnInit {
 		this.coupon_amount =0; 
 		this.couponApplied=false;
 		this.couponError='';
+		$('#promo_code').val('');
 		couponUpdatedArray = {type: 1, couponOptions: this.couponOptions}; 
 		this.sendCouponEvent.emit(couponUpdatedArray);
 		

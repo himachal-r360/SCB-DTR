@@ -1,5 +1,5 @@
-<main class="site-main">
-    <section class="travel-area mtb-100">
+<main class="site-main mt-180">
+    <section class="travel-area mt-80 mb-10">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -8,453 +8,43 @@
                             <div class="travel-select-box">
                                 <ul class="travel-list-ul">
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a active">
-                                            <img src="./assets/images/icons/flight.png" alt="">
+                                        <a href="javascript:;" class="travel-list-a"  (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
+                                            <img src="{{cdnUrl}}/images/icons/flight.png" alt="">
                                             Flights
                                         </a>
                                     </li>
-                                    <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
-                                            <img src="./assets/images/icons/trains.png" alt="">
+                                    <li class="travel-list-li" >
+                                        <a href="javascript:;"class="travel-list-a"  (click)="navBarLink('train')"  [ngClass]="navItemActive == 'train'? 'active':'' ">
+                                            <img src="{{cdnUrl}}/images/icons/trains.png" alt="">
                                             Trains
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
-                                            <img src="./assets/images/icons/bus.png" alt="">
+                                        <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('bus')" [ngClass]="navItemActive == 'bus'? 'active':'' ">
+                                            <img src="{{cdnUrl}}/images/icons/bus.png" alt="">
                                             Bus
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
-                                        <a href="" class="travel-list-a">
-                                            <img src="./assets/images/icons/stays.png" alt="">
+                                        <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('hotel')"  [ngClass]="navItemActive == 'hotel'? 'active':'' ">
+                                            <img src="{{cdnUrl}}/images/icons/stays.png" alt="">
                                             Stays
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <form [formGroup]="flightData" (ngSubmit)="flightSearch()">
-                            <div class="travel-select-data-area">
-                                <div class="travel-select-trip">
-                                    <ul class="travel-select-trip-ul">
-                                        <li>
-                                            <span class="selectway ">Round Trip</span>
-                                        </li>
-                                        <li>
-                                            <span class="selectway active">One Way</span>
-                                        </li>
-                                        <li>
-                                            <span class="selectway">Multicity</span>
-                                        </li>
-                                        <li>
-                                            <div class="Travellers-dropdown ms-3" appDropdown>
-                                                <div class="Travellers-dropdown-title">
-                                                    <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i>
-                                                    </h5>
-                                                </div>
-                                                <ul class="Travellers-dropdown-data flight-from-hide dropdown" id="openTravellers" #openTravellers>
-                                                    <li>
-                                                        <p class="t-title">Travellers</p>
-                                                    </li>
-                                                    <li>
-                                                        <div class="Travellers-passengers-data">
-                                                            <div class="Travellers-name">
-                                                                <h6>Adult</h6>
-                                                                <p>12 years & above</p>
-                                                            </div>
-                                                            <div class="Travellers-qty">
-                                                                <div class="quantity buttons_added">
-                                                                    <input type="button" (click)="decreaseAdult()"
-                                                                        value="-" class="qty-buttons minus">
-                                                                    <input type="number" step="1"
-                                                                        oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
-                                                                        min="1" max="9" name="quantity" value="0"
-                                                                        title="Qty"
-                                                                        class="input-text qty text quantity_adult1_events"
-                                                                        formControlName="adults" size="4" pattern=""
-                                                                        inputmode="" [(ngModel)]="flightData.value.adults">
-                                                                    <input type="button" (click)="increaseAdult()"
-                                                                        value="+" [disabled]="disableParent"
-                                                                        class="qty-buttons plus">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="Travellers-passengers-data">
-                                                            <div class="Travellers-name">
-                                                                <h6>Child</h6>
-                                                                <p>2 - 11 years</p>
-                                                            </div>
-                                                            <div class="Travellers-qty">
-                                                                <div class="quantity buttons_added">
-                                                                    <input type="button" (click)="decreaseChild()"
-                                                                        value="-" class="qty-buttons minus">
-                                                                    <input type="number" step="1" min="0" max="6"
-                                                                        name="quantity" value="0" title="Qty"
-                                                                        class="input-text qty text quantity_adult1_events"
-                                                                        size="4" pattern="" inputmode=""
-                                                                        formControlName="child" [(ngModel)]="flightData.value.child">
-                                                                    <input type="button" (click)="increaseChild()"
-                                                                        [disabled]="disablechildren" value="+"
-                                                                        class="qty-buttons plus">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-
-                                                        <div class="Travellers-passengers-data">
-                                                            <div class="Travellers-name">
-                                                                <h6>Infant</h6>
-                                                                <p>Under 2 years</p>
-                                                            </div>
-                                                            <div class="Travellers-qty">
-                                                                <div class="quantity buttons_added">
-                                                                    <input type="button" (click)="decreaseInfant()"
-                                                                        value="-" class="qty-buttons minus">
-                                                                    <input type="number" step="1" min="0" max="6"
-                                                                        name="quantity" value="0" title="Qty"
-                                                                        class="input-text qty text quantity_adult1_events"
-                                                                        size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants"
-                                                                        inputmode="">
-                                                                    <input type="button" (click)="increaseInfant()"
-                                                                        [disabled]="disableinfants" value="+"
-                                                                        class="qty-buttons plus">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                        </li>
-                                        <li>
-                                          <mat-select class=" ms-4"  formControlName="flightclass">
-                                            <mat-option value="B">Business Class</mat-option>
-                                            <mat-option value="E">Economy Class</mat-option>
-                                            <mat-option value="F">First Class</mat-option>
-                                            <mat-option value="P">Premium Economy</mat-option>
-                                          </mat-select>
-                                            <!-- <select name="" class="liothers class-select ms-4" value="B"
-                                                aria-label="Default select example" formControlName="flightclass">
-                                                <option selected="selected" value="B">Business Class</option>
-                                                <option value="E">Economy Class</option>
-                                                <option value="F">First Class</option>
-                                                <option value="P">Premium Economy</option>
-                                            </select> -->
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="travel-data">
-                                    <div class="row g-2">
-                                        <div class="col-lg-6">
-                                            <div class="select-root-area">
-                                                <div class="select-root-left" appDropdown >
-                                                    <span class="select-roottitle">FROM</span>
-                                                    <h5 class="fw_6 ">{{fromCityName}}</h5>
-                                                    <span class="select-roottitle">{{fromAirpotName}}</span>
-                                                    <div class="flight-from-data flight-from-hide ff-form-data dropdown"  >
-                                                      <div class="mob-title">
-                                                        <h3>Select City</h3>
-                                                        <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile" >
-                                                            <img src="/assets/images/icons/close.png" (click)="onClose()"  class="close-mobile"  alt="" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="mob-search">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="mob-search-list">
-                                                                    <label for="">From</label>
-                                                                    <input type="text" name="" class="w-100" id="" value="Mumbai (BOM)">
-                                                                </div>
-                                                                <div class="mob-search-list">
-                                                                    <label for="">From</label>
-                                                                    <input type="text" name="" class="w-100" id="" value="Hyderabad (HYD)">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                        <div class="flight-from-data-search">
-                                                            <!-- <input type="text" autocomplete="off" class="w-100"
-                                                                id="fromCitySearch" placeholder="Search City"
-                                                                (keyup)="fromList($event)">
-                                                            <input type="hidden" formControlName="flightfrom"
-                                                            id="hdnfromCitySearch" > -->
-                                                            <input type="text" autocomplete="off" class="w-100"
-                                                                id="fromCitySearch" placeholder="Search City" formControlName="flightfrom"
-                                                                (keyup)="fromList($event)" autofocus #fromCityInput [(ngModel)]="flightData.value.flightfrom">
-                                                            <input type="text" name="flightfrom" style="display:none"
-                                                            id="fromCitySearch" >
-
-                                                        </div>
-
-                                                        <ul class="flight-from-data-ul" *ngIf="fromFlightList">
-                                                            <li class="flight-from-ul-li">
-                                                                <p class="flight-Results-text">Results</p>
-                                                            </li>
-                                                            <li class="flight-from-ul-li"
-                                                                *ngFor="let fromCity of cityList">
-                                                                <a href="#" class="flight-from-ul-li-a"
-                                                                    (click)="selectFromFlightList(fromCity._source)" >
-                                                                    <div class="flight-from-name">
-                                                                        <h6>{{fromCity._source.city}},
-                                                                            {{fromCity._source.country}}</h6>
-                                                                        <p>{{fromCity._source.airport_name}} </p>
-                                                                    </div>
-                                                                    <div class="flight-from-shortname">
-                                                                        <h6>{{fromCity._source.airport_code}}</h6>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-
-
-                                                        </ul>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="select-root-icons" (click)="swap()">
-                                                    <img src="./assets/images/icons/twoway.png" alt="">
-                                                </div>
-                                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
-                                                    <span class="select-roottitle">TO</span>
-                                                    <h5 class="fw_6 ">{{toCityName}}</h5>
-                                                    <span class="select-roottitle">{{toAirpotName}}</span>
-
-                                                    <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
-
-                                                        <div class="flight-from-data-search">
-                                                            <input type="text" autocomplete="off" class="w-100"
-                                                                id="toCitySearch" placeholder="Search City" formControlName="flightto"
-                                                                (keyup)="toList($event)" #toCityInput autofocus  [(ngModel)]="flightData.value.flightto">
-                                                            <input type="text"  name="flightto" style="display:none"
-                                                            id="toCitySearch" >
-                                                        </div>
-                                                        <ul class="flight-from-data-ul" *ngIf="toFlightList">
-                                                            <li class="flight-from-ul-li">
-                                                                <p class="flight-Results-text">Results</p>
-                                                            </li>
-                                                            <li class="flight-from-ul-li"
-                                                                *ngFor="let toCity of cityList">
-                                                                <a href="#" class="flight-from-ul-li-a"
-                                                                    (click)="selectToFlightList(toCity._source)">
-                                                                    <div class="flight-from-name">
-                                                                        <h6>{{toCity._source.city}},
-                                                                            {{toCity._source.country}}</h6>
-                                                                        <p>{{toCity._source.airport_name}} </p>
-                                                                    </div>
-                                                                    <div class="flight-from-shortname">
-                                                                        <h6>{{toCity._source.airport_code}}</h6>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="home-error d-flex">
-                                              <mat-error class="w-50" *ngIf="submitted && Error('flightfrom', 'required')">
-                                                Select departure
-                                              </mat-error>
-                                              <mat-error *ngIf="submitted && Error('flightto', 'required')">
-                                                Select departure
-                                              </mat-error>
-                                              <!-- <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger w-50">
-                                                  <span class="fs_12"> Select departure</span>
-                                              </div>
-                                              <div *ngIf="submitted && Error('flightto', 'required')" class="text-danger w-50">
-                                                <span class="fs_12"> Select destination</span>
-                                              </div> -->
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="root-date">
-                                                <div class="select-root-area">
-                                                    <div class="select-dep-ret">
-                                                        <!-- <div class="area-root-departure" id="DepartureDate">
-                                                            <div class="select-root-departure departure-date">
-                                                                <span class="select-roottitle">DEPARTURE</span>
-                                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-                                                                <span class="select-roottitle d-block w-100"
-                                                                    *ngIf="departureDate=='' ||departureDate==undefined">Tap
-                                                                    to add a <br> departure date</span>
-                                                                <span class="select-roottitle"
-                                                                    *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate
-                                                                    | date:'EEEE' }}</span>
-                                                            </div>
-                                                            <div class="select-root-date">
-                                                                <i
-                                                                class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
-                                                                <input type="hidden" name="hdnDepartureDate"
-                                                                    value="{{departureDate}}" formControlName="departure">
-                                                            </div>
-                                                        </div> -->
-                                                        <div class="area-root-departure" (click)="picker.open()" id="datePickerOpen">
-                                                            <div class="select-root-departure departure-date" >
-                                                                <span class="select-roottitle">DEPARTURE</span>
-                                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-                                                                <span class="select-roottitle d-block w-100"
-                                                                    *ngIf="departureDate=='' ||departureDate==undefined">Tap
-                                                                    to add a <br> departure date</span>
-                                                                <span class="select-roottitle"
-                                                                    *ngIf="departureDate!='' ||departureDate!=undefined" >{{departureDate
-                                                                    | date:'EEEE' }}</span>
-                                                            </div>
-                                                            <div class="select-root-date" style="position: relative; left: 0;">
-                                                                <i class="far fa-calendar-alt single-datepicker me-3 fs_22" ></i>
-
-                                                                  <mat-form-field  style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                                    <input matInput [min]="minDate" [matDatepicker]="picker"  formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClicked($event)"  >
-                                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                                                    <mat-datepicker #picker ></mat-datepicker>
-                                                             </mat-form-field>
-
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="area-root-reutrn">
-                                                            <div class="select-root-reutrn">
-                                                                <span class="select-roottitle">RETURN</span>
-                                                                <!-- <h5 class="">29 May</h5> -->
-                                                                <span class="select-roottitle d-block w-100">Tap to add
-                                                                    a <br> return date</span>
-                                                            </div>
-                                                            <div class="select-root-date">
-                                                                <!-- <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i> -->
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="root-search">
-                                                    <button type="submit" class="searchbn">Search</button>
-                                                </div>
-                                            </div>
-                                            <mat-error *ngIf="dateValidation">
-                                              Select departure
-                                            </mat-error>
-                                           <!-- <div *ngIf="dateValidation" class="text-danger">
-                                            <span class="fs_12"> Select departure date</span>
-                                        </div> -->
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="add-search-area">
-                                    <!-- <div class="add-search-content">
-                                        <ul class="add-search-ul">
-                                            <li class="custom-check-box">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                                                        <input type="checkbox" class="material-control-input"
-                                                            checked="checked" />
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description">Regular Fare</span>
-                                                    </label>
-                                                </div>
-                                            </li>
-                                            <li class="custom-check-box">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                                                        <input type="checkbox" class="material-control-input" />
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description">Student Fare</span>
-                                                    </label>
-                                                </div>
-                                            </li>
-                                            <li class="custom-check-box">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                                                        <input type="checkbox" class="material-control-input" />
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description">Armed Forces</span>
-                                                    </label>
-                                                </div>
-                                            </li>
-                                            <li class="custom-check-box">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                                                        <input type="checkbox" class="material-control-input" />
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description">Senior Citizen</span>
-                                                    </label>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div> -->
-                                    <div class="add-search-content ms-3">
-                                        <div class="Preferred-area" appDropdown>
-                                            <h5 class="Preferred-title">Preferred Airline <img
-                                                    src="./assets/images/icons/down.png" class="ms-1" alt=""></h5>
-                                            <div class="Preferred-data  flight-from-hide dropdown" >
-                                              <div class="mob-title">
-                                                <h3>Preferred Airline</h3>
-                                                <a href="#" class="mob-close mob-preferred-close close-mobile">
-                                                    <img src="./assets/images/icons/close.png" class="close-mobile" alt="" />
-                                                </a>
-                                            </div>
-                                                <div class="Preferred-search">
-                                                    <input type="text" name="" class="w-100" id=""
-                                                        placeholder="Search Airline">
-                                                </div>
-                                                <ul class="Preferred-items mCustomScrollbar" data-mcs-theme="dark">
-                                                    <li class="Preferred-list">
-                                                        <p class="">Results</p>
-                                                    </li>
-                                                    <li class="Preferred-list">
-                                                        <a href="#" class="">
-                                                            IndiGo (6E)
-                                                        </a>
-                                                    </li>
-                                                    <li class="Preferred-list">
-                                                        <a href="#" class="">
-                                                            SpiceJet (SG)
-                                                        </a>
-                                                    </li>
-                                                    <li class="Preferred-list">
-                                                        <a href="#" class="">
-                                                            Vistara (UK)
-                                                        </a>
-                                                    </li>
-                                                    <li class="Preferred-list">
-                                                        <a href="#" class="">
-                                                            Go First (G8)
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- <div class="text-center">
-                            <div *ngIf="submitted && Error('flightfrom', 'required')" class="text-danger">
-                                <span> Select departure city from drop down</span>
-                            </div>
-
-                            <div *ngIf="submitted && Error('flightto', 'required')" class="text-danger">
-                               <span> Select destination city from drop down</span>
-                            </div>
-
-                            <div *ngIf="dateValidation" class="text-danger">
-                                <span> Select destination departure from drop down</span>
-                            </div>
-                        </div> -->
+                        <app-flight-search isViewPartner="true" *ngIf="navItemActive=='flight'" ></app-flight-search>
+                        <app-hotel-search isViewPartner="true" *ngIf="navItemActive=='hotel'" ></app-hotel-search>
+                        <app-bus-search isViewPartner="true" *ngIf="navItemActive=='bus'" ></app-bus-search>
+                        <app-train-search isViewPartner="true" *ngIf="navItemActive=='train'" ></app-train-search>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-       <!-- Continue Search -->
-       <section class="ContinueSearch-area mb-50">
+ <!-- Continue Search -->
+    <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='flight' && continueSearchVal && continueSearchVal.length>0">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -464,105 +54,478 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Chennai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/round.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Mumbai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/next-active.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>  -->
-                <!-- <div class="col-md-3">
-                    <a href="">
-                        <div class="Continuesearch-items">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>Chennai</h6>
-                                    <p>Wed, 10 Apr</p>
-                                </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/round.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>Bangalore</h6>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
-                <div class="col-md-3" *ngFor="let continue of continueSearchVal; let i = index">
-
-                    <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearch(continue)" >
-                        <div class="Continuesearch-items ">
-                            <div class="Continuesearch-items-text">
-                                <div class="Continuesearch-name">
-                                    <h6>{{continue.fromCity}}</h6>
+                <!-- continue search website view  -->
+                <ng-container *ngIf="isMobile == false">
+                    <div class="col-md-3" *ngFor="let continue of continueSearchVal; let i = index">
+                        <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearch(continue)">
+                            <div class="Continuesearch-items ">
+                                <div class="Continuesearch-items-text">
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.fromCity}}</h6>
                                         <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                    </div>
+                                    <div class="Continuesearch-image">
+                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.png"
+                                            alt="">
+                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png" alt="">
+                                    </div>
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.toCity}}</h6>
+                                        <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
+                                    </div>
                                 </div>
-                                <div class="Continuesearch-image">
-                                    <img src="./assets/images/icons/next-active.png" alt="">
-                                </div>
-                                <div class="Continuesearch-name">
-                                    <h6>{{continue.toCity}}</h6>
-                                    <!-- <p>{{continue.arrival|date:"EEE ,dd MMM"}}</p> -->
+                                <div class="Continuesearch-items-actions">
+                                    <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+
                                 </div>
                             </div>
-                            <div class="Continuesearch-items-actions">
-                                <img src="./assets/images/icons/next.png" alt="">
+                        </a>
+                    </div>
+                </ng-container>
+                <!-- continue search mobile view  -->
+                <div class="box-item" *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let continue of continueSearchVal; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearch(continue)">
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.fromCity}}</h6>
+                                                <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img *ngIf="!continue.arrival"
+                                                    src="{{cdnUrl}}/images/icons/next-active.png" alt="">
+                                                <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png"
+                                                    alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.toCity}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+        <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='bus' && continueSearchValBus && continueSearchValBus.length>0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Continue Your Search</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- continue search website view  -->
+                <ng-container *ngIf="isMobile == false">
+                    <div class="col-md-3" *ngFor="let continue of continueSearchValBus; let i = index">
+                        <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearchBus(continue)">
+                            <div class="Continuesearch-items ">
+                                <div class="Continuesearch-items-text">
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchFrom}}</h6>
+                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                    </div>
+                                    <div class="Continuesearch-image">
+                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.png"
+                                            alt="">
+                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png" alt="">
+                                    </div>
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchTo}}</h6>
+                                    </div>
+                                </div>
+                                <div class="Continuesearch-items-actions">
+                                    <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+
+                                </div>
                             </div>
+                        </a>
+                    </div>
+                </ng-container>
+                <!-- continue search mobile view  -->
+                <div class="box-item" *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let continue of continueSearchValBus; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearchBus(continue)">
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchFrom}}</h6>
+                                                <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img *ngIf="!continue.arrival"
+                                                    src="{{cdnUrl}}/images/icons/next-active.png" alt="">
+                                                <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png"
+                                                    alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchTo}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+            <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='train' && continueSearchValTrain && continueSearchValTrain.length>0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Continue Your Search</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- continue search website view  -->
+                <ng-container *ngIf="isMobile == false">
+                    <div class="col-md-3" *ngFor="let continue of continueSearchValTrain; let i = index">
+                        <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearchTrain(continue)">
+                            <div class="Continuesearch-items ">
+                                <div class="Continuesearch-items-text">
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchFrom}}</h6>
+                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                    </div>
+                                    <div class="Continuesearch-image">
+                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.png"
+                                            alt="">
+                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png" alt="">
+                                    </div>
+                                    <div class="Continuesearch-name">
+                                        <h6>{{continue.searchTo}}</h6>
+                                    </div>
+                                </div>
+                                <div class="Continuesearch-items-actions">
+                                    <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ng-container>
+                <!-- continue search mobile view  -->
+                <div class="box-item" *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let continue of continueSearchValTrain; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearchTrain(continue)">
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchFrom}}</h6>
+                                                <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img *ngIf="!continue.arrival"
+                                                    src="{{cdnUrl}}/images/icons/next-active.png" alt="">
+                                                <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.png"
+                                                    alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue.searchTo}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Trending Routes -->
+    <section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-TrendingRoutes-text">
+                        <h4>Trending Routes</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-slider grid-4 tranding-routes-slider" *ngIf="isMobile == false">
+                        <ng-container *ngFor="let trendingItem of trendingRoutes">
+                            <div class="box-item">
+                                <a href="javascript:void(0)">
+                                    <div class="Trending-item">
+                                        <div class="Trending-left">
+                                            <img src="{{trendingItem.fromImg}}" class="img-fluid" alt="">
+                                            <p>{{trendingItem.fromCity}}</p>
+                                        </div>
+                                        <div class="Trending-center">
+                                            <div class="half-circle-top"></div>
+                                            <p>Form</p>
+                                            <h6>&#8377;3,528</h6>
+                                            <img src="assets/images/icons/Trending.png" alt="">
+                                            <div class="half-circle-bottom"></div>
+                                        </div>
+                                        <div class="Trending-right">
+                                            <img src="{{trendingItem.toImg}}" class="img-fluid" alt="">
+                                            <p>{{trendingItem.toCity}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="owl-slider grid-4 tranding-routes-slider " *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let trendingItem of trendingRoutes; let i = index">
+                            <ng-template carouselSlide>
+                                <div class="box-item">
+                                    <a href="javascript:void(0)">
+                                        <div class="Trending-item">
+                                            <div class="Trending-left">
+                                                <img src="{{trendingItem.fromImg}}" class="img-fluid" alt="">
+                                                <p>{{trendingItem.fromCity}}</p>
+                                            </div>
+                                            <div class="Trending-center">
+                                                <div class="half-circle-top"></div>
+                                                <p>Form</p>
+                                                <h6>&#8377;3,528</h6>
+                                                <img src="assets/images/icons/Trending.png" alt="">
+                                                <div class="half-circle-bottom"></div>
+                                            </div>
+                                            <div class="Trending-right">
+                                                <img src="{{trendingItem.toImg}}" class="img-fluid" alt="">
+                                                <p>{{trendingItem.toCity}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+
+    <!-- Popular Domestic Flight Routes -->
+    <section class="popular-Domestic-area mb-50" *ngIf="navItemActive=='flight'">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Popular Domestic Flight Routes</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="popular-routes-list">
+                        <ul class="popular-routes-list-ul">
+                            <li>
+                                <span>From</span>
+                            </li>
+                            <li>
+                                <a href="#" class="active">New Delhi</a>
+                            </li>
+                            <li>
+                                <a href="#">Mumbai</a>
+                            </li>
+                            <li>
+                                <a href="#">Bengaluru</a>
+                            </li>
+                            <li>
+                                <a href="#">Hyderabad</a>
+                            </li>
+                            <li>
+                                <a href="#">Kolkata</a>
+                            </li>
+                            <li>
+                                <a href="#">Others</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="popular-flight-slider">
+                        <div class="owl-carousel carousel-popular-flight">
+                            <owl-carousel-o [options]="DomasticFlightsOptions">
+                                <ng-container *ngFor="let domasticItem of popularDomasticRoutes; let i = index">
+                                    <ng-template carouselSlide>
+                                        <div class="item">
+                                            <a href="javascript:void(0)">
+                                                <div class="Popular-flight-items">
+                                                    <div class="Popular-flight-image">
+                                                        <img src="{{domasticItem.image}}" alt="flight" />
+                                                        <div class="Popular-flight-name">
+                                                            <span>{{domasticItem.fromCity}} </span>
+                                                            <img src="assets/images/icons/twoway.png" alt="" />
+                                                            <span>{{domasticItem.toCity}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Popular-flight-content">
+                                                        <p class="pf-date">{{domasticItem.date}}</p>
+                                                        <p>
+                                                            <span class="opacity-50">Starts from</span>
+                                                            <span
+                                                                class="pf-price text-color ms-1">&#8377;{{domasticItem.totalFare}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </ng-container>
+                            </owl-carousel-o>
                         </div>
-                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular International  Flight Routes -->
+    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Popular International Flight Routes</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="popular-routes-list">
+                        <ul class="popular-routes-list-ul">
+                            <li>
+                                <span>From</span>
+                            </li>
+                            <li>
+                                <a href="#" class="active">New Delhi</a>
+                            </li>
+                            <li>
+                                <a href="#">Mumbai</a>
+                            </li>
+                            <li>
+                                <a href="#">Bengaluru</a>
+                            </li>
+                            <li>
+                                <a href="#">Hyderabad</a>
+                            </li>
+                            <li>
+                                <a href="#">Kolkata</a>
+                            </li>
+                            <li>
+                                <a href="#">Others</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="popular-flight-slider">
+                        <div class="owl-carousel carousel-popular-flight">
+                            <owl-carousel-o [options]="DomasticFlightsOptions">
+                                <ng-container *ngFor="let domasticItem of popularDomasticRoutes; let i = index">
+                                    <ng-template carouselSlide>
+                                        <div class="item">
+                                            <a href="javascript:void(0)">
+                                                <div class="Popular-flight-items">
+                                                    <div class="Popular-flight-image">
+                                                        <img src="{{domasticItem.image}}" alt="flight" />
+                                                        <div class="Popular-flight-name">
+                                                            <span>{{domasticItem.fromCity}} </span>
+                                                            <img src="assets/images/icons/twoway.png" alt="" />
+                                                            <span>{{domasticItem.toCity}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Popular-flight-content">
+                                                        <p class="pf-date">{{domasticItem.date}}</p>
+                                                        <p>
+                                                            <span class="opacity-50">Starts from</span>
+                                                            <span
+                                                                class="pf-price text-color ms-1">&#8377;{{domasticItem.totalFare}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </ng-container>
+                            </owl-carousel-o>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular International  Flight Routes -->
+    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Exciting Offers</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="Exciting-Offers-slider">
+                        <div class="owl-carousel carousel-Offers-flight">
+                            <owl-carousel-o [options]="existingOffer">
+                                <ng-container *ngFor="let exitingItem of exitingOffers; let i = index">
+                                    <ng-template carouselSlide>
+                                        <div class="item">
+                                            <a href="javascript:void(0)">
+                                                <div class="Exciting-Offers-slider-items">
+                                                    <div class="Exciting-Offers-slider-image">
+                                                        <img src="{{exitingItem.image}}" alt="flight" />
+                                                    </div>
+                                                    <div class="Exciting-Offers-slider-content">
+                                                        <p class="pffer-first">{{exitingItem.title}}</p>
+                                                        <h6>Up to &#8377;{{exitingItem.totalFare}} OFF* </h6>
+                                                        <hr>
+                                                        <p class="Offers-time"><img
+                                                                src="assets/images/smartbuy/icons/time.png"
+                                                                alt="flight" /> Valid till : {{exitingItem.date}}</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </ng-container>
+                            </owl-carousel-o>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
 </main>
-
-<!-- <h3 class="text-center" *ngIf="loader">Loading...</h3> -->
-
-<div class="loader-box" *ngIf="loader">
-    <div class="loader-round"></div>
-</div>
-
-

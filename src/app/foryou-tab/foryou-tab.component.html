@@ -1,4 +1,4 @@
-<div class="tab_inner pb-0">
+<div class="tab_inner pb-0 mt-80">
     <div class=" container_ftab c-space-2 mb-1 pt-16">
         <div class="row">
             <div class="col-lg-12 col-sm-12" *ngIf="isLogged==false">
@@ -68,29 +68,22 @@
             <div class="col-lg-6 col-sm-12" *ngIf="isLogged==true">
 
                 <div class="row mb-3">
-                    <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints">
+                    <!-- <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints"  [hidden]="IsPointsCardDetails"> -->
+                      <div class="col-sm-12"  [hidden]="IsPointsCardDetails">  
                         <div class="card_points_info">
-                            <div>
+                            <!-- <div>
                                 <div class="card_select">
                                     <select (change)="selectedCard($event)">
-                    <option *ngFor="let each of customercards" value="{{each.id}}"   >{{each.card}}</option>
-                  </select>
-                                    <!--<div class="d-inline-block pl-4"><a href="">View Details</a></div>-->
+                                        <option *ngFor="let each of customercards" value="{{each.id}}"   >{{each.card}}</option>
+                                    </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="points_section">
-                                <!--<div class="counter_points">
-                  <p><i class="fa fa-rupee"></i>XXXXX</p>
-                  <p>saved in XXXXX</p>
-                </div>-->
                                 <div class="counter_points">
                                     <p>{{customeravailablepoints}}</p>
                                     <p>Reward points</p>
                                 </div>
-                                <!--<div class="counter_points">
-                  <p>XXXXX <span class="total_points">/XXXXX</span></p>
-                  <p>Points expiring</p>
-                </div>-->
+                                
                                 <div class="voucher-code-entry">
                                     <div class="redeem_error">
                                         <small>{{errorMsg0}}</small>
@@ -99,9 +92,43 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12">
-                        <div class="">
-                            <a href="#" class=""> <img src="https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/images/banners/mobile/recents_nodata.png" alt="rec_small_banner" class="img-fluid"> </a>
+                    <div class="col-sm-12" *ngIf="isLogged" [hidden]="IsPointsCardDetailsModel">
+                        <div class="unlock_card">
+                            <div class="">
+                                 <img src="{{cdnUrl}}images/smartbuy/icons/coin-icn.svg" alt="" class="img-fluid">
+                            </div>
+                            <div class="text_verify">
+                                <p class="">Verify mobile number & add card details to</p>
+                                <p class="mt-15">Unlock Rewards Summary</p>
+                            </div>
+                            <div>
+                                <!-- <div class="mark_question">
+                                    <div class="tooltip"><img src="{{cdnUrl}}images/smartbuy/icons/qmark.svg" alt="" class="img-fluid">
+                                        <span class="tooltiptext">
+                                            <div>
+                                                <p class="text-left pb-10" > <span class="text_eg me-2">e.g.</span> <span class="text_card">Regalia Credit Card xx1234</span> <span class="material-icons down_arrow">expand_more</span></p>
+                                                <div class="points_sec row">
+                                                    <div class="col-4">
+                                                        <p class="value"> 35,645</p>
+                                                        <p class="name">Current Available Points</p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="value"> 35,645</p>
+                                                        <p class="name">Available Reward Points</p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="value">35,645</p>
+                                                        <p class="name">Last Statement points</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div> -->
+                                <div>
+                                    <div class="icon_place" data-bs-toggle="modal" data-bs-target="#unlockCardPopup"> <span><img src="{{cdnUrl}}images/smartbuy/icons/east.svg" alt="icn-right"></span> </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,8 +155,8 @@
                                                         <span *ngIf="rsearchval.type !='hotel'">{{rsearchval.searchFrom | uppercase | slice:0:11 }}{{rsearchval.searchFrom.length > 11 ? '...' : ''}}</span>
                                                         <span *ngIf="rsearchval.type ==='hotel'">{{rsearchval.searchFrom | uppercase | slice:0:28 }}{{rsearchval.searchFrom.length > 28 ? '...' : ''}}</span>
                                                         <span class="p-0">            
-                              <img *ngIf="rsearchval.type !='hotel'" src="{{cdnUrl}}images/smartbuy/icons/{{rsearchval.type}}_line.svg" alt="{{rsearchval.type}}-icon" class="">
-                            </span>
+                                                            <img *ngIf="rsearchval.type !='hotel'" src="{{cdnUrl}}images/smartbuy/icons/{{rsearchval.type}}_line.svg" alt="{{rsearchval.type}}-icon" class="">
+                                                        </span>
                                                         <span *ngIf="rsearchval.type !='hotel'">{{rsearchval.searchTo | uppercase | slice:0:10 }}{{rsearchval.searchTo.length > 10 ? '...' : ''}}</span>
                                                     </p>
                                                     <p class="date_info col-12"><span class="date">{{rsearchval.showdate}}</span></p>
@@ -218,8 +245,8 @@
 
 
 
-     <!-- Smartbuy Exclusive Mlite Code -->
-     <div class="mlite_exclusive d-block d-sm-none" *ngIf="DOMAIN_SETTINGS">
+    <!-- Smartbuy Exclusive Mlite Code -->
+    <div class="mlite_exclusive d-block d-sm-none" *ngIf="DOMAIN_SETTINGS">
         <div class="container_ftab c-space-2">
             <h3 class="">Smartbuy Exclusive
                 <span class="float-right"><a (click)="goToNew('/partners')" class="view_all_link">Explore</a></span>
@@ -240,10 +267,10 @@
                     <a (click)="redirectUrl('flipkart',0,'flipkart')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/flipkart.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.flipkart.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.flipkart.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.flipkart.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.flipkart.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -251,10 +278,10 @@
                     <a (click)="redirectUrl('imagine',0,'imagine')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/imagine.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.imagine.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.imagine.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.imagine.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.imagine.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -262,10 +289,10 @@
                     <a (click)="redirectUrl('mmt',0,'mmt')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/mmt.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.mmt.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.mmt.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.mmt.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.mmt.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -273,10 +300,10 @@
                     <a (click)="goTo('/bus')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/redbus.svg" alt="" class="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.bus.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.bus.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.bus.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.bus.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -285,32 +312,32 @@
                     <a (click)="redirectUrl('igp',0,'igp')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/igp.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.igp.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.igp.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.igp.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.igp.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
                 <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
-                      <a  (click)="clickUrl('compare-fly')">
+                    <a (click)="clickUrl('compare-fly')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/flight.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_red_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.flight.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.flight.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.flight.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.flight.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
                 <div class="item_b red_bg" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
-                    <a  (click)="clickUrl('compare-stay')">
+                    <a (click)="clickUrl('compare-stay')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/stay.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_red_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.hotel.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.hotel.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.hotel.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.hotel.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -318,10 +345,10 @@
                     <a (click)="goTo('/train')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/irctc.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg m-0">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.train.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.train.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.train.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.train.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -329,10 +356,10 @@
                     <a (click)="redirectUrl('jockey',0,'jockey')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/jockey.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.jockey.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.jockey.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.jockey.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.jockey.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -341,10 +368,10 @@
                     <a (click)="redirectUrl('instavouchers',0,'instavouchers')">
                         <div class="exclusive_brand"><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/m_exc/gyftr.svg" alt="" class="exclusive_brand_img"></div>
                         <div class="dark_warning_bg">
-                        <div class="points_text">
-                            <p class="rp_text"><span>{{serviceSettings.offer_construct.instant_voucher.reward}}X</span> RP</p>
-                            <p class="cb_text"><span>{{serviceSettings.offer_construct.instant_voucher.cashback}}%</span> CB</p>
-                        </div>
+                            <div class="points_text">
+                                <p class="rp_text"><span>{{serviceSettings.offer_construct.instant_voucher.reward}}X</span> RP</p>
+                                <p class="cb_text"><span>{{serviceSettings.offer_construct.instant_voucher.cashback}}%</span> CB</p>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -367,7 +394,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div>
 
         </div>
@@ -387,8 +414,8 @@
                         <p class="main_text">Flights</p>
                     </div>
                     <p class="sub_text mb-1"><span>Powered by </span> </p>
-                    <p class="icns" > 
-                        <span *ngFor="let flights of poweredByPartners.flights" ><img *ngIf="flights.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{flights.img}}" alt="{{flights.name}}"></span>
+                    <p class="icns">
+                        <span *ngFor="let flights of poweredByPartners.flights"><img *ngIf="flights.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{flights.img}}" alt="{{flights.name}}"></span>
                     </p>
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.flight.cashback}}% cashback and {{serviceSettings.offer_construct.flight.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 2}"> <app-travel-search searchDisplayForm="flight"  webView="1"   showType="1"  popular="0" tab="0"  ></app-travel-search></span>
@@ -398,11 +425,11 @@
                         <p class="main_text">Stays</p>
                     </div>
                     <p class="sub_text mb-1"><span>Powered by</span> </p>
-                    <p class="icns" > 
+                    <p class="icns">
                         <span *ngFor="let hotels of poweredByPartners.hotels"><img *ngIf="hotels.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{hotels.img}}" alt="{{hotels.name}}"></span>
                     </p>
                     <p class="icns">
-                       
+
 
                         <!-- <span *ngIf="serviceSettings.partners_status.Makemytrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/mmt.svg" alt="MMT"></span>
                         <span *ngIf="serviceSettings.partners_status.Cleartrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="cleartrip"></span>
@@ -416,7 +443,7 @@
                         <p class="main_text">Bus</p>
                     </div>
                     <p class="sub_text mb-1"><span>Powered by</span> </p>
-                    <p class="icns" > 
+                    <p class="icns">
                         <span *ngFor="let bus of poweredByPartners.bus"><img *ngIf="bus.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{bus.img}}" alt="{{bus.name}}"></span>
                     </p>
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.bus.cashback}}% cashback and {{serviceSettings.offer_construct.bus.reward}}X reward points</p>
@@ -428,7 +455,7 @@
                         <p class="main_text">Train</p>
                     </div>
                     <p class="sub_text mb-1"><span>Powered by</span> </p>
-                    <p class="icns" > 
+                    <p class="icns">
                         <span *ngFor="let train of poweredByPartners.train"><img *ngIf="train.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{train.img}}" alt="{{train.name}}"></span>
                     </p>
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.train.cashback}}% cashback and {{serviceSettings.offer_construct.train.reward}}X reward points</p>
@@ -501,7 +528,7 @@
 
     <div class=" container_ftab c-space-2" *ngIf="topDeals && topDeals.length > 0">
         <div class="mt-4">
-            <h3 class="d-inline">Offer and Deals 
+            <h3 class="d-inline">Offer and Deals
                 <span class="float-end float-end mt-md-3"><a (click)="redirectDisUrl('deals')" class="view_all_link">View All Offers</a></span>
             </h3>
             <span class="d-block d-sm-inline mt-2 mt-sm-0 deals_offers_sec">
@@ -515,8 +542,8 @@
                     </mat-form-field>
                 </span>
 
-                <!-- Sub Catogery Dropdown-->
-                <span class="ps-3">
+            <!-- Sub Catogery Dropdown-->
+            <span class="ps-3">
 
                     <mat-form-field class="" *ngIf="topDealSubCategory.length>0">
                         <mat-select  (selectionChange) ="selectDealSubCategory($event)" class="categorie_select" [(value)]="modeselectDealSubCat" >
@@ -549,7 +576,8 @@
                 <div class="img_sec">
                   <img src="{{cdnDealUrl+hit.image}}" alt="" class="img-fluid radius_8"   (error)="onImgErrorDeals($event)"  > 
                 </div>
-                <hr class="visi-hide" />
+                <!-- <hr class="visi-hide" /> -->
+                <div class="card_foryou_long">
                 <div>
                   <h1 class="offerCard-title">{{hit.name}}</h1>
                   <p class="offerCard-desc">{{hit.short_description}}</p>
@@ -561,6 +589,7 @@
                 <div>
                   <button class="btn view_btn"  (click)="redirectDisUrl('offer_details/'+hit.slug_url)">View details</button>
                 </div>
+            </div>
               </div>
             </div>
         </ng-template>  
@@ -585,7 +614,7 @@
 
     <div class=" container_ftab c-space-2" *ngIf="foryouPartners.length > 0 ">
         <div class="">
-            <h3 class="d-inline">Explore Partners</h3> <span class="float-end mt-md-3"><a class="view_all_link" (click)="goToNew('/partners')">View All</a></span> 
+            <h3 class="d-inline">Explore Partners</h3> <span class="float-end mt-md-3"><a class="view_all_link" (click)="goToNew('/partners')">View All</a></span>
             <!-- <h3 class="d-inline">{{foryouPartners.length}}+ Partners</h3> <span class="pl-3"><a >View All</a></span> -->
         </div>
         <div>
@@ -606,7 +635,7 @@
 
     <!-- Trending Items section  -->
     <div class=" pt-3 pt-sm-0 container_ftab c-space-2" *ngIf="showShoppingItems && amazonCategories && DOMAIN_SETTINGS.AMAZON_PANTRY==1">
-        <div class="d-none d-sm-block web_code" >
+        <div class="d-none d-sm-block web_code">
             <h3 class="d-inline">Trending items</h3>
             <span class="">
                 <mat-form-field class="ps-3" *ngIf="showShoppingItems && amazonCategories['category_filter']">
@@ -617,7 +646,7 @@
                 </mat-form-field>
             </span>
         </div>
-        <div class="d-block d-sm-none mlite_code" >
+        <div class="d-block d-sm-none mlite_code">
             <div class="trendItems_mlite">
                 <h3 class="">Trending items</h3>
                 <span class="">
@@ -679,7 +708,7 @@
     <p class="points_note">Who said good things take time?</p>
     <div>
         <div class="partners_container_emi">
-            <a href="javascript:;" (click)="clickUrl('compare-fly')" target="_blank"  *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+            <a href="javascript:;" (click)="clickUrl('compare-fly')" target="_blank" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_flight.png" alt="Flights" class="">
                     <div class="emi_text">
@@ -688,7 +717,7 @@
                     </div>
                 </div>
             </a>
-            <a href="javascript:;" (click)="clickUrl('compare-stay')" target="_blank"  *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+            <a href="javascript:;" (click)="clickUrl('compare-stay')" target="_blank" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_stays.png" alt="Holiday packages" class="">
                     <div class="emi_text">
@@ -697,7 +726,7 @@
                     </div>
                 </div>
             </a>
-            <a (click)="goTo('bus')"  *ngIf="DOMAIN_SETTINGS.BUS==1">
+            <a (click)="goTo('bus')" *ngIf="DOMAIN_SETTINGS.BUS==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_bus.png" alt="Buses" class="">
                     <div class="emi_text">
@@ -707,7 +736,7 @@
                 </div>
             </a>
 
-            <a (click)="redirectUrl('amazon',0,'amazon')"  *ngIf="DOMAIN_SETTINGS.AMAZON==1">
+            <a (click)="redirectUrl('amazon',0,'amazon')" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_amazon.png" alt="Amazon" class="">
                     <div class="emi_text">
@@ -716,7 +745,7 @@
                     </div>
                 </div>
             </a>
-            <a (click)="redirectUrl('flipkart',0,'flipkart')"  *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
+            <a (click)="redirectUrl('flipkart',0,'flipkart')" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_flipkart.png" alt="Flipkart" class="">
                     <div class="emi_text">
@@ -753,6 +782,115 @@
 </div>
 <!-- </div> -->
 
+
+<!-- Unlock Crad Popup Capture Details -->
+  
+  <!-- Modal Enter Details -->
+  <div class="modal fade unlockCardPopup" id="unlockCardPopup" tabindex="-1" aria-labelledby="unlockCardPopupLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="unlockCardPopupLabel">Enter Card Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form [formGroup]="angForm" novalidate (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                      <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number" formControlName="mobile_no" (keypress)="onlyNumberKey($event,10)">
+                      <div *ngIf="angForm.controls['mobile_no'].invalid && (angForm.controls['mobile_no'].dirty || angForm.controls['mobile_no'].touched)" class="cardError">
+                          <div *ngIf="angForm.controls['mobile_no'].errors.required" max-length="10">
+                            Mobile Number is required
+                          </div>
+                          <div *ngIf="angForm.controls['mobile_no'].hasError('pattern')">
+                            Mobile Number must be numeric
+                          </div>
+                          <div *ngIf="angForm.controls['mobile_no'].hasError('minlength')">
+                            Mobile Number must be of 10 digit
+                          </div>
+                          <div *ngIf="angForm.controls['mobile_no'].hasError('maxlength')">
+                            Mobile Number must be of 10 digit
+                          </div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card" formControlName="last_4_digit" (keypress)="onlyNumberKey($event,4)">
+                      <div *ngIf="angForm.controls['last_4_digit'].invalid && (angForm.controls['last_4_digit'].dirty || angForm.controls['last_4_digit'].touched)" class="cardError">
+                          <div *ngIf="angForm.controls['last_4_digit'].errors.required">
+                            Last 4 digit of the card is required
+                          </div>
+                          <div *ngIf="angForm.controls['last_4_digit'].hasError('pattern')">
+                             Last 4 digit of the card must be numeric
+                          </div>
+                          <div *ngIf="angForm.controls['last_4_digit'].hasError('minlength')">
+                            Last 4 digit of the card must be of 4 digit
+                          </div>
+                          <div *ngIf="angForm.controls['last_4_digit'].hasError('maxlength')">
+                            Last 4 digit of the card must be of 4 digit
+                          </div>
+                      </div>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask" (keypress)="onlyNumberKey($event,18)">
+                        <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
+                        <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
+                            <div *ngIf="angForm.controls['dob'].errors.required">
+                              Date of birth is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardError" [hidden]="IsCardError">
+                        {{CardErrorMsg}}
+                    </div>
+                      <div class="modal-footer pt-0 border-0">
+                        <button type="button" class="btn cancel_btn" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary verify_btn">Verify</button>
+                      </div>
+                      <!-- <p>Form value: {{ angForm.value | json }}</p>
+                      <p>Form status: {{ angForm.status | json }}</p> -->
+                  </form>
+                 
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Verify OTP Details -->
+  <div class="modal fade unlockCardPopup" id="unlockOtpPopup" tabindex="-1" aria-labelledby="unlockOtpPopupLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="border-0 modal-header pb-0 ps-0 ps-sm-3">
+          <h5 class="modal-title" id="unlockOtpPopupLabel">Verify with OTP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-0">
+            <p class="otp_text">OTP sent to your mobile number</p>
+            <div class="pt-20">
+                <form>
+                    <div class="mb-3 position-relative">
+                      <input type="text" class="form-control input_control" id="numOtp" placeholder="Enter OTP">
+                      <a href="" class="resend_otp_link">Resend OTP</a>
+                    </div>
+                  </form>
+            </div>
+            <div class="row mt-30">
+                <div class="col-6">
+                    <p class="resend_text">Resend OTP in <span>00:09</span></p>
+                </div>
+                <div class="col-6 text-right">
+                   <div><button class="btn btn-primary w-100">Verify</button></div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer pt-0 border-0">
+          <button type="button" class="btn cancel_btn" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary verify_btn">Verify</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
 
 
 <app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"

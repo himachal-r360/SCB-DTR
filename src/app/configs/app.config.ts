@@ -55,6 +55,7 @@ IRCTC_List_Quota:{
  'SS': 'LOWER BERTH/SR.CITIZEN',
  'TQ': 'TATKAL'
  },
+
   
  // 'PT': 'PREMIUM TATKAL'
  IRCTC_Berth:{
