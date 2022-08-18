@@ -191,7 +191,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     let date = datePicker.target.value
     date = moment(date).format('YYYY-MM-DD')
     item.depart = date;
-    this.multicityForm.get('depart'+ (item.multiCityArrCount - 1)).setValue(item.depart);
+    this.multicityForm.get('depart'+ (item.multiCityArrCount)).setValue(item.depart);
     /*
      let date = datePicker.target.value
      if(date && this.navItemActive !== "Round Trip"){
@@ -881,15 +881,17 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   // Auto fill value in multicity
   autoFillMutlicityVal() {
+    debugger;
     this.multiCityArrayM[1].fromCity = this.multiCityArrayM[0].toCity;
     this.multiCityArrayM[1].leavingFrom = this.multiCityArrayM[0].goingTo;
     this.multiCityArrayM[1].fromAirportName = this.multiCityArrayM[0].toAirportName;
     this.multiCityArrayM[1].fromContry = this.multiCityArrayM[0].toContry;
-    this.multicityForm.value.fromCity1 = this.multicityForm.value.toCity0;
-    this.multicityForm.value.leavingFrom1 = this.multicityForm.value.goingTo0;
-    this.multicityForm.value.fromAirportName1 = this.multicityForm.value.toAirportName0;
-    this.multicityForm.value.fromContry1 = this.multicityForm.value.toContry0;
-    if (this.multiCityArrayM[2] != null && this.multiCityArrayM[2] != "" && this.multiCityArrayM[2] != undefined) {
+    this.multicityForm.value.fromCity1 = this.multiCityArrayM[0].toCity;
+    this.multicityForm.value.leavingFrom1 = this.multiCityArrayM[0].goingTo;
+    this.multicityForm.value.fromAirportName1 = this.multiCityArrayM[0].toAirportName;
+    this.multicityForm.value.fromContry1 = this.multiCityArrayM[0].toContry;
+    
+    if (this.multiCityArrayM.length > 2) {
       this.multiCityArrayM[2].fromCity = this.multiCityArrayM[1].toCity;
       this.multiCityArrayM[2].leavingFrom = this.multiCityArrayM[1].goingTo;
       this.multiCityArrayM[2].fromAirportName = this.multiCityArrayM[1].toAirportName;
@@ -899,7 +901,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.multicityForm.value.fromAirportName2 = this.multicityForm.value.toAirportName1;
       this.multicityForm.value.fromContry2 = this.multicityForm.value.toContry1;
     }
-    if (this.multiCityArrayM[3] != null && this.multiCityArrayM[3] != "" && this.multiCityArrayM[3] != undefined) {
+    if (this.multiCityArrayM.length > 3) {
       this.multiCityArrayM[3].fromCity = this.multiCityArrayM[2].toCity;
       this.multiCityArrayM[3].leavingFrom = this.multiCityArrayM[2].goingTo;
       this.multiCityArrayM[3].fromAirportName = this.multiCityArrayM[2].toAirportName;
@@ -910,7 +912,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.multicityForm.fromContry3 = this.multicityForm.toContry2;
 
     }
-    if (this.multiCityArrayM[4] != null && this.multiCityArrayM[4] != "" && this.multiCityArrayM[4] != undefined) {
+    if (this.multiCityArrayM.length > 4) {
       this.multiCityArrayM[4].fromCity = this.multiCityArrayM[3].toCity;
       this.multiCityArrayM[4].leavingFrom = this.multiCityArrayM[3].goingTo;
       this.multiCityArrayM[4].fromAirportName = this.multiCityArrayM[3].toAirportName;
@@ -920,16 +922,16 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.multicityForm.fromAirportName4 = this.multicityForm.toAirportName3;
       this.multicityForm.fromContry4 = this.multicityForm.toContry3;
     }
-    if (this.multiCityArrayM[5] != null && this.multiCityArrayM[5] != "" && this.multiCityArrayM[5] != undefined) {
-      this.multiCityArrayM[5].fromCity = this.multiCityArrayM[4].toCity;
-      this.multiCityArrayM[5].leavingFrom = this.multiCityArrayM[4].goingTo;
-      this.multiCityArrayM[5].fromAirportName = this.multiCityArrayM[4].toAirportName;
-      this.multiCityArrayM[5].fromContry = this.multiCityArrayM[4].toContry;
-      this.multicityForm.fromCity5 = this.multicityForm.toCity4;
-      this.multicityForm.leavingFrom5 = this.multicityForm.goingTo4;
-      this.multicityForm.fromAirportName5 = this.multicityForm.toAirportName4;
-      this.multicityForm.fromContry5 = this.multicityForm.toContry4;
-    }
+    // if (this.multiCityArrayM[4] != null && this.multiCityArrayM[4] != "" && this.multiCityArrayM[4] != undefined) {
+    //   this.multiCityArrayM[5].fromCity = this.multiCityArrayM[4].toCity;
+    //   this.multiCityArrayM[5].leavingFrom = this.multiCityArrayM[4].goingTo;
+    //   this.multiCityArrayM[5].fromAirportName = this.multiCityArrayM[4].toAirportName;
+    //   this.multiCityArrayM[5].fromContry = this.multiCityArrayM[4].toContry;
+    //   this.multicityForm.fromCity5 = this.multicityForm.toCity4;
+    //   this.multicityForm.leavingFrom5 = this.multicityForm.goingTo4;
+    //   this.multicityForm.fromAirportName5 = this.multicityForm.toAirportName4;
+    //   this.multicityForm.fromContry5 = this.multicityForm.toContry4;
+    // }
   }
 
 }
