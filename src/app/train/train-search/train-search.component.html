@@ -46,13 +46,13 @@
                                                                         <label for="">From</label>
                                                                         <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
                                                                         <input type="hidden"  formControlName="fromTravelCode">
-                                                                        <input type="hidden"  formControlName="fromState">
+                                                                        <!--<input type="hidden"  formControlName="fromState">-->
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
                                                                 <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');">
                                                                 <input type="hidden"  formControlName="toTravelCode">
-                                                                <input type="hidden"  formControlName="toState">
+                                                                <!--<input type="hidden"  formControlName="toState">-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -67,7 +67,7 @@
                                                         <input type="hidden" name="searchFrom" formControlName="searchFrom">
 
                                                         <input type="hidden"  formControlName="fromTravelCode">
-                                                        <input type="hidden"  formControlName="fromState">
+                                                        <!--<input type="hidden"  formControlName="fromState">-->
 
 
 
@@ -81,7 +81,7 @@
                                         <a  class="flight-from-ul-li-a"   (click)="onFromClick(fromOptions,'web')">
                                         
                                               <div class="hotel-from-name">
-                                        <h6><i class="fa fa-train"></i> &nbsp;{{fromOptions._source.name}}</h6>
+                                        <h6><i class="fa fa-train"></i> &nbsp;{{fromOptions._source.station_name}}</h6>
                                         <p></p>
                                         </div>
                                         <div class="flight-from-shortname">
@@ -134,14 +134,14 @@
                                                                         <label for="">From</label>
                                                                         <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
                                                                         <input type="hidden"  formControlName="fromTravelCode">
-                                                                        <input type="hidden"  formControlName="fromState">
+                                                                       <!-- <input type="hidden"  formControlName="fromState">-->
 
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
                                                                 <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
                                                                 <input type="hidden"  formControlName="toTravelCode">
-                                                                <input type="hidden"  formControlName="toState">
+                                                                <!--<input type="hidden"  formControlName="toState">-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -154,7 +154,7 @@
                                                                 id="busToMob">
                                                             <input type="hidden"  formControlName="searchTo">
                                                                    <input type="hidden"  formControlName="toTravelCode">
-                                                                            <input type="hidden"  formControlName="toState">
+                                                                            <!--<input type="hidden"  formControlName="toState">-->
                                                         </div>
                                                         <ul class="flight-from-data-ul" >
                                                         <li class="flight-from-ul-li">
@@ -163,7 +163,7 @@
                                                              <li class="flight-from-ul-li"  *ngFor="let toOptions of travelToOptions;let ind=index;">
                                         <a  class="flight-from-ul-li-a"   (click)="onToClick(toOptions,'web')">
                                           <div class="hotel-from-name">
-                                        <h6><i class="fa fa-train"></i> &nbsp;{{toOptions._source.name}}</h6>
+                                        <h6><i class="fa fa-train"></i> &nbsp;{{toOptions._source.station_name}}</h6>
                                         <p></p>
                                         </div>
                                         <div class="flight-from-shortname">
