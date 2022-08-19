@@ -92,7 +92,7 @@
         </div>
         <div class="col-md-3 text-right">
             <a class="collapse_exp_btn" data-bs-toggle="collapse" href="#collapseExample_{{busrow}}" role="button" aria-expanded="false" aria-controls="collapseExample_{{busrow}}">
-                Bus Details
+                <span class="mx-3">Bus Details</span>
               </a>
         </div>
     </div>
@@ -100,7 +100,7 @@
     <div class="collapse details_collpase" id="collapseExample_{{busrow}}">
         <div class="">
           
-            <ul class="more-details w-33" id="mat-accordion-tab-details">
+            <ul class="more-details w-33 bus_collapse_ul" id="mat-accordion-tab-details">
 
                 <li (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
                 <li (click)="onCancellation(mobile=false)" [ngClass]="{'active': showCancellation}">Cancellation policy</li>
@@ -114,11 +114,11 @@
                 <ul class="amenities-container">
                     <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
                     <li *ngFor="let amen of busamenities">
-                        <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}</li>
+                        <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg" class="ps-2"></i>{{amen}}</li>
                 </ul>
             
             </div>
-            <div class="row amenities-list">
+            <div class="row amenities-list" *ngIf="showDropping">
                 <ul class="amenities-container">
             
                     <table class="table table-borderless">
@@ -135,7 +135,10 @@
                                     <tr *ngFor="let boardingpoin of boardingtimes">
                                         <span><i class="material-icons time-circle">panorama_fish_eye</i></span>
                                         <span class="bor-time">{{boardingpoin.ctime }} </span>
-                                        <span class="bor-place"><b>{{boardingpoin.location}}</b> <br>{{boardingpoin.address}}</span>
+                                        <span class="bor-place"><b>{{boardingpoin.location}}</b>
+                                            <br>
+                                            <span class="bor-text">{{boardingpoin.address}}</span>
+                                        </span>
                                     </tr>
                                 </table>
                             </td>
@@ -144,7 +147,8 @@
                                     <tr *ngFor="let droppingtim of droppingtimes">
                                         <span><i class="material-icons time-circle">panorama_fish_eye</i>
                                                 </span><span class="bor-time">{{droppingtim.ctime }} </span>
-                                        <span class="bor-place"><b>{{droppingtim.location}}</b> <br>{{droppingtim.address}}</span>
+                                        <span class="bor-place"><b>{{droppingtim.location}}</b> <br>
+                                            <span class="bor-text">{{droppingtim.address}}</span></span>
                                     </tr>
             
                                     <tr *ngIf="droppingtimes==0">
@@ -163,19 +167,19 @@
             </div>
             <div class="row amenities-list" *ngIf="showCancellation">
                 <ul class="amenities-container">
-                    <table class="table table-borderless">
+                    <table class="table table-borderless bus_collapse_tbl">
                         <thead>
                             <tr class="can-header">
-                                <th scope="col">Time of Cancellation</th>
-                                <th scope="col" class="text-center">Deduction %</th>
-                                <th scope="col" class="text-center">Cancellation Charges</th>
+                                <th scope="col" width="50%">Time of Cancellation</th>
+                                <th scope="col" class="text-center" width="25%">Deduction %</th>
+                                <th scope="col" width="25%">Cancellation Charges</th>
                             </tr>
                         </thead>
                         <tbody class="can-body">
                             <tr *ngFor="let cancel of retvalues">
                                 <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
                                 <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                                <td class="text-center"> Rs. {{cancel.cancharges }}</td>
+                                <td class="text-left"> Rs. {{cancel.cancharges }}</td>
                             </tr>
                             <tr> </tr>
                         </tbody>
@@ -297,37 +301,59 @@
             <app-loader></app-loader>
         </div>
         <ng-template #listng>
-            <div class="col-md-8 float-left layout-w" *ngIf="bus.rtc==false || rtcseatcall == true; else emptylayout">
+            <div class="col-md-12 float-left layout-w" *ngIf="bus.rtc==false || rtcseatcall == true; else emptylayout">
                 <!-- <ng-container *ngIf="show_dialog"> -->
                 <div id="tab-seats-new">
-                    <div class="position-absolute w-100">
-                        <div class="w-50 text-medium">{{bus.availableSeats}} Seats Available</div>
-                        <div class="text-small">Click on seat to select/ deselect</div>
+                    <div class="bus_seat_details">
+                    <div class="w-100">
+                        <div class="black_text_medium">{{bus.availableSeats}} Seats Available</div>
+                        <div class="gray_text_small">Click on seat to select/ deselect</div>
                     </div>
+                    <!-- static filter button -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="bus_details_filter">
+                                <li><button class="bus_details_filter_btn active">All ({{bus.availableSeats | number }})</button></li>
+                                <span class="bus_details_filter" *ngIf="pricesplit.length > 1">
+                                <li *ngFor="let price of pricesplit"><button class="bus_details_filter_btn">₹{{price.actfare | number }} ({{price.seattotal}})</button></li>
+                                </span>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end of static filter button -->
                     <div class="row pt-10">
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_empty.svg">
-                            <div class="xx-small-text">Available
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Available
                             </div>
                         </div>
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_selected.svg">
-                            <div class="xx-small-text"> Selected</div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Sleeper
+                            </div>
                         </div>
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_ladies_empty.svg">
-                            <div class="xx-small-text"> Reserved for Ladies</div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Booked By Others
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt"> Selected By You</div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt"> Available only for 
+                                female passenger</div>
                         </div>
 
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_ladies.svg">
-                            <div class="xx-small-text">Reserved by Ladies
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Available for male 
+                                passenger
                             </div>
                         </div>
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/bookedSeat.svg">
-                            <div class="xx-small-text">Occupied Seats</div>
-                        </div>
+                    </div>
                     </div>
                     <mat-tab-group mat-align-tabs="end" animationDuration="0ms">
                         <mat-tab label="All ({{bus.availableSeats | number }})">
@@ -396,41 +422,52 @@
                                 <span  >
                                     <mat-tab  *ngFor="let price of pricesplit" label=" Rs.{{price.actfare | number }} ({{price.seattotal}})">
                                           <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
+
+                                          <div class="row">
+                                            <div class="col-md-4">
+
+                                                <div class="lower-bus">
+                                                    <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
+                                                    <table class="cabin fuselage" align="left">
+                                                        <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
+                                                            <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td *ngFor="let seat of LD">
+                                                                            <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
+                                                                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
+                                                    <span *ngIf="price.actfare == seat.baseFare; else blurseat">
+                                                    <label  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)"   >
+                                
+                                                    <img  src="{{cdnUrl}}images/icons/bus/{{seat.newseattype}}.svg" class="{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"  >
+                                                    <ng-template #other_content><img class="{{seat.seattype}}" src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}.svg" ></ng-template>
+                                                    </label>
+                                                    </span>
+                                                                            <ng-template #blurseat>
+                                                                                <span>
+                                                    <label   >
+                                                    <img class="{{seat.seattype}} "  src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}_x.svg" > 
+                                                    </label>
+                                                    </span>
+                                                                            </ng-template>
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4"></div>
+                                          </div>
                                 <span  *ngIf="totalUpperDeck">
                                                 <div class="label-small">Lower</div>
                                 </span>
-                <div class="lower-bus">
-                    <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
-                    <table class="cabin fuselage" align="left">
-                        <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
-                            <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                <table>
-                                    <tr>
-                                        <td *ngFor="let seat of LD">
-                                            <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
-                                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
-					<span *ngIf="price.actfare == seat.baseFare; else blurseat">
-					<label  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)"   >
 
-					<img  src="{{cdnUrl}}images/icons/bus/{{seat.newseattype}}.svg" class="{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"  >
-					<ng-template #other_content><img class="{{seat.seattype}}" src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}.svg" ></ng-template>
-					</label>
-					</span>
-                                            <ng-template #blurseat>
-                                                <span>
-					<label   >
-					<img class="{{seat.seattype}} "  src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}_x.svg" > 
-					</label>
-					</span>
-                                            </ng-template>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
                 <div class="clearfix"></div>
                 <span *ngIf="totalUpperDeck">
                                                     <div class="label-small">Upper</div>
