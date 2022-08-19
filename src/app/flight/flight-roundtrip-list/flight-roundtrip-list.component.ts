@@ -346,13 +346,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
-      this.flightList.forEach((z:any)=>{
-        z.isTimeLess = this.IsTimeDiffLess(z.flights)
-      });
       this.ReturnflightList = this.ascPriceSummaryFlighs(res.response.returnFlights);
       this.ReturnflightList.forEach((z:any)=>{
-        z.disabled = false,
-        z.isTimeLess = this.IsTimeDiffLess(z.flights)
+        z.disabled = false
       });
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
