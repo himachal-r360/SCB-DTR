@@ -1310,4 +1310,8 @@ bookingSummary() {
       }
   }
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
 }
