@@ -61,7 +61,7 @@ let urlToSplit =this.location.path();
     if(LOCALJSON=='true')
     return this.http.get('assets/data/busListResponse.json?version='+new Date().getTime());
     else
-    return this.http.post(this.endpoint+'BusSearch', param, config).pipe(map((response: any) => response));
+    return this.http.post(this.endpoint+'BusSearchNew', param, config).pipe(map((response: any) => response));
   }
 
 
