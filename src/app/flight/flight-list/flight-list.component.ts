@@ -1000,9 +1000,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.DocKey = res.response.docKey;
       // this.flightList = res.response.onwardFlights;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
-      this.flightList.forEach((z:any)=>{
-        z.isTimeLess = this.IsTimeDiffLess(z.flights)
-      });
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
