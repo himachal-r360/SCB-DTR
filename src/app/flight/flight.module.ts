@@ -37,7 +37,7 @@ const routes: Routes = [
   },
   {
 
-    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, },
+    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, }
 
   },
   {
