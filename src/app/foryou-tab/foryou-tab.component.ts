@@ -44,6 +44,9 @@ public modeselectTrending= 'All';
   customercards: any; primaryCust: any;
   selectedCardDetails: any;
   customeravailablepoints: any;
+  card_no: any;
+  current_available_points: any;
+  last_stmt_points: any;
   errorMsg0: any = "";
   XSRFTOKEN: string;
   response1: any = [];
@@ -933,7 +936,7 @@ public modeselectTrending= 'All';
          return false; 
        }
        this.customerInfo = this.sg['customerInfo'];
-       console.log(this.customerInfo);
+       this.card_no=this.angForm.controls['last_4_digit'].value;
        this.IsCardError=true;
        let URLparams = {
           "mobile": this.angForm.controls['mobile_no'].value,
@@ -962,6 +965,8 @@ public modeselectTrending= 'All';
             this.angForm.reset();
             this.spinnerService.show();  
             this.customeravailablepoints=res.points_available;
+            this.current_available_points=res.current_available_points;
+            this.last_stmt_points=res.last_stmt_points;
           }else{
                this.IsCardError=false;
                this.CardErrorMsg=res.message;
