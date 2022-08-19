@@ -300,6 +300,11 @@ export class TrainsTravellerComponent implements OnInit {
      enablesavedTraveller:number=0;
      customerInfo:any;
        isMobile:boolean= true;
+       
+         isCollapseBasefare: boolean = false;
+  isCollapseDiscount: boolean = false;
+  isCollapse: boolean = false;
+       
     constructor(private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
         this.serviceSettings=this.appConfigService.getConfig();
         this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
@@ -512,8 +517,7 @@ export class TrainsTravellerComponent implements OnInit {
         jobGroup.addControl('destAddressState',new FormControl(''));
         jobGroup.addControl('destAddressCity',new FormControl(''));
         jobGroup.addControl('destAddressPost',new FormControl(''));
-        jobGroup.addControl('boardingStation', new FormControl('', [Validators.required]));
-        this.passengerForm = jobGroup;
+      
         
        
         jobGroup.addControl('saveTraveller',new FormControl(''));
@@ -539,7 +543,8 @@ export class TrainsTravellerComponent implements OnInit {
         
 
         jobGroup.addControl('saveGST', new FormControl('1'));
-   
+        this.passengerForm = jobGroup;
+     
         this.seniorCitizenStatus = false;
         this.boardingStations();
         this.getTrains();
@@ -552,6 +557,20 @@ export class TrainsTravellerComponent implements OnInit {
        }); 
         
     }
+    
+      isCollapseShow(identifyCollpase) {
+
+    if (identifyCollpase == 'BaseFare') {
+      this.isCollapseBasefare = !this.isCollapseBasefare;
+   
+    } else if (identifyCollpase == 'discount') {
+      this.isCollapseDiscount = !this.isCollapseDiscount;
+    } else {
+      this.isCollapse = !this.isCollapse;
+    }
+
+  }
+    
     expandItems() {
         if(this.isExpanded == false){
           this.isExpanded = true;

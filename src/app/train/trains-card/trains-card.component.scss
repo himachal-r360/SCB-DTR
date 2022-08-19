@@ -42,7 +42,6 @@ $break-md-tab: 768px;
     box-shadow: 0.5px 0.9px 4px 0 rgba(25, 25, 25, 0.08);
     border: solid 1px #e6e6e6;
     background-color: $color-white;
-    padding: 14px 18px 14px 18px;
     margin-top: 10px;
     float: left;
     width: 100%;
@@ -78,8 +77,8 @@ $break-md-tab: 768px;
         }
     }
     .available-status span.active {
-        color: #080808;
-        font-weight: bold;
+        color: #1D86FF;
+        font-weight: 600;
     }
     .label-black-small {
         color: $color-dark-gray;
@@ -95,50 +94,79 @@ $break-md-tab: 768px;
         text-align: left;
         color: $color-dark-gray-01;
     }
-    .durations {
-        .label-pos {
-            position: absolute;
-            background-color: $color-white;
-            text-align: center;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            width: 60px;
-            top: 5px;
-            align-items: center;
-        }
-        .range {
-            border-top: 1px solid #CBCBCB;
-            position: relative;
-            top: 10px;
-            &::after,
-            &::before {
-                border-radius: 50%;
-                background: #CBCBCB;
-                content: "";
-                width: 10px;
-                height: 10px;
-                display: block;
-                position: absolute;
-                top: -5px;
-            }
-            &::before {
-                right: -1px;
-            }
-            &::after {
-                left: -1px;
-            }
-        }
-    }
+    
     .trainTimeInfo{
         display: flex;
-        justify-content: space-evenly;
+        justify-content: start;
+        align-items: center;
+        gap: 30px;
         div{
-            // margin: 0px 10px;
-            flex: 0 0 50px;
-            text-align: center;
+            /* margin: 0px 10px;
+            flex: 0 0 50px; */
+            text-align: left;
         }
+        .time, .day{
+            font-size: 16px;
+            font-family: 'opensans-bold';
+            color: #000000;
+        }
+        /* .day{
+            font-size: 12px;
+            font-family: 'opensans-regular';
+            color: #888888;
+        } */
+        .place{
+            font-size: 12px;
+            font-family: 'opensans-regular';
+            color: #888888;
+        }
+        .duration_train{
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            .dur_time{
+                color: #888888;
+                font-size: 12px;
+                font-weight: 600;
+                text-align: center;
+            }
+            .range{
+                border-top: 1px solid #E6E6E6;
+                position: relative;
+                margin: 5px 0;
+                width: 200px;
+                &::before{
+                    border-radius: 50%;
+                    background: #888888;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    display: block;
+                    position: absolute;
+                    top: -5px;
+                    left: 0;
+                }
+                &::after{
+                    border-radius: 50%;
+                    background: #888888;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    display: block;
+                    position: absolute;
+                    top: -5px;
+                    right: 0;
+                }
+            }
+            .route{
+                color: #1D86FF;
+                font-size: 11px;
+                font-weight: 600;
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+
         .timeShow{
             flex: 0 0 85px;
             text-align: center;
@@ -243,6 +271,10 @@ $break-md-tab: 768px;
             }
         }
     }
+
+    .web_code{
+        padding: 25px 15px;
+    }
 }
 
 
@@ -286,7 +318,14 @@ $break-md-tab: 768px;
     // text-decoration: underline;
     // color: #1d86ff;
     color: #000000;
-    
+    font-size: 20px;
+    font-family: 'opensans-bold'; 
+    text-transform: uppercase;   
+}
+.train_num{
+    color: #000000;
+    font-size: 18px;
+    font-family: 'opensans-medium'; 
 }
 
 .list-row-m {
@@ -1338,4 +1377,24 @@ $break-md-tab: 768px;
         }
     }
 
+}
+
+
+.train_mat_tabGroup{
+    .mat-tab-header{
+        border: none;
+        .mat-tab-label-container{
+            .mat-tab-list{
+                .mat-tab-labels{
+                    .mat-tab-label{
+                        min-width: 50px;
+                        border: 1px solid #eee;
+                    }
+                }
+            }
+        }
+    }
+    .mat-tab-body-wrapper{
+        margin-top: 15px;
+    }
 }

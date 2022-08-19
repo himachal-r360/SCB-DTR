@@ -16,8 +16,9 @@
 
 
 <div class="list-row" *ngIf="showrow && bus.availableSeats > 0" id="bus-{{busId}}">
+    <div class="card_details_row card_brdr_btm">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="float-left label-name">
                 {{bus.travels}}
             </div>
@@ -25,33 +26,45 @@
         </div>
         <div class="col-md-6 p0-cut">
             <div class="row">
-                <div class="float-left col-md-4 w-15-r">
-                    <div class="label-name text-center">{{bus.departureTime | date:'HH:mm'}}</div>
+                <div class="float-left col-md-3 w-15-r">
+                    <div class="label-name">{{bus.departureTime | date:'HH:mm'}}</div>
 
-                    <div class="label-gray text-center hide-m">{{busHelper.getBoarding(bus.boardingTimes,bus.departureTime| date:'HH:mm')}}</div>
-                    <div class="text-center" *ngIf="nextDayFlag">
+                    <div class="label-gray hide-m">{{busHelper.getBoarding(bus.boardingTimes,bus.departureTime| date:'HH:mm')}}</div>
+                    <div class="text-left" *ngIf="nextDayFlag">
                         <span class="next_flag">Next Day</span>
                     </div>
 
                 </div>
-                <div class="col-md-4 text-center p0 durations position-relative">
+                <div class="col-md-3 text-center px-0 durations position-relative">
                     <div class="range"></div>
                     <div class="label-gray label-pos">{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</div>
                 </div>
-                <div class="float-left col-md-4 w-15-r">
-                    <div class="label-name text-center">{{bus.arrivalTime | date:'HH:mm'}}</div>
-                    <div class="label-gray text-center hide-m">{{busHelper.getDropping(bus.droppingTimes,bus.arrivalTime| date:'HH:mm')}}</div>
+                <div class="float-left col-md-3 w-15-r">
+                    <div class="label-name">{{bus.arrivalTime | date:'HH:mm'}}</div>
+                    <div class="label-gray hide-m">{{busHelper.getDropping(bus.droppingTimes,bus.arrivalTime| date:'HH:mm')}}</div>
+                </div>
+                <div class="col-md-3 float-right w-33">
+                    <div class="float-left">
+                        <div class="label-gray">From</div>
+                        <div class="label-name"> Rs. {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-2 float-right w-33">
-            <div class="float-left">
-                <div class="label-gray text-center">From</div>
-                <div class="label-name text-center"> Rs. {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
-            </div>
+
+        <div class="float-left col-md-3 text-center hide-m">
+            <span *ngIf="bus.availableSeats > 0; else soldout">
+                
+                <div><button class="btn-primary w-80 showBtn" *ngIf="!showSeatLayout" (click)="onSeats(bus.id,rowvalue,bus,mobile=false);">Show Seats</button></div>
+                <div><button class="btn-primary w-80 hideBtn" *ngIf="showSeatLayout" (click)="HideSeats(bus.id,rowvalue,bus,mobile=false);">Hide Seats</button></div>
+                <div class="label-black-small text-center pb5">{{bus.availableSeats}} available <ng-container *ngIf="bus.avlWindowSeats > 0"> ({{bus.avlWindowSeats}} Window) </ng-container> </div>
+                </span>
+            <ng-template #soldout><button class="btn-primary w-80 bkred">Sold Out</button></ng-template>
         </div>
     </div>
-    <div class="row pt-28 w-33">
+    </div>
+    <div class="card_details_row max_h_65">
+    <div class="row">
         <div class="float-left col-md-9 amenities">
             <div>
                 <span *ngIf="bus.rating > 0">
@@ -64,7 +77,7 @@
                             <span class="rat-im g"><img src="{{cdnUrl}}images/icons/Reschedulable.svg" ></span>
                             <span class="rat-title">Reschedulable</span>
                         </span> -->
-                    <span class="w-rate-count" *ngIf="bus.total_rating_count > 0">{{bus.total_rating_count | number}} Ratings</span>
+                    <span class="w-rate-count px-2" *ngIf="bus.total_rating_count > 0">{{bus.total_rating_count | number}} Ratings</span>
                     <span class="live-tracking" *ngIf="bus.liveTrackingAvailable"> 
                             <span class="rat-img"><img src="{{cdnUrl}}images/icons/live track.svg" ></span>
                     <span class="rat-title">Live Tracking</span>
@@ -76,27 +89,120 @@
 
                 </div>
             </div>
-
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="collapse_exp_btn" data-bs-toggle="collapse" href="#collapseExample_{{busrow}}" role="button" aria-expanded="false" aria-controls="collapseExample_{{busrow}}">
+                Bus Details
+              </a>
+        </div>
+    </div>
+    </div>
+    <div class="collapse details_collpase" id="collapseExample_{{busrow}}">
+        <div class="">
+          
             <ul class="more-details w-33" id="mat-accordion-tab-details">
 
                 <li (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
                 <li (click)="onCancellation(mobile=false)" [ngClass]="{'active': showCancellation}">Cancellation policy</li>
                 <li (click)="onDropping(bus.boardingTimes,bus.droppingTimes)" [ngClass]="{'active': showDropping}">Boarding & dropping points</li>
-                <li *ngIf="show_earnpoints" ><button class="bus-cashback d-show">{{show_earnpoints_text}}</button></li>
+                <!-- <li *ngIf="show_earnpoints" ><button class="bus-cashback d-show">{{show_earnpoints_text}}</button></li> -->
 
                 <!-- <li *ngIf="!showSeatLayout" (click)="onSeats(bus.id,rowvalue,bus,mobile=true)" [ngClass]="{'active': showSeatLayout}">Seats</li>
                     <li *ngIf="showSeatLayout" (click)="HideSeats(bus.id,rowvalue,bus)" [ngClass]="{'active': showSeatLayout}">Seats</li> -->
             </ul>
+            <div class="row amenities-list" *ngIf="showAmenities">
+                <ul class="amenities-container">
+                    <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
+                    <li *ngFor="let amen of busamenities">
+                        <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}</li>
+                </ul>
+            
+            </div>
+            <div class="row amenities-list">
+                <ul class="amenities-container">
+            
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr class="can-header">
+                                <th scope="col">Boarding Points</th>
+                                <th scope="col">Dropping Points</th>
+                            </tr>
+                        </thead>
+                        <tbody class="can-body">
+                            <!-- <tr> -->
+                            <td style="padding: .75em .75em .75em 0.48em;">
+                                <table>
+                                    <tr *ngFor="let boardingpoin of boardingtimes">
+                                        <span><i class="material-icons time-circle">panorama_fish_eye</i></span>
+                                        <span class="bor-time">{{boardingpoin.ctime }} </span>
+                                        <span class="bor-place"><b>{{boardingpoin.location}}</b> <br>{{boardingpoin.address}}</span>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr *ngFor="let droppingtim of droppingtimes">
+                                        <span><i class="material-icons time-circle">panorama_fish_eye</i>
+                                                </span><span class="bor-time">{{droppingtim.ctime }} </span>
+                                        <span class="bor-place"><b>{{droppingtim.location}}</b> <br>{{droppingtim.address}}</span>
+                                    </tr>
+            
+                                    <tr *ngIf="droppingtimes==0">
+                                        <span><i class="material-icons time-circle">panorama_fish_eye</i>
+                                                </span><span class="bor-time"> </span>
+                                        <span class="bor-place"><b>*</b>Right now we do not have any information about the dropping point. <br>Please contact bus service</span>
+                                    </tr>
+                                </table>
+                            </td>
+                            <!-- </tr> -->
+            
+                        </tbody>
+                    </table>
+                </ul>
+            
+            </div>
+            <div class="row amenities-list" *ngIf="showCancellation">
+                <ul class="amenities-container">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr class="can-header">
+                                <th scope="col">Time of Cancellation</th>
+                                <th scope="col" class="text-center">Deduction %</th>
+                                <th scope="col" class="text-center">Cancellation Charges</th>
+                            </tr>
+                        </thead>
+                        <tbody class="can-body">
+                            <tr *ngFor="let cancel of retvalues">
+                                <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
+                                <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
+                                <td class="text-center"> Rs. {{cancel.cancharges }}</td>
+                            </tr>
+                            <tr> </tr>
+                        </tbody>
+                    </table>
+                    <ul>
+                        <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text"><b>Refund amount shown above is indicative and calculated on ticket price Rs. {{bus.fareDetails[0].baseFare | commaSeparator }}</b></li>
+                        <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation is allowed for this ticket. Please note that primary passenger booking cannot be cancelled.</b></li>
+                        <ng-template #noPartial>
+                            <li class="cancel-text" style="width: 100%;list-style: circle;margin-left: 25px;">
+                                <b>Partial cancellation is not allowed for this ticket.</b>
+                            </li>
+                        </ng-template>
+                        <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text"><b>Ticket cannot be cancelled after scheduled bus departure time from the first boarding point.</b></li>
+                    </ul>
+                    <!-- <li class="text-bold">Time Before Departure</li>
+                        <li>Before 24 hrs</li>
+                        <li>Between 12 - 24 hrs</li>
+                        <li class="text-bold">Refund Percentage</li>
+                        <li> 70%</li>
+                        <li>70%</li>
+                        <li class="text-bold">Refund Amount</li>
+                        <li> Rs. 225</li>
+                        <li> Rs. 225</li> -->
+                </ul>
+            </div>
         </div>
-        <div class="float-left col-md-3 text-center hide-m">
-            <span *ngIf="bus.availableSeats > 0; else soldout">
-                <div class="label-black-small text-center pb5">{{bus.availableSeats}} available <ng-container *ngIf="bus.avlWindowSeats > 0"> ({{bus.avlWindowSeats}} Window) </ng-container> </div>
-                <div><button class="btn-primary w-80 showBtn" *ngIf="!showSeatLayout" (click)="onSeats(bus.id,rowvalue,bus,mobile=false);">SHOW SEATS</button></div>
-                <div><button class="btn-primary w-80 hideBtn" *ngIf="showSeatLayout" (click)="HideSeats(bus.id,rowvalue,bus,mobile=false);">HIDE SEATS</button></div>
-                </span>
-            <ng-template #soldout><button class="btn-primary w-80 bkred">Sold Out</button></ng-template>
-        </div>
-    </div>
+      </div>
 
 </div>
 
@@ -184,97 +290,7 @@
     </div>
     <button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>
 </div>
-<div class="row amenities-list" *ngIf="showAmenities">
-    <ul class="amenities-container">
-        <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
-        <li *ngFor="let amen of busamenities">
-            <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}</li>
-    </ul>
 
-</div>
-<div class="row amenities-list" *ngIf="showDropping">
-    <ul class="amenities-container">
-
-        <table class="table table-borderless">
-            <thead>
-                <tr class="can-header">
-                    <th scope="col">Boarding Points</th>
-                    <th scope="col">Dropping Points</th>
-                </tr>
-            </thead>
-            <tbody class="can-body">
-                <!-- <tr> -->
-                <td style="padding: .75em .75em .75em 0.48em;">
-                    <table>
-                        <tr *ngFor="let boardingpoin of boardingtimes">
-                            <span><i class="material-icons time-circle">panorama_fish_eye</i></span>
-                            <span class="bor-time">{{boardingpoin.ctime }} </span>
-                            <span class="bor-place"><b>{{boardingpoin.location}}</b> <br>{{boardingpoin.address}}</span>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <table>
-                        <tr *ngFor="let droppingtim of droppingtimes">
-                            <span><i class="material-icons time-circle">panorama_fish_eye</i>
-                                    </span><span class="bor-time">{{droppingtim.ctime }} </span>
-                            <span class="bor-place"><b>{{droppingtim.location}}</b> <br>{{droppingtim.address}}</span>
-                        </tr>
-
-                        <tr *ngIf="droppingtimes==0">
-                            <span><i class="material-icons time-circle">panorama_fish_eye</i>
-                                    </span><span class="bor-time"> </span>
-                            <span class="bor-place"><b>*</b>Right now we do not have any information about the dropping point. <br>Please contact bus service</span>
-                        </tr>
-                    </table>
-                </td>
-                <!-- </tr> -->
-
-            </tbody>
-        </table>
-    </ul>
-
-</div>
-<div class="row amenities-list" *ngIf="showCancellation">
-    <ul class="amenities-container">
-        <table class="table table-borderless">
-            <thead>
-                <tr class="can-header">
-                    <th scope="col">Time of Cancellation</th>
-                    <th scope="col" class="text-center">Deduction %</th>
-                    <th scope="col" class="text-center">Cancellation Charges</th>
-                </tr>
-            </thead>
-            <tbody class="can-body">
-                <tr *ngFor="let cancel of retvalues">
-                    <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
-                    <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                    <td class="text-center"> Rs. {{cancel.cancharges }}</td>
-                </tr>
-                <tr> </tr>
-            </tbody>
-        </table>
-        <ul>
-            <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text"><b>Refund amount shown above is indicative and calculated on ticket price Rs. {{bus.fareDetails[0].baseFare | commaSeparator }}</b></li>
-            <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation is allowed for this ticket. Please note that primary passenger booking cannot be cancelled.</b></li>
-            <ng-template #noPartial>
-                <li class="cancel-text" style="width: 100%;list-style: circle;margin-left: 25px;">
-                    <b>Partial cancellation is not allowed for this ticket.</b>
-                </li>
-            </ng-template>
-            <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text"><b>Ticket cannot be cancelled after scheduled bus departure time from the first boarding point.</b></li>
-        </ul>
-        <!-- <li class="text-bold">Time Before Departure</li>
-            <li>Before 24 hrs</li>
-            <li>Between 12 - 24 hrs</li>
-            <li class="text-bold">Refund Percentage</li>
-            <li> 70%</li>
-            <li>70%</li>
-            <li class="text-bold">Refund Amount</li>
-            <li> Rs. 225</li>
-            <li> Rs. 225</li> -->
-    </ul>
-</div>
 <ng-container>
     <div class="row seat-layout" [ngClass]="rowvalue==seatlayout ? 'active' : 'hide'" id="seat-layout{{bus.id}}" *ngIf="showSeatLayout">
         <div class="col-md-8 float-left layout-w" *ngIf="loading; else listng">

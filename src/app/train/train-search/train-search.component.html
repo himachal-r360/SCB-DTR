@@ -46,13 +46,13 @@
                                                                         <label for="">From</label>
                                                                         <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
                                                                         <input type="hidden"  formControlName="fromTravelCode">
-                                                                        <input type="hidden"  formControlName="fromState">
+                                                                        <!--<input type="hidden"  formControlName="fromState">-->
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
                                                                 <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');">
                                                                 <input type="hidden"  formControlName="toTravelCode">
-                                                                <input type="hidden"  formControlName="toState">
+                                                                <!--<input type="hidden"  formControlName="toState">-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -67,7 +67,7 @@
                                                         <input type="hidden" name="searchFrom" formControlName="searchFrom">
 
                                                         <input type="hidden"  formControlName="fromTravelCode">
-                                                        <input type="hidden"  formControlName="fromState">
+                                                        <!--<input type="hidden"  formControlName="fromState">-->
 
 
 
@@ -81,7 +81,7 @@
                                         <a  class="flight-from-ul-li-a"   (click)="onFromClick(fromOptions,'web')">
                                         
                                               <div class="hotel-from-name">
-                                        <h6><i class="fa fa-train"></i> &nbsp;{{fromOptions._source.name}}</h6>
+                                        <h6><i class="fa fa-train"></i> &nbsp;{{fromOptions._source.station_name}}</h6>
                                         <p></p>
                                         </div>
                                         <div class="flight-from-shortname">
@@ -134,14 +134,14 @@
                                                                         <label for="">From</label>
                                                                         <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
                                                                         <input type="hidden"  formControlName="fromTravelCode">
-                                                                        <input type="hidden"  formControlName="fromState">
+                                                                       <!-- <input type="hidden"  formControlName="fromState">-->
 
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
                                                                 <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
                                                                 <input type="hidden"  formControlName="toTravelCode">
-                                                                <input type="hidden"  formControlName="toState">
+                                                                <!--<input type="hidden"  formControlName="toState">-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -154,7 +154,7 @@
                                                                 id="busToMob">
                                                             <input type="hidden"  formControlName="searchTo">
                                                                    <input type="hidden"  formControlName="toTravelCode">
-                                                                            <input type="hidden"  formControlName="toState">
+                                                                            <!--<input type="hidden"  formControlName="toState">-->
                                                         </div>
                                                         <ul class="flight-from-data-ul" >
                                                         <li class="flight-from-ul-li">
@@ -163,7 +163,7 @@
                                                              <li class="flight-from-ul-li"  *ngFor="let toOptions of travelToOptions;let ind=index;">
                                         <a  class="flight-from-ul-li-a"   (click)="onToClick(toOptions,'web')">
                                           <div class="hotel-from-name">
-                                        <h6><i class="fa fa-train"></i> &nbsp;{{toOptions._source.name}}</h6>
+                                        <h6><i class="fa fa-train"></i> &nbsp;{{toOptions._source.station_name}}</h6>
                                         <p></p>
                                         </div>
                                         <div class="flight-from-shortname">
@@ -182,17 +182,36 @@
                                             </div>
 
                                         </div>
-                                        <mat-form-field class="fligh-select-mat-field">
-                                        <mat-select formControlName="quota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
-                                        <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
-                                        </mat-select>
-                                        </mat-form-field>
+                                       
                                         <div class="col-lg-6">
                                             <div class="root-date">
+
+                                                    <div class="select-root-area" >
+                                                        <div class="select-dep-ret " >
+                                                             <div class="area-root-departure train-area-root">
+    
+                                                                <div class="select-root-departure departure-date">
+                                                                    <span class="select-roottitle">Class</span>
+                                                                    
+                                                                        <mat-form-field class="train-selectClass-mat-field">
+                                                                            <mat-select formControlName="quota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
+                                                                            <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                                    
+
+                                                                    <span class="select-roottitle">{{selectedQuota}}</span>
+    
+                                                                </div>
+    
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                
                                             <!--Web Date Picker-->
-                                            <div class="select-root-area" *ngIf="!isMobile">
+                                                <div class="select-root-area" *ngIf="!isMobile">
                                                     <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
-                                                 <div class="area-root-departure " (click)="picker.open()"
+                                                         <div class="area-root-departure train-area-root " (click)="picker.open()"
                                                             id="datePickerOpen">
 
                                                             <div class="select-root-departure departure-date">
@@ -223,8 +242,7 @@
                                                                     <mat-datepicker #picker></mat-datepicker>
                                                                 </mat-form-field>
                                                             </div>
-                                                        </div>
-                                              
+                                                         </div>
                                                     </div>
                                                 </div>
                                             <!--Web Date Picker-->
@@ -242,13 +260,13 @@
                                                                     *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                                                     }}</span>
 
-          <div class="mt-30"  *ngIf="submitted && Error('departure', 'required')" >
-                                        <small class="validate-msg" >Please select departure date</small>
-                                        </div>
+                                                                <div class="mt-30"  *ngIf="submitted && Error('departure', 'required')" >
+                                                                <small class="validate-msg" >Please select departure date</small>
+                                                                </div>
 
                                                             </div>
 
-                                                            <div class="select-root-date"                    style="position: relative; left: 0;">
+                                                            <div class="select-root-date" style="position: relative; left: 0;">
                                                                 <i   class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
                                                                 <mat-form-field       style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                                 <input  matInput   [(ngModel)]="departureDate"   autocomplete="off"  readonly formControlName="departure"  id="departure" >
@@ -311,3 +329,9 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="sponsor_logo">Powered By: <img src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg" class="ms-2"></p>
+                            </div>
+                        </div>
