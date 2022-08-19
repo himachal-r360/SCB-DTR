@@ -49,6 +49,9 @@ export class BannersComponent implements OnInit {
   IsCardError:boolean=true;
   CardErrorMsg:any;
   customeravailablepoints: any;
+  card_no: any;
+  current_available_points: any;
+  last_stmt_points: any;
   isLogged: Boolean;
   XSRFTOKEN: string;
   ngOnInit(): void {
@@ -156,6 +159,7 @@ onSubmit(){
        return false; 
      }
      this.customerInfo = this.sg['customerInfo']; 
+     this.card_no=this.angForm.controls['last_4_digit'].value;
       let URLparams = {
          "mobile": this.angForm.controls['mobile_no'].value,
          "customer_id": this.customerInfo["customerid"],
@@ -182,6 +186,8 @@ onSubmit(){
             this.angForm.reset();
             this.spinnerService.show();  
             this.customeravailablepoints=res.points_available;
+            this.current_available_points=res.current_available_points;
+            this.last_stmt_points=res.last_stmt_points;
           }else{
                this.IsCardError=false;
                this.CardErrorMsg=res.message;
