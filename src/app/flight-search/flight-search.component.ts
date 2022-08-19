@@ -85,6 +85,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   dateValidation: boolean = false;
   continueSearchVal: any;
   minDate = new Date();
+  minDateR = new Date();
   isMobile: boolean = false;
   isClosed: boolean = true;
   isFromorNot: boolean = false;
@@ -191,12 +192,18 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     });
   }
 
+  currentPeriodClickedN(datePicker: any) {
+    let date = datePicker.target.value
+    this.minDateR=date;
 
+  }
   currentPeriodClicked(datePicker: any, item) {
     let date = datePicker.target.value
     date = moment(date).format('YYYY-MM-DD')
     item.depart = date;
     this.multicityForm.get('depart'+ (item.multiCityArrCount - 1)).setValue(item.depart);
+    this.minDateR=date;
+    
     /*
      let date = datePicker.target.value
      if(date && this.navItemActive !== "Round Trip"){
@@ -398,6 +405,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     if (field == 'departure') {
       this.departureDate = event;
       this.minDateFlightToMlite = event;
+       this.minDateR = event;
       var compare1 = new Date(event).getTime();
       var compare2 = new Date(this.arrivalDate).getTime();
       if (compare1 > compare2) {

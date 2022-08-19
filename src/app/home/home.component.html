@@ -9,25 +9,25 @@
                                 <ul class="travel-list-ul">
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a"  (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
-                                            <img src="{{cdnUrl}}/images/icons/flight.png" alt="">
+                                            <img src="{{cdnUrl}}/images/icons/flight.svg" alt="">
                                             Flights
                                         </a>
                                     </li>
                                     <li class="travel-list-li" >
                                         <a href="javascript:;"class="travel-list-a"  (click)="navBarLink('train')"  [ngClass]="navItemActive == 'train'? 'active':'' ">
-                                            <img src="{{cdnUrl}}/images/icons/trains.png" alt="">
+                                            <img src="{{cdnUrl}}/images/icons/trains.svg" alt="">
                                             Trains
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('bus')" [ngClass]="navItemActive == 'bus'? 'active':'' ">
-                                            <img src="{{cdnUrl}}/images/icons/bus.png" alt="">
+                                            <img src="{{cdnUrl}}/images/icons/bus.svg" alt="">
                                             Bus
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('hotel')"  [ngClass]="navItemActive == 'hotel'? 'active':'' ">
-                                            <img src="{{cdnUrl}}/images/icons/stays.png" alt="">
+                                            <img src="{{cdnUrl}}/images/icons/stays.svg" alt="">
                                             Stays
                                         </a>
                                     </li>
@@ -155,7 +155,7 @@
                     </div>
                 </ng-container>
                 <!-- continue search mobile view  -->
-                <div class="box-item" *ngIf="isMobile == true">
+                <div class="box-item m_box_item" *ngIf="isMobile == true">
                     <owl-carousel-o [options]="customOptions">
                         <ng-container *ngFor="let continue of continueSearchValBus; let i = index">
                             <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
@@ -483,6 +483,89 @@
             </div>
         </div>
     </section>
+
+
+
+    <!-- popular bus routes -->
+        <!-- Popular International  Flight Routes -->
+        <section class="popular-International-area mb-50" *ngIf="navItemActive=='bus'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="home-ContinueSearch-text">
+                            <h4>Popular Bus Routes</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="popular-routes-list">
+                            <ul class="popular-routes-list-ul">
+                                <li>
+                                    <span>From</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="active">New Delhi</a>
+                                </li>
+                                <li>
+                                    <a href="#">Mumbai</a>
+                                </li>
+                                <li>
+                                    <a href="#">Bengaluru</a>
+                                </li>
+                                <li>
+                                    <a href="#">Hyderabad</a>
+                                </li>
+                                <li>
+                                    <a href="#">Kolkata</a>
+                                </li>
+                                <li>
+                                    <a href="#">Others</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="popular-flight-slider">
+                            <div class="owl-carousel carousel-popular-flight">
+                                <owl-carousel-o [options]="DomasticFlightsOptions">
+                                    <ng-container *ngFor="let domasticItem of popularDomasticRoutes; let i = index">
+                                        <ng-template carouselSlide>
+                                            <div class="item">
+                                                <a href="javascript:void(0)">
+                                                    <div class="Popular-flight-items">
+                                                        <div class="Popular-flight-image">
+                                                            <img src="{{domasticItem.image}}" alt="flight" />
+                                                            <div class="Popular-flight-name">
+                                                                <span>{{domasticItem.fromCity}} </span>
+                                                                <img src="assets/images/icons/twoway.png" alt="" />
+                                                                <span>{{domasticItem.toCity}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="Popular-flight-content">
+                                                            <p class="pf-date">{{domasticItem.date}}</p>
+                                                            <p>
+                                                                <span class="opacity-50">Starts from</span>
+                                                                <span
+                                                                    class="pf-price text-color ms-1">&#8377;{{domasticItem.totalFare}}</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </owl-carousel-o>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- end of popular bus routes -->
+
+
 
     <!-- Popular International  Flight Routes -->
     <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
