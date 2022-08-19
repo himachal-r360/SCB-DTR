@@ -43,6 +43,18 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   isMobile: boolean = true;
   math = Math;
   minDate = new Date();
+  sector:number = 0;
+  SelectedFlightsOnSector:any = [];
+  isSelectedSectorFlight:boolean = false;
+  TotalFare:number= 0.0;
+  BaseFare:number= 0.0;
+  Tax:number= 0.0;
+  isError:boolean = false;
+  ErrorMessage:string = 'Flights overlap with each other.Please change the selection.'
+  isAllSelected:boolean =false;
+  isLast:boolean =false;
+  mobileSelected:any;
+  MobileCurrentSector:any;
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -160,10 +172,16 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.getQueryParamData();
     this.flightSearch();
     this.getAirpotsNameList();
-    this.getAirlinesIconList();
+
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
+      this.getAirlinesIconList();
+      var element = document.getElementById('Sector-area');
+      if(element)
+      {
+        element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
+      }
       this.Initslider();
     }, 200);
   }
@@ -189,11 +207,12 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       }
     }
     this.searchData = flightSearchArr;
+    this.searchData.forEach((z)=>{
+      z.isSelected = false;
+      z.selectedFlight = null
+    });
     this.selectedTripData = this.searchData[0];
-    var element = document.getElementById('Sector-area');
-    if (element) {
-      element.style.gridTemplateColumns = 'repeat(' + this.searchData.length + ',1fr)';
-    }
+
     console.log(flightSearchArr, "flightSearchArr");
   }
 
@@ -203,22 +222,32 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     let searchObj = (this.searchData);
     console.log(searchObj, "searchObj");
     this.sub = this._flightService.getMulticityList(searchObj).subscribe((res: any) => {
-      console.log(res, "response");
-      this.WithoutFilterFlightList = res.response.journeys;
-      this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
-      this.flightListWithOutFilter = this.flightList;
-      this.DocKey = res.response.docKey;
-      this.getAirlinelist();
-      if (this.flightList.length > 0) {
-        this.GetMinAndMaxPriceForFilter();
-        // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-        // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
-        this.sliderRange(this, this.minPrice, this.maxPrice);
+      console.log(res , "response");
+      if(res.response.journeys)
+      {
+        this.WithoutFilterFlightList = res.response.journeys;
+        this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
+        this.flightList.forEach((z)=>{
+          z.isSelected = false;
+        });
+        this.flightListWithOutFilter = this.flightList;
+        this.DocKey = res.response.docKey;
+        console.log(this.flightList)
+        this.getAirlinelist();
+        if (this.flightList.length > 0) {
+          this.GetMinAndMaxPriceForFilter();
+          // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+          // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+           this.sliderRange(this, this.minPrice, this.maxPrice);
+         }
+        // console.log(this.flightList,"this.flightList");
+         this.getAirlinelist();
+         this.loader = false;
+         this.popularFilterFlightData();
       }
-      // console.log(this.flightList,"this.flightList");
-      this.getAirlinelist();
-      this.loader = false;
-      this.popularFilterFlightData();
+      else{
+        this.loader = false;
+      }
 
     }, (error) => { console.log(error) });
 
@@ -234,12 +263,40 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     })
     return flightsData;
   }
-  activeSelectedTrip(i: number) {
+  activeSelectedTrip(i : number)
+  {
+    if(i == (this.searchData.length-1) && !this.isAllSelected)
+    {
+      this.isLast = true;
+    }
+    else{
+      this.isLast = false;
+    }
     this.selectedTripData = this.searchData[i];
     this.selectedTrip = i;
     this.flightList = [];
     this.flightList = this.WithoutFilterFlightList[i].sectors;
+    this.flightList.forEach((z)=>{
+      if(this.SelectedFlightsOnSector[i])
+      {
+        if(z.flightKey == this.SelectedFlightsOnSector[i].flightKey)
+        {
+          z.isSelected = true;
+        }
+       else{
+        z.isSelected = false;
+       }
+      }
+     else{
+      z.isSelected = false;
+     }
+    });
+    this.sector = i;
     this.flightListWithOutFilter = this.flightList;
+    if(this.isMobile)
+    {
+      this.isSelectedSectorFlight = false;
+    }
     this.popularFilterFlightData();
   }
 
@@ -330,26 +387,26 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
 
   }
 
-  bookingSummary(flights: any, selected: any, flightKey: any) {
-    /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
+bookingSummary() {
+  /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
 
     let flightDetailsArr: any = {
       "travel": "DOM",
       "travel_type": "O",
       "docKey": this.DocKey,
-      "onwardFlightKey": flightKey,
+      "onwardFlightKey": "",
       "returnFlightKey": '',
-      "onwardFlights": flights,
-      "returnFlights": '',
-      "onwardPriceSummary": selected,
+      "onwardFlights": "",
+      "returnFlights":'' ,
+      "onwardPriceSummary": "",
       "returnPriceSummary": '',
       "queryFlightData": this.searchData
     };
 
 
-    let randomFlightDetailKey = btoa(this.DocKey + flightKey + selected.partnerName);
-    sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
-    let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
+  let randomFlightDetailKey = btoa(this.DocKey+this.searchData[0].selectedFlight.flightKey);
+  sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
+  let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
 
     setTimeout(() => {
       this.router.navigateByUrl(url);
@@ -1122,14 +1179,135 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   }
   onApplyFilter() {
     var filterDiv = document.getElementById('sortMobileFilter');
-    if (filterDiv) {
+    if(filterDiv)
+    {
       filterDiv.style.display = 'none';
     }
     this.popularFilterFlightData();
   }
 
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+  IsTimeDiffLess(flights:any)
+  {
+   var disable = false;
+   if(flights.length > 1)
+   {
+    for(var i =0 ; i< (flights.length -1); i++)
+    {
+      var diff = new Date(flights[i+1].departureDateTime).valueOf() -new Date(flights[i].arrivalDateTime).valueOf();
+      var diffInHours = diff/1000/60/60;
+
+      if(diffInHours <= 2)
+      {
+        disable = true;
+        break;
+      }
+    }
+
+   }
+   return disable;
   }
- 
+
+   //sorting in mobile version
+   flightSortingMobile(val:any) {
+    let selectedVal = val;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    });
+  }
+
+  applySortingMobile() {
+    let sortingBtn = document.getElementById('sortMobileFilter');
+    if(sortingBtn)
+    {
+      sortingBtn.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
+
+  onSelect(flightKey:any,flights:any,item:any,event:any)
+  {
+
+    $(".BtnOnSelect").removeClass('button-selected-style');
+    $(".BtnOnSelect").html('Select');
+      var selected = event.target as HTMLElement
+      if(selected)
+      {
+        selected.classList.add('button-selected-style')
+        selected.innerHTML = 'Selected'
+      }
+      this.TotalFare = this.TotalFare + item.totalFare;
+      this.BaseFare = this.BaseFare + item.baseFare;
+      this.Tax = this.Tax + (item.totalFare-item.baseFare)
+
+      var SelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item,index:this.sector};
+      this.isSelectedSectorFlight = true;
+      this.SelectedFlightsOnSector[this.sector] = SelectedFlight;
+      this.searchData[this.sector].isSelected = true;
+      this.searchData[this.sector].selectedFlight = SelectedFlight;
+      if(this.SelectedFlightsOnSector.length == this.searchData.length)
+      {
+        this.isAllSelected = true;
+        this.isLast = false;
+      }
+      for(var i =0 ; i< (this.SelectedFlightsOnSector.length -1); i++)
+      {
+        var diff = new Date(this.SelectedFlightsOnSector[i+1].flights[0].departureDateTime).valueOf() -new Date(this.SelectedFlightsOnSector[i].flights[(this.SelectedFlightsOnSector[i].flights.length -1)].arrivalDateTime).valueOf();
+        var diffInHours = diff/1000/60/60;
+
+        if(diffInHours <= 2)
+        {
+          this.isError = true;
+          this.ErrorMessage = "Flights overlap with each other.Please change the selection.";
+          break;
+        }
+        else{
+          this.isError = false;
+        }
+      }
+      console.log(this.SelectedFlightsOnSector);
+      console.log(this.searchData);
+  }
+
+  nextFlightSelect()
+  {
+    this.activeSelectedTrip(this.sector + 1);
+  }
+
+  onMobileSelect(flightKey:any,flights:any,item:any,event:any)
+  {
+    $(".BtnOnSelect").removeClass('button-selected-style');
+    $(".BtnOnSelect").html('Select');
+      var selected = event.target as HTMLElement
+      if(selected)
+      {
+        selected.classList.add('button-selected-style')
+        selected.innerHTML = 'Selected'
+      }
+    var SelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item,index:this.sector};
+    this.isSelectedSectorFlight = true;
+    this.SelectedFlightsOnSector[this.sector] = SelectedFlight;
+      this.searchData[this.sector].isSelected = true;
+      this.searchData[this.sector].selectedFlight = SelectedFlight;
+      this.mobileSelected = SelectedFlight;
+      for(var i =0 ; i< (this.SelectedFlightsOnSector.length -1); i++)
+      {
+        var diff = new Date(this.SelectedFlightsOnSector[i+1].flights[0].departureDateTime).valueOf() -new Date(this.SelectedFlightsOnSector[i].flights[(this.SelectedFlightsOnSector[i].flights.length -1)].arrivalDateTime).valueOf();
+        var diffInHours = diff/1000/60/60;
+
+        if(diffInHours <= 2)
+        {
+          this.isError = true;
+          this.ErrorMessage = "Flights overlap with each other.Please change the selection.";
+          break;
+        }
+        else{
+          this.isError = false;
+        }
+      }
+  }
+
 }

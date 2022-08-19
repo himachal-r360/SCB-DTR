@@ -385,11 +385,12 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
+                                                              <button  class="button-style onwardbuttons {{list.flightKey}}" id="selectedOnward_{{i}}_{{j}}"  (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
                                                           </div>
                                                       </div>
 
                                                   </div>
+
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
                                                           <!--<ul class="extra-tabs-right-ul">
@@ -555,7 +556,7 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)" >Select</button>
+                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled "  [ngClass]="{'disable-partner':list.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)" >Select</button>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -746,7 +747,7 @@
                                                   <h6>₹ {{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking-Selected">
-                                                  <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
+                                                  <button  class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom"  >
@@ -1165,7 +1166,7 @@
                                                   <h6>₹{{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking-Selected">
-                                                  <button class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
+                                                  <button class="button-style returnButtons"  [disabled]="item.disabled " [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom" >

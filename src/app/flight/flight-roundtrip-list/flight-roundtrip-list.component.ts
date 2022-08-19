@@ -1563,4 +1563,25 @@ getLayoverHour(obj1: any, obj2: any) {
   return dateHour;
 }
 
+IsTimeDiffLess(flights:any)
+{
+ var disable = false;
+ if(flights.length > 1)
+ {
+  for(var i =0 ; i< (flights.length -1); i++)
+  {
+    var diff = new Date(flights[i+1].departureDateTime).valueOf() -new Date(flights[i].arrivalDateTime).valueOf();
+    var diffInHours = diff/1000/60/60;
+
+    if(diffInHours <= 2)
+    {
+      disable = true;
+      break;
+    }
+  }
+
+ }
+ return disable;
+}
+
 }

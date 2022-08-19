@@ -483,14 +483,14 @@
                                                 </div>
                                                 <div class="flight-options-book">
                                                   <!-- <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item)">Book</a> -->
-                                                  <a href="javascript:void(0);" class="button-style" (click)="bookingSummary(list.flights,item,list.flightKey)">Book</a>
+                                                  <button href="javascript:void(0);"  class="button-style" (click)="bookingSummary(list.flights,item,list.flightKey)">Book</button>
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="flight-info-box" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
-                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
-                                </div>
+                                        <div class="flight-info-box" *ngIf="(item.totalFare|couponDiplay:flightCoupons:item.partnerName)">
+                                <p  *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName"><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                               </div>
                                         <div class="flight-info-box ">
                                           <ul class="extra-tabs-right-ul">
                                                 <!-- <li class="ms-0">
@@ -936,12 +936,11 @@
                                       <p *ngIf="item.totalFare > EMIAvailableLimit">EMI @ ₹ {{calculateEMI(item.totalFare)|number}}/month</p>
                                   </div>
                                   <div class="mob-booking">
-                                      <a href="javascript:void(0)"  (click)="bookingSummary(list.flights,item,list.flightKey)">
+                                      <button   (click)="bookingSummary(list.flights,item,list.flightKey)">
                                           Book
-                                      </a>
+                                      </button>
                                   </div>
                               </div>
-
                              <div class="name-bottom-bottom" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
                                 <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
                                 </div>
