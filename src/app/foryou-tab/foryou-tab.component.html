@@ -68,27 +68,29 @@
             <div class="col-lg-6 col-sm-12" *ngIf="isLogged==true">
 
                 <div class="row mb-3">
-                    <!-- <div class="col-sm-12" *ngIf="isLogged && custCardsAvailable && customeravailablepoints"  [hidden]="IsPointsCardDetails"> -->
-                      <div class="col-sm-12"  [hidden]="IsPointsCardDetails">  
-                        <div class="card_points_info">
-                            <!-- <div>
-                                <div class="card_select">
-                                    <select (change)="selectedCard($event)">
-                                        <option *ngFor="let each of customercards" value="{{each.id}}"   >{{each.card}}</option>
-                                    </select>
+
+                    <div class="card_points_info" [hidden]="IsPointsCardDetails">
+                        <div class="bg_place">
+                          <p class="card_name">Card Number xx{{card_no}} <span><a href="javascript:;">View Details</a></span></p>
+                            <div class="row">
+                              <div class="col-md-4 col-4">
+                                <div>
+                                  <p class="number">{{current_available_points | number:'1.0':'en-US'}}</p>
+                                  <p class="text">Current Available Points</p>
                                 </div>
-                            </div> -->
-                            <div class="points_section">
-                                <div class="counter_points">
-                                    <p>{{customeravailablepoints}}</p>
-                                    <p>Reward points</p>
+                              </div>
+                              <div class="col-md-4 col-4">
+                                <div>
+                                  <p class="number">{{customeravailablepoints | number:'1.0':'en-US'}}</p>
+                                  <p class="text">Reward Points</p>
                                 </div>
-                                
-                                <div class="voucher-code-entry">
-                                    <div class="redeem_error">
-                                        <small>{{errorMsg0}}</small>
-                                    </div>
+                              </div>
+                              <div class="col-md-4 col-4">
+                                <div>
+                                  <p class="number">{{last_stmt_points | number:'1.0':'en-US'}}</p>
+                                  <p class="text">Last Statement points</p>
                                 </div>
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -102,7 +104,7 @@
                                 <p class="mt-15">Unlock Rewards Summary</p>
                             </div>
                             <div>
-                                <!-- <div class="mark_question">
+                                <div class="mark_question">
                                     <div class="tooltip"><img src="{{cdnUrl}}images/smartbuy/icons/qmark.svg" alt="" class="img-fluid">
                                         <span class="tooltiptext">
                                             <div>
@@ -124,7 +126,7 @@
                                             </div>
                                         </span>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div>
                                     <div class="icon_place" data-bs-toggle="modal" data-bs-target="#unlockCardPopup"> <span><img src="{{cdnUrl}}images/smartbuy/icons/east.svg" alt="icn-right"></span> </div>
                                 </div>
