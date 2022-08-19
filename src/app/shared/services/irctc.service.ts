@@ -83,7 +83,7 @@ let urlToSplit =this.location.path();
      }else if(hammock=='true'){
 	return this.http.post(this.hammockUrl+'trainBwStns', param, config).pipe(map((response: any) => response));
      }else{
-     return this.http.post(this.endpoint+'enquiry/trainBwStns', param, config).pipe(map((response: any) => response));
+     return this.http.post(this.endpoint+'enquiry/trainBwStnsNew', param, config).pipe(map((response: any) => response));
      } 
   }
 
