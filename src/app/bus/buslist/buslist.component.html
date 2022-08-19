@@ -153,7 +153,12 @@
                   </div>
                   <div class="mob-listing-header-center">
                       <h6>{{busfrom}} - {{busto}}</h6>
-                      <p>{{departure | date:'EEE, dd MMM' }}   </p>
+                      <div class="d-flex align-items-center">
+                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
+                            <p>{{departure | date:'EEE, dd MMM' }}   </p>
+                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
+                      </div>
+                      
                   </div>
                   <div class="mob-listing-header-right">
                       <a href="javascript:;" routerLink="/bus" >
@@ -167,7 +172,7 @@
                   <h6> <p *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p></h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()">
                       <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                      <span>Sort/Filters</span>
+                      <span class="px-2">Sort/Filters</span>
                   </a>
               </div>
           </div>
@@ -236,6 +241,11 @@
                                 <mat-option value="Seats Availability" (click)="orderBy('seats-availability')">Seats Availability</mat-option>
                                 </mat-select>
                                 </mat-form-field>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-6"></div>
+                                <div class="col-6"></div>
                               </div>
                           </div>
                           <div class="mob-sf-btns">
