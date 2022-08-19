@@ -712,94 +712,93 @@
         <div class="travel-data" [ngClass]="navItemActive == 'Multicity'?'':'d-none'">
             <form [formGroup]="multicityForm">
                 <div class="row g-2">
-                    <ng-container *ngFor="let item of multiCityArrayM; index as i;">
+                    
+                    <ng-container *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
+                    <ng-container  [formGroupName]="i">
                         <div class="col-lg-6">
                             <div class="select-root-area">
                                 <div class="select-root-left" appDropdown>
                                     <span class="select-roottitle">FROM</span>
-                                    <h5 class="fw_6 ">{{item.fromCity}}</h5>
-                                    <!-- <span class="select-roottitle" >{{fromAirportName}}</span> -->
-                                    <span class="select-roottitle">{{item.fromAirportName}}</span>
-                                    <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('leavingFrom' + item.multiCityArrCount, 'required')">
-                                        <small class="validate-msg">Please select from city</small>
-                                    </mat-error>
-                                    <!-- <mat-error *ngIf="submitted && MulticityError('goingTo'+item.multiCityArrCount, 'MustMatch')">
-                                        <small class="validate-msg"> From and To cannot be same.</small>
-                                    </mat-error> -->
-                                  
-                                    <div class="flight-from-data flight-from-hide ff-form-data dropdown">
-                                        <div class="mob-title">
-                                            <h3>Select From City</h3>
-                                            <a href="javascript:void(0)"
-                                                class="mob-close mob-ff-from-close close-mobile">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" (click)="onClose()"
+                                    <h5 class="fw_6 ">{{item.value.fromCity}}</h5>
+                                    <span class="select-roottitle">{{item.value.fromAirportName}}</span>
+                                    
+                                        <!-- <mat-error *ngIf="submitted && item.get('leavingFrom').errors && item.get('leavingFrom')hasError('required')"> <small
+                                                class="validate-msg"> Please select from city.</small></mat-error> -->
+                                            <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('leavingFrom').errors?.required"> <small
+                                                class="validate-msg"> Please select departure date.</small></mat-error>        -->
+                                            
+                                            <div class="flight-from-data flight-from-hide ff-form-data dropdown">
+                                                <div class="mob-title">
+                                                    <h3>Select From City</h3>
+                                                    <a href="javascript:void(0)"
+                                                    class="mob-close mob-ff-from-close close-mobile">
+                                                    <img src="{{cdnUrl}}/images/icons/close.png" (click)="onClose()"
                                                     class="close-mobile" alt="" />
-                                            </a>
-                                        </div>
-
-                                        <!------------------------- Mobile view Start--------------------------------------------------------------------------------->
-                                        <div class="mob-search" *ngIf="isMobile">
-                                            <div class="row">
+                                                </a>
+                                            </div>
+                                            
+                                            <!------------------------- Mobile view Start--------------------------------------------------------------------------------->
+                                            <div class="mob-search" *ngIf="isMobile">
+                                                <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="mob-search-list">
                                                         <label for="">From</label>
                                                         <input type="text" autocomplete="off" class="w-100"
                                                             placeholder="Search City" name="leavingFrom"
-                                                            formControlName="leavingFrom{{item.multiCityArrCount}}"
+                                                            formControlName="leavingFrom"
                                                             (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');"
                                                             id="fromCitySearch">
-                                                        <input type="hidden" formControlName="leavingFrom{{item.multiCityArrCount}}">
-                                                        <input type="hidden" formControlName="fromContry{{item.multiCityArrCount}}">
-                                                        <input type="hidden" formControlName="fromAirportName{{item.multiCityArrCount}}">
+                                                        <input type="hidden" formControlName="leavingFrom">
+                                                        <input type="hidden" formControlName="fromContry">
+                                                        <input type="hidden" formControlName="fromAirportName">
                                                     </div>
                                                     <div class="mob-search-list">
                                                         <label for="">To</label>
                                                         <input type="text" autocomplete="off" class="w-100"
                                                             placeholder="Search City" name="toCity"
-                                                            formControlName="goingTo{{item.multiCityArrCount}}"
+                                                            formControlName="goingTo"
                                                             (keyup)="searchAutoComplete($event,'toCity' ,'mobile');">
-                                                        <input type="hidden" formControlName="goingTo{{item.multiCityArrCount}}">
-                                                        <input type="hidden" formControlName="toContry{{item.multiCityArrCount}}">
-                                                        <input type="hidden" formControlName="toAirportName{{item.multiCityArrCount}}">
+                                                            <input type="hidden" formControlName="goingTo">
+                                                            <input type="hidden" formControlName="toContry">
+                                                        <input type="hidden" formControlName="toAirportName">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!------------------------- Mobile view End--------------------------------------------------------------------------------->
+                                      
                                         <div class="flight-from-data-search" *ngIf="!isMobile">
                                             <input type="text" autocomplete="off" class="w-100" id="fromCitySearch"
                                                 placeholder="Search City"
-                                                (keyup)="searchAutoComplete($event,'fromCity'+item.multiCityArrCount,'web',item.multiCityArrCount);"
+                                                (keyup)="searchAutoComplete($event,'fromCity'+i,'web',item);"
                                                 autofocus #fromCityInput>
 
                                             <input type="hidden" 
-                                                formControlName="fromCity{{item.multiCityArrCount}}">
+                                                formControlName="fromCity">
                                             <input type="hidden" 
-                                                formControlName="leavingFrom{{item.multiCityArrCount}}">
+                                                formControlName="leavingFrom">
                                             <input type="hidden" 
-                                                formControlName="fromContry{{item.multiCityArrCount}}">
-                                            <input type="hidden" 
-                                                formControlName="fromAirportName{{item.multiCityArrCount}}">
-                                            <!-- <input type="hidden"  name="fromCity" formControlName="fromAirportName"> -->
-                                        </div>
-
+                                                formControlName="fromContry">
+                                                <input type="hidden" 
+                                                formControlName="fromAirportName">
+                                            </div>
                                         <ul class="flight-from-data-ul">
                                             <li class="flight-from-ul-li">
                                                 <p class="flight-Results-text">{{searchFlightFromHeader}}</p>
                                             </li>
                                             <li class="flight-from-ul-li"
-                                                *ngFor="let fromFlightOptions of flightFromOptions;let ind=index;">
-                                                <a class="flight-from-ul-li-a"
-                                                    (click)="onFromClick(fromFlightOptions,isMobile , item.multiCityArrCount)">
+                                            *ngFor="let fromFlightOptions of flightFromOptions;let ind=index;">
+                                            <a class="flight-from-ul-li-a"
+                                            (click)="onFromClick(fromFlightOptions,isMobile,item,i)">
                                                     <div class="flight-from-name">
                                                         <h6>{{fromFlightOptions._source.city}},
                                                             {{fromFlightOptions._source.country}}</h6>
-                                                        <p>{{fromFlightOptions._source.airport_name}} </p>
-                                                    </div>
-                                                    <div class="flight-from-shortname">
-                                                        <h6>{{fromFlightOptions._source.airport_code}}</h6>
-                                                    </div>
-                                                </a>
+                                                            <p>{{fromFlightOptions._source.airport_name}} </p>
+                                                        </div>
+                                                        <div class="flight-from-shortname">
+                                                            <h6>{{fromFlightOptions._source.airport_code}}</h6>
+                                                        </div>
+                                                    </a>
                                             </li>
                                             <li *ngIf="flightFromOptions.length==0"><a>No Results Found...</a></li>
                                         </ul>
@@ -811,11 +810,15 @@
                                 </div>
                                 <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv_{{i}}">
                                     <span class="select-roottitle">TO</span>
-                                    <h5 class="fw_6 ">{{item.toCity}}</h5>
-                                    <span class="select-roottitle">{{item.toAirportName}}</span>
-                                    <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('goingTo' + item.multiCityArrCount, 'required')">
+                                    <h5 class="fw_6 ">{{item.value.toCity}}</h5>
+                                    <span class="select-roottitle">{{item.value.toAirportName}}</span>
+                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('goingTo').errors.required"> <small
+                                        class="validate-msg"> Please select departure date.</small></mat-error>   -->
+                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && item.get('goingTo').errors && item.get('goingTo')hasError('required')"> <small
+                                                class="validate-msg"> Please select to city.</small></mat-error>         -->
+                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('goingTo' + i, 'required')">
                                         <small class="validate-msg">Please select to city</small>
-                                    </mat-error>
+                                    </mat-error> -->
                                     <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
                                         <div class="mob-title">
                                             <h3>Select To City</h3>
@@ -860,13 +863,13 @@
                                                 (keyup)="searchAutoComplete($event,'toCity' ,'web');" #toCityInput
                                                 autofocus id="toCityMob">
                                             <input type="hidden" name='toCity'
-                                                formControlName="toCity{{item.multiCityArrCount}}">
+                                                formControlName="toCity">
                                             <input type="hidden"
-                                                formControlName="goingTo{{item.multiCityArrCount}}">
+                                                formControlName="goingTo">
                                             <input type="hidden" 
-                                                formControlName="toContry{{item.multiCityArrCount}}">
+                                                formControlName="toContry">
                                             <input type="hidden" 
-                                                formControlName="toAirportName{{item.multiCityArrCount}}">
+                                                formControlName="toAirportName">
                                         </div>
                                         <ul class="flight-from-data-ul">
                                             <li class="flight-from-ul-li">
@@ -875,7 +878,7 @@
                                             <li class="flight-from-ul-li"
                                                 *ngFor="let toFlightOptions of flightToOptions;let ind=index;">
                                                 <a class="flight-from-ul-li-a"
-                                                    (click)="onToClick(toFlightOptions,isMobile,item.multiCityArrCount)">
+                                                    (click)="onToClick(toFlightOptions,isMobile,item,i)">
                                                     <div class="flight-from-name">
                                                         <h6>{{toFlightOptions._source.city}},
                                                             {{toFlightOptions._source.country}}</h6>
@@ -895,14 +898,7 @@
                                 </div>
                             </div>
                             <div class="home-error d-flex">
-                                <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('leavingFrom' + item.multiCityArrCount, 'required')">
-                                    <small class="validate-msg">Please select from city</small>
-                                </mat-error>
-                                <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('goingTo' + item.multiCityArrCount, 'required')">
-                                    <small class="validate-msg">Please select to city</small>
-                                </mat-error> -->
-                          
-                                <!-- <mat-error *ngIf="submitted && MulticityError('goingTo'+item.multiCityArrCount, 'MustMatch')">From and To cannot be same.</mat-error> -->
+                                
                             </div>
                         </div>
 
@@ -915,13 +911,13 @@
                                             (click)="picker.open()" id="datePickerMulticity_{{i}}">
                                             <div class="select-root-departure departure-date">
                                                 <span class="select-roottitle">DEPARTURE</span>
-                                                <h5 class=" ">{{item.depart | date:'dd MMM' }}</h5>
+                                                <h5 class=" ">{{item.value.depart | date:'dd MMM' }}</h5>
 
                                                 <span class="select-roottitle d-block w-100"
-                                                    *ngIf="item.depart=='' ||item.depart==undefined">Select
+                                                    *ngIf="item.value.depart=='' ||item.value.depart==undefined">Select
                                                     Departure</span>
                                                 <span class="select-roottitle"
-                                                    *ngIf="item.depart!='' ||item.depart!=undefined">{{item.depart|date:'EEEE'
+                                                    *ngIf="item.value.depart!='' ||item.value.depart!=undefined">{{item.value.depart|date:'EEEE'
                                                     }}</span>
                                                     
                                                 </div>
@@ -931,8 +927,8 @@
                                                     <mat-form-field
                                                     style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                     <input matInput [min]="minDate" [matDatepicker]="picker"
-                                                    formControlName="depart{{item.multiCityArrCount}}"
-                                                    [(ngModel)]="item.depart"
+                                                    formControlName="depart"
+                                                    [(ngModel)]="item.value.depart"
                                                         (dateChange)="currentPeriodClicked($event , item)">
                                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                                     </mat-datepicker-toggle>
@@ -947,7 +943,7 @@
                                 </div>
                                 
                                 <!--Web Date Picker-->
-                                <!--Mobile Date Picker-->
+                                <!-----Mobile Date Picker-------------------------------------------------------------------->
                                 <div class="select-root-area " *ngIf="isMobile">
                                     <div class="select-dep-ret "
                                         [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''">
@@ -1041,7 +1037,7 @@
                                 </div>
 
 
-                                <!--Mobile Date Picker Ends-->
+                                <!--Mobile Date Picker Ends------------------------------------------------------------------>
 
                                 <div class="mob-travellers-class">
                                     <div class="mob-travellers-class-box" (click)="openTravellerBlock()">
@@ -1192,23 +1188,25 @@
                                     <button type="button" class="searchbn" (click)="searchMulticityFlight()"
                                         *ngIf="i == 0">Search</button>
                                         <a href="javascript:void(0);" class="multi-city-close-btn" *ngIf="i > 1"
-                                            (click)="removeMulticity(item,i)">
+                                            (click)="removeMutlicityInput(i)">
                                             <img src="assets/images/icons/close_01.png" alt="">
                                         </a>
                                     </div>
                                     
                                 </div>
-                                <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('depart' + item.multiCityArrCount, 'required')">
-                                    <small class="validate-msg">Please select departure date</small>
-                                </mat-error>
-                                
+             
+                                <!-- <mat-error class="w-50 error_msg w-50" *ngIf="item.get('depart').invalid "> <small
+                                    class="validate-msg"> Please select departure date.</small></mat-error>  -->
+                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('depart').errors.required"> <small
+                                        class="validate-msg"> Please select departure date.</small></mat-error>             -->
                         </div>
+                    </ng-container>
                     </ng-container>
 
                     <div class="add-city-search-box ">
-                        <div class="add-city-search-left">
-                            <a href="javascript:void(0);" class="button-style" (click)="multiCityAdd()"
-                                [ngClass]="multiCityArrayM.length > 4 ? 'd-none':''">+ Add another
+                        <div class="add-city-search-left" *ngIf="multicityFormArr">
+                            <a href="javascript:void(0);" class="button-style" (click)="addNewCitySearchInput()"
+                                [ngClass]="multicityFormArr.length > 4 ? 'd-none':''">+ Add another
                                 city</a>
                         </div>
                         <div class="add-city-search-right fs_102">
