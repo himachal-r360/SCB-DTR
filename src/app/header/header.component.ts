@@ -82,6 +82,7 @@ export class HeaderComponent implements OnInit {
         public guestLogin: boolean=false;
         showSearchBoxTop: boolean=false;
         domainRedirect: string;
+        sub_domain_redirection_url:string;
         menuParam:any = [];
         showSearchBox = false;
         showdcEMI= false;
@@ -749,6 +750,7 @@ closeCookieConsent(value){
   
   ngOnInit() {
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
+    this.sub_domain_redirection_url=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/';
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
    
@@ -1170,7 +1172,7 @@ this.customerLogin=true;*/
         this.redirectPopupUrl= this.domainRedirect+'insta-redirection/shopredirectLink?u='+(window.btoa(url));
          this.redirectPopup=1;
         }else{
-        this.redirectPopupUrl= this.domainRedirect+'popup-redirection/'+partner ;
+        this.redirectPopupUrl= this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'popup-redirection/'+partner ;
          this.redirectPopup=1;
         } 
     
@@ -1225,7 +1227,22 @@ this.customerLogin=true;*/
         this.redirectPopup=2;
         this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url;
      }else{
-     window.open(this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url,"_blank");
+  
+      window.open(this.serviceSettings.sub_domain_redirection_url+'/'+url,"_blank");
+     //window.open(this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url,"_blank");
+     }
+      this.navbarOpen =false;
+    }
+    
+     clickUrlmilestone(url){
+     if(environment.IS_MAIN==1){
+      const current = new Date();
+        this.redirectPopupTriggerTimestamp=current.getTime();
+        this.redirectPopupTrigger=1;
+        this.redirectPopup=2;
+        this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url;
+     }else{
+     this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'/'+url;
      }
       this.navbarOpen =false;
     }
@@ -1336,6 +1353,7 @@ export class DisclaimerBottomSheetComponent implements OnInit {
   
         this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
         this.domainRedirect=data.redirectUrl;
+
   }
  ngOnInit() {}
   closeSheet() {

@@ -328,7 +328,7 @@
                                             style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                             <input matInput [min]="minDate" [matDatepicker]="picker"
                                                 formControlName="departure" [(ngModel)]="departureDate"
-                                                (dateChange)="currentPeriodClicked($event)">
+                                                (dateChange)="currentPeriodClickedN($event)">
                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
@@ -358,7 +358,7 @@
                                         <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
                                         <mat-form-field
                                             style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                            <input matInput [min]="departureDate" [matDatepicker]="picker2"
+                                            <input matInput [min]="minDateR" [matDatepicker]="picker2"
                                                 formControlName="arrival" [(ngModel)]="arrivalDate"
                                                 (dateChange)="currentPeriodArrivalClicked($event)">
                                             <mat-datepicker-toggle matSuffix [for]="picker2">
@@ -483,7 +483,7 @@
                                         <i class="far fa-calendar-alt daterange-right me-3 fs_22"></i>
                                         <mat-form-field
                                             style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                            <input matInput [min]="departureDate" formControlName="arrival"
+                                            <input matInput [min]="minDateR" formControlName="arrival"
                                                 [(ngModel)]="arrivalDate">
 
                                         </mat-form-field>
@@ -499,7 +499,7 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <mat-calendar [minDate]="minDateFlightToMlite"
+                                                <mat-calendar [minDate]="minDateR"
                                                     (selectedChange)="onSelectMliteDate($event,'arrival')"
                                                     [selected]="arrivalDate"></mat-calendar>
                                             </div>

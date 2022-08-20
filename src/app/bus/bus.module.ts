@@ -21,6 +21,7 @@ import { FilterModule } from './filter/filter.module';
 import { BusfilterPipe } from 'src/app/shared/pipes/busfilter.pipe';
 import { BusCheckoutComponent } from './bus-checkout/bus-checkout.component';
 import { DecimalPipe } from '@angular/common';
+import { CheckoutBottomSheetComponent } from './bus-checkout/bottom-sheet/bottom-sheet.component';
 const routes: Routes = [
   {
     path:"bus/search" ,component:BuslistComponent,
@@ -35,7 +36,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    BuslistComponent,BottomSortbySheet,BottomSheetComponent,ChromeExtBusDialog,BusfilterPipe,BusCheckoutComponent
+    BuslistComponent,BottomSortbySheet,BottomSheetComponent,CheckoutBottomSheetComponent,ChromeExtBusDialog,BusfilterPipe,BusCheckoutComponent
 
   ],
   imports: [
@@ -56,7 +57,7 @@ const routes: Routes = [
   ],
   
   exports: [RouterModule],
-    entryComponents:[BottomSortbySheet,BottomSheetComponent,ChromeExtBusDialog],
+    entryComponents:[BottomSortbySheet,BottomSheetComponent,CheckoutBottomSheetComponent,ChromeExtBusDialog],
   providers: [
     {
       provide: RouteReuseStrategy,

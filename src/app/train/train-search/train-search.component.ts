@@ -53,8 +53,8 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
    cdnUrl: any;
   fromCityName :any ='From city';
   toCityName:any ='To city';
-  fromStateName:any='From city';
-  toStateName:any='From city';
+  fromStateName:any='';
+  toStateName:any='';
   departureDate:any = "";
   continueSearchTrain:any=[]
   submitted = false;
@@ -95,8 +95,6 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         searchTo: ['', Validators.required],
         fromTravelCode: ['', Validators.required],
         toTravelCode: ['', Validators.required],
-        fromState: ['', Validators.required],
-        toState: ['', Validators.required],
         departure: ['', Validators.required],
         quota: ['GN', Validators.required]
 	}, {
@@ -115,16 +113,16 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
      }, 10);
 
  	this.defaultTravelOptions=[
-	{"_source":{"name":"KSR BENGALURU","id":"0","code":"SBC"}},
-	{"_source":{"name":"CHENNAI CENTRAL","id":"0","code":"MAS"}},
-	{"_source":{"name":"HYDERABAD DECAN","id":"0","code":"HYB"}},
-	{"_source":{"name":"MUMBAI CENTRAL","id":"0","code":"MMCT"}},
-	{"_source":{"name":"NEW DELHI","id":"0","code":"NDLS"}},
-	{"_source":{"name":"KOLKATA","id":"0","code":"KOAA"}},
-	{"_source":{"name":"MANGALURU JN","id":"0","code":"MAJN"}},
-	{"_source":{"name":"PUNE JN","id":"0","code":"PUNE"}},
-	{"_source":{"name":"Tirupathi","id":"0","code":"TPTY"}},
-	{"_source":{"name":"GOHAD ROAD","id":"0","code":"GOA"}}
+	{"_source":{"station_name":"KSR BENGALURU","id":"0","station_code":"SBC"}},
+	{"_source":{"station_name":"CHENNAI CENTRAL","id":"0","station_code":"MAS"}},
+	{"_source":{"station_name":"HYDERABAD DECAN","id":"0","station_code":"HYB"}},
+	{"_source":{"station_name":"MUMBAI CENTRAL","id":"0","station_code":"MMCT"}},
+	{"_source":{"station_name":"NEW DELHI","id":"0","station_code":"NDLS"}},
+	{"_source":{"station_name":"KOLKATA","id":"0","station_code":"KOAA"}},
+	{"_source":{"station_name":"MANGALURU JN","id":"0","station_code":"MAJN"}},
+	{"_source":{"station_name":"PUNE JN","id":"0","station_code":"PUNE"}},
+	{"_source":{"station_name":"Tirupathi","id":"0","station_code":"TPTY"}},
+	{"_source":{"station_name":"GOHAD ROAD","id":"0","station_code":"GOA"}}
 	];
 	  this.quotaList =AppConfig.IRCTC_List_Quota;
        this.travelFromOptions= this.defaultTravelOptions;
@@ -210,10 +208,11 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   }
   onFromClick(values,device) {
         values=values['_source'];
-        this.searchTrainForm['controls']['searchFrom'].setValue(values.name);
-        this.searchTrainForm['controls']['fromTravelCode'].setValue(values.code);
-        this.fromCityName=values.name;
-        this.fromStateName=values.code+' '+values.name;
+        console.log(values);
+        this.searchTrainForm['controls']['searchFrom'].setValue(values.station_name);
+        this.searchTrainForm['controls']['fromTravelCode'].setValue(values.station_code);
+        this.fromCityName=values.station_name;
+        this.fromStateName=values.station_code+', '+values.station_name;
         this.travelFromOptions= this.defaultTravelOptions;
         
          setTimeout(() => {
@@ -226,10 +225,10 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
   onToClick(values,device) {
         values=values['_source'];
-        this.searchTrainForm['controls']['searchTo'].setValue(values.name);
-        this.searchTrainForm['controls']['toTravelCode'].setValue(values.code);
-        this.toCityName=values.name;
-        this.toStateName=values.code+' '+values.name;
+        this.searchTrainForm['controls']['searchTo'].setValue(values.station_name);
+        this.searchTrainForm['controls']['toTravelCode'].setValue(values.station_code);
+        this.toCityName=values.station_name;
+        this.toStateName=values.station_code+', '+values.station_name;
         this.travelToOptions= this.defaultTravelOptions;
         
      setTimeout(() => {
@@ -253,30 +252,31 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
    let lastSearch:any=localStorage.getItem('trainLastSearchNew');
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
+      console.log(lastSearch);
         this.fromCityName=lastSearch.searchFrom;
         this.toCityName=lastSearch.searchTo;
-        this.fromStateName=lastSearch.fromState;
-        this.toStateName=lastSearch.toState;
+        this.fromStateName=lastSearch.fromTravelCode+', '+lastSearch.searchFrom;
+        this.toStateName=lastSearch.toTravelCode+', '+lastSearch.searchTo;
         this.searchTrainForm['controls']['searchFrom'].setValue(lastSearch.searchFrom);
         this.searchTrainForm['controls']['searchTo'].setValue(lastSearch.searchTo);
         this.searchTrainForm['controls']['fromTravelCode'].setValue(lastSearch.fromTravelCode);
         this.searchTrainForm['controls']['toTravelCode'].setValue(lastSearch.toTravelCode);
-        this.searchTrainForm['controls']['fromState'].setValue(lastSearch.fromState);
-        this.searchTrainForm['controls']['toState'].setValue(lastSearch.toState);
+        //this.searchTrainForm['controls']['fromState'].setValue(lastSearch.fromState);
+       // this.searchTrainForm['controls']['toState'].setValue(lastSearch.toState);
         this.departureDate = new Date(lastSearch.departure);
         this.searchTrainForm.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
     }else{
-        this.fromCityName='Delhi';
-        this.toCityName='Mumbai';
-        this.fromStateName='New Delhi';
-        this.toStateName='Maharashtra';
-        this.searchTrainForm['controls']['searchFrom'].setValue('Delhi');
-        this.searchTrainForm['controls']['searchTo'].setValue('Mumbai');
-        this.searchTrainForm['controls']['fromTravelCode'].setValue(1492);
-        this.searchTrainForm['controls']['toTravelCode'].setValue(649);
+        this.fromCityName='NEW DELHI';
+        this.toCityName='Mumbai Central';
+        this.fromStateName='NDLS, New Delhi';
+        this.toStateName='MMCT, Mumbai Central';
+        this.searchTrainForm['controls']['searchFrom'].setValue('New Delhi');
+        this.searchTrainForm['controls']['searchTo'].setValue('Mumbai Central');
+        this.searchTrainForm['controls']['fromTravelCode'].setValue('NDLS');
+        this.searchTrainForm['controls']['toTravelCode'].setValue('MMCT');
         
-        this.searchTrainForm['controls']['fromState'].setValue('New Delhi');
-        this.searchTrainForm['controls']['toState'].setValue('Maharashtra');
+      //  this.searchTrainForm['controls']['fromState'].setValue('New Delhi');
+      //  this.searchTrainForm['controls']['toState'].setValue('Maharashtra');
     }
   }
   
@@ -286,22 +286,22 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         var FromData = {
         searchFrom: this.searchTrainForm.value.searchFrom,
         fromTravelCode:this.searchTrainForm.value.fromTravelCode,
-        fromState : this.searchTrainForm.value.fromState
+       // fromState : this.searchTrainForm.value.fromState
         }
 
         this.searchTrainForm.get('searchFrom').setValue(this.searchTrainForm.value.searchTo );
         this.searchTrainForm.get('fromTravelCode').setValue(this.searchTrainForm.value.toTravelCode );
-        this.searchTrainForm.get('fromState').setValue(this.searchTrainForm.value.toState );
+       // this.searchTrainForm.get('fromState').setValue(this.searchTrainForm.value.toState );
        
         this.fromCityName = this.searchTrainForm.value.searchTo;
-        this.fromStateName = this.searchTrainForm.value.toState;
+       // this.fromStateName = this.searchTrainForm.value.toState;
 
         this.searchTrainForm.get('searchTo').setValue(FromData.searchFrom );
         this.searchTrainForm.get('toTravelCode').setValue(FromData.fromTravelCode );
-        this.searchTrainForm.get('toState').setValue(FromData.fromState );
+      //  this.searchTrainForm.get('toState').setValue(FromData.fromState );
      
         this.toCityName =  FromData.searchFrom;
-        this.toStateName = FromData.fromState;
+       // this.toStateName = FromData.fromState;
 
   }
 

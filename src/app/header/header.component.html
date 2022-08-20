@@ -278,10 +278,10 @@
 
                         <div class="inner_child">
                             <div *ngIf="guestLogin==false && customerLogin==false">
-                                <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
+                                <a class="btn btn-login my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Login/Signup</a>
                             </div>
                             <div *ngIf="guestLogin==true && customerLogin==false">
-                                <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
+                                <a class="btn btn-login my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Hi, Guest</a>
                             </div>
 
                             <div class="head_img" *ngIf="guestLogin==false && customerLogin==true">
@@ -330,7 +330,7 @@
                                                 <span>Customer Support</span>
                                             </div>
                                         </a>
-                                        <a class="dropdown-item" href="{{domainRedirect}}logout">
+                                        <a class="dropdown-item" href="{{sub_domain_redirection_url}}logout">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-out.svg" alt="account" class="">
                                                 <span>Logout</span>
@@ -859,10 +859,10 @@
 
                     <div class="inner_child">
                         <div *ngIf="guestLogin==false && customerLogin==false">
-                            <a class="btn rg_btn-login  my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
+                            <a class="btn rg_btn-login  my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Login/Signup</a>
                         </div>
                         <div *ngIf="guestLogin==true && customerLogin==false">
-                            <a class="btn rg_btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
+                            <a class="btn rg_btn-login my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Hi, Guest</a>
                         </div>
 
                         <div class="head_img text-right custmr_details_right" *ngIf="guestLogin==false && customerLogin==true">
@@ -911,7 +911,7 @@
                                             <span>Customer Support</span>
                                         </div>
                                     </a>
-                                    <a class="dropdown-item" href="{{domainRedirect}}logout">
+                                    <a class="dropdown-item" href="{{sub_domain_redirection_url}}logout">
                                         <div class="item">
                                             <img src="{{cdnUrl}}images/smartbuy/icons/icn-out.svg" alt="account" class="">
                                             <span>Logout</span>
@@ -1215,7 +1215,7 @@
                          <div class="row">
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
-                                    <a href="#"><div class="row cntnt_center">
+                                    <a href="javascript:;" (click)="clickUrlmilestone('milestone')"><div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/hdr_sign_board_icn.svg" class="circular_div_img card_img">
@@ -1227,12 +1227,13 @@
                                         <div class="col-sm-2 text-left">
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
                                         </div>
-                                    </div></a>
+                                    </div>
+                                   </a>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
-                                    <a href="#"><div class="row cntnt_center">
+                                    <a href="javascript:;" (click)="clickUrlmilestone('milestone')"><div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/hdr_globe_icn.svg" class="circular_div_img card_img">
@@ -1249,7 +1250,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
-                                    <a href="#"><div class="row cntnt_center">
+                                    <a href="javascript:;" (click)="goTo('regalia_gold/know-your-card')"><div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/hdr_credit_icn.svg" class="circular_div_img card_img">
@@ -1275,7 +1276,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
-                                    <a herf="#"><div class="row cntnt_center">
+                                    <a href="javascript:;" (click)="clickUrl('rewards?cat=premium-rewards')"><div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/hdr_trophy_icn.svg" class="circular_div_img card_img">
@@ -1292,7 +1293,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
-                                    <a href="#"><div class="row cntnt_center">
+                                    <a href="javascript:;" (click)="clickUrl('rewards?cat=luxury-vouchers')"><div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/hdr_voucher_icn.svg" class="circular_div_img card_img">
@@ -1309,7 +1310,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
-                                    <a href="#"><div class="row cntnt_center">
+                                    <a href="javascript:;" (click)="clickUrl('rewards?brand=Apple')"><div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/hdr_apple_icn.svg" class="circular_div_img card_img">
@@ -1326,7 +1327,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="hdr_travel">
-                                    <a href="#"><div class="row cntnt_center">
+                                    <a href="javascript:;" (click)="clickUrl('credit_payment')"><div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
                                                 <img src="{{cdnUrl}}/images/smartbuy/icons/hdr_refresh_icn.svg" class="circular_div_img card_img">
@@ -1346,7 +1347,7 @@
                     </div>
                 </li>
                 <li class="rg_hdr_menu_li">
-                    <a class="nav_link_item rg_hdr_menu" href="javascript:;">Airmiles</a>
+                    <a class="nav_link_item rg_hdr_menu" href="javascript:;" (click)="clickUrl('airmiles')">Airmiles</a>
                 </li>
                 <li class="dropdown rg_hdr_menu_li">
                     <a class="nav_link_item rg_hdr_menu" href="javascript:;">Shopping</a>
@@ -1802,13 +1803,13 @@
     <div class="before_log_m" *ngIf="guestLogin==true &&  customerLogin==false && payzrestriction==false">
 
         <div>
-            <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
+            <a class="btn btn-login my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Hi, Guest</a>
         </div>
     </div>
     <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false  && payzrestriction==false">
 
         <div>
-            <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
+            <a class="btn btn-login my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Login/Signup</a>
         </div>
     </div>
 
@@ -1887,7 +1888,7 @@
                                 <span>Customer Support</span>
                             </div>
                         </a>
-                        <a class="dropdown-item" href="{{domainRedirect}}logout">
+                        <a class="dropdown-item" href="{{sub_domain_redirection_url}}logout">
                             <div class="item">
                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-out.svg" alt="account" class="">
                                 <span>Logout</span>
@@ -2530,7 +2531,7 @@
                             <span>Customer Support</span>
                         </div>
                     </a>
-                    <a class="dropdown-item" href="{{domainRedirect}}logout">
+                    <a class="dropdown-item" href="{{sub_domain_redirection_url}}logout">
                         <div class="item">
                             <img src="{{cdnUrl}}images/smartbuy/icons/icn-out.svg" alt="account" class="">
                             <span>Logout</span>

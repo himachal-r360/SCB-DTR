@@ -34,9 +34,9 @@
                             <div class="filter-loaders animation-loader" *ngIf="loader">
                                    <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                               <div class="filter-loader-content ">
-                                                       <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px', width:'25%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px', width:'50%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '25px', width:'100%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                           </div>
                       </div>
 
@@ -304,14 +304,14 @@
                                               <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                                      </div>
                                     <ng-template #item let-item="item">
-                                     <div *ngFor="let list of item; let i = index" id="flight_list_{{list.flightKey}}">
+                                     <div *ngFor="let list of item; let i = index" id="flight_list_{{i}}">
                                       <div class="round-flight-listing round-click"  appToggleDetail  *ngIf="list">
                                           <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input id="onwardlist_{{list.flightKey}}" name="onwardRadio" class="RadioClass"   type="radio">
-                                                          <label for="onwardlist_{{list.flightKey}}" class="css-label"></label>
+                                                          <input id="onwardlist_{{i}}" name="onwardRadio" class="RadioClass"   type="radio">
+                                                          <label for="onwardlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image" >
@@ -340,7 +340,7 @@
                                               </div>
                                           </div>
 
-                                          <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
                                            <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                               <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
                                                   <div class="round-options-list-top"  >
@@ -385,22 +385,12 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-<<<<<<< HEAD
-                                                              <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,list.priceSummary,$event)">Select</a>
-=======
-                                                              <button  class="button-style onwardbuttons {{list.flightKey}}" id="selectedOnward_{{i}}_{{j}}" [disabled]="list.isTimeLess" [ngClass]="{'disable-partner':list.isTimeLess}"  (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
->>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
+                                                              <button  class="button-style onwardbuttons {{list.flightKey}}" id="selectedOnward_{{i}}_{{j}}"  (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
                                                           </div>
                                                       </div>
 
                                                   </div>
-                                                  <div class="round-options-list-bottom" *ngIf="list.isTimeLess">
-                                                    <div class="round-extra">
-                                                    </div>
-                                                    <span class="difference-error">
-                                                      2 hours diiference required for selecting this flight
-                                                    </span>
-                                                </div>
+
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
                                                           <!--<ul class="extra-tabs-right-ul">
@@ -483,14 +473,14 @@
                                           <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">No flights found</div>
                                       </div>
                                       <ng-template #returnItem let-item="item">
-                                      <div *ngFor="let list of item; let i = index" id="return_flight_list_{{list.flightKey}}">
+                                      <div *ngFor="let list of item; let i = index" id="return_flight_list_{{i}}">
                                       <div class="round-flight-listing round-click" appToggleDetail *ngIf="list"  >
                                           <div class="round-flight-listing-content" >
                                               <div class="round-content-left">
                                                   <div class="round-content-radio">
                                                       <div>
-                                                          <input name="return_roundlist" id="return_roundlist_{{list.flightKey}}" class="RadioClass"  (change)="onReturnRadioChange(i,$event)" type="radio">
-                                                          <label for="return_roundlist_{{list.flightKey}}" class="css-label"></label>
+                                                          <input name="return_roundlist" id="return_roundlist_{{i}}" class="RadioClass"  (change)="onReturnRadioChange(i,$event)" type="radio">
+                                                          <label for="return_roundlist_{{i}}" class="css-label"></label>
                                                       </div>
                                                   </div>
                                                   <div class="round-content-image">
@@ -520,7 +510,7 @@
                                               </div>
                                           </div>
 
-                                          <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
+                                          <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{i}}" *ngIf="list && list.priceSummary.length > 0">
 
                                           <ng-container  *ngFor="let item of list.priceSummary; let j = index">
                                               <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
@@ -566,21 +556,10 @@
                                                               </span>
                                                           </div>
                                                           <div class="round-list-btns">
-<<<<<<< HEAD
-                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event)" >Select</button>
-=======
-                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled || list.isTimeLess"  [ngClass]="{'disable-partner':list.disabled || list.isTimeLess}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)" >Select</button>
->>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
+                                                              <button  class="button-style returnButtons"  [disabled]="item.disabled "  [ngClass]="{'disable-partner':list.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)" >Select</button>
                                                           </div>
                                                       </div>
                                                   </div>
-                                                  <div class="round-options-list-bottom" *ngIf="list.isTimeLess">
-                                                    <div class="round-extra">
-                                                    </div>
-                                                    <span class="difference-error">
-                                                      2 hours diiference required for selecting this file
-                                                    </span>
-                                                </div>
                                                   <div class="round-options-list-bottom">
                                                       <div class="round-extra">
                                                           <!--<ul class="extra-tabs-right-ul">
@@ -708,7 +687,7 @@
                                  <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                               <ng-template #item let-item="item">
                                <div  *ngFor="let list of item; let i = index">
-                              <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileOnward_{{list.flightKey}}">
+                              <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileOnward_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -768,11 +747,7 @@
                                                   <h6>₹ {{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking-Selected">
-<<<<<<< HEAD
-                                                  <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
-=======
-                                                  <button [disabled]="list.isTimeLess" [ngClass]="{'disable-partner':list.isTimeLess}" class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
->>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
+                                                  <button  class="button-style onwardbuttons" id="selectedOnward_{{i}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</button>
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom"  >
@@ -1131,7 +1106,7 @@
                                  <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">No flights found</div>
                               <ng-template #returnItem let-item="item">
                               <div *ngFor="let list of item; let i = index" >
-                              <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileReturn_{{list.flightKey}}">
+                              <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileReturn_{{i}}">
                                   <div class="mob-list-items-name">
                                       <div class="mob-list-items-name-top">
                                           <div class="mob-list-items-image">
@@ -1191,11 +1166,7 @@
                                                   <h6>₹{{item.totalFare |number}}</h6>
                                               </div>
                                               <div class="mob-booking-Selected">
-<<<<<<< HEAD
-                                                  <button class="button-style returnButtons"  [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
-=======
-                                                  <button class="button-style returnButtons"  [disabled]="item.disabled || list.isTimeLess" [ngClass]="{'disable-partner':item.disabled ||list.isTimeLess}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
->>>>>>> 2cb0709603dd39649cb52cbaf232c6444a905711
+                                                  <button class="button-style returnButtons"  [disabled]="item.disabled " [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{i}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
                                               </div>
                                           </div>
                                           <div class="mob-book-list-bottom" >
@@ -1554,7 +1525,7 @@
             <div class="modal-body pt-0">
               <div>
                 <img
-                  src="{{cdnUrl}}/images/flight_partners/{{onwardSelectedFlight.priceSummery.partnerName}}.png"
+                  src="{{cdnUrl}}/images/flight_partners/small-no/{{onwardSelectedFlight.priceSummery.partnerName}}.png"
                   alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
               </div>
               <div class="widget-content">
@@ -2313,15 +2284,13 @@
                                   </div>
                                   <div class="fixedright-price">
                                       <h6>
-                                          ₹ {{ sumval  |number}}
-                                          <span>EMI @{{calculateEMI(sumval) | number}}/month</span>
+                                          ₹ {{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}
+                                          <span>EMI @{{calculateEMI(onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare) | number}}/month</span>
                                       </h6>
                                   </div>
                                   <div class="fixedright-otherinfo">
                                       <!--<span class="mainprice">₹ 5,000</span>
                                       <span class="price-off">10% off</span>-->
-                                      <span class="mainprice" *ngIf="sumval !=sumvalold" >₹ {{sumvalold|number}}</span>
-                                      <span class="price-off" *ngIf="sumval !=sumvalold">Discounted</span>
                                       <div class="ff-Viewfaredetails">
                                           <a href="javascript:;" class="rr-Viewfare">View Fare Details</a>
                                           <div class="hover-popover">
@@ -2340,7 +2309,7 @@
                                                   <hr class="m-0">
                                                   <div class="hover-popover-content-list popover-total">
                                                       <p>Total</p>
-                                                      <p>₹{{ sumval  |number}}</p>
+                                                      <p>₹{{ onwardSelectedFlight.priceSummery.totalFare +returnSelectedFlight.priceSummery.totalFare  |number}}</p>
                                                   </div>
                                               </div>
                                               <div class="hover-popover-footer">
@@ -2869,44 +2838,4 @@
           </div>
       </div>
 
-<div class="modal fade bookingprocess" id="flightChangeO" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-           <div >
-          <h5 class="mt-20 text-center"><b>Confirm</b></h5>
-        </div>
-      <div class="modal-body" >
-        <div class="p-20">
-          <div class="text-center">
-            <p class="line_height_30 ">{{flightChangeDisplay}}</p>
-          </div>
-          <div class="mt-20">
-            <a  class="btn w-50" data-bs-dismiss="modal" aria-label="Close" >Cancel</a><button type="button" (click)="onSelectOnwordContinue(flightKeyChange,flightsChange,itemChange,eventChange)" class="btn btn-primary w-50" >Confirm</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="modal fade bookingprocess" id="flightChangeR" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-           <div >
-          <h5 class="mt-20 text-center"><b>Confirm</b></h5>
-        </div>
-      <div class="modal-body" >
-        <div class="p-20">
-          <div class="text-center">
-            <p class="line_height_30 ">{{flightChangeDisplayR}}</p>
-          </div>
-          <div class="mt-20">
-            <a  class="btn w-50" data-bs-dismiss="modal" aria-label="Close" >Cancel</a><button type="button" (click)="onSelectReturnChange(flightKeyChangeR,flightsChangeR,itemChangeR,eventChangeR)" class="btn btn-primary w-50" >Confirm</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

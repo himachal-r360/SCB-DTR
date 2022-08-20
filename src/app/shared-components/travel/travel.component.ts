@@ -1353,7 +1353,11 @@ const current = new Date();
 this.redirectPopupTriggerTimestamp=current.getTime();
 this.redirectPopupTrigger=1;
 this.redirectPopup=2;
-this.redirectPopupUrl=environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
+
+// this.redirectPopupUrl=environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
+this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
 return;
 }
 
@@ -1361,7 +1365,10 @@ return;
 if(this.serviceSettings.flightSearch==1){
 this.router.navigate([this.sg['domainPath']+'flights/listing'], { queryParams: this.searchArray  });
 }else{
-this.document.location.href =environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+// this.document.location.href =environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
+this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
 }
 break; 
 } 
@@ -1472,11 +1479,14 @@ const current = new Date();
 this.redirectPopupTriggerTimestamp=current.getTime();
 this.redirectPopupTrigger=1;
 this.redirectPopup=2;
-this.redirectPopupUrl=environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+
+//this.redirectPopupUrl=environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
  return;
 }
 
-this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+//this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
 //  console.log(JSON.stringify(this.searchHotelForm.value, null, 4));
 
 break; 
