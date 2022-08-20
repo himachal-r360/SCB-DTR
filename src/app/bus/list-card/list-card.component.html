@@ -679,26 +679,37 @@
                             </div>
                             <!-- <a class="info-m" hrref="#" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></a> -->
 
-                            <div class="fixed-f">
+                            <div class="fixed-f bg-white">
                                 <div class="row">
-                                    <div class="col" (click)="openBottomSheet()">
-                                        <div class="xs-text">Total</div>
-                                        <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> Rs.{{totalfare | number:'1.2'}}</span>
-                                            <ng-template #zero1> Rs. {{totalfare | number:'1.2'}}</ng-template>
-                                        </div>
+                                    <div class="col-6" (click)="openAmentiesmlite()">
+                                        <span class="blue_link float-start">Amenities & more</span>
                                     </div>
-                                    <div class="col p0" (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
-                                        <span class=""><i class="material-icons mobile-fare-info">error_outline</i></span>
+                                    <div class="col-6"  *ngIf="seatdetails.length > 0">
+                                        <span class="blue_link float-end">Fare Summary</span>
+                                    </div>
+                                </div>
+                                <hr class="my-2">
+                                <div class="row">
+                                    <div class="col-4" (click)="openBottomSheet()">
+                                        <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> ₹{{totalfare | number:'1.2'}}</span>
+                                            <ng-template #zero1> ₹{{totalfare | number:'1.2'}}</ng-template>
+                                        </div>
+                                        <div class="xs-text" *ngIf="seatdetails.length == 0">
+                                            <span>Select Seats</span>
+                                        </div>
+                                        <div (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
 
-                                        <div class="xs-text">Selected Seats</div>
                                         <div class="xs-text li-h">
                                             <span *ngFor="let seats of seatdetails;let lastRow=last;">{{seats.selseats}}<span *ngIf="!lastRow">,</span>
                                             </span>
 
                                         </div>
+
+                                        </div>
                                     </div>
-                                    <div class="col" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
-                                        <button class="btn-primary">CONTINUE</button>
+                                    
+                                    <div class="col-8" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
+                                        <button class="btn-primary w-100">CONTINUE</button>
                                     </div>
                                 </div>
                             </div>
@@ -725,6 +736,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </mat-tab>
 
                         <span *ngIf="pricesplit.length > 1">
@@ -885,38 +897,8 @@
 </ng-template>
 
 </mat-tab>
-<mat-tab label="Amenities">
-    <ul class="amenities-m">
-        <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
-        <li *ngFor="let amen of busamenities">
-            {{amen}} <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>
-        </li>
-    </ul>
-</mat-tab>
-<mat-tab label="Cancellation Policy">
-    <table class="table table-striped cancellation">
-        <thead>
-            <tr>
-                <th>Time of Cancellation</th>
-                <th class="text-center">Deduction %</th>
-                <th class="text-center">Cancellation Charges</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let cancel of retvalues">
-                <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
-                <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                <td class="text-center"> Rs. {{cancel.cancharges}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <p class="cancel-text" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
-    <ng-template #noPartial>
-        <p class="cancel-text">
-            <b>Partial cancellation not allowed</b>
-        </p>
-    </ng-template>
-</mat-tab>
+
+
 </mat-tab-group>
 </div>
 <div class="seat-info-m" *ngIf="seatinfo">
@@ -956,6 +938,7 @@
       </ol> -->
 
 <!-- Mobile Boarding & Dropping -->
+
 <div class="mobile-boarding-dropping" *ngIf="showBoardDrop">
     <div class="boarding-back-title-smartbuy" *ngIf="domainName=='SMARTBUY'">
         <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
@@ -981,8 +964,86 @@
         <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
         <div>{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</div>
     </div>
-    <mat-tab-group #tabGroup [selectedIndex]="selected" (selectedIndexChange)="tabSelectionChanged($event)" style="height: 80%">
-        <mat-tab label="Boarding Point">
+
+    <div class="mob-sf-tabs bg-white">
+    <ul class="nav nav-tabs m-popup-tabs mt-5 ">
+        <li>
+            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab">Boarding Points</a>
+        </li>
+        <li class="nav-item">
+            <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab">Dropping Points</a>
+        </li>
+    </ul>
+    <div class="tab-content clearfix">
+        <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab">
+            <div class="m-bordng-drpng-div">
+            <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
+            
+            <label *ngFor="let boardingpoints of boardingtimes" for="{{boardingpoints.boardingPointId}}" class="radio" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)">
+                <div class="#">
+                <table>
+                    <tr> 
+                      
+                        <td><input type="radio" name="mobile-boarding" id="{{boardingpoints.boardingPointId}}" class="hidden" #selectAfterAdding (click)="changeTab(selectAfterAdding.checked)"/>
+                            <span class="label"></span> </td>
+                    
+                        <td><p class="b-time">{{boardingpoints.ctime}}</p></td>
+                        <td><p class="b-place-one">{{boardingpoints.location}}</p></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 10px" class="">({{boardingpoints.nextday | date:'dd LLL'}}) </span></td>
+                        <td><p class="b-place-two">{{boardingpoints.address}}<span *ngIf="boardingpoints.landmark !=boardingpoints.address"> ,{{boardingpoints.landmark}}</span></p></td></tr>
+                </table>
+                </div>
+            </label>
+            </div>
+        </div>
+        <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab">
+        <div class="m-bordng-drpng-div">
+                        <div class="info text-gary" *ngIf="showErrorDropping" [ngClass]="{'errorred':showErrorDropping}">Please select boarding & dropping points to continue</div>
+
+            <label *ngFor="let droppingtimes of droppingtimes" for="{{droppingtimes.boardingPointId}}" class="radio" (click)="Boardingdroping('dropping',droppingtimes.boardingPointId,bus.id)">
+                        <div class="#">
+                        <table>
+                            <tr>
+                                <td ><input type="radio" name="mobile-boarding1" id="{{droppingtimes.boardingPointId}}" class="hidden"/>
+                                    <span class="label"></span> </td>
+                                    <td class="text-left"> <p class="b-time">{{droppingtimes.ctime}}</p></td>
+                                    <td class="text-left"><p class="b-place-one">{{droppingtimes.location}}</p></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><span *ngIf="droppingtimes.nextday" style="color:red;font-size:10px" class="">({{droppingtimes.nextday | date:'dd LLL'}}) </span></td>
+                                <td><p class="b-place-two">{{droppingtimes.address}}<span *ngIf="droppingtimes.landmark !=droppingtimes.address"> ,{{droppingtimes.landmark}}</span></p></td></tr>
+                        </table>
+                        </div>
+                    </label>
+            <label *ngIf="droppingtimes.length==0" for="DNA" class="radio" (click)="Boardingdroping('dropping','NA',bus.id)">
+                        <input type="radio" name="mobile-boarding1" id="DNA" class="hidden"/>
+                        <span class="label"></span>
+                        <span class="">
+                        <span class="b-time">{{bus.arrivalTime | date:'HH:mm'}}</span>
+                        <p class="d-inline">
+                                <span class="b-place-one">{{params.queryParamMap.get('searchTo')}}</span> 
+                                <span class="b-place-two"></span>
+                        </p>
+                        </span>
+                    </label>
+        </div>
+            <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+            <ng-template #noPartial>
+                <p class="cancel-text mt-2 mb-2">
+                    <b>Partial cancellation not allowed</b>
+                </p>
+            </ng-template>
+
+        </div>
+    </div>
+    </div>
+
+    <mat-tab-group #tabGroup [selectedIndex]="selected" (selectedIndexChange)="tabSelectionChanged($event)">
+        <!-- <mat-tab label="Boarding Point">
             <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
             <label *ngFor="let boardingpoints of boardingtimes" for="{{boardingpoints.boardingPointId}}" class="radio" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)">
                         <div class="#">
@@ -1034,9 +1095,79 @@
                         </p>
                         </span>
                     </label>
-        </mat-tab>
+        </mat-tab> -->
     </mat-tab-group>
-    <div class="boarding-footer">
-        <button class="btn-primary btn" [disabled]="bookButtonDisable" (click)="onSubmitSeats(bus.id,bus,rowvalue,mobile=true)">Book</button>
+    <div class="boarding-footer bg-white">
+        <button class="btn-primary btn w-100" [disabled]="bookButtonDisable" (click)="onSubmitSeats(bus.id,bus,rowvalue,mobile=true)">Book</button>
     </div>
+
 </div>
+
+
+
+
+
+                                <!-- amenities modal popup -->
+                                <div class="mob-sf-area" id="Mobileamenities" style="left:0;">
+
+                                    <div class="mob-sf-box">
+                                        <div class="mob-title">
+                                            <h3>More about the bus</h3>
+                                            <a href="javascript:void(0)" (click)="closeAmenitiesmlite()" class="mob-close mob-ff-from-close">
+                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="mob-sf-tabs ">
+                                            <ul class="nav nav-tabs m-popup-tabs">
+                                                <li>
+                                                    <a class="active" href="#amenities" role="tab" aria-controls="amenities" data-bs-toggle="tab">Amenities</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#policy" role="tab" aria-controls="policy" data-bs-toggle="tab">Cancellation Policy</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content clearfix">
+                                                <div class="tab-pane active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+
+                                                    <ul class="amenities-m">
+                                                        <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
+                                                        <li *ngFor="let amen of busamenities">
+                                                             <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="tab-pane" id="policy" role="tabpanel" aria-labelledby="policy-tab">
+                                                <div class="m-policy-tbl">
+                                                    <table class="table table-bordered ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="33%">Time of Cancellation</th>
+                                                                <th width="33%">Deduction %</th>
+                                                                <th width="33%">Cancellation Charges</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let cancel of retvalues">
+                                                                <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
+                                                                <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
+                                                                <td class="text-center"> Rs. {{cancel.cancharges}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                    <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+                                                    <ng-template #noPartial>
+                                                        <p class="cancel-text mt-2">
+                                                            <b>Partial cancellation not allowed</b>
+                                                        </p>
+                                                    </ng-template>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- end of amenties modal pop up  -->
+
+

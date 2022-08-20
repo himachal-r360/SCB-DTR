@@ -243,79 +243,83 @@
                                 </mat-form-field>
                               </div>
                               <div class="container filter-container">
-                                <!-- <div class="filter-header">
-                                  <span class="float-left filter_heading">Filters</span>
-                                  <span class="float-right"><a href="javascript:;" (click)="onlyClearSelectionAll()" class="filter_blue_link" >Reset All</a></span>
-                                </div> -->
-                                <div class="col-md-12 float-left" id="filter-nav">
-                                <!-- <ng-template > -->
-                                      <label class="checkbox-cust" >
-                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.svg" /></div>
+
+                                    <!-- <div class="col-md-12 m_sort_flex_div" id="filter-nav"> -->
+                                        <div class="row m_sort_flex_div">
+                                            <div class="col-6">
+                                      <label class="checkbox-cust " >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
                                             <p class="m_sort_text50">Low to High</p>
                                         </div>
-                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <input checked="checked" type="radio" (click)="orderBy('price-low-high')" value="Price (Low to High)" >
                                         <span class="checkmark-cust"></span>
                                       </label>
+                                    </div>
 
+                                    <div class="col-6">
                                       <label class="checkbox-cust" >
-                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.svg" /></div>
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
                                             <p class="m_sort_text50">High to Low</p>
                                         </div>
-                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <input checked="checked" type="radio" (click)="orderBy('price-high-low')" value="Price (High to Low)">
                                         <span class="checkmark-cust"></span>
                                       </label>
+                                    </div>
 
+                                    <div class="col-6">
                                       <label class="checkbox-cust" >
-                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.svg" /></div>
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/grade.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Rating</p>
                                             <p class="m_sort_text50">Highest</p>
                                         </div>
-                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <input checked="checked" type="radio" (click)="orderBy('rating')" value="Price (Low to High)" >
                                         <span class="checkmark-cust"></span>
                                       </label>
+                                    </div>
 
+                                    <div class="col-6">
                                       <label class="checkbox-cust" >
-                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.svg" /></div>
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/seat_human.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Seats Availability</p>
                                             <p class="m_sort_text50">Available</p>
                                         </div>
-                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <input checked="checked" type="radio" (click)="orderBy('seats-availability')" value="Seats Availability" >
                                         <span class="checkmark-cust"></span>
                                       </label>
+                                    </div>
 
+                                    <div class="col-6">
                                       <label class="checkbox-cust" >
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Early</p>
                                             <p class="m_sort_text50">Earliest</p>
                                         </div>
-                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <input checked="checked" type="radio" (click)="orderBy('leave-early')" value="Leave Early">
                                         <span class="checkmark-cust"></span>
                                       </label>
+                                    </div>
 
+                                    <div class="col-6">
                                       <label class="checkbox-cust" >
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Late</p>
                                             <p class="m_sort_text50">Laest</p>
                                         </div>
-                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <input checked="checked" type="radio" (click)="orderBy('leave-late')" value="Leave Late">
                                         <span class="checkmark-cust"></span>
                                       </label>
-                                      <!-- </ng-template> -->
-                                      </div>
+                                    </div>
+                                    <!-- </div> -->
                                 </div>
-
-                              <div class="row">
-                                <div class="col-6"></div>
-                                <div class="col-6"></div>
-                              </div>
+                                </div>
                           </div>
                           <div class="mob-sf-btns">
                               <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>

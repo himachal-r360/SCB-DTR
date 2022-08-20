@@ -469,6 +469,25 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    });
  }
 
+ openAmentiesmlite()
+ {
+   var filterDiv = document.getElementById('Mobileamenities');
+   if(filterDiv)
+   {
+     filterDiv.style.display = 'block';
+   }
+
+ }
+ closeAmenitiesmlite()
+ {
+   var filterDiv = document.getElementById('Mobileamenities');
+   if(filterDiv)
+   {
+     filterDiv.style.display = 'none';
+   }
+
+ }
+
  openBoardingDroping(tripid: string, busdetails, rowvalue) {
   var searchparam = this.searchParam;
   if (searchparam.seatdetails != undefined) {
