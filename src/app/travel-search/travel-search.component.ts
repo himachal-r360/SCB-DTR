@@ -2182,7 +2182,7 @@ switch(service) {
         this.arrowFromkeyLocation=0;
 	}else if ($event.keyCode != 40 && $event.keyCode != 38 ){
         this.arrowFromkeyLocation=0;
-        if ($event.timeStamp - this.lastKeypress > 0) {
+        if (true) {
         this.queryText = $event.target.value;
         if(this.queryText && this.queryText.length > 0){
         //Elastic Search
