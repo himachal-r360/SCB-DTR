@@ -63,29 +63,29 @@
                     <p class="mt-15">Unlock Rewards Summary</p>
                 </div>
                 <div>
-                    <!-- <div class="mark_question">
+                    <div class="mark_question">
                         <div class="tooltip"><img src="{{cdnUrl}}images/smartbuy/icons/qmark.svg" alt="" class="img-fluid">
                             <span class="tooltiptext">
                                 <div>
                                   <p class="text-left pb-10" > <span class="text_eg me-2">e.g.</span> <span class="text_card">Regalia Credit Card xx1234</span> <span class="material-icons down_arrow">expand_more</span></p>
                                     <div class="points_sec row">
                                       <div class="col-4">
-                                          <p class="value"> 35,645</p>
+                                          <p class="value">{{current_available_points}}</p>
                                           <p class="name">Current Available Points</p>
                                       </div>
                                       <div class="col-4">
-                                          <p class="value"> 35,645</p>
+                                          <p class="value">{{customeravailablepoints}}</p>
                                           <p class="name">Available Reward Points</p>
                                       </div>
                                       <div class="col-4">
-                                          <p class="value">35,645</p>
+                                          <p class="value">{{last_stmt_points}}</p>
                                           <p class="name">Last Statement points</p>
                                       </div>
                                   </div>
                                 </div>
                             </span>
                         </div>
-                    </div> -->
+                    </div>
                     <div>
                         <div class="icon_place" data-bs-toggle="modal" data-bs-target="#unlockCardPopup"> <span><img src="{{cdnUrl}}images/smartbuy/icons/east.svg" alt="icn-right"></span> </div>
                     </div>
@@ -95,8 +95,8 @@
 
           <div class="goldCardDetails" [hidden]="IsgoldCardDetails">
               <div class="bg_place">
-                <p class="card_name">Regalia Gold Card xx10101 <span><a href="#">View Details</a></span></p>
-                  <div class="row">
+                <p class="card_name">Regalia Gold Card xx{{card_no}} <span><a href="javascript:;">View Details</a></span></p>
+                  <!-- <div class="row">
                     <div class="col-md-4 col-4">
                       <div>
                         <p class="number">Rs. 3,464</p>
@@ -113,6 +113,26 @@
                       <div>
                         <p class="number">232<span class="full_points">/2365</span></p>
                         <p class="text">Points Expiring</p>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="row">
+                    <div class="col-md-4 col-4">
+                      <div>
+                        <p class="number">{{current_available_points | number:'1.0':'en-US'}}</p>
+                        <p class="text">Current Available Points</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-4">
+                      <div>
+                        <p class="number">{{customeravailablepoints | number:'1.0':'en-US'}}</p>
+                        <p class="text">Reward Points</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-4">
+                      <div>
+                        <p class="number">{{last_stmt_points | number:'1.0':'en-US'}}</p>
+                        <p class="text">Last Statement points</p>
                       </div>
                     </div>
                   </div>
@@ -268,6 +288,12 @@
                               Date of birth is required
                             </div>
                         </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" formControlName="save_card" id="savecardcheck">
+                        <label class="ml-10" for="savecardcheck">
+                            Save this card
+                        </label>
                     </div>
                     <div class="cardError" [hidden]="IsCardError">
                         {{CardErrorMsg}}

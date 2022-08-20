@@ -160,10 +160,16 @@ nextIndex=0;
     this.getQueryParamData();
     this.flightSearch();
     this.getAirpotsNameList();
-    this.getAirlinesIconList();
+
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
+      this.getAirlinesIconList();
+      var element = document.getElementById('Sector-area');
+      if(element)
+      {
+        element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
+      }
       this.Initslider();
     }, 200);
   }
@@ -192,11 +198,7 @@ nextIndex=0;
     }
     this.searchData = flightSearchArr;
     this.selectedTripData = this.searchData[0];
-    var element = document.getElementById('Sector-area');
-    if(element)
-    {
-      element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
-    }
+
     console.log(flightSearchArr, "flightSearchArr");
   }
 
@@ -212,9 +214,7 @@ nextIndex=0;
       {
         this.WithoutFilterFlightList = res.response.journeys;
         this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
-        this.flightList.forEach((z:any)=>{
-          z.isTimeLess = this.IsTimeDiffLess(z.flights)
-        });
+
         this.flightListWithOutFilter = this.flightList;
         this.DocKey = res.response.docKey;
         console.log(this.flightList)
@@ -255,9 +255,7 @@ nextIndex=0;
     this.selectedTrip = i;
     this.flightList = [];
     this.flightList = this.WithoutFilterFlightList[i].sectors;
-    this.flightList.forEach((z:any)=>{
-      z.isTimeLess = this.IsTimeDiffLess(z.flights)
-    });
+
     this.flightListWithOutFilter = this.flightList;
     this.popularFilterFlightData();
   }
@@ -1183,5 +1181,42 @@ openMobileFilterSection()
 
    }
    return disable;
+  }
+
+   //sorting in mobile version
+   flightSortingMobile(val:any) {
+    let selectedVal = val;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    });
+  }
+
+  applySortingMobile() {
+    let sortingBtn = document.getElementById('sortMobileFilter');
+    if(sortingBtn)
+    {
+      sortingBtn.style.display = 'none';
+    }
+    this.popularFilterFlightData();
+  }
+
+  onSelect(flightKey:any,flights:any,item:any,event:any,index:number)
+  {
+
+    $(".onwardbuttons").removeClass('button-selected-style');
+    $(".onwardbuttons").html('Select');
+      var selected = event.target as HTMLElement
+      if(selected)
+      {
+        selected.classList.add('button-selected-style')
+        selected.innerHTML = 'Selected'
+      }
+      var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
+
+
   }
 }

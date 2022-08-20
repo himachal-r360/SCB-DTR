@@ -49,6 +49,9 @@ export class BannersComponent implements OnInit {
   IsCardError:boolean=true;
   CardErrorMsg:any;
   customeravailablepoints: any;
+  card_no: any;
+  current_available_points: any;
+  last_stmt_points: any;
   isLogged: Boolean;
   XSRFTOKEN: string;
   ngOnInit(): void {
@@ -131,7 +134,8 @@ benefitsLink(){
   this.angForm = this.fb.group({
      mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
      last_4_digit: ['', [Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
-     dob: ['', Validators.required ]
+     dob: ['', Validators.required ],
+     save_card: [''],
   });
 }
 
@@ -156,6 +160,7 @@ onSubmit(){
        return false; 
      }
      this.customerInfo = this.sg['customerInfo']; 
+     this.card_no=this.angForm.controls['last_4_digit'].value;
       let URLparams = {
          "mobile": this.angForm.controls['mobile_no'].value,
          "customer_id": this.customerInfo["customerid"],
@@ -163,13 +168,13 @@ onSubmit(){
          "last4digit":this.angForm.controls['last_4_digit'].value,
          "_token":this.customerInfo["XSRF-TOKEN"],
          "DOB":this.angForm.controls['dob'].value,
-         "savecard":1,
          "user_id":this.customerInfo["id"],
          'modal':'REWARD',
          'type' : 'available_points',
          'clientToken':this.sg['domainName'],
          'services_id':7,
          'partner_id':1,
+         'savecard':this.angForm.controls['save_card'].value,
        }
        var EncURLparams = {
          postData: this.EncrDecr.set(JSON.stringify(URLparams))
@@ -182,6 +187,8 @@ onSubmit(){
             this.angForm.reset();
             this.spinnerService.show();  
             this.customeravailablepoints=res.points_available;
+            this.current_available_points=res.current_available_points;
+            this.last_stmt_points=res.last_stmt_points;
           }else{
                this.IsCardError=false;
                this.CardErrorMsg=res.message;
