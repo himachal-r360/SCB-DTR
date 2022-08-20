@@ -109,6 +109,9 @@ public modeselectTrending= 'All';
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
+    console.log("for you");
+    console.log(this.sg);
+    this.customercards=this.sg['customerInfo']['customercards'];
     //console.log((this.poweredByPartners));
     
      if(this.serviceSettings['new_ui_ux']==0){   
