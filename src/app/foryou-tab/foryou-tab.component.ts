@@ -109,11 +109,7 @@ public modeselectTrending= 'All';
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
-    console.log("for you");
-    console.log(this.sg);
     this.customercards=this.sg['customerInfo']['customercards'];
-    //console.log((this.poweredByPartners));
-    
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
@@ -132,7 +128,6 @@ public modeselectTrending= 'All';
    // this._styleManager.removeScript('owl');
   }
   onlyNumberKey(event,maxlenth) {
-      console.log($(event.target).prop('value').length);
       if($(event.target).prop('value').length>=maxlenth){
         return false;
        } 
@@ -246,11 +241,6 @@ public modeselectTrending= 'All';
     
       this.createForm();
      setTimeout(() => {
-     
-     
-    //Check Laravel Seesion
-        console.log('customerInfo');   
-        console.log(this.sg['customerInfo']);
         if(this.sg['customerInfo']){
          var customer_cookie;
           if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
@@ -615,14 +605,13 @@ public modeselectTrending= 'All';
           }
         }), (err: HttpErrorResponse) => {
           var message = 'Something went wrong';
-          console.log(message);
         };
       }
     }
   }
 
   selectedCard(e) {
-    this.selectedCardDetails = e.value;
+    this.selectedCardDetails = e.target.value;
     this.checkAvailablePointsforSavedCard();
   }
 
@@ -730,6 +719,8 @@ public modeselectTrending= 'All';
       if (this.response1['status'] != undefined && (this.response1['status'] == true || this.response1['status'] == 'true')) {
         this.errorMsg0 = ""
         this.customeravailablepoints = (Number(this.response1['points_available'])).toLocaleString('en-IN');
+        this.current_available_points = (Number(this.response1['current_available_points'])).toLocaleString('en-IN');
+        this.last_stmt_points = (Number(this.response1['points_available'])).toLocaleString('en-IN');
 
       } else {
         this.errorMsg0 = "Something went wrong";
@@ -770,7 +761,6 @@ public modeselectTrending= 'All';
 
     }), (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
-      console.log(message);
     };
   }
 
@@ -965,7 +955,6 @@ public modeselectTrending= 'All';
           postData: this.EncrDecr.set(JSON.stringify(URLparams))
         };
         this.rest.AvailablePoints(EncURLparams).subscribe(res => {
-         console.log(res); 
          if(res.error_code=="100"){
             document.getElementById('unlockCardPopup').click();
             this.IsPointsCardDetails=false;

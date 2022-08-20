@@ -102,7 +102,6 @@ export class BannersComponent implements OnInit {
     this.rest.getRegaliaGoldList().subscribe(res => {
       this.mainBanners = res.mainBanners.diners;
     });
-     console.log(this.sg);
      var params_arg = {
       _token:this.sg['customerInfo']['XSRF-TOKEN']
       };
@@ -146,7 +145,6 @@ benefitsLink(){
 HotelRecentSearch(){
  if (localStorage.getItem("HotelRecentSearch") != null) {
    var HotelRecentSearchResult = JSON.parse(window.atob(localStorage.getItem("HotelRecentSearch")));
-   console.log(HotelRecentSearchResult);
   /* for (let cok = 0; cok < HotelRecentSearchResult.length; cok++) {
    if (HotelRecentSearchResult[cok]['city_id'] == search_values_setCookieHotel[0].city_id && HotelRecentSearchResult[cok]['checkin'] == search_values_setCookieHotel[0].checkin && HotelRecentSearchResult[cok]['checkout'] == search_values_setCookieHotel[0].checkout) {
       HotelRecentSearchResult.splice(cok, 1);
