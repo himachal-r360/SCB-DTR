@@ -294,10 +294,11 @@ return this.http.post( this.endpoint+'flexiPay_check_existingcustomer',param, co
   }
 }
 flexipayvalidateOTP(param){
-  if(LOCALJSON=='true'){
-    return this.http.get('assets/data/flexipayvalidateOTP.json');
-  }else{
-return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe(map((response: any) => response));
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/flexipayvalidateOTP.json');
+    }else{
+      return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe(map((response: any) => response));
+    }
   }
-}
+
 }

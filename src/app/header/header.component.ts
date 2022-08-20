@@ -23,6 +23,8 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
+import {formatDate} from '@angular/common';
+
 
 declare var $: any;
 declare var jQuery: any;
@@ -51,7 +53,7 @@ declare const annyang: any;
 export class HeaderComponent implements OnInit {
   
 
-
+        now:any=[];
   rd_site_url: any;shop_site_url;
         loginUrl:string='check-login?g=1';
         addtocart: boolean = false;
@@ -725,47 +727,40 @@ closeCookieConsent(value){
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
     
-   
-       
-       this.router.events.subscribe((event: any) => {
-	if (event instanceof NavigationEnd) {
-	
-	 if (event.url.includes("train-traveller") || event.url.includes("bus/booking") ||  event.url.includes("freshmenu/review-order") ) 
-	this.loginUrl='check-login';
-	else
-	this.loginUrl='check-login?g=1';
-	
-	 if (event.url.includes("compare-fly")) 
-          this.activeMenu='compare-fly';
-         else if (event.url.includes("flights")) 
-          this.activeMenu='compare-fly';
-         else
-           this.activeMenu='home';
+      this.router.events.subscribe((event: any) => {
+        	if (event instanceof NavigationEnd) {
+        	
+        	 if (event.url.includes("train-traveller") || event.url.includes("bus/booking") ||  event.url.includes("freshmenu/review-order") ) 
+        	this.loginUrl='check-login';
+        	else
+        	this.loginUrl='check-login?g=1';
+        	
+        	 if (event.url.includes("compare-fly")) 
+            this.activeMenu='compare-fly';
+           else if (event.url.includes("flights")) 
+            this.activeMenu='compare-fly';
+           else
+             this.activeMenu='home';
 
+          }
+      });
+
+      this.router.events.subscribe((event: any) => {
+        if (event instanceof NavigationEnd) {
+          if(event.url.includes('freshmenu')){
+            this.displayCart = true;
+          }else{
+            this.displayCart = false;
+          }
         }
-    });
+      });
 
-    this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd) {
-      if(event.url.includes('freshmenu')){
-        this.displayCart = true;
-      }else{
-        this.displayCart = false;
-      }
-    }
-    });
+      let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
+    	if(queryParamMap.keys[0])
+    	 this.redirectUrlpopup(queryParamMap.keys[0],0,'smartbuy');
 
-
-
-
-
-    let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
-	if(queryParamMap.keys[0])
-	 this.redirectUrlpopup(queryParamMap.keys[0],0,'smartbuy');
-
-/*this.customerInfo=  JSON.parse(this.EncrDecr.get('drw6SKRtkeqkTBiXIayqU5HyPwGeiveIXQzuz/KGDsQq9voz8OBqnyumqoqWhUuxRGwQAcwa6Lm/pES4C3pOhnz0JOc2xmIeYFuC2LDYt2+9dhekELisHSTBHbIchrIkeGf6q8KafxHJ1uTCm+Viqh04rkThML9wSQjbTHGsKr/di5FuMSBZKkM9x54/c5YKyWk21WLS5LC1J9e2syYncmY2dOdbpO94WJgc4udqIOGQFlzqptKFugCzph4sMg00y7tLpzFBXj5ZMPzeVtI1WbvjZ6J97k/h0NvdoPy+uZ1u1ggZht8htFI/eodX6decl0Qfe956+fRCewg5AYpAC1oT6Me9GDXOojqCORK5O7MoqTfBuEQYFleGQtIzV783Y2VmVvdmdusnVyI29JncPA=='));
-
-this.customerLogin=true;*/
+      /*this.customerInfo=  JSON.parse(this.EncrDecr.get('drw6SKRtkeqkTBiXIayqU5HyPwGeiveIXQzuz/KGDsQq9voz8OBqnyumqoqWhUuxRGwQAcwa6Lm/pES4C3pOhnz0JOc2xmIeYFuC2LDYt2+9dhekELisHSTBHbIchrIkeGf6q8KafxHJ1uTCm+Viqh04rkThML9wSQjbTHGsKr/di5FuMSBZKkM9x54/c5YKyWk21WLS5LC1J9e2syYncmY2dOdbpO94WJgc4udqIOGQFlzqptKFugCzph4sMg00y7tLpzFBXj5ZMPzeVtI1WbvjZ6J97k/h0NvdoPy+uZ1u1ggZht8htFI/eodX6decl0Qfe956+fRCewg5AYpAC1oT6Me9GDXOojqCORK5O7MoqTfBuEQYFleGQtIzV783Y2VmVvdmdusnVyI29JncPA=='));
+      this.customerLogin=true;*/
   
     }
     
@@ -1252,7 +1247,6 @@ this.customerLogin=true;*/
     };
     this._DisclaimerSheetComponent.open(DisclaimerBottomSheetComponent, config);
   }
-    
     
   }
 
