@@ -81,7 +81,11 @@ export class BannersComponent implements OnInit {
         this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
         this.rest.updateCardDetails(this.customerInfo);
         if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
-          this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
+             this.card_no="xx"+(Number(this.customerInfo['ccustomer'].last4digit));
+            this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
+            this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
+            this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
+        //  this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
           this.IsgoldCardDetails=false;
           this.IsgoldCardDetailsModel=true;
          }
@@ -98,7 +102,6 @@ export class BannersComponent implements OnInit {
     this.rest.getRegaliaGoldList().subscribe(res => {
       this.mainBanners = res.mainBanners.diners;
     });
-     console.log(this.sg);
      var params_arg = {
       _token:this.sg['customerInfo']['XSRF-TOKEN']
       };
@@ -142,7 +145,6 @@ benefitsLink(){
 HotelRecentSearch(){
  if (localStorage.getItem("HotelRecentSearch") != null) {
    var HotelRecentSearchResult = JSON.parse(window.atob(localStorage.getItem("HotelRecentSearch")));
-   console.log(HotelRecentSearchResult);
   /* for (let cok = 0; cok < HotelRecentSearchResult.length; cok++) {
    if (HotelRecentSearchResult[cok]['city_id'] == search_values_setCookieHotel[0].city_id && HotelRecentSearchResult[cok]['checkin'] == search_values_setCookieHotel[0].checkin && HotelRecentSearchResult[cok]['checkout'] == search_values_setCookieHotel[0].checkout) {
       HotelRecentSearchResult.splice(cok, 1);
@@ -160,7 +162,7 @@ onSubmit(){
        return false; 
      }
      this.customerInfo = this.sg['customerInfo']; 
-     this.card_no=this.angForm.controls['last_4_digit'].value;
+     this.card_no="xx"+this.angForm.controls['last_4_digit'].value;
       let URLparams = {
          "mobile": this.angForm.controls['mobile_no'].value,
          "customer_id": this.customerInfo["customerid"],

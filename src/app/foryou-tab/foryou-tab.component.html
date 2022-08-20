@@ -69,9 +69,14 @@
 
                 <div class="row mb-3">
 
-                    <div class="card_points_info" [hidden]="IsPointsCardDetails">
+                    <div class="card_points_info" [hidden]="IsPointsCardDetails">                                   
                         <div class="bg_place">
-                          <p class="card_name">Card Number xx{{card_no}} <span><a href="javascript:;">View Details</a></span></p>
+                          <div class="card_select">
+                            <select (change)="selectedCard($event)">
+                              <option *ngFor="let each of customercards" value="{{each.id}}"  [attr.selected]="each.primary ==1">{{each.card}}</option>
+                            </select>
+                          </div>        
+                          <!-- <p class="card_name">Card Number {{card_no}} <span><a href="javascript:;">View Details</a></span></p> -->
                             <div class="row">
                               <div class="col-md-4 col-4">
                                 <div>
