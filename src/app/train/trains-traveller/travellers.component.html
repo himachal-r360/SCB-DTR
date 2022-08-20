@@ -89,37 +89,37 @@
             
                 <div class="row">
 
-                  <div class="col-sm-6">
+                  <div class="col-sm-4">
                     <p class="train_name">
                       LTT VSKP EXP(18520)
                     </p>
                     <p class="daily_chart">
                         <span class="text-small-gray" style="color:#000000;">Runs on:</span>
-                        <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
-                        <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
-                        <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
-                        <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
-                        <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
-                        <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
-                        <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                        <span >S</span>
+                        <span >M</span>
+                        <span >T</span>
+                        <span >W</span>
+                        <span >T</span>
+                        <span class="active">F</span>
+                        <span >S</span>
                     </p>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-8">
                     <div class="trainTimeInfo">
                         <div class="">
-                            <p><span class="time">{{train.departureTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
-                            <p class="place">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
+                            <p><span class="time">06:05, Sat</span></p>
+                            <p class="place">Lokmantatilak (LTT) </p>
                             <p class="date">Jul 17, 2022</p>
                         </div>
                         <div>
                             <div class="duration_train">
-                                <p class="dur_time">{{commonHelper.trainDuration(train.duration)}}</p>
+                                <p class="dur_time">13 hrs 35 mins</p>
                                 <div class="range"></div>
                             </div>
                         </div>
                         <div>
-                            <p><span class="time">{{train.arrivalTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
-                            <p class="place">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
+                            <p><span class="time">20:30, Sun</span> </p>
+                            <p class="place">Secunderabad Jn (SC)</p>
                             <p class="date">Jul 17, 2022</p>
                         </div>
                       </div>
@@ -140,9 +140,9 @@
                   <div class="col-sm-8">
                                     <!--Show bording stations-->
                     <p class="train_title_label"> Boarding station </p>
-                    <div class="common_box">
+                    <div class="">
                       <div class="boarding_point">
-                        <mat-form-field class="w-50" appearance="outline">
+                        <mat-form-field class="w-100" appearance="outline">
                           <mat-select placeholder="Select boarding station" formControlName="boardingStation" [(ngModel)]="defaultBoardingStation" (ngModelChange)="trainSchedlue(defaultBoardingStation)">
                               <mat-option *ngFor="let stationList of stationNames" [value]="stationList.stnNameCode">
                                   {{stationList.stnNameCode}} </mat-option>
@@ -151,9 +151,9 @@
                         <div *ngIf="submittedUserInfoForm && idForm.controls['boardingStation']['errors']" class="error">
                             <small *ngIf="idForm.controls['boardingStation']['errors']['required']">Please select boarding station.</small>
                         </div>
-                        <div class="train-schedule-time">
-                          <span>Scheduled time: <span>{{scheduletime}}</span> </span>
-                        </div>
+                      </div>
+                      <div class="train-schedule-time">
+                        <span>Scheduled time: <span>{{scheduletime}}</span> </span>
                       </div>
                       
                     </div>
