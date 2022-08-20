@@ -273,7 +273,11 @@ public modeselectTrending= 'All';
           this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
           this.rest.updateCardDetails(this.customerInfo);
           if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
-            this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
+            this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
+            this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
+            this.card_no="xx"+(Number(this.customerInfo['ccustomer'].last4digit));
+            this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
+            //this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
             this.IsPointsCardDetails=false;
             this.IsPointsCardDetailsModel=true;
            }
