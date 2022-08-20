@@ -153,7 +153,12 @@
                   </div>
                   <div class="mob-listing-header-center">
                       <h6>{{busfrom}} - {{busto}}</h6>
-                      <p>{{departure | date:'EEE, dd MMM' }}   </p>
+                      <div class="d-flex align-items-center">
+                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
+                            <p>{{departure | date:'EEE, dd MMM' }}   </p>
+                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
+                      </div>
+                      
                   </div>
                   <div class="mob-listing-header-right">
                       <a href="javascript:;" routerLink="/bus" >
@@ -167,7 +172,7 @@
                   <h6> <p *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p></h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()">
                       <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                      <span>Sort/Filters</span>
+                      <span class="px-2">Sort/Filters</span>
                   </a>
               </div>
           </div>
@@ -236,6 +241,80 @@
                                 <mat-option value="Seats Availability" (click)="orderBy('seats-availability')">Seats Availability</mat-option>
                                 </mat-select>
                                 </mat-form-field>
+                              </div>
+                              <div class="container filter-container">
+                                <!-- <div class="filter-header">
+                                  <span class="float-left filter_heading">Filters</span>
+                                  <span class="float-right"><a href="javascript:;" (click)="onlyClearSelectionAll()" class="filter_blue_link" >Reset All</a></span>
+                                </div> -->
+                                <div class="col-md-12 float-left" id="filter-nav">
+                                <!-- <ng-template > -->
+                                      <label class="checkbox-cust" >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Price</p>
+                                            <p class="m_sort_text50">Low to High</p>
+                                        </div>
+                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+
+                                      <label class="checkbox-cust" >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Price</p>
+                                            <p class="m_sort_text50">High to Low</p>
+                                        </div>
+                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+
+                                      <label class="checkbox-cust" >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Rating</p>
+                                            <p class="m_sort_text50">Highest</p>
+                                        </div>
+                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+
+                                      <label class="checkbox-cust" >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Seats Availability</p>
+                                            <p class="m_sort_text50">Available</p>
+                                        </div>
+                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+
+                                      <label class="checkbox-cust" >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Leave Early</p>
+                                            <p class="m_sort_text50">Earliest</p>
+                                        </div>
+                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+
+                                      <label class="checkbox-cust" >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Leave Late</p>
+                                            <p class="m_sort_text50">Laest</p>
+                                        </div>
+                                        <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+                                      <!-- </ng-template> -->
+                                      </div>
+                                </div>
+
+                              <div class="row">
+                                <div class="col-6"></div>
+                                <div class="col-6"></div>
                               </div>
                           </div>
                           <div class="mob-sf-btns">
