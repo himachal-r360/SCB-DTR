@@ -207,8 +207,7 @@
                   *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                 <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
               </div>
-              {{dateOnwardHourMulti[searchi][i]}}
-              <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi][i+1]">
+              <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
                 <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in
                   {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
               </div>
@@ -311,9 +310,9 @@
             </div>
                   </ng-container> 
           </div>
-   
+
           
-          <div class="booking-inner-box fare-rules-box" *ngIf="baggageInfoOnwardMulti[searchi] || cancellationPolicyOnwardMulti[searchi]">
+          <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 ">   
             <div class="fare-rules-title">
               <h6>Fare Rules</h6>
             </div>
@@ -321,44 +320,30 @@
 
               <div class="rules-flight">
 
-
-                  <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
-                <div class="rules-flight-items">
-                    <div class="rules-flight-thumbe">
-                      <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[searchi][0].airline}}.gif"
-                        alt="{{flightOnwardDetails[searchi][0].airline}}" class=" mr-10">
-                    </div>
-                    <div class="rules-flight-content">
-                      <h6>
-                        {{searchData.fromCity}}
+              <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
+                        <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails{{searchi}}"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
+                        <div class="rules-flight-items">
+                        <div class="rules-flight-thumbe">
+                        <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[searchi]['flights'][0].airline}}.gif"
+                        alt="{{flightOnwardDetails[searchi]['flights'][0].airline}}" class=" mr-10">
+                        </div>
+                        <div class="rules-flight-content">
+                        <h6>
+                        {{searchDatad.fromCity}}
                         <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
-                        {{searchData.toCity}}
-                      </h6>
-                    </div>
-                  </div>
-              </a>
+                        {{searchDatad.toCity}}
+                        </h6>
+                        </div>
+                        </div>
+                        </a>
 
+           </ng-container>
 
-              <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails"  *ngIf="cancellationPolicyReturn || baggageInfoReturn">
-                <div class="rules-flight-items" *ngIf="flightReturnDetails[0]">
-                    <div class="rules-flight-thumbe">
-                      <img src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0].airline}}.gif"
-                        alt="{{flightReturnDetails[0].airline}}" class=" mr-10">
-                    </div>
-                    <div class="rules-flight-content">
-                      <h6>
-                        {{searchData.toCity}}
-                        <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
-                        {{searchData.fromCity}}
-                      </h6>
-                    </div>
-                  </div>
-              </a>
 
               </div>
-
+           <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
               <!--Onward-->
-              <div id="onwardFareDetails" class="flight-extra-content-onward">
+              <div id="onwardFareDetails{{searchi}}" class="flight-extra-content-onward">
                 <ul class="list-unstyled flight-extra-tabs">
                   <li *ngIf="cancellationPolicyOnwardMulti[searchi]">
                     <a href="javascript:void(0);" class="flight-extra-content-oo"
@@ -485,7 +470,7 @@
                 </div>
 
               </div>
-
+          </ng-container>
            
            </div> 
              </div> 

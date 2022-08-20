@@ -737,7 +737,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
              } 
             }
             
-console.log( this.baggageInfoOnwardMulti);
 
 
 
@@ -1891,7 +1890,7 @@ console.log( this.baggageInfoOnwardMulti);
     if (obj2 != null || obj2 != undefined) {
       let obj2Date = new Date(obj2.departureDateTime);
       let obj1Date = new Date(obj1.arrivalDateTime);
-      this.dateOnwardHourMulti[j]=( (obj2Date.valueOf() - obj1Date.valueOf()) / 1000);
+      this.dateOnwardHourMulti[j][i]=( (obj2Date.valueOf() - obj1Date.valueOf()) / 1000);
       return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;;    
     }
     
@@ -1993,6 +1992,7 @@ console.log( this.baggageInfoOnwardMulti);
         let onward_airline_array = [];
         let return_airline_array = [];
    this.dateOnwardHourTotalMulti[j]=0;
+   this.dateOnwardHourMulti[j]=[];
   
     for (let i = 0; i < this.flightOnwardDetails[j]['flights'].length; i++) {
       onward_airline_array.push(this.flightOnwardDetails[j]['flights'][i].airline);
@@ -2000,7 +2000,7 @@ console.log( this.baggageInfoOnwardMulti);
       if (this.flightOnwardDetails[j]['flights'][i + 1] != null && this.flightOnwardDetails[j]['flights'][i + 1] != undefined) {
        this.dateOnwardHourTotalMulti[j]+= this.getLayoverHourOnwardMulti(this.flightOnwardDetails[j]['flights'][i], this.flightOnwardDetails[j]['flights'][i + 1],j,i);
       }else{
-       this.dateOnwardHourMulti[j]=0;
+       this.dateOnwardHourMulti[j][i]=0;
        }
       totalOnwardStops++;
     }
