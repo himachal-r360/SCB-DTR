@@ -1718,10 +1718,10 @@ console.log(this.searchFlightForm);
         this.redirectPopupTriggerTimestamp=current.getTime();
         this.redirectPopupTrigger=1;
         this.redirectPopup=2;
-        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         return;
         }
-         this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+         this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         
         
         break;
@@ -1800,11 +1800,11 @@ console.log(this.searchFlightForm);
         this.redirectPopupTriggerTimestamp=current.getTime();
         this.redirectPopupTrigger=1;
         this.redirectPopup=2;
-        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         return;
         }
         
-         this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+         this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         
 
        
