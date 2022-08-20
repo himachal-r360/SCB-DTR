@@ -299,6 +299,9 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
   baggageInfoOnward: any = '';
   cancellationPolicyOnward: any = '';
+  
+  baggageInfoOnwardMulti: any = [];
+  cancellationPolicyOnwardMulti: any = [];
 
   baggageInfoReturn: any = '';
   cancellationPolicyReturn: any = '';
@@ -414,10 +417,26 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   }, 10);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
-                  //console.log(this.searchData);
+                  console.log(this.flightSessionData);
+                  console.log(this.searchData);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
+                  
+                  if( this.flightSessionData['travel_type']=='M') {
+                  //Multicity
+                this.maxAdults = Number(this.searchData[0].adults);
+                this.maxChilds = Number(this.searchData[0].child);
+                this.maxInfants = Number(this.searchData[0].infants);
+                this.travelerDetails['adults'] = this.searchData[0].adults;
+                this.travelerDetails['child'] = this.searchData[0].child;
+                this.travelerDetails['infants'] = this.searchData[0].infants;
+                this.partnerToken = this.flightSessionData.onwardFlights[0]['priceSummery']['partnerName'];
+                this.flightOnwardDetails = this.flightSessionData.onwardFlights; 
+                console.log(this.flightOnwardDetails);
+                this.flightReturnDetails = [];
+                  }else{
+                  
                   this.maxAdults = Number(this.searchData.adults);
                   this.maxChilds = Number(this.searchData.child);
                   this.maxInfants = Number(this.searchData.infants);
@@ -449,6 +468,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
 
                   this.partnerToken = this.selectedOnwardVendor.partnerName;
+                 } 
+                  
                   this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
                   //console.log(this.partnerToken);
                   //console.log(this.enableVAS);
@@ -589,8 +610,26 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   getFlightDetails(param) {
 
     if (param != null) {
-
+    
       let flightKeys = [];
+      if(param['travel_type']=='M'){
+        for (let j = 0; j < param.onwardFlights.length; j++) {
+         flightKeys.push(param.onwardFlights[j]['flightKey']);
+        }
+      
+       var body1 = {
+        "docKey": param.docKey,
+        "flightKeys": flightKeys,
+        "partnerName": param.onwardFlights[0]['priceSummery']['partnerName'],
+        "onwardFlightFareKey": '',
+        "returnFlightFareKey": ''
+      }
+
+       this.getFlightInfoMulticity(body1, param.onwardFlights[0]['priceSummery']['partnerName'], this.searchData);
+      this.durationCalcMulti();
+     
+      
+      }else{
       flightKeys.push(param.onwardFlightKey);
 
       if (param.returnFlightKey)
@@ -609,9 +648,127 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
       this.getFlightInfo(body, this.selectedOnwardVendor.partnerName, this.searchData);
       this.durationCalc();
+      }
     }
 
 
+  }
+  
+  
+    getFlightInfoMulticity(param: any, partner: any, searchData: any) {
+    this.loaderValue = 10;
+    const myInterval3 = setInterval(() => {
+      this.loaderValue = this.loaderValue + 10;
+
+      if (this.loaderValue == 110) {
+        this.loaderValue = 10;
+      }
+    }, 600);
+
+    this._flightService.getFlightInfoMulticity(param, searchData).subscribe((res: any) => {
+
+      let baseFare = 0; let taxFare = 0; let totalFare = 0; let totalFareOnward = 0; let totalFareReturn = 0;
+      let adultFare = 0; let childFare = 0; let infantFare = 0;
+
+      clearInterval(myInterval3);
+      setTimeout(() => {
+        $("#infoprocess").modal('hide');
+      }, 10);
+
+      if (res.statusCode == 200) {
+        this.flightInfo = res.response;
+        var suggestHotels = {
+          service: 'Flights',
+          city: this.searchData[0].toCity,
+          country_code: this.searchData[0].toContry,
+          address: '',
+          check_in_date: this.searchData[0].departure,
+          adult: 1,
+          child: 1
+        };
+
+        this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
+
+          if (res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.length > 0) {
+          
+          let fareInfo;
+          
+            for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
+             fareInfo=  res.response.onwardFlightDetails[k];
+
+              if (fareInfo.fare) {
+                if (fareInfo.fare.ADT) {
+                  this.AdtFare += Number(fareInfo.fare.ADT.bf * fareInfo.fare.ADT.qt) + Number(fareInfo.fare.ADT.TX);
+
+                  this.AdtQuantity += Number(fareInfo.fare.ADT.qt);
+                  this.AdtBaseFare += Number(fareInfo.fare.ADT.bf);
+
+                }
+
+                if (fareInfo.fare.CHD) {
+                  this.ChildFare += Number(fareInfo.fare.CHD.bf * fareInfo.fare.CHD.qt) + Number(fareInfo.fare.CHD.TX);
+
+                  this.ChildQuantity += Number(fareInfo.fare.CHD.qt);
+                  this.ChildBaseFare += Number(fareInfo.fare.CHD.bf);
+
+                }
+
+                if (fareInfo.fare.INF) {
+                  this.InfantTotalFare += Number(fareInfo.fare.INF.bf * fareInfo.fare.INF.qt) + Number(fareInfo.fare.INF.TX);
+
+                  this.InfantQuantity += Number(fareInfo.fare.INF.qt);
+                  this.InfantBaseFare += Number(fareInfo.fare.INF.bf);
+
+                }
+              }
+
+
+              totalFare += Number(res.response.comboFare.onwardTotalFare);
+              baseFare += Number(res.response.comboFare.onwardBaseFare);
+              totalFareOnward += Number(res.response.comboFare.onwardTotalFare);
+
+
+             if (fareInfo && fareInfo.bg.length > 0)
+              this.baggageInfoOnwardMulti[k] = fareInfo.bg;
+              this.cancellationPolicyOnwardMulti[k] = this.emt_cancellationPolicy(fareInfo.cancellationPolicy);
+             
+              
+              
+             } 
+            }
+            
+console.log( this.baggageInfoOnwardMulti);
+
+
+
+      } else {
+        $('#bookingprocessFailed').modal('show');
+      }
+      taxFare = totalFare - baseFare;
+
+      this.BaseFare = baseFare;
+      this.Tax = taxFare;
+      this.TotalFare = totalFare;
+
+      this.totalCollectibleAmount = Number(this.TotalFare);
+      this.totalCollectibleAmountFromPartnerResponse = this.totalCollectibleAmount;
+      this.totalCollectibleAmountFromPartnerResponseOrg = this.totalCollectibleAmount;
+      // console.log( this.totalCollectibleAmountFromPartnerResponse);
+
+
+      this.onwardAmount = totalFareOnward;
+      this.returnAmount = totalFareReturn;
+
+    }, (error) => {
+
+      clearInterval(myInterval3);
+
+      setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+      }, 10);
+
+    });
   }
 
 
@@ -1726,6 +1883,20 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       this.dateOnwardHour = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
     }
   }
+  
+   dateOnwardHourMulti: any=[];
+
+    dateOnwardHourTotalMulti= [];
+  getLayoverHourOnwardMulti(obj1: any, obj2: any,j:number,i:number) {
+    if (obj2 != null || obj2 != undefined) {
+      let obj2Date = new Date(obj2.departureDateTime);
+      let obj1Date = new Date(obj1.arrivalDateTime);
+      this.dateOnwardHourMulti[j]=( (obj2Date.valueOf() - obj1Date.valueOf()) / 1000);
+      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;;    
+    }
+    
+  }
+  
 
   dateReturnHour: number = 0;
   getLayoverHourReturn(obj1: any, obj2: any) {
@@ -1805,6 +1976,57 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
 
   }
+  
+  
+  
+    totalOnwardStops_data_multi=[];
+  onwardAirlineMulti_multi=[];
+  totalOnwardDurationMulti=[];
+
+  durationCalcMulti() {
+    const unique = (value, index, self) => {
+      return self.indexOf(value) === index
+    }
+  for (let j = 0; j < this.flightOnwardDetails.length; j++) {
+        let totalOnwardStops = -1;
+        this.totalOnwardDurationMulti[j] = 0;
+        let onward_airline_array = [];
+        let return_airline_array = [];
+   this.dateOnwardHourTotalMulti[j]=0;
+  
+    for (let i = 0; i < this.flightOnwardDetails[j]['flights'].length; i++) {
+      onward_airline_array.push(this.flightOnwardDetails[j]['flights'][i].airline);
+      this.totalOnwardDurationMulti[j] += this.flightOnwardDetails[j]['flights'][i].duration;
+      if (this.flightOnwardDetails[j]['flights'][i + 1] != null && this.flightOnwardDetails[j]['flights'][i + 1] != undefined) {
+       this.dateOnwardHourTotalMulti[j]+= this.getLayoverHourOnwardMulti(this.flightOnwardDetails[j]['flights'][i], this.flightOnwardDetails[j]['flights'][i + 1],j,i);
+      }else{
+       this.dateOnwardHourMulti[j]=0;
+       }
+      totalOnwardStops++;
+    }
+    
+
+    if (totalOnwardStops == 0) {
+      if (this.flightSessionData.onwardFlights[j]['flights'][0]['stops'] == 0)
+        this.totalOnwardStops_data_multi[j]= "Non-Stop";
+      else
+        this.totalOnwardStops_data_multi[j]=totalOnwardStops + " Stop";
+    } else {
+      this.totalOnwardStops_data_multi[j]=totalOnwardStops + " Stop";
+    }
+
+
+    const onward_airline_unique = onward_airline_array.filter(unique);
+
+    if (onward_airline_unique.length > 1){
+      this.onwardAirlineMulti_multi[j] = true;
+    }else{
+     this.onwardAirlineMulti_multi[j] = false;
+    }
+    }
+
+  }
+  
 
   changeFareRuleTabBottomOnward(event: any) {
     $('.flight-extra-content-o').hide();
@@ -1872,7 +2094,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       }
     }, 600);
 
-
     this._flightService.getFlightInfo(param, searchData).subscribe((res: any) => {
 
       let baseFare = 0; let taxFare = 0; let totalFare = 0; let totalFareOnward = 0; let totalFareReturn = 0;
@@ -1908,8 +2129,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   totalFareOnward += Number(res.response.onwardFlightDetails.fare.O.ADT.tf * res.response.onwardFlightDetails.fare.O.ADT.qt);
                   this.AdtFare += Number(res.response.onwardFlightDetails.fare.O.ADT.tf * res.response.onwardFlightDetails.fare.O.ADT.qt);
 
-                  this.AdtQuantity = Number(res.response.onwardFlightDetails.fare.O.ADT.qt);
-                  this.AdtBaseFare = Number(res.response.onwardFlightDetails.fare.O.ADT.bf);
+                  this.AdtQuantity += Number(res.response.onwardFlightDetails.fare.O.ADT.qt);
+                  this.AdtBaseFare += Number(res.response.onwardFlightDetails.fare.O.ADT.bf);
 
                 }
                 if (res.response.onwardFlightDetails.fare.O.CHD) {
@@ -1918,8 +2139,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   totalFareOnward += Number(res.response.onwardFlightDetails.fare.O.CHD.tf * res.response.onwardFlightDetails.fare.O.CHD.qt);
                   this.ChildFare += Number(res.response.onwardFlightDetails.fare.O.CHD.tf * res.response.onwardFlightDetails.fare.O.CHD.qt);
 
-                  this.ChildQuantity = Number(res.response.onwardFlightDetails.fare.O.CHD.qt);
-                  this.ChildBaseFare = Number(res.response.onwardFlightDetails.fare.O.CHD.bf);
+                  this.ChildQuantity += Number(res.response.onwardFlightDetails.fare.O.CHD.qt);
+                  this.ChildBaseFare += Number(res.response.onwardFlightDetails.fare.O.CHD.bf);
 
                 }
 
@@ -1929,8 +2150,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   totalFareOnward += Number(res.response.onwardFlightDetails.fare.O.INF.tf * res.response.onwardFlightDetails.fare.O.INF.qt);
                   this.InfantTotalFare += Number(res.response.onwardFlightDetails.fare.O.INF.tf * res.response.onwardFlightDetails.fare.O.INF.qt);
 
-                  this.InfantQuantity = Number(res.response.onwardFlightDetails.fare.O.INF.qt);
-                  this.InfantBaseFare = Number(res.response.onwardFlightDetails.fare.O.INF.bf);
+                  this.InfantQuantity += Number(res.response.onwardFlightDetails.fare.O.INF.qt);
+                  this.InfantBaseFare += Number(res.response.onwardFlightDetails.fare.O.INF.bf);
 
                 }
               }
@@ -1943,8 +2164,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   this.AdtFare += Number(res.response.returnFlightDetails.fare.O.ADT.tf * res.response.returnFlightDetails.fare.O.ADT.qt);
 
 
-                  this.AdtQuantity = Number(res.response.returnFlightDetails.fare.O.ADT.qt);
-                  this.AdtBaseFare = Number(res.response.returnFlightDetails.fare.O.ADT.bf);
+                  this.AdtQuantity += Number(res.response.returnFlightDetails.fare.O.ADT.qt);
+                  this.AdtBaseFare += Number(res.response.returnFlightDetails.fare.O.ADT.bf);
 
                 }
                 if (res.response.returnFlightDetails.fare.O.CHD) {
@@ -1953,8 +2174,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   totalFareReturn += Number(res.response.returnFlightDetails.fare.O.CHD.tf * res.response.returnFlightDetails.fare.O.CHD.qt);
                   this.ChildFare += Number(res.response.returnFlightDetails.fare.O.CHD.tf * res.response.returnFlightDetails.fare.O.CHD.qt);
 
-                  this.ChildQuantity = Number(res.response.returnFlightDetails.fare.O.CHD.qt);
-                  this.ChildBaseFare = Number(res.response.returnFlightDetails.fare.O.CHD.bf);
+                  this.ChildQuantity += Number(res.response.returnFlightDetails.fare.O.CHD.qt);
+                  this.ChildBaseFare += Number(res.response.returnFlightDetails.fare.O.CHD.bf);
 
                 }
 
@@ -1964,8 +2185,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   totalFareReturn += Number(res.response.returnFlightDetails.fare.O.INF.tf * res.response.returnFlightDetails.fare.O.INF.qt);
                   this.InfantTotalFare += Number(res.response.returnFlightDetails.fare.O.INF.tf * res.response.returnFlightDetails.fare.O.INF.qt);
 
-                  this.InfantQuantity = Number(res.response.returnFlightDetails.fare.O.INF.qt);
-                  this.InfantBaseFare = Number(res.response.returnFlightDetails.fare.O.INF.bf);
+                  this.InfantQuantity += Number(res.response.returnFlightDetails.fare.O.INF.qt);
+                  this.InfantBaseFare += Number(res.response.returnFlightDetails.fare.O.INF.bf);
 
                 }
               }
@@ -1993,8 +2214,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 if (res.response.onwardFlightDetails.fare.INF) {
                   this.InfantTotalFare += Number(res.response.onwardFlightDetails.fare.INF.bf * res.response.onwardFlightDetails.fare.INF.qt) + Number(res.response.onwardFlightDetails.fare.INF.TX);
 
-                  this.InfantQuantity = Number(res.response.onwardFlightDetails.fare.INF.qt);
-                  this.InfantBaseFare = Number(res.response.onwardFlightDetails.fare.INF.bf);
+                  this.InfantQuantity += Number(res.response.onwardFlightDetails.fare.INF.qt);
+                  this.InfantBaseFare += Number(res.response.onwardFlightDetails.fare.INF.bf);
 
                 }
               }
@@ -2003,23 +2224,23 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 if (res.response.returnFlightDetails.fare.ADT) {
                   this.AdtFare += Number(res.response.returnFlightDetails.fare.ADT.bf * res.response.returnFlightDetails.fare.ADT.qt) + Number(res.response.returnFlightDetails.fare.ADT.TX);
 
-                  this.AdtQuantity = Number(res.response.returnFlightDetails.fare.ADT.qt);
-                  this.AdtBaseFare = Number(res.response.returnFlightDetails.fare.ADT.bf);
+                  this.AdtQuantity += Number(res.response.returnFlightDetails.fare.ADT.qt);
+                  this.AdtBaseFare += Number(res.response.returnFlightDetails.fare.ADT.bf);
                 }
 
                 if (res.response.returnFlightDetails.fare.CHD) {
                   this.ChildFare += Number(res.response.returnFlightDetails.fare.CHD.bf * res.response.returnFlightDetails.fare.CHD.qt) + Number(res.response.returnFlightDetails.fare.CHD.TX);
 
-                  this.ChildQuantity = Number(res.response.returnFlightDetails.fare.CHD.qt);
-                  this.ChildBaseFare = Number(res.response.returnFlightDetails.fare.CHD.bf);
+                  this.ChildQuantity += Number(res.response.returnFlightDetails.fare.CHD.qt);
+                  this.ChildBaseFare += Number(res.response.returnFlightDetails.fare.CHD.bf);
 
                 }
 
                 if (res.response.returnFlightDetails.fare.INF) {
                   this.InfantTotalFare += Number(res.response.returnFlightDetails.fare.INF.bf * res.response.returnFlightDetails.fare.INF.qt) + Number(res.response.returnFlightDetails.fare.INF.TX);
 
-                  this.InfantQuantity = Number(res.response.returnFlightDetails.fare.INF.qt);
-                  this.InfantBaseFare = Number(res.response.returnFlightDetails.fare.INF.bf);
+                  this.InfantQuantity += Number(res.response.returnFlightDetails.fare.INF.qt);
+                  this.InfantBaseFare += Number(res.response.returnFlightDetails.fare.INF.bf);
 
                 }
               }
@@ -2057,8 +2278,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 totalFare += Number(res.response.flight_details.fare.O.ADT.tf * res.response.flight_details.fare.O.ADT.qt);
                 totalFareOnward += Number(res.response.flight_details.fare.O.ADT.tf * res.response.flight_details.fare.O.ADT.qt);
                 this.AdtFare += Number(res.response.flight_details.fare.O.ADT.tf * res.response.flight_details.fare.O.ADT.qt);
-                this.AdtQuantity = Number(res.response.flight_details.fare.O.ADT.qt);
-                this.AdtBaseFare = Number(res.response.flight_details.fare.O.ADT.bf);
+                this.AdtQuantity += Number(res.response.flight_details.fare.O.ADT.qt);
+                this.AdtBaseFare += Number(res.response.flight_details.fare.O.ADT.bf);
 
               }
               if (res.response.flight_details.fare.O.CHD) {
@@ -2066,8 +2287,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 totalFare += Number(res.response.flight_details.fare.O.CHD.tf * res.response.flight_details.fare.O.CHD.qt);
                 totalFareOnward += Number(res.response.flight_details.fare.O.CHD.tf * res.response.flight_details.fare.O.CHD.qt);
                 this.ChildFare += Number(res.response.flight_details.fare.O.CHD.tf * res.response.flight_details.fare.O.CHD.qt);
-                this.ChildQuantity = Number(res.response.flight_details.fare.O.CHD.qt);
-                this.ChildBaseFare = Number(res.response.flight_details.fare.O.CHD.bf);
+                this.ChildQuantity += Number(res.response.flight_details.fare.O.CHD.qt);
+                this.ChildBaseFare += Number(res.response.flight_details.fare.O.CHD.bf);
               }
 
               if (res.response.flight_details.fare.O.INF) {
@@ -2075,8 +2296,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 totalFare += Number(res.response.flight_details.fare.O.INF.tf * res.response.flight_details.fare.O.INF.qt);
                 totalFareOnward += Number(res.response.flight_details.fare.O.INF.tf * res.response.flight_details.fare.O.INF.qt);
                 this.InfantTotalFare += Number(res.response.flight_details.fare.O.INF.tf * res.response.flight_details.fare.O.INF.qt);
-                this.InfantQuantity = Number(res.response.flight_details.fare.O.INF.qt);
-                this.InfantBaseFare = Number(res.response.flight_details.fare.O.INF.bf);
+                this.InfantQuantity += Number(res.response.flight_details.fare.O.INF.qt);
+                this.InfantBaseFare += Number(res.response.flight_details.fare.O.INF.bf);
               }
             }
 
@@ -2089,16 +2310,16 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 totalFare += Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt) + Number(res.response.flight_details.fare.ADT.TX);
                 totalFareOnward += Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt) + Number(res.response.flight_details.fare.ADT.TX);
                 this.AdtFare += Number(res.response.flight_details.fare.ADT.bf * res.response.flight_details.fare.ADT.qt) + Number(res.response.flight_details.fare.ADT.TX);
-                this.AdtQuantity = Number(res.response.flight_details.fare.ADT.qt);
-                this.AdtBaseFare = Number(res.response.flight_details.fare.ADT.bf);
+                this.AdtQuantity += Number(res.response.flight_details.fare.ADT.qt);
+                this.AdtBaseFare += Number(res.response.flight_details.fare.ADT.bf);
               }
               if (res.response.flight_details.fare.CHD) {
                 baseFare += Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt);
                 totalFare += Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt) + Number(res.response.flight_details.fare.CHD.TX);
                 totalFareOnward += Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt) + Number(res.response.flight_details.fare.CHD.TX);
                 this.ChildFare += Number(res.response.flight_details.fare.CHD.bf * res.response.flight_details.fare.CHD.qt) + Number(res.response.flight_details.fare.CHD.TX);
-                this.ChildQuantity = Number(res.response.flight_details.fare.CHD.qt);
-                this.ChildBaseFare = Number(res.response.flight_details.fare.CHD.bf);
+                this.ChildQuantity += Number(res.response.flight_details.fare.CHD.qt);
+                this.ChildBaseFare += Number(res.response.flight_details.fare.CHD.bf);
               }
 
               if (res.response.flight_details.fare.INF) {
@@ -2106,8 +2327,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 totalFare += Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt) + Number(res.response.flight_details.fare.INF.TX);
                 totalFareOnward += Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt) + Number(res.response.flight_details.fare.INF.TX);
                 this.InfantTotalFare += Number(res.response.flight_details.fare.INF.bf * res.response.flight_details.fare.INF.qt) + Number(res.response.flight_details.fare.INF.TX);
-                this.InfantQuantity = Number(res.response.flight_details.fare.INF.qt);
-                this.InfantBaseFare = Number(res.response.flight_details.fare.INF.bf);
+                this.InfantQuantity += Number(res.response.flight_details.fare.INF.qt);
+                this.InfantBaseFare += Number(res.response.flight_details.fare.INF.bf);
               }
             }
           }
@@ -2684,7 +2905,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
             "couponcode": "",
             "ticket_class": this.flightClasses[this.searchData.flightclass]
           };
-          console.log(this.new_fare); console.log(this.partnerConvFee); console.log(this.old_fare);
+        //  console.log(this.new_fare); console.log(this.partnerConvFee); console.log(this.old_fare);
 
           if (this.new_fare  != this.old_fare) {
             $('#infoprocess').modal('hide');

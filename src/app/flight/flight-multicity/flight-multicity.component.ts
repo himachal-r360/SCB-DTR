@@ -388,23 +388,32 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   }
 
 bookingSummary() {
-  /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
 
-    let flightDetailsArr: any = {
-      "travel": "DOM",
-      "travel_type": "O",
-      "docKey": this.DocKey,
-      "onwardFlightKey": "",
-      "returnFlightKey": '',
-      "onwardFlights": "",
-      "returnFlights":'' ,
-      "onwardPriceSummary": "",
-      "returnPriceSummary": '',
-      "queryFlightData": this.searchData
+   let uniqueKey='';
+
+
+        for (let j = 0; j < this.SelectedFlightsOnSector.length; j++) {
+        uniqueKey+=this.SelectedFlightsOnSector[j]['flightKey'];
+        }
+
+
+        let flightDetailsArr: any = {
+        "travel": "DOM",
+        "travel_type": "M",
+        "docKey": this.DocKey,
+        "onwardFlightKey": "",
+        "returnFlightKey": "",
+        "onwardFlights": this.SelectedFlightsOnSector,
+        "returnFlights":'' ,
+        "onwardPriceSummary": "",
+        "returnPriceSummary": '',
+        "queryFlightData": this.searchData
     };
 
-
-  let randomFlightDetailKey = btoa(this.DocKey+this.searchData[0].selectedFlight.flightKey);
+   uniqueKey+=this.DocKey;
+  
+      
+  let randomFlightDetailKey = btoa(uniqueKey);
   sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
   let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
 

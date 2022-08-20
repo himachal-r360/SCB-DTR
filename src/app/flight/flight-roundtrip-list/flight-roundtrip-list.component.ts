@@ -381,7 +381,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
       let priceSummaryArr=flightItem.priceSummary;
       if(priceSummaryArr.length>1){
-        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare && a.splrtFareFlight==false  && b.splrtFareFlight==false )     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
+        priceSummaryArr.sort(function(a, b) {if (a.totalFare === b.totalFare && a.splrtFareFlight==false  && b.splrtFareFlight==false )     {     if (Math.random() < .5) return -1; else return 1;     } else {     return a.totalFare - b.totalFare;  }      });
         flightItem.priceSummary=priceSummaryArr;
       }
     })
@@ -1836,27 +1836,6 @@ getLayoverHour(obj1: any, obj2: any) {
     dateHour = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
   }
   return dateHour;
-}
-
-IsTimeDiffLess(flights:any)
-{
- var disable = false;
- if(flights.length > 1)
- {
-  for(var i =0 ; i< (flights.length -1); i++)
-  {
-    var diff = new Date(flights[i+1].departureDateTime).valueOf() -new Date(flights[i].arrivalDateTime).valueOf();
-    var diffInHours = diff/1000/60/60;
-
-    if(diffInHours <= 2)
-    {
-      disable = true;
-      break;
-    }
-  }
-
- }
- return disable;
 }
 
 }

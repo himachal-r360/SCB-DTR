@@ -722,9 +722,9 @@
                                     <h5 class="fw_6 ">{{item.value.fromCity}}</h5>
                                     <span class="select-roottitle">{{item.value.fromAirportName}}</span>
                                     
-                                        <!-- <mat-error *ngIf="submitted && item.get('leavingFrom').errors && item.get('leavingFrom')hasError('required')"> <small
+                                        <!-- <mat-error *ngIf="submitted && item.get('flightfrom').errors && item.get('flightfrom')hasError('required')"> <small
                                                 class="validate-msg"> Please select from city.</small></mat-error> -->
-                                            <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('leavingFrom').errors?.required"> <small
+                                            <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('flightfrom').errors?.required"> <small
                                                 class="validate-msg"> Please select departure date.</small></mat-error>        -->
                                             
                                             <div class="flight-from-data flight-from-hide ff-form-data dropdown">
@@ -744,11 +744,11 @@
                                                     <div class="mob-search-list">
                                                         <label for="">From</label>
                                                         <input type="text" autocomplete="off" class="w-100"
-                                                            placeholder="Search City" name="leavingFrom"
-                                                            formControlName="leavingFrom"
+                                                            placeholder="Search City" name="flightfrom"
+                                                            formControlName="flightfrom"
                                                             (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');"
                                                             id="fromCitySearch">
-                                                        <input type="hidden" formControlName="leavingFrom">
+                                                        <input type="hidden" formControlName="flightfrom">
                                                         <input type="hidden" formControlName="fromContry">
                                                         <input type="hidden" formControlName="fromAirportName">
                                                     </div>
@@ -756,9 +756,9 @@
                                                         <label for="">To</label>
                                                         <input type="text" autocomplete="off" class="w-100"
                                                             placeholder="Search City" name="toCity"
-                                                            formControlName="goingTo"
+                                                            formControlName="flightto"
                                                             (keyup)="searchAutoComplete($event,'toCity' ,'mobile');">
-                                                            <input type="hidden" formControlName="goingTo">
+                                                            <input type="hidden" formControlName="flightto">
                                                             <input type="hidden" formControlName="toContry">
                                                         <input type="hidden" formControlName="toAirportName">
                                                     </div>
@@ -776,7 +776,7 @@
                                             <input type="hidden" 
                                                 formControlName="fromCity">
                                             <input type="hidden" 
-                                                formControlName="leavingFrom">
+                                                formControlName="flightfrom">
                                             <input type="hidden" 
                                                 formControlName="fromContry">
                                                 <input type="hidden" 
@@ -812,11 +812,11 @@
                                     <span class="select-roottitle">TO</span>
                                     <h5 class="fw_6 ">{{item.value.toCity}}</h5>
                                     <span class="select-roottitle">{{item.value.toAirportName}}</span>
-                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('goingTo').errors.required"> <small
+                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('flightto').errors.required"> <small
                                         class="validate-msg"> Please select departure date.</small></mat-error>   -->
-                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && item.get('goingTo').errors && item.get('goingTo')hasError('required')"> <small
+                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && item.get('flightto').errors && item.get('flightto')hasError('required')"> <small
                                                 class="validate-msg"> Please select to city.</small></mat-error>         -->
-                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('goingTo' + i, 'required')">
+                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('flightto' + i, 'required')">
                                         <small class="validate-msg">Please select to city</small>
                                     </mat-error> -->
                                     <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
@@ -865,7 +865,7 @@
                                             <input type="hidden" name='toCity'
                                                 formControlName="toCity">
                                             <input type="hidden"
-                                                formControlName="goingTo">
+                                                formControlName="flightto">
                                             <input type="hidden" 
                                                 formControlName="toContry">
                                             <input type="hidden" 
@@ -911,13 +911,13 @@
                                             (click)="picker.open()" id="datePickerMulticity_{{i}}">
                                             <div class="select-root-departure departure-date">
                                                 <span class="select-roottitle">DEPARTURE</span>
-                                                <h5 class=" ">{{item.value.depart | date:'dd MMM' }}</h5>
+                                                <h5 class=" ">{{item.value.departure | date:'dd MMM' }}</h5>
 
                                                 <span class="select-roottitle d-block w-100"
-                                                    *ngIf="item.value.depart=='' ||item.value.depart==undefined">Select
+                                                    *ngIf="item.value.departure=='' ||item.value.departure==undefined">Select
                                                     Departure</span>
                                                 <span class="select-roottitle"
-                                                    *ngIf="item.value.depart!='' ||item.value.depart!=undefined">{{item.value.depart|date:'EEEE'
+                                                    *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
                                                     }}</span>
                                                     
                                                 </div>
@@ -927,8 +927,8 @@
                                                     <mat-form-field
                                                     style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                                                     <input matInput [min]="minDate" [matDatepicker]="picker"
-                                                    formControlName="depart"
-                                                    [(ngModel)]="item.value.depart"
+                                                    formControlName="departure"
+                                                    [(ngModel)]="item.value.departure"
                                                         (dateChange)="currentPeriodClicked($event , item)">
                                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                                     </mat-datepicker-toggle>

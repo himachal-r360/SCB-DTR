@@ -1630,7 +1630,7 @@
                                   <img src="{{cdnUrl}}/images/airlines/{{item.selectedFlight.flights[0].airline}}.gif" alt="">
                               </div>
                               <div class="flight-fixed-list-content" >
-                                  <h6 [ngClass]="{'text-secondory':!item.isSelected}">{{item.leavingFrom}} - {{item.goingTo}}</h6>
+                                  <h6 [ngClass]="{'text-secondory':!item.isSelected}">{{item.flightfrom}} - {{item.flightto}}</h6>
                                   <p *ngIf="!item.isSelected" class="text-secondory">Flight not selected</p>
                                   <p *ngIf="item.isSelected">&#8377; {{item == null ? 0:item.selectedFlight.priceSummery.totalFare|number}}</p>
                               </div>

@@ -19,7 +19,6 @@ export class ToggleDetailDirective{
           {
             if(this.elRef.nativeElement.querySelector('.RadioClass').checked == true)
             {
-            console.log('ddddd');
               this.elRef.nativeElement
               .querySelector('.dropdown')
               .classList.remove('flight-from-hide')
@@ -52,7 +51,7 @@ export class ToggleDetailDirective{
          }
         }
         else{
-         // if(element.closest('.showless-close'))
+          if(element.closest('.showless-close'))
           {
             this.elRef.nativeElement
             .querySelector('.dropdown')
