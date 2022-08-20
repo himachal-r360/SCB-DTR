@@ -150,16 +150,20 @@ export class HeaderComponent implements OnInit {
         cookieMessage;cookieAgree;cookieMessageType;cookieConsent:boolean=false;cookieExpiredDate: any = new Date();
         disclimerConsent:boolean=false;
         is_main:number=0;
-          voiceActiveSectionDisabled: boolean = true;
-	voiceActiveSectionError: boolean = false;
-	voiceActiveSectionSuccess: boolean = false;
-	voiceActiveSectionListening: boolean = false;
-	voiceText: any;
-  parsed_date:any;
-  relative_to:any;
-  push_ids:any;
-  delta:any;
+        voiceActiveSectionDisabled: boolean = true;
+        voiceActiveSectionError: boolean = false;
+        voiceActiveSectionSuccess: boolean = false;
+        voiceActiveSectionListening: boolean = false;
+        voiceText: any;
+        parsed_date:any;
+        relative_to:any;
+        push_ids:any;
+        delta:any;
         payzrestriction:boolean=false;
+        cardList:any=[];
+        showcards:boolean=false;
+        mainRedirect:any;
+
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
@@ -723,6 +727,7 @@ closeCookieConsent(value){
   
   ngOnInit() {
   
+    this.mainRedirect=this.DOMAIN_SETTINGS['main_domain_url']+'/';
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
@@ -761,6 +766,7 @@ closeCookieConsent(value){
 
       /*this.customerInfo=  JSON.parse(this.EncrDecr.get('drw6SKRtkeqkTBiXIayqU5HyPwGeiveIXQzuz/KGDsQq9voz8OBqnyumqoqWhUuxRGwQAcwa6Lm/pES4C3pOhnz0JOc2xmIeYFuC2LDYt2+9dhekELisHSTBHbIchrIkeGf6q8KafxHJ1uTCm+Viqh04rkThML9wSQjbTHGsKr/di5FuMSBZKkM9x54/c5YKyWk21WLS5LC1J9e2syYncmY2dOdbpO94WJgc4udqIOGQFlzqptKFugCzph4sMg00y7tLpzFBXj5ZMPzeVtI1WbvjZ6J97k/h0NvdoPy+uZ1u1ggZht8htFI/eodX6decl0Qfe956+fRCewg5AYpAC1oT6Me9GDXOojqCORK5O7MoqTfBuEQYFleGQtIzV783Y2VmVvdmdusnVyI29JncPA=='));
       this.customerLogin=true;*/
+      this.getAllcards();     
   
     }
     
@@ -1247,6 +1253,21 @@ closeCookieConsent(value){
     };
     this._DisclaimerSheetComponent.open(DisclaimerBottomSheetComponent, config);
   }
+
+      getAllcards()
+      {
+         this.cartService.getAllCards().subscribe(resp =>{
+          //console.log(resp.status);
+          if(typeof resp.status != undefined && resp.status === true){
+            this.cardList=resp['cardList'];
+            this.showcards = true;
+          }
+
+        }),(err:HttpErrorResponse)=>{
+          alert("Something went wrong, please try again");
+          //this.router.navigate([this.sg['domainPath'] + 'milestone']);
+        };
+      }
     
   }
 

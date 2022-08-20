@@ -338,8 +338,8 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -596,6 +596,33 @@
                                     </div>
                                     <div class="brand_img" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
                                         <img (click)="redirectUrlpopup('imagine',0,'imagine')" src="{{cdnUrl}}images/smartbuy/partner/48/svg/premium.svg" alt="imaginetresor">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown" *ngIf="DOMAIN_SETTINGS.OFFER==1">
+                        <a class="nav_link_item" href="javascript:;">Switch To</a>
+                        <div class="dropdown-content-list list-deals" *ngIf="showcards">
+                            <div class="row">                              
+                                <div class="col-sm-12" *ngFor="let cardItem of cardList;">
+                                    <div class="hdr_privilege_card">
+                                     <a href="{{mainRedirect}}{{cardItem.program_name | lowercase}}" target="_blank">
+                                        <div class="row cntnt_center">
+                                            <div class="col-sm-4">
+                                                <div class="privilege_img_div">
+                                                    <img src="{{cdnUrl}}/images/smartbuy/icons/privilege_card1.svg" class="privilege_img">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 pl-1">
+                                                <p class="privilege_text_highlight mb-0">{{cardItem.program_name}}</p>
+                                                <p class="privilege_text mb-0">xxx {{cardItem.last4digit}}</p>
+                                            </div>
+                                            <div class="col-sm-2 pl-0">
+                                                <img src="{{cdnUrl}}/images/smartbuy/icons/rg_arrw_icn.svg" width="12px" height="12px">
+                                            </div>
+                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
