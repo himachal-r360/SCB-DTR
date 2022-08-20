@@ -103,7 +103,7 @@ export class RestapiService {
           return this.http.get('assets/data/milestone.json');
           //return this.http.post('http://offers.smartbuylocal.reward360.us/api/get_milestone_details',param, config).pipe(map((response: any) => response));
         }else{
-          return this.http.post(MAIN_SITE_URL+this.domainPath+'get_milestone_details',param, config).pipe(map((response: any) => response));
+          return this.http.post(this.endpoint+'get_milestone_details',param, config).pipe(map((response: any) => response));
         }
   }
   AvailablePoints(param){
