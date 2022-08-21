@@ -312,7 +312,7 @@
           </div>
 
           
-          <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 ">   
+          <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0">   
             <div class="fare-rules-title">
               <h6>Fare Rules</h6>
             </div>
@@ -321,7 +321,7 @@
               <div class="rules-flight">
 
               <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
-                        <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails{{searchi}}"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
+                        <a href="javascript:void(0);" (click)="changeFareRuleTabOnwardMult(searchi,$event)" data-bind="onwardFareDetails{{searchi}}"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
                         <div class="rules-flight-items">
                         <div class="rules-flight-thumbe">
                         <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[searchi]['flights'][0].airline}}.gif"
@@ -343,23 +343,23 @@
               </div>
            <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
               <!--Onward-->
-              <div id="onwardFareDetails{{searchi}}" class="flight-extra-content-onward">
+              <div id="onwardFareDetails{{searchi}}" class="flight-extra-content-onward " [ngClass]="{'hide': searchi !=0  }">
                 <ul class="list-unstyled flight-extra-tabs">
                   <li *ngIf="cancellationPolicyOnwardMulti[searchi]">
-                    <a href="javascript:void(0);" class="flight-extra-content-oo"
+                    <a href="javascript:void(0);" class="flight-extra-content-oo{{searchi}}"
                       [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnwardMulti[searchi]  }"
-                      (click)="changeFareRuleTabBottomOnward($event)" data-bind="CancellationDetails">Fare Rules</a>
+                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event)" data-bind="CancellationDetails{{searchi}}">Fare Rules</a>
                   </li>
                   <li *ngIf="baggageInfoOnwardMulti[searchi]">
-                    <a href="javascript:void(0);" class="flight-extra-content-ob"
-                      [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnwardMulti[searchi]  }" data-bind="BaggageDetails"
-                      (click)="changeFareRuleTabBottomOnward($event)">Baggage Policy</a>
+                    <a href="javascript:void(0);" class="flight-extra-content-ob{{searchi}}"
+                      [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnwardMulti[searchi]  }" data-bind="BaggageDetails{{searchi}}"
+                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event)">Baggage Policy</a>
                   </li>
 
                 </ul>
 
                 <div class="extra-tabs-ara">
-                <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnwardMulti[searchi]"           [ngClass]="{'extra-active': cancellationPolicyOnwardMulti[searchi]  }">
+                <div id="CancellationDetails{{searchi}}" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnwardMulti[searchi]"           [ngClass]="{'extra-active': cancellationPolicyOnwardMulti[searchi]  }">
                     <table class="table-bordered table-content w-100">
                       <tbody>
                         <tr>
@@ -372,7 +372,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -403,7 +403,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -433,7 +433,7 @@
                       </div>
                     </div>
                   </div>
-                  <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfoOnwardMulti[searchi]"  [ngClass]="{'extra-active': !cancellationPolicyOnwardMulti[searchi] ,'hide': cancellationPolicyOnwardMulti[searchi]   }">
+                  <div id="BaggageDetails{{searchi}}" class="flight-extra-content-o "   *ngIf="baggageInfoOnwardMulti[searchi]"  [ngClass]="{'extra-active': !cancellationPolicyOnwardMulti[searchi] ,'hide': cancellationPolicyOnwardMulti[searchi]   }">
 
                     <table class="table-bordered table-content w-100">
                       <tbody>
@@ -487,7 +487,7 @@
                   {{searchData.toCity}}
                 </h6>
                 <p> {{searchData.departure | date:"EEE,dd MMM"}} | {{totalOnwardStops_data}} |
-                  {{totalOnwardDuration + dateOnwardHour| durationTime}}</p>
+                  {{totalOnwardDuration + dateOnwardHourTotal| durationTime}}</p>
               </div>
               <div class="booking-inner-title-right" *ngIf="selectedOnwardVendor">
                 <p class="non-refundable" *ngIf="selectedOnwardVendor.refundStatus != 1">NON-REFUNDABLE</p>
@@ -571,8 +571,8 @@
                   *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                 <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
               </div>
-              <div class="change-planes" *ngIf="dateOnwardHour && airportsNameJson && flightOnwardDetails[i+1]">
-                <h6>Change of planes・{{dateOnwardHour | durationTime}} Layover in
+              <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in
                   {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
               </div>
             </div>
@@ -683,7 +683,7 @@
                   {{searchData.fromCity}}
                 </h6>
                 <p> {{searchData.arrival | date:"EEE,dd MMM"}} | {{totalReturnStops_data}} |
-                  {{totalReturnDuration + dateReturnHour| durationTime}}</p>
+                  {{totalReturnDuration + dateReturnHourTotal| durationTime}}</p>
               </div>
               <div class="booking-inner-title-right" *ngIf="selectedReturnVendor">
                 <p class="non-refundable" *ngIf="selectedReturnVendor.refundStatus != 1">NON-REFUNDABLE</p>
@@ -768,8 +768,8 @@
                   *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                 <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
               </div>
-              <div class="change-planes" *ngIf="dateReturnHour && airportsNameJson && flightReturnDetails[i+1]">
-                <h6>Change of planes・{{dateReturnHour | durationTime}} Layover in
+              <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
+                <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in
                   {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
               </div>
             </div>
@@ -946,7 +946,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -977,7 +977,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -1077,7 +1077,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -1108,7 +1108,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -4768,8 +4768,8 @@ Please enter a valid expiry date</mat-error>
                 </div>
                 <div>
                   <div>
-                    <p class="duration_flight">{{totalOnwardDuration + dateOnwardHour| durationTime}}</p>
-                    <p class="date_text">{{flightOnwardDetails[0].stops}} Stop</p>
+                    <p class="duration_flight">{{totalOnwardDuration + dateOnwardHourTotal| durationTime}}</p>
+                    <p class="date_text">{{flightOnwardDetails[0].stops}} Stopddddddddd</p>
                   </div>
                 </div>
                 <div class="booking-inner-title-right">
@@ -4829,7 +4829,7 @@ Please enter a valid expiry date</mat-error>
                   </div>
                   <div>
                     <div>
-                      <p class="duration_flight">{{totalOnwardDuration + dateOnwardHour| durationTime}}</p>
+                      <p class="duration_flight">{{totalOnwardDuration + dateOnwardHourTotal| durationTime}}</p>
                       <p class="date_text">{{flightOnwardDetails[0].stops}} Stop</p>
                     </div>
                   </div>
@@ -4916,8 +4916,8 @@ Please enter a valid expiry date</mat-error>
                     *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                   <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                 </div>
-                <div class="change-planes" *ngIf="dateOnwardHour && airportsNameJson && flightOnwardDetails[i+1]">
-                  <h6>Change of planes・{{dateOnwardHour | durationTime}} Layover in
+                <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                  <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in
                     {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                 </div>
               </div>
@@ -4985,7 +4985,7 @@ Please enter a valid expiry date</mat-error>
                 </div>
                 <div>
                   <div>
-                    <p class="duration_flight">{{totalReturnDuration + dateReturnHour| durationTime}}</p>
+                    <p class="duration_flight">{{totalReturnDuration + dateReturnHourTotal| durationTime}}</p>
                     <p class="date_text">{{flightReturnDetails[0].stops}} Stop</p>
                   </div>
                 </div>
@@ -5046,7 +5046,7 @@ Please enter a valid expiry date</mat-error>
                   </div>
                   <div>
                     <div>
-                      <p class="duration_flight">{{totalReturndDuration + dateReturnHour| durationTime}}</p>
+                      <p class="duration_flight">{{totalReturndDuration + dateReturnHourTotal| durationTime}}</p>
                       <p class="date_text">{{flightReturnDetails[0].stops}} Stop</p>
                     </div>
                   </div>
@@ -5132,8 +5132,8 @@ Please enter a valid expiry date</mat-error>
                     *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                   <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                 </div>
-                <div class="change-planes" *ngIf="dateReturnHour && airportsNameJson && flightReturnDetails[i+1]">
-                  <h6>Change of planes・{{dateReturnHour | durationTime}} Layover in
+                <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
+                  <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in
                     {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                 </div>
               </div>

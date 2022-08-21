@@ -375,7 +375,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "non_stop") { item.active = !item.active; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+     
     }
     if(!this.isMobile)
     {
@@ -507,8 +508,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     this.morningDearptureCount = 0;
     if (this.flightList.length > 0) {
       this.flightList.filter((e: any) => {
+      
         var flights = e.flights.filter((d: any, indx: number) => { if (d.stops == 0 && indx == 0) { return d; } }); // Non-Stop count
-        if (flights.length > 0) {
+        
+        if (flights.length == 1 && e.flights.length==1) {
           this.nonStopCount += 1;
           this.flight_PopularItems.filter((item: any) => {
             if (item.name == "non_stop") {
@@ -516,6 +519,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             }
           })
         }
+        
+        
         var flights = e.priceSummary.filter((d: any) => { if (d.refundStatus == 1) { return d; } }); // Refundable Fares Count
         if (flights.length > 0) {
           this.RefundableFaresCount += 1;
@@ -765,35 +770,39 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         return item;
       }
     })
+    
+    
     if (isStopsFilterItems.length > 0) {
       isfilterFlightStops = true;
     }
     if (isfilterFlightStops == true) {
       var filteredStopsArr: any[] = [];
       if (flightList.length > 0) {
+     
         flightList.filter((d: any) => {
-          let singleFlightStops = [];
-          singleFlightStops = d.flights.filter(function (e: any, indx: number) {
-            if (indx == 0) {
-              //0 - no_stops
-              if ((isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "no_stops") { return item; } }).length > 0) && e.stops == 0) {
-                return e;
-              }
-              //0 - no_stops
-              if ((isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "1_stops") { return item; } }).length > 0) && e.stops == 1) {
-                return e;
-              }
-              //0 - no_stops
-              if ((isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "2plus_stops") { return item; } }).length > 0) && e.stops > 1) {
-                return e;
-              }
-            }
-          });
-          if (singleFlightStops.length > 0) {
-            filteredStopsArr.push(d);
-          }
+        
+         if (d.flights.length==1 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "no_stops") { return item; } }).length > 0) &&  d.flights[0].stops == 0) {
+               filteredStopsArr.push(d);
+         }
+  
+        if (d.flights.length==1 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "1_stops") { return item; } }).length > 0)&&  d.flights[0].stops == 1) {
+               filteredStopsArr.push(d);
+         }
+         
+         if (d.flights.length==2 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "1_stops") { return item; } }).length > 0)) {
+               filteredStopsArr.push(d);
+         }
+         
+         if (d.flights.length > 2 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "2plus_stops") { return item; } }).length > 0) ) {
+           filteredStopsArr.push(d);
+         }
+        
+
         });
       }
+      
+       
+      
       updatedflightList = filteredStopsArr;
     }
     else {

@@ -1873,19 +1873,19 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
 
-
-  dateOnwardHour: number = 0;
-  getLayoverHourOnward(obj1: any, obj2: any) {
+ dateOnwardHourTotal: number=0;
+  dateOnwardHour: any=[];
+  getLayoverHourOnward(obj1: any, obj2: any,i:number) {
     if (obj2 != null || obj2 != undefined) {
       let obj2Date = new Date(obj2.departureDateTime);
       let obj1Date = new Date(obj1.arrivalDateTime);
-      this.dateOnwardHour = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+      this.dateOnwardHour[i] = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+     return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
     }
   }
   
    dateOnwardHourMulti: any=[];
-
-    dateOnwardHourTotalMulti= [];
+   dateOnwardHourTotalMulti= [];
   getLayoverHourOnwardMulti(obj1: any, obj2: any,j:number,i:number) {
     if (obj2 != null || obj2 != undefined) {
       let obj2Date = new Date(obj2.departureDateTime);
@@ -1896,13 +1896,14 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     
   }
   
-
-  dateReturnHour: number = 0;
-  getLayoverHourReturn(obj1: any, obj2: any) {
+ dateReturnHourTotal: number=0;
+  dateReturnHour: any=[];
+  getLayoverHourReturn(obj1: any, obj2: any,i:number) {
     if (obj2 != null || obj2 != undefined) {
       let obj2Date = new Date(obj2.departureDateTime);
       let obj1Date = new Date(obj1.arrivalDateTime);
-      this.dateReturnHour = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+      this.dateReturnHour[i] = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;;
     }
   }
 
@@ -1927,8 +1928,10 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       onward_airline_array.push(this.flightOnwardDetails[i].airline);
       this.totalOnwardDuration += this.flightOnwardDetails[i].duration;
       if (this.flightOnwardDetails[i + 1] != null && this.flightOnwardDetails[i + 1] != undefined) {
-        this.getLayoverHourOnward(this.flightOnwardDetails[i], this.flightOnwardDetails[i + 1]);
-      }
+        this.totalOnwardDuration+=  this.getLayoverHourOnward(this.flightOnwardDetails[i], this.flightOnwardDetails[i + 1],i);
+          }else{
+       this.dateOnwardHour[i]=0;
+       }
       totalOnwardStops++;
     }
 
@@ -1949,8 +1952,10 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       return_airline_array.push(this.flightReturnDetails[i].airline);
       this.totalOnwardDuration += this.flightReturnDetails[i].duration;
       if (this.flightReturnDetails[i + 1] != null && this.flightReturnDetails[i + 1] != undefined) {
-        this.getLayoverHourReturn(this.flightReturnDetails[i], this.flightReturnDetails[i + 1]);
-      }
+        this.totalOnwardDuration+=   this.getLayoverHourReturn(this.flightReturnDetails[i], this.flightReturnDetails[i + 1],i);
+       }else{
+       this.dateReturnHour[i]=0;
+       }
       totalReturnStops++;
     }
 
@@ -2027,6 +2032,14 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
   }
   
+    changeFareRuleTabBottomOnwardMulti(index:any,event: any) {
+    $('.flight-extra-content-o'+index).hide();
+    $('#onwardFareDetails'+index+' .flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+    var Element = document.getElementById(event.target.dataset['bind']);
+    Element!.style.display = 'block';
+    event.target.classList.add('flight-extra-tabs-active');
+  }
+  
 
   changeFareRuleTabBottomOnward(event: any) {
     $('.flight-extra-content-o').hide();
@@ -2042,6 +2055,25 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     var Element = document.getElementById(event.target.dataset['bind']);
     Element!.style.display = 'block';
     event.target.classList.add('flight-extra-tabs-active');
+  }
+
+  changeFareRuleTabOnwardMult(index:any,event: any) {
+    $('.flight-extra-content-onward').hide();
+    $('#onwardFareDetails'+index).show();
+    $('.flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
+
+    if (this.cancellationPolicyOnwardMulti[index]) {
+      var Element = document.getElementById("CancellationDetails"+index);
+      Element!.style.display = 'block';
+      $('.flight-extra-content-oo'+index).addClass('flight-extra-tabs-active');
+    }
+    
+    if (!this.cancellationPolicyOnwardMulti[index] && this.baggageInfoOnwardMulti[index]) {
+      var Element = document.getElementById("BaggageDetails"+index);
+      Element!.style.display = 'block';
+      $('.flight-extra-content-ob'+index).addClass('flight-extra-tabs-active');
+    }
+
   }
 
 
