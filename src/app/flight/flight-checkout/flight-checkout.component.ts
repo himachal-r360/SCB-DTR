@@ -417,8 +417,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   }, 10);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
-                  console.log(this.flightSessionData);
-                  console.log(this.searchData);
+                  //console.log(this.flightSessionData);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -434,9 +433,19 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 this.partnerToken = this.flightSessionData.onwardFlights[0]['priceSummery']['partnerName'];
                 this.flightOnwardDetails = this.flightSessionData.onwardFlights; 
                 this.selectedOnwardVendor = this.flightSessionData.onwardFlights[0]['priceSummery'];
+                this.searchData['adults'] = this.searchData[0].adults;
+                this.searchData['child'] = this.searchData[0].child;
+                this.searchData['infants'] = this.searchData[0].infants;
+                this.searchData['flightclass'] = this.searchData[0].flightclass;
+                
+                this.searchData['travel'] = 'DOM';
+                for (let j = 0; j < this.flightSessionData.queryFlightData.length; j++) {
+                 if(this.flightSessionData.queryFlightData[j]['fromContry'] != 'IN' || this.flightSessionData.queryFlightData[j]['toContry'] != 'IN'){
+                 this.searchData['travel'] = 'INT';
+                 }
+                }
                 
                 
-                console.log(this.flightOnwardDetails);
                 this.flightReturnDetails = [];
                   }else{
                   
@@ -2720,6 +2729,16 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
 
       let fareDetails = [];
+      
+      
+      
+      if( this.flightSessionData['travel_type']=='M') {
+         for (let j = 0; j < this.flightSessionData['onwardFlights'].length; j++) {
+         fareDetails.push({ "amount": this.flightSessionData['onwardFlights'][j]['priceSummery']['totalFare'], "fareKey":  this.flightInfo['onwardFlightDetails'][j]['fareKey'], "flightKey":  this.flightSessionData['onwardFlights'][j]['flightKey'] });
+        }
+      
+      }else{
+      
 
       if (this.searchData.travel == 'INT') {
         fareDetails.push({ "amount": this.onwardAmount, "fareKey": this.flightInfo.flight_details.fareKey, "flightKey": this.flightSessionData.onwardFlightKey });
@@ -2729,8 +2748,36 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         if (this.flightSessionData.returnFlightKey)
           fareDetails.push({ "amount": this.returnAmount, "fareKey": this.flightInfo.returnFlightDetails.fareKey, "flightKey": this.flightSessionData.returnFlightKey });
       }
+     }
 
+    var m=1;
 
+      if( this.flightSessionData['travel_type']=='M') {
+        for (let i = 0; i < (this.flightSessionData.onwardFlights.length); i++) {
+        
+          for (let j = 0; j < (this.flightSessionData.onwardFlights[i]['flights'].length); j++) {
+        flightDetailsOnward.push({
+          "apar": this.partnerToken,
+          "departureAirport": this.flightSessionData.onwardFlights[i]['flights'][j]['departureAirport'],
+          "arrivalAirport": this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalAirport'],
+          "flightNumber": this.flightSessionData.onwardFlights[i]['flights'][j]['flightNumber'],
+          "airline": this.flightSessionData.onwardFlights[i]['flights'][j]['airline'],
+          "operatingAirline": "",
+          "departureDate": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['departureDateTime']).format('YYYY-MM-DD'),
+          "stops": this.flightSessionData.onwardFlights[i]['flights'][j]['stops'],
+          "segNum": m,
+          "duration": this.flightSessionData.onwardFlights[i]['flights'][j]['duration'],
+          "arrivalDateTime": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalDateTime']).format('HH:mm:ss'),
+          "departureDateTime": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['departureDateTime']).format('HH:mm:ss'),
+          "arrivalDate": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalDateTime']).format('YYYY-MM-DD'),
+          "bookingClass": this.flightSessionData.onwardPriceSummary['bookingClass'] ? this.flightSessionData.onwardPriceSummary['bookingClass'] : ""
+        });
+        m++;
+        }
+      }
+      
+      
+      }else{
 
       for (let i = 0; i < (this.flightSessionData.onwardFlights.length); i++) {
         flightDetailsOnward.push({
@@ -2750,7 +2797,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           "bookingClass": this.flightSessionData.onwardPriceSummary['bookingClass'] ? this.flightSessionData.onwardPriceSummary['bookingClass'] : ""
         });
       }
-
+     }
 
       for (let i = 0; i < (this.flightSessionData.returnFlights.length); i++) {
         flightDetailsReturn.push({
@@ -2818,9 +2865,29 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       };
 
 
-
+      let segement_values:any;
+      
+      if( this.flightSessionData['travel_type']=='M') {
+      
+        segement_values=
+        {
+        "onwardSegmentSpec": flightDetailsOnward,
+        }
+        ;
+          
+      }else{
+      segement_values=[
+            {
+              "segments": {
+                "onwardSegmentSpec": flightDetailsOnward,
+                "returnSegmentSpec": flightDetailsReturn
+              }
+            }
+          ];
+      }
 
       this.itineraryRequest = {
+        "travel_type":this.flightSessionData['travel_type'],
         "serviceName": "Flight",
         "clientName": "HDFC243",
         "partnerName": this.partnerToken,
@@ -2828,8 +2895,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         "itineraryId": "",
         "price": this.totalCollectibleAmountFromPartnerResponse+ Number(this.partnerConvFee),
         "comboFare": "false",
-        "origin": this.searchData.flightfrom,
-        "destination": this.searchData.flightto,
+        "origin": this.flightSessionData['travel_type']=='M' ? this.flightSessionData.queryFlightData[0]['flightfrom'] : this.searchData.flightfrom,
+        "destination": this.flightSessionData['travel_type']=='M' ? this.flightSessionData.queryFlightData[this.flightSessionData.queryFlightData.length-1]['flightto'] :  this.searchData.flightto,
         "onwardCheckInDate": moment(this.searchData.departure).format('YYYY-MM-DD'),
         "threadName": "",
         "tripType": this.searchData.travel,
@@ -2848,14 +2915,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         "gstDetails": this.gstDetails,
         "itinerary": {
           "fareDetails": fareDetails,
-          "flights": [
-            {
-              "segments": {
-                "onwardSegmentSpec": flightDetailsOnward,
-                "returnSegmentSpec": flightDetailsReturn
-              }
-            }
-          ],
+          "flights": segement_values,
           "paxInfoList": this.paxInfo,
           "contactDetail": this.contactDatails,
           "paymentDetail": {
@@ -2882,14 +2942,14 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       }, 700);
       this.new_fare = 0;
 
-      //    console.log(this.itineraryRequest);
+         console.log(this.itineraryRequest);
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryRequest))
       };
       this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
 
         this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
-
+  console.log(this.itinararyResponse);
         if (this.itinararyResponse['response'] && this.itinararyResponse['response']['itineraryResponseDetails'] &&this.itinararyResponse['response']["pricingResponseDetails"] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode'] == 200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"] == 200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"] == 200) {
 
           if (this.partnerToken == 'Yatra') {
