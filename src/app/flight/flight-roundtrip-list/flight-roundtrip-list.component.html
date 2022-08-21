@@ -326,9 +326,10 @@
                                               </div>
                                               <div class="round-content-right">
                                                   <div class="round-content-stops" *ngIf="flightList">
-                                                    <h6>{{ list.flights[0].duration | durationTime }}</h6>
-                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
-                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
+                                                    <h6>{{ list.flights | durationTotalTime }}</h6>
+                                                     <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
+                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                                    <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
                                                   </div>
                                                   <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
@@ -495,9 +496,10 @@
                                               </div>
                                               <div class="round-content-right">
                                                   <div class="round-content-stops">
-                                                    <h6>{{ list.flights[0].duration | durationTime }}</h6>
-                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
-                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
+                                                    <h6>{{ list.flights | durationTotalTime }}</h6>
+                                                     <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
+                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                                    <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
                                                   </div>
                                                   <div class="round-content-price"  *ngIf="list.priceSummary.length > 0">
                                                       <h6>₹ {{list.priceSummary[0].totalFare | number}}</h6>
@@ -711,7 +713,7 @@
                                               </div>
                                           </div>
                                           <div class="mob-fr-time">
-                                              <p>{{ list.flights[0].duration | durationTime }}  |
+                                              <p>{{ list.flights | durationTotalTime }}  |
                                                 <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
                                               <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
                                             </p>
@@ -1130,7 +1132,7 @@
                                               </div>
                                           </div>
                                           <div class="mob-fr-time">
-                                              <p>{{ list.flights[0].duration | durationTime }}  |
+                                              <p>{{ list.flights | durationTotalTime }}  |
                                                 <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
                                               <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
                                               </p>
@@ -2236,7 +2238,7 @@
                                       </div>
                                       <div class="round-ff-right" >
                                           <div class="round-content-stops">
-                                              <h6> {{onwardSelectedFlight.flights[0].duration | durationTime}}</h6>
+                                              <h6> {{onwardSelectedFlight.flights | durationTotalTime}}</h6>
                                               <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops==0">non stop</p>
                                               <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops!=0">{{onwardSelectedFlight.flights[0].stops}} stop</p>
                                           </div>
@@ -2264,7 +2266,7 @@
                                       </div>
                                       <div class="round-ff-right">
                                           <div class="round-content-stops">
-                                              <h6>{{returnSelectedFlight.flights[0].duration | durationTime}}</h6>
+                                              <h6>{{returnSelectedFlight.flights | durationTotalTime}}</h6>
                                               <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops==0">non stop</p>
                                               <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops!=0">{{returnSelectedFlight.flights[0].stops}} stop</p>
                                           </div>

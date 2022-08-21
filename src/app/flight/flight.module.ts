@@ -21,6 +21,8 @@ import { FilterPipe } from 'src/app/shared/pipes/filterUnique.pipe';
 import { couponDiplayPipe } from 'src/app/shared/pipes/couponDiplay.pipe';
 import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
+import { TotalDurationTimePipe } from '../pipes/total-duration-time.pipe';
+
 
 import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
 
@@ -54,7 +56,7 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe
+    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe,TotalDurationTimePipe
 
   ],
   imports: [

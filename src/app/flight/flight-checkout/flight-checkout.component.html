@@ -348,12 +348,12 @@
                   <li *ngIf="cancellationPolicyOnwardMulti[searchi]">
                     <a href="javascript:void(0);" class="flight-extra-content-oo{{searchi}}"
                       [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnwardMulti[searchi]  }"
-                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event)" data-bind="CancellationDetails{{searchi}}">Fare Rules</a>
+                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'CancellationDetails')" data-bind="CancellationDetails{{searchi}}">Fare Rules</a>
                   </li>
                   <li *ngIf="baggageInfoOnwardMulti[searchi]">
                     <a href="javascript:void(0);" class="flight-extra-content-ob{{searchi}}"
                       [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnwardMulti[searchi]  }" data-bind="BaggageDetails{{searchi}}"
-                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event)">Baggage Policy</a>
+                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'BaggageDetails')">Baggage Policy</a>
                   </li>
 
                 </ul>
@@ -487,7 +487,7 @@
                   {{searchData.toCity}}
                 </h6>
                 <p> {{searchData.departure | date:"EEE,dd MMM"}} | {{totalOnwardStops_data}} |
-                  {{totalOnwardDuration + dateOnwardHourTotal| durationTime}}</p>
+                  {{totalOnwardDuration | durationTime}}</p>
               </div>
               <div class="booking-inner-title-right" *ngIf="selectedOnwardVendor">
                 <p class="non-refundable" *ngIf="selectedOnwardVendor.refundStatus != 1">NON-REFUNDABLE</p>
@@ -683,7 +683,7 @@
                   {{searchData.fromCity}}
                 </h6>
                 <p> {{searchData.arrival | date:"EEE,dd MMM"}} | {{totalReturnStops_data}} |
-                  {{totalReturnDuration + dateReturnHourTotal| durationTime}}</p>
+                  {{totalReturnDuration | durationTime}}</p>
               </div>
               <div class="booking-inner-title-right" *ngIf="selectedReturnVendor">
                 <p class="non-refundable" *ngIf="selectedReturnVendor.refundStatus != 1">NON-REFUNDABLE</p>
@@ -4768,7 +4768,7 @@ Please enter a valid expiry date</mat-error>
                 </div>
                 <div>
                   <div>
-                    <p class="duration_flight">{{totalOnwardDuration + dateOnwardHourTotal| durationTime}}</p>
+                    <p class="duration_flight">{{totalOnwardDuration | durationTime}}</p>
                     <p class="date_text">{{flightOnwardDetails[0].stops}} Stopddddddddd</p>
                   </div>
                 </div>
@@ -4829,7 +4829,7 @@ Please enter a valid expiry date</mat-error>
                   </div>
                   <div>
                     <div>
-                      <p class="duration_flight">{{totalOnwardDuration + dateOnwardHourTotal| durationTime}}</p>
+                      <p class="duration_flight">{{totalOnwardDuration | durationTime}}</p>
                       <p class="date_text">{{flightOnwardDetails[0].stops}} Stop</p>
                     </div>
                   </div>
@@ -4985,7 +4985,7 @@ Please enter a valid expiry date</mat-error>
                 </div>
                 <div>
                   <div>
-                    <p class="duration_flight">{{totalReturnDuration + dateReturnHourTotal| durationTime}}</p>
+                    <p class="duration_flight">{{totalReturnDuration | durationTime}}</p>
                     <p class="date_text">{{flightReturnDetails[0].stops}} Stop</p>
                   </div>
                 </div>
@@ -5046,7 +5046,7 @@ Please enter a valid expiry date</mat-error>
                   </div>
                   <div>
                     <div>
-                      <p class="duration_flight">{{totalReturndDuration + dateReturnHourTotal| durationTime}}</p>
+                      <p class="duration_flight">{{totalReturndDuration | durationTime}}</p>
                       <p class="date_text">{{flightReturnDetails[0].stops}} Stop</p>
                     </div>
                   </div>
