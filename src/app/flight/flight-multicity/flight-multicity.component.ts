@@ -108,7 +108,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
 
   @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
-  
+
 
   pageIndex: number = 26;
   ITEMS_RENDERED_AT_ONCE = 25;
@@ -167,12 +167,13 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.isMobile = window.innerWidth < 991 ? true : false;
   }
   ngOnInit(): void {
+    this.route.url.subscribe(url =>{
     this.loader = true;
     this.isMobile = window.innerWidth < 991 ? true : false;
     this.getQueryParamData();
     this.flightSearch();
     this.getAirpotsNameList();
-
+    });
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -220,8 +221,13 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     debugger;
     this.loader = true;
     let searchObj = (this.searchData);
+    var element = document.getElementById('Sector-area');
+      if(element)
+      {
+        element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
+      }
     console.log(searchObj, "searchObj");
-    this.sub = this._flightService.getMulticityList(searchObj).subscribe((res: any) => {
+    this.sub = this._flightService.multicityList(searchObj).subscribe((res: any) => {
       console.log(res , "response");
       if(res.response.journeys)
       {
@@ -244,12 +250,15 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
          this.getAirlinelist();
          this.loader = false;
          this.popularFilterFlightData();
+
       }
       else{
         this.loader = false;
       }
 
-    }, (error) => { console.log(error) });
+    }, (error) => {
+      this.loader = false;
+      console.log(error) });
 
   }
   ascPriceSummaryFlighs(flightsData: any) {
@@ -411,8 +420,8 @@ bookingSummary() {
     };
 
    uniqueKey+=this.DocKey;
-  
-      
+
+
   let randomFlightDetailKey = btoa(uniqueKey);
   sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
   let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
@@ -1257,7 +1266,10 @@ bookingSummary() {
       this.SelectedFlightsOnSector[this.sector] = SelectedFlight;
       this.searchData[this.sector].isSelected = true;
       this.searchData[this.sector].selectedFlight = SelectedFlight;
-      if(this.SelectedFlightsOnSector.length == this.searchData.length)
+
+      var select = this.searchData.filter(z=> {return z.isSelected == true})
+
+      if(select.length == this.searchData.length)
       {
         this.isAllSelected = true;
         this.isLast = false;
