@@ -49,6 +49,9 @@ export class BannersComponent implements OnInit {
   IsCardError:boolean=true;
   CardErrorMsg:any;
   customeravailablepoints: any;
+  card_no: any;
+  current_available_points: any;
+  last_stmt_points: any;
   isLogged: Boolean;
   XSRFTOKEN: string;
   ngOnInit(): void {
@@ -78,7 +81,11 @@ export class BannersComponent implements OnInit {
         this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
         this.rest.updateCardDetails(this.customerInfo);
         if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
-          this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
+             this.card_no="xx"+(Number(this.customerInfo['ccustomer'].last4digit));
+            this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
+            this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
+            this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
+        //  this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
           this.IsgoldCardDetails=false;
           this.IsgoldCardDetailsModel=true;
          }
@@ -95,7 +102,6 @@ export class BannersComponent implements OnInit {
     this.rest.getRegaliaGoldList().subscribe(res => {
       this.mainBanners = res.mainBanners.diners;
     });
-     console.log(this.sg);
      var params_arg = {
       _token:this.sg['customerInfo']['XSRF-TOKEN']
       };
@@ -131,14 +137,14 @@ benefitsLink(){
   this.angForm = this.fb.group({
      mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
      last_4_digit: ['', [Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
-     dob: ['', Validators.required ]
+     dob: ['', Validators.required ],
+     save_card: [''],
   });
 }
 
 HotelRecentSearch(){
  if (localStorage.getItem("HotelRecentSearch") != null) {
    var HotelRecentSearchResult = JSON.parse(window.atob(localStorage.getItem("HotelRecentSearch")));
-   console.log(HotelRecentSearchResult);
   /* for (let cok = 0; cok < HotelRecentSearchResult.length; cok++) {
    if (HotelRecentSearchResult[cok]['city_id'] == search_values_setCookieHotel[0].city_id && HotelRecentSearchResult[cok]['checkin'] == search_values_setCookieHotel[0].checkin && HotelRecentSearchResult[cok]['checkout'] == search_values_setCookieHotel[0].checkout) {
       HotelRecentSearchResult.splice(cok, 1);
@@ -156,6 +162,7 @@ onSubmit(){
        return false; 
      }
      this.customerInfo = this.sg['customerInfo']; 
+     this.card_no="xx"+this.angForm.controls['last_4_digit'].value;
       let URLparams = {
          "mobile": this.angForm.controls['mobile_no'].value,
          "customer_id": this.customerInfo["customerid"],
@@ -163,13 +170,13 @@ onSubmit(){
          "last4digit":this.angForm.controls['last_4_digit'].value,
          "_token":this.customerInfo["XSRF-TOKEN"],
          "DOB":this.angForm.controls['dob'].value,
-         "savecard":1,
          "user_id":this.customerInfo["id"],
          'modal':'REWARD',
          'type' : 'available_points',
          'clientToken':this.sg['domainName'],
          'services_id':7,
          'partner_id':1,
+         'savecard':this.angForm.controls['save_card'].value,
        }
        var EncURLparams = {
          postData: this.EncrDecr.set(JSON.stringify(URLparams))
@@ -182,6 +189,8 @@ onSubmit(){
             this.angForm.reset();
             this.spinnerService.show();  
             this.customeravailablepoints=res.points_available;
+            this.current_available_points=res.current_available_points;
+            this.last_stmt_points=res.last_stmt_points;
           }else{
                this.IsCardError=false;
                this.CardErrorMsg=res.message;
