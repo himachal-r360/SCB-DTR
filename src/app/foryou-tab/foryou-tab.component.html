@@ -803,46 +803,46 @@
         <div class="modal-body">
             <div>
                 <form [formGroup]="angForm" novalidate (ngSubmit)="onSubmit()">
-                    <div class="mb-3">
+                    <div class="mb-30 card-container-rel">
                       <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number" formControlName="mobile_no" (keypress)="onlyNumberKey($event,10)">
                       <div *ngIf="angForm.controls['mobile_no'].invalid && (angForm.controls['mobile_no'].dirty || angForm.controls['mobile_no'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['mobile_no'].errors.required" max-length="10">
-                            Mobile Number is required
+                            <small class="validate-msg">Mobile Number is required</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('pattern')">
-                            Mobile Number must be numeric
+                            <small class="validate-msg">Mobile Number must be numeric</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('minlength')">
-                            Mobile Number must be of 10 digit
+                            <small class="validate-msg">Mobile Number must be of 10 digit</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('maxlength')">
-                            Mobile Number must be of 10 digit
+                            <small class="validate-msg">Mobile Number must be of 10 digit</small>
                           </div>
                       </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-30 card-container-rel">
                       <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card" formControlName="last_4_digit" (keypress)="onlyNumberKey($event,4)">
                       <div *ngIf="angForm.controls['last_4_digit'].invalid && (angForm.controls['last_4_digit'].dirty || angForm.controls['last_4_digit'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['last_4_digit'].errors.required">
-                            Last 4 digit of the card is required
+                            <small class="validate-msg">Last 4 digit of the card is required</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('pattern')">
-                             Last 4 digit of the card must be numeric
+                             <small class="validate-msg">Last 4 digit of the card must be numeric</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('minlength')">
-                            Last 4 digit of the card must be of 4 digit
+                           <small class="validate-msg"> Last 4 digit of the card must be of 4 digit</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('maxlength')">
-                            Last 4 digit of the card must be of 4 digit
+                            <small class="validate-msg">Last 4 digit of the card must be of 4 digit</small>
                           </div>
                       </div>
                     </div>
-                    <div class="mb-3 position-relative">
+                    <div class="mb-30 card-container-rel">
                         <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask" (keypress)="onlyNumberKey($event,18)">
                         <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
                         <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
                             <div *ngIf="angForm.controls['dob'].errors.required">
-                              Date of birth is required
+                              <small class="validate-msg">Date of birth is required</small>
                             </div>
                         </div>
                     </div>
