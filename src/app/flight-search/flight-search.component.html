@@ -722,10 +722,12 @@
                                     <h5 class="fw_6 ">{{item.value.fromCity}}</h5>
                                     <span class="select-roottitle">{{item.value.fromAirportName}}</span>
                                     
-                                        <!-- <mat-error *ngIf="submitted && item.get('flightfrom').errors && item.get('flightfrom')hasError('required')"> <small
-                                                class="validate-msg"> Please select from city.</small></mat-error> -->
-                                            <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('flightfrom').errors?.required"> <small
-                                                class="validate-msg"> Please select departure date.</small></mat-error>        -->
+                                                <mat-error *ngIf="submitted && item.get('flightfrom').errors  && item.get('flightfrom')hasError('required')"><small
+                                                    class="validate-msg"> Please select from city.</small></mat-error> 
+
+                                                    <!-- <mat-error *ngIf="submitted && item.get('flightfrom').Error  && item.get('flightfrom')Error('MustMatch')"><small
+                                                        class="validate-msg"> Please select from city.</small></mat-error>      -->
+                                                
                                             
                                             <div class="flight-from-data flight-from-hide ff-form-data dropdown">
                                                 <div class="mob-title">
@@ -812,13 +814,14 @@
                                     <span class="select-roottitle">TO</span>
                                     <h5 class="fw_6 ">{{item.value.toCity}}</h5>
                                     <span class="select-roottitle">{{item.value.toAirportName}}</span>
-                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('flightto').errors.required"> <small
-                                        class="validate-msg"> Please select departure date.</small></mat-error>   -->
-                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && item.get('flightto').errors && item.get('flightto')hasError('required')"> <small
-                                                class="validate-msg"> Please select to city.</small></mat-error>         -->
-                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && MulticityError('flightto' + i, 'required')">
-                                        <small class="validate-msg">Please select to city</small>
-                                    </mat-error> -->
+                                 
+                                                <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto')hasError('required')"><small
+                                                    class="validate-msg"> Please select to city.</small></mat-error> 
+                                                    <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto')hasError('MustMatch')"><small
+                                                        class="validate-msg"> From and To cannot be same.</small></mat-error> 
+                                                    <!-- <mat-error class="" *ngIf="submitted && MulticityError(item.get('flightto'), 'MustMatch')">
+                                                        <small class="validate-msg">From and To cannot be same.</small>
+                                                    </mat-error>           -->
                                     <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
                                         <div class="mob-title">
                                             <h3>Select To City</h3>
@@ -901,7 +904,7 @@
                                 
                             </div>
                         </div>
-
+                            
                         <div class="col-lg-6">
                             <div class="root-date">
                                 <!--Web Date Picker-->
@@ -929,7 +932,7 @@
                                                     <input matInput [min]="minDate" [matDatepicker]="picker"
                                                     formControlName="departure"
                                                     [(ngModel)]="item.value.departure"
-                                                        (dateChange)="currentPeriodClicked($event , item)">
+                                                        (dateChange)="currentPeriodClicked($event , item ,i)">
                                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                                     </mat-datepicker-toggle>
                                                     <mat-datepicker #picker></mat-datepicker>
@@ -1195,10 +1198,11 @@
                                     
                                 </div>
              
-                                <!-- <mat-error class="w-50 error_msg w-50" *ngIf="item.get('depart').invalid "> <small
-                                    class="validate-msg"> Please select departure date.</small></mat-error>  -->
-                                    <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('depart').errors.required"> <small
-                                        class="validate-msg"> Please select departure date.</small></mat-error>             -->
+                              
+                                        <mat-error *ngIf="submitted && item.get('departure').errors && item.get('departure')hasError('required')"><small
+                                            class="validate-msg"> Please select departure date.</small></mat-error> 
+                                        
+                                        
                         </div>
                     </ng-container>
                     </ng-container>
