@@ -748,9 +748,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
              if (fareInfo && fareInfo.bg.length > 0)
               this.baggageInfoOnwardMulti[k] = fareInfo.bg;
-              this.cancellationPolicyOnwardMulti[k] = this.emt_cancellationPolicy(fareInfo.cancellationPolicy);
-             
-              
+              this.cancellationPolicyOnwardMulti[k] = this.emt_cancellationPolicy(fareInfo.cancellationPolicy,this.searchData[k]['flightfrom'],this.searchData[k]['flightto'],'onward');
               
              } 
             }
@@ -2323,10 +2321,10 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
               this.baggageInfoReturn = res.response.returnFlightDetails.bg;
 
             if (partner == 'Easemytrip')
-              this.cancellationPolicyOnward = this.emt_cancellationPolicy(res.response.onwardFlightDetails.cancellationPolicy);
+             this.emt_cancellationPolicy(res.response.onwardFlightDetails.cancellationPolicy,this.searchData['flightfrom'],this.searchData['flightto'],'onward');
 
             if (partner == 'Easemytrip' && res.response.returnFlightDetails && res.response.returnFlightDetails.cancellationPolicy)
-              this.cancellationPolicyReturn = this.emt_cancellationPolicy(res.response.returnFlightDetails.cancellationPolicy);
+              this.emt_cancellationPolicy(res.response.returnFlightDetails.cancellationPolicy,this.searchData['flightto'],this.searchData['flightfrom'],'return');
           }
         } else {
           /**International**/
@@ -2398,7 +2396,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
             this.baggageInfoOnward = res.response.flight_details.bg;
 
           if (partner == 'Easemytrip' && res.response && res.response.flight_details.cancellationPolicy)
-            this.cancellationPolicyOnward = this.emt_cancellationPolicy(res.response.flight_details.cancellationPolicy);
+         this.emt_cancellationPolicy(res.response.flight_details.cancellationPolicy,this.searchData['flightto'],this.searchData['flightfrom'],'onward');
           // console.log( res.response.flight_details);
         }
 
@@ -2433,7 +2431,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  emt_cancellationPolicy(data) {
+  emt_cancellationPolicy(data,flightfrom,flightto,type) {
   
         var getCancellationPolicy = {
         itineraryId: this.itineraryid,
@@ -2446,17 +2444,19 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         pricingId:this.pricingId,
         onward_flightIdCSV:'',
         airlineCode:'',
+        flightfrom:flightfrom,
+        flightto:flightto,
         classType:this.searchData['flightclass'],
-
         };
-        
-         this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(result => { 
-          console.log(result);
+        console.log(getCancellationPolicy);
+         this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(response => {
+         if(response.status=="success"){
+         if(type=='onward')
+            this.cancellationPolicyOnward =response.data;
          
-         
+         }
          });
         
-        console.log(getCancellationPolicy);
 
   /*
     if (data && data.Cancellation) {
@@ -3086,7 +3086,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         classType:this.searchData['flightclass'],
       
         };
-console.log(getCancellationPolicy);
        // this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(result => { });
           
           
