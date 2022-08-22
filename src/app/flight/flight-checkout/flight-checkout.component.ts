@@ -2146,6 +2146,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         this.loaderValue = 10;
       }
     }, 600);
+ 
 
     this._flightService.getFlightInfo(param, searchData).subscribe((res: any) => {
 
@@ -2323,7 +2324,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           }
         } else {
           /**International**/
-
+          console.log(res.response);
+           console.log(partner);
           if (partner == 'Yatra') {
             if (res.response.flight_details.fare.O) {
               if (res.response.flight_details.fare.O.ADT) {
@@ -2426,7 +2428,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   }
 
   emt_cancellationPolicy(data) {
-    if (data.Cancellation) {
+    if (data && data.Cancellation) {
       let cancellation_data = data.Cancellation.split('|');
       let reschedule_data = data.Reschedule.split('|');
       let emt_charges = data.EMTFee;
