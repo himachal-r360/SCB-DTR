@@ -2959,23 +2959,33 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
         this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
   console.log(this.itinararyResponse);
-        if (this.itinararyResponse['response'] && this.itinararyResponse['response']['itineraryResponseDetails'] &&this.itinararyResponse['response']["pricingResponseDetails"] && (this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode']) && this.itinararyResponse['response']['itineraryResponseDetails']['partnerErrorCode'] == 200 && this.itinararyResponse['response']['itineraryResponseDetails']["httpcode"] == 200 && this.itinararyResponse['response']["pricingResponseDetails"]["httpcode"] == 200) {
+        let itinararyResponse;
+       if( this.flightSessionData['travel_type']=='M') {
+       
+       itinararyResponse=this.itinararyResponse;
+       }else{
+       itinararyResponse=this.itinararyResponse['response'];
+       }
+  
+  
+  
+        if (itinararyResponse && itinararyResponse['itineraryResponseDetails'] &&itinararyResponse["pricingResponseDetails"] && (itinararyResponse['itineraryResponseDetails']['partnerErrorCode']) && itinararyResponse['itineraryResponseDetails']['partnerErrorCode'] == 200 && itinararyResponse['itineraryResponseDetails']["httpcode"] == 200 && itinararyResponse["pricingResponseDetails"]["httpcode"] == 200) {
 
           if (this.partnerToken == 'Yatra') {
-            this.pricingId = this.itinararyResponse['response']['itineraryResponseDetails']['pricingId'];
-            this.itineraryid = this.itinararyResponse['response']['itineraryResponseDetails']['superPnr'];
+            this.pricingId = itinararyResponse['itineraryResponseDetails']['pricingId'];
+            this.itineraryid = itinararyResponse['itineraryResponseDetails']['superPnr'];
             //$json_data=$result_array['response']["pricingResponseDetails"]['partnerErrorMessage'];
             // $getStopOver=Yatraflight::getStopOver($json_data,$data['post_data'],$session_flight_key);
 
           } else {
-            this.itineraryid = this.itinararyResponse['response']['itineraryResponseDetails']['itineraryId'];
+            this.itineraryid = itinararyResponse['itineraryResponseDetails']['itineraryId'];
           }
           this.partnerConvFee = 0;
-          if ((this.itinararyResponse['response']["pricingResponseDetails"]["partnerConvFee"]) && this.itinararyResponse['response']["pricingResponseDetails"]["partnerConvFee"] != '') {
-            this.partnerConvFee = this.itinararyResponse['response']["pricingResponseDetails"]["partnerConvFee"];
+          if ((itinararyResponse["pricingResponseDetails"]["partnerConvFee"]) && itinararyResponse["pricingResponseDetails"]["partnerConvFee"] != '') {
+            this.partnerConvFee = itinararyResponse["pricingResponseDetails"]["partnerConvFee"];
           }
           let priceSummary; let setOrderAmount;
-          this.priceSummaryResponse = this.itinararyResponse['response']["pricingResponseDetails"]['priceSummary'];
+          this.priceSummaryResponse = itinararyResponse["pricingResponseDetails"]['priceSummary'];
           priceSummary = JSON.parse(this.priceSummaryResponse);
           this.new_fare = Number(priceSummary['total_fare']) - Number(this.coupon_amount);
           setOrderAmount = Number(priceSummary['total_fare']) ? Number((priceSummary['total_fare'])) : 0;
@@ -3038,6 +3048,9 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           }, 20);
 
         }
+        
+      
+        
       }), (err: HttpErrorResponse) => {
         clearInterval(myInterval1);
         setTimeout(() => {
@@ -3054,6 +3067,11 @@ orderReferenceNumber:any;
     // console.log(this.flightInfo);
     let fligthsOnward = [];
     let fligthsReturn = [];
+    
+      if( this.flightSessionData['travel_type']=='M') {
+      
+      
+     }else{
     for (let i = 0; i < (this.flightSessionData.onwardFlights.length); i++) {
       fligthsOnward.push({
         "arr_tym": this.flightSessionData.onwardFlights[i]['arrivalDateTime'],
@@ -3092,7 +3110,7 @@ orderReferenceNumber:any;
         "stopsDetails": []
       });
     }
-
+   }
 
     for (let i = 0; i < (this.flightSessionData.returnFlights.length); i++) {
 
