@@ -1,0 +1,178 @@
+@import '../../../assets/sharedscss/color';
+@import '../../../assets/sharedscss/spacing';
+
+h6 {
+    font-size: $size-small;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: left;
+    color: $color-dark-gray;
+}
+
+.filter-container{
+    .filter-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #88888820;
+        padding-bottom: 15px;
+        .header-left{
+            color: #555555;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .header-right{
+            a{
+                color: #1D86FF;
+                font-size: 12px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.w-filter{
+    .mat-accordion{
+        .mat-expansion-panel{
+            box-shadow: none;
+            border-bottom: 1px solid #eee;
+            border-radius: 0;
+            .mat-expansion-panel-header{
+                padding: 0 2px 0 0;
+            }
+            .mat-expansion-panel-content{
+                
+            }
+            
+        }
+    }
+
+
+    .train_timeTitle{
+        font-size: 12px;
+        color: #555555;
+        font-weight: 400;
+        margin: 10px 0px;
+    }
+
+    .departure_check, .arrival_check{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 9px;
+        label{
+            width: 48%;
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+            position: relative;
+            cursor: pointer;
+            font-size: 11px;
+            text-align: left;
+            color: #000000;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            float: left;
+            border-radius: 2px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            background-color: #ffffff;
+        }
+    }
+}
+
+.search-sub-filter {
+    border: 0;
+    border-bottom: 1px solid #88888820;
+    font-size: $size-small;
+    line-height: 1.87;
+    text-align: left;
+    color: $color-dark-gray;
+    padding-left: 25px;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+    }
+
+    ::-webkit-input-placeholder {
+        color: $color-dark-gray;
+    }
+
+    ::-moz-placeholder {
+        color: $color-dark-gray;
+    }
+
+    :-ms-input-placeholder {
+        color: $color-dark-gray;
+    }
+
+    :-moz-placeholder {
+        color: $color-dark-gray;
+    }
+}
+
+
+.icn_search{
+    font-size: 15px;
+    position: absolute;
+    top: 4px;
+    height: 4px;
+    width: 4px;
+}
+
+.filter-common{
+    max-height: 500px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+
+
+/*cust-checkbox*/
+    
+
+.checkbox-cust input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark-cust {
+    position: absolute;
+    top: 25px;
+    left: 5px;
+    width: 85%;
+    height: 16px;
+}
+
+
+.checkbox-cust  input:checked + .checkbox-cust  {
+    background-color: #000000;
+}
+
+.check-control {
+    font-size: 14px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    display: block;
+    cursor: pointer;
+    /* display: grid;
+    grid-template-columns: 1em auto;
+    grid-gap: 0.5em;
+    gap: 0.5em; */
+    input[type="checkbox"]{
+
+        position: relative;
+        top: 2px;
+        margin-right: 6px;
+    }
+}

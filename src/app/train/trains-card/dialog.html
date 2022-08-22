@@ -1,0 +1,120 @@
+<mat-dialog-content  class="">
+<!-- For Web Code  -->
+<div class="text-center d-none d-sm-block">
+    <div class="confirmation-header">
+       <h4>You are choosing different route</h4>
+    </div>
+
+    <div>
+        <div class="">
+            <p class="heading_title">You searched train for</p>
+            <div class="search_change">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span class="train-name-conf">{{data.searchfrom|titlecase}} ({{data.frmStn}})</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="duration_train">
+                            <div class="range"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="train-name-conf">{{data.searchto|titlecase}} ({{data.toStn}})</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-3">
+        Loader 
+    </div>
+
+    <div class="">
+        
+        <div class="">
+            <p class="heading_title">But Booking From</p>
+            <div class="search_change">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span class="train-name-conf">{{data.trainFrom|titlecase}} ({{data.fromStnCode}})</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="duration_train">
+                            <div class="range"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="train-name-conf">{{data.trainTo|titlecase}} ({{data.toStnCode}})</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pb-4 px-3">
+    <div class="row">
+        <div class="continiue-title col-12">
+            <h4>Do you want to continue with it?</h4>
+        </div>
+    </div>
+
+        <button  (click)="onNoClick()" tabindex="1" class="btn btn-b-{{domainName}} mx-2" style="width:110px;">Cancel</button>
+        <button   (click)="onYesClick()" tabindex="2" class="btn btn-c-{{domainName}} mr-2" style="width:110px;">Ok</button>
+    </div>
+</div>
+
+
+<!-- For Mobile Code  -->
+
+<div class="text-center d-block d-sm-none mobile-route">
+        <div class="confirmation-header">
+           <h4>You are choosing different route</h4>
+        </div>
+        <div class="py-4 px-3 row">
+            <div class="col-12">
+                <p>You seached train for</p>
+                        <div class="row">
+                            <div class="col-5">
+                                <span class="train-name-conf">{{data.searchfrom|titlecase}} ({{data.frmStn}})</span>
+                            </div>
+                            <div class="col-2 p-0">
+                                <hr style="margin: 0.6rem 0;">
+                            </div>
+                            <div class="col-5">
+                                <span class="train-name-conf">{{data.searchto|titlecase}} ({{data.toStn}})</span>
+                            </div>
+                        </div>
+            </div>
+            <div class="col-12 py-3">
+                <img src="{{cdnUrl}}images/irctcbw.svg" alt="train-between">
+            </div>
+            <div class="col-12">
+                <p>But Booking From</p>
+                        <div class="row">
+                            <div class="col-5">
+                                <span class="train-name-conf">{{data.trainFrom|titlecase}} ({{data.fromStnCode}})</span>
+                            </div>
+                            <div class="col-2 p-0">
+                                <hr style="margin: 0.6rem 0;">
+                            </div>
+                            <div class="col-5">
+                                <span class="train-name-conf">{{data.trainTo|titlecase}} ({{data.toStnCode}})</span>
+                            </div>
+                        </div>
+            </div>
+            <div class="continiue-title col-12">
+                    <h4>Do you want to continue with it?</h4>
+            </div>
+        
+            <hr>
+        <div class="text-center col">
+            <button  (click)="onNoClick()" tabindex="1" class="btn btn-b-{{domainName}} mx-2" style="width:90px;">Cancel</button>
+            <button   (click)="onYesClick()" tabindex="2" class="btn btn-c-{{domainName}} mr-2" style="width:90px;">Ok</button>
+        </div>
+    </div>
+    </div>
+
+
+</mat-dialog-content>
+

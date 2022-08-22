@@ -1,14 +1,17 @@
 import { NgModule } from "@angular/core";
 import { DropdownDirective } from "../directives/dropdown.directive";
+import { ToggleDetailDirective } from "./toggle-detail.directive";
 
 @NgModule({
   declarations: [
-    DropdownDirective
+    DropdownDirective,
+    ToggleDetailDirective
   ],
   imports: [
   ],
   exports:[
-    DropdownDirective
+    DropdownDirective,
+    ToggleDetailDirective
   ]
 })
 export class DirectiveModule { }

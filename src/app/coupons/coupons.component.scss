@@ -50,7 +50,7 @@
 }
 
 
-.radio {
+/* .radio {
   position: relative;
   cursor: pointer;
   line-height: 20px;
@@ -89,13 +89,47 @@
 
 input[type=radio]:checked + .label {
   border-color: #1d86ff;
+  background: url(./../../assets/images/r360_logo_black.svg) no-repeat;
 }
 
 input[type=radio]:checked + .label:after {
   transform: scale(1);
   transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
   opacity: 1;
-}
+} */
 
 [type="radio"]:checked,
 [type="radio"]:not(:checked) {position: relative; left: 0px; }
+
+
+.promo-msg{
+  .text-green{
+    display: flex;
+    margin-bottom: 20px;
+    img{
+      margin-right: 10px;
+      width: 25px;
+      height: auto;
+    }
+    span{
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: normal;
+      margin-top: 5px;
+    }
+  }
+}
+
+/* Over ride CSS for radio btn */
+.form-check-input:focus{
+  border-color: #B7B7B7;
+}
+.form-check-input:checked{
+  background-image: url('../../assets/images/icons/couponsuccess.svg') !important;
+  border: none;
+  background-color: transparent;
+  &:focus{
+    box-shadow: none;
+  }
+}

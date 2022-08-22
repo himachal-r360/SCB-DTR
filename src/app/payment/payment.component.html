@@ -1,97 +1,188 @@
-   <!-- New Payment Code pahse 3 -->
-
-        <div class="  payment_cnt">
-            
-            <div class="partner_info">
-                <div class="row">
-                    <div class="col-7">
-                        <div>
-                            <div>
-                                <p class="title">Paying</p>
+<div class="  " *ngIf="showRewardsBox">
+<!-- <ng-container >
+        <div class="payPoints-section ">
+            <h5 class="point-title"><b>Pay using Points</b></h5>
+            <div class="row">
+                <div class="col-sm-6 col-12">
+                    <div class="redeem-section">
+                        <div class="row">
+                            <div class="col-md-2 col-2 text-center">
+                                <img src="{{cdnUrl}}images/icons/gift-re.svg" alt="redeem-img">
+                            </div>
+                            <div class="col-md-10 col-10">
+                                <p class="redeem-text">Redeem your Credit card reward points</p>
+                                <button class="btn redeem-btn redeemnow" *ngIf="!RedeemStatus;else RedeemedWeb" (click)="calldialog('add_card')">REDEEM NOW</button>
+                                <ng-template #RedeemedWeb>
+                                    <button class="btn redeem-sucess" style="cursor:not-allowed">REDEEMED<span><i class="fa fa-check-circle" aria-hidden="true"></i></span></button>
+                                </ng-template>
                             </div>
                         </div>
                     </div>
-                    <div class="col-5 text-left">
-                        <div>
-                            <p class="title">Amount</p>
-                            <p class="title_value">Rs. {{payTotalFare| number:'1.2-2'}} 
-                                <!-- <a href="">Show Breakup</a> -->
-                            </p>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <div class="redeem-section">
+                        <div class="row">
+                            <div class="col-md-2 col-2 text-center">
+                                <img src="{{cdnUrl}}images/icons/redeemhave.svg" alt="redeem-img">
+                            </div>
+                            <div class="col-md-10 col-10">
+                                <p class="redeem-text">Already have a Confirmation Code?</p>
+                                <button class="btn redeem-btn applyvoucher" (click)="calldialog('apply_voucher')">APPLY CODE</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <hr style="border-top-color: #e6e6e6;">
-                <div class="card_img_sec">
-                    <ul>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/pci.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/master.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/visa.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/rupay.png" alt="card_partner">
-                        </li>
-                        <li>
-                            <img src="{{cdnUrl}}images/smartbuy/partner/card/american.png" alt="card_partner">
-                        </li>
-                    </ul>
+            </div>
+        </div>
+    </ng-container> -->
+
+    <ng-container>
+        <app-paywithpoints *ngIf="pointsPG" [serviceId]="serviceId" [payTotalFare]="payTotalFare"></app-paywithpoints>  
+    </ng-container>
+
+    <ng-container *ngIf="showProceedPayment">
+        <ng-container *ngIf="PayNoAmtStatus;else proceedPayment">
+            <!-- PAY NO AMOUNT , GO TO CHECKOUT SECTION -->
+            <div class="payPoints-section">
+                <div class="payment-section col-md-12">
+                    <form [formGroup]="PayNoAmtForm">
+                        <div class="success-redeem"></div>
+                        <div class="">
+                            <!-- <span><b>{{redeemtext}}</b></span> -->
+                            <p class="success_msg" [innerHtml]="redeemtext"></p>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_noAmount">
+                                    <label class="form-check-label xs-check-font" for="termscondition_noAmount" >
+                                        I understand and agree to the rules and restrictions of
+                                        this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                        understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                        SmartBuy.
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- <p> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
+                                      this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                      understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                      SmartBuy.
+                                      <input type="checkbox" formControlName="termscondition" name="termscondition"> <span class="checkmark"></span></label>
+                            </p> -->
+                            <div *ngIf="submittedPayNoAmtForm && PayNoAmtForm.controls.termscondition.errors" class="error">
+                                <small *ngIf="PayNoAmtForm.controls.termscondition.errors.required || PayNoAmtForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
+                            </div>
+                            <button class="btn btn-primary btn-paynow col-sm-3 col-12 mt-2" (click)="payNow(7)">Confirm Booking</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </ng-container>
 
-            <div class="my-5">
-                <div class="payment_final_sec">
+        <ng-template #proceedPayment>
+            <!-- PAY REMAINING AMOUNT -->
+            <div>
+                <div class="payPointsSuccess-section">
+                    <div class="payment-section">
+                        <div class="success-redeem"></div>
+                        <div class="">
+                            <!-- <p class="success_msg">{{redeemtext}}</p> -->
+                            <p class="success_msg" [innerHtml]="redeemtext"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+    </ng-container>
+
+  </div>
+   <!-- New Payment Code pahse 3 -->
+
+    <div class="payment_cnt">
+        <div class="card_partner_info">
+            <div class="amount_sec">
+                <div>
+                    <p class="title">Paying </p>
+                </div>
+                <div class="text-end">
+                    <p class="title_sub">Amount </p>
+                    <p class="title_value">₹{{payTotalFare| number:'1.2-2'}} 
+                        <!-- <a href="">Show Breakup</a> -->
+                    </p>
+                </div>
+            </div>
+            <hr style="border-top-color: #e6e6e6;">
+            <div class="card_img_sec">
+                <ul>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/pci.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/master.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/visa.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/rupay.png" alt="card_partner">
+                    </li>
+                    <li>
+                        <img src="{{cdnUrl}}images/smartbuy/partner/card/american.png" alt="card_partner">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+        <div class="payment_cnt p-0">
+            
+            <div class="">
+                <div class="payment_final_sec border-0">
                     <div class="row">
-                        <div class="col-5 pr-0">
-                            <div class=" d-flex">
+                        <div class="col-md-4 pe-md-0">
+                            <div class="">
                                 <ul id="tabs" class="nav nav-tabs py-3" role="tablist">
                                     <li class="nav-item" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                       <a id="tab-savedCards" href="#pane-savedCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="pl-2">Saved Methods</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Cards</span>
                                       </a>
                                     </li>
                             
                                     <li class="nav-item" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
                                       <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="pl-2">Debit / Credit Card</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsNETBANKING">
                                       <a id="tab-netBanking" href="#pane-netBanking" class="nav-link" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="pl-2">Net Banking</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">Net Banking</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsEMI && emiArray.length >0">
                                       <a id="tab-emi" href="#pane-emi" class="nav-link" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="pl-2">EMI</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsPAYZAPP"> 
                                         <a id="tab-payzapp" href="#pane-payzapp" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="pl-2">Payzapp</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
                                         </a>
                                       </li>
-                                    <li class="nav-item" *ngIf="showRewardsBox">
+                                    <!--<li class="nav-item" *ngIf="showRewardsBox">
                                       <a id="tab-rewardPoints" href="#pane-rewardPoints" class="nav-link" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="pl-2">Reward Points</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Reward Points</span>
                                       </a>
-                                    </li>
+                                    </li>-->
                                     <li class="nav-item" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
                                         <a id="tab-flexipay" href="#pane-flexipay" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="pl-2">Flexi Pay</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
                                         </a>
                                       </li>
-                                            <li class="nav-item" *ngIf="pgSettingsUPI">
-                                        <a id="tab-upi" href="#pane-upi" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/upi.svg" alt="icon"> <span class="pl-2">UPI</span>
-                                        </a>
-                                      </li>  
+                       
                                     <li class="nav-item" *ngIf="pgSettingsTESTPG">
                                         <a id="tab-testPg" href="#pane-testPg" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="pl-2">Test Pg</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Test Pg</span>
                                         </a>
                                       </li>
                              
@@ -99,13 +190,22 @@
                                 
                             </div>
                         </div>
-                        <div class="col-7 pl-0">
-                            <div id="content" class="tab-content payment-content pt-3 pr-3 pl-3" role="tablist">
+                        <div class="col-md-8 col-12 ps-md-0">
+                            <div id="content" class="tab-content payment-content p-3" role="tablist">
 
                                 <!-- Saved Card Section Starts -->
-                                <div id="pane-savedCards" class="card tab-pane fade show" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
-                                    <div id="collapse-savedCards" class="collapse show" role="tabpanel" aria-labelledby="heading-savedCards">
-                                        <div class="card-body p-0">
+                                <div id="pane-savedCards" class="card tab-pane fade show" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
+                                            <a id="tab-netBanking" class="accordion-button" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-savedCards" aria-expanded="true" aria-controls="collapse-savedCards">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Cards</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-savedCards" class="accordion-collapse collapse show" role="tabpanel" aria-labelledby="heading-savedCards" data-bs-parent="#content">
+                                        <div class="card-body">
                                             <div>
                                                 <div class="common_title">
                                                     <span class="">Pay Using Saved Cards</span>
@@ -115,10 +215,9 @@
                                                         <!-- <h6><b>Pay using</b></h6> -->
                                                         <p>Your Saved Cards</p>
                                     
-                                    
                                                         <div class="row">
-                                                            <div class="pl-3" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title">PG Charges Applicable</span>
-                                                                <span class="pg-subtitle pl-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/>For all Domestic HDFC BANK Debit Cards – NIL up to Rs. 1 Lakh</span></div>
+                                                            <div class="ps-3" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title">PG Charges Applicable</span>
+                                                                <span class="pg-subtitle ps-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/>For all Domestic HDFC BANK Debit Cards – NIL up to ₹1 Lakh</span></div>
                                                         </div>
                                     
                                                     </div>
@@ -126,14 +225,14 @@
                                                     <!-- <div class="accordion" id="saveCardAccordion"> -->
                                     
                                                     <form [formGroup]="saveCardForm">
-                                                        <div *ngFor="let card of cardData; let cardfirstRow = first;let cardIndex=index;">
+                                                        <div *ngFor="let card of cardData; let cardfirstRow = first;let cardIndex=index;" class="saveCard_radio">
                                     
                                                             <label for="card_id{{cardIndex}}" class="radio">
                                         
                                         
-                                                <input type="hidden"  formControlName="cardRow"  id="cardRow{{cardIndex}}"   />
+                                                             <input type="hidden"  formControlName="cardRow"  id="cardRow{{cardIndex}}"   />
                                         
-                                                <input type="radio"  class="hidden" data-bs-toggle="collapse"  [attr.data-bs-target]="'#saveCardOne'+ cardIndex" [attr.aria-controls]="'saveCardOne'+ cardIndex"   name="card_id"  id="card_id{{cardIndex}}"  value="{{card.card_id}}"  [checked]="cardfirstRow"  (change)="onSavecardChange(card,cardIndex)" (click)='getPGvalues(5)' />
+                                                             <input type="radio"  class="hidden" data-bs-toggle=""  [attr.data-bs-target]="'#saveCardOne'+ cardIndex" [attr.aria-controls]="'saveCardOne'+ cardIndex"   name="card_id"  id="card_id{{cardIndex}}"  value="{{card.card_id}}"  [checked]="cardfirstRow"  (change)="onSavecardChange(card,cardIndex)" (click)='getPGvalues(5)' />
                                         
                                                             <span class="label"></span>
                                                             {{card.type | titlecase}} card<br>
@@ -141,23 +240,43 @@
                                                             <!-- <img src="https://via.placeholder.com/250x100" class="save-card-img img-fluid"> -->
                                                             </label>
                                     
-                                                            <div id="saveCardOne{{cardIndex}}" class="collapse" [ngClass]="{'show': cardfirstRow }" data-bs-parent="#allPayments" name="paymentModule">
+                                                            <div id="saveCardOne{{cardIndex}}" class="" [ngClass]="{'show': cardfirstRow }" data-bs-parent="" name="paymentModule">
                                                                 <div class="save-card-info w-card-id">
                                                                     <p class="save-card-num"> {{card.card_display_name}}</p>
-                                                                    <!--<p class="save-card-offer"><img src="https://via.placeholder.com/50x50" class="img-fluid w-40"></p>-->
                                                                 </div>
-                                                                <div class="contact-form">
-                                                                    <mat-form-field class=" matField_full_width cvv-w col-4 pl-0 pt-16" appearance="fill">
-                                                                        <mat-label>CVV</mat-label>
-                                                                        <input matInput placeholder="" id="cvvnumber-{{card.id}}" formControlName="save_cvvnumber{{cardIndex}}" maxlength="3" autocomplete="new-password" type="password">
-                                                                        <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-                                                                        <!-- <img src="https://via.placeholder.com/50x50" class="newcard-info-cvvimg"> -->
-                                                                        <!-- <i class="material-icons newcard-info-cvvimg">error_outline</i> -->
-                                                                    </mat-form-field>
-                                                                    <div *ngIf="submittedSaveCardForm && saveCardForm.controls['save_cvvnumber'+cardIndex]['errors']" class="error1">
-                                                                        <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].required">CVV is required</small>
-                                                                        <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].pattern">Please enter a valid data</small>
-                                                                        <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].minlength">Please enter maximum 3 Digits</small>
+                                                                <div class="contact-form mt-15">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6 col-8">
+                                                                            <mat-form-field class=" cvv-w w-75 ps-0 pt-16" appearance="outline">
+                                                                                <mat-label>CVV</mat-label>
+                                                                                <input matInput placeholder="" id="cvvnumber-{{card.id}}" formControlName="save_cvvnumber{{cardIndex}}" maxlength="3" autocomplete="new-password" type="password">
+                                                                  
+                                                                            </mat-form-field>
+                                                                            <div *ngIf="submittedSaveCardForm && saveCardForm.controls['save_cvvnumber'+cardIndex]['errors']" class="error1 cvv-w">
+                                                                                <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].required">CVV is required</small>
+                                                                                <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].pattern">Please enter a valid data</small>
+                                                                                <small *ngIf="saveCardForm.controls['save_cvvnumber'+cardIndex]['errors'].minlength">Please enter maximum 3 Digits</small>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6 col-12 text-end">
+                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==0">
+                                                                                <span> 
+                                                                                    <p class="invalid">
+                                                                                        <span class="material-icons px-1">warning</span>
+                                                                                        <span class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="1" id="tokenization{{cardIndex}}" (change)="checkInfo($event,cardIndex)">
+                                                                                            <label class="form-check-label" for="tokenization{{cardIndex}}">
+                                                                                                 Tokenise & Save
+                                                                                            </label>
+                                                                                        </span>
+                                                                                        <!-- <input type="checkbox" id="tokenization{{cardIndex}}"   value="1" (change)="checkInfo($event,cardIndex)" class="mt-10"> 
+                                                                                        <span class="material-icons px-1" for="tokenization{{cardIndex}}">warning</span>  Tokenise and Save -->
+                                                                                    </p> 
+                                                                                </span>
+                                                                                <span class="tokensaveard"><i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo(card.type)"></i> </span> 
+                                                                            </div>
+                                                                            <div class="secure_text"  *ngIf="pgSettingsCYBERToken && isLoggedIn && card.secured==1"><p class="valid"><span class="material-icons pe-2 ">lock</span> Secure now</p><input type="checkbox" name="tokenization" id="tokenization{{cardIndex}}" checked value="1" style="display:none;"></div>
+                                                                        </div>
                                                                     </div>
                                     
                                                                 </div>
@@ -167,16 +286,20 @@
                                                             </div>
                                     
                                                         </div>
-                                                        <p> <label class="checkbox xs-check-font ">I understand and agree to the rules and restrictions of
-                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                SmartBuy.
-                                                                        <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                        </p>
-                                                        <div *ngIf="submittedSaveCardForm && saveCardForm.controls.termscondition.errors" class="error">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_saveCard">
+                                                            <label class="form-check-label xs-check-font" for="termscondition_saveCard" >
+                                                                I understand and agree to the rules and restrictions of
+                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                SmartBuy.
+                                                            </label>
+                                                        </div>
+                                                          
+                                                        <div *ngIf="submittedSaveCardForm && saveCardForm.controls.termscondition.errors" class="error_tc">
                                                             <small *ngIf="saveCardForm.controls.termscondition.errors.required || saveCardForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                         </div>
-                                                        <button class="btn btn-c btn-paynow-{{domainName}}" (click)="checkNonSpcOfferforSaveCard()" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                        <button class="btn btn-paynow-{{domainName}} my-3" (click)="checkNonSpcOfferforSaveCard()" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                     
                                                     </form>
                                     
@@ -188,90 +311,29 @@
                                 <!-- Saved Card Section Ends -->
 
 
-                                <!-- UPI Section Starts -->
-                                <div id="pane-upi" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-upi" *ngIf="pgSettingsUPI">
-                                    <div id="collapse-upi" class="collapse" role="tabpanel" aria-labelledby="heading-upi">
-                                        <div class="card-body">
-                                            <div>
-                                                <div class="bharatQrSection">
-                                                    <!-- <label for="bharatQR" class="radio">
-                                                            <input type="radio" name="rdo"  (click)="pgSelect('UPI');getPGvalues(6)" id="bharatQR" class="hidden" data-bs-toggle="collapse"
-                                                              data-bs-target="#upiOption" aria-expanded="false" aria-controls="upiOption"  [checked]="!pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && !pgSettingsPAYZAPP && pgSettingsUPI " />
-                                                            <span class="label"></span><span class="payMethod-label">UPI</span>
-                                                            <img src="https://via.placeholder.com/50x50" class="new-card-titleoffer">
-                                                          </label> -->
-                                                          <div class="common_title">
-                                                            <span class="">Pay Using UPI</span>
-                                                        </div>
-                                                    <form [formGroup]="upiForm">
-                                                        <div id="upiOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && !pgSettingsPAYZAPP && pgSettingsUPI }" data-bs-parent="#allPayments" name="paymentModule">
-                            
-                                                            <div class="bharatqr-info">
-                                                                <div>
-                                                                    <img src="" class="img-fluid">
-                            
-                                                                    <div class="bharatqr-price-section">
-                            
-                                                                        <mat-form-field>
-                                                                            <input matInput placeholder="VPA" formControlName="virtual_address" autocomplete="off">
-                                                                        </mat-form-field>
-                                                                        <div *ngIf="submittedUpiForm && upiForm.controls.virtual_address.errors" class="error">
-                                                                            <small *ngIf="upiForm.controls.virtual_address.errors.required">VPA is required</small>
-                                                                            <small *ngIf="upiForm.controls.virtual_address.errors.pattern">Please enter a valid email id</small>
-                                                                        </div>
-                                                                        <p class="bharat-total">Total Amount</p>
-                                                                        <p class="bharat-price"> Rs. {{payTotalFare| number:'1.2-2'}}</p>
-                                                                    </div>
-                                                                </div>
-                            
-                            
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                            <div class="new-card-footer ">
-                                                                <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                SmartBuy.
-                                                                  <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                            
-                                                                </p>
-                                                                <div *ngIf="submittedUpiForm && upiForm.controls.termscondition.errors" class="error">
-                                                                    <small *ngIf="upiForm.controls.termscondition.errors.required || upiForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
-                                                                </div>
-                                                                <div class="my-3 xs-center">
-                                                                    <button class="btn-c btn-primary" (click)="payNow(6)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
-                                                                </div>
-                            
-                                                            </div>
-                            
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- UPI Section Ends -->
+                              
 
 
                                 <!-- Credt/Debit Card Section Starts -->
-                                <div id="pane-ccdcCards" class="card tab-pane fade" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="tabpanel" aria-labelledby="tab-ccdcCards" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                    <div id="collapse-ccdcCards" class="collapse" role="tabpanel" aria-labelledby="heading-ccdcCards">
+                                <div id="pane-ccdcCards" class="card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="tabpanel" aria-labelledby="tab-ccdcCards" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
+                                            <a id="tab-ccdcCards"  class="accordion-button collapsed" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
+                                            </a>
+                                        </div>  
+                                    </div>
+                                    <div id="collapse-ccdcCards" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-ccdcCards" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
+                                                <div class="common_title">
+                                                    <span class="">Pay Using Debit/Credit Cards</span>
+                                                </div>
                                                 <div class="newCardsAddSection" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                                    <!-- <label for="addNew" class="radio">
-                                                            <input type="radio" name="rdo"  (click)="pgSelect('CYBER');getPGvalues(5)" id="addNew" class="hidden" data-bs-toggle="collapse"
-                                                            data-bs-target="#adddNewCard" aria-expanded="true" aria-controls="adddNewCard" [checked]="cardData.length == 0 && (pgSettingsCYBER || pgSettingsHDFCPG ) && (!Isflexipayeligible || flexipayArrDefault.length == 0)"/>
-                                                              <span class="label"></span>
-                                                              <span class="row w-radio">
-                                                              <span class="payMethod-label col-md-4 col-9 pl-0">Credit/Debit Card</span> 
-                                                              <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId==25"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title"  >PG Charges Applicable</span>
-                                                              <span class="pg-subtitle pl-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/> For all Domestic HDFC BANK Debit Cards – NIL up to Rs. 1 Lakh</span></span>
-                                                            </span>
-                                                          </label> -->
+                                                  
                                                           <div class="tab_btn_payments">
-                                                            <ul class="mb-3 nav nav-justified nav-pills" id="pills-tab" role="tablist">
+                                                            <ul class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
                                                                 <li class="nav-item">
                                                                   <a class="nav-link active" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true">Visa / MasterCard / Diners</a>
                                                                 </li>
@@ -279,29 +341,28 @@
                                                                   <a class="nav-link" id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false">Rupay</a>
                                                                 </li>
                                                               </ul>
-                                                              <div class="tab-content" id="pills-tabContent">
+                                                              <div class="tab-content pt-0" id="pills-tabContent">
                                                                 <div class="tab-pane fade show active" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
                                                                     <div>
                                                                         <div class="common_title">
-                                                                            <span class="">Add  Visa / MasterCard / Diners</span>
+                                                                            <span class="">Add Visa / MasterCard / Diners</span>
                                                                           </div>
                                                                           <div>
                                                                             <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId==25"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title"  >PG Charges Applicable</span>
-                                                                            <span class="pg-subtitle pl-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/> For all Domestic HDFC BANK Debit Cards – NIL up to Rs. 1 Lakh</span></span>
+                                                                            <span class="pg-subtitle ps-4">For all Domestic HDFC BANK Credit Cards – 1.0% + GST<br/> For all Domestic HDFC BANK Debit Cards – NIL up to ₹1 Lakh</span></span>
                                                                           </div>
                                                                       
                                                                           <form [formGroup]="creditForm" id="creditForm" *ngIf="pgSettingsCYBER" class="mt-4">
-                                                                            <div id="VisaMasterSection" class="collapse " [ngClass]="{'show':  pgSettingsCYBER }" data-bs-parent="#VisaRupaySection">
+                                                                            <div id="VisaMasterSection"  [ngClass]="{'show':  pgSettingsCYBER }" >
                                         
                                                                                 <div class="contact-form">
                                                                                     <div class="new-card-info-2 xs-mti-50">
                                                                                         <div class="">
                                                                                             <div class="col-12">
                                                                                                 <div class="col-12 p-0">
-                                                                                                    <mat-form-field class="matField_full_width" appearance="fill">
+                                                                                                    <mat-form-field appearance="outline" class="w-100">
                                                                                                         <mat-label>Card Number</mat-label>
-                                                                                                        <input matInput placeholder="" formControlName="cardnumber" name="cardnumber" id="cardnumber" maxlength="19" [cleave]="{creditCard: true,delimiter:'-'}" autocomplete="off" ccNumber type="tel">
-                                                                                                        <!-- <img src="https://via.placeholder.com/50x50" class="newcard-info-img"> -->
+                                                                                                        <input matInput placeholder="" formControlName="cardnumber" name="cardnumber" id="cardnumber" maxlength="19" [cleave]="{creditCard: true,delimiter:'-'}" autocomplete="off"  type="tel">
                                                                                                     </mat-form-field>
                                         
                                                                                                     <div *ngIf="submittedCreditForm && creditForm.controls.cardnumber.errors" class="error">
@@ -312,18 +373,12 @@
                                                                                                         <small *ngIf="sg['domainName'] != 'SMARTBUY' && !creditForm.controls.cardnumber.errors.minlength && !creditForm.controls.cardnumber.errors.required && !creditForm.controls.cardnumber.errors.ccNumber && creditForm.get('cardnumber').hasError('isCardValid')">Please use a valid {{sg['domainName']}} HDFC Bank Credit/Debit card</small>
                                                                                                         <small *ngIf="sg['domainName'] == 'SMARTBUY' &&  !creditForm.controls.cardnumber.errors.minlength && !creditForm.controls.cardnumber.errors.required && !creditForm.controls.cardnumber.errors.ccNumber && creditForm.get('cardnumber').hasError('isCardValid')">Please use a valid HDFC Bank Credit/Debit card</small>
                                         
-                                        
                                                                                                     </div>
-                                                                                                    <!--<span *ngIf="creditForm.get('cardnumber').dirty || submittedCreditForm" class="error"> 
-                                                                              <small  *ngIf="creditForm.get('cardnumber').hasError('isCardValid')">Invalid Card</small>
-                                                                          </span>-->
-                                                                                                    <!-- <div *ngIf="submittedCreditForm && isCardValidStatus==0" class="error">
-                                                                              <small>Invalid Card</small>
-                                                                          </div> -->
+                                                                                                  
                                                                                                 </div>
                                                                                                 <div class="row">
                                                                                                     <div class="col-6  col-xl-6">
-                                                                                                        <mat-form-field class="matField_full_width" appearance="fill">
+                                                                                                        <mat-form-field class="w-100" appearance="outline">
                                                                                                         <mat-label>Expiry Month</mat-label>
                                                                                                             <mat-select placeholder="" formControlName="expiryMonth" id="expiryMonth" name="expiryMonth">
                                                                                                                 <mat-option *ngFor="let month of monthArray;" value="{{month+1| number:'2.0' }}">{{month+1| number:'2.0' }}</mat-option>
@@ -335,7 +390,7 @@
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="col-6  col-xl-6">
-                                                                                                        <mat-form-field class="matField_full_width" appearance="fill">
+                                                                                                        <mat-form-field class="w-100" appearance="outline">
                                                                                                             <mat-label>Expiry Year</mat-label>
                                                                                                             <mat-select placeholder="" formControlName="expiryYear" id="expiryYear" name="expiryYear">
                                                                                                                 <mat-option *ngFor="let yearValue of yearArray;" value="{{yearValue}}">{{yearValue}}</mat-option>
@@ -348,53 +403,77 @@
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                        
-                                                                                                <div class="col-6 col-md-4 p-0">
-                                                                                                    <mat-form-field class="matField_full_width" appearance="fill">
-                                                                                                        <mat-label>CVV</mat-label>
-                                                                                                        <input matInput placeholder="" formControlName="cvvnumber" class="cvvnumber" id="cvvnumber"  name="cvvnumber" maxlength="3" type="password" (keypress)="numberInput($event)" autocomplete="new-password">
-                                                                                                        <!-- <img src="https://via.placeholder.com/50x50" class="newcard-info-cvvimg"> -->
-                                                                                                        <!-- <i class="material-icons newcard-info-cvvimg">error_outline</i> -->
-                                                                                                    </mat-form-field>
-                                                                                                    <div *ngIf="submittedCreditForm && creditForm.controls.cvvnumber.errors" class="error">
-                                                                                                        <small *ngIf="creditForm.controls.cvvnumber.errors.required">CVV is required</small>
-                                                                                                        <small *ngIf="creditForm.controls.cvvnumber.errors.pattern">Please enter a valid data</small>
-                                                                                                        <small *ngIf="creditForm.controls.cvvnumber.errors.minlength">Please enter maximum 3 Digits</small>
+                                                                                                <div class="row">
+                                                                                                    <div class="col-6 col-md-4">
+                                                                                                        <mat-form-field class="w-100" appearance="outline">
+                                                                                                            <mat-label>CVV</mat-label>
+                                                                                                            <input matInput placeholder="" formControlName="cvvnumber" class="cvvnumber" id="cvvnumber"  name="cvvnumber" maxlength="3" type="password" (keypress)="numberInput($event)" autocomplete="new-password">
+                                                                                                           
+                                                                                                        </mat-form-field>
+                                                                                                        <div *ngIf="submittedCreditForm && creditForm.controls.cvvnumber.errors" class="error">
+                                                                                                            <small *ngIf="creditForm.controls.cvvnumber.errors.required">CVV is required</small>
+                                                                                                            <small *ngIf="creditForm.controls.cvvnumber.errors.pattern">Please enter a valid data</small>
+                                                                                                            <small *ngIf="creditForm.controls.cvvnumber.errors.minlength">Please enter maximum 3 Digits</small>
+                                                                                                        </div>
+                                                                                                    </div>
+                                            
+                                                                                                    <div class="col-6 col-md-8">
+                                                                                                        <mat-form-field class="w-100" appearance="outline">
+                                                                                                            <mat-label>Name On Card</mat-label>
+                                                                                                            <input matInput placeholder="" formControlName="nameoncard" id="nameoncard" name="nameoncard" (keypress)="flInput($event)" autocomplete="nope">
+                                                                                                        </mat-form-field>
+                                                                                                        <div *ngIf="submittedCreditForm && creditForm.controls.nameoncard.errors" class="error">
+                                                                                                            <small *ngIf="creditForm.controls.nameoncard.errors.required">Card Holder Name is required</small>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
-                                        
-                                                                                                <div class="col-12 p-0">
-                                                                                                    <mat-form-field class="matField_full_width" appearance="fill">
-                                                                                                        <mat-label>Name On Card</mat-label>
-                                                                                                        <input matInput placeholder="" formControlName="nameoncard" id="nameoncard" name="nameoncard" (keypress)="flInput($event)" autocomplete="nope">
-                                                                                                    </mat-form-field>
-                                                                                                    <div *ngIf="submittedCreditForm && creditForm.controls.nameoncard.errors" class="error">
-                                                                                                        <small *ngIf="creditForm.controls.nameoncard.errors.required">Card Holder Name is required</small>
-                                                                                                    </div>
-                                                                                                </div>
+                                                                                                
                                                                                             </div>
                                         
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="new-card-footer mb-4">
-                                        
-                                                                                        <p *ngIf="pgSettingsCYBER && isLoggedIn"> <label class="checkbox xs-check-font pt-10">Save Card
-                                                                                                <input type="checkbox" type="checkbox" name="savecard" id="savecard" checked> <span class="checkmark"></span></label>
+                                                                                        
+                                                                                        <div *ngIf="!pgSettingsCYBERToken && pgSettingsCYBER && isLoggedIn">
+                                                                                            <div class="form-check">
+                                                                                                <input class="form-check-input" type="checkbox"  name="savecard" id="savecard">
+                                                                                                <label class="form-check-label xs-check-font" for="savecard" >
+                                                                                                    Save Card
+                                                                                                </label>
+                                                                                            </div>
                                                                                             <span style="font-size:12px;margin-bottom:20px;display: block;">(To avoid re-entering card details for every transaction. Delete saved cards anytime from Manage A/c → Payments)</span>
-                                                                                        </p>
-                                        
-                                                                                        <p> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                                              this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                                              understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                                              SmartBuy.
-                                                                                                <input type="checkbox" formControlName="termscondition" name="termscondition"> <span class="checkmark"></span></label>
-                                                                                        </p>
-                                                                                        <div *ngIf="submittedCreditForm && creditForm.controls.termscondition.errors" class="error">
+                                                                                        </div>
+                                                                                        
+                                                                                        
+                                                                                                      <div *ngIf="pgSettingsCYBER && pgSettingsCYBERToken && isLoggedIn">
+                                                                                            <div class="form-check">
+                                                                                            
+                                                                                                <input class="form-check-input" type="checkbox"  name="tokenization" id="tokenization"  value="1" (change)="checkInfo1($event)">
+                                                                                                <label class="form-check-label xs-check-font" for="tokenization" >
+                                                                                                    Tokenise and Save
+                                                                                                </label>
+                                                                                                 <span class="tokensaveard">&nbsp;<i class="fa fa-info-circle payinficon" aria-hidden="true" (click)="openInfo('VISA / MASTER / DINERS')"></i></span>
+                                                                                            </div>
+                                                                                              <input type="hidden" name="savecard" id="savecard" >
+                                                                                            <span style="font-size:12px;margin-bottom:20px;display: block;">(To avoid re-entering card details for every transaction. Delete saved cards anytime from Manage A/c → Payments)</span>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <div class="form-check">
+                                                                                                <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_newCard">
+                                                                                                <label class="form-check-label xs-check-font" for="termscondition_newCard" >
+                                                                                                    I understand and agree to the rules and restrictions of
+                                                                                                    this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                                                    understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                                                    SmartBuy.
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div *ngIf="submittedCreditForm && creditForm.controls.termscondition.errors" class="error_tc">
                                                                                             <small *ngIf="creditForm.controls.termscondition.errors.required || creditForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                                         </div>
                                         
                                                                                         <div class="xs-center">
-                                                                                            <button class="btn-c btn-primary" (click)="checkNonSpcOfferforHDFCcards()" [disabled]="paynowBtnDisabled_55">Pay Now</button>
+                                                                                            <button class="btn btn-paynow" (click)="checkNonSpcOfferforHDFCcards()" [disabled]="paynowBtnDisabled_55">Pay Now</button>
                                                                                         </div>
                                         
                                                                                     </div>
@@ -409,26 +488,31 @@
                                                                             <span class="">Rupay Card</span>
                                                                           </div>
                                                                           <form [formGroup]="hdfcPgForm" *ngIf="pgSettingsHDFCPG">
-                                                                            <div id="RupaySectionPath" class="collapse" data-bs-parent="#VisaRupaySection" [ngClass]="{'show':  !pgSettingsCYBER && pgSettingsHDFCPG }">
+                                                                            <div id="RupaySectionPath" [ngClass]="{'show':  !pgSettingsCYBER && pgSettingsHDFCPG }" >
                                                                                 <div class="RupayCardSection">
                                                                                     <div class="rupay-info">
                                                                                         <img src="{{cdnUrl}}images/logo-rupay.jpg" class="img-fluid">
                                                                                         <p class="rupay-total">Total Amount</p>
-                                                                                        <p class="rupay-price">Rs. {{payTotalFare| number:'1.2-2' }}</p>
+                                                                                        <p class="rupay-price">₹{{payTotalFare| number:'1.2-2' }}</p>
                                                                                     </div>
                                                                                     <div class="clearfix"></div>
                                                                                     <div class="new-card-footer ">
-                                                                                        <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                                                SmartBuy.
-                                                                                                <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                                                        </p>
-                                                                                        <div *ngIf="submittedHdfcPgForm && hdfcPgForm.controls.termscondition.errors" class="error">
+                                                                                        <div class="my-2">
+                                                                                            <div class="form-check">
+                                                                                                <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_rupay">
+                                                                                                <label class="form-check-label xs-check-font" for="termscondition_rupay" >
+                                                                                                    I understand and agree to the rules and restrictions of
+                                                                                                    this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                                                    understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                                                    SmartBuy.
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div *ngIf="submittedHdfcPgForm && hdfcPgForm.controls.termscondition.errors" class="error_tc">
                                                                                             <small *ngIf="hdfcPgForm.controls.termscondition.errors.required || hdfcPgForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                                         </div>
                                                                                         <div class="my-3 xs-center">
-                                                                                            <button class="btn-c btn-primary " (click)="payNow(1)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                                            <button class="btn btn-paynow " (click)="payNow(1)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -440,40 +524,7 @@
                                                           </div>
                             
                                                           
-                                                          <!-- Copyright 2018 Google Inc. All Rights Reserved.
-                                                              Use of this source code is governed by an MIT-style license that
-                                                              can be found in the LICENSE file at http://angular.io/license -->
-
-                                                    <!-- <div id="adddNewCard" class="collapse " data-bs-parent="#allPayments" name="paymentModule" [ngClass]="{'show': cardData.length == 0 && ( pgSettingsCYBER || pgSettingsHDFCPG  ) && (!Isflexipayeligible || flexipayArrDefault.length == 0) }">
-                            
-                                                        
-
-                                                        <div class="accordion" id="VisaRupaySection">
-                            
-                                                            <div class="visa-label" *ngIf="pgSettingsCYBER && pgSettingsHDFCPG">
-                                                                <div class="row">
-                                                                    <div class="col-md-6 col-12">
-                                                                        <label for="visa-master" class="radio">
-                                                                          <input type="radio" name="vroption" id="visa-master" class="hidden" data-bs-toggle="collapse"
-                                                                            data-bs-target="#VisaMasterSection" aria-expanded="true" aria-controls="VisaMasterSection" checked />
-                                                                          <span class="label"></span><span class="payMethod-label-visa">Visa / MasterCard / Diners</span>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="col-md-6 col-12">
-                                                                        <label for="rupay-path" class="radio">
-                                                                            <input type="radio" name="vroption" id="rupay-path" class="hidden" data-bs-toggle="collapse"
-                                                                              data-bs-target="#RupaySectionPath" aria-expanded="true" aria-controls="RupaySectionPath"  />
-                                                                            <span class="label"></span><span class="payMethod-label-visa">Rupay</span>
-                                                                          </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                            
-                                                           
-                                                        </div>
-                            
-                                                    </div> -->
+                                                      
                             
                                                 </div>
                                             </div>
@@ -485,50 +536,52 @@
 
                                 <!-- Net Banking Section Starts -->
                                 <div id="pane-netBanking" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-netBanking" *ngIf="pgSettingsNETBANKING">
-                                    <div id="collapse-netBanking" class="collapse" role="tabpanel" aria-labelledby="heading-netBanking">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsNETBANKING">
+                                            <a id="tab-netBanking" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-netBanking" aria-expanded="false" aria-controls="collapse-netBanking">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">Net Banking</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-netBanking" class="collapse" role="tabpanel" aria-labelledby="heading-netBanking" data-bs-parent="#content">
                                         <div class="card-body p-1">
                                             <div>
                                                 <div class="hdfcNetBankingSection" >
 
-                                                    <!-- <label for="hdfcNetBanking" class="radio">
-                                                            <input type="radio" name="rdo" (click)="pgSelect('NETBANKING');getPGvalues(2)" id="hdfcNetBanking" class="hidden" data-bs-toggle="collapse"
-                                                            data-bs-target="#hdfcNetBankOption" aria-expanded="false" aria-controls="hdfcNetBankOption" [checked]="!pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && pgSettingsNETBANKING"  />
-                                                            <span class="label"></span>
-                                                            <span class="row w-radio">
-                                                                <span class="payMethod-label col-md-4 col-9 pl-0">Net Banking</span>
-                                                                <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title" >PG Charges Applicable</span>
-                                                                <span class="pg-subtitle pl-4">For NetBanking – Rs. 10/- + GST</span></span>
-                                                            </span>
-                                                            <img src="https://via.placeholder.com/50x50" class="new-card-titleoffer img-fluid">
-                                                        </label> -->
+                                                  
                                                         <div class="common_title">
                                                             <span class="">Using Net Banking</span>
                                                           </div>
                                                         <div>
                                                             <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title" >PG Charges Applicable</span>
-                                                                <span class="pg-subtitle pl-4">For NetBanking – Rs. 10/- + GST</span></span>
+                                                                <span class="pg-subtitle ps-4">For NetBanking – ₹10/- + GST</span></span>
                                                         </div>
                                                     <form [formGroup]="netbankingForm">
-                                                        <div id="hdfcNetBankOption" class="collapse" [ngClass]="{'show': !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && pgSettingsNETBANKING }" data-bs-parent="#allPayments" name="paymentModule">
+                                                        <div id="hdfcNetBankOption" [ngClass]="{'show': !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && pgSettingsNETBANKING }" data-bs-parent="#allPayments" name="paymentModule">
                             
                                                             <div class="hdfcNetBank-info">
                                                                 <p class="netBank-total">Total Amount</p>
-                                                                <p class="netBank-price">Rs. {{payTotalFare | commaSeparator}}</p>
-                                                                <!--<p class="netBank-fee"><i class="fas fa-rupee-sign"></i> 1 Convenience Fee added</p>-->
+                                                                <p class="netBank-price">₹{{payTotalFare | commaSeparator}}</p>
                             
                                                             </div>
                                                             <div class="new-card-footer ">
-                                                                <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                SmartBuy.
-                                                                <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                                </p>
-                                                                <div *ngIf="submittedNetBankingForm && netbankingForm.controls.termscondition.errors" class="error">
+                                                                <div class="my-2">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_netBanking">
+                                                                        <label class="form-check-label xs-check-font" for="termscondition_netBanking" >
+                                                                            I understand and agree to the rules and restrictions of
+                                                                            this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                            understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                            SmartBuy.
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="submittedNetBankingForm && netbankingForm.controls.termscondition.errors" class="error_tc">
                                                                     <small *ngIf="netbankingForm.controls.termscondition.errors.required || netbankingForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                 </div>
                                                                 <div class="my-3 xs-center">
-                                                                    <button class="btn-c btn-primary " (click)="payNow(2)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                    <button class="btn btn-paynow" (click)="payNow(2)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                 </div>
                             
                                                             </div>
@@ -545,10 +598,18 @@
 
                                 <!-- EMI Section Starts -->
                                 <div id="pane-emi" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-emi" *ngIf="pgSettingsEMI && emiArray.length >0">
-                                    <div id="collapse-emi" class="collapse" role="tabpanel" aria-labelledby="heading-emi">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsEMI && emiArray.length >0">
+                                            <a id="tab-emi" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-emi" aria-expanded="false" aria-controls="collapse-emi">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-emi" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-emi" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div class="tab_btn_payments" >
-                                                <ul class="mb-3 nav nav-justified nav-pills" id="pills-tab" role="tablist">
+                                                <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
                                                     <li class="nav-item" >
                                                       <a class="nav-link active" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="true">Credit Card EMI</a>
                                                     </li>
@@ -562,12 +623,7 @@
                                                              <!-- Credit Card EMI Start-->
                                                                 <div class="payEmiSection" >
 
-                                                                <!-- <label for="paycreditemi" class="radio">
-                                                                        <input type="radio" name="rdo"  (click)="pgSelect('EMI');getPGvalues(3)" id="paycreditemi" class="hidden" data-bs-toggle="collapse"
-                                                                        data-bs-target="#payCreditEmiOption" aria-expanded="false" aria-controls="payCreditEmiOption" [checked]="!pgSettingsCYBER && !pgSettingsHDFCPG && pgSettingsEMI  && emiArray.length >0" />
-                                                                        <span class="label"></span><span class="payMethod-label">Pay With Credit Card EMI</span>
-                                                                        <img src="https://via.placeholder.com/50x50" class="new-card-titleoffer img-fluid">
-                                                                    </label> -->
+                                                              
                                                                     <div class="common_title">
                                                                         <span class="">Pay With Credit Card EMI</span>
                                                                     </div>
@@ -585,20 +641,15 @@
                                                                             <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow" />
                                                                             <span class="label"></span>
                                                                             <div class="sub-info">
-                                                                            <p class="emi-duration"> Rs. {{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
+                                                                            <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
                                                                                 Value</span></p>
-                                                                            <p class="emi-tenure"> {{emiInterst[emi.key]}}% interest (Rs. {{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }} paid as interest in complete EMI tenure) </p>
+                                                                            <p class="emi-tenure"> {{emiInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }} paid as interest in complete EMI tenure) </p>
                                                                             </div>
                                                                         </label>
                                                                                 </div>
                                                                                 <hr />
 
-                                                                                <!--<div class="hdfcNetBank-info">
-                                                                        <p class="netBank-total">Total Amount</p>
-                                                                        <p class="netBank-price"> <i class="fas fa-rupee-sign"></i>  {{payTotalFare| number:'1.2-2'}}</p>
-                                                                        <!--<p class="netBank-fee"><i class="fas fa-rupee-sign"></i> 1 Convenience Fee added</p>-->
-
-                                                                                <!--</div>-->
+                                                                            
 
                                                                                 <div style="width: 100%; padding: 10px 15px 10px 20px; border-radius: 4px; background-color: rgba(0, 74, 143, 0.17);">
                                                                                     <span class="medium-dark-text"> Note: </span><span style="font-size: 12px;font-style: normal;"> A fee of Rs 199 + GST will be charged by HDFC Bank on your Credit card for providing the EMI service.
@@ -609,16 +660,21 @@
 
 
                                                                                 <div class="my-2 xs-center">
-                                                                                    <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                        this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                        understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                        SmartBuy.
-                                                        <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                                                    </p>
-                                                                                    <div *ngIf="submittedEmiForm && emiForm.controls.termscondition.errors" class="error">
+                                                                                    <div class="my-2">
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_ccEmi">
+                                                                                            <label class="form-check-label xs-check-font" for="termscondition_ccEmi" >
+                                                                                                I understand and agree to the rules and restrictions of
+                                                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                                                SmartBuy.
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div *ngIf="submittedEmiForm && emiForm.controls.termscondition.errors" class="error_tc">
                                                                                         <small *ngIf="emiForm.controls.termscondition.errors.required || emiForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                                     </div>
-                                                                                    <button class="btn-c btn-primary " (click)="payNow(3)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                                    <button class="btn btn-paynow " (click)="payNow(3)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -634,13 +690,6 @@
                                                             <!-- Debit Card EMI Start-->
                                                                 <div class="payEmiSection" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0">
 
-                                                                    <!-- <label for="paydebitemi" class="radio">
-                                                                <input type="radio" name="rdo"  (click)="pgSelect('DEBIT_EMI');getPGvalues(11)" id="paydebitemi" class="hidden" data-bs-toggle="collapse"
-                                                                data-bs-target="#payDebitEmiOption" aria-expanded="false" aria-controls="payDebitEmiOption" [checked]="!pgSettingsCYBER && !pgSettingsHDFCPG && 
-                                                        !pgSettingsEMI &&pgSettingsDEBITEMI && emiDebitArray.length >0" />
-                                                                <span class="label"></span><span class="payMethod-label">Pay With Debit Card EMI</span>
-                                                                <img src="https://via.placeholder.com/50x50" class="new-card-titleoffer img-fluid">
-                                                            </label> -->
                                                             <div class="common_title">
                                                                 <span class="">Pay With Debit Card EMI</span>
                                                             </div>
@@ -659,9 +708,9 @@
                                                                     <input type="radio" name="payDebitemi-sub" id="payDebitemi-subOne{{emi.key}}" class="hidden dc_emi_option" value="{{emi.key}}"  [checked]="firstRow" />
                                                                     <span class="label"></span>
                                                                     <div class="sub-info">
-                                                                    <p class="emi-duration"> Rs. {{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
+                                                                    <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
                                                                         Value</span></p>
-                                                                    <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (Rs. {{(emi.value*emi.key-payTotalFare | commaSeparator)| number}} paid as interest in complete EMI tenure) </p>
+                                                                    <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare )| commaSeparator }} paid as interest in complete EMI tenure) </p>
                                                                     </div>
                                                                 </label>
                                                                                     </div>
@@ -687,20 +736,25 @@
                                                                                         <span style="font-size: 12px;font-style: normal;">A fee of Rs 199 + GST will be charged by HDFC Bank on your Debit card for providing the EMI service. 
                                                                     </span></div>
                                                                                     <div class="my-2 xs-center">
-                                                                                        <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                        this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                        understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                        SmartBuy.
-                                                        <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                                                        </p>
-                                                                                        <div *ngIf="submittedDebitEMIFrom && DebitEMIFrom.controls.termscondition.errors" class="error">
+                                                                                        <div class="my-2">
+                                                                                            <div class="form-check">
+                                                                                                <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_dcEmi">
+                                                                                                <label class="form-check-label xs-check-font" for="termscondition_dcEmi" >
+                                                                                                    I understand and agree to the rules and restrictions of
+                                                                                                    this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                                                    understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                                                    SmartBuy.
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div *ngIf="submittedDebitEMIFrom && DebitEMIFrom.controls.termscondition.errors" class="error_tc">
                                                                                             <div *ngIf="DebitEMIFrom.controls.termscondition.errors.required || DebitEMIFrom.controls.termscondition.errors.pattern">Please accept Terms and Conditions</div>
                                                                                         </div>
                                                                                         <ng-container *ngIf="enable_dcemi2; else old_dvalidateDebitEmi">
-                                                                                            <button class="btn-c btn-primary" (click)="validateDebitEmi_new()">Continue</button>
+                                                                                            <button class="btn btn-paynow" (click)="validateDebitEmi_new()">Continue</button>
                                                                                         </ng-container>
                                                                                         <ng-template #old_dvalidateDebitEmi>
-                                                                                            <button class="btn-c btn-primary" (click)="validateDebitEmi()">Continue</button>
+                                                                                            <button class="btn btn-paynow" (click)="validateDebitEmi()">Continue</button>
                                                                                         </ng-template>
                                                                                     </div>
                                                                                 </div>
@@ -724,10 +778,10 @@
                                                                                         </div>
                                                                                         <div class="col-6 col-md-3">
                                                                                             <ng-container *ngIf="enable_dcemi2; else old_validateDebitEmiOTP">
-                                                                                                <button class="btn-c btn-primary mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
+                                                                                                <button class="btn btn-paynow mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
                                                                                             </ng-container>
                                                                                             <ng-template #old_validateDebitEmiOTP>
-                                                                                                <button class="btn-c btn-primary mt-2" (click)="validateDebitEmiOTP()">SUBMIT</button>
+                                                                                                <button class="btn btn-paynow mt-2" (click)="validateDebitEmiOTP()">SUBMIT</button>
                                                                                             </ng-template>
 
                                                                                         </div>
@@ -749,12 +803,12 @@
                                                                                                             <div class="col-md-6 bor-right">
                                                                                                                 <div class="emi-show">
                                                                                                                     <p class="total-amount">Total Amount</p>
-                                                                                                                    <p class="total-price">Rs. {{dcemiOtpResponse.cumulativeInvoiceAmount | commaSeparator}}</p>
+                                                                                                                    <p class="total-price">₹{{dcemiOtpResponse.cumulativeInvoiceAmount | commaSeparator}}</p>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                             <div class="col-md-6">
                                                                                                                 <div class="emi-show">
-                                                                                                                    <p class="emi-price">Rs. {{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
+                                                                                                                    <p class="emi-price">₹{{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
                                                                                                                     <p class="emi-para">EMI plan for <span>{{dcemiOtpResponse.tenure}}</span> months<br/>at <span>{{emiDebitInterst[DCEMItenure]}}%</span> interest</p>
                                                                                                                 </div>
                                                                                                             </div>
@@ -787,27 +841,45 @@
                                                                                             </div>
                                                                                             <div class="row ">
                                                                                                 <div class="col-md-12 ">
-                                                                                                    <p> <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through the above <a href="{{domainRedirect}}terms_conditions" target="_blank"> Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxx</span> for EMI under Standing Instruction mode.
-                                                                                    <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
-                                                                                    <span class="checkmark"></span>
-                                                                                    </label>
-                                                                                                    </p>
-                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition.errors" class="error">
+                                                                                                    <div class="">
+                                                                                                        <div class="form-check">
+                                                                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_otp">
+                                                                                                            <label class="form-check-label xs-check-font" for="termscondition_otp" >
+                                                                                                                I hereby expressly acknowledge and confirm that I have carefully gone through the above <a href="{{domainRedirect}}terms_conditions" target="_blank"> Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxx</span> for EMI under Standing Instruction mode.
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <!-- <p> 
+                                                                                                        <label class="checkbox xs-check-font">
+                                                                                                        <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
+                                                                                                        <span class="checkmark"></span>
+                                                                                                        </label>
+                                                                                                    </p> -->
+                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition.errors" class="error_tc">
                                                                                                         <small *ngIf="DebitEMIConfirmFrom.controls.termscondition.errors.required || DebitEMIConfirmFrom.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                                                     </div>
-                                                                                                    <p> <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through the provisions of the <a href="{{domainRedirect}}payment_schedule" target="_blank">Schedule of Charges</a> (which I have fully understood) and hereby record my agreement and consent to abide by the provisions of the Schedule of Charges.
-                                                                                    <input type="checkbox" formControlName="termscondition1" name="termscondition1" id="termscondition">
-                                                                                    <span class="checkmark"></span>
-                                                                                    </label>
-                                                                                                    </p>
-                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition1.errors" class="error">
+                                                                                                    <div class="">
+                                                                                                        <div class="form-check">
+                                                                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition1" name="termscondition1" id="termscondition_otp2">
+                                                                                                            <label class="form-check-label xs-check-font" for="termscondition_otp2" >
+                                                                                                                I hereby expressly acknowledge and confirm that I have carefully gone through the provisions of the <a href="{{domainRedirect}}payment_schedule" target="_blank">Schedule of Charges</a> (which I have fully understood) and hereby record my agreement and consent to abide by the provisions of the Schedule of Charges.
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <!-- <p> 
+                                                                                                        <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through the provisions of the <a href="{{domainRedirect}}payment_schedule" target="_blank">Schedule of Charges</a> (which I have fully understood) and hereby record my agreement and consent to abide by the provisions of the Schedule of Charges.
+                                                                                                        <input type="checkbox" formControlName="termscondition1" name="termscondition1" id="termscondition">
+                                                                                                        <span class="checkmark"></span>
+                                                                                                        </label>
+                                                                                                    </p> -->
+                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition1.errors" class="error_tc">
                                                                                                         <small *ngIf="DebitEMIConfirmFrom.controls.termscondition1.errors.required || DebitEMIConfirmFrom.controls.termscondition1.errors.pattern">Please accept Terms and Conditions</small>
                                                                                                     </div>
 
                                                                                                 </div>
 
                                                                                                 <div class="col-md-12 text-center py-2">
-                                                                                                    <button type="button" class="btn-c btn-primary" id="" (click)="payNow(11)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                                                    <button type="button" class="btn btn-paynow" id="" (click)="payNow(11)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                                                 </div>
                                                                                             </div>
 
@@ -827,12 +899,12 @@
                                                                                                             <div class="col-md-6 bor-right">
                                                                                                                 <div class="emi-show">
                                                                                                                     <p class="total-amount">Total Amount</p>
-                                                                                                                    <p class="total-price">Rs. {{payTotalFare | commaSeparator}}</p>
+                                                                                                                    <p class="total-price">₹{{payTotalFare | commaSeparator}}</p>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                             <div class="col-md-6">
                                                                                                                 <div class="emi-show">
-                                                                                                                    <p class="emi-price">Rs. {{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
+                                                                                                                    <p class="emi-price">₹{{DCEMISelectedAmount[0]['value'] | commaSeparator}}<span class="emi-title">/ month</span></p>
                                                                                                                     <p class="emi-para">EMI plan for <span>{{DCEMItenure}}</span> months<br/>at <span>{{emiDebitInterst[DCEMItenure]}}%</span> interest</p>
                                                                                                                 </div>
                                                                                                             </div>
@@ -863,27 +935,45 @@
                                                                                             </div>
                                                                                             <div class="row ">
                                                                                                 <div class="col-md-12 ">
-                                                                                                    <p> <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through the above <a href="{{domainRedirect}}terms_conditions" target="_blank"> Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxx</span> for EMI under Standing Instruction mode.
-                                                                                    <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
-                                                                                    <span class="checkmark"></span>
-                                                                                    </label>
-                                                                                                    </p>
-                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition.errors" class="error">
+                                                                                                    <div class="">
+                                                                                                        <div class="form-check">
+                                                                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_verify">
+                                                                                                            <label class="form-check-label xs-check-font" for="termscondition_verify" >
+                                                                                                                I hereby expressly acknowledge and confirm that I have carefully gone through the above <a href="{{domainRedirect}}terms_conditions" target="_blank"> Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxx</span> for EMI under Standing Instruction mode.
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <!-- <p> 
+                                                                                                        <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through the above <a href="{{domainRedirect}}terms_conditions" target="_blank"> Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxx</span> for EMI under Standing Instruction mode.
+                                                                                                        <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
+                                                                                                        <span class="checkmark"></span>
+                                                                                                        </label>
+                                                                                                    </p> -->
+                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition.errors" class="error_tc">
                                                                                                         <small *ngIf="DebitEMIConfirmFrom.controls.termscondition.errors.required || DebitEMIConfirmFrom.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                                                     </div>
-                                                                                                    <p> <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through the provisions of the <a href="{{domainRedirect}}payment_schedule" target="_blank">Schedule of Charges</a> (which I have fully understood) and hereby record my agreement and consent to abide by the provisions of the Schedule of Charges.
-                                                                                    <input type="checkbox" formControlName="termscondition1" name="termscondition1" id="termscondition">
-                                                                                    <span class="checkmark"></span>
-                                                                                    </label>
-                                                                                                    </p>
-                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition1.errors" class="error">
+                                                                                                    <div class="">
+                                                                                                        <div class="form-check">
+                                                                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition1" name="termscondition1" id="termscondition_verify1">
+                                                                                                            <label class="form-check-label xs-check-font" for="termscondition_verify1" >
+                                                                                                                I hereby expressly acknowledge and confirm that I have carefully gone through the provisions of the <a href="{{domainRedirect}}payment_schedule" target="_blank">Schedule of Charges</a> (which I have fully understood) and hereby record my agreement and consent to abide by the provisions of the Schedule of Charges.
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <!-- <p> 
+                                                                                                        <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through the provisions of the <a href="{{domainRedirect}}payment_schedule" target="_blank">Schedule of Charges</a> (which I have fully understood) and hereby record my agreement and consent to abide by the provisions of the Schedule of Charges.
+                                                                                                        <input type="checkbox" formControlName="termscondition1" name="termscondition1" id="termscondition">
+                                                                                                        <span class="checkmark"></span>
+                                                                                                        </label>
+                                                                                                    </p> -->
+                                                                                                    <div *ngIf="submittedDebitEMIConfirmFrom && DebitEMIConfirmFrom.controls.termscondition1.errors" class="error_tc">
                                                                                                         <small *ngIf="DebitEMIConfirmFrom.controls.termscondition1.errors.required || DebitEMIConfirmFrom.controls.termscondition1.errors.pattern">Please accept Terms and Conditions</small>
                                                                                                     </div>
 
                                                                                                 </div>
 
                                                                                                 <div class="col-md-12 text-center py-2">
-                                                                                                    <button type="button" class="btn-c btn-primary" id="" (click)="payNow(11)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                                                    <button type="button" class="btn btn-paynow" id="" (click)="payNow(11)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                                                 </div>
                                                                                             </div>
 
@@ -911,52 +1001,62 @@
 
                                 <!-- payzapp Section Starts -->
                                 <div id="pane-payzapp" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP">
-                                    <div id="collapse-payzapp" class="collapse" role="tabpanel" aria-labelledby="heading-payzapp">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsPAYZAPP">
+                                            <a id="tab-payzapp" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-payzapp" aria-expanded="false" aria-controls="collapse-payzapp">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-payzapp" class="accordion-collpase collapse" role="tabpanel" aria-labelledby="heading-payzapp" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
                                                 <div class="payzappCardSection" >
 
-                                                    <!-- <label for="payzappCard" class="radio">
-                                                            <input type="radio" name="rdo" (click)="pgSelect('PAYZAPP');getPGvalues(4)" id="payzappCard" class="hidden" data-bs-toggle="collapse"
-                                                              data-bs-target="#payzappOption" aria-expanded="false" aria-controls="payzappOption"  [checked]="!pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && pgSettingsPAYZAPP "  />
-                                                            <span class="label"></span>
-                                                            <span class="row w-radio">
-                                                                <span class="payMethod-label col-md-4 col-9 pl-0">PayZapp</span>
-                                                                <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title" >PG Charges Applicable</span>
-                                                                <span class="pg-subtitle pl-4">Additional PG Charges : 1.8% + GST</span></span>
-                                                            </span>
-                                                            <img src="https://via.placeholder.com/50x50" class="new-card-titleoffer">
-                                                          </label> -->
+                                                 
                                                           <div class="common_title">
                                                             <span class="">Pay Using Payzapp</span>
                                                           </div>
                                                           <div>
                                                             <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title" >PG Charges Applicable</span>
-                                                            <span class="pg-subtitle pl-4">Additional PG Charges : 1.8% + GST</span></span>
+                                                            <span class="pg-subtitle ps-4">Additional PG Charges : 1.8% + GST</span></span>
                                                           </div>
                                                     <form [formGroup]="payzappForm">
-                                                        <div id="payzappOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && pgSettingsPAYZAPP }" data-bs-parent="#allPayments" name="paymentModule">
+                                                        <div id="payzappOption"  [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && pgSettingsPAYZAPP }" data-bs-parent="#allPayments" name="paymentModule">
                             
                                                             <div class="payzapp-info">
                                                                 <img src="{{cdnUrl}}images/logo-payzapp.jpg" class="img-fluid">
                                                                 <p class="payzapp-total">Total Amount</p>
-                                                                <p class="payzapp-price">Rs. {{payTotalFare| number:'1.2-2' }}</p>
+                                                                <p class="payzapp-price">₹{{payTotalFare| number:'1.2-2' }}</p>
                                                                 <!--<p class="payzapp-fee"><i class="fas fa-rupee-sign"></i> 1 Convenience Fee added</p>-->
                                                             </div>
                             
                                                             <div class="clearfix"></div>
                                                             <div class="new-card-footer ">
-                                                                <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                SmartBuy.
+                                                                <div class="my-2">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_payzapp">
+                                                                        <label class="form-check-label xs-check-font" for="termscondition_payzapp" >
+                                                                            I understand and agree to the rules and restrictions of
+                                                                            this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                            understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                            SmartBuy.
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <p class="my-2"> 
+                                                                    <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
+                                                                    this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                    understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                    SmartBuy.
                                                                   <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                                </p>
-                                                                <div *ngIf="submittedPayzappForm && payzappForm.controls.termscondition.errors" class="error">
+                                                                </p> -->
+                                                                <div *ngIf="submittedPayzappForm && payzappForm.controls.termscondition.errors" class="error_tc">
                                                                     <small *ngIf="payzappForm.controls.termscondition.errors.required || payzappForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                 </div>
                                                                 <div class="my-3 xs-center">
-                                                                    <button class="btn-c btn-primary " (click)="payNow(4)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                    <button class="btn btn-paynow " (click)="payNow(4)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -969,8 +1069,16 @@
                                 <!-- payzapp Section Ends -->
 
                                 <!-- Reward Points Section Starts -->
-                                <div id="pane-rewardPoints" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-rewardPoints" *ngIf="showRewardsBox">
-                                    <div id="collapse-rewardPoints" class="collapse" role="tabpanel" aria-labelledby="heading-rewardPoints">
+                                <!--<div id="pane-rewardPoints" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-rewardPoints" *ngIf="showRewardsBox">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="showRewardsBox">
+                                            <a id="tab-rewardPoints" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-rewardPoints" aria-expanded="false" aria-controls="collapse-rewardPoints">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Reward Points</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-rewardPoints" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-rewardPoints" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
                                                 <ng-container >
@@ -978,7 +1086,6 @@
                                                         <div class="common_title">
                                                             <span class="">Pay Using Points</span>
                                                           </div>
-                                                        <!-- <h6 class="point-title"><b>Pay using Points</b></h6> -->
                                                         <div class="row">
                                                             <div class="col-sm-12 col-12">
                                                                 <div class="redeem-section">
@@ -1015,23 +1122,27 @@
                                             
                                                 <ng-container *ngIf="showProceedPayment">
                                                     <ng-container *ngIf="PayNoAmtStatus;else proceedPayment">
-                                                        <!-- PAY NO AMOUNT , GO TO CHECKOUT SECTION -->
                                                         <div class="payPoints-section">
                                                             <div class="payment-section col-md-12">
                                                                 <form [formGroup]="PayNoAmtForm">
                                                                     <div class="success-redeem"></div>
                                                                     <div class="">
-                                                                        <!-- <span><b>{{redeemtext}}</b></span> -->
                                                                         <p class="success_msg" [innerHtml]="redeemtext"></p>
                                                                     </div>
                                                                     <div class="col-md-12 mt-3">
-                                                                        <p> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
-                                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                                                                SmartBuy.
-                                                                                <input type="checkbox" formControlName="termscondition" name="termscondition"> <span class="checkmark"></span></label>
-                                                                        </p>
-                                                                        <div *ngIf="submittedPayNoAmtForm && PayNoAmtForm.controls.termscondition.errors" class="error">
+                                                                        <div class="">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_noA">
+                                                                                <label class="form-check-label xs-check-font" for="termscondition_noA" >
+                                                                                    I understand and agree to the rules and restrictions of
+                                                                                    this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                                    understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                                    SmartBuy.
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                              
+                                                                        <div *ngIf="submittedPayNoAmtForm && PayNoAmtForm.controls.termscondition.errors" class="error_tc">
                                                                             <small *ngIf="PayNoAmtForm.controls.termscondition.errors.required || PayNoAmtForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
                                                                         </div>
                                                                         <button class="btn btn-primary btn-paynow col-sm-3 col-12 mt-2" (click)="payNow(7)">Confirm Booking</button>
@@ -1042,13 +1153,11 @@
                                                     </ng-container>
                                             
                                                     <ng-template #proceedPayment>
-                                                        <!-- PAY REMAINING AMOUNT -->
                                                         <div>
                                                             <div class="payPointsSuccess-section">
                                                                 <div class="payment-section">
                                                                     <div class="success-redeem"></div>
                                                                     <div class="">
-                                                                        <!-- <p class="success_msg">{{redeemtext}}</p> -->
                                                                         <p class="success_msg" [innerHtml]="redeemtext"></p>
                                                                     </div>
                                                                 </div>
@@ -1062,35 +1171,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <!-- Reward Points Section Ends -->
 
 
                                 <!-- Flexipay Section Starts -->
                                 <div id="pane-flexipay" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-flexipay" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
-                                    <div id="collapse-flexipay" class="collapse" role="tabpanel" aria-labelledby="heading-flexipay">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
+                                            <a id="tab-flexipay" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-flexipay" aria-expanded="false" aria-controls="collapse-flexipay">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-flexipay" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-flexipay" data-bs-parent="#content">
                                         <div class="card-body p-1">
                                             <div>
                                                 <div class="newCardsAddSection" >
 
-                                                    <!-- <label for="flexiRadio" class="radio">
-                                          <input type="radio" name="rdo"  id="flexiRadio" class="hidden" data-bs-toggle="collapse"
-                                          data-bs-target="#flexiSection" aria-expanded="false" aria-controls="flexiSection" [checked]="cardData.length == 0  && pgSettingFlexipayEMI" (click)="pgSelect('FLEXI_PAY');getPGvalues(12)"/>
-                                                          <span class="label"></span>
-                                                          <span class="row w-radio">
-                                                          <span class="payMethod-label col-md-4 col-9 pl-0">FlexiPay <sup><img src="{{cdnUrl}}images/new-fp.gif" class="pr-2 flexi_newBlink"></sup></span> 
-                                                          <span class="col-md-7 p-0 col-10 offset-lg-0"> <img src="{{cdnUrl}}images/flex-pay.svg" class="pr-2"> <span class="pg-title w-pg-title">Book now & Pay Later !</span></span>
-                                                        </span>
-                                                        <img src="https://via.placeholder.com/50x50" class="new-card-titleoffer img-fluid">
-                                                        for mobile offer2version
-                                                        <img src="https://via.placeholder.com/50x50" class="new-card-titleoffer lg-none offer2">
-                                                      </label> -->
+                                                   
                                                       <div class="common_title">
                                                         <span class="">Pay Using Flexipay</span>
                                                       </div>
                                                     <div id="pay-flexipay-info">
                             
-                                                        <div id="flexiSection" class="collapse" data-bs-parent="#allPayments" name="paymentModule" [ngClass]="{'show':  cardData.length == 0 && pgSettingFlexipayEMI}">
+                                                        <div id="flexiSection" data-bs-parent="#allPayments" name="paymentModule" [ngClass]="{'show':  cardData.length == 0 && pgSettingFlexipayEMI}">
                             
                             
                                                             <div class="accordion" id="VisaRupaySection1">
@@ -1129,7 +1235,7 @@
                                                                         <div>
                                                                             <div class="sign-section col-md-8" *ngIf="fpGuestsession && !showflexipaydefaultsection">
                                                                                 <!-- <button type="button" class="dc_close close" (click)="close()" >&times;</button> -->
-                                                                                <form [formGroup]="flexipayguestForm" name="flexipayguestForm" class="pl-2 pt-1 p-sm-1" (ngSubmit)="fpGuestmobile()">
+                                                                                <form [formGroup]="flexipayguestForm" name="flexipayguestForm" class="ps-2 pt-1 p-sm-1" (ngSubmit)="fpGuestmobile()">
                                                                                     <!-- <p class="my-3">Enter mobile number linked with your HDFC Bank Debit Card</p> -->
                                                                                     <mat-form-field class="d-none d-sm-block">
                                                                                         <input matInput placeholder="Enter your Mobile Number linked to your HDFC Bank Debit Card" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber"
@@ -1140,9 +1246,7 @@
                                                                                             onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off">
                                                                                     </mat-form-field>
                             
-                                                                                    <!-- <input type="text" class="input-field mb-3 w-100 p-2 w-input" placeholder="Enter Mobile Number" autocomplete="off" (keypress)="numberInput($event);AvoidSpace($event)"
-                                                                      value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber" maxlength="10" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"> -->
-                            
+                                                                                   
                             
                                                                                     <div *ngIf="flexiGuestformSubmitted && flexipayguestForm.get('mobileNumber').invalid" class="flexi_Error mb-2">
                                                                                         <span *ngIf="flexipayguestForm.get('mobileNumber').errors.required">Please enter 10 digits mobile number.</span>
@@ -1157,7 +1261,7 @@
                                                                                     </div>
                             
                             
-                                                                                    <button type="submit" class="btn-c btn-primary mt-2 sign-continue">CONTINUE</button>
+                                                                                    <button type="submit" class="btn btn-paynow mt-2 sign-continue">CONTINUE</button>
                                                                                 </form>
                                                                             </div>
                             
@@ -1169,17 +1273,17 @@
                                                                                     <p>Please Choose a Tenure</p>
                                                                                 </div>
                                                                                 <div class="row" *ngIf="showflexipaydefaultsection && !fpGuestsession">
-                                                                                    <div *ngFor="let installment of flexiPayNewcalcArr;let i=index" class="col-12 col-md-6">
+                                                                                    <div *ngFor="let installment of flexiPayNewcalcArr;let i=index" class="col-6 col-sm-6">
                                                                                         <div class="w-flexpay-price" (click)="select(i)" [ngClass]="{'w-flexpay-active': selectedIndex == i, 'list-group-item': true}">
                                                                                             <label for="payFlexiemi-subOne{{installment.key}}" class="radio flexi_radio">
-                                                  <input type="radio" formControlName='flexiOptions' name="flexiOptions" id="payFlexiemi-subOne{{installment.key}}" class="hidden dc_emi_option" value="{{installment.key}}" (click)="calculateIntr(installment.key)"/>
-                                                        <span class="label d-none"></span>
-                                                        <div class="sub-info m-0">
-                                                        <p class="emi-duration"> {{installment.key}} days later</p>
-                                                        <p class="emi-tenure" *ngIf="installment.key==15; else intrest">No extra cost</p>
-                                                      </div>
-                                                      <ng-template #intrest><p class="emi-tenure">Interest = Rs. {{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
-                                                  </label>
+                                                                                                 <input type="radio" formControlName='flexiOptions' name="flexiOptions" id="payFlexiemi-subOne{{installment.key}}" class="hidden dc_emi_option" value="{{installment.key}}" (click)="calculateIntr(installment.key)"/>
+                                                                                                    <span class="label d-none"></span>
+                                                                                                    <div class="sub-info m-0">
+                                                                                                    <p class="emi-duration"> {{installment.key}} days later</p>
+                                                                                                    <p class="emi-tenure" *ngIf="installment.key==15; else intrest">No extra cost</p>
+                                                                                                </div>
+                                                                                                <ng-template #intrest><p class="emi-tenure">Interest = ₹{{installment.value | number : '1.2-2' | commaSeparator}} / month</p></ng-template>
+                                                                                            </label>
                                                                                         </div>
                                                                                     </div>
                             
@@ -1196,7 +1300,7 @@
                                                                                         <div class="w-flexpay-price-text text-center">
                                                                                             <p>You have chosen to pay {{selectedperiod}} days later. <br/>
                                                                                                 <!-- <span *ngIf="selectedperiod==15;else intrest"><b>Congratulations! No extra cost</b></span>
-                                                    <ng-template  #intrest><b>Congratulations! Interest is Rs. {{intrstopay}}/- per month</b></ng-template> -->
+                                                    <ng-template  #intrest><b>Congratulations! Interest is ₹{{intrstopay}}/- per month</b></ng-template> -->
                                                                                             </p>
                                                                                         </div>
                                                                                     </div>
@@ -1210,14 +1314,18 @@
                             
                                                                                 <div>
                             
-                                                                                    <div *ngIf="showflexipaydefaultsection && !fpGuestsession">
+                                                                                    <div *ngIf="showflexipaydefaultsection && !fpGuestsession" class="mt-30">
                                                                                         <h6 class="payTitle pt-28">Enter your HDFC Bank Debit Card Number</h6>
-                                                                                        <div class="col-md-12 col-12 pl-0 contact-form">
-                                                                                            <mat-form-field class="matField_full_width" appearance="fill">
+                                                                                        <div class="col-md-12 col-12 ps-0 contact-form">
+                                                                                            <mat-form-field appearance="outline" class="w-50">
+                                                                                                <mat-label>Card Number</mat-label>
+                                                                                                <input (keypress)="numberInput($event)" (ngModelChange)="checkInputchanges()" matInput placeholder="" name="cardnumber" id="" minlength="14" maxlength="16" autocomplete="off" formControlName="cardnumber" onDrag="return false" onDrop="return false" >
+                                                                                            </mat-form-field>
+                                                                                            <!-- <mat-form-field class="matField_full_width" appearance="fill">
                                                                                                 <mat-label>Card Number</mat-label>
                                                                                                 <input (keypress)="numberInput($event)" (ngModelChange)="checkInputchanges()" matInput placeholder="" name="cardnumber" id="" minlength="14" maxlength="16" autocomplete="off" formControlName="cardnumber" onDrag="return false" onDrop="return false">
-                                                                                                <!-- <img src="https://via.placeholder.com/50x50" class="newcard-info-img"> -->
-                                                                                            </mat-form-field>
+                                                                                                <img src="https://via.placeholder.com/50x50" class="newcard-info-img">
+                                                                                            </mat-form-field> -->
                             
                                                                                             <div *ngIf="flexiemisubmitted && flexipayForm.get('cardnumber').invalid" class="flexi_Error">
                                                                                                 <span *ngIf="flexipayForm.get('cardnumber').errors.required">Please enter the card number.</span>
@@ -1234,10 +1342,10 @@
                                                                                             <div class="col-md-6">
                                                                                                 <div class="total-amt mrg_top_20">Total Amount</div>
                                                                                                 <div class="row my-3">
-                                                                                                    <div class="col-12 col-md-12 pr-0">
+                                                                                                    <div class="col-12 col-md-12 pe-0">
                                                                                                         <div>
-                                                                                                            <span class="big-dark-text">Rs. {{payTotalFare| number:'1.2-2' }}</span>
-                                                                                                            <span class="big-strike pl-3" *ngIf="selectedperiod==15">Rs. {{showFlexiValue | commaSeparator}}</span>
+                                                                                                            <span class="big-dark-text">₹{{payTotalFare| number:'1.2-2' }}</span>
+                                                                                                            <span class="big-strike ps-3" *ngIf="selectedperiod==15">₹{{showFlexiValue | commaSeparator}}</span>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <!-- <div class="col-4 col-md-5 p-0" *ngIf="selectedperiod==15">
@@ -1245,12 +1353,14 @@
                                                                         </div>
                                                                       </div> -->
                                                                                                 </div>
-                                                                                                <div class="row w-flexipay-discount m-0" *ngIf="selectedperiod==15">
-                                                                                                    <div class="col-2 col-md-1 pr0">
-                                                                                                        <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
-                                                                                                    </div>
-                                                                                                    <div class="col-10 col-md-11">
-                                                                                                        <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">Rs. {{intrstopay | commaSeparator}}</span> Applied!</small>
+                                                                                                <div class="w-flexipay-discount mb-10">
+                                                                                                    <div class="row m-0" *ngIf="selectedperiod==15">
+                                                                                                        <div class="col-2 col-sm-2 pr-0">
+                                                                                                            <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
+                                                                                                        </div>
+                                                                                                        <div class="col-10 col-sm-10">
+                                                                                                            <small>FlexiPay No Cost Discount of <span id="fp_dis_amt">₹{{intrstopay | commaSeparator}}</span> Applied!</small>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -1274,18 +1384,30 @@
                                                                                     </div>
                             
                                                                                     <div class="my-2 xs-center" *ngIf="showflexipaydefaultsection && !fpGuestsession">
-                                                                                        <p class="my-2"> <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of  
-                                              this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
-                                              understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
-                                              SmartBuy.
-                                              <input formControlName="termscondition" type="checkbox" name="termscondition" id=""> <span class="checkmark"></span></label>
-                                                                                        </p>
-                                                                                        <div *ngIf="flexiemisubmitted && flexipayForm.get('termscondition').invalid" class="flexi_Error mb-3 pl-1 text-left">
+                                                                                        <div class="my-2">
+                                                                                            <div class="form-check">
+                                                                                                <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_flexi">
+                                                                                                <label class="form-check-label xs-check-font" for="termscondition_flexi" >
+                                                                                                    I understand and agree to the rules and restrictions of
+                                                                                                    this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                                                    understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                                                    SmartBuy.
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- <p class="my-2"> 
+                                                                                            <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of  
+                                                                                                this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                                                understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                                                SmartBuy.
+                                                                                                <input formControlName="termscondition" type="checkbox" name="termscondition" id=""> <span class="checkmark"></span></label>
+                                                                                        </p> -->
+                                                                                        <div *ngIf="flexiemisubmitted && flexipayForm.get('termscondition').invalid" class="error_tc">
                                                                                             <span *ngIf="flexipayForm.get('termscondition').errors.required || flexipayForm.get('termscondition').errors.pattern">Please accept Terms and Conditions.</span>
                                                                                         </div>
                             
                             
-                                                                                        <button class="btn-c btn-primary" type="submit">Continue</button>
+                                                                                        <button class="btn btn-paynow" type="submit">Continue</button>
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
@@ -1316,7 +1438,7 @@
                             
                                                                                 </div>
                                                                                 <div class="col-6 col-md-3">
-                                                                                    <button type="submit" class="btn-c btn-primary mt-2 m-btn-c" [disabled]="!flexiOtpButtonActive">VERIFY</button>
+                                                                                    <button type="submit" class="btn btn-paynow mt-2 m-btn-c" [disabled]="!flexiOtpButtonActive">VERIFY</button>
                                                                                 </div>
                                                                             </div>
                                                                         </form>
@@ -1335,7 +1457,7 @@
                                                                                                 <div class="col-md-6 bor-right">
                                                                                                     <div class="emi-show">
                                                                                                         <p class="total-amount">FlexiPay Transaction Amount</p>
-                                                                                                        <p class="total-price">Rs. {{flexipayOtpResponse.cumulativeInvoiceAmount | number:'1.2-2' }}</p>
+                                                                                                        <p class="total-price">₹{{flexipayOtpResponse.cumulativeInvoiceAmount | number:'1.2-2' }}</p>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="col-md-6">
@@ -1396,7 +1518,7 @@
                             
                             
                                                                                     <div class="col-md-12 py-2">
-                                                                                        <button type="button" class="btn-c btn-primary" id="" (click)="payNow(12)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                                        <button type="button" class="btn btn-paynow" id="" (click)="payNow(12)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                                     </div>
                                                                                 </div>
                             
@@ -1416,37 +1538,39 @@
                                 <!-- Flexipay Section Ends -->
 
                                 <!-- Test Pg Section Starts -->
-                                <div id="pane-testPg" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-testPg">
-                                    <div id="collapse-testPg" class="collapse" role="tabpanel" aria-labelledby="heading-testPg">
+                                <div id="pane-testPg" class="card tab-pane fade border-0" role="tabpanel" aria-labelledby="tab-testPg">
+                                    <div class="panel-heading">
+                                        <div class="" *ngIf="pgSettingsTESTPG">
+                                            <a id="tab-testPg" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-testPg" aria-expanded="false" aria-controls="collapse-testPg">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Test Pg</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-testPg" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-testPg" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                         <div>
                                             <div class="testPGCardSection" *ngIf="pgSettingsTESTPG">
 
-                                                <!-- <label for="testPG" class="radio">
-                                                        <input type="radio" name="rdo" (click)="pgSelect('TESTPG')" id="testPG" class="hidden" data-bs-toggle="collapse"
-                                                        data-bs-target="#testPgOption" aria-expanded="false" aria-controls="testPgOption"  [checked]="!pgSettingsCYBER && !pgSettingsHDFCPG && 
-                                    !pgSettingsEMI && !pgSettingsNETBANKING && !pgSettingsPAYZAPP && pgSettingsTESTPG"/>
-                                                        <span class="label"></span><span class="payMethod-label">TEST PG</span>
-                                                        
-                                                    </label> -->
+                                             
                                                     <div class="common_title">
                                                         <span class="">Pay Using Test Pg</span>
                                                       </div>
                                                 <form [formGroup]="payzappForm">
-                                                    <div id="testPgOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG && 
+                                                    <div id="testPgOption"  [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG && 
                                     !pgSettingsEMI && !pgSettingsNETBANKING && !pgSettingsPAYZAPP && pgSettingsTESTPG }" data-bs-parent="#allPayments" name="paymentModule">
                         
                                                         <div class="col-12">
                                                             <div class="payzapp-info">
                                                                 <p class="payzapp-total">Total Amount</p>
-                                                                <p class="payzapp-price">Rs. {{payTotalFare| number:'1.2-2' }}</p>
+                                                                <p class="payzapp-price">₹{{payTotalFare| number:'1.2-2' }}</p>
                                                                 <!-- <p class="payzapp-price"> <i class="fas fa-rupee-sign"></i> {{payTotalFare| number:'1.2-2'}}</p> -->
                                                             </div>
                             
                                                             <div class="clearfix"></div>
                                                             <div class="new-card-footer ">
                                                                 <div class="my-3 xs-center">
-                                                                    <button class="btn-c btn-primary " (click)="payNow(90)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                    <button class="btn btn-paynow" (click)="payNow(90)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1467,3 +1591,65 @@
             </div>
             
         </div>      
+        
+        
+        
+          <form [formGroup]="payForm" action="{{MAIN_SITE_URL}}checkout" name="payForm" method="POST" id="payForm">
+        <input type="hidden" formControlName="orderReferenceNumber" name="orderReferenceNumber" id="orderReferenceNumber">
+        <input type="hidden" formControlName="_token" name="_token" id="_token">
+        <input type="hidden" formControlName="ctype" name="ctype" id="ctype">
+         <input type="hidden"  name="rewamp" id="rewamp" value=1>
+    </form>
+        
+
+<button class=" payinfo_popup hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo" ></button>
+   <button class=" payinfo_popup1 hideHeader" data-bs-toggle="modal" data-bs-target="#payinfo1"></button>
+
+
+<div class="modal fade pop_code" id="payinfo" tabindex="-1" role="dialog" aria-labelledby="payinfo"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-2 pr-0">
+                <button type="button" class="btn-close close-popupd" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-10">
+ <div  align="center" id="faredata-error">Are you sure? If you do not tokenise your card prior to 30th September, you will have to re-enter the full card details while paying.</div>
+<div class="selectd-book-btn" style="text-align:center;">
+<div class="container row mt-4"> 
+       <div class="col-md-6 col-12"> <button type="button" class="btn-normal btn-animated btnyes" (click)="securemycard()" >Tokenise and Save</button> </div>
+       <div class="col-md-4 col-12"> <button type="button" class="btn btn-animated btnno"   (click)="nothanks()" >NO THANKS</button> </div>
+</div>
+<input type="hidden" id="payinfoid" value="" />
+</div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade pop_code" id="payinfo1" tabindex="-1" role="dialog" aria-labelledby="payinfo1"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered tokenise_popup" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-2 pr-0">
+                <button type="button" class="btn-close close-popupd" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-10">
+                 <div class="text-center">
+        <img src="" alt="" class="img-fluid secure_img infocardimg mb-20" width="50%"> 
+        <p class="title_visa pb-10">Please Tokenise & Save <span class="infocardtype"></span> card.</p>
+        <p class="desc_visa">As per RBI guidelines, We will securely save your card through Tokenisation.</p>
+      </div>
+      <div class="text_points">
+        <p>How will this help?</p>
+        <ul>
+          <li>Prevents your card from unauthorized use</li>
+          <li class="infocardtext"></li>
+        </ul>
+      </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-running-dots" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
