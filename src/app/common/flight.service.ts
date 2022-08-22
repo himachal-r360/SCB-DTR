@@ -10,6 +10,7 @@ export class FlightService {
   flight = environment.url + "api/flightSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
   flightInfo = environment.url + "api/flightInfo";
+    flightInfoMulticity = environment.url + "api/flightInfoMulticity";
   multicityFlight = environment.url + "api/flightSearchMulticity";
   flightListData: any;
   flightListDate: any;
@@ -17,6 +18,7 @@ export class FlightService {
   airportsNameList ="assets/Json/airports.json";
   countryList = "assets/Json/country.json";
   flightDetails:any;
+  multicitylisting = environment.url + "api/multicitySearch";
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();
@@ -55,7 +57,6 @@ export class FlightService {
         }
       }
     } else {
-      console.log(body, "body");
 
       return this.http.post(this.flight, body, { headers: this.header })
     }
@@ -87,13 +88,37 @@ export class FlightService {
     return this.flightDetailsSubject.asObservable();
   }
 
-  getFlightInfo(param: any) {
-    console.log(param);
+
+
+  getFlightInfo(param: any,searchData:any) {
     if (LOCALJSON == 'true') {
-      return this.http.get('assets/data/flightInfo.json');
+      if(searchData.travel=='DOM'){
+        if(searchData.flightdefault=='O')
+        return this.http.get('assets/data/flightInfo.json');
+        else
+        return this.http.get('assets/data/flightInfo-R.json');
+      }
+        if(searchData.travel=='INT'){
+          if(searchData.flightdefault=='O')
+        return this.http.get('assets/data/flightInfo-int.json');
+        else
+        return this.http.get('assets/data/flightInfo-int-R.json');
+      }
+    
     } else {
 
       return this.http.post(this.flightInfo, param, { headers: this.header })
+    }
+  }
+  multicityList(para: any) {
+    let body = JSON.stringify(para);
+     if(LOCALJSON=='true'){
+      
+      return this.http.get('assets/data/multicity.json');
+     
+    }else{
+    
+    return this.http.post(this.multicitylisting, body, { headers: this.header })
     }
   }
 
@@ -101,6 +126,16 @@ export class FlightService {
     let body = JSON.stringify(param);
     console.log(body)
     return this.http.post(this.multicityFlight , body , { headers: this.header })
+  }
+    getFlightInfoMulticity(param: any,searchData:any) {
+    if (LOCALJSON == 'true') {
+ 
+        return this.http.get('assets/data/flightInfoMulticity.json');
+    
+    } else {
+
+      return this.http.post(this.flightInfoMulticity, param, { headers: this.header })
+    }
   }
 
 }

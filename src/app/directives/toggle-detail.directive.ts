@@ -51,7 +51,6 @@ export class ToggleDetailDirective{
          }
         }
         else{
-
           if(element.closest('.showless-close'))
           {
             this.elRef.nativeElement

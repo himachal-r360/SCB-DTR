@@ -89,10 +89,7 @@ export class AppComponent implements OnInit {
 	this.assetPath="diners/";
         this.domainPath="diners/";
         this.domainName='DINERS';
-        setTimeout(() => {
-        $('link[href="smartbuy.css"]'). attr("href","diners.css");
-        }, 1000);
-	break;
+ 	break;
 	case ('infinia'):
 	this.assetPath="infinia/";
         this.domainPath="infinia/";
@@ -107,10 +104,7 @@ export class AppComponent implements OnInit {
 	this.assetPath="regalia_gold/";
         this.domainPath="regalia_gold/";
         this.domainName='REGALIA_GOLD';
-        setTimeout(() => {
-          $('link[href="smartbuy.css"]'). attr("href","regalia_gold.css");
-          }, 1000);
-	break;
+  	break;
 	case ('corporate'):
 	this.assetPath="corporate/";
         this.domainPath="corporate/";
@@ -125,13 +119,6 @@ export class AppComponent implements OnInit {
 	this.assetPath="";
         this.domainPath="";
         this.domainName='SMARTBUY';
-        
-        setTimeout(() => {
-       // $('link[href="smartbuy.css"]'). attr("href","smartbuy.css");
-        },1000);
-       
-       
-	
 	break;
 	}  
 

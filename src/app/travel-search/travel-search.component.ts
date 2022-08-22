@@ -286,16 +286,16 @@ export class TravelSearchComponent implements OnInit {
 	];
 
 	this.defaultBusOptions=[
-	{"_source":{"stateId":"","name":"Bangalore","id":"3","state":"Bangalore"}},
-	{"_source":{"stateId":"","name":"Chennai","id":"102","state":"Chennai"}},
-	{"_source":{"stateId":"","name":"Tirupathi","id":"1885","state":"Tirupathi"}},
-	{"_source":{"stateId":"","name":"Pune","id":"626","state":"Pune"}},
-	{"_source":{"stateId":"","name":"Mumbai","id":"649","state":"Mumbai"}},
-	{"_source":{"stateId":"","name":"Mangalore","id":"489","state":"Mangalore"}},
-	{"_source":{"stateId":"","name":"Kolkata","id":"1308","state":"Kolkata"}},
-	{"_source":{"stateId":"","name":"Hyderabad","id":"6","state":"Hyderabad"}},
+	{"_source":{"stateId":"","name":"Bangalore","id":"3","state":"Karnataka"}},
+	{"_source":{"stateId":"","name":"Chennai","id":"102","state":"Tamilnadu"}},
+	{"_source":{"stateId":"","name":"Tirupathi","id":"1885","state":"Andhra Pradesh"}},
+	{"_source":{"stateId":"","name":"Pune","id":"626","state":"Maharashtra"}},
+	{"_source":{"stateId":"","name":"Mumbai","id":"649","state":"Maharashtra"}},
+	{"_source":{"stateId":"","name":"Mangalore","id":"489","state":"Karnataka"}},
+	{"_source":{"stateId":"","name":"Kolkata","id":"1308","state":"West Bengal"}},
+	{"_source":{"stateId":"","name":"Hyderabad","id":"6","state":"Telangana"}},
 	{"_source":{"stateId":"","name":"Goa","id":"615","state":"Goa"}},
-	{"_source":{"stateId":"","name":"Delhi","id":"1492","state":"Delhi"}}
+	{"_source":{"stateId":"","name":"Delhi","id":"1492","state":"New Delhi"}}
 	];
 
 	}
@@ -372,7 +372,9 @@ export class TravelSearchComponent implements OnInit {
         busTo: ['', Validators.required],
         fromBusCode: ['', Validators.required],
         toBusCode: ['', Validators.required],
-        busDeparture: ['', Validators.required]
+        busDeparture: ['', Validators.required],
+        fromState: ['', Validators.required],
+        toState: ['', Validators.required],
 	});
 
      //Train Form
@@ -447,15 +449,15 @@ export class TravelSearchComponent implements OnInit {
         this.departure = event;
         this.departureMlite = moment(event).format('DD/MM/YYYY');
         this.minDateFlightToMlite=event;
+        if( this.showFlightReturn==true){
         var compare1 = new Date(event).getTime();
         var compare2 = new Date(this.arrival).getTime();
         if(compare1 > compare2){
         this.arrivalMlite=(moment(event).format('DD/MM/YYYY'));
-        
         this.arrival = event;
         this.searchFlightForm['controls']['arrival'].setValue(moment(event).format('DD/MM/YYYY'));
         }
-        
+       } 
         
       }else{
        this.arrival = event;
@@ -961,7 +963,7 @@ check_traveller_count(type) {
 
 
           //Flights
-      lastFlightSearch=localStorage.getItem('flightLastSearch');
+      lastFlightSearch=localStorage.getItem('flightLastSearchNew');
        const lastFlightSearchValue=JSON.parse(lastFlightSearch);
        
         if(lastFlightSearchValue){
@@ -1126,7 +1128,7 @@ check_traveller_count(type) {
 
 
         //Bus
-        lastBusSearch=localStorage.getItem('busLastSearch');
+        lastBusSearch=localStorage.getItem('busLastSearchNew');
        const lastBusSearchValue=JSON.parse(lastBusSearch);
         if(lastBusSearchValue){
          this.busFromText=lastBusSearchValue.searchFrom;
@@ -1142,6 +1144,9 @@ check_traveller_count(type) {
         this.searchBusForm['controls']['busTo'].setValue(lastBusSearchValue.searchTo);
         this.searchBusForm['controls']['fromBusCode'].setValue(lastBusSearchValue.fromTravelCode);
         this.searchBusForm['controls']['toBusCode'].setValue(lastBusSearchValue.toTravelCode);
+               this.searchBusForm['controls']['fromState'].setValue(lastBusSearchValue.fromState);
+        this.searchBusForm['controls']['toState'].setValue(lastBusSearchValue.toState); 
+
 
        var date2 = new Date(lastBusSearchValue.departure).getTime();
 
@@ -1166,9 +1171,14 @@ check_traveller_count(type) {
         this.searchBusForm['controls']['busTo'].setValue('Mumbai');
         this.searchBusForm['controls']['fromBusCode'].setValue(1492);
         this.searchBusForm['controls']['toBusCode'].setValue(649);
+        
+              this.searchBusForm['controls']['fromState'].setValue('New Delhi');
+        this.searchBusForm['controls']['toState'].setValue('Maharashtra');
+        
+                
         }
         //Train
-         lastTrainSearch=localStorage.getItem('trainLastSearch');
+         lastTrainSearch=localStorage.getItem('trainLastSearchNewNewNewNewNewNew');
         const lastTrainSearchValue=JSON.parse(lastTrainSearch);
         if(lastTrainSearchValue){
 
@@ -1312,8 +1322,12 @@ check_traveller_count(type) {
     switchBusRoutes(){
         var tempSearchFrom= this.searchBusForm.controls.busFrom.value;
 	var tempFromSearchCode= this.searchBusForm.controls.fromBusCode.value;
+		var tempfromState= this.searchBusForm.controls.fromState.value;
+	
 	var tempSearchTo= this.searchBusForm.controls.busTo.value;
 	var tempToSearchCode= this.searchBusForm.controls.toBusCode.value;
+		var temptoState= this.searchBusForm.controls.toState.value;
+
 
 	var tempSearchFromText= this.busFromText;
 	var tempSearchToText= this.busToText;
@@ -1324,9 +1338,10 @@ check_traveller_count(type) {
 
 	this.searchBusForm['controls']['busTo'].setValue(tempSearchFrom);
 	this.searchBusForm['controls']['toBusCode'].setValue(tempFromSearchCode);
+	this.searchBusForm['controls']['toState'].setValue(tempfromState);
 	this.searchBusForm['controls']['busFrom'].setValue(tempSearchTo);
 	this.searchBusForm['controls']['fromBusCode'].setValue(tempToSearchCode);
-
+        this.searchBusForm['controls']['fromState'].setValue(temptoState);
 
 	this.busFromText= tempSearchToText;
 	this.busToText= tempSearchFromText;
@@ -1487,7 +1502,7 @@ console.log(this.searchFlightForm);
 
         this.flightSearchCallBack(searchValue);
 
-        localStorage.setItem('flightLastSearch',JSON.stringify(searchValue));
+        localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
 
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
@@ -1663,6 +1678,9 @@ console.log(this.searchFlightForm);
         searchTo:xss(this.searchBusForm.controls.busTo.value),
         fromTravelCode:xss(this.searchBusForm.controls.fromBusCode.value),
         toTravelCode:xss(this.searchBusForm.controls.toBusCode.value),
+              fromState:xss(this.searchBusForm.controls.fromState.value),
+        toState:xss(this.searchBusForm.controls.toState.value),
+        
         departure:xss(uDate),
         cdeparture:xss(cDate),
         };
@@ -1678,7 +1696,7 @@ console.log(this.searchFlightForm);
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('busLastSearch', JSON.stringify(this.searchArray));
+        localStorage.setItem('busLastSearchNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -1700,10 +1718,10 @@ console.log(this.searchFlightForm);
         this.redirectPopupTriggerTimestamp=current.getTime();
         this.redirectPopupTrigger=1;
         this.redirectPopup=2;
-        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         return;
         }
-         this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+         this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         
         
         break;
@@ -1760,7 +1778,7 @@ console.log(this.searchFlightForm);
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('trainLastSearch', JSON.stringify(this.searchArray));
+        localStorage.setItem('trainLastSearchNewNewNewNewNewNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -1782,11 +1800,11 @@ console.log(this.searchFlightForm);
         this.redirectPopupTriggerTimestamp=current.getTime();
         this.redirectPopupTrigger=1;
         this.redirectPopup=2;
-        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         return;
         }
         
-         this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure'+this.searchArray['departure'];
+         this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         
 
        
@@ -2030,9 +2048,12 @@ switch(service) {
         }
 
         case 'bus' : {
+      
          this.searchBusForm['controls']['busFrom'].setValue(values.name);
         this.searchBusForm['controls']['fromBusCode'].setValue(values.id);
+                 this.searchBusForm['controls']['fromState'].setValue(values.state);
         this.busFromText=values.name;
+        this.busFromDisp=values.name;
         this.busFromOptions= this.defaultBusOptions;
          this.closeSearchBox();
         $("#busTo").select();
@@ -2047,6 +2068,7 @@ switch(service) {
         this.searchTrainForm['controls']['trainFrom'].setValue(values.name);
         this.searchTrainForm['controls']['fromTrainCode'].setValue(values.code);
         this.trainFromText=values.code+', '+values.name;
+        this.trainFromDisp=values.name;
         this.trainFromOptions= this.defaultTrainOptions;
         this.closeSearchBox();
         $("#trainTo").select();
@@ -2086,6 +2108,7 @@ switch(service) {
         this.searchHotelForm['controls']['hotelId'].setValue(values.city);
         this.searchHotelForm['controls']['countryId'].setValue(values.country);
         this.hotelFromText=values.full_content;
+        this.hotelNameDisp=values.full_content;
         this.hotelOptions= this.defaultHotelOptions;
         this.closeSearchBox();
 
@@ -2097,7 +2120,9 @@ switch(service) {
          case 'bus' : {
         this.searchBusForm['controls']['busTo'].setValue(values.name);
         this.searchBusForm['controls']['toBusCode'].setValue(values.id);
+         this.searchBusForm['controls']['toState'].setValue(values.state);
         this.busToText=values.name;
+         this.busToDisp=values.name;
         this.busToOptions= this.defaultBusOptions;
         this.closeSearchBox();
 
@@ -2111,6 +2136,7 @@ switch(service) {
         this.searchTrainForm['controls']['trainTo'].setValue(values.name);
         this.searchTrainForm['controls']['toTrainCode'].setValue(values.code);
         this.trainToText=values.code+', '+values.name;
+         this.trainToDisp=values.name;
         this.trainToOptions= this.defaultTrainOptions;
         this.closeSearchBox();
 
@@ -2156,7 +2182,7 @@ switch(service) {
         this.arrowFromkeyLocation=0;
 	}else if ($event.keyCode != 40 && $event.keyCode != 38 ){
         this.arrowFromkeyLocation=0;
-        if ($event.timeStamp - this.lastKeypress > 0) {
+        if (true) {
         this.queryText = $event.target.value;
         if(this.queryText && this.queryText.length > 0){
         //Elastic Search

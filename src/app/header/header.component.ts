@@ -24,6 +24,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
 import { FlightService } from '../common/flight.service';
+import { ConditionalExpr } from '@angular/compiler';
+import { Console } from 'console';
 declare var $: any;
 declare var jQuery: any;
 declare const annyang: any;
@@ -80,6 +82,7 @@ export class HeaderComponent implements OnInit {
         public guestLogin: boolean=false;
         showSearchBoxTop: boolean=false;
         domainRedirect: string;
+        sub_domain_redirection_url:string;
         menuParam:any = [];
         showSearchBox = false;
         showdcEMI= false;
@@ -146,6 +149,7 @@ export class HeaderComponent implements OnInit {
         state: string = 'default';
         new_header_footer:any=0;
         showName:string;
+        pushcountavail:any;
 
         ShowCookieTab:boolean=false;
         cookieMessage;cookieAgree;cookieMessageType;cookieConsent:boolean=false;cookieExpiredDate: any = new Date();
@@ -323,12 +327,13 @@ export class HeaderComponent implements OnInit {
    if (this.cookieService.get("push_enable")) { 
      this.enablePushTitle = true;
      this.rest.getNotificationPopup().subscribe(result => {
-      
+      console.log(result);
         // this.pushPopup=this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
         this.pushcount = result.count;
 
         this.pushid = result.pushid;
         var htmltoast='';
+        console.log('hihi',this.pushid);
         for (var index in this.pushid) {
           this.read= this.cookieService.get("read_push");
           if(this.read){
@@ -360,6 +365,8 @@ export class HeaderComponent implements OnInit {
 
   
   toast(val,index){
+    console.log('aammmm');
+    console.log(index,val);
     var html;
     switch(val['type']){
               case 'TEXT':
@@ -396,7 +403,7 @@ export class HeaderComponent implements OnInit {
                  html ='<div class="toast_push " id="toast_'+index+'"  >'+
                                                  '<div class="toast-body" ><div class="toast-wrapper"> <button type="button" class="ml-2  close close_btn"  data-bs-dismiss="toast_push"   aria-label="Close" (click)="toastClose()" onclick="Window.myComponent.toastClose('+index+')">'+
                                                  '<span class="toast-close" aria-hidden="true" >&times;</span>'+
-                                               '</button></div> <div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')"><a href="'+val['redirect_url']+'">  <div class="row"><div class="col-2 "><div class="push-wrapper-new"><img src="'+image_url+'" class="" alt="..."  ><img class="notify-pos-abs" src="'+subimage_url+'" alt=""/></div></div><div class="text-truncate-new col-10">'+
+                                               '</button></div> <div class="toast-wrap col-md-12 p-0" (click)="trackEventToastClick()" onclick="Window.myComponent.trackEventToastClick(\''+val['redirect_url']+'\','+val['id']+')"><a href="'+val['redirect_url']+'" target="_blank">  <div class="row"><div class="col-2 "><div class="push-wrapper-new"><img src="'+image_url+'" class="" alt="..." style="max-width: fit-content;"  ><img class="notify-pos-abs" src="'+subimage_url+'" alt=""/></div></div><div class="text-truncate-new col-10">'+
                         '<h4 style="-webkit-box-orient: vertical;">'+val['title']+' </h4>'+
                                           '<h5 style="-webkit-box-orient: vertical;">'+val['text']+' </h5>'+
                                           '<p style="-webkit-box-orient: vertical;"> '+this.converttime(val['created_at'])+'</p></div></div></div>'+
@@ -580,6 +587,9 @@ closeCookieConsent(value){
     this.rest.getNotification().subscribe(result => {
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
+      this.pushcountavail = result.count;
+      console.log(this.pushcountavail,result.count);
+      //pushcountavail
       // $.each( result.result, function(k, v) {
         result.result.forEach((v, k) =>  {
                 this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
@@ -740,6 +750,7 @@ closeCookieConsent(value){
   
   ngOnInit() {
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
+    this.sub_domain_redirection_url=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/';
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
    
@@ -1161,7 +1172,7 @@ this.customerLogin=true;*/
         this.redirectPopupUrl= this.domainRedirect+'insta-redirection/shopredirectLink?u='+(window.btoa(url));
          this.redirectPopup=1;
         }else{
-        this.redirectPopupUrl= this.domainRedirect+'popup-redirection/'+partner ;
+        this.redirectPopupUrl= this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'popup-redirection/'+partner ;
          this.redirectPopup=1;
         } 
     
@@ -1216,7 +1227,22 @@ this.customerLogin=true;*/
         this.redirectPopup=2;
         this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url;
      }else{
-     window.open(this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url,"_blank");
+  
+      window.open(this.serviceSettings.sub_domain_redirection_url+'/'+url,"_blank");
+     //window.open(this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url,"_blank");
+     }
+      this.navbarOpen =false;
+    }
+    
+     clickUrlmilestone(url){
+     if(environment.IS_MAIN==1){
+      const current = new Date();
+        this.redirectPopupTriggerTimestamp=current.getTime();
+        this.redirectPopupTrigger=1;
+        this.redirectPopup=2;
+        this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+url;
+     }else{
+     this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'/'+url;
      }
       this.navbarOpen =false;
     }
@@ -1327,6 +1353,7 @@ export class DisclaimerBottomSheetComponent implements OnInit {
   
         this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
         this.domainRedirect=data.redirectUrl;
+
   }
  ngOnInit() {}
   closeSheet() {

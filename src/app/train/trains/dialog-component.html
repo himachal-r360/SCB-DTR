@@ -1,0 +1,19 @@
+<h6 mat-dialog-title class="sortby-h">Sort by</h6>
+<div mat-dialog-content class="sortby-list" style="margin-bottom: 53px;">
+  <ul>
+    <li (click)="selectLi('leave-early')"  [ngClass]="{'sortby-list-selected':optionSelected === 'leave-early'}">Early Departure</li>
+    <li (click)="selectLi('leave-late')"  [ngClass]="{'sortby-list-selected':optionSelected === 'leave-late'}">Late Departure</li>
+  </ul>
+  <div class="position-fixed footer-sortbuy sort_inner">
+    <div class="fixed_btns_sort">
+      <div class="row">
+        <div class="col-6">
+          <button class="btn btn-outline fix_btns" (click)="onNoClick($event)">CANCEL</button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary fix_btns" (click)="orderBy(optionSelected)" >APPLY</button>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

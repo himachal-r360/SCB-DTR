@@ -82,6 +82,7 @@ export class RestapiService {
     }
     }
   }
+
   getDealsOffers ():Observable<any> {
     if(LOCALJSON=='true'){
       return this.http.get('assets/data/getDealsandoffers.json');
@@ -96,6 +97,24 @@ export class RestapiService {
 
   getRegaliaGoldList ():Observable<any> {
     return this.http.get('assets/data/regalia_gold.json');
+  }
+  getMilestoneDetail (param:any):Observable<any> {
+        if(LOCALJSON=='true'){
+          return this.http.get('assets/data/milestone.json');
+          //return this.http.post('http://offers.smartbuylocal.reward360.us/api/get_milestone_details',param, config).pipe(map((response: any) => response));
+        }else{
+          return this.http.post(this.endpoint+'get_milestone_details',param, config).pipe(map((response: any) => response));
+        }
+  }
+  AvailablePoints(param){
+      //console.log(param);
+    //return this.http.post(this.endpoint+'availablepoints', param, config).pipe(map((response:any) => response));
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/availablepoints.json').pipe(map((response:any) => response));
+    }
+    else{
+      return this.http.post(this.endpoint+'availablepoints', param, config).pipe(map((response:any) => response));
+    }
   }
   
     verifyDomain ():Observable<any> {
@@ -280,6 +299,13 @@ createItinerary(param){
     }
     
   }
+    getCards(param){
+  if(LOCALJSON=='true'){
+    return this.http.get('assets/data/checckcsrf.json').pipe(map((response:any) => response));
+  }else{
+    return this.http.post(this.endpoint+'getcustomercard', param, config).pipe(map((response:any) => response));
+  }
+}
   
  getFlexipayDetails ():Observable<any> {
       return this.http.post(this.endpoint+'get-flexipay-details', config).pipe(map((response: any) => response));  

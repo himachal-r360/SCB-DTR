@@ -20,14 +20,27 @@ API_URL:{
  'REGALIA': 'https://smartbuydev.reward360.in/regalia/api/',
  'CORPORATE': 'https://smartbuydev.reward360.in/corporate/api/',
  'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
+'REGALIA_GOLD': 'https://smartbuydev.reward360.in/regalia_gold/api/',
   },
     MAIN_SITE_URL:'https://smartbuydev.reward360.in/',
  SUB_SITE_URL:'https://smartbuydev.reward360.in/',
     ANGULAR_SITE_URL:'https://smartbuydev.reward360.in/lite/',
+    ANGULAR_SITE_URL1:'https://smartbuydev.reward360.in/v1/',
+    MILESTONE_SITE_URL:'https://smartbuydev.reward360.in/milestone/',
    enableEncryptionRequestResponse:false,
   'IS_MAIN':0,
   
   
+  API_URL_IRCTC:{
+ 'SMARTBUY': '//smartbuydev.reward360.in/api/',
+ 'DINERS': '//smartbuydev.reward360.in/diners/api/',
+ 'INFINIA'  : '//smartbuydev.reward360.in/infinia/api/',
+ 'REGALIA': '//smartbuydev.reward360.in/regalia/api/',
+ 'INFINIA_RESERVE'  : '//smartbuydev.reward360.in/infinia_reserve/api/',
+ 'REGALIA_GOLD': '//smartbuydev.reward360.in/regalia_gold/api/',
+ 'CORPORATE': '//smartbuydev.reward360.in/corporate/api/',
+ 'BUSINESS': '//smartbuydev.reward360.in/business/api/',
+  },
   
   BUS_SITE_URL:{
  'SMARTBUY': 'https://smartbuydev.reward360.in/lite/',
@@ -36,6 +49,7 @@ API_URL:{
  'REGALIA': 'https://smartbuydev.reward360.in/lite/regalia/',
  'CORPORATE': 'https://smartbuydev.reward360.in/lite/corporate/',
   'BUSINESS': 'https://smartbuydev.reward360.in/lite/business/',
+'REGALIA_GOLD': 'https://smartbuydev.reward360.in/lite/regalia_gold/',
   },
   TRAIN_SITE_URL:{
  'SMARTBUY': 'https://smartbuydev.reward360.in/lite/train/',
@@ -44,6 +58,7 @@ API_URL:{
  'REGALIA': 'https://smartbuydev.reward360.in/lite/regalia/train/',
  'CORPORATE': 'https://smartbuydev.reward360.in/lite/corporate/train/',
   'BUSINESS': 'https://smartbuydev.reward360.in/lite/business/train/',
+'REGALIA_GOLD': 'https://smartbuydev.reward360.in/lite/regalia_gold/train',
   },
   
   FRESHMENU_SITE_URL  :{
@@ -112,7 +127,8 @@ API_URL:{
     "INFINIA":"infinia/checknatgeo" ,
     "REGALIA":"regalia/bus",
     "CORPORATE":"corporate/bus",
-    "BUSINESS":"business/bus"        
+    "BUSINESS":"business/bus"  ,
+    "REGALIA_GOLD":"regalia/bus",     
   }
   
   

@@ -108,7 +108,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
 
   @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
-  
+
 
   pageIndex: number = 26;
   ITEMS_RENDERED_AT_ONCE = 25;
@@ -221,7 +221,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.loader = true;
     let searchObj = (this.searchData);
     console.log(searchObj, "searchObj");
-    this.sub = this._flightService.getMulticityList(searchObj).subscribe((res: any) => {
+    this.sub = this._flightService.multicityList(searchObj).subscribe((res: any) => {
       console.log(res , "response");
       if(res.response.journeys)
       {
@@ -249,7 +249,9 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.loader = false;
       }
 
-    }, (error) => { console.log(error) });
+    }, (error) => {
+      this.loader = false;
+      console.log(error) });
 
   }
   ascPriceSummaryFlighs(flightsData: any) {
@@ -388,23 +390,32 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   }
 
 bookingSummary() {
-  /*let flightDetailsArr: any = { "flights": flights, "priceSummary": selected, "docKey": this.DocKey, "flightKey": flightKey,"queryFlightData":this.queryFlightData};*/
 
-    let flightDetailsArr: any = {
-      "travel": "DOM",
-      "travel_type": "O",
-      "docKey": this.DocKey,
-      "onwardFlightKey": "",
-      "returnFlightKey": '',
-      "onwardFlights": "",
-      "returnFlights":'' ,
-      "onwardPriceSummary": "",
-      "returnPriceSummary": '',
-      "queryFlightData": this.searchData
+   let uniqueKey='';
+
+
+        for (let j = 0; j < this.SelectedFlightsOnSector.length; j++) {
+        uniqueKey+=this.SelectedFlightsOnSector[j]['flightKey'];
+        }
+
+
+        let flightDetailsArr: any = {
+        "travel": "DOM",
+        "travel_type": "M",
+        "docKey": this.DocKey,
+        "onwardFlightKey": "",
+        "returnFlightKey": "",
+        "onwardFlights": this.SelectedFlightsOnSector,
+        "returnFlights":'' ,
+        "onwardPriceSummary": "",
+        "returnPriceSummary": '',
+        "queryFlightData": this.searchData
     };
 
+   uniqueKey+=this.DocKey;
 
-  let randomFlightDetailKey = btoa(this.DocKey+this.searchData[0].selectedFlight.flightKey);
+
+  let randomFlightDetailKey = btoa(uniqueKey);
   sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
   let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
 
@@ -1248,7 +1259,10 @@ bookingSummary() {
       this.SelectedFlightsOnSector[this.sector] = SelectedFlight;
       this.searchData[this.sector].isSelected = true;
       this.searchData[this.sector].selectedFlight = SelectedFlight;
-      if(this.SelectedFlightsOnSector.length == this.searchData.length)
+
+      var select = this.searchData.filter(z=> {return z.isSelected == true})
+
+      if(select.length == this.searchData.length)
       {
         this.isAllSelected = true;
         this.isLast = false;

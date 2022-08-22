@@ -1,0 +1,315 @@
+<div class="container filter-container p-0">
+  <!-- <div class="filter-header">
+    <span class="float-left filter_heading">Filters</span>
+    <span class="float-right"><a href="javascript:;" (click)="onlyClearSelectionAll()" class="filter_blue_link" >Reset All</a></span>
+  </div> -->
+  <div class="col-md-12 float-left p0" id="filter-nav">
+  <ng-template >
+        <label class="checkbox-cust" >
+          <div class="icons-filter"><img src="{{cdnUrl}}images/before6AM.svg" /></div>
+          <div class="label-filter"  >Before 06 AM</div>
+          <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
+          <span class="checkmark-cust"></span>
+        </label>
+        <label class="checkbox-cust">
+          <div class="icons-filter">
+            <img src="{{cdnUrl}}images/6AMTo12PM.svg" />
+          </div>
+          <div class="label-filter">06 AM - 12 PM</div>
+          <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[1])" [(ngModel)]="departureTimeFilter[1].selected" [checked]="departureTimeFilter[1].selected" >
+          <span class="checkmark-cust"></span>
+        </label>
+        <label class="checkbox-cust">
+          <div class="icons-filter">
+             <img src="{{cdnUrl}}images/12to6PM.svg" />
+          </div>
+          <div class="label-filter">12 PM - 06 PM</div>
+          <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[2])" [(ngModel)]="departureTimeFilter[2].selected"  [checked]="departureTimeFilter[2].selected">
+          <span class="checkmark-cust"></span>
+        </label>
+        <label class="checkbox-cust">
+          <div class="icons-filter">  <img src="{{cdnUrl}}images/After6PM.svg" />
+          </div>
+          <div class="label-filter">After 06 PM</div>
+          <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[3])" [(ngModel)]="departureTimeFilter[3].selected" [checked]="departureTimeFilter[3].selected" >
+          <span class="checkmark-cust"></span>
+        </label>
+</ng-template>
+
+
+  <ng-template >
+        <label class="checkbox-cust" >
+          <div class="icons-filter"><img src="{{cdnUrl}}images/before6AM.svg" /></div>
+          <div class="label-filter"  >Before 06 AM</div>
+          <input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[0])" [(ngModel)]="arrivalTimeFilter[0].selected" [checked]="arrivalTimeFilter[0].selected" >
+          <span class="checkmark-cust"></span>
+        </label>
+        <label class="checkbox-cust">
+          <div class="icons-filter">
+             <img src="{{cdnUrl}}images/6AMTo12PM.svg" />
+          </div>
+          <div class="label-filter">06 AM - 12 PM</div>
+          <input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[1])" [(ngModel)]="arrivalTimeFilter[1].selected" [checked]="arrivalTimeFilter[1].selected" >
+          <span class="checkmark-cust"></span>
+        </label>
+        <label class="checkbox-cust">
+          <div class="icons-filter">
+             <img src="{{cdnUrl}}images/12to6PM.svg" />
+          </div>
+          <div class="label-filter">12 PM - 06 PM</div>
+          <input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[2])" [(ngModel)]="arrivalTimeFilter[2].selected"  [checked]="arrivalTimeFilter[2].selected" >
+          <span class="checkmark-cust"></span>
+        </label>
+        <label class="checkbox-cust">
+          <div class="icons-filter"> <img src="{{cdnUrl}}images/After6PM.svg" />
+          </div>
+          <div class="label-filter">After 06 PM</div>
+          <input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[3])" [(ngModel)]="arrivalTimeFilter[3].selected"   [checked]="arrivalTimeFilter[3].selected">
+          <span class="checkmark-cust"></span>
+        </label>
+</ng-template>
+  <ng-template >
+    <label class="checkbox" *ngFor="let classes of availableClasses " >
+       {{classes.type}} ({{classes.count}})
+        <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
+      <span class="checkmark"></span>
+    </label>
+</ng-template>
+  <ng-template >
+        <h6>BOARDING POINT</h6>
+        <span><i class="material-icons mob-search">search</i>
+        <input class="search-sub-filter" #inputmstring (keyup)="searchboarding('boarding',inputmstring.value)"  type="text" placeholder="Boarding point">
+        </span>
+        <div class="float-left pt-24 filter-common">
+        <!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
+          <div class="mb-2em">
+            <label class="checkbox" *ngFor="let bp of boardingpoints " >{{bp.boardingPointName}} ({{bp.total}})
+              <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId
+              }}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId
+              }}" [checked]="bp.selected" /> 
+              <span class="checkmark"></span>
+            </label>
+        </div>
+        </div>
+</ng-template>
+  <ng-template >
+        <h6>DROPPING POINT</h6>
+        <span><i class="material-icons mob-search">search</i>
+        <input class="search-sub-filter" #droppingmstring (keyup)="searchboarding('dropping',droppingmstring.value)"  type="text" placeholder="Dropping point">
+        </span>
+        <div class="float-left pt-24 filter-common">
+        <!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
+          <div class="mb-2em">
+        <label class="checkbox" *ngFor="let bp of droppingpoints " >{{bp.boardingPointName}} ({{bp.total}})
+          <input (change)="updateDroppingFilter(bp)"  id="bp{{bp.boardingPointId
+          }}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId
+          }}" [checked]="bp.selected" /> 
+          <span class="checkmark"></span>
+        </label>
+        </div>
+         </div>
+</ng-template>
+  <ng-template >
+        <h6>OPERATORS</h6>
+        <span><i class="material-icons mob-search">search</i>
+        <input class="search-sub-filter" #operatormstring  (keyup)="searchboarding('operators',operatormstring.value)" type="text" placeholder="Operators">
+        </span>
+        <div class="float-left pt-24 filter-common">
+        <!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
+          <div class="mb-2em">
+        <label class="checkbox" *ngFor="let op of operators " >{{op.name}}({{op.total}})
+          <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator
+          }}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator
+          }}"  [checked]="op.selected" /> 
+          <span class="checkmark"></span>
+        </label>
+        </div>
+      </div>
+</ng-template>
+  <ng-template >
+          <div class="float-left pt-24 filter-common-amen">
+          <!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
+          <div class="mb-2em">
+        <label class="checkbox" *ngFor="let am of amenities"  >{{am.amenities}}({{am.total}})
+        <input (change)="updateamenitiesFilter(am)"  id="am{{am.amenities
+        }}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities
+        }}"  [checked]="am.selected" /> 
+        <span class="checkmark"></span>
+      </label>
+      </div>
+        </div>
+</ng-template>
+  </div>
+  <!-- <div class="filter-footer">
+    <div class="float-left w-50 footer-left"><button class="btn-footer" (click)="clearSelectionAll()" >CANCEL</button></div>
+    <div class="float-right w-50 footer-right"><button *ngIf="domainName=='SMARTBUY'" class="btn-primary-footer" (click)="applyFil()">APPLY</button></div>
+    <div class="float-right w-50 footer-right"><button *ngIf="domainName=='DINERS'" class="btn-primary-footer" (click)="applyFil()">APPLY</button></div>
+    <div class="float-right w-50 footer-right"><button *ngIf="domainName=='INFINIA'" class="btn-primary-footer-infinia" (click)="applyFil()">APPLY</button></div>
+    <div class="float-right w-50 footer-right"><button *ngIf="domainName=='REGALIA'" class="btn-primary-footer-regalia" (click)="applyFil()">APPLY</button></div>
+    <div class="float-right w-50 footer-right"><button *ngIf="domainName=='CORPORATE'" class="btn-primary-footer-corporate" (click)="applyFil()">APPLY</button></div>
+    <div class="float-right w-50 footer-right"><button *ngIf="domainName=='BUSINESS'" class="btn-primary-footer-business" (click)="applyFil()">APPLY</button></div>
+  </div> -->
+</div>
+<div class="container w-filter p-0" id="w-filter">
+  <div class="filter-w-header w-100 float-left d-none d-md-block">
+    <span class="filter_heading float-left">Filters </span>
+    <span class="float-right"><a href="javascript:;" (click)="clearSelectionAll()"  class="filter_blue_link">Reset All</a></span>
+  </div>
+
+  <div class="m_filter_paddng">
+  <mat-accordion multi="true">
+    <mat-expansion-panel [expanded]="true" class="pb-3">
+      <div class="mat-expansion-panel-header" >
+        Departure Time
+      </div>
+      <a href="#" class="fixed_filter_blue_link">Reset</a>
+      <div class="flex-items">
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+         <img src="{{cdnUrl}}images/icons/before6AM.svg" /></div>
+        <div class="label-filter">Before 6AM</div><input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected"><span class="checkmark-cust"></span>
+      </label>
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+         <img src="{{cdnUrl}}images/icons/6AMTo12PM.svg" /></div>
+        <div class="label-filter">6AM-12PM</div><input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[1])" [(ngModel)]="departureTimeFilter[1].selected" [checked]="departureTimeFilter[1].selected" ><span class="checkmark-cust"></span>
+      </label>
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+         <img src="{{cdnUrl}}images/icons/12to6PM.svg" /></div>
+        <div class="label-filter">12PM-6PM</div><input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[2])" [(ngModel)]="departureTimeFilter[2].selected" [checked]="departureTimeFilter[2].selected" ><span class="checkmark-cust"></span>
+      </label>
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+         <img src="{{cdnUrl}}images/icons/After6PM.svg" /></div>
+        <div class="label-filter">After 6PM</div><input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[3])" [(ngModel)]="departureTimeFilter[3].selected" [checked]="departureTimeFilter[3].selected" ><span class="checkmark-cust"></span>
+      </label>
+    </div>
+    </mat-expansion-panel>
+
+
+      <mat-expansion-panel [expanded]="true" class="pb-3">
+      <div class="mat-expansion-panel-header" >
+        Arrival Time
+      </div>
+      <a href="#" class="fixed_filter_blue_link">Reset</a>
+      <div class="flex-items">
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+          <img src="{{cdnUrl}}images/icons/before6AM.svg" /></div>
+        <div class="label-filter">Before 6AM</div><input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[0])" [(ngModel)]="arrivalTimeFilter[0].selected" [checked]="arrivalTimeFilter[0].selected"><span class="checkmark-cust"></span>
+      </label>
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+         <img src="{{cdnUrl}}images/icons/6AMTo12PM.svg" /></div>
+        <div class="label-filter">6AM-12PM</div><input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[1])" [(ngModel)]="arrivalTimeFilter[1].selected" [checked]="arrivalTimeFilter[1].selected"><span class="checkmark-cust"></span>
+      </label>
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+         <img src="{{cdnUrl}}images/icons/12to6PM.svg" /></div>
+        <div class="label-filter">12PM-6PM</div><input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[2])" [(ngModel)]="arrivalTimeFilter[2].selected" [checked]="arrivalTimeFilter[2].selected"><span class="checkmark-cust"></span>
+      </label>
+      <label class="checkbox-cust" >
+        <div class="icons-filter px-1">
+        <img src="{{cdnUrl}}images/icons/After6PM.svg" /></div>
+        <div class="label-filter">After 6PM</div><input checked="checked" type="checkbox" (change)="updateArrivalTimeFilter(arrivalTimeFilter[3])" [(ngModel)]="arrivalTimeFilter[3].selected"   [checked]="arrivalTimeFilter[3].selected" ><span class="checkmark-cust"></span>
+      </label>
+    </div>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="true" class="pb-3">
+      <div class="mat-expansion-panel-header" >
+        Bus Type
+      </div>
+      <a href="#" class="fixed_filter_blue_link">Reset</a>
+        <label class="checkbox" *ngFor="let classes of availableClasses " >
+          <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
+          {{classes.type}} ({{classes.count}})
+          <span class="checkmark"></span>
+        </label>
+      </mat-expansion-panel>
+
+      
+    <mat-expansion-panel>
+      <mat-expansion-panel-header class="h_auto">
+        Boarding Point
+      </mat-expansion-panel-header>
+      <!-- <h6>BOARDING POINT</h6> -->
+      <div class="filter_search_div">
+          <span><i class="fa fa-search" aria-hidden="true"></i>
+          <input #inputstring class="search-sub-filter sdfsdf" (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
+      </div>
+      
+
+      <div class="float-left pt-24 filter-common">
+        <!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
+        <label class="checkbox" *ngFor="let bp of boardingpoints " >
+          <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
+          {{bp.boardingPointName}} ({{bp.total}})
+          <span class="checkmark"></span>
+        </label>
+      </div>
+       
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header class="h_auto">
+        Dropping Point
+      </mat-expansion-panel-header>
+      <!-- <h6>DROPPING POINT</h6> -->
+      <div class="filter_search_div">
+        <span><i class="fa fa-search" aria-hidden="true"></i>
+        <input class="search-sub-filter" #dropstring  (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
+      </div>
+      
+      <div class="float-left pt-24 filter-common">
+        <!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
+        <label class="checkbox" *ngFor="let bp of droppingpoints " >
+          <input (change)="updateDroppingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId }}"  [checked]="bp.selected"  /> 
+          {{bp.boardingPointName}} ({{bp.total}})
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </mat-expansion-panel>
+    
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header class="h_auto">
+        Operators
+      </mat-expansion-panel-header>
+      <!-- <h6>OPERATORS</h6> -->
+      <div class="filter_search_div">
+        <span><i class="fa fa-search" aria-hidden="true"></i>
+          <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
+        </span>
+      </div>
+
+      <div class="float-left pt-24 filter-common">
+        <!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
+        <label class="checkbox" *ngFor="let op of operators " >
+            <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
+            {{op.name}}({{op.total}})
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf = "amenities.length > 0 " class="brdr_btm_0 pb-3">
+      <mat-expansion-panel-header class="h_auto">
+        Amenities
+      </mat-expansion-panel-header>
+      <div class="float-left pt-24 filter-common">
+      <label class="checkbox" *ngFor="let am of amenities " >
+        <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
+        {{am.amenities}}({{am.total}}) 
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="w-100 mt-2 mb-2">
+      <span class="float-start"><a href="javascript:;" class="filter_blue_link">view all</a></span>
+ 
+      <span class="float-end"> <a href="javascript:;" class="filter_blue_link">Reset All</a></span>
+    </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+</div>

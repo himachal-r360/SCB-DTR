@@ -48,34 +48,77 @@
   </div>
   <!-- Card Details -->
   <div>
-    <div class="card_details">
+    <div class="card_details" *ngIf="isLogged">
       <div class="row">
         <div class="col-sm-6 p-0">
-          <div class="goldCardDetails">
+          <!-- nocard Details -->
+
+          <div class="col-sm-12">
+            <div class="unlock_card goldCardDetails" [hidden]="IsgoldCardDetailsModel">
+                <div class="">
+                     <img src="{{cdnUrl}}images/smartbuy/icons/coin-icn.svg" alt="" class="img-fluid">
+                </div>
+                <div class="text_verify">
+                    <p class="">Verify mobile number & add card details to</p>
+                    <p class="mt-15">Unlock Rewards Summary</p>
+                </div>
+                <div>
+                    <div class="mark_question">
+                        <div class="tooltip"><img src="{{cdnUrl}}images/smartbuy/icons/qmark.svg" alt="" class="img-fluid">
+                            <span class="tooltiptext">
+                                <div>
+                                  <p class="text-left pb-10" > <span class="text_eg me-2">e.g.</span> <span class="text_card">Regalia Credit Card xx1234</span> <span class="material-icons down_arrow">expand_more</span></p>
+                                    <div class="points_sec row">
+                                      <div class="col-4">
+                                          <p class="value">{{current_available_points}}</p>
+                                          <p class="name">Current Available Points</p>
+                                      </div>
+                                      <div class="col-4">
+                                          <p class="value">{{customeravailablepoints}}</p>
+                                          <p class="name">Available Reward Points</p>
+                                      </div>
+                                      <div class="col-4">
+                                          <p class="value">{{last_stmt_points}}</p>
+                                          <p class="name">Last Statement points</p>
+                                      </div>
+                                  </div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="icon_place" data-bs-toggle="modal" data-bs-target="#unlockCardPopup"> <span><img src="{{cdnUrl}}images/smartbuy/icons/east.svg" alt="icn-right"></span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <div class="goldCardDetails" [hidden]="IsgoldCardDetails">
               <div class="bg_place">
-                <p class="card_name">Regalia Gold Card xx10101 <span><a href="#">View Details</a></span></p>
+                <p class="card_name">Regalia Gold Card {{card_no}} <span><a href="javascript:;">View Details</a></span></p>
                   <div class="row">
                     <div class="col-md-4 col-4">
                       <div>
-                        <p class="number">Rs. 3,464</p>
-                        <p class="text">Saved in 2021</p>
+                        <p class="number">{{current_available_points | number:'1.0':'en-US'}}</p>
+                        <p class="text">Current Available Points</p>
                       </div>
                     </div>
                     <div class="col-md-4 col-4">
                       <div>
-                        <p class="number">Rs. 3,464</p>
+                        <p class="number">{{customeravailablepoints | number:'1.0':'en-US'}}</p>
                         <p class="text">Reward Points</p>
                       </div>
                     </div>
                     <div class="col-md-4 col-4">
                       <div>
-                        <p class="number">232<span class="full_points">/2365</span></p>
-                        <p class="text">Points Expiring</p>
+                        <p class="number">{{last_stmt_points | number:'1.0':'en-US'}}</p>
+                        <p class="text">Last Statement points</p>
                       </div>
                     </div>
                   </div>
               </div>
           </div>
+
         </div>
         <div class="col-sm-6 p-0">
           <div class="card_benefit">
@@ -85,11 +128,12 @@
                 <div class="benefit_sec"> 
                   <div class="benefit_text">
                       <p class="text">Welcome Benefit</p>
-                      <p class="value">Rs, 2000</p>
+                      <p class="value">Rs {{wb_spend}}</p>
                   </div>
-                  <div class="mt-10">
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">80%</div>
+                  <div class="mt-10" *ngIf="is_wb_progressbar">
+                    <div class="progress" >
+                      <div  class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{wb_perc}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                      {{wb_perc}}%</div>
                     </div>
                   </div>
                 </div>
@@ -98,11 +142,11 @@
                 <div class="benefit_sec"> 
                   <div class="benefit_text">
                       <p class="text">Milestone Benefit</p>
-                      <p class="value_transfer">Airport Transfer</p>
+                      <p class="value_transfer">Premium Voucher</p>
                   </div>
-                  <div class="mt-10">
+                  <div class="mt-10" *ngIf="is_mb_progressbar">
                     <div class="progress">
-                      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">80%</div>
+                      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{mb_perc}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">{{mb_perc}}%</div>
                     </div>
                   </div>
                 </div>
@@ -117,7 +161,7 @@
   <!-- Recent Search Gold -->
 
   <div>
-    <div class="recent_search">
+    <div class="recent_search" *ngIf="isLogged">
       <div class="row">
         <div class="col-sm-2">
           <div class="text_rec">
@@ -162,6 +206,123 @@
               </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Unlock Crad Popup Capture Details -->
+  
+  <!-- Modal Enter Details -->
+  <div class="modal fade unlockCardPopup" id="unlockCardPopup" tabindex="-1" aria-labelledby="unlockCardPopupLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="unlockCardPopupLabel">Enter Card Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form [formGroup]="angForm" novalidate (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                      <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number" formControlName="mobile_no">
+                      <div *ngIf="angForm.controls['mobile_no'].invalid && (angForm.controls['mobile_no'].dirty || angForm.controls['mobile_no'].touched)" class="cardError">
+                          <div *ngIf="angForm.controls['mobile_no'].errors.required">
+                            Mobile Number is required
+                          </div>
+                          <div *ngIf="angForm.controls['mobile_no'].hasError('pattern')">
+                            Mobile Number must be numeric
+                          </div>
+                          <div *ngIf="angForm.controls['mobile_no'].hasError('minlength')">
+                            Mobile Number must be of 10 digit
+                          </div>
+                          <div *ngIf="angForm.controls['mobile_no'].hasError('maxlength')">
+                            Mobile Number must be of 10 digit
+                          </div>
+                          
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card" formControlName="last_4_digit">
+                      <div *ngIf="angForm.controls['last_4_digit'].invalid && (angForm.controls['last_4_digit'].dirty || angForm.controls['last_4_digit'].touched)" class="cardError">
+                          <div *ngIf="angForm.controls['last_4_digit'].errors.required">
+                            Last 4 digit of the card is required
+                          </div>
+                          <div *ngIf="angForm.controls['last_4_digit'].hasError('pattern')">
+                             Last 4 digit of the card must be numeric
+                          </div>
+                          <div *ngIf="angForm.controls['last_4_digit'].hasError('minlength')">
+                            Last 4 digit of the card must be of 4 digit
+                          </div>
+                          <div *ngIf="angForm.controls['last_4_digit'].hasError('maxlength')">
+                            Last 4 digit of the card must be of 4 digit
+                          </div>
+                      </div>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask">
+                        <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
+                        <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
+                            <div *ngIf="angForm.controls['dob'].errors.required">
+                              Date of birth is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" formControlName="save_card" id="savecardcheck">
+                        <label class="ml-10" for="savecardcheck">
+                            Save this card
+                        </label>
+                    </div>
+                    <div class="cardError" [hidden]="IsCardError">
+                        {{CardErrorMsg}}
+                    </div>
+                    <div class="modal-footer pt-0 border-0">
+                      <button type="button" class="btn cancel_btn" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary verify_btn">Verify</button>
+                    </div>
+                  </form>
+                  <!-- <p>Form value: {{ angForm.value | json }}</p>
+                  <p>Form status: {{ angForm.status | json }}</p> -->
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Verify OTP Details -->
+  <div class="modal fade unlockCardPopup" id="unlockOtpPopup" tabindex="-1" aria-labelledby="unlockOtpPopupLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title" id="unlockOtpPopupLabel">Verify with OTP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-0">
+            <p class="otp_text">OTP sent to your mobile number</p>
+            <div class="pt-20">
+                <form>
+                    <div class="mb-3 position-relative">
+                      <input type="text" class="form-control input_control" id="numOtp" placeholder="Enter OTP">
+                      <a href="" class="resend_otp_link">Resend OTP</a>
+                    </div>
+                  </form>
+            </div>
+            <div class="row mt-30">
+                <div class="col-6">
+                    <p class="resend_text">Resend OTP in <span>00:09</span></p>
+                </div>
+                <div class="col-6 text-right">
+                   <div><button class="btn btn-primary w-100">Verify</button></div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer pt-0 border-0">
+          <button type="button" class="btn cancel_btn" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary verify_btn">Verify</button>
+        </div> -->
       </div>
     </div>
   </div>

@@ -20,6 +20,7 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import { environment } from '../../environments/environment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
+import { AppConfigService } from '../app-config.service';
 import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -88,6 +89,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   dateValidation: boolean = false;
   continueSearchVal: any;
   minDate = new Date();
+  minDateR = new Date();
   isMobile: boolean = false;
   isClosed: boolean = true;
   isFromorNot: boolean = false;
@@ -130,38 +132,42 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     travel: ['', [Validators.required]]
   }, {
     validators: MustMatch('flightfrom', 'flightto')
-    
-  },);
+});
+  enableFlightServices:any;
+   serviceSettings:any;
   constructor(
-    public _styleManager: StyleManagerService,
+    public _styleManager: StyleManagerService, private appConfigService:AppConfigService,
     public route: ActivatedRoute,
-    public router: Router,
-    private _fb: FormBuilder,
-    private _flightService: FlightService, private ngZone: NgZone, private sg: SimpleGlobal, private es: ElasticsearchService
+      public router: Router,
+      private _fb: FormBuilder,
+      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService
 
-  ) {
-    this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
-    window.onresize = (e) => {
-      //ngZone.run will help to run change detection
-      this.ngZone.run(() => {
-        this.isMobile = window.innerWidth < 991 ? true : false;
-      });
-    }
-    setTimeout(() => {
-      this._styleManager.setScript('custom', `assets/js/custom.js`);
-    }, 10);
+    ) {
+      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+       this.serviceSettings=this.appConfigService.getConfig();
+        this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
+      window.onresize = (e) =>
+      {
+          //ngZone.run will help to run change detection
+          this.ngZone.run(() => {
+            this.isMobile = window.innerWidth < 991 ?  true : false;
+          });
+      }
+      setTimeout(() => {
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+     }, 10);
 
-    this.defaultFlightOptions = [
-      { "_source": { "city": "New Delhi", "airport_code": "DEL", "airport_name": "Indira Gandhi Airport", "country_code": "IN" } },
-      { "_source": { "city": "Mumbai", "airport_code": "BOM", "airport_name": "Chatrapati Shivaji Airport", "country_code": "IN" } },
-      { "_source": { "city": "Bangalore", "airport_code": "BLR", "airport_name": "Kempegowda International Airport", "country_code": "IN" } },
-      { "_source": { "city": "Goa", "airport_code": "GOI", "airport_name": "Dabolim Airport", "country_code": "IN" } },
-      { "_source": { "city": "Chennai", "airport_code": "MAA", "airport_name": "Chennai Airport", "country_code": "IN" } },
-      { "_source": { "city": "Kolkata", "airport_code": "CCU", "airport_name": "Netaji Subhas Chandra Bose Airport", "country_code": "IN" } },
-      { "_source": { "city": "Hyderabad", "airport_code": "HYD", "airport_name": "Hyderabad Airport", "country_code": "IN" } },
-    ];
-    this.flightFromOptions = this.defaultFlightOptions;
-    this.flightToOptions = this.defaultFlightOptions;
+     	this.defaultFlightOptions=[
+	{"_source":{"city":"New Delhi","airport_code":"DEL","airport_name":"Indira Gandhi Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Mumbai","airport_code":"BOM","airport_name":"Chatrapati Shivaji Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Bangalore","airport_code":"BLR","airport_name":"Kempegowda International Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Goa","airport_code":"GOI","airport_name":"Dabolim Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Chennai","airport_code":"MAA","airport_name":"Chennai Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Kolkata","airport_code":"CCU","airport_name":"Netaji Subhas Chandra Bose Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Hyderabad","airport_code":"HYD","airport_name":"Hyderabad Airport","country_code":"IN","country":"India"}},
+	];
+     this.flightFromOptions= this.defaultFlightOptions;
+	this.flightToOptions= this.defaultFlightOptions;
 
     this.multicityForm = this._fb.group({
       multicityFormArr: this._fb.array([this.multiCityArrAddItems()])
@@ -173,7 +179,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   };
 
   public MulticityError = (controlName: string, errorName: string) => {
-    debugger;
+  //  debugger;
     return this.multicityForm.controls[controlName ].hasError(errorName);
   };
 
@@ -190,13 +196,19 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     });
   }
 
+  currentPeriodClickedN(datePicker: any) {
+    let date = datePicker.target.value
+    this.minDateR=date;
 
+  }
   currentPeriodClicked(datePicker: any, item) {
     console.log(datePicker , "datepicker");
     console.log(item , "item date");
     let date = datePicker.target.value
     date = moment(date).format('YYYY-MM-DD')
-    item.value.depart = date;
+    item.value.departure = date;
+    this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
+    this.minDateR=date;
   }
 
   currentPeriodArrivalClicked(datePicker: any) {
@@ -218,7 +230,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   searchAutoComplete($event, field, device, index: any) {
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
-      if ($event.timeStamp - this.lastKeypress > 0) {
+      if (true) {
         this.queryText = $event.target.value;
         if (this.queryText && this.queryText.length > 0) {
 
@@ -273,7 +285,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   onFromClick(values, device, index , i) {
     if (index != undefined || index != null) {
       index.value.fromCity=values['_source'].city;
-      index.value.leavingFrom = values['_source'].airport_code;
+      index.value.flightfrom = values['_source'].airport_code;
       index.value.fromContry = values['_source'].country_code;
       index.value.fromAirportName = values['_source'].airport_name;
       console.log(this.multicityForm);
@@ -308,7 +320,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   onToClick(values, device, index, i) {
     if (index != undefined || index != null) {
       index.value.toCity=values['_source'].city;
-      index.value.goingTo = values['_source'].airport_code;
+      index.value.flightto = values['_source'].airport_code;
       index.value.toContry = values['_source'].country_code;
       index.value.toAirportName = values['_source'].airport_name;
       values = values['_source'];
@@ -359,6 +371,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     if (field == 'departure') {
       this.departureDate = event;
       this.minDateFlightToMlite = event;
+       this.minDateR = event;
       var compare1 = new Date(event).getTime();
       var compare2 = new Date(this.arrivalDate).getTime();
       if (compare1 > compare2) {
@@ -380,7 +393,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   infantsVal: any
   flightFromInput: any;
   setSearchFilterData() {
-    let lastSearch: any = localStorage.getItem('flightLastSearch');
+    let lastSearch: any = localStorage.getItem('flightLastSearchNew');
    
     if (lastSearch != null || lastSearch != undefined) {
       lastSearch = JSON.parse(lastSearch);
@@ -482,7 +495,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
       this.flightSearchCallBack(searchValue);
 
-      localStorage.setItem('flightLastSearch', JSON.stringify(searchValue));
+      localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
 
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
@@ -714,9 +727,20 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.navItemActive = navItem;
     let datePickerArrival = document.getElementById('datePickerArrival');
     let datePickerOpen = document.getElementById('datePickerOpen');
-    if (this.navItemActive == 'One Way') {
-      this.arrivalDate = '';
-    }
+  
+
+    if(this.navItemActive == 'Round Trip'){
+      this.minDateFlightToMlite=this.departureDate;
+      this.flightData.controls["arrival"].setValidators(Validators.required);
+      this.flightData.controls["arrival"].updateValueAndValidity();
+   }else{
+       this.arrivalDate = '';
+       this.flightData.controls["arrival"].setValue('');
+       this.flightData.controls["arrival"].clearValidators();
+       this.flightData.controls["arrival"].updateValueAndValidity();
+   }
+
+
     if (this.navItemActive == 'Multicity') {
       datePickerOpen.classList.add('roundtrip-area-root-departure');
       datePickerArrival.style.display = 'none'
@@ -745,21 +769,21 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
    multiCityArrAddItems() {
      return this._fb.group({
-        leavingFrom:[],
-        goingTo:[],
+        flightfrom:[],
+        flightto:[],
         adults:[this.flightData.value.adults],
         child:[this.flightData.value.child],
         infants:[this.flightData.value.infants],
         channel:['Web'],
         travel:['DOM'],
-        depart:[],
+        departure:[],
         fromCity:[this.multicityFromCityName],
         toCity:[this.multicityToCityName],
         fromContry:[],
         toContry:[],
         fromAirportName:[this.multicityFromAirpotName],
         toAirportName:[this.multicityToAirpotName],
-        classType:[this.flightData.value.flightclass],
+        flightclass:[this.flightData.value.flightclass],
         defaultType:['M'],
         sortBy:['asc'],
       })
@@ -777,7 +801,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
   
   searchMulticityFlight() {
-    debugger
+   // debugger
     this.submitted = true;
     console.log(this.multicityFormArr.value , "form"); 
     if (this.multicityForm.invalid) {
@@ -815,42 +839,42 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   // autoFillMutlicityVal() {
   //   debugger;
   //   this.multiCityArrayM[1].fromCity = this.multiCityArrayM[0].toCity;
-  //   this.multiCityArrayM[1].leavingFrom = this.multiCityArrayM[0].goingTo;
+  //   this.multiCityArrayM[1].flightfrom = this.multiCityArrayM[0].flightto;
   //   this.multiCityArrayM[1].fromAirportName = this.multiCityArrayM[0].toAirportName;
   //   this.multiCityArrayM[1].fromContry = this.multiCityArrayM[0].toContry;
   //   this.multicityForm.value.fromCity1 = this.multiCityArrayM[0].toCity;
-  //   this.multicityForm.value.leavingFrom1 = this.multiCityArrayM[0].goingTo;
+  //   this.multicityForm.value.flightfrom1 = this.multiCityArrayM[0].flightto;
   //   this.multicityForm.value.fromAirportName1 = this.multiCityArrayM[0].toAirportName;
   //   this.multicityForm.value.fromContry1 = this.multiCityArrayM[0].toContry;
     
   //   if (this.multiCityArrayM[2] != null && this.multiCityArrayM[2] != "" && this.multiCityArrayM[2] != undefined) {
   //     this.multiCityArrayM[2].fromCity = this.multiCityArrayM[1].toCity;
-  //     this.multiCityArrayM[2].leavingFrom = this.multiCityArrayM[1].goingTo;
+  //     this.multiCityArrayM[2].flightfrom = this.multiCityArrayM[1].flightto;
   //     this.multiCityArrayM[2].fromAirportName = this.multiCityArrayM[1].toAirportName;
   //     this.multiCityArrayM[2].fromContry = this.multiCityArrayM[1].toContry;
   //     this.multicityForm.value.fromCity2 = this.multicityForm.value.toCity1;
-  //     this.multicityForm.value.leavingFrom2 = this.multicityForm.value.goingTo1;
+  //     this.multicityForm.value.flightfrom2 = this.multicityForm.value.flightto1;
   //     this.multicityForm.value.fromAirportName2 = this.multicityForm.value.toAirportName1;
   //     this.multicityForm.value.fromContry2 = this.multicityForm.value.toContry1;
   //   }
   //   if (this.multiCityArrayM[3] != null && this.multiCityArrayM[3] != "" && this.multiCityArrayM[3] != undefined) {
   //     this.multiCityArrayM[3].fromCity = this.multiCityArrayM[2].toCity;
-  //     this.multiCityArrayM[3].leavingFrom = this.multiCityArrayM[2].goingTo;
+  //     this.multiCityArrayM[3].flightfrom = this.multiCityArrayM[2].flightto;
   //     this.multiCityArrayM[3].fromAirportName = this.multiCityArrayM[2].toAirportName;
   //     this.multiCityArrayM[3].fromContry = this.multiCityArrayM[2].toContry;
   //     this.multicityForm.fromCity3 = this.multicityForm.toCity2;
-  //     this.multicityForm.leavingFrom3 = this.multicityForm.goingTo2;
+  //     this.multicityForm.flightfrom3 = this.multicityForm.flightto2;
   //     this.multicityForm.fromAirportName3 = this.multicityForm.toAirportName2;
   //     this.multicityForm.fromContry3 = this.multicityForm.toContry2;
 
   //   }
   //   if (this.multiCityArrayM[4] != null && this.multiCityArrayM[4] != "" && this.multiCityArrayM[4] != undefined) {
   //     this.multiCityArrayM[4].fromCity = this.multiCityArrayM[3].toCity;
-  //     this.multiCityArrayM[4].leavingFrom = this.multiCityArrayM[3].goingTo;
+  //     this.multiCityArrayM[4].flightfrom = this.multiCityArrayM[3].flightto;
   //     this.multiCityArrayM[4].fromAirportName = this.multiCityArrayM[3].toAirportName;
   //     this.multiCityArrayM[4].fromContry = this.multiCityArrayM[3].toContry;
   //     this.multicityForm.fromCity4 = this.multicityForm.toCity3;
-  //     this.multicityForm.leavingFrom4 = this.multicityForm.goingTo3;
+  //     this.multicityForm.flightfrom4 = this.multicityForm.flightto3;
   //     this.multicityForm.fromAirportName4 = this.multicityForm.toAirportName3;
   //     this.multicityForm.fromContry4 = this.multicityForm.toContry3;
   //   }

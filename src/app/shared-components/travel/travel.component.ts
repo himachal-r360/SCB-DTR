@@ -830,7 +830,7 @@ var date1 = new Date(this.today.getFullYear()+'-'+month+'-'+day).getTime();
  
  
   //Flights
-lastFlightSearch=localStorage.getItem('flightLastSearch');
+lastFlightSearch=localStorage.getItem('flightLastSearchNew');
 const lastFlightSearchValue=JSON.parse(lastFlightSearch);
 if(lastFlightSearchValue){
 this.flightFromText=lastFlightSearchValue.flightFromText;
@@ -973,7 +973,7 @@ this.roomOperation('add');
 
  
 //Bus
-lastBusSearch=localStorage.getItem('busLastSearch');
+lastBusSearch=localStorage.getItem('busLastSearchNew');
 const lastBusSearchValue=JSON.parse(lastBusSearch);
 if(lastBusSearchValue){
  this.busFromText=lastBusSearchValue.searchFrom;
@@ -1012,7 +1012,7 @@ this.searchBusForm['controls']['fromBusCode'].setValue(1492);
 this.searchBusForm['controls']['toBusCode'].setValue(649);
 }
 //Train
- lastTrainSearch=localStorage.getItem('trainLastSearch');
+ lastTrainSearch=localStorage.getItem('trainLastSearchNewNewNewNewNewNewNew');
 const lastTrainSearchValue=JSON.parse(lastTrainSearch);
 if(lastTrainSearchValue){
 
@@ -1303,7 +1303,7 @@ flightFromText:xss(""+this.flightFromText+""),
 flightToText:xss(""+this.flightToText+"")
 };
 
-localStorage.setItem('flightLastSearch', JSON.stringify(this.searchArray));
+localStorage.setItem('flightLastSearchNew', JSON.stringify(this.searchArray));
 
 
 // Only for Recent Search
@@ -1353,7 +1353,11 @@ const current = new Date();
 this.redirectPopupTriggerTimestamp=current.getTime();
 this.redirectPopupTrigger=1;
 this.redirectPopup=2;
-this.redirectPopupUrl=environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
+
+// this.redirectPopupUrl=environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
+this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
 return;
 }
 
@@ -1361,7 +1365,10 @@ return;
 if(this.serviceSettings.flightSearch==1){
 this.router.navigate([this.sg['domainPath']+'flights/listing'], { queryParams: this.searchArray  });
 }else{
-this.document.location.href =environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+// this.document.location.href =environment.MAIN_SITE_URL+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
+this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'flights/searching?class='+this.flightClass+'&Default='+this.flightTripType+'&flightfrom='+this.searchFlightForm.controls.flightFrom.value+'('+this.searchFlightForm.controls.fromFlightCode.value+')&fcode='+this.searchFlightForm.controls.fromFlightCode.value+'&flightto='+this.searchFlightForm.controls.flightTo.value+' ('+this.searchFlightForm.controls.toFlightCode.value+')&tcode='+this.searchFlightForm.controls.toFlightCode.value+'&flightdeparture='+cDate+'&flightreturn='+cDateR+'&adults='+this.adult_cnt+'&child='+this.child_cnt+'&infants='+this.infant_cnt+'&t=ZWFybg==';
+
 }
 break; 
 } 
@@ -1472,11 +1479,14 @@ const current = new Date();
 this.redirectPopupTriggerTimestamp=current.getTime();
 this.redirectPopupTrigger=1;
 this.redirectPopup=2;
-this.redirectPopupUrl=environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+
+//this.redirectPopupUrl=environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
  return;
 }
 
-this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+//this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
 //  console.log(JSON.stringify(this.searchHotelForm.value, null, 4));
 
 break; 
@@ -1529,7 +1539,7 @@ cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-localStorage.setItem('busLastSearch', JSON.stringify(this.searchArray));
+localStorage.setItem('busLastSearchNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -1611,7 +1621,7 @@ cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-localStorage.setItem('trainLastSearch', JSON.stringify(this.searchArray));
+localStorage.setItem('trainLastSearchNewNewNewNewNewNewNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -2021,7 +2031,7 @@ if($event.keyCode==13){
 this.arrowFromkeyLocation=0;
 }else if ($event.keyCode != 40 && $event.keyCode != 38 ){
 this.arrowFromkeyLocation=0;
-if ($event.timeStamp - this.lastKeypress > 0) {
+if (true) {
 this.queryText = $event.target.value;
 if(this.queryText && this.queryText.length > 0){
 //Elastic Search

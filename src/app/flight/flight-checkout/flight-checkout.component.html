@@ -1,4 +1,4 @@
-<div class="flight_mlite_process">
+<div class="flight_mlite_process"  *ngIf="REWARD_CUSTOMERID !='0000'">
   <section class="mob-flights-listing" *ngIf="searchData && isMobile">
       <div class="container">
         <div class="row">
@@ -10,8 +10,8 @@
                 </a>
               </div>
               <div class="mob-listing-header-center">
-                <h6>{{searchData.fromCity}} - {{searchData.toCity}}</h6>
-                <p>{{searchData.departure | date:"EEE,dd MMM" }} | {{maxAdults+maxChilds+maxInfants}} Travellers |
+                <h6>{{searchData.fromCity}} - {{searchData.toCity}} <span *ngIf="searchData && searchData.flightdefault=='R'"> | {{searchData.toCity}} - {{searchData.fromCity}}</span></h6>
+                <p>{{searchData.departure | date:"EEE,dd MMM" }} <span *ngIf="searchData && searchData.flightdefault=='R'"> | {{searchData.arrival | date:'EEE, dd MMM' }}</span>| {{maxAdults+maxChilds+maxInfants}} Travellers |
                   {{flightClasses[searchData.flightclass]}}
                 </p>
               </div>
@@ -72,7 +72,7 @@
         </div>
       </section>
 </div>
-<main class="site-main">
+<main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'" >
 <!-- <div class="route-details row">
       <div class="col-2">
           <span class="material-icons">arrow_back_ios</span>
@@ -97,7 +97,10 @@
         </strong></p>
     </div>
   </div>
-  <input *ngIf="searchData" type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
+  <input *ngIf="searchData && flightSessionData.travel_type !='M'" type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
+  
+  <input *ngIf="searchData && flightSessionData.travel_type =='M'" type="hidden" id="journery_date" value='{{searchData[0].departure | date:"YYYY-MM-dd"}}' />
+    
   <div class="container">
     <div class="row">
 
@@ -107,8 +110,374 @@
           <div class="booking-title-box">
             <h4>Flight Details</h4>
           </div>
+          <!--Multicity form starts-->
+           <div class="booking-inner-box from-to-box" *ngIf="searchData && flightSessionData.travel_type =='M'">
+           
+           <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
+          <div class="booking-inner-title">
+              <div class="booking-inner-title-left">
+                <h6>
+                  {{searchDatad.fromCity}}
+                  <img src="{{cdnUrl}}/images/icons/flight-right.png" class="ms-2 me-2" alt="">
+                  {{searchDatad.toCity}}
+                </h6>
+                <p> {{searchDatad.departure | date:"EEE,dd MMM"}} | {{totalOnwardStops_data_multi[searchi]}} |
+                  {{totalOnwardDurationMulti[searchi] + dateOnwardHourTotalMulti[searchi]| durationTime}}</p>
+              </div>
+              <div class="booking-inner-title-right" *ngIf="flightOnwardDetails[searchi]['priceSummery']['refundStatus']">
+                <p class="non-refundable" *ngIf="flightOnwardDetails[searchi]['priceSummery']['refundStatus'] != 1">NON-REFUNDABLE</p>
+                <p class="refundable" *ngIf="flightOnwardDetails[searchi]['priceSummery']['refundStatus'] == 1">REFUNDABLE</p>
+              </div>
+            </div>
+         
 
-          <div class="booking-inner-box from-to-box">
+            <div class="Flight-One" *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+              <div class="Booking-Flight-name">
+                <div class="Booking-Flight-name-left">
+                  <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
+                    class="flight-image mr-10">
+                  <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                  <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
+                </div>
+                <div class="Booking-Flight-name-right">
+                  <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}/images/icons/info.png" width="10px" alt=""></p>-->
+                  <p>{{flightClasses[searchData.flightclass]}}</p>
+                </div>
+              </div>
+              <div class="Booking-Flight-time">
+                <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                <span class="round round-line"></span>
+                <div class="Flight-time-name" *ngIf="airportsNameJson">
+                  <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                  <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                  <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                  <p class="text-gray" *ngIf="flights.stopsDetails && flights.stopsDetails.length > 0">Via
+                    {{flights.stopsDetails[0]['layoverAirportName']}}</p>
+                </div>
+              </div>
+
+              <div class="Booking-Flight-time">
+                <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                <span class="round"></span>
+                <div class="Flight-time-name" *ngIf="airportsNameJson">
+                  <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                  <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                </div>
+              </div>
+
+              <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnwardMulti[searchi] && baggageInfoOnwardMulti[searchi][i]">
+                <div class="row">
+                  <div class="col-md-2 col-4">
+                    <h6>Airline</h6>
+                  </div>
+                  <div class="col-md-3 col-4">
+                    <h6>Check-in Baggage</h6>
+                  </div>
+                  <div class="col-md-3 col-4">
+                    <h6>Cabin Baggage</h6>
+                  </div>
+                  <!--<div class="col-md-4">
+                                          <h6>Flight Extras</h6>
+                                          <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
+                                          <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                      </div>-->
+                </div>
+                <div class="row">
+                  <div class="col-md-2 col-4">
+                    <p>{{baggageInfoOnwardMulti[searchi][i].flightName}}<br>{{baggageInfoOnwardMulti[searchi][i].flightNo}}</p>
+                  </div>
+                  <div class="col-md-3 col-4">
+                    <p *ngIf="baggageInfoOnwardMulti[searchi][i].checkIn;then checkIn_content else checkIn_blank"></p>
+                    <ng-template #checkIn_content>{{baggageInfoOnwardMulti[searchi][i].checkIn}}</ng-template>
+                    <ng-template #checkIn_blank>NA</ng-template>
+                  </div>
+                  <div class="col-md-3 col-4">
+                    <p *ngIf="baggageInfoOnwardMulti[searchi][i].cabin ;then cabin_content else cabin_blank"></p>
+                    <ng-template #cabin_content>{{baggageInfoOnwardMulti[searchi][i].cabin}}</ng-template>
+                    <ng-template #cabin_blank>NA</ng-template>
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="operated_by"
+                *ngIf="airlinesNameJson && flights.operatingAirline && flights.airline != flights.operatingAirline">
+                Operated by
+                <span
+                  *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
+                <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
+              </div>
+              <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
+                <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in
+                  {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+              </div>
+            </div>
+
+
+            <div class="luggage-box" *ngIf="enableVAS==1">
+              <div class="luggage-text">
+                <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
+                <p>Got excess luggage? Don't stress, buy extra check-in baggage allowance at fab rate!</p>
+              </div>
+              <div class="luggage-btn">
+                <a class="luggage-add" data-bs-toggle="collapse" href="#luggagecollapse" role="button"
+                  aria-expanded="false" aria-controls="luggagecollapse">+ Add</a>
+              </div>
+            </div>
+            <div class="collapse luggage-add-box" id="luggagecollapse">
+              <div class="luggage-add-list">
+                <div class="luggage-add-name">
+                  <h6><img src="{{cdnUrl}}/images/icons/bag.png" alt=""> 5 KG</h6>
+                </div>
+                <div class="luggage-add-items">
+                  <div class="">
+                    <h6>&#8377; 600</h6>
+                  </div>
+                  <div class="Travellers-qty ms-4">
+                    <div class="quantity buttons_added">
+                      <input type="button" value="-" class="qty-buttons minus">
+                      <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty"
+                        class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                      <input type="button" value="+" class="qty-buttons plus">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="luggage-add-list">
+                <div class="luggage-add-name">
+                  <h6><img src="{{cdnUrl}}/images/icons/bag-more.png" alt=""> 10 KG</h6>
+                </div>
+                <div class="luggage-add-items">
+                  <div class="">
+                    <h6>&#8377; 1200</h6>
+                  </div>
+                  <div class="Travellers-qty ms-4">
+                    <div class="quantity buttons_added">
+                      <input type="button" value="-" class="qty-buttons minus">
+                      <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty"
+                        class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                      <input type="button" value="+" class="qty-buttons plus">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="luggage-add-list">
+                <div class="luggage-add-name">
+                  <h6><img src="{{cdnUrl}}/images/icons/bag-more.png" alt=""> 15 KG</h6>
+                </div>
+                <div class="luggage-add-items">
+                  <div class="">
+                    <h6>&#8377; 1800</h6>
+                  </div>
+                  <div class="Travellers-qty ms-4">
+                    <div class="quantity buttons_added">
+                      <input type="button" value="-" class="qty-buttons minus">
+                      <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty"
+                        class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                      <input type="button" value="+" class="qty-buttons plus">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="luggage-add-list">
+                <div class="luggage-add-name">
+                  <h6><img src="{{cdnUrl}}/images/icons/bag-more.png" alt=""> 20 KG</h6>
+                </div>
+                <div class="luggage-add-items">
+                  <div class="">
+                    <h6>&#8377; 2400</h6>
+                  </div>
+                  <div class="Travellers-qty ms-4">
+                    <div class="quantity buttons_added">
+                      <input type="button" value="-" class="qty-buttons minus">
+                      <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty"
+                        class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                      <input type="button" value="+" class="qty-buttons plus">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="luggage-add-list">
+                <div class="luggage-add-name">
+                  <h6 class="fw_7 fs_18">Total</h6>
+                </div>
+                <div class="luggage-add-items">
+                  <div class="">
+                    <h6 class="fw_7 fs_18">&#8377; 600</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+                  </ng-container> 
+          </div>
+
+          
+          <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0">   
+            <div class="fare-rules-title">
+              <h6>Fare Rules</h6>
+            </div>
+            <div class="flight-extra-details">
+
+              <div class="rules-flight">
+
+              <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
+                        <a href="javascript:void(0);" (click)="changeFareRuleTabOnwardMult(searchi,$event)" data-bind="onwardFareDetails{{searchi}}"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
+                        <div class="rules-flight-items">
+                        <div class="rules-flight-thumbe">
+                        <img src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[searchi]['flights'][0].airline}}.gif"
+                        alt="{{flightOnwardDetails[searchi]['flights'][0].airline}}" class=" mr-10">
+                        </div>
+                        <div class="rules-flight-content">
+                        <h6>
+                        {{searchDatad.fromCity}}
+                        <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                        {{searchDatad.toCity}}
+                        </h6>
+                        </div>
+                        </div>
+                        </a>
+
+           </ng-container>
+
+
+              </div>
+           <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
+              <!--Onward-->
+              <div id="onwardFareDetails{{searchi}}" class="flight-extra-content-onward " [ngClass]="{'hide': searchi !=0  }">
+                <ul class="list-unstyled flight-extra-tabs">
+                  <li *ngIf="cancellationPolicyOnwardMulti[searchi]">
+                    <a href="javascript:void(0);" class="flight-extra-content-oo{{searchi}}"
+                      [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnwardMulti[searchi]  }"
+                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'CancellationDetails')" data-bind="CancellationDetails{{searchi}}">Fare Rules</a>
+                  </li>
+                  <li *ngIf="baggageInfoOnwardMulti[searchi]">
+                    <a href="javascript:void(0);" class="flight-extra-content-ob{{searchi}}"
+                      [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnwardMulti[searchi]  }" data-bind="BaggageDetails{{searchi}}"
+                      (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'BaggageDetails')">Baggage Policy</a>
+                  </li>
+
+                </ul>
+
+                <div class="extra-tabs-ara">
+                <div id="CancellationDetails{{searchi}}" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnwardMulti[searchi]"           [ngClass]="{'extra-active': cancellationPolicyOnwardMulti[searchi]  }">
+                    <table class="table-bordered table-content w-100">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <p class="fw_6 fs_13">Time Frame to cancel</p>
+                            <p class="opacity_05">Before scheduled departure time</p>
+                          </td>
+                          <td>
+                            <p class="fw_6 fs_13">Airline Fees</p>
+                            <p class="opacity_05">(Per passenger)</p>
+                          </td>
+                          <td>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
+                            <p class="opacity_05">(Per passenger)</p>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let can of cancellationPolicyOnwardMulti[searchi].cancellation;let i = index">
+                          <td>
+                            <p class="opacity_05">{{can.data}}</p>
+                          </td>
+                          <td>
+                            <p>₹{{can.airline_fee}}</p>
+                          </td>
+                          <td>
+                            <p>₹{{can.emt_fee}}</p>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+
+                    <table class="table-bordered table-content w-100 mt-15">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <p class="fw_6 fs_13">Time Frame to reschedule</p>
+                            <p class="opacity_05">Before scheduled departure time</p>
+                          </td>
+                          <td>
+                            <p class="fw_6 fs_13">Airline Fees</p>
+                            <p class="opacity_05">(Per passenger)</p>
+                          </td>
+                          <td>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
+                            <p class="opacity_05">(Per passenger)</p>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let re of cancellationPolicyOnwardMulti[searchi].reschedule;let i = index">
+                          <td>
+                            <p class="opacity_05">{{re.data}}</p>
+                          </td>
+                          <td>
+                            <p>₹{{re.airline_fee}}</p>
+                          </td>
+                          <td>
+                            <p>₹{{re.emt_fee}}</p>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                    <div class="imp-Information mt-10">
+                      <h6>Terms & Conditions</h6>
+                      <div class="imp-Information-list">
+                        <ul class="imp-Information-list">
+                          <li *ngFor="let tnc of cancellationPolicyOnwardMulti[searchi].tnc;let i = index">
+                            <p>{{tnc}}</p>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="BaggageDetails{{searchi}}" class="flight-extra-content-o "   *ngIf="baggageInfoOnwardMulti[searchi]"  [ngClass]="{'extra-active': !cancellationPolicyOnwardMulti[searchi] ,'hide': cancellationPolicyOnwardMulti[searchi]   }">
+
+                    <table class="table-bordered table-content w-100">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <p class="fw_6 fs_13">Airline</p>
+                          </td>
+                          <td>
+                            <p class="fw_6 fs_13">Check-in Baggage</p>
+                          </td>
+                          <td>
+                            <p class="fw_6 fs_13">Cabin Baggage</p>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let bag of baggageInfoOnwardMulti[searchi];let i = index">
+                          <td>
+                            <p class="opacity_05">{{bag.flightName}}<br>{{baggageInfoOnwardMulti[searchi][i].flightNo}}</p>
+                          </td>
+                          <td>
+                            <p *ngIf="bag.checkIn;then checkIn_content else checkIn_blank"></p>
+                            <ng-template #checkIn_content>{{bag.checkIn}}</ng-template>
+                            <ng-template #checkIn_blank>NA</ng-template>
+                          </td>
+                          <td>
+                            <p *ngIf="bag.cabin ;then cabin_content else cabin_blank"></p>
+                            <ng-template #cabin_content>{{bag.cabin}}</ng-template>
+                            <ng-template #cabin_blank>NA</ng-template>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+          </ng-container>
+           
+           </div> 
+             </div> 
+          <!--Multicity form ends-->
+          
+
+          <div class="booking-inner-box from-to-box" *ngIf="searchData && flightSessionData.travel_type !='M'">
 
             <div class="booking-inner-title">
               <div class="booking-inner-title-left" *ngIf="searchData">
@@ -118,7 +487,7 @@
                   {{searchData.toCity}}
                 </h6>
                 <p> {{searchData.departure | date:"EEE,dd MMM"}} | {{totalOnwardStops_data}} |
-                  {{totalOnwardDuration + dateOnwardHour| durationTime}}</p>
+                  {{totalOnwardDuration | durationTime}}</p>
               </div>
               <div class="booking-inner-title-right" *ngIf="selectedOnwardVendor">
                 <p class="non-refundable" *ngIf="selectedOnwardVendor.refundStatus != 1">NON-REFUNDABLE</p>
@@ -129,7 +498,7 @@
             <div class="Flight-One" *ngFor="let flights of flightOnwardDetails;let i = index">
               <div class="Booking-Flight-name">
                 <div class="Booking-Flight-name-left">
-                  <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}"
+                  <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
                     class="flight-image mr-10">
                   <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                   <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -202,8 +571,8 @@
                   *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                 <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
               </div>
-              <div class="change-planes" *ngIf="dateOnwardHour && airportsNameJson && flightOnwardDetails[i+1]">
-                <h6>Change of planes・{{dateOnwardHour | durationTime}} Layover in
+              <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in
                   {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
               </div>
             </div>
@@ -314,7 +683,7 @@
                   {{searchData.fromCity}}
                 </h6>
                 <p> {{searchData.arrival | date:"EEE,dd MMM"}} | {{totalReturnStops_data}} |
-                  {{totalReturnDuration + dateReturnHour| durationTime}}</p>
+                  {{totalReturnDuration | durationTime}}</p>
               </div>
               <div class="booking-inner-title-right" *ngIf="selectedReturnVendor">
                 <p class="non-refundable" *ngIf="selectedReturnVendor.refundStatus != 1">NON-REFUNDABLE</p>
@@ -325,7 +694,7 @@
             <div class="Flight-One" *ngFor="let flights of flightReturnDetails;let i = index">
               <div class="Booking-Flight-name">
                 <div class="Booking-Flight-name-left">
-                  <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px" alt="{{flights.airline}}"
+                  <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
                     class="flight-image mr-10">
                   <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                   <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -399,8 +768,8 @@
                   *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                 <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
               </div>
-              <div class="change-planes" *ngIf="dateReturnHour && airportsNameJson && flightReturnDetails[i+1]">
-                <h6>Change of planes・{{dateReturnHour | durationTime}} Layover in
+              <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
+                <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in
                   {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
               </div>
             </div>
@@ -577,7 +946,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -608,7 +977,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -708,7 +1077,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -739,7 +1108,7 @@
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                           <td>
-                            <p class="fw_6 fs_13">EMT Fees</p>
+                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
                             <p class="opacity_05">(Per passenger)</p>
                           </td>
                         </tr>
@@ -890,9 +1259,9 @@
                                         <mat-option value="Mrs">Mrs</mat-option>
                                         <mat-option value="Ms">Ms</mat-option>
                                       </mat-select>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
-                                        Please enter title</mat-error>
+                                        Select title</mat-error>
                                     </mat-form-field>
                                   </div>
 
@@ -901,16 +1270,16 @@
                                       <mat-label>First Name</mat-label>
                                       <input matInput placeholder="First Name" name="adult_first_name" data-test="adult_first_name{{saveAdultTravellerId[passenger.id]}}"
                                         formControlName="adult_first_name{{saveAdultTravellerId[passenger.id]}}">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter valid first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter atleast 2 character</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter maximum 26 character</mat-error>
                                     </mat-form-field>
@@ -920,16 +1289,16 @@
                                       <mat-label>Last Name</mat-label>
                                       <input matInput placeholder="Last Name"
                                         formControlName="adult_last_name{{saveAdultTravellerId[passenger.id]}}">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter valid first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter atleast 2 character</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                         Please enter maximum 26 character</mat-error>
                                     </mat-form-field>
@@ -941,13 +1310,18 @@
                                         <input matInput [inputMask]="dateInputMask"
                                           formControlName="adult_dob{{saveAdultTravellerId[passenger.id]}}"
                                           placeholder="Date Of Birth" name="dateOfBirth">
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
                                           Please enter dob</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">
                                           Adult age should be above 12 years.</mat-error>
+                                          <mat-error class="error-flight-checkout" *ngIf="passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).touched && passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).getError('younger')">
+                                            Please Enter Valid DOB
+                                          </mat-error>
                                       </mat-form-field>
+
+
                                     </div>
                                   </div>
 
@@ -960,9 +1334,22 @@
                                           <input matInput
                                             formControlName="adult_passport_num{{saveAdultTravellerId[passenger.id]}}"
                                             placeholder="Passport Number" name="PassportNumber">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                             Please enter passport number</mat-error>
+
+                                            <mat-error class="error-flight-checkout"
+                                            *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                            Please enter atleast 8 digits.</mat-error>
+
+                                            <mat-error class="error-flight-checkout"
+                                            *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                            Cannot exceed more than 12 characters.</mat-error>
+
+                                            <mat-error class="error-flight-checkout"
+                                            *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                            This field must contain only letters</mat-error>
+
                                         </mat-form-field>
 
                                       </div>
@@ -973,9 +1360,12 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="adult_passport_expiry_date{{saveAdultTravellerId[passenger.id]}}"
                                             placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
                                             Please enter passport issue date</mat-error>
+                                <mat-error class="error-flight-checkout"
+                                *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+                                Please enter a valid expiry date</mat-error>
                                         </mat-form-field>
                                       </div>
 
@@ -986,9 +1376,12 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="adult_passport_issue_date{{saveAdultTravellerId[passenger.id]}}"
                                             placeholder="Passport Issue Date" name="PassportIssueDate">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                             Please enter passport issue date</mat-error>
+
+                                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                              Please enter a valid issued date.</mat-error>
                                         </mat-form-field>
                                       </div>
 
@@ -1002,9 +1395,9 @@
                                               <mat-option *ngFor="let country of countryJson;"
                                                 value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                             </mat-select>
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
-                                              Please enter passport issuing country</mat-error>
+                                              Select passport issuing country</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1018,9 +1411,9 @@
                                               <mat-option *ngFor="let country of countryJson;"
                                                 value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                             </mat-select>
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
-                                              Please enter nationality</mat-error>
+                                              Select nationality</mat-error>
                                           </mat-form-field>
                                         </div>
                                       </div>
@@ -1074,9 +1467,9 @@
                                           <mat-option value="Ms">Ms</mat-option>
                                         </mat-select>
 
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
-                                          Please enter title</mat-error>
+                                          Select title</mat-error>
 
                                       </mat-form-field>
                                     </div>
@@ -1086,16 +1479,16 @@
                                         <mat-label>First Name</mat-label>
                                         <input matInput placeholder="First Name" name="adult_first_name"
                                           formControlName="adult_first_name{{saveAdultTravellerId[passenger.id]}}">
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter valid first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter atleast 2 character</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
                                       </mat-form-field>
@@ -1105,16 +1498,16 @@
                                         <mat-label>Last Name</mat-label>
                                         <input matInput placeholder="Last Name"
                                           formControlName="adult_last_name{{saveAdultTravellerId[passenger.id]}}">
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter valid first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter atleast 2 character</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
                                       </mat-form-field>
@@ -1127,12 +1520,15 @@
                                             formControlName="adult_dob{{saveAdultTravellerId[passenger.id]}}"
                                             placeholder="Date Of Birth" name="dateOfBirth">
 
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">
                                             Adult age should be above 12 years.</mat-error>
+                                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).touched && passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).getError('younger')">
+                                              Please Enter Valid DOB
+                                            </mat-error>
                                         </mat-form-field>
                                       </div>
                                     </div>
@@ -1145,9 +1541,22 @@
                                             <input matInput
                                               formControlName="adult_passport_num{{saveAdultTravellerId[passenger.id]}}"
                                               placeholder="Passport Number" name="PassportNumber">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
+
+                                              <mat-error class="error-flight-checkout"
+                                              *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                              Please enter atleast 8 digits.</mat-error>
+
+                                              <mat-error class="error-flight-checkout"
+                                              *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                              Cannot exceed more than 12 characters.</mat-error>
+
+                                              <mat-error class="error-flight-checkout"
+                                              *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                              This field must contain only letters</mat-error>
+
                                           </mat-form-field>
 
                                         </div>
@@ -1158,9 +1567,12 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="adult_passport_expiry_date{{saveAdultTravellerId[passenger.id]}}"
                                               placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1171,9 +1583,11 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="adult_passport_issue_date{{saveAdultTravellerId[passenger.id]}}"
                                               placeholder="Passport Issue Date" name="PassportIssueDate">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                                Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1187,9 +1601,9 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
-                                                Please enter passport issuing country</mat-error>
+                                                Select passport issuing country</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -1203,9 +1617,9 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
-                                                Please enter nationality</mat-error>
+                                                Select nationality</mat-error>
                                             </mat-form-field>
                                           </div>
                                         </div>
@@ -1251,8 +1665,7 @@
                                     <mat-option value="Mrs">Mrs</mat-option>
                                     <mat-option value="Ms">Ms</mat-option>
                                   </mat-select>
-                                  <mat-error *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Please
-                                    enter title</mat-error>
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Select title</mat-error>
                                 </mat-form-field>
                               </div>
 
@@ -1261,13 +1674,13 @@
                                   <mat-label>First Name</mat-label>
                                   <input matInput placeholder="First Name" name="adult_first_name"
                                     formControlName="adult_first_name{{traveller}}">
-                                  <mat-error *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">
                                     Please enter first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('pattern','adult_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('pattern','adult_first_name'+traveller) && !passengerForm.hasError('required','adult_first_name'+traveller)">
                                     Please enter valid first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('minlength','adult_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('minlength','adult_first_name'+traveller) && !passengerForm.hasError('pattern','adult_first_name'+traveller)">
                                     Please enter atleast 2 character</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller) && !passengerForm.hasError('pattern','adult_first_name'+traveller)">
                                     Please enter maximum 26 character</mat-error>
                                 </mat-form-field>
 
@@ -1277,13 +1690,13 @@
                                   <mat-label>Last Name</mat-label>
                                   <input matInput placeholder="Last Name"
                                     formControlName="adult_last_name{{traveller}}">
-                                  <mat-error *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">
                                     Please enter first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('pattern','adult_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('pattern','adult_last_name'+traveller) && !passengerForm.hasError('required','adult_last_name'+traveller)">
                                     Please enter valid first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('minlength','adult_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','adult_last_name'+traveller) && !passengerForm.hasError('pattern','adult_last_name'+traveller)">
                                     Please enter atleast 2 character</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">
                                     Please enter maximum 26 character</mat-error>
 
                                 </mat-form-field>
@@ -1296,11 +1709,16 @@
                                       formControlName="adult_dob{{traveller}}" placeholder="Date Of Birth"
                                       name="dateOfBirth">
 
-                                    <mat-error *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please
+                                    <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please
                                       enter dob</mat-error>
-                                    <mat-error
+                                    <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">Adult
                                       age should be above 12 years.</mat-error>
+
+                                      <mat-error class="error-flight-checkout"  *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
+                                        Please Enter Valid DOB
+                                      </mat-error>
+
                                   </mat-form-field>
 
                                 </div>
@@ -1313,9 +1731,22 @@
                                       <mat-label>Passport Number</mat-label>
                                       <input matInput formControlName="adult_passport_num{{traveller}}"
                                         placeholder="Passport Number" name="PassportNumber">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">
                                         Please enter passport number</mat-error>
+
+                                        <mat-error class="error-flight-checkout"
+                                        *ngIf="passengerForm.hasError('minlength','adult_passport_num'+traveller)">
+                                        Please enter atleast 8 digits.</mat-error>
+
+                                        <mat-error class="error-flight-checkout"
+                                        *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+traveller)">
+                                        Cannot exceed more than 12 characters.</mat-error>
+
+                                        <mat-error class="error-flight-checkout"
+                                        *ngIf="passengerForm.hasError('pattern','adult_passport_num'+traveller)">
+                                        This field must contain only letters</mat-error>
+
                                     </mat-form-field>
 
                                   </div>
@@ -1326,9 +1757,12 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="adult_passport_expiry_date{{traveller}}"
                                         placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+traveller)">
                                         Please enter passport issue date</mat-error>
+                                        <mat-error class="error-flight-checkout"
+                                        *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+traveller)">
+                                        Please enter a valid expiry date</mat-error>
                                     </mat-form-field>
                                   </div>
 
@@ -1339,9 +1773,13 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="adult_passport_issue_date{{traveller}}"
                                         placeholder="Passport Issue Date" name="PassportIssueDate">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
                                         Please enter passport issue date</mat-error>
+
+                                    <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+traveller) && !passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
+                                        Please enter a valid issued date.</mat-error>
+
                                     </mat-form-field>
                                   </div>
 
@@ -1354,9 +1792,9 @@
                                           <mat-option *ngFor="let country of countryJson;"
                                             value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+traveller)">
-                                          Please enter passport issuing country</mat-error>
+                                          Select passport issuing country</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -1369,9 +1807,9 @@
                                           <mat-option *ngFor="let country of countryJson;"
                                             value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_pax_nationality'+traveller)">
-                                          Please enter nationality</mat-error>
+                                          Select nationality</mat-error>
                                       </mat-form-field>
                                     </div>
                                   </div>
@@ -1417,9 +1855,9 @@
                                                 <mat-option value="Mrs">Mrs</mat-option>
                                                 <mat-option value="Ms">Ms</mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','adult_title'+traveller)">
-                                                Please enter title</mat-error>
+                                                Select title</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -1428,16 +1866,16 @@
                                               <mat-label>First Name</mat-label>
                                               <input matInput placeholder="First Name" name="adult_first_name"
                                                 formControlName="adult_first_name{{traveller}}">
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">
                                                 Please enter first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','adult_first_name'+traveller)">
                                                 Please enter valid first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','adult_first_name'+traveller)">
                                                 Please enter atleast 2 character</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller)">
                                                 Please enter maximum 26 character</mat-error>
                                             </mat-form-field>
@@ -1448,16 +1886,16 @@
                                               <mat-label>Last Name</mat-label>
                                               <input matInput placeholder="Last Name"
                                                 formControlName="adult_last_name{{traveller}}">
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">
                                                 Please enter first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','adult_last_name'+traveller)">
                                                 Please enter valid first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','adult_last_name'+traveller)">
                                                 Please enter atleast 2 character</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">
                                                 Please enter maximum 26 character</mat-error>
 
@@ -1471,12 +1909,17 @@
                                                   formControlName="adult_dob{{traveller}}" placeholder="Date Of Birth"
                                                   name="dateOfBirth">
 
-                                                <mat-error
+                                                <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">
                                                   Please enter dob</mat-error>
-                                                <mat-error
+                                                <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">
                                                   Adult age should be above 12 years.</mat-error>
+
+                                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
+                                                    Please Enter Valid DOB
+                                                  </mat-error>
+
                                               </mat-form-field>
 
                                             </div>
@@ -1485,7 +1928,7 @@
 
 
 
-                                          <div> <button class="btn btn-primary"
+                                          <div> <button class="btn btn-primary w-100"
                                               (click)="validateMliteForm('adult',traveller)">Add</button> </div>
                                         </div>
                                       </div>
@@ -1586,9 +2029,9 @@
                                         <mat-option value="Miss">Miss</mat-option>
                                       </mat-select>
 
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
-                                        Please enter title</mat-error>
+                                        Select title</mat-error>
 
                                     </mat-form-field>
                                   </div>
@@ -1598,16 +2041,16 @@
                                       <mat-label>First Name</mat-label>
                                       <input matInput placeholder="First Name" name="child_first_name"
                                         formControlName="child_first_name{{saveChildTravellerId[passenger.id]}}">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
                                         Please enter first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','child_first_name'+saveChildTravellerId[passenger.id])">
                                         Please enter valid first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','child_first_name'+saveChildTravellerId[passenger.id])">
                                         Please enter atleast 2 character</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','child_first_name'+saveChildTravellerId[passenger.id])">
                                         Please enter maximum 26 character</mat-error>
                                     </mat-form-field>
@@ -1617,16 +2060,16 @@
                                       <mat-label>Last Name</mat-label>
                                       <input matInput placeholder="Last Name"
                                         formControlName="child_last_name{{saveChildTravellerId[passenger.id]}}">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','child_last_name'+saveChildTravellerId[passenger.id])">
                                         Please enter first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','child_last_name'+saveChildTravellerId[passenger.id])">
                                         Please enter valid first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','child_last_name'+saveChildTravellerId[passenger.id])">
                                         Please enter atleast 2 character</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','child_last_name'+saveChildTravellerId[passenger.id])">
                                         Please enter maximum 26 character</mat-error>
                                     </mat-form-field>
@@ -1639,10 +2082,10 @@
                                           formControlName="child_dob{{saveChildTravellerId[passenger.id]}}"
                                           placeholder="Date Of Birth" name="dateOfBirth">
 
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
                                           Please enter dob</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">
                                           Child age should be between 2 - 12 years.</mat-error>
                                       </mat-form-field>
@@ -1657,9 +2100,21 @@
                                           <input matInput
                                             formControlName="child_passport_num{{saveChildTravellerId[passenger.id]}}"
                                             placeholder="Passport Number" name="PassportNumber">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                             Please enter passport number</mat-error>
+
+                                      <mat-error class="error-flight-checkout"
+                                      *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                      Please enter atleast 8 digits.</mat-error>
+
+                                      <mat-error class="error-flight-checkout"
+                                      *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                      Cannot exceed more than 12 characters.</mat-error>
+
+                                      <mat-error class="error-flight-checkout"
+                                      *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                      This field must contain only letters</mat-error>
                                         </mat-form-field>
 
                                       </div>
@@ -1670,9 +2125,13 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="child_passport_expiry_date{{saveChildTravellerId[passenger.id]}}"
                                             placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
                                             Please enter passport issue date</mat-error>
+
+                                            <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                         </mat-form-field>
                                       </div>
 
@@ -1683,9 +2142,11 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="child_passport_issue_date{{saveChildTravellerId[passenger.id]}}"
                                             placeholder="Passport Issue Date" name="PassportIssueDate">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
                                             Please enter passport issue date</mat-error>
+                                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                              Please enter a valid issued date.</mat-error>
                                         </mat-form-field>
                                       </div>
 
@@ -1699,9 +2160,9 @@
                                               <mat-option *ngFor="let country of countryJson;"
                                                 value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                             </mat-select>
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
-                                              Please enter passport issuing country</mat-error>
+                                              Select passport issuing country</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1715,9 +2176,9 @@
                                               <mat-option *ngFor="let country of countryJson;"
                                                 value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                             </mat-select>
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
-                                              Please enter nationality</mat-error>
+                                              Select nationality</mat-error>
                                           </mat-form-field>
                                         </div>
                                       </div>
@@ -1769,9 +2230,9 @@
                                           <mat-option value="Miss">Miss</mat-option>
                                         </mat-select>
 
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
-                                          Please enter title</mat-error>
+                                          Select title</mat-error>
 
                                       </mat-form-field>
                                     </div>
@@ -1781,16 +2242,16 @@
                                         <mat-label>First Name</mat-label>
                                         <input matInput placeholder="First Name" name="child_first_name"
                                           formControlName="child_first_name{{saveChildTravellerId[passenger.id]}}">
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','child_first_name'+saveChildTravellerId[passenger.id])">
                                           Please enter valid first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','child_first_name'+saveChildTravellerId[passenger.id])">
                                           Please enter atleast 2 character</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','child_first_name'+saveChildTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
                                       </mat-form-field>
@@ -1800,16 +2261,16 @@
                                         <mat-label>Last Name</mat-label>
                                         <input matInput placeholder="Last Name"
                                           formControlName="child_last_name{{saveChildTravellerId[passenger.id]}}">
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_last_name'+saveChildTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','child_last_name'+saveChildTravellerId[passenger.id])">
                                           Please enter valid first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','child_last_name'+saveChildTravellerId[passenger.id])">
                                           Please enter atleast 2 character</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','child_last_name'+saveChildTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
                                       </mat-form-field>
@@ -1822,10 +2283,10 @@
                                             formControlName="child_dob{{saveChildTravellerId[passenger.id]}}"
                                             placeholder="Date Of Birth" name="dateOfBirth">
 
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">
                                             Child age should be between 2 - 12 years.</mat-error>
                                         </mat-form-field>
@@ -1839,9 +2300,22 @@
                                             <input matInput
                                               formControlName="child_passport_num{{saveChildTravellerId[passenger.id]}}"
                                               placeholder="Passport Number" name="PassportNumber">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
+
+                                            <mat-error class="error-flight-checkout"
+                                            *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                            Please enter atleast 8 digits.</mat-error>
+
+                                            <mat-error class="error-flight-checkout"
+                                            *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                            Cannot exceed more than 12 characters.</mat-error>
+
+                                            <mat-error class="error-flight-checkout"
+                                            *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                            This field must contain only letters</mat-error>
+
                                           </mat-form-field>
 
                                         </div>
@@ -1852,9 +2326,12 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="child_passport_expiry_date{{saveChildTravellerId[passenger.id]}}"
                                               placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1865,9 +2342,11 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="child_passport_issue_date{{saveChildTravellerId[passenger.id]}}"
                                               placeholder="Passport Issue Date" name="PassportIssueDate">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                                Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -1881,9 +2360,9 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
-                                                Please enter passport issuing country</mat-error>
+                                                Select passport issuing country</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -1897,9 +2376,9 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
-                                                Please enter nationality</mat-error>
+                                                Select nationality</mat-error>
                                             </mat-form-field>
                                           </div>
                                         </div>
@@ -1944,8 +2423,7 @@
                                     <mat-option value="Mstr"> Mstr </mat-option>
                                     <mat-option value="Miss">Miss</mat-option>
                                   </mat-select>
-                                  <mat-error *ngIf="passengerForm.hasError('required','child_title'+traveller)">Please
-                                    enter title</mat-error>
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','child_title'+traveller)">Select title</mat-error>
                                 </mat-form-field>
                               </div>
 
@@ -1954,13 +2432,13 @@
                                   <mat-label>First Name</mat-label>
                                   <input matInput placeholder="First Name" name="child_first_name"
                                     formControlName="child_first_name{{traveller}}">
-                                  <mat-error *ngIf="passengerForm.hasError('required','child_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','child_first_name'+traveller)">
                                     Please enter first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('pattern','child_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','child_first_name'+traveller)">
                                     Please enter valid first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('minlength','child_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','child_first_name'+traveller)">
                                     Please enter atleast 2 character</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('maxlength','child_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','child_first_name'+traveller)">
                                     Please enter maximum 26 character</mat-error>
                                 </mat-form-field>
 
@@ -1970,13 +2448,13 @@
                                   <mat-label>Last Name</mat-label>
                                   <input matInput placeholder="Last Name"
                                     formControlName="child_last_name{{traveller}}">
-                                  <mat-error *ngIf="passengerForm.hasError('required','child_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','child_last_name'+traveller)">
                                     Please enter first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('pattern','child_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','child_last_name'+traveller)">
                                     Please enter valid first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('minlength','child_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','child_last_name'+traveller)">
                                     Please enter atleast 2 character</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('maxlength','child_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','child_last_name'+traveller)">
                                     Please enter maximum 26 character</mat-error>
 
                                 </mat-form-field>
@@ -1989,9 +2467,9 @@
                                       formControlName="child_dob{{traveller}}" placeholder="Date Of Birth"
                                       name="dateOfBirth">
 
-                                    <mat-error *ngIf="passengerForm.hasError('required','child_dob'+traveller)">Please
+                                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','child_dob'+traveller)">Please
                                       enter dob</mat-error>
-                                    <mat-error
+                                    <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('validateChildAge','child_dob'+traveller)">Child
                                       age should be between 2 - 12 years.</mat-error>
                                   </mat-form-field>
@@ -2004,9 +2482,21 @@
                                       <mat-label>Passport Number</mat-label>
                                       <input matInput formControlName="child_passport_num{{traveller}}"
                                         placeholder="Passport Number" name="PassportNumber">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
                                         Please enter passport number</mat-error>
+
+                                    <mat-error class="error-flight-checkout"
+                                    *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
+                                    Please enter atleast 8 digits.</mat-error>
+
+                                    <mat-error class="error-flight-checkout"
+                                    *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
+                                    Cannot exceed more than 12 characters.</mat-error>
+
+                                    <mat-error class="error-flight-checkout"
+                                    *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
+                                    This field must contain only letters</mat-error>
                                     </mat-form-field>
 
                                   </div>
@@ -2017,9 +2507,12 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="child_passport_expiry_date{{traveller}}"
                                         placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+traveller)">
                                         Please enter passport issue date</mat-error>
+                                        <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                     </mat-form-field>
                                   </div>
 
@@ -2030,9 +2523,11 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="child_passport_issue_date{{traveller}}"
                                         placeholder="Passport Issue Date" name="PassportIssueDate">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
                                         Please enter passport issue date</mat-error>
+                                        <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+traveller)">
+                                          Please enter a valid issued date.</mat-error>
                                     </mat-form-field>
                                   </div>
 
@@ -2045,9 +2540,9 @@
                                           <mat-option *ngFor="let country of countryJson;"
                                             value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+traveller)">
-                                          Please enter passport issuing country</mat-error>
+                                          Select passport issuing country</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -2060,9 +2555,9 @@
                                           <mat-option *ngFor="let country of countryJson;"
                                             value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_pax_nationality'+traveller)">
-                                          Please enter nationality</mat-error>
+                                          Select nationality</mat-error>
                                       </mat-form-field>
                                     </div>
                                   </div>
@@ -2107,9 +2602,9 @@
                                                 <mat-option value="Mstr"> Mstr </mat-option>
                                                 <mat-option value="Miss">Miss</mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','child_title'+traveller)">
-                                                Please enter title</mat-error>
+                                                Select title</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -2118,16 +2613,16 @@
                                               <mat-label>First Name</mat-label>
                                               <input matInput placeholder="First Name" name="child_first_name"
                                                 formControlName="child_first_name{{traveller}}">
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','child_first_name'+traveller)">
                                                 Please enter first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','child_first_name'+traveller)">
                                                 Please enter valid first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','child_first_name'+traveller)">
                                                 Please enter atleast 2 character</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','child_first_name'+traveller)">
                                                 Please enter maximum 26 character</mat-error>
                                             </mat-form-field>
@@ -2138,16 +2633,16 @@
                                               <mat-label>Last Name</mat-label>
                                               <input matInput placeholder="Last Name"
                                                 formControlName="child_last_name{{traveller}}">
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','child_last_name'+traveller)">
                                                 Please enter first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','child_last_name'+traveller)">
                                                 Please enter valid first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','child_last_name'+traveller)">
                                                 Please enter atleast 2 character</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','child_last_name'+traveller)">
                                                 Please enter maximum 26 character</mat-error>
 
@@ -2161,10 +2656,10 @@
                                                   formControlName="child_dob{{traveller}}" placeholder="Date Of Birth"
                                                   name="dateOfBirth">
 
-                                                <mat-error
+                                                <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('required','child_dob'+traveller)">
                                                   Please enter dob</mat-error>
-                                                <mat-error
+                                                <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('validateChildAge','child_dob'+traveller)">
                                                   Child age should be between 2 - 12 years.</mat-error>
                                               </mat-form-field>
@@ -2178,9 +2673,21 @@
                                                   <mat-label>Passport Number</mat-label>
                                                   <input matInput formControlName="child_passport_num{{traveller}}"
                                                     placeholder="Passport Number" name="PassportNumber">
-                                                  <mat-error
+                                                  <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
                                                     Please enter passport number</mat-error>
+
+                                                    <mat-error class="error-flight-checkout"
+                                                    *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
+                                                    Please enter atleast 8 digits.</mat-error>
+
+                                                    <mat-error class="error-flight-checkout"
+                                                    *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
+                                                    Cannot exceed more than 12 characters.</mat-error>
+
+                                                    <mat-error class="error-flight-checkout"
+                                                    *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
+                                                    This field must contain only letters</mat-error>
                                                 </mat-form-field>
 
                                               </div>
@@ -2191,9 +2698,12 @@
                                                   <input matInput [inputMask]="dateInputMask"
                                                     formControlName="child_passport_expiry_date{{traveller}}"
                                                     placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                                  <mat-error
+                                                  <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+traveller)">
                                                     Please enter passport issue date</mat-error>
+                                                    <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                                 </mat-form-field>
                                               </div>
 
@@ -2204,9 +2714,12 @@
                                                   <input matInput [inputMask]="dateInputMask"
                                                     formControlName="child_passport_issue_date{{traveller}}"
                                                     placeholder="Passport Issue Date" name="PassportIssueDate">
-                                                  <mat-error
+                                                  <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
                                                     Please enter passport issue date</mat-error>
+
+                                                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+traveller)">
+                                                      Please enter a valid issued date.</mat-error>
                                                 </mat-form-field>
                                               </div>
 
@@ -2221,9 +2734,9 @@
                                                         value="{{country.countryCode}}"> {{country.country}}
                                                       </mat-option>
                                                     </mat-select>
-                                                    <mat-error
+                                                    <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+traveller)">
-                                                      Please enter passport issuing country</mat-error>
+                                                      Select passport issuing country</mat-error>
                                                   </mat-form-field>
                                                 </div>
 
@@ -2237,16 +2750,16 @@
                                                         value="{{country.countryCode}}"> {{country.country}}
                                                       </mat-option>
                                                     </mat-select>
-                                                    <mat-error
+                                                    <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('required','child_pax_nationality'+traveller)">
-                                                      Please enter nationality</mat-error>
+                                                      Select nationality</mat-error>
                                                   </mat-form-field>
                                                 </div>
                                               </div>
 
                                             </div>
                                           </ng-container>
-                                          <div> <button class="btn btn-primary"
+                                          <div> <button class="btn btn-primary w-100"
                                               (click)="validateMliteForm('child',traveller)">Add</button> </div>
                                         </div>
                                       </div>
@@ -2351,9 +2864,9 @@
                                         <mat-option value="Miss">Miss</mat-option>
                                       </mat-select>
 
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">
-                                        Please enter title</mat-error>
+                                        Select title</mat-error>
 
                                     </mat-form-field>
                                   </div>
@@ -2363,16 +2876,16 @@
                                       <mat-label>First Name</mat-label>
                                       <input matInput placeholder="First Name" name="infant_first_name"
                                         formControlName="infant_first_name{{saveInfantTravellerId[passenger.id]}}">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter valid first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter atleast 2 character</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter maximum 26 character</mat-error>
                                     </mat-form-field>
@@ -2382,16 +2895,16 @@
                                       <mat-label>Last Name</mat-label>
                                       <input matInput placeholder="Last Name"
                                         formControlName="infant_last_name{{saveInfantTravellerId[passenger.id]}}">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter valid first name</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter atleast 2 character</mat-error>
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                         Please enter maximum 26 character</mat-error>
                                     </mat-form-field>
@@ -2404,10 +2917,10 @@
                                           formControlName="infant_dob{{saveInfantTravellerId[passenger.id]}}"
                                           placeholder="Date Of Birth" name="dateOfBirth">
 
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">
                                           Please enter dob</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+saveChildTravellerId[passenger.id])">
                                           Infant age should be between 0 - 2 years.</mat-error>
                                       </mat-form-field>
@@ -2422,9 +2935,22 @@
                                           <input matInput
                                             formControlName="infant_passport_num{{saveInfantTravellerId[passenger.id]}}"
                                             placeholder="Passport Number" name="PassportNumber">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                             Please enter passport number</mat-error>
+
+                                        <mat-error class="error-flight-checkout"
+                                        *ngIf="passengerForm.hasError('minlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                        Please enter atleast 8 digits.</mat-error>
+
+                                        <mat-error class="error-flight-checkout"
+                                        *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                        Cannot exceed more than 12 characters.</mat-error>
+
+                                        <mat-error class="error-flight-checkout"
+                                        *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                        This field must contain only letters</mat-error>
+
                                         </mat-form-field>
 
                                       </div>
@@ -2435,9 +2961,12 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="infant_passport_expiry_date{{saveInfantTravellerId[passenger.id]}}"
                                             placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                             Please enter passport issue date</mat-error>
+                                            <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                         </mat-form-field>
                                       </div>
 
@@ -2448,9 +2977,11 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="infant_passport_issue_date{{saveInfantTravellerId[passenger.id]}}"
                                             placeholder="Passport Issue Date" name="PassportIssueDate">
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
                                             Please enter passport issue date</mat-error>
+                                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                              Please enter a valid issued date.</mat-error>
                                         </mat-form-field>
                                       </div>
 
@@ -2464,9 +2995,9 @@
                                               <mat-option *ngFor="let country of countryJson;"
                                                 value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                             </mat-select>
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+saveInfantTravellerId[passenger.id])">
-                                              Please enter passport issuing country</mat-error>
+                                              Select passport issuing country</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -2480,9 +3011,9 @@
                                               <mat-option *ngFor="let country of countryJson;"
                                                 value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                             </mat-select>
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','infant_pax_nationality'+saveInfantTravellerId[passenger.id])">
-                                              Please enter nationality</mat-error>
+                                              Select nationality</mat-error>
                                           </mat-form-field>
                                         </div>
                                       </div>
@@ -2533,9 +3064,9 @@
                                           <mat-option value="Miss">Miss</mat-option>
                                         </mat-select>
 
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">
-                                          Please enter title</mat-error>
+                                          Select title</mat-error>
 
                                       </mat-form-field>
                                     </div>
@@ -2545,16 +3076,16 @@
                                         <mat-label>First Name</mat-label>
                                         <input matInput placeholder="First Name" name="infant_first_name"
                                           formControlName="infant_first_name{{saveInfantTravellerId[passenger.id]}}">
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter valid first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter atleast 2 character</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
                                       </mat-form-field>
@@ -2564,16 +3095,16 @@
                                         <mat-label>Last Name</mat-label>
                                         <input matInput placeholder="Last Name"
                                           formControlName="infant_last_name{{saveInfantTravellerId[passenger.id]}}">
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter valid first name</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter atleast 2 character</mat-error>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
                                       </mat-form-field>
@@ -2586,10 +3117,10 @@
                                             formControlName="infant_dob{{saveInfantTravellerId[passenger.id]}}"
                                             placeholder="Date Of Birth" name="dateOfBirth">
 
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
-                                          <mat-error
+                                          <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+saveChildTravellerId[passenger.id])">
                                             Infant age should be between 0 - 2 years.</mat-error>
                                         </mat-form-field>
@@ -2604,9 +3135,21 @@
                                             <input matInput
                                               formControlName="infant_passport_num{{saveInfantTravellerId[passenger.id]}}"
                                               placeholder="Passport Number" name="PassportNumber">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
+
+                                              <mat-error class="error-flight-checkout"
+                                              *ngIf="passengerForm.hasError('minlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                              Please enter atleast 8 digits.</mat-error>
+
+                                              <mat-error class="error-flight-checkout"
+                                              *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                              Cannot exceed more than 12 characters.</mat-error>
+
+                                              <mat-error class="error-flight-checkout"
+                                              *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
+                                              This field must contain only letters</mat-error>
                                           </mat-form-field>
 
                                         </div>
@@ -2617,9 +3160,12 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="infant_passport_expiry_date{{saveInfantTravellerId[passenger.id]}}"
                                               placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
+Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -2630,9 +3176,11 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="infant_passport_issue_date{{saveInfantTravellerId[passenger.id]}}"
                                               placeholder="Passport Issue Date" name="PassportIssueDate">
-                                            <mat-error
+                                            <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
+                                              <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                                Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
 
@@ -2646,9 +3194,9 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+saveInfantTravellerId[passenger.id])">
-                                                Please enter passport issuing country</mat-error>
+                                                Select passport issuing country</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -2662,9 +3210,9 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','infant_pax_nationality'+saveInfantTravellerId[passenger.id])">
-                                                Please enter nationality</mat-error>
+                                                Select nationality</mat-error>
                                             </mat-form-field>
                                           </div>
                                         </div>
@@ -2709,8 +3257,8 @@
                                     <mat-option value="Mstr"> Mstr </mat-option>
                                     <mat-option value="Miss">Miss</mat-option>
                                   </mat-select>
-                                  <mat-error *ngIf="passengerForm.hasError('required','infant_title'+traveller)">
-                                    Please enter title</mat-error>
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','infant_title'+traveller)">
+                                    Select title</mat-error>
                                 </mat-form-field>
                               </div>
 
@@ -2719,14 +3267,14 @@
                                   <mat-label>First Name</mat-label>
                                   <input matInput placeholder="First Name" name="infant_first_name"
                                     formControlName="infant_first_name{{traveller}}">
-                                  <mat-error *ngIf="passengerForm.hasError('required','infant_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','infant_first_name'+traveller)">
                                     Please enter first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('pattern','infant_first_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','infant_first_name'+traveller)">
                                     Please enter valid first name</mat-error>
-                                  <mat-error
+                                  <mat-error class="error-flight-checkout"
                                     *ngIf="passengerForm.hasError('minlength','infant_first_name'+traveller)">Please
                                     enter atleast 2 character</mat-error>
-                                  <mat-error
+                                  <mat-error class="error-flight-checkout"
                                     *ngIf="passengerForm.hasError('maxlength','infant_first_name'+traveller)">Please
                                     enter maximum 26 character</mat-error>
                                 </mat-form-field>
@@ -2737,13 +3285,13 @@
                                   <mat-label>Last Name</mat-label>
                                   <input matInput placeholder="Last Name"
                                     formControlName="infant_last_name{{traveller}}">
-                                  <mat-error *ngIf="passengerForm.hasError('required','infant_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','infant_last_name'+traveller)">
                                     Please enter first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('pattern','infant_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','infant_last_name'+traveller)">
                                     Please enter valid first name</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('minlength','infant_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','infant_last_name'+traveller)">
                                     Please enter atleast 2 character</mat-error>
-                                  <mat-error *ngIf="passengerForm.hasError('maxlength','infant_last_name'+traveller)">
+                                  <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','infant_last_name'+traveller)">
                                     Please enter maximum 26 character</mat-error>
 
                                 </mat-form-field>
@@ -2756,9 +3304,9 @@
                                       formControlName="infant_dob{{traveller}}" placeholder="Date Of Birth"
                                       name="dateOfBirth">
 
-                                    <mat-error *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">
+                                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">
                                       Please enter dob</mat-error>
-                                    <mat-error
+                                    <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+traveller)">
                                       Infant age should be between 0 - 2 years.</mat-error>
                                   </mat-form-field>
@@ -2771,9 +3319,21 @@
                                       <mat-label>Passport Number</mat-label>
                                       <input matInput formControlName="infant_passport_num{{traveller}}"
                                         placeholder="Passport Number" name="PassportNumber">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">
                                         Please enter passport number</mat-error>
+
+                                    <mat-error class="error-flight-checkout"
+                                    *ngIf="passengerForm.hasError('minlength','infant_passport_num'+traveller)">
+                                    Please enter atleast 8 digits.</mat-error>
+
+                                    <mat-error class="error-flight-checkout"
+                                    *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+traveller)">
+                                    Cannot exceed more than 12 characters.</mat-error>
+
+                                    <mat-error class="error-flight-checkout"
+                                    *ngIf="passengerForm.hasError('pattern','infant_passport_num'+traveller)">
+                                    This field must contain only letters</mat-error>
                                     </mat-form-field>
 
                                   </div>
@@ -2784,9 +3344,12 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="infant_passport_expiry_date{{traveller}}"
                                         placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+traveller)">
                                         Please enter passport issue date</mat-error>
+                                        <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                     </mat-form-field>
                                   </div>
 
@@ -2797,9 +3360,11 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="infant_passport_issue_date{{traveller}}"
                                         placeholder="Passport Issue Date" name="PassportIssueDate">
-                                      <mat-error
+                                      <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+traveller)">
                                         Please enter passport issue date</mat-error>
+                                        <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+traveller)">
+                                          Please enter a valid issued date.</mat-error>
                                     </mat-form-field>
                                   </div>
 
@@ -2812,9 +3377,9 @@
                                           <mat-option *ngFor="let country of countryJson;"
                                             value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+traveller)">
-                                          Please enter passport issuing country</mat-error>
+                                          Select passport issuing country</mat-error>
                                       </mat-form-field>
                                     </div>
 
@@ -2827,9 +3392,9 @@
                                           <mat-option *ngFor="let country of countryJson;"
                                             value="{{country.countryCode}}"> {{country.country}} </mat-option>
                                         </mat-select>
-                                        <mat-error
+                                        <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_pax_nationality'+traveller)">
-                                          Please enter nationality</mat-error>
+                                          Select nationality</mat-error>
                                       </mat-form-field>
                                     </div>
                                   </div>
@@ -2873,9 +3438,9 @@
                                                 <mat-option value="Mstr"> Mstr </mat-option>
                                                 <mat-option value="Miss">Miss</mat-option>
                                               </mat-select>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','infant_title'+traveller)">
-                                                Please enter title</mat-error>
+                                                Select title</mat-error>
                                             </mat-form-field>
                                           </div>
 
@@ -2884,16 +3449,16 @@
                                               <mat-label>First Name</mat-label>
                                               <input matInput placeholder="First Name" name="infant_first_name"
                                                 formControlName="infant_first_name{{traveller}}">
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','infant_first_name'+traveller)">
                                                 Please enter first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','infant_first_name'+traveller)">
                                                 Please enter valid first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','infant_first_name'+traveller)">
                                                 Please enter atleast 2 character</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','infant_first_name'+traveller)">
                                                 Please enter maximum 26 character</mat-error>
                                             </mat-form-field>
@@ -2904,16 +3469,16 @@
                                               <mat-label>Last Name</mat-label>
                                               <input matInput placeholder="Last Name"
                                                 formControlName="infant_last_name{{traveller}}">
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','infant_last_name'+traveller)">
                                                 Please enter first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','infant_last_name'+traveller)">
                                                 Please enter valid first name</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','infant_last_name'+traveller)">
                                                 Please enter atleast 2 character</mat-error>
-                                              <mat-error
+                                              <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','infant_last_name'+traveller)">
                                                 Please enter maximum 26 character</mat-error>
 
@@ -2927,10 +3492,10 @@
                                                   formControlName="infant_dob{{traveller}}"
                                                   placeholder="Date Of Birth" name="dateOfBirth">
 
-                                                <mat-error
+                                                <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">
                                                   Please enter dob</mat-error>
-                                                <mat-error
+                                                <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+traveller)">
                                                   Infant age should be between 0 - 2 years.</mat-error>
                                               </mat-form-field>
@@ -2944,9 +3509,21 @@
                                                   <mat-label>Passport Number</mat-label>
                                                   <input matInput formControlName="infant_passport_num{{traveller}}"
                                                     placeholder="Passport Number" name="PassportNumber">
-                                                  <mat-error
+                                                  <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">
                                                     Please enter passport number</mat-error>
+
+                                      <mat-error class="error-flight-checkout"
+                                      *ngIf="passengerForm.hasError('minlength','infant_passport_num'+traveller)">
+                                      Please enter atleast 8 digits.</mat-error>
+
+                                      <mat-error class="error-flight-checkout"
+                                      *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+traveller)">
+                                      Cannot exceed more than 12 characters.</mat-error>
+
+                                      <mat-error class="error-flight-checkout"
+                                      *ngIf="passengerForm.hasError('pattern','infant_passport_num'+traveller)">
+                                      This field must contain only letters</mat-error>
                                                 </mat-form-field>
 
                                               </div>
@@ -2957,9 +3534,12 @@
                                                   <input matInput [inputMask]="dateInputMask"
                                                     formControlName="infant_passport_expiry_date{{traveller}}"
                                                     placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                                  <mat-error
+                                                  <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+traveller)">
                                                     Please enter passport issue date</mat-error>
+                                                    <mat-error class="error-flight-checkout"
+*ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+traveller)">
+Please enter a valid expiry date</mat-error>
                                                 </mat-form-field>
                                               </div>
 
@@ -2970,9 +3550,11 @@
                                                   <input matInput [inputMask]="dateInputMask"
                                                     formControlName="infant_passport_issue_date{{traveller}}"
                                                     placeholder="Passport Issue Date" name="PassportIssueDate">
-                                                  <mat-error
+                                                  <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+traveller)">
                                                     Please enter passport issue date</mat-error>
+                                                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+traveller)">
+                                                      Please enter a valid issued date.</mat-error>
                                                 </mat-form-field>
                                               </div>
 
@@ -2987,9 +3569,9 @@
                                                         value="{{country.countryCode}}"> {{country.country}}
                                                       </mat-option>
                                                     </mat-select>
-                                                    <mat-error
+                                                    <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+traveller)">
-                                                      Please enter passport issuing country</mat-error>
+                                                      Select passport issuing country</mat-error>
                                                   </mat-form-field>
                                                 </div>
 
@@ -3003,9 +3585,9 @@
                                                         value="{{country.countryCode}}"> {{country.country}}
                                                       </mat-option>
                                                     </mat-select>
-                                                    <mat-error
+                                                    <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('required','infant_pax_nationality'+traveller)">
-                                                      Please enter nationality</mat-error>
+                                                      Select nationality</mat-error>
                                                   </mat-form-field>
                                                 </div>
                                               </div>
@@ -3013,7 +3595,7 @@
                                             </div>
                                           </ng-container>
 
-                                          <div> <button class="btn btn-primary"
+                                          <div> <button class="btn btn-primary w-100"
                                               (click)="validateMliteForm('infant',traveller)">Add</button> </div>
                                         </div>
                                       </div>
@@ -3107,7 +3689,7 @@
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="_@_._" type="text" formControlName="passengerEmail"
                       name="passengerEmail" id="passengerEmail" [inputMask]="emailInputMask">
-                    <mat-error *ngIf="passengerForm.hasError('required','passengerEmail')">Please enter email address
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','passengerEmail')">Please enter email address
                     </mat-error>
                   </mat-form-field>
 
@@ -3115,13 +3697,14 @@
                 <div class="col-xl-6 col-lg-6 col-md-6">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Mobile Number</mat-label>
+
                     <input matInput placeholder="Mobile Number" formControlName="passengerMobile"
                       name="passengerMobile" id="passengerMobile" (keypress)="AvoidSpace($event)">
-                    <mat-error *ngIf="passengerForm.hasError('required','passengerMobile')">>Please enter mobile
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','passengerMobile')">>Please enter mobile
                       number.</mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('minlength','passengerMobile')">>Please enter min 10
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','passengerMobile')">>Please enter min 10
                       Digits.</mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('pattern','passengerMobile')">>Please enter a valid ten
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','passengerMobile')">>Please enter a valid ten
                       digits mobile number.</mat-error>
                   </mat-form-field>
                 </div>
@@ -3218,9 +3801,9 @@
                       minlength="15" maxlength="15" autocomplete="off" (keypress)="AvoidSpace($event)"
                       (keypress)="specialcharInputAddress($event)" (keyup)="convertToUpperCase($event);">
 
-                    <mat-error *ngIf="passengerForm.hasError('required','gstNumber')">Please enter gst number.
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstNumber')">Please enter gst number.
                     </mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('pattern','gstNumber')">Please enter valid gst number.
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstNumber')">Please enter valid gst number.
                     </mat-error>
                   </mat-form-field>
 
@@ -3235,9 +3818,9 @@
                       name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off"
                       (keypress)="specialcharInputAddress($event)">
 
-                    <mat-error *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business
                       name.</mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -3246,9 +3829,9 @@
                     <mat-label>Business Address</mat-label>
                     <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress"
                       id="gstAddress" maxlength="100" (keypress)="specialcharInputAddress($event)" autocomplete="off">
-                    <mat-error *ngIf="passengerForm.hasError('required','gstAddress')">Please enter business
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstAddress')">Please enter business
                       address.</mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('pattern','gstAddress')">Please enter valid address.No
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstAddress')">Please enter valid address.No
                       special characters allowed except / - ,</mat-error>
                   </mat-form-field>
                 </div>
@@ -3258,9 +3841,9 @@
                     <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode"
                       id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)"
                       (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
-                    <mat-error *ngIf="passengerForm.hasError('required','gstPincode')">Please enter pincode.
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstPincode')">Please enter pincode.
                     </mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('minlength','gstPincode')">Please enter 6 digits [0-9]
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','gstPincode')">Please enter 6 digits [0-9]
                       pincode.</mat-error>
                   </mat-form-field>
                 </div>
@@ -3271,9 +3854,9 @@
                     <mat-label>City / Town</mat-label>
                     <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"
                       autocomplete="nope">
-                    <mat-error *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.
                     </mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('pattern','gstCity')">Please enter valid city
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstCity')">Please enter valid city
                       name. </mat-error>
                   </mat-form-field>
                 </div>
@@ -3284,9 +3867,9 @@
                     <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
                       (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
                       readonly="stateCheck" value={{state}}>
-                    <mat-error *ngIf="passengerForm.hasError('required','gstState')">Please enter state name.
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstState')">Please enter state name.
                     </mat-error>
-                    <mat-error *ngIf="passengerForm.hasError('pattern','gstState')">Please enter valid state
+                    <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstState')">Please enter valid state
                       name.</mat-error>
                   </mat-form-field>
                 </div>
@@ -4185,8 +4768,8 @@
                 </div>
                 <div>
                   <div>
-                    <p class="duration_flight">{{totalOnwardDuration + dateOnwardHour| durationTime}}</p>
-                    <p class="date_text">{{flightOnwardDetails[0].stops}} Stop</p>
+                    <p class="duration_flight">{{totalOnwardDuration | durationTime}}</p>
+                    <p class="date_text">{{flightOnwardDetails[0].stops}} Stopddddddddd</p>
                   </div>
                 </div>
                 <div class="booking-inner-title-right">
@@ -4246,7 +4829,7 @@
                   </div>
                   <div>
                     <div>
-                      <p class="duration_flight">{{totalOnwardDuration + dateOnwardHour| durationTime}}</p>
+                      <p class="duration_flight">{{totalOnwardDuration | durationTime}}</p>
                       <p class="date_text">{{flightOnwardDetails[0].stops}} Stop</p>
                     </div>
                   </div>
@@ -4261,7 +4844,7 @@
               <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
-                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px"
+                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif"
                       alt="{{flights.airline}}" class="flight-image mr-10">
                     <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                     <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
@@ -4333,8 +4916,8 @@
                     *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                   <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                 </div>
-                <div class="change-planes" *ngIf="dateOnwardHour && airportsNameJson && flightOnwardDetails[i+1]">
-                  <h6>Change of planes・{{dateOnwardHour | durationTime}} Layover in
+                <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                  <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in
                     {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                 </div>
               </div>
@@ -4363,11 +4946,9 @@
                 <div class="booking-inner-title-left" *ngIf="searchData">
                   <div class="head_info">
                     <div class="float-start">
-                      <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                        class="mx-2" alt="">
+                      <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"        class="flight-image mx-2" alt="">
                       <img *ngIf="!return_airline_unique"
-                        src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif" width="40px"
-                        class="mx-2" alt="">
+                        src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"        class="flight-image mx-2" alt="">
                     </div>
                     <h6>
                       <span class="city_text">{{searchData.toCity}}</span>
@@ -4404,7 +4985,7 @@
                 </div>
                 <div>
                   <div>
-                    <p class="duration_flight">{{totalReturnDuration + dateReturnHour| durationTime}}</p>
+                    <p class="duration_flight">{{totalReturnDuration | durationTime}}</p>
                     <p class="date_text">{{flightReturnDetails[0].stops}} Stop</p>
                   </div>
                 </div>
@@ -4421,11 +5002,9 @@
 
                   <div class="head_info mb-20">
                     <div class="float-start">
-                      <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" width="40px"
-                        class="mx-2" alt="">
+                      <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"                  class="flight-image mx-2" alt="">
                       <img *ngIf="!return_airline_unique"
-                        src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif" width="40px"
-                        class="mx-2" alt="">
+                        src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"                class="flight-image mx-2" alt="">
                     </div>
                     <h6>
                       <span class="city_text">{{searchData.fromCity}}</span>
@@ -4467,7 +5046,7 @@
                   </div>
                   <div>
                     <div>
-                      <p class="duration_flight">{{totalReturndDuration + dateReturnHour| durationTime}}</p>
+                      <p class="duration_flight">{{totalReturndDuration | durationTime}}</p>
                       <p class="date_text">{{flightReturnDetails[0].stops}} Stop</p>
                     </div>
                   </div>
@@ -4482,8 +5061,7 @@
               <div class="Flight-One flight_detail_review" *ngFor="let flights of flightReturnDetails;let i = index">
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
-                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" width="30px"
-                      alt="{{flights.airline}}" class="flight-image mr-10">
+                    <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif"               alt="{{flights.airline}}" class="flight-image mr-10">
                     <span class="fw_7  mr-10">{{flights.airlineName}}</span>
                     <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
                   </div>
@@ -4554,8 +5132,8 @@
                     *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                   <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                 </div>
-                <div class="change-planes" *ngIf="dateReturnHour && airportsNameJson && flightReturnDetails[i+1]">
-                  <h6>Change of planes・{{dateReturnHour | durationTime}} Layover in
+                <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
+                  <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in
                     {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                 </div>
               </div>
@@ -4575,7 +5153,6 @@
 
           </div>
           <!--Return-->
-
 
 
 
@@ -4999,11 +5576,10 @@
 
                   </li>
 
-                  <li class="fare-list-item" *ngIf="partnerConvFee>0.00">
+                  <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3" >
                     <div class="fare-list-box">
                       <div class="fare-list-left">
                         <p>
-
                           {{selectedOnwardVendor.partnerName}} Convenience Fee
                         </p>
                       </div>
@@ -5060,10 +5636,15 @@
                       <div class="fare-list-left">
                         <h6 class="fw_7">Grand Total</h6>
                       </div>
-                      <div class="fare-list-right">
+                      <div class="fare-list-right" *ngIf="steps > 3">
                         <h6 class="fw_7">₹ {{totalCollectibleAmount|number}}</h6>
                         <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
                           {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                      </div>
+                           <div class="fare-list-right" *ngIf="steps < 4">
+                        <h6 class="fw_7">₹ {{(totalCollectibleAmount-partnerConvFee)|number}}</h6>
+                        <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI @
+                          {{calculateEMI((totalCollectibleAmount-partnerConvFee))|number: '.2'}}/month</p>
                       </div>
                     </div>
                   </li>
@@ -5083,7 +5664,7 @@
             </div>
           </div>
           <div *ngIf="steps==5 && !isMobile">
-            <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
+            <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
               [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
               [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
               (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
@@ -5107,8 +5688,11 @@
           <div class="bookingprocess-title text-center mb-30">
             <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
           </div>
-          <div class="bookingprocess-content">
-            <div class="bookingprocess-flight">
+          
+           <ng-container *ngIf="flightSessionData.travel_type !='M'" >
+          <div class="bookingprocess-content" >
+            
+            <div class="bookingprocess-flight" >
               <h6>{{searchData.fromCity}},{{searchData.fromContry}} ({{searchData.flightfrom}})</h6>
               <p class="mt-10">{{searchData.departure | date:'dd.MM.yyyy'}} - <span>{{searchData.adults}}
                   Adult,</span> <span *ngIf="searchData.child != '0'">{{searchData.child}} Child,</span> <span
@@ -5117,6 +5701,8 @@
               </p>
               <h6>{{searchData.toCity}},{{searchData.toContry}} ({{searchData.flightto}})</h6>
             </div>
+            
+            
             <div class="bookingprocess-processbar">
               <div class="progress">
                 <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
@@ -5125,7 +5711,37 @@
                 </div>
               </div>
             </div>
+            
+            
           </div>
+          </ng-container>  
+             <ng-container *ngIf="flightSessionData.travel_type =='M'" >
+         <div class="bookingprocess-content" *ngFor="let searchD of searchData;">
+            <div class="bookingprocess-flight" >
+              <h6>{{searchD.fromCity}},{{searchD.fromContry}} ({{searchD.flightfrom}})</h6>
+              <p class="mt-10">{{searchD.departure | date:'dd.MM.yyyy'}} - <span>{{searchD.adults}}
+                  Adult,</span> <span *ngIf="searchD.child != '0'">{{searchD.child}} Child,</span> <span
+                  *ngIf="searchD.infants != '0'">{{searchD.infants}} Infants,</span>
+                {{searchD.flightclass == "B" ? "Business":null || searchD.flightclass == "E" ? "Economy":null || searchD.flightclass == "F" ? "First":null  || searchD.flightclass == "P" ? "Premium":null}}
+              </p>
+              <h6>{{searchD.toCity}},{{searchD.toContry}} ({{searchD.flightto}})</h6>
+            </div>
+            
+            
+            <div class="bookingprocess-processbar">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
+                  aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                  <span class="title"> &nbsp; </span>
+                </div>
+              </div>
+            </div>
+        
+            
+          </div>
+           </ng-container>   
+        
+          
           <div class="refresh-text text-center pt-2">
             <p>Please don't click or refresh the page</p>
           </div>
@@ -5179,7 +5795,7 @@
             </div>
           </div>
           <div class="refresh-text text-center pt-2">
-            <button type="button" class="btn btn-primary" (click)="continueWithNewFare('')">Continue with New
+            <button type="button" class="btn btn-primary" (click)="continueWithNewFare(continueWithNewFareInterval)">Continue with New
               Fare</button>
           </div>
           <div class="refresh-text text-center pt-2">
@@ -5238,16 +5854,16 @@
 
 <!-- Mlite Apply Coupon Popup -->
 <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-  aria-hidden="true">
+  aria-hidden="true" *ngIf="steps==5 && isMobile">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Coupon Code</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" *ngIf="steps==5">
+      <div class="modal-body" >
 
-        <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
+        <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
           [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
           [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
           (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
@@ -5305,7 +5921,7 @@
               </div>
             </li>
 
-            <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 2 ">
+            <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3 ">
               <div class="fare-list-box">
                 <div class="fare-list-left">
                   <p>
@@ -5347,15 +5963,15 @@
             <li class="fare-list-item">
               <div class="fare-list-box pt-30">
                 <div class="fare-list-left">
-                  <h6 class="fw_7">Grand Total</h6>
+                  <h6 class="fw_7">Grand Total </h6>
                 </div>
-                <div class="fare-list-right" *ngIf="steps < 3">
+                <div class="fare-list-right" *ngIf="steps < 4">
                   <h6 class="fw_7">₹{{totalCollectibleAmount-partnerConvFee|number}}</h6>
-                  <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
+                  <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @
                     {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number: '.2'}}/month</p>
                 </div>
 
-                <div class="fare-list-right" *ngIf="steps > 2">
+                <div class="fare-list-right" *ngIf="steps > 3">
                   <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
                   <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
                     {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
