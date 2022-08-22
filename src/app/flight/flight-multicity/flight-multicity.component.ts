@@ -167,12 +167,13 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.isMobile = window.innerWidth < 991 ? true : false;
   }
   ngOnInit(): void {
+    this.route.url.subscribe(url =>{
     this.loader = true;
     this.isMobile = window.innerWidth < 991 ? true : false;
     this.getQueryParamData();
     this.flightSearch();
     this.getAirpotsNameList();
-
+    });
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -220,6 +221,11 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     debugger;
     this.loader = true;
     let searchObj = (this.searchData);
+    var element = document.getElementById('Sector-area');
+      if(element)
+      {
+        element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
+      }
     console.log(searchObj, "searchObj");
     this.sub = this._flightService.multicityList(searchObj).subscribe((res: any) => {
       console.log(res , "response");
@@ -244,6 +250,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
          this.getAirlinelist();
          this.loader = false;
          this.popularFilterFlightData();
+
       }
       else{
         this.loader = false;
