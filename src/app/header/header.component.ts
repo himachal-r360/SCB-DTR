@@ -23,15 +23,10 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
-<<<<<<< HEAD
-import {formatDate} from '@angular/common';
-
-
-=======
 import { FlightService } from '../common/flight.service';
 import { ConditionalExpr } from '@angular/compiler';
 import { Console } from 'console';
->>>>>>> ddf3288ee2b714452f863c107de30c37277905ba
+
 declare var $: any;
 declare var jQuery: any;
 declare const annyang: any;
@@ -161,17 +156,6 @@ export class HeaderComponent implements OnInit {
         cookieMessage;cookieAgree;cookieMessageType;cookieConsent:boolean=false;cookieExpiredDate: any = new Date();
         disclimerConsent:boolean=false;
         is_main:number=0;
-<<<<<<< HEAD
-        voiceActiveSectionDisabled: boolean = true;
-        voiceActiveSectionError: boolean = false;
-        voiceActiveSectionSuccess: boolean = false;
-        voiceActiveSectionListening: boolean = false;
-        voiceText: any;
-        parsed_date:any;
-        relative_to:any;
-        push_ids:any;
-        delta:any;
-=======
           voiceActiveSectionDisabled: boolean = true;
 	voiceActiveSectionError: boolean = false;
 	voiceActiveSectionSuccess: boolean = false;
@@ -183,7 +167,6 @@ export class HeaderComponent implements OnInit {
   cdnnotifyUrl:any;
     isMobile:boolean= false;
   delta:any;
->>>>>>> ddf3288ee2b714452f863c107de30c37277905ba
         payzrestriction:boolean=false;
         cardList:any=[];
         showcards:boolean=false;
@@ -771,34 +754,14 @@ closeCookieConsent(value){
   }
   
   ngOnInit() {
-<<<<<<< HEAD
-  
+
     this.mainRedirect=this.DOMAIN_SETTINGS['main_domain_url']+'/';
-=======
->>>>>>> ddf3288ee2b714452f863c107de30c37277905ba
+
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
     this.sub_domain_redirection_url=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/';
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
-<<<<<<< HEAD
-    
-      this.router.events.subscribe((event: any) => {
-        	if (event instanceof NavigationEnd) {
-        	
-        	 if (event.url.includes("train-traveller") || event.url.includes("bus/booking") ||  event.url.includes("freshmenu/review-order") ) 
-        	this.loginUrl='check-login';
-        	else
-        	this.loginUrl='check-login?g=1';
-        	
-        	 if (event.url.includes("compare-fly")) 
-            this.activeMenu='compare-fly';
-           else if (event.url.includes("flights")) 
-            this.activeMenu='compare-fly';
-           else
-             this.activeMenu='home';
-=======
-   
-   
+
        
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
@@ -829,21 +792,6 @@ closeCookieConsent(value){
     });
 
 
-
->>>>>>> ddf3288ee2b714452f863c107de30c37277905ba
-
-          }
-      });
-
-      this.router.events.subscribe((event: any) => {
-        if (event instanceof NavigationEnd) {
-          if(event.url.includes('freshmenu')){
-            this.displayCart = true;
-          }else{
-            this.displayCart = false;
-          }
-        }
-      });
 
       let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
     	if(queryParamMap.keys[0])

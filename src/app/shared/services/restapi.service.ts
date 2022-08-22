@@ -345,10 +345,6 @@ flexipayvalidateOTP(param){
       return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe(map((response: any) => response));
     }
   }
-<<<<<<< HEAD
-
-=======
-}
 
    saveCheckout (param): Observable<any> {
     if(LOCALJSON=='true'){
