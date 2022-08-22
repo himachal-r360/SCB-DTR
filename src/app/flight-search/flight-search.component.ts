@@ -404,8 +404,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   setSearchFilterData() {
     let lastSearch: any = localStorage.getItem('flightLastSearchNew');
    console.log("last:"+lastSearch);
-    if (lastSearch != null || lastSearch != undefined) {
-      lastSearch = JSON.parse(lastSearch);
+    
       var multicity = localStorage.getItem('multicityLastSearch');
       if(multicity != null && multicity != '')
       {
@@ -426,7 +425,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
 
       }
-      else{
+      else if (lastSearch != null || lastSearch != undefined) {
+        lastSearch = JSON.parse(lastSearch);
         this.flightData.get('adults').setValue(lastSearch.adults);
         this.flightData.get('child').setValue(lastSearch.child);
         this.flightData.get('flightclass').setValue(lastSearch.flightclass);
@@ -461,7 +461,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
       }
 
-    }
+    
 
 
   }
