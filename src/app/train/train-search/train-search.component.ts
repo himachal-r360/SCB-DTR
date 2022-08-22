@@ -149,7 +149,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
        let keycode = $event.which;
        if($event.keyCode==13){
 	}else if ($event.keyCode != 40 && $event.keyCode != 38 ){
-        if ($event.timeStamp - this.lastKeypress > 0) {
+        if (true) {
         this.queryText = $event.target.value;
         if(this.queryText && this.queryText.length > 0){
         //Elastic Search

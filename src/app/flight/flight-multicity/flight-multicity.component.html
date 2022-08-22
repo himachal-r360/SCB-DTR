@@ -414,8 +414,8 @@
                                                     <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                 </div>
                                                 <div class="flight-listing-viewfares">
-                                                    <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> View Fares <i class="fa fa-angle-down ml-10"></i></a>
-                                                    <a href="javascript:void(0)" class="button-style hidefares d-none " id="hidefares_{{list.flightKey}}" (click)="hideFarebutton(list.flightKey,'fare-details',0)"> Hide Fares<i class="fa fa-angle-up ml-10"></i></a>
+                                                    <a href="javascript:void(0)" [ngClass]="{'d-none':list.isSelected}" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> View Fares <i class="fa fa-angle-down ml-10"></i></a>
+                                                    <a href="javascript:void(0)" [ngClass]="{'d-none':!list.isSelected}" class="button-style hidefares " id="hidefares_{{list.flightKey}}" (click)="hideFarebutton(list.flightKey,'fare-details',0)"> Hide Fares<i class="fa fa-angle-up ml-10"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -425,7 +425,7 @@
                               <div class="flight-info-box" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
                                 <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
                                 </div>
-                                <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{list.flightKey}}" >
+                                <div class="flight-details-box viewfaresbox" [ngClass]="{'flight-details-box-hide':!list.isSelected}" id="CompareToFly_{{list.flightKey}}" >
                                   <div class="flight-options-box" id="FareDetails_{{list.flightKey}}">
                                     <div class="flight-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
                                         <div class="flight-options-list">
@@ -474,7 +474,7 @@
                                                 </div>
                                                 <div class="flight-options-book">
                                                   <!-- <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item)">Book</a> -->
-                                                  <button class="button-style" (click)="bookingSummary(list.flights,item,list.flightKey)">Book</button>
+                                                  <button class="button-style BtnOnSelect" [ngClass]="{'button-selected-style' : list.isSelected}" (click)="onSelect(list.flightKey,list.flights,item,$event)">{{list.isSelected?'Selected':'Select'}}</button>
                                                 </div>
                                             </div>
 
@@ -928,8 +928,8 @@
                                       <p *ngIf="item.totalFare > EMIAvailableLimit">EMI @ ₹ {{calculateEMI(item.totalFare)|number}}/month</p>
                                   </div>
                                   <div class="mob-booking">
-                                    <button   (click)="bookingSummary(list.flights,item,list.flightKey)">
-                                      Book
+                                    <button  class="BtnOnSelect" (click)="onMobileSelect(list.flightKey,list.flights,item,$event)">
+                                      Select
                                   </button>
                                   </div>
                               </div>
@@ -1616,3 +1616,215 @@
 
 
       </main>
+   <!-- ------------------------------
+    >>> multi-city-flight-fixed-area
+    ---------------------------------->
+    <div class="multi-city-flight-fixed-area" *ngIf="isSelectedSectorFlight && !isMobile">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="flight-fixed">
+                      <div class="flight-fixed-left">
+                          <div class="flight-fixed-list" [ngClass]="{'after-none':i==(searchData.length-1)}" *ngFor="let item of searchData;let i=index">
+                              <div class="flight-fixed-list-image" *ngIf="item.isSelected">
+                                  <img src="{{cdnUrl}}/images/airlines/{{item.selectedFlight.flights[0].airline}}.gif" alt="">
+                              </div>
+                              <div class="flight-fixed-list-content" >
+                                  <h6 [ngClass]="{'text-secondory':!item.isSelected}">{{item.flightfrom}} - {{item.flightto}}</h6>
+                                  <p *ngIf="!item.isSelected" class="text-secondory">Flight not selected</p>
+                                  <p *ngIf="item.isSelected">&#8377; {{item == null ? 0:item.selectedFlight.priceSummery.totalFare|number}}</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="flight-fixed-right">
+                          <div class="fixedright-content">
+                              <div class="fixedright-image" >
+                                  <img src="{{cdnUrl}}/images/flight_partners/small-no/{{searchData[0].selectedFlight.priceSummery.partnerName}}.png" alt="" width="52px">
+                              </div>
+                              <div class="fixedright-price">
+                                  <h6>
+                                      ₹ {{TotalFare | number}}
+                                      <span *ngIf="TotalFare > EMIAvailableLimit">EMI @{{calculateEMI(TotalFare)|number}}/month</span>
+                                  </h6>
+                              </div>
+                              <div class="fixedright-otherinfo">
+                                  <!-- <span class="mainprice">₹ 5,000</span>
+                                  <span class="price-off">10% off</span> -->
+                                  <div class="ff-Viewfaredetails">
+                                      <a href="#" class="rr-Viewfare">View Fare Details</a>
+                                      <div class="hover-popover" style="left: -82px;">
+                                          <div class="hover-popover-title">
+                                              <h6>Price Breakdown</h6>
+                                          </div>
+                                          <div class="hover-popover-content">
+                                              <div class="hover-popover-content-list">
+                                                  <p>Base Fare</p>
+                                                  <p>₹{{BaseFare | number}}</p>
+                                              </div>
+                                              <div class="hover-popover-content-list">
+                                                  <p>Tax</p>
+                                                  <p>₹{{Tax | number}}</p>
+                                              </div>
+                                              <hr class="m-0">
+                                              <div class="hover-popover-content-list popover-total">
+                                                  <p>Total</p>
+                                                  <p>₹{{TotalFare | number}}</p>
+                                              </div>
+                                          </div>
+                                          <div class="hover-popover-footer">
+                                              <p>*Partner Convenience Fee is applicable</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="flight-fixed-btn">
+                              <a (click)="nextFlightSelect()" *ngIf="!isAllSelected && !isLast"  class="button-style ms-2">Select Next Flight</a>
+                              <button *ngIf="isAllSelected || isLast" [disabled]="isError || isLast" [ngClass]="{'disable-partner':isError || isLast}" (click)="bookingSummary()"  class="button-style ms-2">Book</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------
+    >>> mult-city-error-area
+    ---------------------------------->
+    <div class="mult-city-error-area" *ngIf="isError && !isMobile">
+      <div class="container">
+        <div class="row justify-content-center ">
+          <div class="col-md-6">
+            <div class="mult-city-error-content">
+              <p>{{ErrorMessage}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <!-- ------------------------------
+    >>> mult-city-error-area-mobile
+    ---------------------------------->
+    <div class="mult-city-error-area-mobile" *ngIf="isError && isMobile">
+      <div class="container">
+        <div class="row justify-content-center ">
+          <div class="col-md-6">
+            <div class="mult-city-error-content">
+              <p>{{ErrorMessage}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- ------------------------------
+        >>> Mobile flight fixed
+        ---------------------------------->
+  <div class="fr-flight-fixed-area" *ngIf="isSelectedSectorFlight && isMobile ">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="fr-flight-fixed-box">
+                          <div class="fr-flight-fixed-top">
+                              <div class="fr-applycoupon">
+                                  <span>Multicity</span>
+                              </div>
+                              <div class="fr-faresummary">
+                                  <img src="{{cdnUrl}}/images/flight_partners/small-no/{{mobileSelected.priceSummery.partnerName}}.png" alt="">
+                              </div>
+                          </div>
+                          <div class="mob-ff-name">
+                              <h6>{{selectedTripData.fromCity}} to {{selectedTripData.toCity}}</h6>
+                          </div>
+                          <div class="fr-flight-fixed-bottom">
+                              <div class="fr-fixed-price">
+                                  <h6>₹ {{mobileSelected.priceSummery.totalFare | number}} </h6>
+                                  <p *ngIf="mobileSelected.priceSummery.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(mobileSelected.priceSummery.totalFare)|number}}/month </p>
+                                  <span>|</span>
+                                  <a href="javascript:void(0)" data-bs-toggle="modal"
+                                  data-bs-target="#fareSummary_mlite">Fare Details</a>
+                              </div>
+                              <div class="fr-fixed-btn">
+                                  <button *ngIf="!isLast" [disabled]="isError" (click)="nextFlightSelect()" [ngClass]="{'disable-partner':isError}" class="button-style w-100 mt-2">Select Next Flight</button>
+                                  <button *ngIf="isLast" [disabled]="isError" [ngClass]="{'disable-partner':isError}" (click)="bookingSummary()" class="button-style w-100 mt-2">Book</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  </div>
+
+
+     <!-- Mlite Fare Summary Popup -->
+     <div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel"
+     aria-hidden="true" *ngIf="isSelectedSectorFlight && isMobile">
+     <div class="modal-dialog" style="
+      margin: 0;
+      display:flex;
+      align-items: flex-end;
+      min-height: calc(100% - 0px);
+    ">
+       <div class="modal-content">
+         <div class="modal-header pb-0">
+           <h5 class="modal-title">Fare Summary</h5>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body pt-0">
+           <div>
+             <img
+               src="{{cdnUrl}}/images/flight_partners/small-no/{{mobileSelected.priceSummery.partnerName}}.png"
+               alt="{{mobileSelected.priceSummery.partnerName}}">
+           </div>
+           <div class="widget-content">
+             <ul class="widget-list clearfix">
+               <li class="fare-list-item">
+                 <div class="fare-list-box">
+                   <div class="fare-list-left">
+                     <p>
+                       <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                       Base Fare
+                     </p>
+                   </div>
+                   <div class="fare-list-right">
+                     <p>&#8377;{{mobileSelected.priceSummery.baseFare|number}}</p>
+                   </div>
+                 </div>
+               </li>
+               <li class="fare-list-item">
+                 <div class="fare-list-box">
+                   <div class="fare-list-left">
+                     <p>
+                       <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                       Taxes and Fees
+                     </p>
+                   </div>
+                   <div class="fare-list-right">
+                     <p>&#8377;{{(mobileSelected.priceSummery.totalFare-mobileSelected.priceSummery.baseFare)
+                      |number}}</p>
+                   </div>
+                 </div>
+               </li>
+               <li class="fare-list-item">
+                 <div class="fare-list-box pt-30">
+                   <div class="fare-list-left">
+                     <h6 class="fw_7">Grand Total</h6>
+                   </div>
+                   <div class="fare-list-right">
+                     <h6 class="fw_7">₹{{mobileSelected.priceSummery.totalFare | number}}</h6>
+                     <p class="opacity_05" *ngIf="mobileSelected.priceSummery.totalFare > EMIAvailableLimit">EMI @
+                       {{calculateEMI(mobileSelected.priceSummery.totalFare )|number: '.2'}}/month</p>
+                   </div>
+                 </div>
+               </li>
+             </ul>
+           </div>
+         </div>
+         <!-- <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary">Save changes</button>
+                 </div> -->
+       </div>
+     </div>
+   </div>

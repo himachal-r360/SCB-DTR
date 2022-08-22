@@ -10,6 +10,7 @@ export class FlightService {
   flight = environment.url + "api/flightSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
   flightInfo = environment.url + "api/flightInfo";
+    flightInfoMulticity = environment.url + "api/flightInfoMulticity";
   multicityFlight = environment.url + "api/flightSearchMulticity";
   flightListData: any;
   flightListDate: any;
@@ -125,6 +126,16 @@ export class FlightService {
     let body = JSON.stringify(param);
     console.log(body)
     return this.http.post(this.multicityFlight , body , { headers: this.header })
+  }
+    getFlightInfoMulticity(param: any,searchData:any) {
+    if (LOCALJSON == 'true') {
+ 
+        return this.http.get('assets/data/flightInfoMulticity.json');
+    
+    } else {
+
+      return this.http.post(this.flightInfoMulticity, param, { headers: this.header })
+    }
   }
 
 }
