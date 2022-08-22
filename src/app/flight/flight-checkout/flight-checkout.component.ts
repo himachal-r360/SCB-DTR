@@ -417,7 +417,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   }, 10);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
-                  //console.log(this.flightSessionData);
+                  console.log(this.flightSessionData);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -2751,6 +2751,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
      }
 
     var m=1;
+    
+    let flightSearchDetails=[];
 
       if( this.flightSessionData['travel_type']=='M') {
         for (let i = 0; i < (this.flightSessionData.onwardFlights.length); i++) {
@@ -2765,7 +2767,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           "operatingAirline": "",
           "departureDate": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['departureDateTime']).format('YYYY-MM-DD'),
           "stops": this.flightSessionData.onwardFlights[i]['flights'][j]['stops'],
-          "segNum": m,
+          "segNum": i + 1,
           "duration": this.flightSessionData.onwardFlights[i]['flights'][j]['duration'],
           "arrivalDateTime": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalDateTime']).format('HH:mm:ss'),
           "departureDateTime": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['departureDateTime']).format('HH:mm:ss'),
@@ -2776,6 +2778,9 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         }
       }
       
+        for (let v = 0; v < (this.searchData.length); v++) {
+        flightSearchDetails.push({ "leavingFrom": this.searchData[v]['flightfrom'], "goingTo":  this.searchData[v]['flightto'], "depart": this.searchData[v]['departure']});
+       }
       
       }else{
 
@@ -2928,6 +2933,10 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
       if (this.searchData.arrival)
         this.itineraryRequest["returnCheckInDate"] = moment(this.searchData.arrival).format('YYYY-MM-DD');
+        
+      if( this.flightSessionData['travel_type']=='M')  
+       this.itineraryRequest["flightSearchDetails"] = flightSearchDetails;
+
 
 
       this.resetPopups();
