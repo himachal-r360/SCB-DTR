@@ -332,12 +332,13 @@
            
                 <div class="tier"  *ngFor="let dayList of avlDayList ;" > 
                     <div class="TrainSeatsInfo">
-                        <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> <span class="float-right price">₹{{trainTotalFare|number}}</span></p>
+                        <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> </p>
                         <div class="status">
                             <div class="label-green" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224 && dayList.availablityType!=3">{{dayList.availablityStatus}}</div>
                             <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
                             <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
                         </div>
+                        <p><span class="price">₹{{trainTotalFare|number}}</span></p>
                         <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                     </div>
                    
