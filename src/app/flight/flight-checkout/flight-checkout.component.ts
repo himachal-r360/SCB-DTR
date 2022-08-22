@@ -406,95 +406,9 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 this.IsDcemiEligibleFlag = true;
                 this.isFlexipayEligibleFlag = true;
                 this.enablesavedTraveller = 0;
+                this.syncCustomer(customerInfo);
               } else {
-                this.getQueryParamData();
-                this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
-
-                this.flightSessionData = JSON.parse(this.flightDetailsArrVal);
-                if (!this.flightSessionData) {
-                  setTimeout(() => {
-                    $("#bookingprocessFailed1").modal('show');
-                  }, 10);
-                } else {
-                  this.searchData = (this.flightSessionData.queryFlightData);
-                  console.log(this.flightSessionData);
-                  setTimeout(() => {
-                    $("#infoprocess").modal('show');
-                  }, 10);
-                  
-                  if( this.flightSessionData['travel_type']=='M') {
-                  //Multicity
-                this.maxAdults = Number(this.searchData[0].adults);
-                this.maxChilds = Number(this.searchData[0].child);
-                this.maxInfants = Number(this.searchData[0].infants);
-                this.travelerDetails['adults'] = this.searchData[0].adults;
-                this.travelerDetails['child'] = this.searchData[0].child;
-                this.travelerDetails['infants'] = this.searchData[0].infants;
-                this.partnerToken = this.flightSessionData.onwardFlights[0]['priceSummery']['partnerName'];
-                this.flightOnwardDetails = this.flightSessionData.onwardFlights; 
-                this.selectedOnwardVendor = this.flightSessionData.onwardFlights[0]['priceSummery'];
-                this.searchData['adults'] = this.searchData[0].adults;
-                this.searchData['child'] = this.searchData[0].child;
-                this.searchData['infants'] = this.searchData[0].infants;
-                this.searchData['flightclass'] = this.searchData[0].flightclass;
-                
-                this.searchData['travel'] = 'DOM';
-                for (let j = 0; j < this.flightSessionData.queryFlightData.length; j++) {
-                 if(this.flightSessionData.queryFlightData[j]['fromContry'] != 'IN' || this.flightSessionData.queryFlightData[j]['toContry'] != 'IN'){
-                 this.searchData['travel'] = 'INT';
-                 }
-                }
-                
-                
-                this.flightReturnDetails = [];
-                  }else{
-                  
-                  this.maxAdults = Number(this.searchData.adults);
-                  this.maxChilds = Number(this.searchData.child);
-                  this.maxInfants = Number(this.searchData.infants);
-                  this.travelerDetails = this.searchData;
-
-
-                  if (this.flightSessionData.travel == 'DOM') {
-                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
-                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
-                    this.selectedReturnVendor = this.flightSessionData.returnPriceSummary;
-
-                    if (this.flightSessionData.returnFlights)
-                      this.flightReturnDetails = this.flightSessionData.returnFlights;
-                    else
-                      this.flightReturnDetails = [];
-                  } else {
-
-                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
-                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
-                    this.selectedReturnVendor = [];
-
-
-                    if (this.flightSessionData.returnFlights)
-                      this.flightReturnDetails = this.flightSessionData.returnFlights;
-                    else
-                      this.flightReturnDetails = [];
-
-                  }
-
-
-                  this.partnerToken = this.selectedOnwardVendor.partnerName;
-                 } 
-                  
-                  this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
-                  //console.log(this.partnerToken);
-                  //console.log(this.enableVAS);
-
-                  this.getFlightDetails(this.flightSessionData);
-                }
-                this.REWARD_CUSTOMERID = customerInfo["id"];
-                this.REWARD_EMAILID = customerInfo["email"];
-                this.REWARD_MOBILE = customerInfo["mobile"];
-                this.REWARD_TITLE = customerInfo["title"];
-
-                this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
-                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+                 this.syncCustomer(customerInfo);
 
                 const urlSearchParams = new HttpParams()
                   .set('customerid', customerInfo["id"])
@@ -609,6 +523,99 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
+  syncCustomer(customerInfo){
+                  this.getQueryParamData();
+                this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
+
+                this.flightSessionData = JSON.parse(this.flightDetailsArrVal);
+                if (!this.flightSessionData) {
+                  setTimeout(() => {
+                    $("#bookingprocessFailed1").modal('show');
+                  }, 10);
+                } else {
+                  this.searchData = (this.flightSessionData.queryFlightData);
+                  console.log(this.flightSessionData);
+                  setTimeout(() => {
+                    $("#infoprocess").modal('show');
+                  }, 10);
+                  
+                  if( this.flightSessionData['travel_type']=='M') {
+                  //Multicity
+                this.maxAdults = Number(this.searchData[0].adults);
+                this.maxChilds = Number(this.searchData[0].child);
+                this.maxInfants = Number(this.searchData[0].infants);
+                this.travelerDetails['adults'] = this.searchData[0].adults;
+                this.travelerDetails['child'] = this.searchData[0].child;
+                this.travelerDetails['infants'] = this.searchData[0].infants;
+                this.partnerToken = this.flightSessionData.onwardFlights[0]['priceSummery']['partnerName'];
+                this.flightOnwardDetails = this.flightSessionData.onwardFlights; 
+                this.selectedOnwardVendor = this.flightSessionData.onwardFlights[0]['priceSummery'];
+                this.searchData['adults'] = this.searchData[0].adults;
+                this.searchData['child'] = this.searchData[0].child;
+                this.searchData['infants'] = this.searchData[0].infants;
+                this.searchData['flightclass'] = this.searchData[0].flightclass;
+                
+                this.searchData['travel'] = 'DOM';
+                for (let j = 0; j < this.flightSessionData.queryFlightData.length; j++) {
+                 if(this.flightSessionData.queryFlightData[j]['fromContry'] != 'IN' || this.flightSessionData.queryFlightData[j]['toContry'] != 'IN'){
+                 this.searchData['travel'] = 'INT';
+                 }
+                }
+                
+                
+                this.flightReturnDetails = [];
+                  }else{
+                  
+                  this.maxAdults = Number(this.searchData.adults);
+                  this.maxChilds = Number(this.searchData.child);
+                  this.maxInfants = Number(this.searchData.infants);
+                  this.travelerDetails = this.searchData;
+
+
+                  if (this.flightSessionData.travel == 'DOM') {
+                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
+                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
+                    this.selectedReturnVendor = this.flightSessionData.returnPriceSummary;
+
+                    if (this.flightSessionData.returnFlights)
+                      this.flightReturnDetails = this.flightSessionData.returnFlights;
+                    else
+                      this.flightReturnDetails = [];
+                  } else {
+
+                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
+                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
+                    this.selectedReturnVendor = [];
+
+
+                    if (this.flightSessionData.returnFlights)
+                      this.flightReturnDetails = this.flightSessionData.returnFlights;
+                    else
+                      this.flightReturnDetails = [];
+
+                  }
+
+
+                  this.partnerToken = this.selectedOnwardVendor.partnerName;
+                 } 
+                  
+                  this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
+                  //console.log(this.partnerToken);
+                  //console.log(this.enableVAS);
+
+                  this.getFlightDetails(this.flightSessionData);
+                }
+                this.REWARD_CUSTOMERID = customerInfo["id"];
+                this.REWARD_EMAILID = customerInfo["email"];
+                this.REWARD_MOBILE = customerInfo["mobile"];
+                this.REWARD_TITLE = customerInfo["title"];
+
+                this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
+                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+                
+        }        
+
+
 
   getQueryParamData() {
     this.route.queryParams
@@ -618,20 +625,19 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       });
   }
 
-
+  flightKeys:any=[];
   getFlightDetails(param) {
 
     if (param != null) {
     
-      let flightKeys = [];
       if(param['travel_type']=='M'){
         for (let j = 0; j < param.onwardFlights.length; j++) {
-         flightKeys.push(param.onwardFlights[j]['flightKey']);
+         this.flightKeys.push(param.onwardFlights[j]['flightKey']);
         }
       
        var body1 = {
         "docKey": param.docKey,
-        "flightKeys": flightKeys,
+        "flightKeys": this.flightKeys,
         "partnerName": param.onwardFlights[0]['priceSummery']['partnerName'],
         "onwardFlightFareKey": '',
         "returnFlightFareKey": ''
@@ -642,16 +648,16 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
      
       
       }else{
-      flightKeys.push(param.onwardFlightKey);
+      this.flightKeys.push(param.onwardFlightKey);
 
       if (param.returnFlightKey)
-        flightKeys.push(param.returnFlightKey);
+        this.flightKeys.push(param.returnFlightKey);
 
       var onwardFlightFareKey = (param.onwardPriceSummary.clearTripFareKey != undefined && param.onwardPriceSummary.clearTripFareKey != null ? param.onwardPriceSummary.clearTripFareKey : "");
       var returnFlightFareKey = (param.returnPriceSummary.clearTripFareKey != undefined && param.returnPriceSummary.clearTripFareKey != null ? param.returnPriceSummary.clearTripFareKey : "");
       var body = {
         "docKey": param.docKey,
-        "flightKeys": flightKeys,
+        "flightKeys": this.flightKeys,
         "partnerName": this.selectedOnwardVendor.partnerName,
         "onwardFlightFareKey": onwardFlightFareKey,
         "returnFlightFareKey": returnFlightFareKey,
@@ -2428,6 +2434,31 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   }
 
   emt_cancellationPolicy(data) {
+  
+        var getCancellationPolicy = {
+        itineraryId: this.itineraryid,
+        clientName: 'HDFC243',
+        serviceName: 'Flight',
+        partnerName: this.partnerToken,
+        docKey: this.flightSessionData.docKey,
+        flightKeys:this.flightKeys,
+        travel:this.searchData['travel'],
+        pricingId:this.pricingId,
+        onward_flightIdCSV:'',
+        airlineCode:'',
+        classType:this.searchData['flightclass'],
+
+        };
+        
+         this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(result => { 
+          console.log(result);
+         
+         
+         });
+        
+        console.log(getCancellationPolicy);
+
+  /*
     if (data && data.Cancellation) {
       let cancellation_data = data.Cancellation.split('|');
       let reschedule_data = data.Reschedule.split('|');
@@ -2458,12 +2489,14 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       }
         ;
     }
-
+   */
   }
 
   triggerBack() {
     $('#bookingprocessFailed').modal('hide');
     let url;
+    
+    
     if (this.searchData.travel == 'DOM') {
       if (this.searchData.flightdefault == 'R')
         url = "flight-roundtrip?" + decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
@@ -3010,6 +3043,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
             // $getStopOver=Yatraflight::getStopOver($json_data,$data['post_data'],$session_flight_key);
 
           } else {
+          this.pricingId = '';
             this.itineraryid = itinararyResponse['itineraryResponseDetails']['itineraryId'];
           }
           this.partnerConvFee = 0;
@@ -3033,6 +3067,29 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           this.totalCollectibleAmount = Number(setOrderAmount);
           this.totalCollectibleAmountFromPartnerResponse = this.totalCollectibleAmount;
           this.totalCollectibleAmountFromPartnerResponseOrg= this.totalCollectibleAmount-Number(this.partnerConvFee);
+          
+          
+          
+          
+          
+        var getCancellationPolicy = {
+        itineraryId: this.itineraryid,
+        clientName: 'HDFC243',
+        serviceName: 'Flight',
+        partnerName: this.partnerToken,
+        docKey: this.flightSessionData.docKey,
+        flightKeys:this.flightKeys,
+        travel:this.searchData['travel'],
+        pricingId:this.pricingId,
+        onward_flightIdCSV:'',
+        airlineCode:'',
+        classType:this.searchData['flightclass'],
+      
+        };
+console.log(getCancellationPolicy);
+       // this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(result => { });
+          
+          
 
 
           this.fareData = {
@@ -3315,6 +3372,7 @@ orderReferenceNumber:any;
       "redirect_url": "",
       "retry_url": "",
       "sessionKey":this.randomFlightDetailKey,
+      "docKey": this.flightSessionData.docKey,
       "itineraryRequest": this.itineraryRequest
     };
     this.orderReferenceNumber=order_ref_num;

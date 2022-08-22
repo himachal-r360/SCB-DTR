@@ -5796,12 +5796,12 @@
                         <div class="fare-list-right" *ngIf="steps > 3">
                           <h6 class="fw_7">₹ {{totalCollectibleAmount|number}}</h6>
                           <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                            {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                            {{calculateEMI(totalCollectibleAmount)|number}}/month</p>
                         </div>
                              <div class="fare-list-right" *ngIf="steps < 4">
                           <h6 class="fw_7">₹ {{(totalCollectibleAmount-partnerConvFee)|number}}</h6>
                           <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI @
-                            {{calculateEMI((totalCollectibleAmount-partnerConvFee))|number: '.2'}}/month</p>
+                            {{calculateEMI((totalCollectibleAmount-partnerConvFee))|number}}/month</p>
                         </div>
                       </div>
                     </li>
@@ -5985,7 +5985,7 @@
               <div class="">
                 <h6 class="price">₹{{totalCollectibleAmount|number}}</h6>
                 <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                  {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                  {{calculateEMI(totalCollectibleAmount)|number}}/month</p>
   
               </div>
             </div>
@@ -6125,13 +6125,13 @@
                   <div class="fare-list-right" *ngIf="steps < 4">
                     <h6 class="fw_7">₹{{totalCollectibleAmount-partnerConvFee|number}}</h6>
                     <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @
-                      {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number: '.2'}}/month</p>
+                      {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number}}/month</p>
                   </div>
   
                   <div class="fare-list-right" *ngIf="steps > 3">
                     <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
                     <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                      {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                      {{calculateEMI(totalCollectibleAmount)|number}}/month</p>
                   </div>
   
                 </div>
