@@ -351,201 +351,10 @@
 
                         <div class="seatLayout_structure">
                             <div class="layout">
-                                <div>
-                                    <div class="label  text-right float-left w-50">Front</div>
-                                    <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
-                                    <div class="">
-                                        <span class="lowerclass" *ngIf="selecteddeck && selecteddeck=='lower'">
-                                        <table  class="cabin fuselage">
-                                            <tr  class="row-no" *ngFor="let LD of Lowerdecks " style="width:100%">
-                                                <td *ngIf="LD && LD.length==0" align="left">&nbsp;&nbsp;&nbsp;</td>
-                                                <td *ngFor="let seat of LD" align="left" >
-                                                    <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;&nbsp;</span>
-                                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m">
-                                                    <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"   >
-                                                        <img  src="{{cdnUrl}}images/icons/bus/{{seat.newseattype}}.svg" class="{{seat.newseattype}}-m" *ngIf="selectedseats.indexOf(seat) != -1;else other_content" >
-                                                        <ng-template #other_content><img class="{{seat.seattype}}-m" src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}.svg" ></ng-template>
-                                                    </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        </span> 
-                                    </div>
-                                </div>
-                                <span *ngIf="pricesplit.length > 1">
-                                    <span>
-                                   <mat-tab  *ngFor="let price of pricesplit" label=" Rs.{{price.actfare | number}} ({{price.seattotal}})">
-                                                    
-                                                    <div class="layout">
-                                                            <div class="seat-hint">
-                                                                    <button class="info-m" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></button>
-                                                                   
-                                                                </div>
-                                                            <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
-                                                        
-                                
-                                                     <div class="margin-auto content">
-                                                            <div class="label  text-right float-left w-50">Front</div>
-                                                        
-                                                            <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
-                                                            <div class="">
-                                                                    <span class="lowerclass" *ngIf="selecteddeck && selecteddeck=='lower'">
-                                                     <table class="cabin fuselage" >
-                                                                                    <tr  class="row-no" *ngFor="let LD of Lowerdecks " >
-                                                                                        <td *ngIf="LD && LD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
-                                                                                        <td *ngFor="let seat of LD" align="right">
-                                                                                            <span *ngIf="seat && seat.length==0"  class="seat">&nbsp;&nbsp;&nbsp;</span>
-                                                        <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
-                                                                                                    <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"  *ngIf="price.actfare == seat.baseFare; else blurseat" >
-                                                                                                        
-                                                                                                        <img  src="{{cdnUrl}}images/icons/bus/{{seat.newseattype}}.svg" class="{{seat.newseattype}}-m" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"  >
-                                                                                                        <ng-template #other_content><img class="{{seat.seattype}}-m" src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}.svg" ></ng-template>
-                                                                                                      
-                                                                                                    </a>
-                                                                                                    <ng-template #blurseat>
-                                                                                                     <span><a>
-                                                                                                            <img class="{{seat.seattype}}-m "  src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}_x.svg" ></a></span>
-                                            </ng-template>
-                                            </span>
-                                            </td>
-                                            </tr>
-                                            </table>
-                                            </span>
-                                            <span *ngIf="selecteddeck && selecteddeck=='upper' && totalUpperDeck">
-                                                                      <table  class="cabin fuselage" >
-                                                                                        <tr  class="row-no" *ngFor="let UD of Upperdecks " >
-                                                                                            <td *ngIf="UD && UD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
-                                                                                            <td *ngFor="let seat of UD" align="right">
-                                                                                               <span *ngIf="seat && seat.length==0"  class="seat">&nbsp;&nbsp;&nbsp;</span>
-                                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
-                                                                                                    <span *ngIf="price.actfare == seat.baseFare; else blurseat">
-                                                                                                        <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"   >
-                                                                                                            
-                                                                                                            <img  src="{{cdnUrl}}images/icons/bus/{{seat.newseattype}}.svg" class="{{seat.newseattype}}-m" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"  >
-                                                                                                            <ng-template #other_content><img class="{{seat.seattype}}-m" src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}.svg" ></ng-template>
-                                                                                                            
-                                                                                                        </a>
-                                                                                                        </span>
-                                            <ng-template #blurseat>
-                                                <span><a>
-                                                                                                            <img class="{{seat.seattype}}-m "  src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}_x.svg" ></a></span>
-                                
-                                            </ng-template>
-                                            </span>
-                                            </td>
-                                            </tr>
-                                            </table>
-                                            <!-- <span class="pos-rear">REAR</span> -->
-                                            </span>
-                                            </div>
-                                            <div class="text-center my-3" id="toggle">
-                                                <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
-                                                    <mat-button-toggle value="lower" checked>Lower</mat-button-toggle>
-                                                    <mat-button-toggle value="upper">upper</mat-button-toggle>
-                                                </mat-button-toggle-group>
-                                            </div>
-                                
-                                </div>
-                                </div>
-                                <div class="fixed-f">
-                                    <div class="row">
-                                        <div class="col" (click)="openBottomSheet()">
-                                            <div class="xs-text">Total</div>
-                                            <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> Rs.{{totalfare | number:'1.2'}}</span>
-                                                <ng-template #zero1> Rs. {{totalfare | number:'1.2'}}</ng-template>
-                                            </div>
-                                        </div>
-                                        <div class="col p0" (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
-                                            <span class=""><i class="material-icons mobile-fare-info">error_outline</i></span>
-                                
-                                            <div class="xs-text">Selected Seats</div>
-                                            <div class="xs-text li-h">
-                                                <span *ngFor="let seats of seatdetails;let lastRow=last;">{{seats.selseats}}<span *ngIf="!lastRow">,</span>
-                                                </span>
-                                
-                                            </div>
-                                        </div>
-                                        <div class="col" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
-                                            <button class="btn-primary">CONTINUE</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="fare-break" [ngClass]="{'active': showFare}" *ngFor="let seats of seatdetails">
-                                    <h6>Fare Breakup</h6>
-                                    <div *ngFor="let seats of seatdetails">
-                                        <div class="row" *ngIf="seats">
-                                            <div class="col-6">
-                                                <div> {{seats.totalseats}} Seat(s) @ {{seats.baseFare | number:'1.2-2'}} </div>
-                                                <div>Seat no(s): {{seats.selseats}} </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-right"> Rs. {{seats.totalbaseFare | number:'1.2-2'}} </div>
-                                            </div>
-                                        </div>
-                                        <!-- <li > <span></span></li> -->
-                                    </div>
-                                    <div class="row" *ngIf="totServtax > 0">
-                                        <div class="col-6">
-                                            <div>Taxes</div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="text-right">Rs. {{totServtax | number:'1.2-2'}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                </mat-tab>
-                                <!-- <div class="seat-info-m"  *ngIf="seatinfo1">
-                                        <div class="row m-0 p-2">
-                                            <div class="col px-2">
-                                            <img src="{{cdnUrl}}images/icons/seat_empty.svg">
-                                            <div class="xx-small-text">Available Seats</div>
-                                        </div>
-                                        <div class="col px-2">
-                                            <img src="{{cdnUrl}}images/icons/seat_selected.svg">
-                                            <div class="xx-small-text">Selected Seats</div>
-                                        </div>
-                                        <div class="col px-2">
-                                            <img src="{{cdnUrl}}images/icons/seat_ladies_empty.svg">
-                                            <div class="xx-small-text">Reserved for Ladies</div>
-                                        </div>
-                                        <div class="col px-2">
-                                            <img src="{{cdnUrl}}images/icons/seat_ladies.svg">
-                                            <div class="xx-small-text">Reserved by Ladies</div>
-                                        </div>
-                                        <div class="col px-2">
-                                            <img src="{{cdnUrl}}images/icons/bookedSeat.svg">
-                                            <div class="xx-small-text">Occupied Seats</div>
-                                        </div>
-                                        </div> 
-                                        <div class="overlay" (click)="hideOverlay1()"> 
-                                
-                                        </div> 
-                                    </div> -->
-                                </span>
-                                                        </span>
+                               
                             </div>
                             <div class="layout">
-                                <div>
-                                    <span *ngIf="selecteddeck && selecteddeck=='upper' && totalUpperDeck">
-                                        <table  class="cabin fuselage" >
-                                           <tr  class="row-no" *ngFor="let UD of Upperdecks " >
-                                              <td *ngIf="UD && UD.length==0" align="right" >&nbsp;&nbsp;&nbsp;</td>
-                                              <td *ngFor="let seat of UD"  align="right" >
-                                                 <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;&nbsp;</span>
-                                                 <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m">
-                                                    <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"    >
-                                                       <img  src="{{cdnUrl}}images/icons/bus/{{seat.newseattype}}.svg" class="{{seat.newseattype}}-m" *ngIf="selectedseats.indexOf(seat) != -1;else other_content" >
-                                                       <ng-template #other_content><img class="{{seat.seattype}}-m" src="{{cdnUrl}}images/icons/bus/{{seat.seattype}}.svg" ></ng-template>
-                                                    </a>
-                                                 </span>
-                                              </td>
-                                           </tr>
-                                        </table>
-                                        <!-- <span class="pos-rear">REAR</span> -->
-                                     </span>
-                                </div>
+                                
                             </div>
                         </div>
                         <!-- <ng-container *ngIf="show_dialog"> -->
@@ -562,7 +371,7 @@
         
         
                                         <table class="cabin fuselage" align="left">
-                                            <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
+                                            <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; " style="width:100%">
                                                 <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
                                                     <table>
                                                         <tr>
@@ -720,23 +529,35 @@
                 </mat-form-field>
                 <div class="base-fare cntnt_center_div">
                     <div *ngFor="let seats of seatdetails">
-                        <div class="row d-flex align-items-center">
-                            <div class="float-left gray-medium col-7" *ngIf="seats">
-                                <p> {{seats.totalseats}} seats @ {{seats.fare | number:'1.2-2'}} </p>
+                        <div class="row">
+                            <div class="gray-medium col-7" *ngIf="seats">
+                                <p class="price_seat"> {{seats.totalseats}} seats @ {{seats.fare | number:'1.2-2'}} </p>
+                            </div>
+                            <div class="black-medium col-5 text-right"> 
+                                <div class="fareTotal">
+                                    Rs. {{seats.seatfaretotal | number:'1.2-2'}}
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <p class="seat-numbers">{{seats.selseats}} </p>
                             </div>
-                            <div class="float-right black-medium col-5 pl-0"> Rs. {{seats.seatfaretotal | number:'1.2-2'}}</div>
                         </div>
                         <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="float-left text-large">
+                                    <span class="titleLable"> Total Fare </span><br>
+                                    <span class="text-labels tax">(Includes Taxes)</span>
+                                </span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span class="titleLable black-medium"><span *ngIf="totalfare > 0; else zero"> Rs. {{totalfare | number:'1.2-2'}}</span>
+                                    <ng-template #zero> Rs. {{totalfare}}</ng-template>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <span class="float-left text-large">
-                        <span class="total-heading"> Total Fare </span><br>
-                        <span class="text-labels tax">(Includes Taxes)</span>
-                    </span>
-                    <span class="float-right black-medium d-flex align-items-center"><span *ngIf="totalfare > 0; else zero"> Rs. {{totalfare | number:'1.2-2'}}</span>
-                        <ng-template #zero> Rs. {{totalfare}}</ng-template>
-        
-                    </span>
+                    
                     
                 </div>
                 </div>
