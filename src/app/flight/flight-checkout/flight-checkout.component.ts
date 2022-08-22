@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, DebugNode, NgModule, ViewChild, ChangeDetectorRef, ElementRef, Inject, ɵConsole, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -20,6 +20,7 @@ import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { stringify } from '@angular/compiler/src/util';
 import { AbstractControl } from '@angular/forms';
+import { filter } from 'rxjs/operators';
 
 
 function validateAdultAge(c: FormControl) {
@@ -319,7 +320,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapseDiscount: boolean = false;
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
-
+orderRetry:boolean=false;
 
   constructor(private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
@@ -408,6 +409,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
 
                 this.flightSessionData = JSON.parse(this.flightDetailsArrVal);
+
                 if (!this.flightSessionData) {
                   setTimeout(() => {
                     $("#bookingprocessFailed1").modal('show');
@@ -433,6 +435,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                       this.flightReturnDetails = this.flightSessionData.returnFlights;
                     else
                       this.flightReturnDetails = [];
+                      
                   } else {
 
                     this.flightOnwardDetails = this.flightSessionData.onwardFlights;
@@ -574,6 +577,24 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
 
     });
+
+
+    this.route.queryParamMap
+    .subscribe((params) => {
+      let order = { ...params.keys, ...params };
+      console.log(order['params']['retry']);
+      if(order['params']['retry'] && order['params']['retry'] != undefined) {
+
+       setTimeout(() => {
+        document.getElementById('continueToItinery').click();
+
+        
+      }, 3000);
+       
+      }
+    }
+  );
+
   }
 
 
