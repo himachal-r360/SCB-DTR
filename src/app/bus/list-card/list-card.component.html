@@ -92,7 +92,7 @@
         </div>
         <div class="col-md-3 text-right">
             <a class="collapse_exp_btn" data-bs-toggle="collapse" href="#collapseExample_{{busrow}}" role="button" aria-expanded="false" aria-controls="collapseExample_{{busrow}}">
-                Bus Details
+                <span class="mx-3">Bus Details</span>
               </a>
         </div>
     </div>
@@ -100,7 +100,7 @@
     <div class="collapse details_collpase" id="collapseExample_{{busrow}}">
         <div class="">
           
-            <ul class="more-details w-33" id="mat-accordion-tab-details">
+            <ul class="more-details w-33 bus_collapse_ul" id="mat-accordion-tab-details">
 
                 <li (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
                 <li (click)="onCancellation(mobile=false)" [ngClass]="{'active': showCancellation}">Cancellation policy</li>
@@ -114,11 +114,11 @@
                 <ul class="amenities-container">
                     <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
                     <li *ngFor="let amen of busamenities">
-                        <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}</li>
+                        <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg" class="ps-2"></i>{{amen}}</li>
                 </ul>
             
             </div>
-            <div class="row amenities-list">
+            <div class="row amenities-list" *ngIf="showDropping">
                 <ul class="amenities-container">
             
                     <table class="table table-borderless">
@@ -135,7 +135,10 @@
                                     <tr *ngFor="let boardingpoin of boardingtimes">
                                         <span><i class="material-icons time-circle">panorama_fish_eye</i></span>
                                         <span class="bor-time">{{boardingpoin.ctime }} </span>
-                                        <span class="bor-place"><b>{{boardingpoin.location}}</b> <br>{{boardingpoin.address}}</span>
+                                        <span class="bor-place"><b>{{boardingpoin.location}}</b>
+                                            <br>
+                                            <span class="bor-text">{{boardingpoin.address}}</span>
+                                        </span>
                                     </tr>
                                 </table>
                             </td>
@@ -144,7 +147,8 @@
                                     <tr *ngFor="let droppingtim of droppingtimes">
                                         <span><i class="material-icons time-circle">panorama_fish_eye</i>
                                                 </span><span class="bor-time">{{droppingtim.ctime }} </span>
-                                        <span class="bor-place"><b>{{droppingtim.location}}</b> <br>{{droppingtim.address}}</span>
+                                        <span class="bor-place"><b>{{droppingtim.location}}</b> <br>
+                                            <span class="bor-text">{{droppingtim.address}}</span></span>
                                     </tr>
             
                                     <tr *ngIf="droppingtimes==0">
@@ -163,19 +167,19 @@
             </div>
             <div class="row amenities-list" *ngIf="showCancellation">
                 <ul class="amenities-container">
-                    <table class="table table-borderless">
+                    <table class="table table-borderless bus_collapse_tbl">
                         <thead>
                             <tr class="can-header">
-                                <th scope="col">Time of Cancellation</th>
-                                <th scope="col" class="text-center">Deduction %</th>
-                                <th scope="col" class="text-center">Cancellation Charges</th>
+                                <th scope="col" width="50%">Time of Cancellation</th>
+                                <th scope="col" class="text-center" width="25%">Deduction %</th>
+                                <th scope="col" width="25%">Cancellation Charges</th>
                             </tr>
                         </thead>
                         <tbody class="can-body">
                             <tr *ngFor="let cancel of retvalues">
                                 <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
                                 <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                                <td class="text-center"> Rs. {{cancel.cancharges }}</td>
+                                <td class="text-left"> Rs. {{cancel.cancharges }}</td>
                             </tr>
                             <tr> </tr>
                         </tbody>
@@ -207,48 +211,16 @@
 </div>
 
 
-<div class="list-row-m border-4" *ngIf="showrow && bus.availableSeats > 0" (click)="onDetails(bus.id,rowvalue,bus);">
+<div class="list-row-m" *ngIf="showrow && bus.availableSeats > 0" (click)="onDetails(bus.id,rowvalue,bus);">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-8">
             <div class="float-left label-name">
                 {{bus.travels}}
             </div>
             <div class="label-gray float-left">{{bus.busType}}</div>
         </div>
-
-        <div class="col-md-12 p0-cut pt20">
-            <div class="float-left col-md-4 w-15-r">
-                <div class="label-name-large text-center">{{bus.departureTime | date:'HH:mm'}}</div>
-                <div class="text-center" *ngIf="nextDayFlag">
-                    <span class="next_flag ml-1">Next Day</span>
-                </div>
-                <!-- <div class="label-gray text-center"> {{busHelper.getBoarding(bus.boardingTimes,bus.departureTime| date:'HH:mm')}}</div> -->
-            </div>
-
-            <div class="col-md-4 text-center p0 durations position-relative">
-                <div class="range"></div>
-                <div class="label-gray label-pos">{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</div>
-
-            </div>
-
-            <div class="float-left col-md-4 w-15-r">
-                <div class="label-name-large text-center">{{bus.arrivalTime | date:'HH:mm'}}</div>
-                <!-- <div class="label-gray text-center"> {{busHelper.getDropping(bus.droppingTimes,bus.arrivalTime| date:'HH:mm')}}</div> -->
-            </div>
-        </div>
-
-
-    </div>
-    <div class="row pt-16">
-        <div class="col float-right w-33">
-            <div class="float-left">
-
-                <div class="label-gray ">From</div>
-                <div class="label-name-large "> Rs. {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
-            </div>
-        </div>
-
-        <div class="text-center amenities">
+        <div class="col-4">
+             <div class="text-center amenities">
 
             <div *ngIf="bus.rating > 0">
                 <div class="rating" [ngClass]="bus.rating >= 4 ? 'rating-green' : (bus.rating >= 3 ? 'rating-orange' : 'rating-red')"><i class="material-icons">
@@ -260,35 +232,53 @@
                 </div>
 
             </div>
+
             <div class="m-rate-count">{{bus.total_rating_count | number}} Ratings </div>
         </div>
+        </div>
 
+        <div class="col-7 d-flex align-items-center pt20">
+            <div class="d-flex align-items-center w-100">
+                <div class="label-name-large">{{bus.departureTime | date:'HH:mm'}}
+                    <p *ngIf="nextDayFlag" class="next_flag ml-1">Next Day</p>
+                </div>
+                <div class="label-gray px-1"><span class="m_bus_duartion">{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</span></div>
+                <div class="label-name-large">{{bus.arrivalTime | date:'HH:mm'}}</div>
 
-
-        <div class="float-left col  ">
-            <div class="label-black-x-small  pb5">{{bus.availableSeats}} available <br>
+            </div>
+        </div>
+        <div class="col-5 pt20">
+            <div class=" d-flex align-items-center text-right bus_fare_pos">
+                <div class="label-gray px-1">From</div>
+                <div class="label-name-large text-right"> Rs. {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="label-black-x-small  pb5 text-left">{{bus.availableSeats}} available
                 <ng-container *ngIf="bus.avlWindowSeats > 0"> ({{bus.avlWindowSeats}} Window) </ng-container>
             </div>
 
         </div>
-
     </div>
-    <div class="row pt-3 pl-6">
-        <!-- <span class="re-schedule"> 
-                            <span class="rat-im g"><img src="{{cdnUrl}}images/icons/Reschedulable.svg" ></span>
-                            <span class="rat-title">Reschedulable</span>
-                        </span> -->
-        <span class="live-tracking" *ngIf="bus.liveTrackingAvailable"> 
-                        <span class="rat-img"><img src="{{cdnUrl}}images/icons/live track.svg" ></span>
-        <span class="rat-title">Live Tracking</span>
-        </span>
-        <span class="live-tracking" *ngIf="bus.mTicketEnabled"> 
-                            <span class="rat-img"><img src="{{cdnUrl}}images/icons/mTicketEnabled.svg" ></span>
-        <span class="rat-title">M-ticket Supported</span>
-        </span>
-
+    <div class="row mt-2 row_0_margin d-flex align-items-center">
+        <hr class="m_div_hr">
     </div>
-    <button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>
+    <div class="row">
+        <div class="d-flex align-items-center">
+        <div>
+            <img src="{{cdnUrl}}images/icons/live track.svg" >
+            <span class="rat-text">Live Tracking</span>
+        </div>
+        <div>
+            <span class="rat-text"> | </span>
+        </div>
+        <div class="mx-2">
+            <img src="{{cdnUrl}}images/icons/mTicketEnabled.svg" >
+            <span class="rat-text">M-ticket Supported</span>
+        </div>
+    </div>
+    </div>
+    <!-- <button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button> -->
 </div>
 
 <ng-container>
@@ -297,38 +287,61 @@
             <app-loader></app-loader>
         </div>
         <ng-template #listng>
-            <div class="col-md-8 float-left layout-w" *ngIf="bus.rtc==false || rtcseatcall == true; else emptylayout">
+            <div class="col-md-12 float-left layout-w" *ngIf="bus.rtc==false || rtcseatcall == true; else emptylayout">
                 <!-- <ng-container *ngIf="show_dialog"> -->
                 <div id="tab-seats-new">
-                    <div class="position-absolute w-100">
-                        <div class="w-50 text-medium">{{bus.availableSeats}} Seats Available</div>
-                        <div class="text-small">Click on seat to select/ deselect</div>
+                    <div class="bus_seat_details">
+                    <div class="w-100">
+                        <div class="black_text_medium">{{bus.availableSeats}} Seats Available</div>
+                        <div class="gray_text_small">Click on seat to select/ deselect</div>
                     </div>
+                    <!-- static filter button -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="bus_details_filter">
+                                <li><button class="bus_details_filter_btn active">All ({{bus.availableSeats | number }})</button></li>
+                                <span class="bus_details_filter" *ngIf="pricesplit.length > 1">
+                                <li *ngFor="let price of pricesplit"><button class="bus_details_filter_btn">₹{{price.actfare | number }} ({{price.seattotal}})</button></li>
+                                </span>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end of static filter button -->
                     <div class="row pt-10">
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_empty.svg">
-                            <div class="xx-small-text">Available
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Available
                             </div>
                         </div>
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_selected.svg">
-                            <div class="xx-small-text"> Selected</div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Sleeper
+                            </div>
                         </div>
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_ladies_empty.svg">
-                            <div class="xx-small-text"> Reserved for Ladies</div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Booked By Others
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt"> Selected By You</div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt"> Available only for 
+                                female passenger</div>
                         </div>
 
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/seat_ladies.svg">
-                            <div class="xx-small-text">Reserved by Ladies
+                        <div class="col text-center">
+                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img"></div>
+                            <div class="check_status_txt">Available for male 
+                                passenger
                             </div>
                         </div>
-                        <div class="col">
-                            <img src="{{cdnUrl}}images/icons/bookedSeat.svg">
-                            <div class="xx-small-text">Occupied Seats</div>
-                        </div>
                     </div>
+                    </div>
+
                     <mat-tab-group mat-align-tabs="end" animationDuration="0ms">
                         <mat-tab label="All ({{bus.availableSeats | number }})">
                             <!-- <div class="errorMessage">{{maxSeatMessage}}</div> -->
@@ -484,22 +497,23 @@
     <!-- <ng-container *ngIf="show_dialog">  -->
     <div class="col-md-8 float-left layout-w" *ngIf="bus.rtc==true && rtcseatcall == false">Please select boarding & dropping points to continue</div>
 
-    <div class="col-md-4 detail-section float-left">
-        <div class="info text-gary" [ngClass]="{'errorred':showError}">Please select seat(s), boarding & dropping points to continue</div>
-        <mat-form-field class="w-100">
-            <mat-select placeholder="Boarding point">
+    <div class="col-md-4 mt-2">
+        <div class="bus_details_view_form">
+        <div class="gray_text_small" [ngClass]="{'errorred':showError}">Please select seat(s), boarding & dropping points to continue</div>
+        <mat-form-field class="w-100 bus_details_form">
+            <mat-select placeholder="Boarding point"  [ngClass]="'check'">
                 <mat-option *ngFor="let boardingpoints of boardingtimes" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)" [value]="boardingpoints.boardingPointId"><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 10px">({{boardingpoints.nextday | date:'dd LLL'}}) </span>{{boardingpoints.ctime}} : {{boardingpoints.location}} ({{boardingpoints.address}})</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="w-100">
+        <mat-form-field class="w-100 bus_details_form">
             <mat-select placeholder="Dropping point">
                 <mat-option *ngFor="let droppingTimes of droppingtimes" (click)="Boardingdroping('dropping',droppingTimes.boardingPointId,bus.id)" [value]="droppingTimes.boardingPointId"><span *ngIf="droppingTimes.nextday" style="color:red;font-size: 10px">({{droppingTimes.nextday | date:'dd LLL'}}) </span> {{droppingTimes.ctime}} : {{droppingTimes.location}} ({{droppingTimes.address}})</mat-option>
                 <mat-option *ngIf="droppingtimes.length==0" (click)="Boardingdroping('dropping','NA',bus.id)" [value]="params.queryParamMap.get('searchTo')">{{bus.arrivalTime | date:'HH:mm'}} : {{params.queryParamMap.get('searchTo')}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <div class="base-fare">
+        <div class="base-fare cntnt_center_div">
             <div *ngFor="let seats of seatdetails">
-                <div class="row">
+                <div class="row d-flex align-items-center">
                     <div class="float-left gray-medium col-7" *ngIf="seats">
                         <p> {{seats.totalseats}} seats @ {{seats.fare | number:'1.2-2'}} </p>
                         <p class="seat-numbers">{{seats.selseats}} </p>
@@ -508,20 +522,27 @@
                 </div>
                 <hr>
             </div>
-            <div class="float-left text-large">
-                <div class="total-heading"> Total Fare </div>
-                <div class="text-labels tax">(Includes Taxes)</div>
-            </div>
-            <div class="float-right black-medium"><span *ngIf="totalfare > 0; else zero"> Rs. {{totalfare | number:'1.2-2'}}</span>
+            <span class="float-left text-large">
+                <span class="total-heading"> Total Fare </span><br>
+                <span class="text-labels tax">(Includes Taxes)</span>
+            </span>
+            <span class="float-right black-medium d-flex align-items-center"><span *ngIf="totalfare > 0; else zero"> Rs. {{totalfare | number:'1.2-2'}}</span>
                 <ng-template #zero> Rs. {{totalfare}}</ng-template>
 
-            </div>
-            <button class="btn-primary mt-15" id="{{bus.id}}" (click)="onSubmitSeats(bus.id,bus,rowvalue)" [disabled]="buttonstatus">
-                                <ng-container *ngIf="rtcseatcall; else selseatbut">CONTINUE</ng-container>
-                                <ng-template #selseatbut><span [ngClass]="{'spinner-border spinner-border-sm': buttonstatus }"></span>  {{button2_name}}</ng-template> 
-                        </button>
+            </span>
+            
         </div>
+        </div>
+        <button class="btn-primary mt-15 w-100" id="{{bus.id}}" (click)="onSubmitSeats(bus.id,bus,rowvalue)" [disabled]="buttonstatus">
+            <ng-container *ngIf="rtcseatcall; else selseatbut">CONTINUE</ng-container>
+            <ng-template #selseatbut><span [ngClass]="{'spinner-border spinner-border-sm': buttonstatus }"></span>  {{button2_name}}</ng-template> 
+        </button>
+
+
+
     </div>
+
+
     <!-- </ng-container> -->
     </div>
 </ng-container>
@@ -658,26 +679,37 @@
                             </div>
                             <!-- <a class="info-m" hrref="#" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></a> -->
 
-                            <div class="fixed-f">
+                            <div class="fixed-f bg-white">
                                 <div class="row">
-                                    <div class="col" (click)="openBottomSheet()">
-                                        <div class="xs-text">Total</div>
-                                        <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> Rs.{{totalfare | number:'1.2'}}</span>
-                                            <ng-template #zero1> Rs. {{totalfare | number:'1.2'}}</ng-template>
-                                        </div>
+                                    <div class="col-6" (click)="openAmentiesmlite()">
+                                        <span class="blue_link float-start">Amenities & more</span>
                                     </div>
-                                    <div class="col p0" (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
-                                        <span class=""><i class="material-icons mobile-fare-info">error_outline</i></span>
+                                    <div class="col-6"  *ngIf="seatdetails.length > 0">
+                                        <span class="blue_link float-end">Fare Summary</span>
+                                    </div>
+                                </div>
+                                <hr class="my-2">
+                                <div class="row">
+                                    <div class="col-4" (click)="openBottomSheet()">
+                                        <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> ₹{{totalfare | number:'1.2'}}</span>
+                                            <ng-template #zero1> ₹{{totalfare | number:'1.2'}}</ng-template>
+                                        </div>
+                                        <div class="xs-text" *ngIf="seatdetails.length == 0">
+                                            <span>Select Seats</span>
+                                        </div>
+                                        <div (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
 
-                                        <div class="xs-text">Selected Seats</div>
                                         <div class="xs-text li-h">
                                             <span *ngFor="let seats of seatdetails;let lastRow=last;">{{seats.selseats}}<span *ngIf="!lastRow">,</span>
                                             </span>
 
                                         </div>
+
+                                        </div>
                                     </div>
-                                    <div class="col" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
-                                        <button class="btn-primary">CONTINUE</button>
+                                    
+                                    <div class="col-8" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
+                                        <button class="btn-primary w-100">CONTINUE</button>
                                     </div>
                                 </div>
                             </div>
@@ -704,6 +736,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </mat-tab>
 
                         <span *ngIf="pricesplit.length > 1">
@@ -864,38 +897,8 @@
 </ng-template>
 
 </mat-tab>
-<mat-tab label="Amenities">
-    <ul class="amenities-m">
-        <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
-        <li *ngFor="let amen of busamenities">
-            {{amen}} <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>
-        </li>
-    </ul>
-</mat-tab>
-<mat-tab label="Cancellation Policy">
-    <table class="table table-striped cancellation">
-        <thead>
-            <tr>
-                <th>Time of Cancellation</th>
-                <th class="text-center">Deduction %</th>
-                <th class="text-center">Cancellation Charges</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let cancel of retvalues">
-                <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
-                <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                <td class="text-center"> Rs. {{cancel.cancharges}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <p class="cancel-text" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
-    <ng-template #noPartial>
-        <p class="cancel-text">
-            <b>Partial cancellation not allowed</b>
-        </p>
-    </ng-template>
-</mat-tab>
+
+
 </mat-tab-group>
 </div>
 <div class="seat-info-m" *ngIf="seatinfo">
@@ -935,6 +938,7 @@
       </ol> -->
 
 <!-- Mobile Boarding & Dropping -->
+
 <div class="mobile-boarding-dropping" *ngIf="showBoardDrop">
     <div class="boarding-back-title-smartbuy" *ngIf="domainName=='SMARTBUY'">
         <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
@@ -960,8 +964,86 @@
         <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
         <div>{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</div>
     </div>
-    <mat-tab-group #tabGroup [selectedIndex]="selected" (selectedIndexChange)="tabSelectionChanged($event)" style="height: 80%">
-        <mat-tab label="Boarding Point">
+
+    <div class="mob-sf-tabs bg-white">
+    <ul class="nav nav-tabs m-popup-tabs mt-5 ">
+        <li>
+            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab">Boarding Points</a>
+        </li>
+        <li class="nav-item">
+            <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab">Dropping Points</a>
+        </li>
+    </ul>
+    <div class="tab-content clearfix">
+        <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab">
+            <div class="m-bordng-drpng-div">
+            <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
+            
+            <label *ngFor="let boardingpoints of boardingtimes" for="{{boardingpoints.boardingPointId}}" class="radio" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)">
+                <div class="#">
+                <table>
+                    <tr> 
+                      
+                        <td><input type="radio" name="mobile-boarding" id="{{boardingpoints.boardingPointId}}" class="hidden" #selectAfterAdding (click)="changeTab(selectAfterAdding.checked)"/>
+                            <span class="label"></span> </td>
+                    
+                        <td><p class="b-time">{{boardingpoints.ctime}}</p></td>
+                        <td><p class="b-place-one">{{boardingpoints.location}}</p></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 10px" class="">({{boardingpoints.nextday | date:'dd LLL'}}) </span></td>
+                        <td><p class="b-place-two">{{boardingpoints.address}}<span *ngIf="boardingpoints.landmark !=boardingpoints.address"> ,{{boardingpoints.landmark}}</span></p></td></tr>
+                </table>
+                </div>
+            </label>
+            </div>
+        </div>
+        <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab">
+        <div class="m-bordng-drpng-div">
+                        <div class="info text-gary" *ngIf="showErrorDropping" [ngClass]="{'errorred':showErrorDropping}">Please select boarding & dropping points to continue</div>
+
+            <label *ngFor="let droppingtimes of droppingtimes" for="{{droppingtimes.boardingPointId}}" class="radio" (click)="Boardingdroping('dropping',droppingtimes.boardingPointId,bus.id)">
+                        <div class="#">
+                        <table>
+                            <tr>
+                                <td ><input type="radio" name="mobile-boarding1" id="{{droppingtimes.boardingPointId}}" class="hidden"/>
+                                    <span class="label"></span> </td>
+                                    <td class="text-left"> <p class="b-time">{{droppingtimes.ctime}}</p></td>
+                                    <td class="text-left"><p class="b-place-one">{{droppingtimes.location}}</p></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><span *ngIf="droppingtimes.nextday" style="color:red;font-size:10px" class="">({{droppingtimes.nextday | date:'dd LLL'}}) </span></td>
+                                <td><p class="b-place-two">{{droppingtimes.address}}<span *ngIf="droppingtimes.landmark !=droppingtimes.address"> ,{{droppingtimes.landmark}}</span></p></td></tr>
+                        </table>
+                        </div>
+                    </label>
+            <label *ngIf="droppingtimes.length==0" for="DNA" class="radio" (click)="Boardingdroping('dropping','NA',bus.id)">
+                        <input type="radio" name="mobile-boarding1" id="DNA" class="hidden"/>
+                        <span class="label"></span>
+                        <span class="">
+                        <span class="b-time">{{bus.arrivalTime | date:'HH:mm'}}</span>
+                        <p class="d-inline">
+                                <span class="b-place-one">{{params.queryParamMap.get('searchTo')}}</span> 
+                                <span class="b-place-two"></span>
+                        </p>
+                        </span>
+                    </label>
+        </div>
+            <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+            <ng-template #noPartial>
+                <p class="cancel-text mt-2 mb-2">
+                    <b>Partial cancellation not allowed</b>
+                </p>
+            </ng-template>
+
+        </div>
+    </div>
+    </div>
+
+    <mat-tab-group #tabGroup [selectedIndex]="selected" (selectedIndexChange)="tabSelectionChanged($event)">
+        <!-- <mat-tab label="Boarding Point">
             <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
             <label *ngFor="let boardingpoints of boardingtimes" for="{{boardingpoints.boardingPointId}}" class="radio" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)">
                         <div class="#">
@@ -1013,9 +1095,79 @@
                         </p>
                         </span>
                     </label>
-        </mat-tab>
+        </mat-tab> -->
     </mat-tab-group>
-    <div class="boarding-footer">
-        <button class="btn-primary btn" [disabled]="bookButtonDisable" (click)="onSubmitSeats(bus.id,bus,rowvalue,mobile=true)">Book</button>
+    <div class="boarding-footer bg-white">
+        <button class="btn-primary btn w-100" [disabled]="bookButtonDisable" (click)="onSubmitSeats(bus.id,bus,rowvalue,mobile=true)">Book</button>
     </div>
+
 </div>
+
+
+
+
+
+                                <!-- amenities modal popup -->
+                                <div class="mob-sf-area" id="Mobileamenities" style="left:0;">
+
+                                    <div class="mob-sf-box">
+                                        <div class="mob-title">
+                                            <h3>More about the bus</h3>
+                                            <a href="javascript:void(0)" (click)="closeAmenitiesmlite()" class="mob-close mob-ff-from-close">
+                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="mob-sf-tabs ">
+                                            <ul class="nav nav-tabs m-popup-tabs">
+                                                <li>
+                                                    <a class="active" href="#amenities" role="tab" aria-controls="amenities" data-bs-toggle="tab">Amenities</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#policy" role="tab" aria-controls="policy" data-bs-toggle="tab">Cancellation Policy</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content clearfix">
+                                                <div class="tab-pane active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+
+                                                    <ul class="amenities-m">
+                                                        <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
+                                                        <li *ngFor="let amen of busamenities">
+                                                             <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="tab-pane" id="policy" role="tabpanel" aria-labelledby="policy-tab">
+                                                <div class="m-policy-tbl">
+                                                    <table class="table table-bordered ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="33%">Time of Cancellation</th>
+                                                                <th width="33%">Deduction %</th>
+                                                                <th width="33%">Cancellation Charges</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let cancel of retvalues">
+                                                                <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
+                                                                <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
+                                                                <td class="text-center"> Rs. {{cancel.cancharges}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                    <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+                                                    <ng-template #noPartial>
+                                                        <p class="cancel-text mt-2">
+                                                            <b>Partial cancellation not allowed</b>
+                                                        </p>
+                                                    </ng-template>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- end of amenties modal pop up  -->
+
+

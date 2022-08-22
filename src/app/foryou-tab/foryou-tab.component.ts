@@ -44,6 +44,9 @@ public modeselectTrending= 'All';
   customercards: any; primaryCust: any;
   selectedCardDetails: any;
   customeravailablepoints: any;
+  card_no: any;
+  current_available_points: any;
+  last_stmt_points: any;
   errorMsg0: any = "";
   XSRFTOKEN: string;
   response1: any = [];
@@ -106,8 +109,7 @@ public modeselectTrending= 'All';
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
     this.poweredByPartners = this.serviceSettings.poweredByPartners;
-    //console.log((this.poweredByPartners));
-    
+    this.customercards=this.sg['customerInfo']['customercards'];
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
@@ -126,7 +128,6 @@ public modeselectTrending= 'All';
    // this._styleManager.removeScript('owl');
   }
   onlyNumberKey(event,maxlenth) {
-      console.log($(event.target).prop('value').length);
       if($(event.target).prop('value').length>=maxlenth){
         return false;
        } 
@@ -136,7 +137,8 @@ public modeselectTrending= 'All';
     this.angForm = this.fb.group({
        mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
        last_4_digit: ['', [Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
-       dob: ['', Validators.required ]
+       dob: ['', Validators.required ],
+       save_card: [''],
     });
   }
  loadTopBanner(l) {
@@ -239,11 +241,6 @@ public modeselectTrending= 'All';
     
       this.createForm();
      setTimeout(() => {
-     
-     
-    //Check Laravel Seesion
-        console.log('customerInfo');   
-        console.log(this.sg['customerInfo']);
         if(this.sg['customerInfo']){
          var customer_cookie;
           if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
@@ -269,7 +266,11 @@ public modeselectTrending= 'All';
           this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
           this.rest.updateCardDetails(this.customerInfo);
           if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
-            this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
+            this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
+            this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
+            this.card_no="xx"+(Number(this.customerInfo['ccustomer'].last4digit));
+            this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
+            //this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
             this.IsPointsCardDetails=false;
             this.IsPointsCardDetailsModel=true;
            }
@@ -604,14 +605,13 @@ public modeselectTrending= 'All';
           }
         }), (err: HttpErrorResponse) => {
           var message = 'Something went wrong';
-          console.log(message);
         };
       }
     }
   }
 
   selectedCard(e) {
-    this.selectedCardDetails = e.value;
+    this.selectedCardDetails = e.target.value;
     this.checkAvailablePointsforSavedCard();
   }
 
@@ -719,6 +719,8 @@ public modeselectTrending= 'All';
       if (this.response1['status'] != undefined && (this.response1['status'] == true || this.response1['status'] == 'true')) {
         this.errorMsg0 = ""
         this.customeravailablepoints = (Number(this.response1['points_available'])).toLocaleString('en-IN');
+        this.current_available_points = (Number(this.response1['current_available_points'])).toLocaleString('en-IN');
+        this.last_stmt_points = (Number(this.response1['points_available'])).toLocaleString('en-IN');
 
       } else {
         this.errorMsg0 = "Something went wrong";
@@ -759,7 +761,6 @@ public modeselectTrending= 'All';
 
     }), (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
-      console.log(message);
     };
   }
 
@@ -933,7 +934,7 @@ public modeselectTrending= 'All';
          return false; 
        }
        this.customerInfo = this.sg['customerInfo'];
-       console.log(this.customerInfo);
+       this.card_no=this.angForm.controls['last_4_digit'].value;
        this.IsCardError=true;
        let URLparams = {
           "mobile": this.angForm.controls['mobile_no'].value,
@@ -942,19 +943,18 @@ public modeselectTrending= 'All';
           "last4digit":this.angForm.controls['last_4_digit'].value,
           "_token":this.customerInfo["XSRF-TOKEN"],
           "DOB":this.angForm.controls['dob'].value,
-          "savecard":1,
           "user_id":this.customerInfo["id"],
           'modal':'REWARD',
           'type' : 'available_points',
           'clientToken':this.sg['domainName'],
           'services_id':7,
           'partner_id':1,
+          'savecard':this.angForm.controls['save_card'].value,
         }
         var EncURLparams = {
           postData: this.EncrDecr.set(JSON.stringify(URLparams))
         };
         this.rest.AvailablePoints(EncURLparams).subscribe(res => {
-         console.log(res); 
          if(res.error_code=="100"){
             document.getElementById('unlockCardPopup').click();
             this.IsPointsCardDetails=false;
@@ -962,6 +962,8 @@ public modeselectTrending= 'All';
             this.angForm.reset();
             this.spinnerService.show();  
             this.customeravailablepoints=res.points_available;
+            this.current_available_points=res.current_available_points;
+            this.last_stmt_points=res.last_stmt_points;
           }else{
                this.IsCardError=false;
                this.CardErrorMsg=res.message;
