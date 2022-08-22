@@ -114,7 +114,7 @@
                         <div>
                             <div class="duration_train">
                                 <p class="dur_time">13 hrs 35 mins</p>
-                                <div class="range"></div>
+                                <div class="range m_range"></div>
                             </div>
                         </div>
                         <div>
@@ -216,7 +216,7 @@
         </form>   
 
           <div class="traveler-details mb-100">
-            <div class="d-grid gap-2 d-md-block">
+            <div class="gap-2 d-md-block">
               <button class="btn btn-primary btn-w" (click)="submitBookingInfo()">Continue</button>
               <button class="btn btn-primary-outline btn-w ms-3">Back</button>
             </div>
@@ -702,7 +702,7 @@
                   
                    <div class="my-2 p-3">
 
-                    <div class="add_new_traveler" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
+                    <div class="add_new_traveler mb-10" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
                       <p class="title pb-10">Traveller Adult details</p>
                       
                       <!--Manaual Passenger Adult-->
@@ -886,7 +886,7 @@
 
               <div class="traveller-addbox-details traveller-infants-details">
                 <div class="p-3">
-                  <div class="add_new_traveler" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
+                  <div class="add_new_traveler mb-10" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
                     <p class="title pb-10">Traveller Infant details</p>
     
                     <div *ngIf="travellersArrayM.length>0">
@@ -965,7 +965,7 @@
         <div>
         
         
-            <div class="contact-details booking-inner-box " *ngIf="showDestAddressBox">
+            <div class="contact-details booking-inner-box destination_details_train" *ngIf="showDestAddressBox">
                 <div class="contact-header traveller-person-left">
                    <h6 class="des_title">Your Destination Address</h6>
                    <!-- <p>Your ticket and PNR number will be sent to</p> -->
@@ -1394,8 +1394,215 @@
       <!--Step3 Starts-->
       <div class="col-md-8" *ngIf="steps==3">
       
-     Review Booking
-       
+          <div>
+
+            <div class="booking-process-content" >
+              <div class="booking-title-box">
+                <h4 class="heading_text">Mumbai to Hyderabad <p class="sub_head_text"> <span
+                  class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
+                      src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                </h4>
+              </div>
+              <div class="booking-inner-box from-to-box">
+                
+                    <div class="row">
+    
+                      <div class="col-sm-4">
+                        <p class="train_name">
+                          LTT VSKP EXP(18520)
+                        </p>
+                        <p class="daily_chart">
+                            <span class="text-small-gray" style="color:#000000;">Runs on:</span>
+                            <span >S</span>
+                            <span >M</span>
+                            <span >T</span>
+                            <span >W</span>
+                            <span >T</span>
+                            <span class="active">F</span>
+                            <span >S</span>
+                        </p>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="trainTimeInfo">
+                            <div class="">
+                                <p><span class="time">06:05, Sat</span></p>
+                                <p class="place">Lokmantatilak (LTT) </p>
+                                <p class="date">Jul 17, 2022</p>
+                            </div>
+                            <div>
+                                <div class="duration_train">
+                                    <p class="dur_time">13 hrs 35 mins</p>
+                                    <div class="range m_range"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <p><span class="time">20:30, Sun</span> </p>
+                                <p class="place">Secunderabad Jn (SC)</p>
+                                <p class="date">Jul 17, 2022</p>
+                            </div>
+                          </div>
+                      </div>
+    
+                    </div>
+                    <div class="row mt-40">
+    
+                      <div class="col-sm-4">
+                        <p class="train_title_label"> Availability Status </p>
+                        <div class="common_box">
+                          <div>
+                            <p class="ava_status"><span class="coach">SL</span> <span class="list">PQWL106/WL81</span></p>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="col-sm-8">
+                                        <!--Show bording stations-->
+                        <p class="train_title_label"> Boarding station </p>
+                        <div class="">
+                          <div class="boarding_point">
+                            <div class="common_box">
+                              <div>
+                                <p class="ava_status"> <span class="list">Lokmanyatilak t (lTT) - 1:20 PM (11 Aug)</span></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="train-schedule-time">
+                            <span>Scheduled time: <span>{{scheduletime}}</span> </span>
+                          </div>
+                          
+                        </div>
+                      </div>
+    
+                    </div>
+    
+              </div>
+    
+              
+            </div>
+              
+    
+              
+              
+              
+            </div>
+
+            <div class="booking-process-content contact_review">
+              <div class="booking-title-box mb-0">
+                <h4 class="heading_text">Contact Details <p class="sub_head_text ps-3">(for all communication) <span
+                      class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
+                          src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                </h4>
+              </div>
+              <div class="booking-inner-box from-to-box">
+                <div class="">
+                  <div class="row gy-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                      <p class="label_text">Email</p>
+                      <p class="label_value">{{contactDatails.email}}</p>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                      <p class="label_text">Mobile Number</p>
+                      <p class="label_value">{{contactDatails.mobile}}</p>
+                    </div>
+                  </div>
+    
+                  <div class="contact-whatsapp">
+                    <div class="contact-whatsapp-info me-2">
+                      <span>Send my booking information through</span>
+                      <img src="{{cdnUrl}}/images/icons/whatsapp.png" class="ms-2" alt="">
+                      <span class="fw_7">WhatsApp</span>
+                    </div>
+                    <div class="form-check form-switch m-0 ">
+                      <input class="form-check-input" type="checkbox" role="switch" disabled [checked]="whatsAppCheck" />
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+    
+            </div>
+            <div class="booking-process-content traveller_review">
+              <div class="booking-title-box mb-0">
+    
+    
+                <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
+                      Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span> <span
+                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> <span class="ps-1">
+                      <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{cdnUrl}}/images/icons/edit.png"
+                          alt=""></a></span></p>
+                </h4>
+              </div>
+              <div class="booking-inner-box from-to-box">
+                <div class="p-2">
+                  <div>
+                    <h6>{{travelerDetails.adults}} Adults</h6>
+                    <table class="table  traveller_table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="col-6">Name</th>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                          <th scope="col">Birth Preference</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let adult of paxInfo;let i = index">
+                          <tr *ngIf="adult.type=='ADT'">
+                            <td>Amit Kumar</td>
+                            <td>21</td>
+                            <td>Male</td>
+                            <td>Window side</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- <div *ngIf="travelerDetails.child > 0">
+                    <h6>{{travelerDetails.child}} Child</h6>
+                    <table class="table  traveller_table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="col-6">Name</th>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let adult of paxInfo;let i = index">
+                          <tr *ngIf="adult.type=='ADT'">
+                            <td>Amit Kumar</td>
+                            <td>6 months</td>
+                            <td>Male</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div> -->
+                  <div *ngIf="travelerDetails.infants > 0">
+                    <h6>{{travelerDetails.infants}} Infant</h6>
+                    <table class="table  traveller_table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="col-6">Name</th>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let adult of paxInfo;let i = index">
+                          <tr *ngIf="adult.type=='ADT'">
+                            <td>Amit Kumar</td>
+                            <td>6 months</td>
+                            <td>Male</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+    
+            </div>
       </div>
       <!--Step3 Ends-->
 

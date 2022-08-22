@@ -1086,7 +1086,21 @@ list-component:last-child {
         font-size: 10px;
     }
 }
-
+.seatLayout_structure{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    width: 100%;
+    div.layout{
+        padding: 25px 20px;
+        background: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 1rem;
+        width: 50%;
+    }
+}
 .lower-bus,
 .upper-bus {
     float: left;
@@ -1095,11 +1109,17 @@ list-component:last-child {
     // margin-left: 5px;
     border: 1px solid #f2f2f2;
     background-color: $color-white;
-    width: 100%;
+    /* width: 100%;
     position: relative;
     overflow-x: auto;
-    max-height: 275px;
-    min-height: 250px;
+    max-height: 275px; */
+    min-height: 100vh; 
+    transform: rotate(90deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    
     @media screen and (max-width: 1024px) and (min-width: $break-md-tab) {
         overflow-x: auto;
     }
@@ -1732,4 +1752,10 @@ right:27px;
         border-radius:5px;
         margin:10px;
         padding:10px 15px;
+    }
+
+    .seat_label{
+        img{
+            transform: rotate(-90deg);
+        }
     }
