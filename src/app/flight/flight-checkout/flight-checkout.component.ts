@@ -2287,11 +2287,11 @@ orderRetry:boolean=false;
         res= JSON.parse(this.EncrDecr.get(res.result));
         }else{
         clearInterval(myInterval3);
-
         setTimeout(() => {
         $('#infoprocess').modal('hide');
         $('#bookingprocessFailed').modal('show');
         }, 10);
+        return;
         }
     
     
@@ -2481,20 +2481,34 @@ orderRetry:boolean=false;
                 if (res.response && res.response.returnFlightDetails && res.response.returnFlightDetails.bg.length > 0)
                 baggage_data.push( res.response.returnFlightDetails.bg);
 
-
-
                 this.baggagePolicy(baggage_data);
-
             
             if (partner == 'Easemytrip')
              this.emt_cancellationPolicy('onward');
 
             
+          }else{
+        clearInterval(myInterval3);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 10);
+        return;
           }
         } else {
           /**International**/
-          console.log(res.response);
-           console.log(partner);
+
+     
+        if (res.response && res.response.flight_details && res.response.flight_details.fareKey) { }else{
+        clearInterval(myInterval3);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 10);
+        return;
+        }
+     
+     
           if (partner == 'Yatra') {
             if (res.response.flight_details.fare.O) {
               if (res.response.flight_details.fare.O.ADT) {
@@ -2559,6 +2573,10 @@ orderRetry:boolean=false;
 
           if (res.response && res.response.flight_details.bg.length > 0)
             this.baggageInfoOnward = res.response.flight_details.bg;
+            
+            console.log(res.response.flight_details);
+            
+            this.baggagePolicy(res.response.flight_details.bg);
 
           if (partner == 'Easemytrip' && res.response && res.response.flight_details.cancellationPolicy)
          this.emt_cancellationPolicy('onward');
@@ -2597,25 +2615,30 @@ orderRetry:boolean=false;
   }
   
         baggageInfo:any;
-        baggagePolicy(data){
         
-        console.log(this.searchData);
-        console.log(data);
-        /*
-        let airlineCode;
-        if(this.onwardAirlineMulti_multi[i])
+        baggagePolicy(data){
+        let airlineCode;   let airlineCodeR;
+        if(this.onwardAirlineMulti)
         airlineCode='Multi';
         else
-        airlineCode=this.onward_airline_array_multi[0];
-        */
+        airlineCode=this.onward_airline_array[0];
+        
+        
+        if(this.returnAirlineMulti)
+        airlineCodeR='Multi';
+        else
+        airlineCodeR=this.return_airline_array[0];
 
-        this.baggageInfo= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">
-        <ul class="nav nav-tabs travelTab" role="tablist">`;
+        this.baggageInfo= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">`;
+        
+         if(this.searchData['travel'] !='INT'){
+        
+         this.baggageInfo+= `<ul class="nav nav-tabs travelTab" role="tablist">`;
         
         this.baggageInfo+= `<li role="presentation" >
         <a data-bs-target="#baggagetab" aria-controls="baggagetab" role="tab" data-bs-toggle="tab" aria-expanded="true" class="active" >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/6E.gif"     alt="6E" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="6E" class=" mr-10"></div>
         <div class="rules-flight-content">
         <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightto']+`</h6>
         </div>
@@ -2625,9 +2648,9 @@ orderRetry:boolean=false;
         
         if(this.searchData['flightdefault']=='R'){
         this.baggageInfo+= `<li role="presentation" >
-        <a data-bs-target="#baggagetab" aria-controls="baggagetab" role="tab" data-bs-toggle="tab" aria-expanded="true"  >
+        <a data-bs-target="#baggagetabR" aria-controls="baggagetabR" role="tab" data-bs-toggle="tab" aria-expanded="true"  >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/6E.gif"     alt="6E" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCodeR+`.gif"     alt="6E" class=" mr-10"></div>
         <div class="rules-flight-content">
         <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightfrom']+`</h6>
         </div>
@@ -2637,12 +2660,79 @@ orderRetry:boolean=false;
         }
         
         this.baggageInfo+= `</ul>`;
+        }
+        
         this.baggageInfo+= `<div class="tab-content">`;
-        this.baggageInfo+= `<div role="tabpanel" class="tab-pane fade active show" id="baggagetab">sssssss`;
+        
+        this.baggageInfo+= `<div role="tabpanel" class="tab-pane fade active show" id="baggagetab">`;
+        this.baggageInfo+= `<table class="table-bordered table-content w-100">
+        <tbody>
+        <tr>
+        <td>
+        <p class="fw_6 fs_13">Airline</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Check-in Baggage</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Cabin Baggage</p>
+        </td>
+        </tr>`;
+        
+         for(var i=0;i<this.baggageInfoOnward.length;i++){ 
+         this.baggageInfo+= `<tr >
+        <td>
+        <p class="opacity_05">`+this.baggageInfoOnward[i].flightName+`<br>`+this.baggageInfoOnward[i].flightNo+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnward[i].checkIn+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnward[i].cabin+`</p>
+        </td>
+        </tr>`;
+        }
+         this.baggageInfo+= `</tbody>
+        </table>`;
+        this.baggageInfo+= `</div>`;
+        
+        if(this.searchData['flightdefault']=='R'){  
+        this.baggageInfo+= `<div role="tabpanel" class="tab-pane fade " id="baggagetabR">`;
+        this.baggageInfo+= `<table class="table-bordered table-content w-100">
+        <tbody>
+        <tr>
+        <td>
+        <p class="fw_6 fs_13">Airline</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Check-in Baggage</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Cabin Baggage</p>
+        </td>
+        </tr>`;
+        
+         for(var i=0;i<this.baggageInfoReturn.length;i++){ 
+         this.baggageInfo+= `<tr >
+        <td>
+        <p class="opacity_05">`+this.baggageInfoReturn[i].flightName+`<br>`+this.baggageInfoReturn[i].flightNo+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoReturn[i].checkIn+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoReturn[i].cabin+`</p>
+        </td>
+        </tr>`;
+        }
+         this.baggageInfo+= `</tbody>
+        </table>`;
+        this.baggageInfo+= `</div>`;
+        }
+        
+        
         this.baggageInfo+= `</div>`;
         this.baggageInfo+= `</div>`;
-        this.baggageInfo+= `</div>`;
-
   
        }
   
