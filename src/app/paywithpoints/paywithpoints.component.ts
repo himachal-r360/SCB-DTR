@@ -56,6 +56,8 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  // amount:number;
  orderamount:number;
  redemptionMsg:any;
+ cardmobile:any;
+ carddob:any;
  redemption_value:any;
  voucherOtp:Boolean=false;
  otpaccepted:Boolean=false;
@@ -284,6 +286,8 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         var card_type=this.response1['card_type'];
         this.CcCharges = this.response1['CcCharges'];
         this.pointData = this.response1;
+        this.cardmobile = this.response1['mobile'];
+        this.carddob = this.response1['dob'];
         this.setSlider();
         // this.intitialconversionptoc();
       }else{
@@ -345,16 +349,29 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     }else{
       this.submittedotpform=false;
       this.otpaccepted = false;
-    //need to change as per api
-    var request = {
-      "takecard":this.selectedCardDetails.id,
-      "amount":this.orderamount,
-      "ctype":this.ctype,
+       let URLparams = {
+      "mobile": this.cardmobile,
+      "customer_id": this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
-      "_token":this.XSRFTOKEN
-    };
+      "last4digit":this.selectedCardDetails.card.slice(-4),
+      "_token":this.sg["customerInfo"]["XSRF-TOKEN"],
+      "DOB":this.carddob,
+      "savecard":1,
+      "user_id":this.sg["customerInfo"]["id"],
+    }
+      this.otpGenerate(URLparams);
+   
+  }    
+  }
+    otpGenerate(URLparams:any){
+     //need to change as per api
+    // let request = {
+    //   "takecard":this.selectedCardDetails.id,
+    //   "customer_id": this.REWARD_CUSTOMERID,
+    //   "programName":this.sg['domainName']
+    // }
     var passData = {
-      postData: this.EncrDecr.set(JSON.stringify(request))
+      postData: this.EncrDecr.set(JSON.stringify(URLparams))
     };
         this.pay.generateVoucherOtp(passData).subscribe(response => {
         if(response.reward_message='successful'){
@@ -372,15 +389,41 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       
     };
   }
-    
-  }
    OTPVerification(){
     this.submittedFormotpvalidate=true;
     if (this.Formotpvalidate.status !='VALID') {
       return;
     }else{
-      console.log('validated');
+       let URLparams = {
+          "mobile": this.cardmobile,
+          "customer_id": this.sg["customerInfo"]["customerid"],
+          "programName":this.sg['domainName'],
+          "last4digit":this.selectedCardDetails.card.slice(-4),
+          "passwordValue":this.Formotpvalidate.controls['otp'].value,
+          "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
+        }
+      this.otpVerify(URLparams);
     }
+  }
+  otpVerify(URLparams:any){
+     
+         var passData = {
+        postData: this.EncrDecr.set(JSON.stringify(URLparams))
+      };
+       this.pay.otp_validation(passData).subscribe(resp =>{
+  if(typeof resp.status != undefined && resp.status){
+        //validate otp success
+      }else{
+
+     //validate otp fail
+
+    } 
+   
+       }),(err:HttpErrorResponse)=>{
+         alert("Something went wrong, please try again");
+        //this.router.navigate([this.sg['domainPath'] + 'milestone']);
+         
+    };
   }
     handleEvent($event,ref){
    // console.log($event);
