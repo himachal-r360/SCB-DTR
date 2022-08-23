@@ -44,7 +44,7 @@
                                                 formControlName="adults" size="4" pattern="" inputmode=""
                                                 [(ngModel)]="flightData.value.adults">
                                             <input type="button" (click)="increaseAdult()" value="+"
-                                                [disabled]="disableParent" class="qty-buttons plus">
+                                                [disabled]="disableParent" class="qty-buttons plus" >
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                                 pattern="" formControlName="infants"
                                                 [(ngModel)]="flightData.value.infants" inputmode="">
                                             <input type="button" (click)="increaseInfant()" [disabled]="disableinfants"
-                                                value="+" class="qty-buttons plus">
+                                                value="+" class="qty-buttons plus" id="checkInfantsStatus">
                                         </div>
                                     </div>
                                 </div>
@@ -136,8 +136,8 @@
 
 
                             <div class="flight-from-data flight-from-hide ff-form-data dropdown">
-                                <div class="mob-title">
-                                    <h3>Select From City</h3>
+                                <div class="mob-title" *ngIf="isMobile">
+                                    <h3 >Select From City</h3>
                                     <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile">
                                         <img src="{{cdnUrl}}/images/icons/close.png" (click)="onClose()"
                                             class="close-mobile" alt="" />
@@ -196,11 +196,11 @@
                                             (click)="onFromClick(fromFlightOptions,isMobile)">
                                             <div class="flight-from-name">
                                                 <h6>{{fromFlightOptions._source.city}},
-                                                    {{fromFlightOptions._source.country}}</h6>
+                                                    {{fromFlightOptions._source.country}} ({{fromFlightOptions._source.airport_code}})</h6>
                                                 <p>{{fromFlightOptions._source.airport_name}} </p>
                                             </div>
                                             <div class="flight-from-shortname">
-                                                <h6>{{fromFlightOptions._source.airport_code}}</h6>
+                                                <h6 class="d-none">{{fromFlightOptions._source.airport_code}}</h6>
                                             </div>
                                         </a>
                                     </li>
@@ -232,8 +232,8 @@
 
 
                             <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
-                                <div class="mob-title">
-                                    <h3>Select To City</h3>
+                                <div class="mob-title" *ngIf="isMobile">
+                                    <h3 >Select To City</h3>
                                     <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile">
                                         <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
                                     </a>
@@ -282,11 +282,11 @@
                                         <a class="flight-from-ul-li-a" (click)="onToClick(toFlightOptions,isMobile)">
                                             <div class="flight-from-name">
                                                 <h6>{{toFlightOptions._source.city}},
-                                                    {{toFlightOptions._source.country}}</h6>
+                                                    {{toFlightOptions._source.country}} ({{toFlightOptions._source.airport_code}})</h6>
                                                 <p>{{toFlightOptions._source.airport_name}} </p>
                                             </div>
                                             <div class="flight-from-shortname">
-                                                <h6>{{toFlightOptions._source.airport_code}}</h6>
+                                                <h6 class="d-none">{{toFlightOptions._source.airport_code}}</h6>
                                             </div>
                                         </a>
                                     </li>
@@ -566,7 +566,7 @@
                             <div class="mob-filter-travellers"
                                 [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
                                 <div class="mob-title">
-                                    <h3>Preferred Airline</h3>
+                                    <h3>Select Travellers & Class</h3>
                                     <a class="mob-close mob-preferred-airline-close" (click)="closeTravllerBlock()">
                                         <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                     </a>
@@ -641,7 +641,7 @@
                                                             [(ngModel)]="flightData.value.infants" inputmode="">
                                                         <input type="button" (click)="increaseInfant()"
                                                             [disabled]="disableinfants" value="+"
-                                                            class="qty-buttons plus">
+                                                            class="qty-buttons plus" id="checkInfantsStatus">
                                                         <!-- <input type="button" value="-" class="qty-buttons minus">
                                                       <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
                                                       <input type="button" value="+" class="qty-buttons plus"> -->
@@ -717,14 +717,8 @@
                   <span class="select-roottitle">FROM</span>
                   <h5 class="fw_6 ">{{multicitySearchData[0].fromCity}}</h5>
                   <span class="select-roottitle">{{multicitySearchData[0].fromAirportName}}</span>
-
-                      <!-- <mat-error *ngIf="submitted && item.get('flightfrom').errors && item.get('flightfrom')hasError('required')"> <small
-                              class="validate-msg"> Please select from city.</small></mat-error> -->
-                          <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('flightfrom').errors?.required"> <small
-                              class="validate-msg"> Please select departure date.</small></mat-error>        -->
-
                           <div class="flight-from-data flight-from-hide ff-form-data dropdown">
-                              <div class="mob-title">
+                              <div class="mob-title" *ngIf="isMobile">
                                   <h3>Select From City</h3>
                                   <a href="javascript:void(0)"
                                   class="mob-close mob-ff-from-close close-mobile">
@@ -788,11 +782,11 @@
                           (click)="onFromClick(fromFlightOptions,isMobile,item,i)">
                                   <div class="flight-from-name">
                                       <h6>{{fromFlightOptions._source.city}},
-                                          {{fromFlightOptions._source.country}}</h6>
+                                          {{fromFlightOptions._source.country}} ({{fromFlightOptions._source.airport_code}})</h6>
                                           <p>{{fromFlightOptions._source.airport_name}} </p>
                                       </div>
                                       <div class="flight-from-shortname">
-                                          <h6>{{fromFlightOptions._source.airport_code}}</h6>
+                                          <h6 class="d-none">{{fromFlightOptions._source.airport_code}}</h6>
                                       </div>
                                   </a>
                           </li>
@@ -815,7 +809,7 @@
                         <small class="validate-msg">Please select to city</small>
                     </mat-error> -->
                     <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
-                        <div class="mob-title">
+                        <div class="mob-title" *ngIf="isMobile">
                             <h3>Select To City</h3>
                             <a href="javascript:void(0)"
                                 class="mob-close mob-ff-from-close close-mobile">
@@ -876,11 +870,11 @@
                                     (click)="onToClick(toFlightOptions,isMobile,item,i)">
                                     <div class="flight-from-name">
                                         <h6>{{toFlightOptions._source.city}},
-                                            {{toFlightOptions._source.country}}</h6>
+                                            {{toFlightOptions._source.country}} ({{toFlightOptions._source.airport_code}})</h6>
                                         <p>{{toFlightOptions._source.airport_name}} </p>
                                     </div>
                                     <div class="flight-from-shortname">
-                                        <h6>{{toFlightOptions._source.airport_code}}</h6>
+                                        <h6 class="d-none">{{toFlightOptions._source.airport_code}}</h6>
                                     </div>
                                 </a>
                             </li>
@@ -954,7 +948,7 @@
 
 
                                             <div class="flight-from-data flight-from-hide ff-form-data dropdown">
-                                                <div class="mob-title">
+                                                <div class="mob-title" *ngIf="isMobile">
                                                     <h3>Select From City</h3>
                                                     <a href="javascript:void(0)"
                                                     class="mob-close mob-ff-from-close close-mobile">
@@ -978,7 +972,7 @@
                                                         <input type="hidden" formControlName="fromContry">
                                                         <input type="hidden" formControlName="fromAirportName">
                                                     </div>
-                                                    <div class="mob-search-list">
+                                                    <!-- <div class="mob-search-list">
                                                         <label for="">To</label>
                                                         <input type="text" autocomplete="off" class="w-100"
                                                             placeholder="Search City" name="toCity"
@@ -987,7 +981,7 @@
                                                             <input type="hidden" formControlName="flightto">
                                                             <input type="hidden" formControlName="toContry">
                                                         <input type="hidden" formControlName="toAirportName">
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -1018,11 +1012,11 @@
                                             (click)="onFromClick(fromFlightOptions,isMobile,item,i)">
                                                     <div class="flight-from-name">
                                                         <h6>{{fromFlightOptions._source.city}},
-                                                            {{fromFlightOptions._source.country}}</h6>
+                                                            {{fromFlightOptions._source.country}} ({{fromFlightOptions._source.airport_code}})</h6>
                                                             <p>{{fromFlightOptions._source.airport_name}} </p>
                                                         </div>
                                                         <div class="flight-from-shortname">
-                                                            <h6>{{fromFlightOptions._source.airport_code}}</h6>
+                                                            <h6 class="d-none">{{fromFlightOptions._source.airport_code}}</h6>
                                                         </div>
                                                     </a>
                                             </li>
@@ -1045,7 +1039,7 @@
                                                         class="validate-msg"> From and To cannot be same.</small></mat-error>
 
                                     <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
-                                        <div class="mob-title">
+                                        <div class="mob-title" *ngIf="isMobile">
                                             <h3>Select To City</h3>
                                             <a href="javascript:void(0)"
                                                 class="mob-close mob-ff-from-close close-mobile">
@@ -1106,11 +1100,11 @@
                                                     (click)="onToClick(toFlightOptions,isMobile,item,i)">
                                                     <div class="flight-from-name">
                                                         <h6>{{toFlightOptions._source.city}},
-                                                            {{toFlightOptions._source.country}}</h6>
+                                                            {{toFlightOptions._source.country}} ({{toFlightOptions._source.airport_code}})</h6>
                                                         <p>{{toFlightOptions._source.airport_name}} </p>
                                                     </div>
                                                     <div class="flight-from-shortname">
-                                                        <h6>{{toFlightOptions._source.airport_code}}</h6>
+                                                        <h6 class="d-none">{{toFlightOptions._source.airport_code}}</h6>
                                                     </div>
                                                 </a>
                                             </li>
@@ -1284,7 +1278,7 @@
                                     <div class="mob-filter-travellers"
                                         [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
                                         <div class="mob-title">
-                                            <h3>Preferred Airline</h3>
+                                            <h3>Select Travellers & Class</h3>
                                             <a class="mob-close mob-preferred-airline-close"
                                                 (click)="closeTravllerBlock()">
                                                 <img src="{{cdnUrl}}/images/icons/close.png" alt="">
@@ -1362,7 +1356,7 @@
                                                                     [(ngModel)]="flightData.value.infants" inputmode="">
                                                                 <input type="button" (click)="increaseInfant()"
                                                                 [disabled]="disableinfants" value="+"
-                                                                class="qty-buttons plus">
+                                                                class="qty-buttons plus" id="checkInfantsStatus">
                                                                 <!-- <input type="button" value="-" class="qty-buttons minus">
                                                                                     <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
                                                                                     <input type="button" value="+" class="qty-buttons plus"> -->
@@ -1653,7 +1647,7 @@
 
 
 
-                <div class="multicity-add-area mb-3">
+                <div class="multicity-add-area mb-3" *ngIf="multicityFormArr">
                     <div class="add-trip-text text-center">
                         <p>You can add upto 5 cities in multi-city trip</p>
                     </div>
