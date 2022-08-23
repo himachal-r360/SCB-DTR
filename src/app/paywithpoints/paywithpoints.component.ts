@@ -343,6 +343,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
  
   generateVoucherOtp(){
+    console.log(this.sg);
     this.submittedotpform=true;
     if (this.Formotp.status !='VALID') {
       return;
@@ -398,7 +399,13 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           "mobile": this.cardmobile,
           "customer_id": this.sg["customerInfo"]["customerid"],
           "programName":this.sg['domainName'],
+          "first4digit":this.selectedCardDetails.card.slice(4),
           "last4digit":this.selectedCardDetails.card.slice(-4),
+          "points":this.value,
+          "ORDER_POINTS":this.value,
+          "voucherINRvalue":this.value * this.points_percentage,
+           "DOB":this.carddob,
+           "bin":this.carddob,
           "passwordValue":this.Formotpvalidate.controls['otp'].value,
           "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
         }

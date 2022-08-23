@@ -43,7 +43,7 @@ export const environment = {
  'CORPORATE': 'https://smartbuydev.reward360.in/corporate/api/',
  'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
   },
-  
+
   BUS_SITE_URL: {
     'SMARTBUY': 'https://smartbuydev.reward360.in/lite/',
     'DINERS': 'https://smartbuydev.reward360.in/lite/diners/',
