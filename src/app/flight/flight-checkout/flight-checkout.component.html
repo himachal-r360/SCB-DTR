@@ -312,13 +312,13 @@
             </div>
   
             
-            <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0">   
+            <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0 && flightSessionData.travel_type =='M'">   
               <div class="fare-rules-title">
                 <h6>Fare Rules</h6>
               </div>
               <div class="flight-extra-details">
   
-                <div class="rules-flight">
+               <!-- <div class="rules-flight">
   
                 <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
                           <a href="javascript:void(0);" (click)="changeFareRuleTabOnwardMult(searchi,$event)" data-bind="onwardFareDetails{{searchi}}"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
@@ -340,7 +340,7 @@
              </ng-container>
   
   
-                </div>
+                </div>-->
              <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
                 <!--Onward-->
                 <div id="onwardFareDetails{{searchi}}" class="flight-extra-content-onward " [ngClass]="{'hide': searchi !=0  }">
@@ -359,80 +359,7 @@
                   </ul>
   
                   <div class="extra-tabs-ara">
-                  <div id="CancellationDetails{{searchi}}" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnwardMulti[searchi]"           [ngClass]="{'extra-active': cancellationPolicyOnwardMulti[searchi]  }">
-                      <table class="table-bordered table-content w-100">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <p class="fw_6 fs_13">Time Frame to cancel</p>
-                              <p class="opacity_05">Before scheduled departure time</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">Airline Fees</p>
-                              <p class="opacity_05">(Per passenger)</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
-                              <p class="opacity_05">(Per passenger)</p>
-                            </td>
-                          </tr>
-                          <tr *ngFor="let can of cancellationPolicyOnwardMulti[searchi].cancellation;let i = index">
-                            <td>
-                              <p class="opacity_05">{{can.data}}</p>
-                            </td>
-                            <td>
-                              <p>₹{{can.airline_fee}}</p>
-                            </td>
-                            <td>
-                              <p>₹{{can.emt_fee}}</p>
-                            </td>
-                          </tr>
-  
-                        </tbody>
-                      </table>
-  
-                      <table class="table-bordered table-content w-100 mt-15">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <p class="fw_6 fs_13">Time Frame to reschedule</p>
-                              <p class="opacity_05">Before scheduled departure time</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">Airline Fees</p>
-                              <p class="opacity_05">(Per passenger)</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
-                              <p class="opacity_05">(Per passenger)</p>
-                            </td>
-                          </tr>
-                          <tr *ngFor="let re of cancellationPolicyOnwardMulti[searchi].reschedule;let i = index">
-                            <td>
-                              <p class="opacity_05">{{re.data}}</p>
-                            </td>
-                            <td>
-                              <p>₹{{re.airline_fee}}</p>
-                            </td>
-                            <td>
-                              <p>₹{{re.emt_fee}}</p>
-                            </td>
-                          </tr>
-  
-                        </tbody>
-                      </table>
-                      <div class="imp-Information mt-10">
-                        <h6>Terms & Conditions</h6>
-                        <div class="imp-Information-list">
-                          <ul class="imp-Information-list">
-                            <li *ngFor="let tnc of cancellationPolicyOnwardMulti[searchi].tnc;let i = index">
-                              <p>{{tnc}}</p>
-                            </li>
-  
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
+               <span [innerHtml]="cancellationPolicyOnward | safeHtml" ></span>
                     <div id="BaggageDetails{{searchi}}" class="flight-extra-content-o "   *ngIf="baggageInfoOnwardMulti[searchi]"  [ngClass]="{'extra-active': !cancellationPolicyOnwardMulti[searchi] ,'hide': cancellationPolicyOnwardMulti[searchi]   }">
   
                       <table class="table-bordered table-content w-100">
@@ -873,15 +800,13 @@
   
             </div>
             
-            <div class="booking-inner-box fare-rules-box" *ngIf="baggageInfoOnward || cancellationPolicyOnward">
+            <div class="booking-inner-box fare-rules-box" *ngIf="baggageInfoOnward || cancellationPolicyOnward && flightSessionData.travel_type !='M'">
               <div class="fare-rules-title">
                 <h6>Fare Rules</h6>
               </div>
               <div class="flight-extra-details">
   
-                <div class="rules-flight">
-  
-  
+               <!-- <div class="rules-flight">
                     <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails"  *ngIf="cancellationPolicyOnward || baggageInfoOnward" >
                   <div class="rules-flight-items">
                       <div class="rules-flight-thumbe">
@@ -915,17 +840,16 @@
                     </div>
                 </a>
   
-                </div>
-  
+                </div>-->
                 <!--Onward-->
                 <div id="onwardFareDetails" class="flight-extra-content-onward">
                   <ul class="list-unstyled flight-extra-tabs">
                     <li *ngIf="cancellationPolicyOnward">
                       <a href="javascript:void(0);" class="flight-extra-content-oo"
                         [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnward  }"
-                        (click)="changeFareRuleTabBottomOnward($event)" data-bind="CancellationDetails">Fare Rules</a>
+                        (click)="changeFareRuleTabBottomOnward($event)" data-bind="CancellationDetails">Cancellation Charges</a>
                     </li>
-                    <li *ngIf="baggageInfoOnward">
+                    <li *ngIf="baggageInfo">
                       <a href="javascript:void(0);" class="flight-extra-content-ob"
                         [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }" data-bind="BaggageDetails"
                         (click)="changeFareRuleTabBottomOnward($event)">Baggage Policy</a>
@@ -935,42 +859,12 @@
   
                   <div class="extra-tabs-ara">
                   <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnward"           [ngClass]="{'extra-active': cancellationPolicyOnward  }">
-                    <span innerHtml="{{cancellationPolicyOnward}}"></span>
+                    <span [innerHtml]="cancellationPolicyOnward | safeHtml" ></span>
                      
                     </div>
-                    <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfoOnward"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
-  
-                      <table class="table-bordered table-content w-100">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <p class="fw_6 fs_13">Airline</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">Check-in Baggage</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">Cabin Baggage</p>
-                            </td>
-                          </tr>
-                          <tr *ngFor="let bag of baggageInfoOnward;let i = index">
-                            <td>
-                              <p class="opacity_05">{{bag.flightName}}<br>{{baggageInfoOnward[i].flightNo}}</p>
-                            </td>
-                            <td>
-                              <p *ngIf="bag.checkIn;then checkIn_content else checkIn_blank"></p>
-                              <ng-template #checkIn_content>{{bag.checkIn}}</ng-template>
-                              <ng-template #checkIn_blank>NA</ng-template>
-                            </td>
-                            <td>
-                              <p *ngIf="bag.cabin ;then cabin_content else cabin_blank"></p>
-                              <ng-template #cabin_content>{{bag.cabin}}</ng-template>
-                              <ng-template #cabin_blank>NA</ng-template>
-                            </td>
-                          </tr>
-  
-                        </tbody>
-                      </table>
+                    <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfo"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
+                      <span [innerHtml]="baggageInfo | safeHtml" ></span>
+                     
                     </div>
                   </div>
   
@@ -4663,7 +4557,7 @@
                   <div class="booking-inner-title-left" *ngIf="searchDatad">
                     <div class="head_info">
                       <div class="float-start">
-                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" class="flight-image mx-2" alt="Multi">
+                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif" class="flight-image mx-2" alt="Multi">
                         <img *ngIf="!onward_airline_unique"
                           src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[searchi]['flights'][0]['airline']}}.gif" class="flight-image mx-2" alt="{{flightOnwardDetails[searchi]['flights'][0]['airline']}}">
                       </div>
@@ -4812,7 +4706,7 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info">
                       <div class="float-start">
-                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" class="flight-image mx-2" alt="Multi">
+                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif" class="flight-image mx-2" alt="Multi">
                         <img *ngIf="!onward_airline_unique"
                           src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif" class="flight-image mx-2" alt="{{flightOnwardDetails[0]['airline']}}">
                       </div>
@@ -4871,7 +4765,7 @@
   
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"                 class="flight-image  mx-2" alt="Multi">
+                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif"                 class="flight-image  mx-2" alt="Multi">
                         <img *ngIf="!onward_airline_unique"
                           src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif"                    class="flight-image  mx-2" alt="{{flightOnwardDetails[0]['airline']}}">
                       </div>
@@ -5034,7 +4928,7 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"        class="flight-image mx-2" alt="">
+                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif"        class="flight-image mx-2" alt="">
                         <img *ngIf="!return_airline_unique"
                           src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"        class="flight-image mx-2" alt="">
                       </div>
@@ -5090,7 +4984,7 @@
   
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif"                  class="flight-image mx-2" alt="">
+                        <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif"                  class="flight-image mx-2" alt="">
                         <img *ngIf="!return_airline_unique"
                           src="{{cdnUrl}}/images/airlines/{{flightReturnDetails[0]['airline']}}.gif"                class="flight-image mx-2" alt="">
                       </div>

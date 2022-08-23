@@ -382,7 +382,7 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
   
   getCancellationPolicy(param){
   if(LOCALJSON=='true'){
-    return this.http.get('assets/data/validatePGData.json');
+    return this.http.get('assets/data/getCancellationPolicy.json');
   }
   else{
   return this.http.post( this.endpoint+'farerules',param, config).pipe(map((response: any) => response));
