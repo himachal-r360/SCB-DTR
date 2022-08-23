@@ -2379,7 +2379,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           }
         } else {
           /**International**/
-     
+
      
         if (res.response && res.response.flight_details && res.response.flight_details.fareKey) { }else{
         clearInterval(myInterval3);
