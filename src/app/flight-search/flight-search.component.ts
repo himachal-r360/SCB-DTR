@@ -66,14 +66,14 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   toFlightList = false;
   selectedDate?: any;
   // cityName:any;
-  fromAirpotName: any = 'from airport';
+  fromAirpotName: any = 'From airport';
   fromCityName: any = 'From';
   toCityName: any = 'To';
   multicityFromCityName:any = 'From';
   multicityToCityName:any = 'To';
-  multicityFromAirpotName: any = 'from airport';
-  multicityToAirpotName: any = 'to airport';
-  toAirpotName: any = 'to airport';
+  multicityFromAirpotName: any = "From airport";
+  multicityToAirpotName: any = 'To airport';
+  toAirpotName: any = 'To airport';
   departureDate: any = "";
   arrivalDate: any = "";
   returnDate: any;
@@ -196,6 +196,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       }
       this.setSearchFilterData()
     });
+
+    
   }
 
   currentPeriodClickedN(datePicker: any) {
@@ -230,6 +232,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   searchAutoComplete($event, field, device, index: any) {
+    debugger;
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if (true) {
@@ -250,18 +253,23 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
                   this.searchFlightFromHeader = 'Result';
                   this.flightFromOptions = this.defaultFlightOptions;
                   this.onFromClick(res.hits.hits[0], device, index , null);
+                
                 } else {
                   this.searchFlightToHeader = 'Result';
                   this.flightToOptions = this.defaultFlightOptions;
                   this.onToClick(res.hits.hits[0], device, index ,null);
+               
                 }
 
               }
             }
 
             if (field == 'fromCity') {
+            
               this.searchFlightFromHeader = 'Result';
               this.flightFromOptions = res.hits.hits;
+              
+              
             } else {
               this.searchFlightToHeader = 'Result';
               this.flightToOptions = res.hits.hits;
@@ -285,6 +293,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     }
   }
   onFromClick(values, device, index , i) {
+    debugger
+    // this.fromCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
       this.multicityFormArr.controls[i].get('flightfrom').setValue( values['_source'].airport_code)
       this.multicityFormArr.controls[i].get('fromCity').setValue(values['_source'].city)
@@ -323,6 +333,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   onToClick(values, device, index, i) {
+    debugger
+    // this.toCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
       this.multicityFormArr.controls[i].get('flightto').setValue(values['_source'].airport_code)
       this.multicityFormArr.controls[i].get('toCity').setValue(values['_source'].city)
@@ -338,7 +350,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         let datePickerMulticity = document.getElementById('datePickerMulticity_' + i);
         datePickerMulticity.click();
-        // this.autoFillMutlicityVal();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
     }
@@ -666,6 +677,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       }
     }
   }
+  
   increaseInfant() {
     if (
       parseInt(this.flightData.value.infants) <
@@ -685,16 +697,21 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.disableinfants = true;
         } else {
           if (
-            parseInt(this.flightData.value.infants) ==
+            parseInt(this.flightData.value.infants) >
             parseInt(this.flightData.value.adults)
           ) {
             this.disableinfants = true;
-          } else {
+            console.log(this.disableinfants);
+            
+          }
+          else {
             this.disableinfants = false;
+
           }
         }
       }
     }
+
   }
   decreaseInfant() {
     if (parseInt(this.flightData.value.infants) > 0) {
