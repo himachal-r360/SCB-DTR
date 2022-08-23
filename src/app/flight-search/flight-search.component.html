@@ -1043,9 +1043,7 @@
                                                     class="validate-msg"> Please select to city.</small></mat-error>
                                                     <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto')hasError('MustMatch')"><small
                                                         class="validate-msg"> From and To cannot be same.</small></mat-error>
-                                                    <!-- <mat-error class="" *ngIf="submitted && MulticityError(item.get('flightto'), 'MustMatch')">
-                                                        <small class="validate-msg">From and To cannot be same.</small>
-                                                    </mat-error>           -->
+
                                     <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
                                         <div class="mob-title">
                                             <h3>Select To City</h3>
@@ -1459,6 +1457,7 @@
                         <p class="multi-city-list-fullname">{{item.value.fromCity}}</p>
                         <mat-error *ngIf="submitted && item.get('flightfrom').errors  && item.get('flightfrom')hasError('required')"><small
                           class="validate-msg"> Please select from city.</small></mat-error>
+
                         <div class="flight-from-hide ff-form-data dropdown" >
                             <div class="flight-from-data">
                                 <div class="mob-title">
@@ -1595,6 +1594,8 @@
                     <span class="select-roottitle"
                         *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
                         }}</span>
+                        <mat-error *ngIf="submitted && item.get('departure').errors && item.get('departure')hasError('required')"><small
+                          class="validate-msg"> Please select departure date.</small></mat-error>
                         <a href="javascript:void(0)" class="mult-mobile-close" *ngIf="i > 1" (click)="removeMutlicityInput(i)">
                           <img src="/assets/images/icons/close_01.png" alt="">
                       </a>

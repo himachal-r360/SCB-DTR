@@ -805,37 +805,39 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.addNewCitySearchInput();
   }
 
-   multiCityArrAddItems() {
-     return this._fb.group({
-        flightfrom:[],
-        flightto:[],
-        adults:[this.flightData.value.adults],
-        child:[this.flightData.value.child],
-        infants:[this.flightData.value.infants],
-        channel:['Web'],
-        travel:['DOM'],
-        departure:[],
-        fromCity:[this.multicityFromCityName],
-        toCity:[this.multicityToCityName],
-        fromContry:[],
-        toContry:[],
-        fromAirportName:[this.multicityFromAirpotName],
-        toAirportName:[this.multicityToAirpotName],
-        flightclass:[this.flightData.value.flightclass],
-        defaultType:['M'],
-        sortBy:['asc'],
-      })
-   }
+  multiCityArrAddItems() {
+    return this._fb.group({
+    flightfrom:['',[Validators.required]],
+    flightto:['',[Validators.required]],
+    adults:[this.flightData.value.adults],
+    child:[this.flightData.value.child],
+    infants:[this.flightData.value.infants],
+    channel:['Web'],
+    travel:['DOM'],
+    departure:['',[Validators.required]],
+    fromCity:[this.multicityFromCityName],
+    toCity:[this.multicityToCityName],
+    fromContry:[],
+    toContry:[],
+    fromAirportName:[this.multicityFromAirpotName],
+    toAirportName:[this.multicityToAirpotName],
+    flightclass:[this.flightData.value.flightclass],
+    defaultType:['M'],
+    sortBy:['asc'],
+    },{
+    validators: MustMatch('flightfrom', 'flightto')
+    })
+    }
    multiCityArrAddItemsDefault(obj:any) {
     return this._fb.group({
-       flightfrom:[obj.flightfrom],
-       flightto:[obj.flightto],
+       flightfrom:[obj.flightfrom,[Validators.required]],
+       flightto:[obj.flightto,[Validators.required]],
        adults:[obj.adults],
        child:[obj.child],
        infants:[obj.infants],
        channel:['Web'],
        travel:['DOM'],
-       departure:[obj.departure],
+       departure:[obj.departure,[Validators.required]],
        fromCity:[obj.fromCity],
        toCity:[obj.toCity],
        fromContry:[obj.fromContry],
@@ -845,7 +847,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
        flightclass:[obj.flightclass],
        defaultType:['M'],
        sortBy:['asc'],
-     })
+     }, {
+      validators: MustMatch('flightfrom', 'flightto')
+  })
   }
 
   addNewCitySearchInput() {
