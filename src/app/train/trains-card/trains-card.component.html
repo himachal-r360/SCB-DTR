@@ -347,7 +347,18 @@
         </div>
 
 
-                   <!-- Mlite code  -->
+
+
+        <div class="row mt-3">
+            <div class="col-6">
+                <a [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber)" data-bs-toggle="modal" class="train_card_links">Show Route</a>
+            </div>
+            <div class="col-6 text-right">
+                <a (click)="onAvailable(train,avlClasses[0])" class="train_card_links">Check Availability</a> 
+            </div>
+
+
+                               <!-- Mlite code  -->
     <div class="row check-available checkAva_m d-block d-sm-none" id="check-available{{train.trainNumber}}" *ngIf="showAvailable && isMobile" > 
         <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)"  [(selectedIndex)]="selectedIndex">
           <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}"  >
@@ -382,13 +393,7 @@
           <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
     </div>
 
-        <div class="row mt-3">
-            <div class="col-6">
-                <a [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber)" data-bs-toggle="modal" class="train_card_links">Show Route</a>
-            </div>
-            <div class="col-6 text-right">
-                <a (click)="onAvailable(train,avlClasses[0])" class="train_card_links">Check Availability</a> 
-            </div>
+    
         </div>
 
 
