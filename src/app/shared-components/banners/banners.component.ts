@@ -23,7 +23,7 @@ export class BannersComponent implements OnInit {
    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    this.cdnDealUrl = environment.cdnDealUrl;
    this.siteUrl = environment.MAIN_SITE_URL;
-
+   this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
    this.createForm();
  }
   public mask = {
@@ -31,6 +31,7 @@ export class BannersComponent implements OnInit {
     showMask : true,
     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
   };
+  DOMAIN_SETTINGS: any;
   angForm: FormGroup;
   mainBanners:any[];
   serviceSettings: any;
@@ -109,18 +110,20 @@ export class BannersComponent implements OnInit {
         postData:this.EncrDecr.set(JSON.stringify(params_arg))
       };
      this.rest.getMilestoneDetail(JSON.stringify(params)).subscribe(res => {
-        this.wb_spend = res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT;
-        if(res.milestone_detail.benefits_availed.wb.can_avail==1){
-          this.is_wb_progressbar=false;
-        }else{
-          this.wb_perc = ((res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.wb.spends.TARGET_SPEND_AMOUNT)*100);
-          this.is_wb_progressbar=true;
-        }
-        if(res.milestone_detail.benefits_availed.pv.previous_quarter.can_avail==1||res.milestone_detail.benefits_availed.pv.current_quarter.can_avail==1){
-               this.is_mb_progressbar=false;
-        }else{
-          this.mb_perc = ((res.milestone_detail.benefits_availed.pv.current_quarter.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.pv.current_quarter.spends.TARGET_SPEND_AMOUNT)*100);
-          this.is_mb_progressbar=true;
+        if(res.status!=undefined && res.status==true){
+          this.wb_spend = res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT;
+          if(res.milestone_detail.benefits_availed.wb.can_avail==1 && res.milestone_detail.benefits_availed.wb.show_benefit==1){
+            this.is_wb_progressbar=false;
+          }else{
+            this.wb_perc = ((res.milestone_detail.benefits_availed.wb.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.wb.spends.TARGET_SPEND_AMOUNT)*100);
+            this.is_wb_progressbar=true;
+          }
+          if(res.milestone_detail.benefits_availed.pv.previous_quarter.can_avail==1||res.milestone_detail.benefits_availed.pv.current_quarter.can_avail==1){
+                 this.is_mb_progressbar=false;
+          }else{
+            this.mb_perc = ((res.milestone_detail.benefits_availed.pv.current_quarter.spends.ACHIEVED_SPEND_AMOUNT / res.milestone_detail.benefits_availed.pv.current_quarter.spends.TARGET_SPEND_AMOUNT)*100);
+            this.is_mb_progressbar=true;
+          }
         }
     });
 
@@ -129,6 +132,18 @@ export class BannersComponent implements OnInit {
     //         this.points_available=res.points_available;
     //      }
     // }); 
+}
+welcome_benefitsLink(){
+     if(this.is_wb_progressbar==false)
+      window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'milestone/regalia_gold/milestone';
+     else
+      return false;
+}
+milestone_benefitsLink(){
+    if(this.is_mb_progressbar==false)
+      window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'milestone/regalia_gold/milestone';
+    else
+      return false;
 }
 benefitsLink(){
   this.router.navigate(['/regalia_gold/know-your-card']);
