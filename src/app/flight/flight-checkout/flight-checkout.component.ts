@@ -685,6 +685,19 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     }, 600);
 
     this._flightService.getFlightInfoMulticity(param, searchData).subscribe((res: any) => {
+    
+    
+            if(res.status=="success"){
+        res= JSON.parse(this.EncrDecr.get(res.result));
+        }else{
+        clearInterval(myInterval3);
+
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 10);
+        }
+    
 
       let baseFare = 0; let taxFare = 0; let totalFare = 0; let totalFareOnward = 0; let totalFareReturn = 0;
       let adultFare = 0; let childFare = 0; let infantFare = 0;
@@ -710,7 +723,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
           if (res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.length > 0) {
           
-          let fareInfo;
+          let fareInfo;let cancellation_array:any=[];
           
             for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
              fareInfo=  res.response.onwardFlightDetails[k];
@@ -749,9 +762,13 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
              if (fareInfo && fareInfo.bg.length > 0)
               this.baggageInfoOnwardMulti[k] = fareInfo.bg;
-              this.cancellationPolicyOnwardMulti[k] = this.emt_cancellationPolicy(fareInfo.cancellationPolicy,this.searchData[k]['flightfrom'],this.searchData[k]['flightto'],'multi');
+              
+              cancellation_array.push(fareInfo.cancellationPolicy);
               
              } 
+             
+             this.emt_cancellationPolicy_Multicity(cancellation_array);
+             
             }
             
 
@@ -1908,7 +1925,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       let obj2Date = new Date(obj2.departureDateTime);
       let obj1Date = new Date(obj1.arrivalDateTime);
       this.dateOnwardHourMulti[j][i]=( (obj2Date.valueOf() - obj1Date.valueOf()) / 1000);
-      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;;    
+      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;    
     }
     
   }
@@ -1920,7 +1937,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       let obj2Date = new Date(obj2.departureDateTime);
       let obj1Date = new Date(obj1.arrivalDateTime);
       this.dateReturnHour[i] = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
-      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;;
+      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
     }
   }
 
@@ -2337,7 +2354,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
               this.baggageInfoReturn = res.response.returnFlightDetails.bg;
 
             if (partner == 'Easemytrip')
-             this.emt_cancellationPolicy(res.response.onwardFlightDetails.cancellationPolicy,this.searchData['flightfrom'],this.searchData['flightto'],'onward');
+             this.emt_cancellationPolicy('onward');
 
             
           }
@@ -2411,7 +2428,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
             this.baggageInfoOnward = res.response.flight_details.bg;
 
           if (partner == 'Easemytrip' && res.response && res.response.flight_details.cancellationPolicy)
-         this.emt_cancellationPolicy(res.response.flight_details.cancellationPolicy,this.searchData['flightto'],this.searchData['flightfrom'],'onward');
+         this.emt_cancellationPolicy('onward');
           // console.log( res.response.flight_details);
         }
 
@@ -2446,10 +2463,114 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  emt_cancellationPolicy(data,flightfrom,flightto,type) {
+      emt_cancellationPolicy_Multicity(data){
+        let aclass='active';let bclass='active show';
+        this.cancellationPolicyOnward= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">
+        <ul class="nav nav-tabs travelTab" role="tablist">`;
+        for(var i=0;i<this.searchData.length;i++){  
+
+        if(i >0) aclass='';
+
+        this.cancellationPolicyOnward+= `<li role="presentation" >
+        <a data-bs-target="#onwardtab`+i+`" aria-controls="onwardtab`+i+`" role="tab" data-bs-toggle="tab" aria-expanded="true" class="`+aclass+`" >
+        <div class="rules-flight-items">
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/6E.gif"     alt="6E" class=" mr-10"></div>
+        <div class="rules-flight-content">
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        </div>
+        </div>
+        </a>
+        </li>`;
+        }       
+        this.cancellationPolicyOnward+= `</ul>`;
+
+        this.cancellationPolicyOnward+= `<div class="tab-content">`;
+        for(var i=0;i<this.searchData.length;i++){   
+        if(i >0) bclass='';
+        this.cancellationPolicyOnward+= `<div role="tabpanel" class="tab-pane fade `+bclass+`" id="onwardtab`+i+`">`;
+
+
+        if (data[i] && data[i].Cancellation) {
+        let cancellation_data = data[i].Cancellation.split('|');
+        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100 mb-20"><tr>
+        <td colspan="2">
+        <p class="fw_6 fs_13">Cancellation Penalty fees (Per passenger)</p>
+        </td>
+        </tr>
+        <tbody class="ng-scope">`;
+
+        for (let i = 0; i < cancellation_data.length; i++) {
+        if (cancellation_data[i]) { 
+        let sp_data = cancellation_data[i].split('Rs.');
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05"> `+sp_data[0]+` </td>
+        <td >₹ `+sp_data[1]+`</td>
+        </tr>`;
+        }
+        }
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td>₹ `+data[i].EMTFee+`</td>
+        </tr>
+        </tbody>
+        </table>`;
+        }
+
+        if (data[i] && data[i].Reschedule) {
+        let reschedule_data = data[i].Reschedule.split('|');  
+
+        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100">
+        <tr>
+        <td colspan="2">
+        <p class="fw_6 fs_13">Reschedule Penalty fees (Per passenger)</p>
+        </td>
+        </tr>
+        <tbody class="ng-scope">`;
+        for (let i = 0; i < reschedule_data.length; i++) {
+
+        if (reschedule_data[i]) { 
+        let rd_data = reschedule_data[i].split('Rs.');
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05"> `+rd_data[0]+` </td>
+        <td >₹ `+rd_data[1]+`</td>
+        </tr>`;
+        }
+        }   
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td>₹ `+data[i].EMTFee+`</td>
+        </tr>
+        </tbody>
+        </table>`;
+        }
+
+        if (data[i] && data[i].Tnc) {  
+        this.cancellationPolicyOnward+= `<div class="imp-Information mt-10"><h6>Terms & Conditions</h6><div class="imp-Information-list"><ul class="imp-Information-list">`;
+         let tnc_data = [];
+         $.each(data[i].Tnc, function (key, value) {
+        tnc_data.push(value);
+        });
+        
+        for (let i = 0; i < tnc_data.length; i++) {
+         this.cancellationPolicyOnward+= `<li>`+tnc_data[i]+`</li>`;
+        }
+        
+        this.cancellationPolicyOnward+= `</ul> </div></div>`;
+        }
+
+        this.cancellationPolicyOnward+= `</div>`;
+        }
+        this.cancellationPolicyOnward+= `</div>`;
+
+  
+       }
+
+  emt_cancellationPolicy(type) {
       let airlineCode;let airlineCodeR='';
-      
-      console.log(this.searchData);
       
         if (this.searchData.flightdefault == 'O' || this.searchData.flightdefault == 'R') {
         if(this.onwardAirlineMulti)
@@ -2476,6 +2597,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         itineraryId: this.itineraryid,
         clientName: 'HDFC243',
         serviceName: 'Flight',
+        post_default:this.searchData.flightdefault,
         partnerName: this.partnerToken,
         docKey: this.flightSessionData.docKey,
         flightKeys:this.flightKeys,
@@ -2498,38 +2620,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
          });
         
 
-  /*
-    if (data && data.Cancellation) {
-      let cancellation_data = data.Cancellation.split('|');
-      let reschedule_data = data.Reschedule.split('|');
-      let emt_charges = data.EMTFee;
-
-      let cancellation_updated_data = [];
-      let reschedule_data_data = [];
-      let tnc_data = [];
-      for (let i = 0; i < cancellation_data.length; i++) {
-        if (cancellation_data[i]) {
-          let sp_data = cancellation_data[i].split('Rs.');
-          let rd_data = reschedule_data[i].split('Rs.');
-          cancellation_updated_data.push({ 'data': sp_data[0], 'airline_fee': sp_data[1], 'emt_fee': emt_charges });
-          reschedule_data_data.push({ 'data': rd_data[0], 'airline_fee': rd_data[1], 'emt_fee': emt_charges });
-        }
-      }
-
-
-      $.each(data.Tnc, function (key, value) {
-        tnc_data.push(value);
-      });
-
-
-      return {
-        "cancellation": cancellation_updated_data,
-        "reschedule": reschedule_data_data,
-        "tnc": tnc_data
-      }
-        ;
-    }
-   */
   }
 
   triggerBack() {
