@@ -1585,9 +1585,6 @@
                         <span class="select-roottitle d-block w-100"
                         *ngIf="item.value.departure=='' ||item.value.departure==undefined">Select
                         Departure</span>
-                    <span class="select-roottitle"
-                        *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
-                        }}</span>
                         <mat-error *ngIf="submitted && item.get('departure').errors && item.get('departure')hasError('required')"><small
                           class="validate-msg"> Please select departure date.</small></mat-error>
                         <a href="javascript:void(0)" class="mult-mobile-close" *ngIf="i > 1" (click)="removeMutlicityInput(i)">
@@ -1675,7 +1672,7 @@
                   <div class="mob-filter-travellers"
                       [ngClass]="showTravellerBlock ? 'preferred-airline-hide' : 'mob-filter-travellers'">
                       <div class="mob-title">
-                          <h3>Preferred Airline</h3>
+                          <h3>Select Travellers & Class</h3>
                           <a class="mob-close mob-preferred-airline-close" (click)="closeTravllerBlock()">
                               <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                           </a>
