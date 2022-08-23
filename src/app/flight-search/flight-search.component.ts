@@ -197,13 +197,13 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.setSearchFilterData()
     });
 
-    
+
   }
 
   currentPeriodClickedN(datePicker: any) {
     let date = datePicker.target.value
     this.minDateR=date;
-    
+
   }
   currentPeriodClicked(datePicker: any, item,i) {
     console.log(datePicker , "datepicker");
@@ -263,23 +263,23 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
                   this.searchFlightFromHeader = 'Result';
                   this.flightFromOptions = this.defaultFlightOptions;
                   this.onFromClick(res.hits.hits[0], device, index , null);
-                
+
                 } else {
                   this.searchFlightToHeader = 'Result';
                   this.flightToOptions = this.defaultFlightOptions;
                   this.onToClick(res.hits.hits[0], device, index ,null);
-               
+
                 }
 
               }
             }
 
             if (field == 'fromCity') {
-            
+
               this.searchFlightFromHeader = 'Result';
               this.flightFromOptions = res.hits.hits;
-              
-              
+
+
             } else {
               this.searchFlightToHeader = 'Result';
               this.flightToOptions = res.hits.hits;
@@ -432,7 +432,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   setSearchFilterData() {
     let lastSearch: any = localStorage.getItem('flightLastSearchNew');
    console.log("last:"+lastSearch);
-   
+
       var multicity = localStorage.getItem('multicityLastSearch');
       if(multicity != null && multicity != '')
       {
@@ -488,7 +488,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
       }
 
-    
+
 
 
   }
@@ -693,7 +693,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
+
   increaseInfant() {
     if (
       parseInt(this.flightData.value.infants) <
@@ -718,7 +718,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           ) {
             this.disableinfants = true;
             console.log(this.disableinfants);
-            
+
           }
           else {
             this.disableinfants = false;
@@ -859,14 +859,14 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
    }
    multiCityArrAddItemsDefault(obj:any) {
     return this._fb.group({
-       flightfrom:[obj.flightfrom],
-       flightto:[obj.flightto],
+       flightfrom:[obj.flightfrom,[Validators.required]],
+       flightto:[obj.flightto,[Validators.required]],
        adults:[obj.adults],
        child:[obj.child],
        infants:[obj.infants],
        channel:['Web'],
        travel:['DOM'],
-       departure:[obj.departure],
+       departure:[obj.departure,[Validators.required]],
        fromCity:[obj.fromCity],
        toCity:[obj.toCity],
        fromContry:[obj.fromContry],
@@ -876,7 +876,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
        flightclass:[obj.flightclass],
        defaultType:['M'],
        sortBy:['asc'],
-     })
+     }, {
+      validators: MustMatch('flightfrom', 'flightto')
+  })
   }
 
   addNewCitySearchInput() {
