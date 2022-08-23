@@ -345,54 +345,29 @@
                 <!--Onward-->
                 <div id="onwardFareDetails{{searchi}}" class="flight-extra-content-onward " [ngClass]="{'hide': searchi !=0  }">
                   <ul class="list-unstyled flight-extra-tabs">
-                    <li *ngIf="cancellationPolicyOnwardMulti[searchi]">
+                    <li *ngIf="cancellationPolicyOnward">
                       <a href="javascript:void(0);" class="flight-extra-content-oo{{searchi}}"
-                        [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnwardMulti[searchi]  }"
+                        [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnward  }"
                         (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'CancellationDetails')" data-bind="CancellationDetails{{searchi}}">Fare Rules</a>
                     </li>
                     <li *ngIf="baggageInfoOnwardMulti[searchi]">
                       <a href="javascript:void(0);" class="flight-extra-content-ob{{searchi}}"
-                        [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnwardMulti[searchi]  }" data-bind="BaggageDetails{{searchi}}"
+                        [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }" data-bind="BaggageDetails{{searchi}}"
                         (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'BaggageDetails')">Baggage Policy</a>
                     </li>
   
                   </ul>
   
                   <div class="extra-tabs-ara">
-               <span [innerHtml]="cancellationPolicyOnward | safeHtml" ></span>
-                    <div id="BaggageDetails{{searchi}}" class="flight-extra-content-o "   *ngIf="baggageInfoOnwardMulti[searchi]"  [ngClass]="{'extra-active': !cancellationPolicyOnwardMulti[searchi] ,'hide': cancellationPolicyOnwardMulti[searchi]   }">
-  
-                      <table class="table-bordered table-content w-100">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <p class="fw_6 fs_13">Airline</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">Check-in Baggage</p>
-                            </td>
-                            <td>
-                              <p class="fw_6 fs_13">Cabin Baggage</p>
-                            </td>
-                          </tr>
-                          <tr *ngFor="let bag of baggageInfoOnwardMulti[searchi];let i = index">
-                            <td>
-                              <p class="opacity_05">{{bag.flightName}}<br>{{baggageInfoOnwardMulti[searchi][i].flightNo}}</p>
-                            </td>
-                            <td>
-                              <p *ngIf="bag.checkIn;then checkIn_content else checkIn_blank"></p>
-                              <ng-template #checkIn_content>{{bag.checkIn}}</ng-template>
-                              <ng-template #checkIn_blank>NA</ng-template>
-                            </td>
-                            <td>
-                              <p *ngIf="bag.cabin ;then cabin_content else cabin_blank"></p>
-                              <ng-template #cabin_content>{{bag.cabin}}</ng-template>
-                              <ng-template #cabin_blank>NA</ng-template>
-                            </td>
-                          </tr>
-  
-                        </tbody>
-                      </table>
+               
+                   <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnward"           [ngClass]="{'extra-active': cancellationPolicyOnward  }">
+                    <span [innerHtml]="cancellationPolicyOnward | safeHtml" ></span>
+                     
+                    </div>
+               
+                <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfo"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
+                      <span [innerHtml]="baggageInfo | safeHtml" ></span>
+                     
                     </div>
                   </div>
   
