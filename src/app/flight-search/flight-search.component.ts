@@ -203,24 +203,26 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   currentPeriodClickedN(datePicker: any) {
     let date = datePicker.target.value
     this.minDateR=date;
-
+    
   }
-  currentPeriodClicked(datePicker: any, item) {
+  currentPeriodClicked(datePicker: any, item,i) {
     console.log(datePicker , "datepicker");
     console.log(item , "item date");
     let date = datePicker.target.value
     date = moment(date).format('YYYY-MM-DD')
     item.value.departure = date;
-    this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
+    this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
+    // this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
     this.minDateR=date;
   }
-  currentMobilePeriodClicked(datePicker: any, item) {
+  currentMobilePeriodClicked(datePicker: any, item , i) {
     console.log(datePicker , "datepicker");
     console.log(item , "item date");
     let date = datePicker;
     date = moment(date).format('YYYY-MM-DD')
     item.value.departure = date;
-    this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
+    this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
+    // this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
     this.minDateR=date;
   }
   currentPeriodArrivalClicked(datePicker: any) {
@@ -304,6 +306,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     debugger
     // this.fromCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
+      this.multicityFormArr.controls[i].get('flightfrom').setValue( values['_source'].airport_code)
+      this.multicityFormArr.controls[i].get('fromCity').setValue(values['_source'].city)
+      this.multicityFormArr.controls[i].get('fromContry').setValue(values['_source'].country_code)
+      this.multicityFormArr.controls[i].get('fromAirportName').setValue(values['_source'].airport_name)
       index.value.fromCity=values['_source'].city;
       index.value.flightfrom = values['_source'].airport_code;
       index.value.fromContry = values['_source'].country_code;
@@ -341,6 +347,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     debugger
     // this.toCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
+      this.multicityFormArr.controls[i].get('flightto').setValue(values['_source'].airport_code)
+      this.multicityFormArr.controls[i].get('toCity').setValue(values['_source'].city)
+      this.multicityFormArr.controls[i].get('toContry').setValue(values['_source'].country_code)
+      this.multicityFormArr.controls[i].get('toAirportName').setValue(values['_source'].airport_name)
       index.value.toCity=values['_source'].city;
       index.value.flightto = values['_source'].airport_code;
       index.value.toContry = values['_source'].country_code;
@@ -422,8 +432,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   setSearchFilterData() {
     let lastSearch: any = localStorage.getItem('flightLastSearchNew');
    console.log("last:"+lastSearch);
-    if (lastSearch != null || lastSearch != undefined) {
-      lastSearch = JSON.parse(lastSearch);
+   
       var multicity = localStorage.getItem('multicityLastSearch');
       if(multicity != null && multicity != '')
       {
@@ -443,7 +452,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
 
       }
-      else{
+      else  if (lastSearch != null || lastSearch != undefined) {
+        lastSearch = JSON.parse(lastSearch)
         this.flightData.get('adults').setValue(lastSearch.adults);
         this.flightData.get('child').setValue(lastSearch.child);
         this.flightData.get('flightclass').setValue(lastSearch.flightclass);
@@ -478,7 +488,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
       }
 
-    }
+    
 
 
   }
@@ -824,14 +834,14 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
    multiCityArrAddItems() {
      return this._fb.group({
-        flightfrom:[],
-        flightto:[],
+      flightfrom:['',[Validators.required]],
+      flightto:['',[Validators.required]],
         adults:[this.flightData.value.adults],
         child:[this.flightData.value.child],
         infants:[this.flightData.value.infants],
         channel:['Web'],
         travel:['DOM'],
-        departure:[],
+        departure:['',[Validators.required]],
         fromCity:[this.multicityFromCityName],
         toCity:[this.multicityToCityName],
         fromContry:[],
@@ -841,7 +851,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         flightclass:[this.flightData.value.flightclass],
         defaultType:['M'],
         sortBy:['asc'],
-      })
+      }
+      ,{
+        validators: MustMatch('flightfrom', 'flightto')
+    }
+)
    }
    multiCityArrAddItemsDefault(obj:any) {
     return this._fb.group({
@@ -878,6 +892,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   searchMulticityFlight() {
    // debugger
     this.submitted = true;
+    this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray
     console.log(this.multicityFormArr.value , "form");
     if (this.multicityForm.invalid) {
       return
