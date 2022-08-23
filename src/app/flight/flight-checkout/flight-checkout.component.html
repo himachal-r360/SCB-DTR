@@ -827,6 +827,7 @@
                             <!--Return Flight Ends-->
 
                         </div>
+
                         <div class="booking-inner-box fare-rules-box" *ngIf="baggageInfoOnward || cancellationPolicyOnward">
                             <div class="fare-rules-title">
                                 <h6>Fare Rules</h6>
@@ -881,78 +882,8 @@
 
                                     <div class="extra-tabs-ara">
                                         <div id="CancellationDetails" class="flight-extra-content-o" *ngIf="cancellationPolicyOnward" [ngClass]="{'extra-active': cancellationPolicyOnward  }">
-                                            <table class="table-bordered table-content w-100">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <p class="fw_6 fs_13">Time Frame to cancel</p>
-                                                            <p class="opacity_05">Before scheduled departure time</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="fw_6 fs_13">Airline Fees</p>
-                                                            <p class="opacity_05">(Per passenger)</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
-                                                            <p class="opacity_05">(Per passenger)</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr *ngFor="let can of cancellationPolicyOnward.cancellation;let i = index">
-                                                        <td>
-                                                            <p class="opacity_05">{{can.data}}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p>₹{{can.airline_fee}}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p>₹{{can.emt_fee}}</p>
-                                                        </td>
-                                                    </tr>
+                                            <span innerHtml="{{cancellationPolicyOnward}}"></span>
 
-                                                </tbody>
-                                            </table>
-
-                                            <table class="table-bordered table-content w-100 mt-15">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <p class="fw_6 fs_13">Time Frame to reschedule</p>
-                                                            <p class="opacity_05">Before scheduled departure time</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="fw_6 fs_13">Airline Fees</p>
-                                                            <p class="opacity_05">(Per passenger)</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="fw_6 fs_13">{{selectedOnwardVendor.partnerName}} Fees</p>
-                                                            <p class="opacity_05">(Per passenger)</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr *ngFor="let re of cancellationPolicyOnward.reschedule;let i = index">
-                                                        <td>
-                                                            <p class="opacity_05">{{re.data}}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p>₹{{re.airline_fee}}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p>₹{{re.emt_fee}}</p>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                            <div class="imp-Information mt-10">
-                                                <h6>Terms & Conditions</h6>
-                                                <div class="imp-Information-list">
-                                                    <ul class="imp-Information-list">
-                                                        <li *ngFor="let tnc of cancellationPolicyOnward.tnc;let i = index">
-                                                            <p>{{tnc}}</p>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div id="BaggageDetails" class="flight-extra-content-o " *ngIf="baggageInfoOnward" [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
 
@@ -4223,55 +4154,202 @@
                         </div>
                         <div class="booking-inner-box from-to-box pb-0">
                             <div class="web_code d-none d-sm-block">
-                                <div class="booking-inner-title ">
-                                    <div class="booking-inner-title-left" *ngIf="searchData">
-                                        <div class="head_info">
-                                            <div class="float-start">
-                                                <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" class="flight-image mx-2" alt="Multi">
-                                                <img *ngIf="!onward_airline_unique" src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif" class="flight-image mx-2" alt="{{flightOnwardDetails[0]['airline']}}">
-                                            </div>
-                                            <h6>
-                                                <span class="city_text">{{searchData.fromCity}}</span>
-                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
-                                                <span class="city_text">{{searchData.toCity}}</span>
-                                                <p class="flight_details mb-0 pt-1">
-                                                    <ng-container *ngFor="let flights of flightOnwardDetails;let i = index;let last = last">
-                                                        <span>{{flights.airlineName}}</span> <span>
+                                <!--Multicity-->
+                                <ng-container *ngIf="searchData && flightSessionData.travel_type =='M'">
+                                    <ng-container *ngFor="let searchDatad of searchData;let searchi = index ;let last = last">
+                                        <div class="booking-inner-title ">
+                                            <div class="booking-inner-title-left" *ngIf="searchDatad">
+                                                <div class="head_info">
+                                                    <div class="float-start">
+                                                        <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" class="flight-image mx-2" alt="Multi">
+                                                        <img *ngIf="!onward_airline_unique" src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[searchi]['flights'][0]['airline']}}.gif" class="flight-image mx-2" alt="{{flightOnwardDetails[searchi]['flights'][0]['airline']}}">
+                                                    </div>
+                                                    <h6>
+                                                        <span class="city_text">{{searchDatad.fromCity}}</span>
+                                                        <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
+                                                        <span class="city_text">{{searchDatad.toCity}}</span>
+                                                        <p class="flight_details mb-0 pt-1">
+                                                            <ng-container *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index;let last = last">
+                                                                <span>{{flights.airlineName}}</span> <span>
                               {{flights.airline}}-{{flights.flightNumber}}</span> <span *ngIf="!last">, </span>
-                                                    </ng-container>
-                                                    | {{flightClasses[searchData.flightclass]}} | <span *ngIf="selectedOnwardVendor.refundStatus != 1">NON-REFUNDABLE</span> <span *ngIf="selectedOnwardVendor.refundStatus == 1">REFUNDABLE</span>
-                                                </p>
-                                            </h6>
+                                                            </ng-container>
+                                                            | {{flightClasses[searchDatad.flightclass]}} | <span *ngIf="selectedOnwardVendor.refundStatus != 1">NON-REFUNDABLE</span> <span *ngIf="selectedOnwardVendor.refundStatus == 1">REFUNDABLE</span>
+                                                        </p>
+                                                    </h6>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div class="head_info">
+                                                    <div>
+                                                        <p class="time_text">{{flightOnwardDetails[searchi]['flights'][0].departureDateTime| date:'HH:mm'}}</p>
+                                                        <p class="date_text">{{flightOnwardDetails[searchi]['flights'][0].departureDateTime| date:'dd MMM'}}</p>
+                                                    </div>
+                                                    <div>
+                                                        <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <p class="time_text">
+                                                            {{flightOnwardDetails[searchi]['flights'][flightOnwardDetails[searchi]['flights'].length -1].arrivalDateTime| date:'HH:mm'}}</p>
+                                                        <p class="date_text">
+                                                            {{flightOnwardDetails[searchi]['flights'][flightOnwardDetails[searchi]['flights'].length -1].arrivalDateTime| date:'dd MMM'}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <p class="duration_flight">{{totalOnwardDuration | durationTime}}</p>
+                                                    <p class="date_text">{{flightOnwardDetails[searchi]['flights'][0].stops}} Stop</p>
+                                                </div>
+                                            </div>
+                                            <div class="booking-inner-title-right">
+                                                <a class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse{{searchi}}" role="button" aria-expanded="false"> <span class=""></span></a>
+                                            </div>
+
                                         </div>
-                                    </div>
-                                    <div>
-                                        <div class="head_info">
-                                            <div>
-                                                <p class="time_text">{{flightOnwardDetails[0].departureDateTime| date:'HH:mm'}}</p>
-                                                <p class="date_text">{{flightOnwardDetails[0].departureDateTime| date:'dd MMM'}}</p>
+                                        <hr *ngIf="!last">
+                                        <div class="collapse" id="flight_review_collapse{{searchi}}">
+                                            <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+                                                <div class="Booking-Flight-name">
+                                                    <div class="Booking-Flight-name-left">
+                                                        <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" alt="{{flights.airline}}" class="flight-image mr-10">
+                                                        <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                                                        <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                                    </div>
+                                                    <div class="Booking-Flight-name-right">
+                                                        <p>{{flightClasses[searchData.flightclass]}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="Booking-Flight-time">
+                                                    <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                                                    <span class="round round-line"></span>
+                                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                        <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                                        <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                                        <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                                        <p class="text-gray" *ngIf="flights.stopsDetails && flights.stopsDetails.length > 0">Via {{flights.stopsDetails[0]['layoverAirportName']}}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="Booking-Flight-time">
+                                                    <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                                                    <span class="round"></span>
+                                                    <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                        <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                                        <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnwardMulti[searchi] && baggageInfoOnwardMulti[searchi][i]">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <h6>Airline</h6>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <h6>Check-in Baggage</h6>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <h6>Cabin Baggage</h6>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <p>{{baggageInfoOnwardMulti[searchi][i].flightName}}<br>{{baggageInfoOnwardMulti[searchi][i].flightNo}}</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p *ngIf="baggageInfoOnwardMulti[searchi][i].checkIn;then checkIn_content else checkIn_blank"></p>
+                                                            <ng-template #checkIn_content>{{baggageInfoOnwardMulti[searchi][i].checkIn}}</ng-template>
+                                                            <ng-template #checkIn_blank>NA</ng-template>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p *ngIf="baggageInfoOnwardMulti[searchi][i].cabin ;then cabin_content else cabin_blank"></p>
+                                                            <ng-template #cabin_content>{{baggageInfoOnwardMulti[searchi][i].cabin}}</ng-template>
+                                                            <ng-template #cabin_blank>NA</ng-template>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="operated_by" *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
+                                                    Operated by
+                                                    <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
+                                                    <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
+                                                </div>
+                                                <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                                    <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="time_text">
-                                                    {{flightOnwardDetails[flightOnwardDetails.length -1].arrivalDateTime| date:'HH:mm'}}</p>
-                                                <p class="date_text">
-                                                    {{flightOnwardDetails[flightOnwardDetails.length -1].arrivalDateTime| date:'dd MMM'}}</p>
+
+                                        </div>
+
+
+                                        <div class="edit_baggage" *ngIf="enableVAS==1">
+                                            <div class="luggage-box-edit">
+                                                <div class="luggage-text">
+                                                    <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
+                                                    <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"
+                          (click)="moveTab(3)"><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div>
+                                    </ng-container>
+                                </ng-container>
+
+                                <ng-container *ngIf="flightSessionData.travel_type !='M'">
+                                    <div class="booking-inner-title ">
+                                        <div class="booking-inner-title-left" *ngIf="searchData">
+                                            <div class="head_info">
+                                                <div class="float-start">
+                                                    <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif.gif" class="flight-image mx-2" alt="Multi">
+                                                    <img *ngIf="!onward_airline_unique" src="{{cdnUrl}}/images/airlines/{{flightOnwardDetails[0]['airline']}}.gif" class="flight-image mx-2" alt="{{flightOnwardDetails[0]['airline']}}">
+                                                </div>
+                                                <h6>
+                                                    <span class="city_text">{{searchData.fromCity}}</span>
+                                                    <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-2" alt="">
+                                                    <span class="city_text">{{searchData.toCity}}</span>
+                                                    <p class="flight_details mb-0 pt-1">
+                                                        <ng-container *ngFor="let flights of flightOnwardDetails;let i = index;let last = last">
+                                                            <span>{{flights.airlineName}}</span> <span>
+                              {{flights.airline}}-{{flights.flightNumber}}</span> <span *ngIf="!last">, </span>
+                                                        </ng-container>
+                                                        | {{flightClasses[searchData.flightclass]}} | <span *ngIf="selectedOnwardVendor.refundStatus != 1">NON-REFUNDABLE</span> <span *ngIf="selectedOnwardVendor.refundStatus == 1">REFUNDABLE</span>
+                                                    </p>
+                                                </h6>
+                                            </div>
+                                        </div>
+
                                         <div>
-                                            <p class="duration_flight">{{totalOnwardDuration | durationTime}}</p>
-                                            <p class="date_text">{{flightOnwardDetails[0].stops}} Stopddddddddd</p>
+                                            <div class="head_info">
+                                                <div>
+                                                    <p class="time_text">{{flightOnwardDetails[0].departureDateTime| date:'HH:mm'}}</p>
+                                                    <p class="date_text">{{flightOnwardDetails[0].departureDateTime| date:'dd MMM'}}</p>
+                                                </div>
+                                                <div>
+                                                    <img src="{{cdnUrl}}/images/icons/flight-right.png" class="mx-3" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="time_text">
+                                                        {{flightOnwardDetails[flightOnwardDetails.length -1].arrivalDateTime| date:'HH:mm'}}</p>
+                                                    <p class="date_text">
+                                                        {{flightOnwardDetails[flightOnwardDetails.length -1].arrivalDateTime| date:'dd MMM'}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <p class="duration_flight">{{totalOnwardDuration | durationTime}}</p>
+                                                <p class="date_text">{{flightOnwardDetails[0].stops}} Stop</p>
+                                            </div>
+                                        </div>
+                                        <div class="booking-inner-title-right">
+                                            <a class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse" role="button" aria-expanded="false"> <span class="">
+                        <!--<i class="fas fa-angle-down rotate-icon"></i>--></span></a>
                                         </div>
                                     </div>
-                                    <div class="booking-inner-title-right">
-                                        <p class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse" role="button" aria-expanded="false"> <span class="">
-                        <!--<i class="fas fa-angle-down rotate-icon"></i>--></span></p>
-                                    </div>
-                                </div>
+                                </ng-container>
+
                             </div>
                             <div class="web_code d-block d-sm-none">
                                 <div class="booking-inner-title mlite_code d-block d-sm-none">
@@ -4330,98 +4408,100 @@
                             </div>
 
 
-                            <div class="collapse" id="flight_review_collapse">
-                                <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
-                                    <div class="Booking-Flight-name">
-                                        <div class="Booking-Flight-name-left">
-                                            <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" alt="{{flights.airline}}" class="flight-image mr-10">
-                                            <span class="fw_7  mr-10">{{flights.airlineName}}</span>
-                                            <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
-                                        </div>
-                                        <div class="Booking-Flight-name-right">
-                                            <p>{{flightClasses[searchData.flightclass]}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="Booking-Flight-time">
-                                        <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
-                                        <span class="round round-line"></span>
-                                        <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                            <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
-                                            <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
-                                            <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
-                                            <p class="text-gray" *ngIf="flights.stopsDetails && flights.stopsDetails.length > 0">Via {{flights.stopsDetails[0]['layoverAirportName']}}
-                                            </p>
-                                        </div>
-                                    </div>
 
-                                    <div class="Booking-Flight-time">
-                                        <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
-                                        <span class="round"></span>
-                                        <div class="Flight-time-name" *ngIf="airportsNameJson">
-                                            <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
-                                            <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
+                            <ng-container *ngIf="flightSessionData.travel_type !='M'">
+                                <div class="collapse" id="flight_review_collapse">
+                                    <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
+                                        <div class="Booking-Flight-name">
+                                            <div class="Booking-Flight-name-left">
+                                                <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" alt="{{flights.airline}}" class="flight-image mr-10">
+                                                <span class="fw_7  mr-10">{{flights.airlineName}}</span>
+                                                <span class="opacity_05 ">{{flights.airline}}-{{flights.flightNumber}}</span>
+                                            </div>
+                                            <div class="Booking-Flight-name-right">
+                                                <p>{{flightClasses[searchData.flightclass]}}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.departureDateTime| date:'HH:mm'}}</h6>
+                                            <span class="round round-line"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
+                                                <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
+                                                <p class="text-gray" *ngIf="flights.stopsDetails && flights.stopsDetails.length > 0">Via {{flights.stopsDetails[0]['layoverAirportName']}}
+                                                </p>
+                                            </div>
+                                        </div>
 
-                                    <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnward[i]">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <h6>Airline</h6>
+                                        <div class="Booking-Flight-time">
+                                            <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
+                                            <span class="round"></span>
+                                            <div class="Flight-time-name" *ngIf="airportsNameJson">
+                                                <h6>{{airportsNameJson[flights.arrivalAirport].city}}</h6>
+                                                <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                                             </div>
-                                            <div class="col-md-3">
-                                                <h6>Check-in Baggage</h6>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <h6>Cabin Baggage</h6>
-                                            </div>
-                                            <!--<div class="col-md-4">
+                                        </div>
+
+                                        <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnward[i]">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <h6>Airline</h6>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <h6>Check-in Baggage</h6>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <h6>Cabin Baggage</h6>
+                                                </div>
+                                                <!--<div class="col-md-4">
                                                 <h6>Flight Extras</h6>
                                                 <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/meals.png" alt="" /> Meals</p>
                                                 <p class="text-green fw_6"><img src="{{cdnUrl}}/images/icons/sat.png" alt="" />  Seat Selections</p>
                                             </div>-->
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <p>{{baggageInfoOnward[i].flightName}}<br>{{baggageInfoOnward[i].flightNo}}</p>
                                             </div>
-                                            <div class="col-md-3">
-                                                <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                <ng-template #checkIn_content>{{baggageInfoOnward[i].checkIn}}</ng-template>
-                                                <ng-template #checkIn_blank>NA</ng-template>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
-                                                <ng-template #cabin_content>{{baggageInfoOnward[i].cabin}}</ng-template>
-                                                <ng-template #cabin_blank>NA</ng-template>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <p>{{baggageInfoOnward[i].flightName}}<br>{{baggageInfoOnward[i].flightNo}}</p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
+                                                    <ng-template #checkIn_content>{{baggageInfoOnward[i].checkIn}}</ng-template>
+                                                    <ng-template #checkIn_blank>NA</ng-template>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
+                                                    <ng-template #cabin_content>{{baggageInfoOnward[i].cabin}}</ng-template>
+                                                    <ng-template #cabin_blank>NA</ng-template>
+                                                </div>
+
                                             </div>
 
                                         </div>
+                                        <div class="operated_by" *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
+                                            Operated by
+                                            <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
+                                            <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
+                                        </div>
+                                        <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                            <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+                                        </div>
+                                    </div>
 
-                                    </div>
-                                    <div class="operated_by" *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
-                                        Operated by
-                                        <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
-                                        <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
-                                    </div>
-                                    <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
-                                        <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
-                                    </div>
                                 </div>
 
-                            </div>
 
-
-                            <div class="edit_baggage" *ngIf="enableVAS==1">
-                                <div class="luggage-box-edit">
-                                    <div class="luggage-text">
-                                        <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
-                                        <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"
+                                <div class="edit_baggage" *ngIf="enableVAS==1">
+                                    <div class="luggage-box-edit">
+                                        <div class="luggage-text">
+                                            <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
+                                            <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"
                           (click)="moveTab(3)"><img src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </ng-container>
                         </div>
-
 
 
                         <!--Return --->
@@ -5092,11 +5172,13 @@
                                                 </div>
                                                 <div class="fare-list-right" *ngIf="steps > 3">
                                                     <h6 class="fw_7">₹ {{totalCollectibleAmount|number}}</h6>
-                                                    <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                                    <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number}}/month
+                                                    </p>
                                                 </div>
                                                 <div class="fare-list-right" *ngIf="steps < 4">
                                                     <h6 class="fw_7">₹ {{(totalCollectibleAmount-partnerConvFee)|number}}</h6>
-                                                    <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI @ {{calculateEMI((totalCollectibleAmount-partnerConvFee))|number: '.2'}}/month</p>
+                                                    <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI @ {{calculateEMI((totalCollectibleAmount-partnerConvFee))|number}}/month
+                                                    </p>
                                                 </div>
                                             </div>
                                         </li>
@@ -5264,7 +5346,8 @@
                         <div class="col-5">
                             <div class="">
                                 <h6 class="price">₹{{totalCollectibleAmount|number}}</h6>
-                                <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number}}/month
+                                </p>
 
                             </div>
                         </div>
@@ -5387,12 +5470,14 @@
                                     </div>
                                     <div class="fare-list-right" *ngIf="steps < 4">
                                         <h6 class="fw_7">₹{{totalCollectibleAmount-partnerConvFee|number}}</h6>
-                                        <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number: '.2'}}/month</p>
+                                        <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number}}/month
+                                        </p>
                                     </div>
 
                                     <div class="fare-list-right" *ngIf="steps > 3">
                                         <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
-                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
+                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number}}/month
+                                        </p>
                                     </div>
 
                                 </div>
