@@ -2483,13 +2483,13 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         
         console.log(this.searchData);
         console.log(data);
-        
+        /*
         let airlineCode;
         if(this.onwardAirlineMulti_multi[i])
         airlineCode='Multi';
         else
         airlineCode=this.onward_airline_array_multi[0];
-        
+        */
 
         this.baggageInfo= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">
         <ul class="nav nav-tabs travelTab" role="tablist">`;
