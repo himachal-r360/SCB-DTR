@@ -604,6 +604,7 @@ selectedGST:any=[];
 checkedGST:any=[];
 disableGSTCheckbox:any=[];
 @ViewChild("contentTraveller") modalTraveller: TemplateRef<any>;
+
 chooseFromSavedTravellers(){
   this.isExpanded = false;
   this.modalService.open(this.modalTraveller, { centered: true }).result.then((result) => {
@@ -705,7 +706,7 @@ getCustomertravellerInfo(){
       //this.saveTravllerShow=false;
     }
 }
-fillupTravellerDetailOnCheck($event,data,travellerIndex){
+fillupTravellerDetailOnCheck($event,data,travellerIndex,){
   
       if($event.target.checked){                
             this.isChecked[travellerIndex]=true;
