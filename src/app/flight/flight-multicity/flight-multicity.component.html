@@ -817,10 +817,10 @@
                   </div>
                   <div class="mob-listing-header-center">
                       <h6>{{selectedTripData.fromCity}} - {{selectedTripData.toCity}}</h6>
-                      <p>{{selectedTripData.depart | date:'EEE, dd MMM' }} | {{(selectedTripData.adults + selectedTripData.child + selectedTripData.infants)}} Travellers | <span *ngIf="selectedTripData.classType == 'B'">Business</span>
-                        <span *ngIf="selectedTripData.classType == 'E'">Economy</span>
-                        <span *ngIf="selectedTripData.classType == 'F'">First</span>
-                        <span *ngIf="selectedTripData.classType == 'P'">Premium</span>
+                      <p>{{selectedTripData.departure | date:'EEE, dd MMM' }} | {{TotalPassenger}} Travellers | <span *ngIf="selectedTripData.flightclass == 'B'">Business</span>
+                        <span *ngIf="selectedTripData.flightclass == 'E'">Economy</span>
+                        <span *ngIf="selectedTripData.flightclass == 'F'">First</span>
+                        <span *ngIf="selectedTripData.flightclass == 'P'">Premium</span>
                       </p>
                   </div>
                   <div class="mob-listing-header-right">
@@ -830,6 +830,25 @@
                   </div>
               </div>
           </div>
+          <!-- <div class="col-md-12 p-0 ">
+            <div class="mult-city-listing-flights-box">
+                <div class="mult-city-listing-flights-items mult-city-active">
+                    <p class="mult-city-listing-names">BOM - HYD</p>
+                    <p class="mult-city-listing-date">Mon, 11 Jul</p>
+                    <p class="mult-city-listing-selected">Not selected</p>
+                </div>
+                <div class="mult-city-listing-flights-items">
+                    <p class="mult-city-listing-names">BOM - HYD</p>
+                    <p class="mult-city-listing-date">Mon, 11 Jul</p>
+                    <p class="mult-city-listing-selected">Not selected</p>
+                </div>
+                <div class="mult-city-listing-flights-items">
+                    <p class="mult-city-listing-names">BOM - HYD</p>
+                    <p class="mult-city-listing-date">Mon, 11 Jul</p>
+                    <p class="mult-city-listing-selected">Not selected</p>
+                </div>
+            </div>
+        </div> -->
           <div class="col-md-12 mt-70" *ngIf="!loader">
               <div class="mob-listing-fiters">
                   <h6>{{flightList.length}} Flights Found</h6>
