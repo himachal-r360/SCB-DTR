@@ -618,7 +618,6 @@ orderRetry:boolean=false;
     this.route.queryParamMap
     .subscribe((params) => {
       let order = { ...params.keys, ...params };
-      console.log(order['params']['retry']);
       if(order['params']['retry'] && order['params']['retry'] != undefined) {
 
        setTimeout(() => {
@@ -644,7 +643,7 @@ orderRetry:boolean=false;
                   }, 10);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
-                  console.log(this.flightSessionData);
+               
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -2272,6 +2271,15 @@ orderRetry:boolean=false;
         $("#infoprocess").modal('hide');
       }, 10);
 
+      let trackUrlParams = new HttpParams()
+      .set('current_url', window.location.href)
+      .set('category', 'Flight')
+      .set('event', 'Flight Info angf')
+      .set('metadata', JSON.stringify(res));
+
+    const track_body: string = trackUrlParams.toString();
+    this.rest.trackEvents(track_body).subscribe(result => { });
+
       if (res.statusCode == 200) {
         this.flightInfo = res.response;
         var suggestHotels = {
@@ -3492,6 +3500,8 @@ orderReferenceNumber:any;
       orderReferenceNumber: order_ref_num,
       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
     };
+
+      console.log(JSON.stringify(checkoutData));
 
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
