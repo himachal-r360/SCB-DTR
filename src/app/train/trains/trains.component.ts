@@ -302,6 +302,24 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       filterDiv.style.display = 'none';
     }
   }
+  openAvailability()
+  {
+    var filterDiv = document.getElementById('m_availability_modal');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'block';
+    }
+
+  }
+
+  CloseAvailabilitySection()
+  {
+    var filterDiv = document.getElementById('m_availability_modal');
+    if(filterDiv)
+    {
+      filterDiv.style.display = 'none';
+    }
+  }
   onApplyFilter(){
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
