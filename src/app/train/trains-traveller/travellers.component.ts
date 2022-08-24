@@ -120,9 +120,6 @@ export class TrainsTravellerComponent implements OnInit {
     
     travellersFilledArray = [];    infanttravellersFilledArray = [];
     
-    
-    
-    
     seniorCitizenStatus: boolean = false;
     seniorCitizenStatusAddMore: any[] = [false];
     applicableBerthTypes: any[];
@@ -338,10 +335,12 @@ export class TrainsTravellerComponent implements OnInit {
         this._flightService.showHeader(true);
       }
            
-        this.moveTop();
+     
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
+        
+        console.log(this.seacthResult);
         
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
      
@@ -903,8 +902,9 @@ saveGSTConsent(){
              this.spinnerService.hide();
         });
     }
+        travelDuration:any;
     trainSchedlue(stationName) {
-       
+    
         if (stationName != '') {
             let stationCode = stationName.split(" - ");
             this.scheduleParam = {
@@ -934,6 +934,17 @@ saveGSTConsent(){
                         else{
                             this.traveldate = new Date(convDate.add(differenceDate,'d'));  
                         }
+                        
+    
+                var startTime = moment(moment(this.traveldate).format('DD-MM-YYYY')+' '+this.scheduletime, 'DD-MM-YYYY hh:mm');
+                var endTime = moment(moment(this.journeyArrivalDate).format('DD-MM-YYYY')+' '+this.arrivalTime, 'DD-MM-YYYY hh:mm');
+                
+
+                var duration = moment.duration(endTime.diff(startTime));
+                var hours = duration.asMinutes();
+                this.travelDuration= Math.floor(hours / 60)+' hrs '+hours % 60+' mins';
+  
+                        
                     }
                 }
             });
@@ -1897,6 +1908,20 @@ gstReset(){
             }
         }
         return temp;
+    }
+    
+    autoUpgrade($event) {
+        this.addshow = !this.addshow;
+        this.addPreferenceSelected = $event.target.checked;
+        if (this.addPreferenceSelected == true) {
+             this.passengerForm['controls']['passengerAutoUpgradation'].setValue(1);
+            this.passengerForm.controls['coachId'].setValidators([Validators.pattern("^(([a-zA-Z]{1})([0-9]{1,3}))"),Validators.maxLength(4)]);
+            this.passengerForm.controls['coachId'].updateValueAndValidity();
+        } else {
+          this.passengerForm['controls']['passengerAutoUpgradation'].setValue(0);
+            this.passengerForm.get('coachId').clearValidators();
+            this.passengerForm.controls['coachId'].updateValueAndValidity();
+        }
     }
     generateTrainItinerary() { 
         if(this.gstSelected){

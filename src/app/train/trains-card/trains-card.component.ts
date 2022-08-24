@@ -58,6 +58,7 @@ selectedIndex:number=0;selectedIndexR:number=0;
         toStn: string;
         journeyDate: string;
         noOfPassenger: number;
+        loaderValue = 10;
         @Input('stationsdump') stationsdump;
         @Input('quota') quota;
         trainId: string = '';

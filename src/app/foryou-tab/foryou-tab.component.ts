@@ -928,6 +928,13 @@ public modeselectTrending= 'All';
       this.document.location.href = environment.MAIN_SITE_URL + url;
     }
   }
+  unlockCardPopup(){
+      if(this.sg['customerInfo']){
+        $("#unlockCardPopup").modal("show");
+      }else{
+         window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'check-login?g=1';
+      }
+  }
   onSubmit(){
        this.angForm.markAllAsTouched();
        if (this.angForm.invalid){

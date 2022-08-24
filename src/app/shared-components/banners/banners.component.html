@@ -124,11 +124,12 @@
           <div class="card_benefit">
             <p class="perk_text">Perk</p>
             <div class="perk_flex">
-              <div class="perk_item">
-                <div class="benefit_sec"> 
+              <div class="perk_item" *ngIf="display_wb">
+                <div class="benefit_sec" (click)="welcome_benefitsLink()"> 
                   <div class="benefit_text">
                       <p class="text">Welcome Benefit</p>
-                      <p class="value">Rs {{wb_spend}}</p>
+                      <p class="value" *ngIf="display_wb_spend">{{wb_spend}}</p>
+                      <p class="value_transfer" *ngIf="display_wb_link">Avail Now</p>
                   </div>
                   <div class="mt-10" *ngIf="is_wb_progressbar">
                     <div class="progress" >
@@ -138,11 +139,19 @@
                   </div>
                 </div>
               </div>
+              <div class="perk_item" *ngIf="display_tb">
+                <div class="benefit_sec" > 
+                  <div class="benefit_text">
+                      <p class="text">Travel Benefit</p>
+                      <p class="value_transfer" (click)="travel_benefitsLink()">Avail Now</p>
+                  </div>
+                </div>
+              </div>
               <div class="perk_item">
-                <div class="benefit_sec"> 
+                <div class="benefit_sec" > 
                   <div class="benefit_text">
                       <p class="text">Milestone Benefit</p>
-                      <p class="value_transfer">Premium Voucher</p>
+                      <p class="value_transfer" (click)="milestone_benefitsLink()" *ngIf="display_mb_link">Avail Now</p>
                   </div>
                   <div class="mt-10" *ngIf="is_mb_progressbar">
                     <div class="progress">
@@ -225,47 +234,47 @@
         <div class="modal-body">
             <div>
                 <form [formGroup]="angForm" novalidate (ngSubmit)="onSubmit()">
-                    <div class="mb-3">
+                    <div class="mb-30 card-container-rel">
                       <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number" formControlName="mobile_no">
                       <div *ngIf="angForm.controls['mobile_no'].invalid && (angForm.controls['mobile_no'].dirty || angForm.controls['mobile_no'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['mobile_no'].errors.required">
-                            Mobile Number is required
+                            <small class="validate-msg">Mobile Number is required</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('pattern')">
-                            Mobile Number must be numeric
+                            <small class="validate-msg">Mobile Number must be numeric</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('minlength')">
-                            Mobile Number must be of 10 digit
+                            <small class="validate-msg">Mobile Number must be of 10 digit</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('maxlength')">
-                            Mobile Number must be of 10 digit
+                            <small class="validate-msg">Mobile Number must be of 10 digit</small>
                           </div>
                           
                       </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-30 card-container-rel">
                       <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card" formControlName="last_4_digit">
                       <div *ngIf="angForm.controls['last_4_digit'].invalid && (angForm.controls['last_4_digit'].dirty || angForm.controls['last_4_digit'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['last_4_digit'].errors.required">
-                            Last 4 digit of the card is required
+                            <small class="validate-msg">Last 4 digit of the card is required</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('pattern')">
-                             Last 4 digit of the card must be numeric
+                             <small class="validate-msg">Last 4 digit of the card must be numeric</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('minlength')">
-                            Last 4 digit of the card must be of 4 digit
+                            <small class="validate-msg">Last 4 digit of the card must be of 4 digit</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('maxlength')">
-                            Last 4 digit of the card must be of 4 digit
+                            <small class="validate-msg">Last 4 digit of the card must be of 4 digit</small>
                           </div>
                       </div>
                     </div>
-                    <div class="mb-3 position-relative">
+                    <div class="mb-30 card-container-rel">
                         <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask">
                         <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
                         <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
                             <div *ngIf="angForm.controls['dob'].errors.required">
-                              Date of birth is required
+                              <small class="validate-msg">Date of birth is required</small>
                             </div>
                         </div>
                     </div>

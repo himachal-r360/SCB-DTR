@@ -824,13 +824,16 @@ a {
 
 
 /* Agular Material Override css */
+.date_box .mat-input-element:disabled{
+    cursor: not-allowed !important; 
+}
 .mat-calendar-body-selected{
     background-color: $primary-color;
 }
 .custom-check-box .mat-form-field-wrapper{
     padding-bottom: 10px;
 }
-.contact-form .mat-form-field-wrapper{
+.contact-form .mat-form-field-wrapper, .destination_details_train .mat-form-field-wrapper{
     padding-bottom: 0px;
 }
 .train-selectClass-mat-field{
@@ -873,8 +876,10 @@ a {
                 .mat-tab-labels{
                     margin: 10px;
                     .mat-tab-label{
-                        min-width: 50px;
-                        border: 2px solid #1D86FF;
+                        max-width: 30px;
+                        min-width: 30px;
+                        height: 30px;
+                        border: 1px solid #1D86FF;
                         font-weight: 600;
                         font-size: 14px;
                         color: #1D86FF;
@@ -891,9 +896,9 @@ a {
                         color: #ffffff;
                         opacity: 1;
                     }
-                    .mat-ink-bar{
-                        display: none;
-                    }
+                }
+                .mat-ink-bar{
+                    display: none;
                 }
             }
         }
@@ -909,6 +914,58 @@ a {
 .m_filter_paddng .mat-expansion-panel-spacing {
     margin-top:0px;
 }
+
+.checkAva_m{
+    .mat-tab-group{ 
+        .mat-tab-header{
+            .mat-tab-label-container{
+                .mat-tab-list{
+                    .mat-ink-bar{
+                        background-color: none;
+                        width:0px;
+                        height:0px;
+                        }
+                    .mat-tab-labels{
+                        
+                        .mat-tab-label{
+                            height: 28px;
+                            padding: 10px 10px;
+                            cursor: pointer;
+                            text-align: center;
+                            display: inline-flex;
+                            justify-content: center;
+                            align-items: center;
+                            white-space: nowrap;
+                            position: relative;
+                            width: 28px;
+                            color: #1d86ff;
+                            opacity:1;
+                            @media (max-width : 599px){
+                                min-width:0px;
+                                opacity:1;
+                            }
+                        }
+                        .mat-tab-label-active{
+                            background:#1d86ff;
+                            color: #fff;
+                            opacity:1;
+                            border-bottom:none;
+                            // @media (max-width : 599px){
+                            //     background:#1d86ff;
+                            // color: #fff;
+                            // opacity:1;
+                            // }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+    .mat-tab-header {
+        border-bottom:none;
+    }
+
 
 @media only screen and (max-width: 997px){
     .mat-select-value, .mat-select, .mat-select-value-text{
@@ -3738,6 +3795,7 @@ table.table-bordered.table-content {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-flow: column;
 }
 .fare-list-box{
     position: relative;
@@ -7551,6 +7609,27 @@ img {
   width: 100%;
   z-index: 99;
 }
+
+.travelTab{
+  display: flex !important;
+    align-items: center;
+    justify-content: start;
+        border: 0;
+             a{
+                .rules-flight-items{
+                    opacity:0.5;
+                }
+            }
+
+              a.active{
+                .rules-flight-items{
+                    opacity:1;
+                }
+            }
+
+}
+
+
 /* end 18-08-2022 */
 
 /* Start 23-08-2022*/
@@ -7606,7 +7685,8 @@ img {
   opacity: 0.6;
 }
 .multi-city-departure-item{
-  background: url(../images/icons/date.png) no-repeat;
+
+  /* background: url(../src/assets/images/icons/date.png) no-repeat; */
   background-position: 90% 50%;
 }
 .mob-form-hide{
