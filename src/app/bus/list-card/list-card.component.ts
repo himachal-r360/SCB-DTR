@@ -479,7 +479,6 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
 
  }
  showBusDetails(id){
- console.log(id);
  $('#collapseExample_'+id).toggle();
   $('#onAmenities_'+id).trigger('click');
  }
