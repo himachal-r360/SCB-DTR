@@ -334,6 +334,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
 
  onSeats(tripId, rowvalue, bus, mobile = false) {
+  $('#collapseExample_'+tripId).hide();
   this.loading = true;
   this.showAmenities = false;
   this.showCancellation = false;
@@ -478,9 +479,10 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
  }
- showBusDetails(id){
+ showBusDetails(amenities,id,mobile){
+ this.showAmenities = false;
  $('#collapseExample_'+id).toggle();
-  $('#onAmenities_'+id).trigger('click');
+  this.onAmenities(amenities, id, mobile);
  }
  
  closeAmenitiesmlite()
