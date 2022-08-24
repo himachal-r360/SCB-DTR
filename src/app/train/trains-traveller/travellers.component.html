@@ -74,7 +74,6 @@
         </strong></p>
     </div>
   </div>
-  <input *ngIf="searchData" type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
   <div class="container">
     <div class="row">
 
@@ -91,36 +90,36 @@
 
                   <div class="col-sm-4">
                     <p class="train_name">
-                      LTT VSKP EXP(18520)
+                      {{trainName}}({{trainnumber}})
                     </p>
                     <p class="daily_chart">
                         <span class="text-small-gray" style="color:#000000;">Runs on:</span>
-                        <span >S</span>
-                        <span >M</span>
-                        <span >T</span>
-                        <span >W</span>
-                        <span >T</span>
-                        <span class="active">F</span>
-                        <span >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
                     </p>
                   </div>
                   <div class="col-sm-8">
                     <div class="trainTimeInfo">
                         <div class="">
-                            <p><span class="time">06:05, Sat</span></p>
-                            <p class="place">Lokmantatilak (LTT) </p>
-                            <p class="date">Jul 17, 2022</p>
+                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
                         </div>
                         <div>
                             <div class="duration_train">
-                                <p class="dur_time">13 hrs 35 mins</p>
+                                <p class="dur_time">{{travelDuration}}</p>
                                 <div class="range m_range"></div>
                             </div>
                         </div>
                         <div>
-                            <p><span class="time">20:30, Sun</span> </p>
-                            <p class="place">Secunderabad Jn (SC)</p>
-                            <p class="date">Jul 17, 2022</p>
+                            <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                            <p class="place">{{tostnDesc}}</p>
+                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
                         </div>
                       </div>
                   </div>
@@ -132,7 +131,7 @@
                     <p class="train_title_label"> Availability Status </p>
                     <div class="common_box">
                       <div>
-                        <p class="ava_status"><span class="coach">SL</span> <span class="list">PQWL106/WL81</span></p>
+                        <p class="ava_status"> <span class="coach">{{enqClass}}</span> <span class="list">{{seacthResult.selectedAvailablityFare.availablityStatus}}</span></p>
                       </div>
                     </div>
                     
@@ -179,7 +178,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
                                                         <mat-form-field class="w-100">
-                                                            <input matInput placeholder="IRCTC Authorised Partner User ID (Case Sensitive)" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);" autofocus>
+                                                            <input matInput placeholder="IRCTC Authorised Partner User ID (Case Sensitive)" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);" >
                                                         </mat-form-field>
                                                         <div class="error" *ngIf="userValidError">
                                                             <small>{{IRCTCUserError}}</small>
