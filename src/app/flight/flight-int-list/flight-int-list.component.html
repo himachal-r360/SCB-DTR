@@ -581,40 +581,36 @@
 
                                                             <div id="FlightDetailsS_{{list.flightKey}}_{{j}}" class="flight-extra-content extra-active">
 
-                                                            </div>
-                                                            <div class="tabs-depart-total">
-                                                                <p>{{details.duration | durationTime}}</p>
-                                                                <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0">Via {{details.stopsDetails[0]['layoverAirportName']}} </p>
-                                                            </div>
-                                                            <div class="tabs-depart-times">
-                                                                <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
-                                                                <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson && airportsNameJson[details.arrivalAirport] ">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="extra-tabs-details-bottom">
-                                                            <div class="tabs-depart-box" *ngFor="let details of list.onwardflights;let i=index;">
-                                                                <div class="tabs-depart-one">
-                                                                    <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.onwardflights[0].airline}}.gif" class="flight-image me-2" alt="">IndiGo {{list.onwardflights[0].airline}} {{list.onwardflights[0].flightNumber}}</p>
-                                                                    <div class="tabs-depart-left float-none">
-                                                                        <div class="tabs-depart-times">
-                                                                            <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
-                                                                            <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                            <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}}) </p>
+                                                                <div id="FlightDetailsS_onward_{{list.flightKey}}_{{j}}" class="flight-extra-content extra-active">
+                                                                    <div class="extra-tabs-details FlightDetails-box">
+                                                                        <div class="extra-tabs-details-top">
+                                                                            <div class="extra-tabs-left">
+                                                                                <p>Depart <span class="ms-2 me-2">|</span>{{fromCityName}} to {{toCityName}}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="extra-tabs-details-bottom">
+                                                                            <div class="tabs-depart-box" *ngFor="let details of list.onwardflights;let i=index;">
+                                                                                <div class="tabs-depart-one">
+                                                                                    <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.onwardflights[0].airline}}.gif" class="flight-image me-2" alt="">IndiGo {{list.onwardflights[0].airline}} {{list.onwardflights[0].flightNumber}}</p>
+                                                                                    <div class="tabs-depart-left float-none">
+                                                                                        <div class="tabs-depart-times">
+                                                                                            <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                            <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                            <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}}) </p>
 
 
-                                                                        </div>
-                                                                        <div class="tabs-depart-total">
-                                                                            <p>{{details.duration | durationTime}}</p>
-                                                                            <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0">Via {{details.stopsDetails[0]['layoverAirportName']}} </p>
-                                                                        </div>
-                                                                        <div class="tabs-depart-times">
-                                                                            <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
-                                                                            <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                            <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--<div class="tabs-depart-right">
+                                                                                        </div>
+                                                                                        <div class="tabs-depart-total">
+                                                                                            <p>{{details.duration | durationTime}}</p>
+                                                                                            <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0">Via {{details.stopsDetails[0]['layoverAirportName']}} </p>
+                                                                                        </div>
+                                                                                        <div class="tabs-depart-times">
+                                                                                            <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                            <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                            <p class="mt-1 opacity_05" *ngIf="airportsNameJson && airportsNameJson[details.arrivalAirport] ">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!--<div class="tabs-depart-right">
                                                                             <div class="Baggage">
                                                                                 <h5>Baggage</h5>
                                                                                 <p>Adult</p>
@@ -628,49 +624,49 @@
                                                                                 <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
                                                                             </div>
                                                                         </div>-->
-                                                                </div>
-                                                                <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
-                                                                    Operated by <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
-                                                                    <b *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
-                                                                </div>
-                                                                <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.onwardflights[i]  && list.onwardflights[i+1] && getLayoverHour(list.onwardflights[i],list.onwardflights[i+1])">
-                                                                    <p>Change of planes・{{getLayoverHour(list.onwardflights[i],list.onwardflights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
-                                                                </div>
+                                                                                </div>
+                                                                                <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                                                                    Operated by <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                                                                    <b *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                                                                </div>
+                                                                                <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.onwardflights[i]  && list.onwardflights[i+1] && getLayoverHour(list.onwardflights[i],list.onwardflights[i+1])">
+                                                                                    <p>Change of planes・{{getLayoverHour(list.onwardflights[i],list.onwardflights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                                </div>
 
-                                                            </div>
+                                                                            </div>
 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--Return-->
-                                                <div id="FlightDetailsS_return_{{list.flightKey}}_{{j}}" class="flight-details-box-hide">
-                                                    <div class="extra-tabs-details-top" *ngIf="list.returnflights.length>0">
-                                                        <div class="extra-tabs-left">
-                                                            <p>Return <span class="ms-2 me-2">|</span>{{toCityName}} to {{fromCityName}}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="extra-tabs-details-bottom">
-                                                        <div class="tabs-depart-box" *ngFor="let details of list.returnflights;let i=index;">
-                                                            <div class="tabs-depart-one">
-                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.returnflights[0].airline}}.gif" class="flight-image me-2" alt="">IndiGo {{list.returnflights[0].airline}} {{list.returnflights[0].flightNumber}}</p>
-                                                                <div class="tabs-depart-left float-none">
-                                                                    <div class="tabs-depart-times">
-                                                                        <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
-                                                                        <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
-
-                                                                    </div>
-                                                                    <div class="tabs-depart-total">
-                                                                        <p>{{details.duration | durationTime}}</p>
-                                                                        <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0">Via {{details.stopsDetails[0]['layoverAirportName']}} </p>
-                                                                    </div>
-                                                                    <div class="tabs-depart-times">
-                                                                        <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
-                                                                        <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <!--<div class="tabs-depart-right">
+                                                                <!--Return-->
+                                                                <div id="FlightDetailsS_return_{{list.flightKey}}_{{j}}" class="flight-details-box-hide">
+                                                                    <div class="extra-tabs-details-top" *ngIf="list.returnflights.length>0">
+                                                                        <div class="extra-tabs-left">
+                                                                            <p>Return <span class="ms-2 me-2">|</span>{{toCityName}} to {{fromCityName}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="extra-tabs-details-bottom">
+                                                                        <div class="tabs-depart-box" *ngFor="let details of list.returnflights;let i=index;">
+                                                                            <div class="tabs-depart-one">
+                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.returnflights[0].airline}}.gif" class="flight-image me-2" alt="">IndiGo {{list.returnflights[0].airline}} {{list.returnflights[0].flightNumber}}</p>
+                                                                                <div class="tabs-depart-left float-none">
+                                                                                    <div class="tabs-depart-times">
+                                                                                        <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                        <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+
+                                                                                    </div>
+                                                                                    <div class="tabs-depart-total">
+                                                                                        <p>{{details.duration | durationTime}}</p>
+                                                                                        <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0">Via {{details.stopsDetails[0]['layoverAirportName']}} </p>
+                                                                                    </div>
+                                                                                    <div class="tabs-depart-times">
+                                                                                        <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                        <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!--<div class="tabs-depart-right">
                                                                             <div class="Baggage">
                                                                                 <h5>Baggage</h5>
                                                                                 <p>Adult</p>
@@ -684,22 +680,22 @@
                                                                                 <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
                                                                             </div>
                                                                         </div>-->
-                                                            </div>
-                                                            <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
-                                                                Operated by <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
-                                                                <b *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
-                                                            </div>
-                                                            <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.returnflights[i]  && list.returnflights[i+1] && getLayoverHour(list.returnflights[i],list.returnflights[i+1])">
-                                                                <p>Change of planes・{{getLayoverHour(list.returnflights[i],list.returnflights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--Return-->
+                                                                            </div>
+                                                                            <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                                                                Operated by <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                                                                <b *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                                                            </div>
+                                                                            <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.returnflights[i]  && list.returnflights[i+1] && getLayoverHour(list.returnflights[i],list.returnflights[i+1])">
+                                                                                <p>Change of planes・{{getLayoverHour(list.returnflights[i],list.returnflights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--Return-->
 
 
-                                            </div>
-                                            <!--<div id="CancellationDetails" id="CancellationDetails_{{list.flightKey}}" class="flight-extra-content">
+                                                            </div>
+                                                            <!--<div id="CancellationDetails" id="CancellationDetails_{{list.flightKey}}" class="flight-extra-content">
                                                         <div class="extra-tabs-details CancellationDetails-box">
                                                             <div class="extra-tabs-details-top">
                                                                 <div class="extra-tabs-left">
@@ -892,23 +888,23 @@
                                                             </div>
                                                         </div>
                                                     </div>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                    </div>
 
+                        </ng-template>
+                        <div id="endOfPage" (click)="loadData()"></div>
+
+                    </div>
                 </div>
             </div>
         </div>
-
-        </ng-template>
-        <div id="endOfPage" (click)="loadData()"></div>
-
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
 </section>
 
