@@ -318,7 +318,7 @@ $break-md-tab: 768px;
     // text-decoration: underline;
     // color: #1d86ff;
     color: #000000;
-    font-size: 20px;
+    font-size: 14px;
     font-family: 'opensans-bold'; 
     text-transform: uppercase;   
 }
@@ -1308,9 +1308,9 @@ $break-md-tab: 768px;
 .search_change{
     border: 1px dashed #1D86FF;
     border-radius: 8px;
-    padding: 15px;
+    padding: 15px 10px;
     margin: 10px;
-    max-width: 550px;
+    max-width: 600px;
     margin: 0 auto;
 }
 .continiue-title {
@@ -1343,9 +1343,11 @@ $break-md-tab: 768px;
     font-family: opensans-medium;
     // letter-spacing: 0.73px;
     text-align: center;
-    color: #1382ff;
+    color: #000000;
     @media screen and (max-width: 425px) {
-        font-size: 12px;
+        font-size: 10px;
+        color:#000;
+        line-height:normal;
     }
 }
 
@@ -1471,3 +1473,263 @@ $break-md-tab: 768px;
         cursor: pointer;
     }
 }
+
+
+// mlite new design css code
+@media (max-width: 599px) {
+    .bordered_div{
+        background: #FFFFFF;
+        border: 1px solid #E6E6E6;
+        border-radius: 8px;
+        padding:10px;
+        .label-name-w{
+            display:flex;
+            .irctc-junction-view{
+                font-size:12px;
+            }
+        }
+        .available-status{
+            display:flex;
+            span{
+                padding-right:5px;
+            }
+        }
+
+        .trainTimeInfo{
+            display:flex;
+            gap:10;
+        }
+        .train_time{
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 16px;
+            color: #000000;
+            .train_time_week{
+                color:#888888;
+            }
+        }
+        .train_duration{
+            font-weight: 300;
+            font-size: 10px;
+            line-height: 0px;
+            color: #888888;
+            padding-bottom:10px;
+        }
+        .duration_dot{
+            width:7px;
+            height:7px;
+            background:#888888;
+            border-radius:50%;
+        }
+    }
+    .train_card_links{
+        color:#1d86ff;
+        font-size:11px;
+        font-weight:600;
+    }
+    .m_brdr_btm_0{
+        border-bottom:none;
+    }
+    ::ng-deep .mat-tab-label{
+        min-width:0px;
+        height: 28px;
+        padding: 0px 5px;
+        cursor: pointer;
+        box-sizing: border-box;
+        border: 1px solid #1d86ff;
+        border-radius: 8px;
+        margin-right: 10px;
+        width: 28px;
+        opacity:1;
+    }
+    .checkAva_m{
+        border-top:none;
+    }
+    .train_list_m{
+        .tier_m{
+            display:block;
+            .TrainSeatsInfo{
+                display:flex;
+                align-items:center;
+                flex-basis:100%;
+                margin-right: 00px;
+                text-align: left;
+                padding: 10px 0px;
+                border: none;
+                justify-content: space-between;
+                border-radius:0px;
+                border-top:1px solid #e6e6e6;
+                .check_avai_week{
+                    font-size:10px;
+                    color:#555555;
+                    font-weight:300;
+                }
+                .check_avai_text{
+                    font-size:12px;
+                    color:#555555;
+                    font-weight:600;
+                }
+                .check_avai_price{
+                    font-size:12px;
+                    color:#000000;
+                    font-weight:300; 
+                }
+                .check_avai_book{
+                    padding:4px 8px;
+                    border: 1px solid #1D86FF;
+                    border-radius: 4px;
+                    color:#1d86ff;
+                    font-size:10px;
+                }
+            }
+        }
+    }
+
+
+    ::ng-deep .mat-dialog-container {
+        padding: 10px;
+        overflow:hidden;
+        border-radius:8px;
+    }
+    ::ng-deep .mat-dialog-content {
+        padding:0px;
+        margin:0px;
+        overflow-y:auto;
+        overflow-x:hidden;
+    }
+    .m_train_confirm_cntnt::-webkit-scrollbar {
+        height:0px !important;
+        width:0px !important;
+    }
+    .train_duration_dots{
+        width:8px;
+        height:8px;
+        background:#888888;
+        border-radius:50%;
+    }
+    .dot_connct_hr{
+        border:1px solid #e6e6e6;
+    }
+    .dashed_brdr_div{
+        background: #FFFFFF;
+        border: 0.5px dashed #1D86FF;
+        border-radius: 8px;
+    }
+    .cnfrm_modal_btn_brdr{
+        padding:5px 15px;
+        min-width:130px;
+        border: 1px solid #1D86FF;
+        border-radius: 8px;
+        color:#1d86ff;
+        text-align: center;
+        background:#fff;
+        font-size:12px;
+        font-weight:600;
+    }
+    .cnfrm_modal_btn{
+        padding:5px 15px;
+        min-width:130px;
+        border: 1px solid #1D86FF;
+        border-radius: 8px;
+        color:#fff;
+        text-align: center;
+        background:#1d86ff;
+        font-size:12px;
+        font-weight:600;
+    }
+
+
+
+
+
+@keyframes horizontalProgressBar {
+	0% {
+		width: 0%;
+	}
+	20% {
+		width: 10%;
+	}
+	30% {
+		width: 15%;
+	}
+	40% {
+		width: 18%;
+	}
+	50% {
+		width: 20%;
+	}
+	60% {
+		width: 22%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+.animated {
+	background: #000;
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+}
+.yt-loader {
+	-webkit-animation-name: horizontalProgressBar;
+	animation-name: horizontalProgressBar;
+	-webkit-animation-timing-function: ease;
+	animation-timing-function: ease;
+	background: red;
+	height: 3px;
+	left: 0;
+	top: 0;
+	width: 0%;
+	z-index: 9999;
+	position: relative;
+	&:after {
+		display: block;
+		position: absolute;
+		content: '';
+		width: 58vh;
+		height: 100%;
+		box-shadow: #ef534e 1px 0 6px 1px;
+		opacity: 1;
+        top:-16px;
+
+
+	}
+}
+
+}
+.train_m_loader{
+    .bookingprocess-processbar {
+        margin: 25px 0 10px 0;
+    }
+    .bookingprocess-processbar .progress {
+        display: block;
+        height: 5px;
+        overflow: inherit;
+    }
+    .bookingprocess-processbar .progress-bar {
+        overflow: inherit;
+        height: 4px;
+        background-color: $primary-color;
+    }
+    
+    .bookingprocess-processbar .progress span.title {
+        position: relative;
+    }
+    .bookingprocess-processbar .progress .title:after {
+        content: "";
+        background: url(../../../../src/assets/images/icons/train_loader.svg) no-repeat;
+        position: absolute;
+        // background-size: 25px;
+        height: 30px;
+        width: 25px;
+        right: 0;
+        z-index: 1;
+        top: -3.5px;
+        bottom: 0;
+        margin: 0 auto;
+    }
+}
+// end of mlite new design css code

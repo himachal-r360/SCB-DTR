@@ -55,6 +55,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   isLast:boolean =false;
   mobileSelected:any;
   MobileCurrentSector:any;
+  TotalPassenger:number = 1;
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -213,7 +214,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       z.selectedFlight = null
     });
     this.selectedTripData = this.searchData[0];
-
+    this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
     console.log(flightSearchArr, "flightSearchArr");
   }
 
@@ -247,7 +248,6 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
            this.sliderRange(this, this.minPrice, this.maxPrice);
          }
         // console.log(this.flightList,"this.flightList");
-         this.getAirlinelist();
          this.loader = false;
          this.popularFilterFlightData();
 
@@ -282,6 +282,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       this.isLast = false;
     }
     this.selectedTripData = this.searchData[i];
+    this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
     this.selectedTrip = i;
     this.flightList = [];
     this.flightList = this.WithoutFilterFlightList[i].sectors;
@@ -304,8 +305,21 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.flightListWithOutFilter = this.flightList;
     if(this.isMobile)
     {
-      this.isSelectedSectorFlight = false;
+      if(this.selectedTripData.isSelected)
+      {
+        this.isSelectedSectorFlight = true;
+      }
+      else{
+        this.isSelectedSectorFlight = false;
+      }
     }
+    this.getAirlinelist();
+    if (this.flightList.length > 0) {
+      this.GetMinAndMaxPriceForFilter();
+      // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+      // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+       this.sliderRange(this, this.minPrice, this.maxPrice);
+     }
     this.popularFilterFlightData();
   }
 
@@ -498,7 +512,7 @@ bookingSummary() {
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = flightListConst;
 
-    var current_date = new Date(this.selectedTripData.depart),
+    var current_date = new Date(this.selectedTripData.departure),
       current_year = current_date.getFullYear(),
       current_mnth = current_date.getMonth(),
       current_day = current_date.getDate();
@@ -835,7 +849,7 @@ bookingSummary() {
     let updatedflightList: any = [];
     let isfilterMorningDepartures: any = false;
     let isfilterFlightTiming = false;
-    var current_date = new Date(this.selectedTripData.depart),
+    var current_date = new Date(this.selectedTripData.departure),
       current_year = current_date.getFullYear(),
       current_mnth = current_date.getMonth(),
       current_day = current_date.getDate();
@@ -1314,6 +1328,12 @@ bookingSummary() {
       this.searchData[this.sector].isSelected = true;
       this.searchData[this.sector].selectedFlight = SelectedFlight;
       this.mobileSelected = SelectedFlight;
+      var select = this.searchData.filter(z=> {return z.isSelected == true})
+      if(select.length == this.searchData.length)
+      {
+        this.isAllSelected = true;
+        this.isLast = false;
+      }
       for(var i =0 ; i< (this.SelectedFlightsOnSector.length -1); i++)
       {
         var diff = new Date(this.SelectedFlightsOnSector[i+1].flights[0].departureDateTime).valueOf() -new Date(this.SelectedFlightsOnSector[i].flights[(this.SelectedFlightsOnSector[i].flights.length -1)].arrivalDateTime).valueOf();

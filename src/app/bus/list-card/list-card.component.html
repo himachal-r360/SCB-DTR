@@ -52,12 +52,12 @@
             </div>
         </div>
 
-        <div class="float-left col-md-3 text-center hide-m">
+        <div class="float-left col-md-3 text-right hide-m">
             <span *ngIf="bus.availableSeats > 0; else soldout">
                 
                 <div><button class="btn-primary w-80 showBtn" *ngIf="!showSeatLayout" (click)="onSeats(bus.id,rowvalue,bus,mobile=false);">Show Seats</button></div>
                 <div><button class="btn-primary w-80 hideBtn" *ngIf="showSeatLayout" (click)="HideSeats(bus.id,rowvalue,bus,mobile=false);">Hide Seats</button></div>
-                <div class="label-black-small text-center pb5">{{bus.availableSeats}} available <ng-container *ngIf="bus.avlWindowSeats > 0"> ({{bus.avlWindowSeats}} Window) </ng-container> </div>
+                <div class="label-black-small text-right pb5">{{bus.availableSeats}} available <ng-container *ngIf="bus.avlWindowSeats > 0"> ({{bus.avlWindowSeats}} Window) </ng-container> </div>
                 </span>
             <ng-template #soldout><button class="btn-primary w-80 bkred">Sold Out</button></ng-template>
         </div>
@@ -91,18 +91,18 @@
             </div>
         </div>
         <div class="col-md-3 text-right">
-            <a class="collapse_exp_btn" data-bs-toggle="collapse" href="#collapseExample_{{busrow}}" role="button" aria-expanded="false" aria-controls="collapseExample_{{busrow}}">
+            <a class="collapse_exp_btn" (click)="showBusDetails(busId)" >
                 <span class="mx-3">Bus Details</span>
               </a>
         </div>
     </div>
     </div>
-    <div class="collapse details_collpase" id="collapseExample_{{busrow}}">
+    <div class="collapse details_collpase" id="collapseExample_{{busId}}">
         <div class="">
           
             <ul class="more-details w-33 bus_collapse_ul" id="mat-accordion-tab-details">
 
-                <li (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
+                <li id="onAmenities_{{busId}}" (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
                 <li (click)="onCancellation(mobile=false)" [ngClass]="{'active': showCancellation}">Cancellation policy</li>
                 <li (click)="onDropping(bus.boardingTimes,bus.droppingTimes)" [ngClass]="{'active': showDropping}">Boarding & dropping points</li>
                 <!-- <li *ngIf="show_earnpoints" ><button class="bus-cashback d-show">{{show_earnpoints_text}}</button></li> -->
@@ -237,12 +237,12 @@
         </div>
         </div>
 
-        <div class="col-7 d-flex align-items-center pt20">
+        <div class="col-7 d-flex align-items-center pt20 pe-0">
             <div class="d-flex align-items-center w-100">
                 <div class="label-name-large">{{bus.departureTime | date:'HH:mm'}}
                     <p *ngIf="nextDayFlag" class="next_flag ml-1">Next Day</p>
                 </div>
-                <div class="label-gray px-1"><span class="m_bus_duartion">{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</span></div>
+                <div class="label-gray mx-1 min_w_40 text-center"><span class="m_bus_duartion"><span>{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</span></span></div>
                 <div class="label-name-large">{{bus.arrivalTime | date:'HH:mm'}}</div>
 
             </div>
@@ -260,10 +260,10 @@
 
         </div>
     </div>
-    <div class="row mt-2 row_0_margin d-flex align-items-center">
+    <div class="row mt-2 row_0_margin d-flex align-items-center height_0">
         <hr class="m_div_hr">
     </div>
-    <div class="row">
+    <div class="row mt-2">
         <div class="d-flex align-items-center">
         <div>
             <img src="{{cdnUrl}}images/icons/live track.svg" >
@@ -969,8 +969,24 @@
 
 <div class="mobile-boarding-dropping" *ngIf="showBoardDrop">
     <div class="boarding-back-title-smartbuy" *ngIf="domainName=='SMARTBUY'">
-        <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
-        <div>{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</div>
+        <!-- <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
+        <div>{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</div> -->
+
+
+        <!-- mobile boarding and dropping static data-->
+        <div class="row">
+            <div class="col-12 text-center">
+                <a (click)="showBoardDrop=false" class="m_fheader_link">
+                    <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                </a>
+                <p class="m_fheader_text">11 Aug</p>
+                <h6 class="m_fheader_title">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
+                <p class="m_fheader_text">A/C Sleeper (2+1)</p>
+            </div>
+        </div>
+        <!-- end of mobile boarding static data -->
+
+
     </div>
     <div class="boarding-back-title-diners" *ngIf="domainName=='DINERS'">
         <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
@@ -993,7 +1009,7 @@
         <div>{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</div>
     </div>
 
-    <div class="mob-sf-tabs bg-white">
+    <div class="mob-sf-tabs mt-5">
     <ul class="nav nav-tabs m-popup-tabs mt-5 ">
         <li>
             <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab">Boarding Points</a>

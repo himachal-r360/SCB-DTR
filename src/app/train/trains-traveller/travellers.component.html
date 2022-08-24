@@ -864,7 +864,7 @@
 
 
                       <div class="row">
-                          <div class="col-6">
+                          <div class="">
                               <div class=" add-traveller-btn">
                                   <a class="" (click)="manualAddTraveller(1)" > + Add New Traveller</a>
                               </div>
@@ -949,7 +949,7 @@
                   </div>
 
                   <div class="row">
-                      <div class="col-6">
+                      <div class="">
                           <div class=" add-traveller-btn">
                               <a class=""  (click)="manualAddTraveller(2)">+ Add New Infant</a>
                           </div>
@@ -967,7 +967,7 @@
         
             <div class="contact-details booking-inner-box destination_details_train" *ngIf="showDestAddressBox">
                 <div class="contact-header traveller-person-left">
-                   <h6 class="des_title">Your Destination Address</h6>
+                   <h6 class="des_title mb-20">Your Destination Address</h6>
                    <!-- <p>Your ticket and PNR number will be sent to</p> -->
                 </div>
                 <div class="row ">
@@ -1374,21 +1374,28 @@
           </div>
 
           </div>  
-                    
-                    <div class="form-check my-3">
-                      <input class="form-check-input" type="checkbox" id="agree_terms" formControlName="passengerAgree" name="passengerAgree">
-                      <label class="form-check-label" for="agree_terms">
-                        I agree to the <a href="{{domainRedirect}}irctc_TnC" class="link_text" target="_blank">Terms &
-                          Conditions</a> and <a href="{{domainRedirect}}irctc_privacy_policy" class="link_text" target="_blank">Privacy
-                          Policy</a>
-                      </label>
-                    </div>
 
+
+                <div class="agree_conditions mb-100">
+                  <ul class="add-search-ul d-block">
+                    <li class="custom-check-box">
+                      <div class="custom-controls-stacked">
+                        <label class="custom-control material-checkbox">
+                          <input type="checkbox" class="material-control-input" formControlName="passengerAgree"
+                            name="passengerAgree" id="agree_terms" [checked]="checked" value="true" >
+                          <span class="material-control-indicator"></span>
+                          <!-- <span class="description fs_12 text-black">Add these travellers to  Travellers list.</span> -->
+                          <span class="description fs_12">I agree to the <a href="{{domainRedirect}}terms_conditions" target="_blank" class="link_text" >Terms & Conditions</a> and <a href="{{domainRedirect}}privacy_policy" target="_blank" class="link_text" >Privacy Policy</a></span>
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
                       <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
                           <small *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls['passengerAgree']['errors']['pattern']">Please accept Terms and Conditions.</small>
                       </div>
        
-                        </form>
+            </form>
       </div>
       <!--Step2 Ends-->
       <!--Step3 Starts-->
@@ -1627,220 +1634,222 @@
 
       <div class="col-md-4" *ngIf="totalCollectibleAmount">
         <!-- <app-fare-summary></app-fare-summary> -->
-        <div class="default-sidebar">
-          <div class="d-none d-sm-block">
-            <div class="sidebar-widget session-expires-widget">
-              <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
-                  <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
-                  </countdown> min
-                </strong></p>
-            </div>
-            <div class="sidebar-widget fare-summary-widget">
-              <div class="widget-title">
-                <h4>Fare Summary</h4>
-                <img  src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg"        alt="IRCTC">
+        <div class="sticky_scroll_sidebar">
+          <div class="default-sidebar">
+            <div class="d-none d-sm-block">
+              <div class="sidebar-widget session-expires-widget">
+                <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+                    <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
+                    </countdown> min
+                  </strong></p>
               </div>
-              <div class="widget-content">
-                <ul class="widget-list clearfix">
+              <div class="sidebar-widget fare-summary-widget">
+                <div class="widget-title">
+                  <h4>Fare Summary</h4>
+                  <img  src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg"        alt="IRCTC">
+                </div>
+                <div class="widget-content">
+                  <ul class="widget-list clearfix">
+                    <li class="fare-list-item">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <div (click)="isCollapseShow('BaseFare')">
+                            <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false"
+                              aria-controls="base-collpase"  >
+  
+                              <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
+                                alt=""  *ngIf="!isCollapseBasefare" >
+  
+                                <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
+                                alt="" *ngIf="isCollapseBasefare" >
+  
+                              Ticket Fare</div>
+  
+                          </div>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>₹ {{(totalTicketFare-0) | number : '1.2-2'}}</p>
+                        </div>
+  
+                      </div>
+                      <!--<div *ngIf="AdtBaseFare>0">
+                        <div class="collapse base_fare_collapse" id="base-collpase">
+                          <div class="row ">
+                            <div class="col-md-11 offset-md-1">
+  
+                              <div class="row collapse_row" *ngIf="AdtBaseFare>0">
+                                <div class="col-8 fare-list-left">
+                                   <p>Adult(s) ({{AdtQuantity}} X ₹ {{AdtBaseFare | number}})</p>
+                                </div>
+                                <div class="col-4 fare-list-right">
+                                   <p>₹ {{AdtBaseFare * AdtQuantity | number}}</p>
+                                </div>
+                             </div>
+                            </div>
+                          </div>
+                          </div>
+                        </div>-->
+  
+                    </li>
+                    
+                    <ng-container  >
+                    <li class="fare-list-item">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <p>Travel Insurance Charges (Incl. GST)
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>&#8377; {{((travel_ins_charge-0)+(travel_ins_charge_tax-0)) | number : '1.2-2'}}</p>
+                        </div>
+                      </div>
+                    </li>
                   <li class="fare-list-item">
-                    <div class="fare-list-box">
-                      <div class="fare-list-left">
-                        <div (click)="isCollapseShow('BaseFare')">
-                          <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false"
-                            aria-controls="base-collpase"  >
-
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>Convenience fee (Incl. of GST)
+                  </p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p>&#8377; {{(wp_charge-0)+(wp_charge_tax-0) | number : '1.2-2'}}</p>
+                  </div>
+                  </div>
+                  </li>
+                  
+                  <li class="fare-list-item" *ngIf="campiagn_agent_charges==0">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>SmartBuy Charges (Incl. of GST)</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p> <span class="value-free dash_line">&#8377; {{agent_charges | number : '1.2-2'}}</span> <span class="text-free">FREE</span></p>
+                  </div>
+                  </div>
+                  </li>
+                    
+                    
+                                 <li class="fare-list-item" *ngIf="campiagn_agent_charges < agent_charges && campiagn_agent_charges != 0">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>SmartBuy Charges (Incl. of GST)</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p> <span class="value-free">&#8377; {{agent_charges | number : '1.2-2'}}</span> <span class="text-free">&#8377; {{campiagn_agent_charges | number : '1.2-2'}}</span></p>
+                  </div>
+                  </div>
+                  </li>
+                    
+                                 <li class="fare-list-item"  *ngIf="campiagn_agent_charges == agent_charges">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>SmartBuy Charges (Incl. of GST)</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p> <span class="value-free">&#8377; {{agent_charges | number : '1.2-2'}}</span> </p>
+                  </div>
+                  </div>
+                  </li>
+  
+  
+                           <li class="fare-list-item" *ngIf="pgCharges>0.00">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>PG Charges</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p>&#8377; <b class="value-free">&#8377; {{pgCharges | number : '1.2-2'}}</b> </p>
+                  </div>
+                  </div>
+                  </li>
+  
+  
+  
+                    <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"(click)="isCollapseShow('discount')">
+  
+                          <p>
                             <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
-                              alt=""  *ngIf="!isCollapseBasefare" >
-
-                              <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
-                              alt="" *ngIf="isCollapseBasefare" >
-
-                            Ticket Fare</div>
-
+                            alt=""  *ngIf="!isCollapseDiscount" >
+  
+                            <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
+                            alt="" *ngIf="isCollapseDiscount" >
+                            Discounts
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p class="text-green">- &#8377; {{coupon_amount}}</p>
                         </div>
                       </div>
-                      <div class="fare-list-right">
-                        <p>₹ {{(totalTicketFare-0) | number : '1.2-2'}}</p>
-                      </div>
-
-                    </div>
-                    <!--<div *ngIf="AdtBaseFare>0">
-                      <div class="collapse base_fare_collapse" id="base-collpase">
-                        <div class="row ">
-                          <div class="col-md-11 offset-md-1">
-
-                            <div class="row collapse_row" *ngIf="AdtBaseFare>0">
-                              <div class="col-8 fare-list-left">
-                                 <p>Adult(s) ({{AdtQuantity}} X ₹ {{AdtBaseFare | number}})</p>
-                              </div>
-                              <div class="col-4 fare-list-right">
-                                 <p>₹ {{AdtBaseFare * AdtQuantity | number}}</p>
-                              </div>
-                           </div>
+  
+                      <div >
+                        <div class="collapse base_fare_collapse" id="coupon-collpase">
+                          <div class="row ">
+                            <div class="col-md-11 offset-md-1">
+  
+                              <div class="row collapse_row">
+                                <div class="col-5 fare-list-left">
+                                   <p>Coupoun Code</p>
+                                </div>
+                                <div class="col-7 fare-list-right">
+                                   <p>{{coupon_code}}</p>
+                                </div>
+                             </div>
+  
+  
+                            </div>
                           </div>
-                        </div>
-                        </div>
-                      </div>-->
-
-                  </li>
-                  
-                  <ng-container  >
-                  <li class="fare-list-item">
-                    <div class="fare-list-box">
-                      <div class="fare-list-left">
-                        <p>Travel Insurance Charges (Incl. GST)
-                        </p>
-                      </div>
-                      <div class="fare-list-right">
-                        <p>&#8377; {{((travel_ins_charge-0)+(travel_ins_charge_tax-0)) | number : '1.2-2'}}</p>
-                      </div>
-                    </div>
-                  </li>
-                <li class="fare-list-item">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>Convenience fee (Incl. of GST)
-                </p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; {{(wp_charge-0)+(wp_charge_tax-0) | number : '1.2-2'}}</p>
-                </div>
-                </div>
-                </li>
-                
-                <li class="fare-list-item" *ngIf="campiagn_agent_charges==0">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>SmartBuy Charges (Incl. of GST)</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{agent_charges | number : '1.2-2'}}</b> <span class="text-free">FREE</span></p>
-                </div>
-                </div>
-                </li>
-                  
-                  
-                               <li class="fare-list-item" *ngIf="campiagn_agent_charges < agent_charges && campiagn_agent_charges != 0">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>SmartBuy Charges (Incl. of GST)</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{agent_charges | number : '1.2-2'}}</b> <span class="text-free">Rs. {{campiagn_agent_charges | number : '1.2-2'}}</span></p>
-                </div>
-                </div>
-                </li>
-                  
-                               <li class="fare-list-item"  *ngIf="campiagn_agent_charges == agent_charges">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>SmartBuy Charges (Incl. of GST)</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{agent_charges | number : '1.2-2'}}</b> </p>
-                </div>
-                </div>
-                </li>
-
-
-                         <li class="fare-list-item" *ngIf="pgCharges>0.00">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>PG Charges</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{pgCharges | number : '1.2-2'}}</b> </p>
-                </div>
-                </div>
-                </li>
-
-
-
-                  <li class="fare-list-item" *ngIf="coupon_amount>0.00">
-                    <div class="fare-list-box">
-                      <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"(click)="isCollapseShow('discount')">
-
-                        <p>
-                          <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
-                          alt=""  *ngIf="!isCollapseDiscount" >
-
-                          <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
-                          alt="" *ngIf="isCollapseDiscount" >
-                          Discounts
-                        </p>
-                      </div>
-                      <div class="fare-list-right">
-                        <p class="text-green">- &#8377; {{coupon_amount}}</p>
-                      </div>
-                    </div>
-
-                    <div >
-                      <div class="collapse base_fare_collapse" id="coupon-collpase">
-                        <div class="row ">
-                          <div class="col-md-11 offset-md-1">
-
-                            <div class="row collapse_row">
-                              <div class="col-5 fare-list-left">
-                                 <p>Coupoun Code</p>
-                              </div>
-                              <div class="col-7 fare-list-right">
-                                 <p>{{coupon_code}}</p>
-                              </div>
-                           </div>
-
-
                           </div>
+  
                         </div>
+  
+  
+                    </li>
+  
+  
+                        <li class="fare-list-item" *ngIf="flexipaysummry">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>FlexiPay Discount</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p>&#8377; <b class="value-free">Rs. {{flexiDiscount | number : '1.2-2'}}</b> </p>
+                  </div>
+                  </div>
+                  </li>
+  
+                    <li class="fare-list-item">
+                      <div class="fare-list-box pt-30">
+                        <div class="fare-list-left">
+                          <h6 class="fw_7">Grand Total</h6>
                         </div>
-
+                        <div class="fare-list-right" >
+                          <h6 class="fw_7">₹ {{(totalCollectibleAmount-0)+(pgCharges-0) | number : '1.2-2'}}</h6>
+                           <p class="payment-text pt-1"><sup>*</sup>PG charges as applicable.</p>
+                        </div>
+                            
                       </div>
-
-
-                  </li>
-
-
-                      <li class="fare-list-item" *ngIf="flexipaysummry">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>FlexiPay Discount</p>
+                    </li>
+             </ng-container>
+                  </ul>
                 </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{flexiDiscount | number : '1.2-2'}}</b> </p>
-                </div>
-                </div>
-                </li>
-
-                  <li class="fare-list-item">
-                    <div class="fare-list-box pt-30">
-                      <div class="fare-list-left">
-                        <h6 class="fw_7">Grand Total</h6>
-                      </div>
-                      <div class="fare-list-right" >
-                        <h6 class="fw_7">₹ {{(totalCollectibleAmount-0)+(pgCharges-0) | number : '1.2-2'}}</h6>
-                         <p class="payment-text pt-1"><sup>*</sup>PG charges as applicable.</p>
-                      </div>
-                          
-                    </div>
-                  </li>
-           </ng-container>
-                </ul>
+              </div>
+              <div class="continue-widget mb-20">
+   
+                <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
+                  *ngIf="steps==2">Continue</a>
+                <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
+                  *ngIf="steps==3">Continue</a>
+               
               </div>
             </div>
-            <div class="continue-widget mb-20">
- 
-              <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
-                *ngIf="steps==2">Continue</a>
-              <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
-                *ngIf="steps==3">Continue</a>
-             
+            <div *ngIf="steps==4 && !isMobile">
+       <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
+                  [passTotalFare]="totalFare" [passActualFare]="intialTotalFare"
+                  [passConvinenceFee]="convenience_fee" passServiceToken="Bus" [passPartnerToken]="partnerToken"
+                  (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+                </app-coupons>
             </div>
-          </div>
-          <div *ngIf="steps==4 && !isMobile">
-     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-                [passTotalFare]="totalFare" [passActualFare]="intialTotalFare"
-                [passConvinenceFee]="convenience_fee" passServiceToken="Bus" [passPartnerToken]="partnerToken"
-                (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
-              </app-coupons>
           </div>
         </div>
 

@@ -873,7 +873,9 @@ a {
                 .mat-tab-labels{
                     margin: 10px;
                     .mat-tab-label{
-                        min-width: 50px;
+                        max-width: 30px;
+                        min-width: 30px;
+                        height: 30px;
                         border: 1px solid #1D86FF;
                         font-weight: 600;
                         font-size: 14px;
@@ -909,6 +911,58 @@ a {
 .m_filter_paddng .mat-expansion-panel-spacing {
     margin-top:0px;
 }
+
+.checkAva_m{
+    .mat-tab-group{ 
+        .mat-tab-header{
+            .mat-tab-label-container{
+                .mat-tab-list{
+                    .mat-ink-bar{
+                        background-color: none;
+                        width:0px;
+                        height:0px;
+                        }
+                    .mat-tab-labels{
+                        
+                        .mat-tab-label{
+                            height: 28px;
+                            padding: 10px 10px;
+                            cursor: pointer;
+                            text-align: center;
+                            display: inline-flex;
+                            justify-content: center;
+                            align-items: center;
+                            white-space: nowrap;
+                            position: relative;
+                            width: 28px;
+                            color: #1d86ff;
+                            opacity:1;
+                            @media (max-width : 599px){
+                                min-width:0px;
+                                opacity:1;
+                            }
+                        }
+                        .mat-tab-label-active{
+                            background:#1d86ff;
+                            color: #fff;
+                            opacity:1;
+                            border-bottom:none;
+                            // @media (max-width : 599px){
+                            //     background:#1d86ff;
+                            // color: #fff;
+                            // opacity:1;
+                            // }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+    .mat-tab-header {
+        border-bottom:none;
+    }
+
 
 @media only screen and (max-width: 997px){
     .mat-select-value, .mat-select, .mat-select-value-text{
@@ -3738,6 +3792,7 @@ table.table-bordered.table-content {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-flow: column;
 }
 .fare-list-box{
     position: relative;
@@ -7551,4 +7606,152 @@ img {
   width: 100%;
   z-index: 99;
 }
+
+.travelTab{
+  display: flex !important;
+    align-items: center;
+    justify-content: start;
+        border: 0;
+             a{
+                .rules-flight-items{
+                    opacity:0.5;
+                }
+            }
+
+              a.active{
+                .rules-flight-items{
+                    opacity:1;
+                }
+            }
+
+}
+
+
 /* end 18-08-2022 */
+
+/* Start 23-08-2022*/
+
+.add-trip-text p{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+  opacity: 0.6;
+  margin: 10px 0;
+}
+.multi-city-list {
+  display: flex;
+  width: 100%;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.multi-city-list-item {
+  position: relative;
+  width: 33.33%;
+  padding: 10px;
+  border-right: 1px solid rgb(0 0 0 / 10%);
+
+}
+.multi-city-list-item:nth-last-child(1) {
+  border-right: none;
+  width: 45%;
+}
+
+.multi-city-list-item .multi-city-list-form-text {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #A6A6A6;
+}
+.multi-city-list-item .multi-city-list-name {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  color: #000000;
+}
+.multi-city-list-item .multi-city-list-fullname {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+  opacity: 0.6;
+}
+.multi-city-departure-item{
+ /* background: url(../src/assets/images/icons/date.png) no-repeat;*/
+  background-position: 90% 50%;
+}
+.mob-form-hide{
+  display: none;
+}
+
+.mutl-searchbn.searchbn {
+  padding: 14px 0px;
+}
+
+.mult-mobile-close{
+  position: absolute;
+  top: -9px;
+  right: -10px;
+}
+
+.mult-city-listing-flights-box {
+  display: flex;
+  background: rgb(255 255 255 / 5%);
+  -webkit-box-shadow: 0 8px 30px hsl(0deg 0% 13% / 15%);
+  box-shadow: 0 8px 30px hsl(0deg 0% 13% / 15%);
+}
+.mult-city-listing-flights-items {
+  text-align: center;
+  width: 126px;
+  padding: 15px 0;
+  border-right: 1px solid rgb(0 0 0 / 10%);
+  position: relative;
+}
+.mult-city-listing-names{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+}
+.mult-city-listing-date{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 14px;
+  color: #888888;
+}
+.mult-city-listing-selected{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 14px;
+  color: #888888;
+}
+.mult-city-active {
+  border-bottom: 4px solid #1d86ff;
+}
+.mult-city-active:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 8px 0 8px;
+  border-color: #1d86ff transparent transparent transparent;
+  bottom: -9px;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+
+.mult-city-header {
+  -webkit-box-shadow: 0px 4.14444px 4.14444px rgb(0 0 0 / 5%);
+  box-shadow: 0px 4.14444px 4.14444px rgb(0 0 0 / 5%);
+}
+/* end 23-08-2022*/
