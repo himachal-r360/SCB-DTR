@@ -1636,11 +1636,11 @@
                   <div class="row gy-4">
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <p class="label_text">Email</p>
-                      <p class="label_value">{{contactDatails.email}}</p>
+                      <p class="label_value">{{passengerItineraryDetails.email}}</p>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <p class="label_text">Mobile Number</p>
-                      <p class="label_value">{{contactDatails.mobile}}</p>
+                      <p class="label_value">{{passengerItineraryDetails.mobileNumber}}</p>
                     </div>
                   </div>
     
@@ -1660,7 +1660,7 @@
     
             </div>
             <div class="booking-process-content traveller_review">
-              <div class="booking-title-box mb-0">
+              <!--<div class="booking-title-box mb-0">
     
     
                 <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
@@ -1695,27 +1695,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <!-- <div *ngIf="travelerDetails.child > 0">
-                    <h6>{{travelerDetails.child}} Child</h6>
-                    <table class="table  traveller_table">
-                      <thead>
-                        <tr>
-                          <th scope="col" class="col-6">Name</th>
-                          <th scope="col">Age</th>
-                          <th scope="col">Gender</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ng-container *ngFor="let adult of paxInfo;let i = index">
-                          <tr *ngIf="adult.type=='ADT'">
-                            <td>Amit Kumar</td>
-                            <td>6 months</td>
-                            <td>Male</td>
-                          </tr>
-                        </ng-container>
-                      </tbody>
-                    </table>
-                  </div> -->
+    
                   <div *ngIf="travelerDetails.infants > 0">
                     <h6>{{travelerDetails.infants}} Infant</h6>
                     <table class="table  traveller_table">
@@ -1738,7 +1718,7 @@
                     </table>
                   </div>
                 </div>
-              </div>
+              </div>-->
     
             </div>
       </div>
@@ -1965,8 +1945,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="continue-widget mb-20">
-   
+              <div class="continue-widget mb-20"> 
                 <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
                   *ngIf="steps==2">Continue</a>
                 <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
@@ -2111,16 +2090,10 @@
           </div>
           <div class="col-7">
             <div>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="sendFlightDetails()"
-                *ngIf="steps==1">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueTravellerDetails()"
-                *ngIf="steps==2">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueSeatSelection()"
-                *ngIf="steps==3">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueReviewBooking()"
-                *ngIf="steps==4">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"
-                *ngIf="steps==5">Continue</a>
+               <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
+                  *ngIf="steps==2">Continue</a>
+                <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
+                  *ngIf="steps==3">Continue</a>
             </div>
           </div>
         </div>

@@ -368,7 +368,9 @@ orderRetry:boolean=false;
     });
 
   }
-
+ ngAfterContentChecked() {
+    this.ref.detectChanges();
+     }
   ngOnInit(): void {
     this.route.url.subscribe(url => {
       this.resetPopups();
