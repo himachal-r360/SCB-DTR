@@ -118,7 +118,6 @@ export class BannersComponent implements OnInit {
       };
      this.rest.getMilestoneDetail(JSON.stringify(params)).subscribe(res => {
         if(res.status!=undefined && res.status==true){
-        
           if(res.milestone_detail.benefits_availed.wb.show_benefit==0 && res.milestone_detail.benefits_availed.tb.show_benefit==1){
             this.display_tb=true;
             this.display_wb=false;
@@ -146,6 +145,9 @@ export class BannersComponent implements OnInit {
             this.display_mb_link=false;
             this.is_mb_progressbar=true;
           }
+        }else{
+          this.display_tb=true;
+          this.display_mb_link=true;
         }
     });
 
@@ -169,7 +171,7 @@ milestone_benefitsLink(){
 }
 travel_benefitsLink(){
    if(this.display_tb==true)
-         window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'milestone/regalia_gold/milestone';
+         window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+'milestone/regalia_gold/travel';
        else
          return false;
 }
