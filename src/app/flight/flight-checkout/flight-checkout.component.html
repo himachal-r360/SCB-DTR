@@ -365,7 +365,7 @@
                      
                     </div>
                
-                <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfo"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
+                   <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfo"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
                       <span [innerHtml]="baggageInfo | safeHtml" ></span>
                      
                     </div>
@@ -3372,11 +3372,11 @@
   
                       <input matInput placeholder="Mobile Number" formControlName="passengerMobile"
                         name="passengerMobile" id="passengerMobile" (keypress)="AvoidSpace($event)">
-                      <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','passengerMobile')">>Please enter mobile
+                      <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','passengerMobile')">Please enter mobile
                         number.</mat-error>
-                      <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','passengerMobile')">>Please enter min 10
+                      <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','passengerMobile')">Please enter min 10
                         Digits.</mat-error>
-                      <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','passengerMobile')">>Please enter a valid ten
+                      <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','passengerMobile')">Please enter a valid 10
                         digits mobile number.</mat-error>
                     </mat-form-field>
                   </div>
@@ -5483,7 +5483,7 @@
               </div>
               <div class="continue-widget mb-20">
                 <a href="javascript:void(0);" class="button-style w-100" (click)="sendFlightDetails()"
-                  *ngIf="steps==1">Continue</a>
+                  *ngIf="steps==1" id="continueToItinery">Continue</a>
                 <a href="javascript:void(0);" class="button-style w-100" (click)="continueTravellerDetails()"
                   *ngIf="steps==2">Continue</a>
                 <a href="javascript:void(0);" class="button-style w-100" (click)="continueSeatSelection()"
@@ -5492,12 +5492,14 @@
                   *ngIf="steps==4">Continue</a>
               </div>
             </div>
+
             <div *ngIf="steps==5 && !isMobile">
               <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                 [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
                 [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
                 (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
               </app-coupons>
+
             </div>
           </div>
   

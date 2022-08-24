@@ -159,6 +159,15 @@ private cartItemsObserver: any;
                 return this.http.post(this.apiendpoint+'checkAddress_avail', param, config).pipe(map((response:any) => response));
             }
         }
+        getAllCards(){
+            //console.log(param);
+           // return this.http.post(this.endpoint+'getcustomercardpoints', param, config).pipe(map((response:any) => response));
+            if(LOCALJSON=='true'){
+              return this.http.get('assets/data/allCards.json').pipe(map((response:any) => response));
+            }else{
+              return this.http.get(this.apiendpoint+'switchCards').pipe(map((response:any) => response));
+            }
+          }  
 
     // load items from local storage
     loadItems() {

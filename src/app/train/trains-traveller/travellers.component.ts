@@ -120,9 +120,6 @@ export class TrainsTravellerComponent implements OnInit {
     
     travellersFilledArray = [];    infanttravellersFilledArray = [];
     
-    
-    
-    
     seniorCitizenStatus: boolean = false;
     seniorCitizenStatusAddMore: any[] = [false];
     applicableBerthTypes: any[];
@@ -329,6 +326,7 @@ export class TrainsTravellerComponent implements OnInit {
         this.masterFood = AppConfig.IRCTC_Food;
 
      this.activatedRoute.url.subscribe(url =>{
+     this.gotoTop();
        this.resetPopups();
       this.steps = 1;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -338,10 +336,12 @@ export class TrainsTravellerComponent implements OnInit {
         this._flightService.showHeader(true);
       }
            
-        this.moveTop();
+     
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
+        
+        console.log(this.seacthResult);
         
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
      
@@ -835,6 +835,7 @@ saveGSTConsent(){
       }
     }
     validateBookingInfoForm() {
+    
         this.submittedUserInfoForm = true;
         //alert(this.idForm.invalid +" ### "+ this.errorInvalid);
         if (this.idForm.invalid || this.errorInvalid == 1) {
@@ -903,8 +904,9 @@ saveGSTConsent(){
              this.spinnerService.hide();
         });
     }
+        travelDuration:any;
     trainSchedlue(stationName) {
-       
+    
         if (stationName != '') {
             let stationCode = stationName.split(" - ");
             this.scheduleParam = {
@@ -934,6 +936,17 @@ saveGSTConsent(){
                         else{
                             this.traveldate = new Date(convDate.add(differenceDate,'d'));  
                         }
+                        
+    
+                var startTime = moment(moment(this.traveldate).format('DD-MM-YYYY')+' '+this.scheduletime, 'DD-MM-YYYY hh:mm');
+                var endTime = moment(moment(this.journeyArrivalDate).format('DD-MM-YYYY')+' '+this.arrivalTime, 'DD-MM-YYYY hh:mm');
+                
+
+                var duration = moment.duration(endTime.diff(startTime));
+                var hours = duration.asMinutes();
+                this.travelDuration= Math.floor(hours / 60)+' hrs '+hours % 60+' mins';
+  
+                        
                     }
                 }
             });
@@ -1072,7 +1085,7 @@ saveGSTConsent(){
                     this.passengerForm.controls['destAddressPin'].setValidators([Validators.required,Validators.minLength(6)]);
                     this.passengerForm.controls['destAddressState'].setValidators([Validators.required]);
                     this.passengerForm.controls['destAddressCity'].setValidators([Validators.required]);
-                    // this.passengerForm.controls['destAddressPost'].setValidators([Validators.required]);
+                    this.passengerForm.controls['destAddressPost'].setValidators([Validators.required]);
                     this.passengerForm.controls['destAddressOne'].updateValueAndValidity();
                     this.passengerForm.controls['destAddressTwo'].updateValueAndValidity();
                     this.passengerForm.controls['destAddressThree'].updateValueAndValidity();
@@ -1155,7 +1168,6 @@ saveGSTConsent(){
 
                 this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
                 this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-                this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
 
                 let trackUrlParams = new HttpParams()
                 .set('current_url', window.location.href)
