@@ -481,39 +481,37 @@
                                     <small *ngIf="searchHotelForm['controls']['hotelName']['errors']['required']" class="validate-msg">Please select a city name from the list</small>
                                 </div>
                                 
-                                  <div class="hotel-to-data dropdown from_citiesPop"  *ngIf="hotelCityList" #menu  >
-                                        <div class="mob-title">
-                                        <h3>Select City</h3>
-                                        <a href="javascript:void(0)" (click)="closeSearchBox()"
-                                        class="mob-close mob-ff-from-close close-mobile">
-                                        <img src="{{cdnUrl}}/images/icons/close.png"
-                                        class="close-mobile" alt="" />
-                                        </a>
-                                        </div>
-                                        <div class="flight-from-data-search">
-                                        <input type="hidden" [(ngModel)]="hotelName"  class=""  formControlName="hotelName" id="hotelName" placeholder="City" name="hotelName" (keyup)="searchAutoComplete($event,'hotels','hotelName','web');" (keypress)="charInput($event)"  autocomplete="off" >
-
-                                        <input type="text"    class="inputField hotelName hotelName-web hotelNamePop"  placeholder="City" name="hotelName"  (keyup)="searchAutoComplete($event,'hotels','hotelName','web');" (keypress)="charInput($event)"  autocomplete="off"    >
-
-                                        </div>
-                                        <ul class="flight-from-data-ul">
-                                        <li class="flight-from-ul-li">
-                                        <p class="flight-Results-text">{{searchHotelHeader}}</p>
-                                        </li>
-                                        <li class="flight-from-ul-li"  *ngFor="let hOptions of hotelOptions;let ind=index;">
-                                        <a  class="flight-from-ul-li-a"    (click)="onToClick(hOptions,'hotels','web')">
-                                         <div class="hotel-from-name">
-                                        <h6><i class="fa fa-building"></i> &nbsp;{{hOptions._source.full_content}}</h6>
-                                        <p>{{hOptions._source.airport_name}} </p>
-                                        </div>
-                                        <div class="flight-from-shortname">
-                                        <h6>{{hOptions._source.city}}</h6>
-                                        </div>
-                                    </a>
-                                        </li>
-                                        <li *ngIf="hotelOptions.length==0"><a>No Results Found...</a></li>
-                                        </ul>
-                                        </div>
+                                <div class="hotel-to-data dropdown from_citiesPop"  *ngIf="hotelCityList" #menu  >
+                                    <div class="mob-title">
+                                       <h3>Select City</h3>
+                                       <a href="javascript:void(0)" (click)="closeSearchBox()"
+                                          class="mob-close mob-ff-from-close close-mobile">
+                                       <img src="{{cdnUrl}}/images/icons/close.png"
+                                          class="close-mobile" alt="" />
+                                       </a>
+                                    </div>
+                                    <div class="flight-from-data-search">
+                                       <input type="hidden" [(ngModel)]="hotelName"  class=""  formControlName="hotelName" id="hotelName" placeholder="City" name="hotelName" (keyup)="searchAutoComplete($event,'hotels','hotelName','web');" (keypress)="charInput($event)"  autocomplete="off" >
+                                       <input type="text"    class="inputField hotelName hotelName-web hotelNamePop"  placeholder="City" name="hotelName"  (keyup)="searchAutoComplete($event,'hotels','hotelName','web');" (keypress)="charInput($event)"  autocomplete="off"    >
+                                    </div>
+                                    <ul class="flight-from-data-ul">
+                                       <li class="flight-from-ul-li">
+                                          <p class="flight-Results-text">{{searchHotelHeader}}</p>
+                                       </li>
+                                       <li class="flight-from-ul-li"  *ngFor="let hOptions of hotelOptions;let ind=index;">
+                                          <a  class="flight-from-ul-li-a"    (click)="onToClick(hOptions,'hotels','web')">
+                                             <div class="hotel-from-name">
+                                                <h6><i class="fa fa-building"></i> &nbsp;{{hOptions._source.full_content}}</h6>
+                                                <p>{{hOptions._source.airport_name}} </p>
+                                             </div>
+                                             <div class="flight-from-shortname">
+                                                <h6>{{hOptions._source.city}}</h6>
+                                             </div>
+                                          </a>
+                                       </li>
+                                       <li *ngIf="hotelOptions.length==0"><a>No Results Found...</a></li>
+                                    </ul>
+                                 </div>
                                 
                   
                             </div>
@@ -609,10 +607,14 @@
                     <div class="d-flex  justify-content-between pt-25">
                         <div class="form-group flex_basis">
                             <p class="label_head"><span>Check-In</span> </p>
+
                                     <input (click)="hotelFromPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelFromPicker"   [min]="minDateMlite"  [max]="flightpickermaxDateMlite"
                                 [(ngModel)]="hotelCheckin"   autocomplete="off"  readonly formControlName="hotelCheckin"  id="hotelCheckin" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultFMlite" (dateChange)="EndDateChange($event,'hotel','web')" >
+
                                 <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="hotelFromPicker.open()" id="webHotelFromPicker" ></span>
+
                                 <mat-datepicker  #hotelFromPicker></mat-datepicker>
+
                             <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']" class="error_msg">
                                 <small *ngIf="searchHotelForm['controls']['hotelCheckin']['errors']['required']" class="validate-msg">Check in date required</small>
                             </div>
@@ -620,9 +622,12 @@
                         </div>
                         <div class="form-group flex_basis pl-2">
                             <p class="label_head"><span>Check-Out</span> </p>
-                             <input  (click)="hotelToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite"
+
+                                <input  (click)="hotelToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite"
                                 [(ngModel)]="hotelCheckout"   autocomplete="off"  readonly formControlName="hotelCheckout"  id="hotelCheckout" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultTMlite" >
+
                                 <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="hotelToPicker.open()" id="webHotelToPicker" ></span>
+
                                 <mat-datepicker  #hotelToPicker></mat-datepicker>
 
                             <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']" class="error_msg">
@@ -747,40 +752,39 @@
                                     </div>
                                     
                                     
-                                        <div class="flight-to-data dropdown from_citiesFlightsPop"  *ngIf="fromFlightCityList" #menu  >
+                                    <div class="flight-to-data dropdown from_citiesFlightsPop"  *ngIf="fromFlightCityList" #menu  >
                                         <div class="mob-title">
-                                        <h3>Select City</h3>
-                                        <a href="javascript:void(0)" (click)="closeSearchBox()"
-                                        class="mob-close mob-ff-from-close close-mobile">
-                                        <img src="{{cdnUrl}}/images/icons/close.png"
-                                        class="close-mobile" alt="" />
-                                        </a>
+                                           <h3>Select City</h3>
+                                           <a href="javascript:void(0)" (click)="closeSearchBox()"
+                                              class="mob-close mob-ff-from-close close-mobile">
+                                           <img src="{{cdnUrl}}/images/icons/close.png"
+                                              class="close-mobile" alt="" />
+                                           </a>
                                         </div>
                                         <div class="flight-from-data-search">
-                                        <input type="hidden"   [(ngModel)]="fromCity" (ngModelChange)="selectCheck(fromCity,toCity,'flights')" formControlName="fromCity" id="fromCity" placeholder="From" name="fromCity"  (keyup)="searchAutoComplete($event,'flights','fromCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
-
-                                        <input type="text"    class="inputField fromCity fromCity-web "  placeholder="From" name="fromCity"  (keyup)="searchAutoComplete($event,'flights','fromCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
-
+                                           <input type="hidden"   [(ngModel)]="fromCity" (ngModelChange)="selectCheck(fromCity,toCity,'flights')" formControlName="fromCity" id="fromCity" placeholder="From" name="fromCity"  (keyup)="searchAutoComplete($event,'flights','fromCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
+                                           <input type="text"    class="inputField fromCity fromCity-web "  placeholder="From" name="fromCity"  (keyup)="searchAutoComplete($event,'flights','fromCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
                                         </div>
                                         <ul class="flight-from-data-ul">
-                                        <li class="flight-from-ul-li">
-                                        <p class="flight-Results-text">{{searchFlightFromHeader}}</p>
-                                        </li>
-                                        <li class="flight-from-ul-li"  *ngFor="let fromFlightOptions of flightFromOptions;let ind=index;">
-                                        <a  class="flight-from-ul-li-a"                                                                    (click)="onFromClick(fromFlightOptions,'flights','web')">
-                                        <div class="flight-from-name">
-                                        <h6>{{fromFlightOptions._source.city}},
-                                        {{fromFlightOptions._source.country}}</h6>
-                                        <p>{{fromFlightOptions._source.airport_name}} </p>
-                                        </div>
-                                        <div class="flight-from-shortname">
-                                        <h6>{{fromFlightOptions._source.airport_code}}</h6>
-                                        </div>
-                                        </a>
-                                        </li>
-                                          <li *ngIf="flightFromOptions.length==0"><a>No Results Found...</a></li>
+                                           <li class="flight-from-ul-li">
+                                              <p class="flight-Results-text">{{searchFlightFromHeader}}</p>
+                                           </li>
+                                           <li class="flight-from-ul-li"  *ngFor="let fromFlightOptions of flightFromOptions;let ind=index;">
+                                              <a  class="flight-from-ul-li-a"                                                                    (click)="onFromClick(fromFlightOptions,'flights','web')">
+                                                 <div class="flight-from-name">
+                                                    <h6>{{fromFlightOptions._source.city}},
+                                                       {{fromFlightOptions._source.country}}
+                                                    </h6>
+                                                    <p>{{fromFlightOptions._source.airport_name}} </p>
+                                                 </div>
+                                                 <div class="flight-from-shortname">
+                                                    <h6>{{fromFlightOptions._source.airport_code}}</h6>
+                                                 </div>
+                                              </a>
+                                           </li>
+                                           <li *ngIf="flightFromOptions.length==0"><a>No Results Found...</a></li>
                                         </ul>
-                                        </div>
+                                     </div>
                                     
             
                                 </div>
@@ -802,40 +806,39 @@
                                         <small *ngIf="searchFlightForm['controls']['toCity']['errors']['required']" class="validate-msg">Please select a city name from the list</small>
                                     </div>
                                     
-                            <div class="flight-to-data dropdown to_citiesFlightPop"  *ngIf="toFlightCityList" #menu  >
+                                    <div class="flight-to-data dropdown to_citiesFlightPop"  *ngIf="toFlightCityList" #menu  >
                                         <div class="mob-title">
-                                        <h3>Select City</h3>
-                                        <a href="javascript:void(0)" (click)="closeSearchBox()"
-                                        class="mob-close mob-ff-from-close close-mobile">
-                                        <img src="{{cdnUrl}}/images/icons/close.png"
-                                        class="close-mobile" alt="" />
-                                        </a>
+                                           <h3>Select City</h3>
+                                           <a href="javascript:void(0)" (click)="closeSearchBox()"
+                                              class="mob-close mob-ff-from-close close-mobile">
+                                           <img src="{{cdnUrl}}/images/icons/close.png"
+                                              class="close-mobile" alt="" />
+                                           </a>
                                         </div>
                                         <div class="flight-from-data-search" >
-                                       <input type="hidden"   [(ngModel)]="toCity"   (ngModelChange)="selectCheck(fromCity,toCity,'flights')"  formControlName="toCity" id="toCity" placeholder="To" name="toCity" (focus)="hideShowForms('web', 'toCity','flights')" (keyup)="searchAutoComplete($event,'flights','toCity' ,'web')" (keypress)="charInput($event)" autocomplete="off">
-
-                                        <input type="text"  class="inputField toCity toCity-web "  placeholder="To" name="toCity"  (keyup)="searchAutoComplete($event,'flights','toCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
-
+                                           <input type="hidden"   [(ngModel)]="toCity"   (ngModelChange)="selectCheck(fromCity,toCity,'flights')"  formControlName="toCity" id="toCity" placeholder="To" name="toCity" (focus)="hideShowForms('web', 'toCity','flights')" (keyup)="searchAutoComplete($event,'flights','toCity' ,'web')" (keypress)="charInput($event)" autocomplete="off">
+                                           <input type="text"  class="inputField toCity toCity-web "  placeholder="To" name="toCity"  (keyup)="searchAutoComplete($event,'flights','toCity' ,'web');" (keypress)="charInput($event)"  autocomplete="off"    >
                                         </div>
                                         <ul class="flight-from-data-ul">
-                                        <li class="flight-from-ul-li">
-                                        <p class="flight-Results-text">{{searchFlightToHeader}}</p>
-                                        </li>
-                                        <li class="flight-from-ul-li"  *ngFor="let toFlightOptions of flightToOptions;let ind=index;">
-                                        <a  class="flight-from-ul-li-a"                                                                    (click)="onToClick(toFlightOptions,'flights','web')">
-                                        <div class="flight-from-name">
-                                        <h6>{{toFlightOptions._source.city}},
-                                        {{toFlightOptions._source.country}}</h6>
-                                        <p>{{toFlightOptions._source.airport_name}} </p>
-                                        </div>
-                                        <div class="flight-from-shortname">
-                                        <h6>{{toFlightOptions._source.airport_code}}</h6>
-                                        </div>
-                                        </a>
-                                        </li>
-                                         <li *ngIf="flightToOptions.length==0"><a>No Results Found...</a></li>
+                                           <li class="flight-from-ul-li">
+                                              <p class="flight-Results-text">{{searchFlightToHeader}}</p>
+                                           </li>
+                                           <li class="flight-from-ul-li"  *ngFor="let toFlightOptions of flightToOptions;let ind=index;">
+                                              <a  class="flight-from-ul-li-a"                                                                    (click)="onToClick(toFlightOptions,'flights','web')">
+                                                 <div class="flight-from-name">
+                                                    <h6>{{toFlightOptions._source.city}},
+                                                       {{toFlightOptions._source.country}}
+                                                    </h6>
+                                                    <p>{{toFlightOptions._source.airport_name}} </p>
+                                                 </div>
+                                                 <div class="flight-from-shortname">
+                                                    <h6>{{toFlightOptions._source.airport_code}}</h6>
+                                                 </div>
+                                              </a>
+                                           </li>
+                                           <li *ngIf="flightToOptions.length==0"><a>No Results Found...</a></li>
                                         </ul>
-                                        </div>
+                                     </div>
                                     
          
                                 </div>
@@ -862,10 +865,12 @@
                         <div class="form-group flex_basis pl-2">
                             <p class="label_head"><span>Return</span> </p>
 
-                                 <input  (click)="flightToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightToPicker"   [min]="minDateFlightToMlite"  [max]="flightpickermaxDateMlite"
+                                <input  (click)="flightToPicker.open()" class="form-control control_input p-0" matInput [matDatepicker]="flightToPicker"   [min]="minDateFlightToMlite"  [max]="flightpickermaxDateMlite"
                                 [(ngModel)]="arrival"   autocomplete="off"  readonly formControlName="arrival"  id="arrival" placeholder="DD/MM/YYYY"  [value]="flightpickerDefaultTMlite" [disabled]="!showFlightReturn">
+
                                 <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" (click)="flightToPicker.open()" id="webFlightToPicker" ></span>
                                 <mat-datepicker #flightToPicker></mat-datepicker>
+
                             <div *ngIf="submittedFlight && searchFlightForm['controls']['arrival']['errors']" class="error_msg">
                                 <small *ngIf="searchFlightForm['controls']['arrival']['errors']['required']" class="validate-msg">Return date required</small>
                             </div>
@@ -1243,7 +1248,7 @@
                                     <label (click)="openMliteDatePicker('hotel','departure')">
                                         <span>Check-In</span> 
                                         <div class="form-group flex_basis dep_m_cal">
-                                        <input class="form-control control_input p-0 hidden" matInput
+                                            <input class="form-control control_input p-0 hidden" matInput
                                             [(ngModel)]="hotelCheckin"   autocomplete="off"  readonly formControlName="hotelCheckin"  id="hotelCheckin" placeholder="DD/MM/YYYY"  [value]="hotelCheckin">
                                             
                                             <input *ngIf="hotelCheckinMlite" class="form-control control_input p-0" matInput
@@ -1262,56 +1267,48 @@
                                 </div>
                                 </label>
                                     
-                                    
-                                    
-                                    
-                
-                          
-                                        <div class="modal bottom_mlite_popup" id="hotel_departure_mlite" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title">Select Check-In Date</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body" >
-                                        <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelectMliteDate($event,'hotel','departure')" [selected]="hotelCheckin"></mat-calendar>
-                                        </div>
-                                        <div class="modal-footer">
-                                        
-                                        <div class="select_city d-block mb-15">
-                                        <div class="row">
-                                        
-                                        <div class="col-6 ">
-                                        <div class="input_box  date_input_box">
-                                        <label (click)="openMliteDatePicker('hotel','departure',0)">
-                                        <span>Check-In </span>
-                                        <div class="form-group flex_basis dep_m_cal">
-                                        <input class="form-control control_input p-0" matInput *ngIf="hotelCheckinMlite"
-                                        autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckinMlite">
-                                        <input class="form-control control_input p-0" matInput *ngIf="!hotelCheckinMlite"
-                                        autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
-                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"></span>
-                                        </div>
-                                        </label>
-                                        </div>
-                                        </div>
-
-                                        <!--[disabled]="!showFlightReturn"-->
-                                        <div class="col-6 ">
-                                        <div class="input_box  date_input_box">
-                                        <label>
-                                        <a (click)="openMliteDatePicker('hotel','arrival',1)" class="mt-25">Add Checkout</a>
-                                        </label>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
-                                        </div> 
-                                </div>
-                                </div>
-                                </div>
+                                <div class="modal bottom_mlite_popup" id="hotel_departure_mlite" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <h5 class="modal-title">Select Check-In Date</h5>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body" >
+                                             <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelectMliteDate($event,'hotel','departure')" [selected]="hotelCheckin"></mat-calendar>
+                                          </div>
+                                          <div class="modal-footer">
+                                             <div class="select_city d-block mb-15">
+                                                <div class="row">
+                                                   <div class="col-6 ">
+                                                      <div class="input_box  date_input_box">
+                                                         <label (click)="openMliteDatePicker('hotel','departure',0)">
+                                                            <span>Check-In </span>
+                                                            <div class="form-group flex_basis dep_m_cal">
+                                                               <input class="form-control control_input p-0" matInput *ngIf="hotelCheckinMlite"
+                                                               autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckinMlite">
+                                                               <input class="form-control control_input p-0" matInput *ngIf="!hotelCheckinMlite"
+                                                                  autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
+                                                               <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"></span>
+                                                            </div>
+                                                         </label>
+                                                      </div>
+                                                   </div>
+                                                   <!--[disabled]="!showFlightReturn"-->
+                                                   <div class="col-6 ">
+                                                      <div class="input_box  date_input_box">
+                                                         <label>
+                                                         <a (click)="openMliteDatePicker('hotel','arrival',1)" class="mt-25">Add Checkout</a>
+                                                         </label>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
                           
                                     </div>
                                 </div>
@@ -1342,54 +1339,53 @@
                                     
                                     
                                     
-                                  <div class="modal bottom_mlite_popup" id="hotel_arrival_mlite" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title">Select Check-Out Date</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body" >
-                                        <mat-calendar  [minDate]="minDateHotelToMlite"   (selectedChange)="onSelectMliteDate($event,'hotel','arrival')" [selected]="arrival"></mat-calendar>
-                                        </div>
-                                        <div class="modal-footer">
-                                        <div class="select_city d-block mb-15">
-                                        <div class="row">
-                                        <div class="col-6 ">
-                                        <div class="input_box  date_input_box">
-                                        <label (click)="openMliteDatePicker('hotel','departure',0)">
-                                        <span>Check-In </span>
-                                        <div class="form-group flex_basis dep_m_cal">
-                                        <input class="form-control control_input p-0" matInput
-                                        autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckinMlite" *ngIf="hotelCheckinMlite" >
-                                         <input class="form-control control_input p-0" matInput *ngIf="!hotelCheckinMlite"
-                                        autocomplete="off"  readonly  placeholder="DD/MM/YYYY" >
-                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
-                                        </div>
-                                        </label>
-                                        </div>
-                                        </div>
-
-                                        <!--[disabled]="!showFlightReturn"-->
-                                        <div class="col-6 ">
-                                        <div class="input_box  date_input_box">
-                                        <label (click)="openMliteDatePicker('arrival','arrival',0)">
-                                        <span>Check-Out</span>
-                                        <div class="form-group flex_basis dep_m_cal">
-                                        <input *ngIf="hotelCheckoutMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckoutMlite">
-                                         <input *ngIf="!hotelCheckoutMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
-                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
-                                        </div>
-                                        </label>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
-                                        </div> 
-                                </div>
-                                </div>
-                                </div>
+                                <div class="modal bottom_mlite_popup" id="hotel_arrival_mlite" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <h5 class="modal-title">Select Check-Out Date</h5>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body" >
+                                             <mat-calendar  [minDate]="minDateHotelToMlite"   (selectedChange)="onSelectMliteDate($event,'hotel','arrival')" [selected]="arrival"></mat-calendar>
+                                          </div>
+                                          <div class="modal-footer">
+                                             <div class="select_city d-block mb-15">
+                                                <div class="row">
+                                                   <div class="col-6 ">
+                                                      <div class="input_box  date_input_box">
+                                                         <label (click)="openMliteDatePicker('hotel','departure',0)">
+                                                            <span>Check-In </span>
+                                                            <div class="form-group flex_basis dep_m_cal">
+                                                               <input class="form-control control_input p-0" matInput
+                                                               autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckinMlite" *ngIf="hotelCheckinMlite" >
+                                                               <input class="form-control control_input p-0" matInput *ngIf="!hotelCheckinMlite"
+                                                                  autocomplete="off"  readonly  placeholder="DD/MM/YYYY" >
+                                                               <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
+                                                            </div>
+                                                         </label>
+                                                      </div>
+                                                   </div>
+                                                   <!--[disabled]="!showFlightReturn"-->
+                                                   <div class="col-6 ">
+                                                      <div class="input_box  date_input_box">
+                                                         <label (click)="openMliteDatePicker('arrival','arrival',0)">
+                                                            <span>Check-Out</span>
+                                                            <div class="form-group flex_basis dep_m_cal">
+                                                               <input *ngIf="hotelCheckoutMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckoutMlite">
+                                                               <input *ngIf="!hotelCheckoutMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
+                                                               <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
+                                                            </div>
+                                                         </label>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
                                     
                                     
                                     
@@ -1578,7 +1574,6 @@
                                         </div>
                                         <div *ngIf="validateMessageFlight && toCity && fromCity " class="error_msg">
                                             <small class="validate-msg">Source and Destination city should not be same</small>
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -1609,9 +1604,11 @@
                                         <label (click)="openMliteDatePicker('flight','departure',0)">
                                         <span>Departure</span> 
                                         <div class="form-group flex_basis dep_m_cal">
-                                        <input class="form-control control_input p-0 hidden" matInput
+                                            <input class="form-control control_input p-0 hidden" matInput
                                             [(ngModel)]="departure"   autocomplete="off"  readonly formControlName="departure"  id="departure" placeholder="DD/MM/YYYY"  [value]="departure">
+
                                             <input class="form-control control_input p-0" matInput        *ngIf="departureMlite"       autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="departureMlite">
+
                                                <input class="form-control control_input p-0" matInput       *ngIf="!departureMlite"          autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
                                             
                                             <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"  id="mliteFlightFromPicker"></span>
@@ -1625,58 +1622,52 @@
                                 </label>
                                 
                                 <div class="modal bottom_mlite_popup" id="flight_departure_mlite" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title">Select Departure Date</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body" >
-                                        <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelectMliteDate($event,'flight','departure')" [selected]="departure"></mat-calendar>
-                                        </div>
-                                        <div class="modal-footer">
-                                        
-                                            <div class="select_city d-block mb-15">
-                                            <div class="row">
-                                            
-                                                <div class="col-6 ">
-                                                    <div class="input_box  date_input_box">
-                                                        <label (click)="openMliteDatePicker('flight','departure',0)">
-                                                        <span>Departure</span>
-                                                        <div class="form-group flex_basis dep_m_cal">
-                                                            <input class="form-control control_input p-0" matInput *ngIf="departureMlite"     autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="departureMlite">
-                                                            <input class="form-control control_input p-0" matInput *ngIf="!departureMlite"              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
-                                                            <!-- <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"></span> -->
-                                                        </div>
-                                                        </label>
-                                                    </div>
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <h5 class="modal-title">Select Departure Date</h5>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body" >
+                                             <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelectMliteDate($event,'flight','departure')" [selected]="departure"></mat-calendar>
+                                          </div>
+                                          <div class="modal-footer">
+                                             <div class="select_city d-block mb-15">
+                                                <div class="row">
+                                                   <div class="col-6 ">
+                                                      <div class="input_box  date_input_box">
+                                                         <label (click)="openMliteDatePicker('flight','departure',0)">
+                                                            <span>Departure</span>
+                                                            <div class="form-group flex_basis dep_m_cal">
+                                                               <input class="form-control control_input p-0" matInput *ngIf="departureMlite"     autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="departureMlite">
+                                                               <input class="form-control control_input p-0" matInput *ngIf="!departureMlite"              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
+                                                               <!-- <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"></span> -->
+                                                            </div>
+                                                         </label>
+                                                      </div>
+                                                   </div>
+                                                   <!--[disabled]="!showFlightReturn"-->
+                                                   <div class="col-6 " >
+                                                      <div class="input_box  date_input_box">
+                                                         <label *ngIf="!arrivalMlite">
+                                                         <a (click)="openMliteDatePicker('flight','arrival',1)" class="">Add return date</a>
+                                                         </label>
+                                                         <label (click)="openMliteDatePicker('flight','arrival',0)" *ngIf="arrivalMlite">
+                                                         <span>Return</span>
+                                                         <div class="form-group flex_basis dep_m_cal">
+                                                            <input *ngIf="arrivalMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite">
+                                                            <!-- <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span> -->
+                                                         </div>
+                                                         </label>
+                                                      </div>
+                                                   </div>
                                                 </div>
-
-                                                <!--[disabled]="!showFlightReturn"-->
-                                                <div class="col-6 " >
-                                                <div class="input_box  date_input_box">
-                                                <label *ngIf="!arrivalMlite">
-                                                <a (click)="openMliteDatePicker('flight','arrival',1)" class="">Add return date</a>
-                                                </label>
-                                                
-                                                <label (click)="openMliteDatePicker('flight','arrival',0)" *ngIf="arrivalMlite">
-                                                <span>Return</span>
-                                                <div class="form-group flex_basis dep_m_cal">
-                                                <input *ngIf="arrivalMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite">
-                                                <!-- <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span> -->
-                                                </div>
-                                                </label>
-                                                
-                                                
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
-                                        </div> 
-                                </div>
-                                </div>
-                                </div>
+                                             </div>
+                                             <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
                                 
                                 
                                 </div>
@@ -1689,14 +1680,14 @@
                                             <span>Return</span>
                                             <div class="form-group flex_basis "> 
 
- <input  class="form-control control_input p-0 hidden" matInput       [(ngModel)]="arrival"   autocomplete="off"  readonly formControlName="arrival"  id="arrival" placeholder="DD/MM/YYYY"  [value]="arrival">
-                                           <ng-container *ngIf="arrivalMlite">
-                                            <input class="form-control control_input p-0" matInput
-                                             autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite" [disabled]="!showFlightReturn">
+                                            <input  class="form-control control_input p-0 hidden" matInput       [(ngModel)]="arrival"   autocomplete="off"  readonly formControlName="arrival"  id="arrival" placeholder="DD/MM/YYYY"  [value]="arrival">
+                                            <ng-container *ngIf="arrivalMlite">
+                                                <input class="form-control control_input p-0" matInput
+                                                autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite" [disabled]="!showFlightReturn">
                                             </ng-container>  
-                                                 <ng-container *ngIf="!arrivalMlite">
-                                            <input class="form-control control_input p-0" matInput
-                                             autocomplete="off"  readonly  placeholder="DD/MM/YYYY" [disabled]="!showFlightReturn">
+                                            <ng-container *ngIf="!arrivalMlite">
+                                                <input class="form-control control_input p-0" matInput
+                                                autocomplete="off"  readonly  placeholder="DD/MM/YYYY" [disabled]="!showFlightReturn">
                                             </ng-container>  
                              
                                                 <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"  ></span>
@@ -1709,54 +1700,53 @@
                                         </label>
                                         
                                         
-                              <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title">Select Return Date</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body" >
-                                        <mat-calendar  [minDate]="minDateFlightToMlite"   (selectedChange)="onSelectMliteDate($event,'flight','arrival')" [selected]="arrival"></mat-calendar>
-                                        </div>
-                                        <div class="modal-footer">
-                                        <div class="select_city d-block mb-15">
-                                        <div class="row">
-                                        <div class="col-6 ">
-                                        <div class="input_box  date_input_box">
-                                        <label (click)="openMliteDatePicker('flight','departure',0)">
-                                        <span>Departure</span>
-                                        <div class="form-group flex_basis dep_m_cal">
-                                        <input class="form-control control_input p-0" matInput *ngIf="departureMlite"
-                                        autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="departureMlite">
-                                         <input class="form-control control_input p-0" matInput *ngIf="!departureMlite"
-                                        autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
-                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
-                                        </div>
-                                        </label>
-                                        </div>
-                                        </div>
-
-                                        <!--[disabled]="!showFlightReturn"-->
-                                        <div class="col-6 ">
-                                        <div class="input_box  date_input_box">
-                                        <label (click)="openMliteDatePicker('flight','arrival',0)">
-                                        <span>Return</span>
-                                        <div class="form-group flex_basis dep_m_cal">
-                                        <input *ngIf="arrivalMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite">
-                                         <input *ngIf="!arrivalMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
-                                        <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
-                                        </div>
-                                        </label>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
-                                        </div> 
-                                </div>
-                                </div>
-                                </div>
+                                        <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                               <div class="modal-content">
+                                                  <div class="modal-header">
+                                                     <h5 class="modal-title">Select Return Date</h5>
+                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body" >
+                                                     <mat-calendar  [minDate]="minDateFlightToMlite"   (selectedChange)="onSelectMliteDate($event,'flight','arrival')" [selected]="arrival"></mat-calendar>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                     <div class="select_city d-block mb-15">
+                                                        <div class="row">
+                                                           <div class="col-6 ">
+                                                              <div class="input_box  date_input_box">
+                                                                 <label (click)="openMliteDatePicker('flight','departure',0)">
+                                                                    <span>Departure</span>
+                                                                    <div class="form-group flex_basis dep_m_cal">
+                                                                       <input class="form-control control_input p-0" matInput *ngIf="departureMlite"
+                                                                       autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="departureMlite">
+                                                                       <input class="form-control control_input p-0" matInput *ngIf="!departureMlite"
+                                                                          autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
+                                                                       <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
+                                                                    </div>
+                                                                 </label>
+                                                              </div>
+                                                           </div>
+                                                           <!--[disabled]="!showFlightReturn"-->
+                                                           <div class="col-6 ">
+                                                              <div class="input_box  date_input_box">
+                                                                 <label (click)="openMliteDatePicker('flight','arrival',0)">
+                                                                    <span>Return</span>
+                                                                    <div class="form-group flex_basis dep_m_cal">
+                                                                       <input *ngIf="arrivalMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite">
+                                                                       <input *ngIf="!arrivalMlite" class="form-control control_input p-0" matInput      autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
+                                                                       <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" ></span>
+                                                                    </div>
+                                                                 </label>
+                                                              </div>
+                                                           </div>
+                                                        </div>
+                                                     </div>
+                                                     <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
+                                                  </div>
+                                               </div>
+                                            </div>
+                                         </div>
                                         
                                         
                                     </div>
