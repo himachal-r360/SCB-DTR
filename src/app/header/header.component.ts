@@ -171,6 +171,7 @@ export class HeaderComponent implements OnInit {
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
+        points:any;
 
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
@@ -203,6 +204,10 @@ export class HeaderComponent implements OnInit {
                 this.sg['card_variant'] = this.customerInfo['ccustomer'].card_variant;
                 else
                  this.sg['card_variant'] = 'Other Credit/Debit Card';
+
+                // console.log(this.customerInfo['ccustomer'].points_available);
+                this.points=this.customerInfo['ccustomer'].points_available;
+
               }else{
                 this.customeravailableStatus=false;
                 this.customeravailablepoints="";
