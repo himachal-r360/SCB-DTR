@@ -408,7 +408,7 @@ orderRetry:boolean=false;
                 this.IsDcemiEligibleFlag = true;
                 this.isFlexipayEligibleFlag = true;
                 this.enablesavedTraveller = 0;
-                this.syncCustomer(customerInfo);
+               
               } else {
                 this.getQueryParamData();
                 this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
@@ -491,7 +491,7 @@ orderRetry:boolean=false;
                   //console.log(this.partnerToken);
                   //console.log(this.enableVAS);
 
-                  this.getFlightDetails(this.flightSessionData);
+                 
                 }
                 this.REWARD_CUSTOMERID = customerInfo["id"];
                 this.REWARD_EMAILID = customerInfo["email"];
@@ -500,8 +500,6 @@ orderRetry:boolean=false;
 
                 this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
                 this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-                 this.syncCustomer(customerInfo);
-
 
                 const urlSearchParams = new HttpParams()
                   .set('customerid', customerInfo["id"])
@@ -589,7 +587,7 @@ orderRetry:boolean=false;
                 }
 
               }
-
+             this.syncCustomer(customerInfo);
             } else {
               this.REWARD_CUSTOMERID = '0000';
               this.REWARD_EMAILID = '';
@@ -634,6 +632,7 @@ orderRetry:boolean=false;
   }
 
   syncCustomer(customerInfo){
+  
                   this.getQueryParamData();
                 this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
 
@@ -712,7 +711,7 @@ orderRetry:boolean=false;
                   this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
                   //console.log(this.partnerToken);
                   //console.log(this.enableVAS);
-
+                  
                   this.getFlightDetails(this.flightSessionData);
                 }
                 this.REWARD_CUSTOMERID = customerInfo["id"];
@@ -737,9 +736,7 @@ orderRetry:boolean=false;
 
   flightKeys:any=[];
   getFlightDetails(param) {
-
     if (param != null) {
-    
       if(param['travel_type']=='M'){
         for (let j = 0; j < param.onwardFlights.length; j++) {
          this.flightKeys.push(param.onwardFlights[j]['flightKey']);
@@ -834,6 +831,7 @@ orderRetry:boolean=false;
           
           let fareInfo;let cancellation_array:any=[];
           
+                    let baggage_data:any=[];
             for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
              fareInfo=  res.response.onwardFlightDetails[k];
 
@@ -869,18 +867,17 @@ orderRetry:boolean=false;
               totalFareOnward += Number(res.response.comboFare.onwardTotalFare);
 
 
-             if (fareInfo && fareInfo.bg.length > 0)
+             if (fareInfo && fareInfo.bg.length > 0){
               this.baggageInfoOnwardMulti[k] = fareInfo.bg;
+                baggage_data.push(fareInfo.bg);
+              }
               
               cancellation_array.push(fareInfo.cancellationPolicy);
               
              } 
-             
+             this.baggagePolicyMulti(baggage_data);
              this.emt_cancellationPolicy_Multicity(cancellation_array);
-             
             }
-            
-
 
 
       } else {
@@ -2182,11 +2179,11 @@ orderRetry:boolean=false;
     $('#onwardFareDetails'+index+' .flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
     
     if(divTag=='BaggageDetails'){
-    $('#BaggageDetails'+index).show();
-     $('#CancellationDetails'+index).hide();
+    $('#BaggageDetails').show();
+     $('#CancellationDetails').hide();
     }else{
-        $('#BaggageDetails'+index).hide();
-     $('#CancellationDetails'+index).show();
+        $('#BaggageDetails').hide();
+     $('#CancellationDetails').show();
     }
     
    // var Element = document.getElementById(event.target.dataset['bind']);
@@ -2574,7 +2571,6 @@ orderRetry:boolean=false;
           if (res.response && res.response.flight_details.bg.length > 0)
             this.baggageInfoOnward = res.response.flight_details.bg;
             
-            console.log(res.response.flight_details);
             
             this.baggagePolicy(res.response.flight_details.bg);
 
@@ -2736,7 +2732,81 @@ orderRetry:boolean=false;
   
        }
   
+        baggagePolicyMulti(data){
+        
+        
+        let aclass='active';let bclass='active show';
+        this.baggageInfo= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">
+        <ul class="nav nav-tabs travelTab" role="tablist">`;
+        for(var i=0;i<this.searchData.length;i++){  
+        let airlineCode;
+        if(this.onwardAirlineMulti_multi[i])
+        airlineCode='Multi';
+        else
+        airlineCode=this.onward_airline_array_multi[i][0];
+        
+
+        if(i >0) aclass='';
+
+        this.baggageInfo+= `<li role="presentation" >
+        <a data-bs-target="#baggagetab`+i+`" aria-controls="baggagetab`+i+`" role="tab" data-bs-toggle="tab" aria-expanded="true" class="`+aclass+`" >
+        <div class="rules-flight-items">
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
+        <div class="rules-flight-content">
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        </div>
+        </div>
+        </a>
+        </li>`;
+        }       
+        this.baggageInfo+= `</ul>`;
+
+        this.baggageInfo+= `<div class="tab-content">`;
+        for(var i=0;i<this.searchData.length;i++){   
+        if(i >0) bclass='';
+        this.baggageInfo+= `<div role="tabpanel" class="tab-pane fade `+bclass+`" id="baggagetab`+i+`">`;
+
+        this.baggageInfo+= `<table class="table-bordered table-content w-100">
+        <tbody>
+        <tr>
+        <td>
+        <p class="fw_6 fs_13">Airline</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Check-in Baggage</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Cabin Baggage</p>
+        </td>
+        </tr>`;
+        
+         for(var j=0;j<this.baggageInfoOnwardMulti[i].length;j++){ 
+         this.baggageInfo+= `<tr >
+        <td>
+        <p class="opacity_05">`+this.baggageInfoOnwardMulti[i][j].flightName+`<br>`+this.baggageInfoOnwardMulti[i][j].flightNo+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnwardMulti[i][j].checkIn+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnwardMulti[i][j].cabin+`</p>
+        </td>
+        </tr>`;
+        }
+        
+        
+         this.baggageInfo+= `</tbody>
+        </table>`;
+
+
+
+        this.baggageInfo+= `</div>`;
+        }
+        this.baggageInfo+= `</div>`;
+          
+
   
+       }
   
 
       emt_cancellationPolicy_Multicity(data){
@@ -2752,7 +2822,6 @@ orderRetry:boolean=false;
         else
         airlineCode=this.onward_airline_array_multi[i][0];
         
-        console.log(airlineCode);
 
         if(i >0) aclass='';
 
@@ -2895,7 +2964,6 @@ orderRetry:boolean=false;
         flightto:this.searchData.flightto,
         classType:this.searchData['flightclass'],
         };
-        console.log(getCancellationPolicy);
          this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(response => {
          if(response.status=="success"){
          if(type=='onward')
