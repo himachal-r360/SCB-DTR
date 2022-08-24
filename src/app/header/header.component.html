@@ -338,8 +338,8 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -926,47 +926,28 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end privilege_drpdwn_div" aria-labelledby="dropdown-user1">
                                             <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="hdr_privilege_card">
-                                                        <a href="">
-                                                        <div class="row cntnt_center">
-                                                            <div class="col-sm-4">
-                                                                <div class="privilege_img_div">
-                                                                    <img src="{{cdnUrl}}/images/smartbuy/icons/privilege_card1.svg" class="privilege_img">
+
+                                                    <div class="col-sm-12" *ngFor="let cardItem of cardList;">
+                                                        <div class="hdr_privilege_card">
+                                                         <a href="{{mainRedirect}}{{cardItem.program_name | lowercase}}" target="_blank">
+                                                            <div class="row cntnt_center">
+                                                                <div class="col-sm-4">
+                                                                    <div class="privilege_img_div">
+                                                                        <img src="{{cdnUrl}}/images/smartbuy/icons/privilege_card1.svg" class="privilege_img">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 pl-1">
+                                                                    <p class="privilege_text_highlight mb-0">{{cardItem.program_name}}</p>
+                                                                    <p class="privilege_text mb-0">xxx {{cardItem.last4digit}}</p>
+                                                                </div>
+                                                                <div class="col-sm-2 pl-0">
+                                                                    <img src="{{cdnUrl}}/images/smartbuy/icons/rg_arrw_icn.svg" width="12px" height="12px">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-6 pl-1">
-                                                                <p class="privilege_text_highlight mb-0">Regalia</p>
-                                                                <p class="privilege_text mb-0 mt-0">xxx 1234</p>
-                                                            </div>
-                                                            <div class="col-sm-2 pl-0">
-                                                                <img src="{{cdnUrl}}/images/smartbuy/icons/rg_arrw_icn.svg">
-                                                            </div>
+                                                            </a>
                                                         </div>
-                                                    </a>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <div class="hdr_privilege_card">
-                                                        <a href="">
-                                                        <div class="row cntnt_center">
-                                                            <div class="col-sm-4">
-                                                                <div class="privilege_img_div">
-                                                                    <img src="{{cdnUrl}}/images/smartbuy/icons/privilege_card1.svg" class="privilege_img">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6 pl-1">
-                                                                <p class="privilege_text_highlight mb-0">Regalia</p>
-                                                                <p class="privilege_text mb-0">xxx 1234</p>
-                                                            </div>
-                                                            <div class="col-sm-2 pl-0">
-                                                                <img src="{{cdnUrl}}/images/smartbuy/icons/rg_arrw_icn.svg">
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                         </div>
                                     </div>

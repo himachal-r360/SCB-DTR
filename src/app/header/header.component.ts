@@ -26,6 +26,7 @@ import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.serv
 import { FlightService } from '../common/flight.service';
 import { ConditionalExpr } from '@angular/compiler';
 import { Console } from 'console';
+
 declare var $: any;
 declare var jQuery: any;
 declare const annyang: any;
@@ -53,7 +54,7 @@ declare const annyang: any;
 export class HeaderComponent implements OnInit {
   
 
-
+        now:any=[];
   rd_site_url: any;shop_site_url;
         loginUrl:string='check-login?g=1';
         addtocart: boolean = false;
@@ -167,6 +168,10 @@ export class HeaderComponent implements OnInit {
     isMobile:boolean= false;
   delta:any;
         payzrestriction:boolean=false;
+        cardList:any=[];
+        showcards:boolean=false;
+        mainRedirect:any;
+
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
@@ -292,6 +297,8 @@ export class HeaderComponent implements OnInit {
     this.domainPath=this.sg['domainPath'];
     this.assetPath=this.sg['assetPath'];
     this.domainName=this.sg['domainName'];
+    console.log(this.domainName=this.sg['domainName']);
+
     this.enablePrivileges=this.serviceSettings.enablePrivileges;
     
     
@@ -363,6 +370,7 @@ export class HeaderComponent implements OnInit {
 
   
   toast(val,index){
+
     var html;
     switch(val['type']){
               case 'TEXT':
@@ -584,6 +592,7 @@ closeCookieConsent(value){
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcountavail = result.count;
+
       //pushcountavail
       // $.each( result.result, function(k, v) {
         result.result.forEach((v, k) =>  {
@@ -744,12 +753,14 @@ closeCookieConsent(value){
   }
   
   ngOnInit() {
+
+    this.mainRedirect=this.DOMAIN_SETTINGS['main_domain_url']+'/';
+
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
     this.sub_domain_redirection_url=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/';
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
-   
-   
+
        
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
@@ -781,15 +792,13 @@ closeCookieConsent(value){
 
 
 
+      let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
+    	if(queryParamMap.keys[0])
+    	 this.redirectUrlpopup(queryParamMap.keys[0],0,'smartbuy');
 
-
-    let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
-	if(queryParamMap.keys[0])
-	 this.redirectUrlpopup(queryParamMap.keys[0],0,'smartbuy');
-
-/*this.customerInfo=  JSON.parse(this.EncrDecr.get('drw6SKRtkeqkTBiXIayqU5HyPwGeiveIXQzuz/KGDsQq9voz8OBqnyumqoqWhUuxRGwQAcwa6Lm/pES4C3pOhnz0JOc2xmIeYFuC2LDYt2+9dhekELisHSTBHbIchrIkeGf6q8KafxHJ1uTCm+Viqh04rkThML9wSQjbTHGsKr/di5FuMSBZKkM9x54/c5YKyWk21WLS5LC1J9e2syYncmY2dOdbpO94WJgc4udqIOGQFlzqptKFugCzph4sMg00y7tLpzFBXj5ZMPzeVtI1WbvjZ6J97k/h0NvdoPy+uZ1u1ggZht8htFI/eodX6decl0Qfe956+fRCewg5AYpAC1oT6Me9GDXOojqCORK5O7MoqTfBuEQYFleGQtIzV783Y2VmVvdmdusnVyI29JncPA=='));
-
-this.customerLogin=true;*/
+      /*this.customerInfo=  JSON.parse(this.EncrDecr.get('drw6SKRtkeqkTBiXIayqU5HyPwGeiveIXQzuz/KGDsQq9voz8OBqnyumqoqWhUuxRGwQAcwa6Lm/pES4C3pOhnz0JOc2xmIeYFuC2LDYt2+9dhekELisHSTBHbIchrIkeGf6q8KafxHJ1uTCm+Viqh04rkThML9wSQjbTHGsKr/di5FuMSBZKkM9x54/c5YKyWk21WLS5LC1J9e2syYncmY2dOdbpO94WJgc4udqIOGQFlzqptKFugCzph4sMg00y7tLpzFBXj5ZMPzeVtI1WbvjZ6J97k/h0NvdoPy+uZ1u1ggZht8htFI/eodX6decl0Qfe956+fRCewg5AYpAC1oT6Me9GDXOojqCORK5O7MoqTfBuEQYFleGQtIzV783Y2VmVvdmdusnVyI29JncPA=='));
+      this.customerLogin=true;*/
+      this.getAllcards();     
   
     }
     
@@ -910,7 +919,7 @@ this.customerLogin=true;*/
         this.updatecarthtml();
     },(err: HttpErrorResponse) => {
           var message = 'Sorry, there seems to be some technical issues. Please try again after some time.';
-          console.log(message);
+         // console.log(message);
     });
     }
 
@@ -998,7 +1007,7 @@ this.customerLogin=true;*/
       this.callshowcart();
     },(err: HttpErrorResponse) => {
         var message = 'Sorry, there seems to be some technical issues. Please try again after some time.';
-        console.log(message);
+      //  console.log(message);
     });
   }
   callshowcart(){
@@ -1077,7 +1086,7 @@ this.customerLogin=true;*/
           // element.click();
         },(err: HttpErrorResponse) => {
             var message = 'Sorry, there seems to be some technical issues. Please try again after some time.';
-            console.log(message);
+           // console.log(message);
         });
       
     }
@@ -1287,7 +1296,21 @@ this.customerLogin=true;*/
     };
     this._DisclaimerSheetComponent.open(DisclaimerBottomSheetComponent, config);
   }
-    
+
+      getAllcards()
+      {
+         this.cartService.getAllCards().subscribe(resp =>{
+         // console.log('=====>>',resp);
+          if(typeof resp.status != undefined && resp.status === true){
+            this.cardList=resp['cardList'];
+            this.showcards = true;
+          }
+
+        }),(err:HttpErrorResponse)=>{
+           alert("Something went wrong, please try again");
+          //this.router.navigate([this.sg['domainPath'] + 'milestone']);
+        };
+      }
     
   }
 
