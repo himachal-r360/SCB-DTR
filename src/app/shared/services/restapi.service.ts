@@ -368,7 +368,17 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
 	return this.http.post( this.endpoint+'getCouponsByService',param, config).pipe(map((response: any) => response));
     }
   }
-  
+
+
+  getOrderRetryDetails (param):Observable<any> { 
+    if(LOCALJSON=='true'){
+      return this.http.get('assets/data/getOrderRetryDetails.json');
+    }else{
+	return this.http.post( this.endpoint+'orderRetry',param, config).pipe(map((response: any) => response));
+    }
+  }
+
+
   
   getCancellationPolicy(param){
   if(LOCALJSON=='true'){
@@ -378,4 +388,5 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
   return this.http.post( this.endpoint+'farerules',param, config).pipe(map((response: any) => response));
   }
   } 
+
 }
