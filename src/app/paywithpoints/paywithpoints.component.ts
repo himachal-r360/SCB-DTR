@@ -57,6 +57,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  orderamount:number;
  redemptionMsg:any;
  cardmobile:any;
+ cardbin:any;
  carddob:any;
  redemption_value:any;
  voucherOtp:Boolean=false;
@@ -287,6 +288,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         this.CcCharges = this.response1['CcCharges'];
         this.pointData = this.response1;
         this.cardmobile = this.response1['mobile'];
+        this.cardbin = this.response1['bin'];
         this.carddob = this.response1['dob'];
         this.setSlider();
         // this.intitialconversionptoc();
@@ -405,7 +407,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           "ORDER_POINTS":this.value,
           "voucherINRvalue":this.value * this.points_percentage,
            "DOB":this.carddob,
-           "bin":this.carddob,
+           "bin":this.cardbin,
           "passwordValue":this.Formotpvalidate.controls['otp'].value,
           "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
         }
