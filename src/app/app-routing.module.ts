@@ -6,6 +6,7 @@ import { PartnersComponent} from './partners/partners.component';
 import { BannersComponent } from './shared-components/banners/banners.component';
 import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
+import { OrdersRetryComponent } from './orders-retry/orders-retry.component';
 /*import { DinersModule } from './diners/diners.module';
 import { InfiniaModule } from './infinia/infinia.module';
 */
@@ -63,6 +64,10 @@ const routes: Routes = [
     loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
 
     
+  },
+  {
+    path: 'order-retry', component:OrdersRetryComponent 
+
   }
 ];
 
