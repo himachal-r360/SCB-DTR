@@ -796,6 +796,9 @@ checkInfo1(event){
      $('#tokenization').val(1);
    }  
 }
+updatenewAmounttopay(event:string){
+	this.payTotalFare=event;
+}
 
 
 securemycard() {
@@ -2512,6 +2515,7 @@ export class PaywithpointsDialog {
 			this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
 			this.customermobile = this.REWARD_MOBILE;
 			this.serviceId=data.serviceId;
+
 	}
 	ngOnInit() {
 		this.serviceSettings=this.appConfigService.getConfig();

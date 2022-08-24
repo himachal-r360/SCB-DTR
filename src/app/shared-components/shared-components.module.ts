@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { TextMaskModule } from 'angular2-text-mask';
+import { RedirectPopupModule } from '../redirect-popup/redirect-popup.module';
 @NgModule({
   declarations: [
     BannersComponent,
@@ -41,7 +42,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatDialogModule,
      MatCheckboxModule,  MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule,NgxCaptchaModule,MatSelectModule
+    MatNativeDateModule,NgxCaptchaModule,MatSelectModule,
+    RedirectPopupModule,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

@@ -145,6 +145,15 @@ export class PayService {
     return this.http.post(this.endpoint+'generateVoucherOtp', param, config).pipe(map((response:any) => response));
   }
 }
+otp_validation(param){
+    
+  // if(LOCALJSON=='true'){
+  //   return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
+  // }else{
+    return this.http.post(this.endpoint+'generateVoucherOtp', param, config).pipe(map((response:any) => response));
+  // }
+}
+
 
 checkNonSpcCardElligible(param){
   if(LOCALJSON=='true'){

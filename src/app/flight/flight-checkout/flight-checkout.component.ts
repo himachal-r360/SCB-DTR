@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, DebugNode, NgModule, ViewChild, ChangeDetectorRef, ElementRef, Inject, ɵConsole, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -20,6 +20,7 @@ import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { stringify } from '@angular/compiler/src/util';
 import { AbstractControl } from '@angular/forms';
+import { filter } from 'rxjs/operators';
 
 
 
@@ -323,7 +324,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapseDiscount: boolean = false;
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
-
+orderRetry:boolean=false;
 
   constructor(private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
@@ -367,7 +368,9 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     });
 
   }
-
+ ngAfterContentChecked() {
+    this.ref.detectChanges();
+     }
   ngOnInit(): void {
     this.route.url.subscribe(url => {
       this.resetPopups();
@@ -407,9 +410,98 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 this.IsDcemiEligibleFlag = true;
                 this.isFlexipayEligibleFlag = true;
                 this.enablesavedTraveller = 0;
-                this.syncCustomer(customerInfo);
+               
               } else {
-                 this.syncCustomer(customerInfo);
+                this.getQueryParamData();
+                this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
+
+                this.flightSessionData = JSON.parse(this.flightDetailsArrVal);
+
+                if (!this.flightSessionData) {
+                  setTimeout(() => {
+                    $("#bookingprocessFailed1").modal('show');
+                  }, 10);
+                } else {
+                  this.searchData = (this.flightSessionData.queryFlightData);
+                  //console.log(this.flightSessionData);
+                  setTimeout(() => {
+                    $("#infoprocess").modal('show');
+                  }, 10);
+                  
+                  if( this.flightSessionData['travel_type']=='M') {
+                  //Multicity
+                this.maxAdults = Number(this.searchData[0].adults);
+                this.maxChilds = Number(this.searchData[0].child);
+                this.maxInfants = Number(this.searchData[0].infants);
+                this.travelerDetails['adults'] = this.searchData[0].adults;
+                this.travelerDetails['child'] = this.searchData[0].child;
+                this.travelerDetails['infants'] = this.searchData[0].infants;
+                this.partnerToken = this.flightSessionData.onwardFlights[0]['priceSummery']['partnerName'];
+                this.flightOnwardDetails = this.flightSessionData.onwardFlights; 
+                this.selectedOnwardVendor = this.flightSessionData.onwardFlights[0]['priceSummery'];
+                this.searchData['adults'] = this.searchData[0].adults;
+                this.searchData['child'] = this.searchData[0].child;
+                this.searchData['infants'] = this.searchData[0].infants;
+                this.searchData['flightclass'] = this.searchData[0].flightclass;
+                
+                this.searchData['travel'] = 'DOM';
+                for (let j = 0; j < this.flightSessionData.queryFlightData.length; j++) {
+                 if(this.flightSessionData.queryFlightData[j]['fromContry'] != 'IN' || this.flightSessionData.queryFlightData[j]['toContry'] != 'IN'){
+                 this.searchData['travel'] = 'INT';
+                 }
+                }
+                
+                
+                this.flightReturnDetails = [];
+                  }else{
+                  
+                  this.maxAdults = Number(this.searchData.adults);
+                  this.maxChilds = Number(this.searchData.child);
+                  this.maxInfants = Number(this.searchData.infants);
+                  this.travelerDetails = this.searchData;
+
+
+                  if (this.flightSessionData.travel == 'DOM') {
+                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
+                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
+                    this.selectedReturnVendor = this.flightSessionData.returnPriceSummary;
+
+                    if (this.flightSessionData.returnFlights)
+                      this.flightReturnDetails = this.flightSessionData.returnFlights;
+                    else
+                      this.flightReturnDetails = [];
+                      
+                  } else {
+
+                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
+                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
+                    this.selectedReturnVendor = [];
+
+
+                    if (this.flightSessionData.returnFlights)
+                      this.flightReturnDetails = this.flightSessionData.returnFlights;
+                    else
+                      this.flightReturnDetails = [];
+
+                  }
+
+
+                  this.partnerToken = this.selectedOnwardVendor.partnerName;
+                 } 
+                  
+                  this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
+                  //console.log(this.partnerToken);
+                  //console.log(this.enableVAS);
+
+                 
+                }
+                this.REWARD_CUSTOMERID = customerInfo["id"];
+                this.REWARD_EMAILID = customerInfo["email"];
+                this.REWARD_MOBILE = customerInfo["mobile"];
+                this.REWARD_TITLE = customerInfo["title"];
+
+                this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
+                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
 
                 const urlSearchParams = new HttpParams()
                   .set('customerid', customerInfo["id"])
@@ -497,7 +589,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 }
 
               }
-
+             this.syncCustomer(customerInfo);
             } else {
               this.REWARD_CUSTOMERID = '0000';
               this.REWARD_EMAILID = '';
@@ -522,9 +614,27 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
 
     });
+
+
+    this.route.queryParamMap
+    .subscribe((params) => {
+      let order = { ...params.keys, ...params };
+      if(order['params']['retry'] && order['params']['retry'] != undefined) {
+
+       setTimeout(() => {
+        document.getElementById('continueToItinery').click();
+
+        
+      }, 3000);
+       
+      }
+    }
+  );
+
   }
 
   syncCustomer(customerInfo){
+  
                   this.getQueryParamData();
                 this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
 
@@ -535,7 +645,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   }, 10);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
-                  console.log(this.flightSessionData);
+               
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -603,7 +713,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
                   //console.log(this.partnerToken);
                   //console.log(this.enableVAS);
-
+                  
                   this.getFlightDetails(this.flightSessionData);
                 }
                 this.REWARD_CUSTOMERID = customerInfo["id"];
@@ -628,9 +738,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
   flightKeys:any=[];
   getFlightDetails(param) {
-
     if (param != null) {
-    
       if(param['travel_type']=='M'){
         for (let j = 0; j < param.onwardFlights.length; j++) {
          this.flightKeys.push(param.onwardFlights[j]['flightKey']);
@@ -725,6 +833,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           
           let fareInfo;let cancellation_array:any=[];
           
+                    let baggage_data:any=[];
             for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
              fareInfo=  res.response.onwardFlightDetails[k];
 
@@ -760,18 +869,17 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
               totalFareOnward += Number(res.response.comboFare.onwardTotalFare);
 
 
-             if (fareInfo && fareInfo.bg.length > 0)
+             if (fareInfo && fareInfo.bg.length > 0){
               this.baggageInfoOnwardMulti[k] = fareInfo.bg;
+                baggage_data.push(fareInfo.bg);
+              }
               
               cancellation_array.push(fareInfo.cancellationPolicy);
               
              } 
-             
+             this.baggagePolicyMulti(baggage_data);
              this.emt_cancellationPolicy_Multicity(cancellation_array);
-             
             }
-            
-
 
 
       } else {
@@ -1873,8 +1981,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   bookingSessionExpires(e: CountdownEvent) {
 
     if (e.action == 'done') {
-
-      $('#bookingprocessExpires').modal('show');
+     this.triggerBack();
+      //$('#bookingprocessExpires').modal('show');
     }
 
 
@@ -2073,11 +2181,11 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     $('#onwardFareDetails'+index+' .flight-extra-tabs li a').removeClass('flight-extra-tabs-active');
     
     if(divTag=='BaggageDetails'){
-    $('#BaggageDetails'+index).show();
-     $('#CancellationDetails'+index).hide();
+    $('#BaggageDetails').show();
+     $('#CancellationDetails').hide();
     }else{
-        $('#BaggageDetails'+index).hide();
-     $('#CancellationDetails'+index).show();
+        $('#BaggageDetails').hide();
+     $('#CancellationDetails').show();
     }
     
    // var Element = document.getElementById(event.target.dataset['bind']);
@@ -2194,6 +2302,15 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         $("#infoprocess").modal('hide');
       }, 10);
+
+      let trackUrlParams = new HttpParams()
+      .set('current_url', window.location.href)
+      .set('category', 'Flight')
+      .set('event', 'Flight Info angf')
+      .set('metadata', JSON.stringify(res));
+
+    const track_body: string = trackUrlParams.toString();
+    this.rest.trackEvents(track_body).subscribe(result => { });
 
       if (res.statusCode == 200) {
         this.flightInfo = res.response;
@@ -2456,7 +2573,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
           if (res.response && res.response.flight_details.bg.length > 0)
             this.baggageInfoOnward = res.response.flight_details.bg;
             
-            console.log(res.response.flight_details);
             
             this.baggagePolicy(res.response.flight_details.bg);
 
@@ -2618,7 +2734,81 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   
        }
   
+        baggagePolicyMulti(data){
+        
+        
+        let aclass='active';let bclass='active show';
+        this.baggageInfo= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">
+        <ul class="nav nav-tabs travelTab" role="tablist">`;
+        for(var i=0;i<this.searchData.length;i++){  
+        let airlineCode;
+        if(this.onwardAirlineMulti_multi[i])
+        airlineCode='Multi';
+        else
+        airlineCode=this.onward_airline_array_multi[i][0];
+        
+
+        if(i >0) aclass='';
+
+        this.baggageInfo+= `<li role="presentation" >
+        <a data-bs-target="#baggagetab`+i+`" aria-controls="baggagetab`+i+`" role="tab" data-bs-toggle="tab" aria-expanded="true" class="`+aclass+`" >
+        <div class="rules-flight-items">
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
+        <div class="rules-flight-content">
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        </div>
+        </div>
+        </a>
+        </li>`;
+        }       
+        this.baggageInfo+= `</ul>`;
+
+        this.baggageInfo+= `<div class="tab-content">`;
+        for(var i=0;i<this.searchData.length;i++){   
+        if(i >0) bclass='';
+        this.baggageInfo+= `<div role="tabpanel" class="tab-pane fade `+bclass+`" id="baggagetab`+i+`">`;
+
+        this.baggageInfo+= `<table class="table-bordered table-content w-100">
+        <tbody>
+        <tr>
+        <td>
+        <p class="fw_6 fs_13">Airline</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Check-in Baggage</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Cabin Baggage</p>
+        </td>
+        </tr>`;
+        
+         for(var j=0;j<this.baggageInfoOnwardMulti[i].length;j++){ 
+         this.baggageInfo+= `<tr >
+        <td>
+        <p class="opacity_05">`+this.baggageInfoOnwardMulti[i][j].flightName+`<br>`+this.baggageInfoOnwardMulti[i][j].flightNo+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnwardMulti[i][j].checkIn+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnwardMulti[i][j].cabin+`</p>
+        </td>
+        </tr>`;
+        }
+        
+        
+         this.baggageInfo+= `</tbody>
+        </table>`;
+
+
+
+        this.baggageInfo+= `</div>`;
+        }
+        this.baggageInfo+= `</div>`;
+          
+
   
+       }
   
 
       emt_cancellationPolicy_Multicity(data){
@@ -2634,7 +2824,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         else
         airlineCode=this.onward_airline_array_multi[i][0];
         
-        console.log(airlineCode);
 
         if(i >0) aclass='';
 
@@ -2777,7 +2966,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         flightto:this.searchData.flightto,
         classType:this.searchData['flightclass'],
         };
-        console.log(getCancellationPolicy);
          this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(response => {
          if(response.status=="success"){
          if(type=='onward')
@@ -2792,7 +2980,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   triggerBack() {
     $('#bookingprocessFailed').modal('hide');
     let url;
-    
+    this.resetPopups();
     
     if (this.searchData.travel == 'DOM') {
       if (this.searchData.flightdefault == 'R')
@@ -3660,7 +3848,7 @@ orderReferenceNumber:any;
         "returnFareKey": this.flightInfo.returnFlightDetails && this.flightInfo.returnFlightDetails.fareKey ? this.flightInfo.returnFlightDetails.fareKey : '',
         "inputs": input_values
       },
-      "cancellationPolicy": this.cancellationPolicyOnward,
+      "cancellationPolicy": '',
       "checkin": "",
       "checkin_box": null,
       "order_ref_num": order_ref_num ,
@@ -3679,6 +3867,8 @@ orderReferenceNumber:any;
       orderReferenceNumber: order_ref_num,
       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
     };
+
+      console.log(JSON.stringify(checkoutData));
 
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
