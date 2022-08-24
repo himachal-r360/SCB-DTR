@@ -327,13 +327,11 @@ export class HeaderComponent implements OnInit {
    if (this.cookieService.get("push_enable")) { 
      this.enablePushTitle = true;
      this.rest.getNotificationPopup().subscribe(result => {
-      console.log(result);
         // this.pushPopup=this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
         this.pushcount = result.count;
 
         this.pushid = result.pushid;
         var htmltoast='';
-        console.log('hihi',this.pushid);
         for (var index in this.pushid) {
           this.read= this.cookieService.get("read_push");
           if(this.read){
@@ -365,8 +363,6 @@ export class HeaderComponent implements OnInit {
 
   
   toast(val,index){
-    console.log('aammmm');
-    console.log(index,val);
     var html;
     switch(val['type']){
               case 'TEXT':
@@ -588,7 +584,6 @@ closeCookieConsent(value){
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcountavail = result.count;
-      console.log(this.pushcountavail,result.count);
       //pushcountavail
       // $.each( result.result, function(k, v) {
         result.result.forEach((v, k) =>  {
