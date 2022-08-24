@@ -3,18 +3,25 @@ import { CommonModule } from '@angular/common';
 import { IrctcregComponent } from './irctcreg.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatDialogModule } from '@angular/material';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import { PaymentsModule } from 'src/app/shared/components/payments/payments.module';
 import { NgxCleaveDirectiveModule } from 'ngx-cleave-directive';
 import { CountdownModule } from 'ngx-countdown';
-import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-//import { ConfirmationDialog } from '../../irctc-home/home.component';
 import {ConfirmationDialog} from './irctcreg.component';
 import {SuccessDialog} from './irctcreg.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import {MatDatepickerModule,MatNativeDateModule} from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+import {MatNativeDateModule, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
+
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 
@@ -29,9 +36,7 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     MatDialogModule,
     NgxCleaveDirectiveModule,
     CountdownModule,
-    PaymentsModule,
     FormsModule,
-    DeviceDetectorModule.forRoot(),
     NgbModule,
     NgxCaptchaModule,
     MatDatepickerModule,
