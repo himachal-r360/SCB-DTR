@@ -2638,7 +2638,7 @@ orderRetry:boolean=false;
         this.baggageInfo+= `<li role="presentation" >
         <a data-bs-target="#baggagetab" aria-controls="baggagetab" role="tab" data-bs-toggle="tab" aria-expanded="true" class="active" >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="6E" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
         <div class="rules-flight-content">
         <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightto']+`</h6>
         </div>
@@ -2650,7 +2650,7 @@ orderRetry:boolean=false;
         this.baggageInfo+= `<li role="presentation" >
         <a data-bs-target="#baggagetabR" aria-controls="baggagetabR" role="tab" data-bs-toggle="tab" aria-expanded="true"  >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCodeR+`.gif"     alt="6E" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCodeR+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
         <div class="rules-flight-content">
         <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightfrom']+`</h6>
         </div>
@@ -2750,14 +2750,16 @@ orderRetry:boolean=false;
         if(this.onwardAirlineMulti_multi[i])
         airlineCode='Multi';
         else
-        airlineCode=this.onward_airline_array_multi[0];
+        airlineCode=this.onward_airline_array_multi[i][0];
+        
+        console.log(airlineCode);
 
         if(i >0) aclass='';
 
         this.cancellationPolicyOnward+= `<li role="presentation" >
         <a data-bs-target="#onwardtab`+i+`" aria-controls="onwardtab`+i+`" role="tab" data-bs-toggle="tab" aria-expanded="true" class="`+aclass+`" >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="6E" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
         <div class="rules-flight-content">
         <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
         </div>
@@ -3776,7 +3778,7 @@ orderReferenceNumber:any;
         "returnFareKey": this.flightInfo.returnFlightDetails && this.flightInfo.returnFlightDetails.fareKey ? this.flightInfo.returnFlightDetails.fareKey : '',
         "inputs": input_values
       },
-      "cancellationPolicy": this.cancellationPolicyOnward,
+      "cancellationPolicy": '',
       "checkin": "",
       "checkin_box": null,
       "order_ref_num": order_ref_num ,

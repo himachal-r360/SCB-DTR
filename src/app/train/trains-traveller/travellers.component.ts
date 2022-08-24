@@ -1898,6 +1898,20 @@ gstReset(){
         }
         return temp;
     }
+    
+    autoUpgrade($event) {
+        this.addshow = !this.addshow;
+        this.addPreferenceSelected = $event.target.checked;
+        if (this.addPreferenceSelected == true) {
+             this.passengerForm['controls']['passengerAutoUpgradation'].setValue(1);
+            this.passengerForm.controls['coachId'].setValidators([Validators.pattern("^(([a-zA-Z]{1})([0-9]{1,3}))"),Validators.maxLength(4)]);
+            this.passengerForm.controls['coachId'].updateValueAndValidity();
+        } else {
+          this.passengerForm['controls']['passengerAutoUpgradation'].setValue(0);
+            this.passengerForm.get('coachId').clearValidators();
+            this.passengerForm.controls['coachId'].updateValueAndValidity();
+        }
+    }
     generateTrainItinerary() { 
         if(this.gstSelected){
             this.gstDetails = {

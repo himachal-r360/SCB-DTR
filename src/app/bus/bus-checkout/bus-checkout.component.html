@@ -83,17 +83,17 @@
                     <div class="col-sm-9">
                       <div class="bus_details">
                           <div>
-                            <p class="city">Mumbai</p>
-                            <p class="time">15 : 30 | Borivali E National Park <br/>
-                              Mon, 11 Aug 2022</p>
+                            <p class="city">{{seacthResult.searchFrom}}</p>
+                            <p class="time">{{boardingpointTime}} | {{boardingpointName}} <br/>
+                              <span *ngIf = "printdoj; else nextday">{{actualboarding | date:'EEE, dd MMM yyyy'}}</span> <ng-template #nextday>({{actualboarding | date:'EEE, dd MMM yyyy'}})</ng-template> </p>
                           </div>
                           <div>
                             <div><img src="{{cdnUrl}}images/icons/Seat-1.svg" alt=""></div>
                           </div>
                           <div>
-                            <p class="city">Bangalore</p>
-                            <p class="time">15 : 30 | Borivali E National Park <br/>
-                              Mon, 11 Aug 2022</p>
+                            <p class="city">{{seacthResult.searchTo}}</p>
+                            <p class="time">{{droppingPointTime}} | {{droppingpointName}} <br/>
+                              {{actualdropping | date:'EEE, dd MMM yyyy'}}</p>
                           </div>
                           <div>
                         </div>
@@ -101,13 +101,13 @@
                     </div>
                     <div class="col-sm-3">
                         <div>
-                          <p class="seat_cnf_number">L1, U12</p>
+                          <p class="seat_cnf_number"> <span *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{seat.name}} <span *ngIf="!lastRow" >, </span> </span></p>
                         </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="bus_name">
-                      <p>Venkatesh Tours & Travels  Non-A/C (2+1)</p>
+                      <p>{{onward.travels}} {{onward.busType}}</p>
                     </div>
                   </div>
                 </div>
@@ -795,42 +795,7 @@
       </div>
     </div>
   </section>
-  <!-- ------------------------------
-            >>> Modal bookingprocess
-        ---------------------------------->
-  <div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body " style="padding: 25px;" *ngIf="searchData">
-          <div class="bookingprocess-items">
-            <div class="bookingprocess-title text-center mb-30">
-              <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
-            </div>
-            <div class="bookingprocess-content">
-              <div class="bookingprocess-flight">
-                <h6>{{searchData.fromCity}},{{searchData.fromContry}} ({{searchData.flightfrom}})</h6>
-                <p class="mt-10">{{searchData.departure | date:'dd.MM.yyyy'}} - <span>{{searchData.travellers}}
-                    Adult,</span> <span *ngIf="searchData.child != '0'">{{searchData.child}} Child,</span> 
-                <h6>{{searchData.toCity}},{{searchData.toContry}} ({{searchData.flightto}})</h6>
-              </div>
-              <div class="bookingprocess-processbar">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
-                    aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                    <span class="title"> &nbsp; </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="refresh-text text-center pt-2">
-              <p>Please don't click or refresh the page</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -1032,6 +997,42 @@
   </div>
 
 </main>
+
+  <!-- ------------------------------
+            >>> Modal bookingprocess
+        ---------------------------------->
+  <div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body " style="padding: 25px;" >
+          <div class="bookingprocess-items">
+            <div class="bookingprocess-title text-center mb-30">
+              <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
+            </div>
+            <div class="bookingprocess-content">
+              <div class="bookingprocess-flight">
+                <h6>{{seacthResult.searchFrom}} </h6>
+                <h6>{{seacthResult.searchTo}}</h6>
+              </div>
+              <div class="bookingprocess-processbar">
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
+                    aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                    <span class="title"> &nbsp; </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="refresh-text text-center pt-2">
+              <p>Please don't click or refresh the page</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div class="modal fade bookingprocess" id="bookingprocessFailed1" data-bs-backdrop="static" data-bs-keyboard="false"
   tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

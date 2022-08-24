@@ -66,14 +66,14 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   toFlightList = false;
   selectedDate?: any;
   // cityName:any;
-  fromAirpotName: any = 'from airport';
+  fromAirpotName: any = 'From airport';
   fromCityName: any = 'From';
   toCityName: any = 'To';
   multicityFromCityName:any = 'From';
   multicityToCityName:any = 'To';
-  multicityFromAirpotName: any = 'from airport';
-  multicityToAirpotName: any = 'to airport';
-  toAirpotName: any = 'to airport';
+  multicityFromAirpotName: any = "From airport";
+  multicityToAirpotName: any = 'To airport';
+  toAirpotName: any = 'To airport';
   departureDate: any = "";
   arrivalDate: any = "";
   returnDate: any;
@@ -104,6 +104,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   multicityForm :FormGroup;
   multicityFormArr:FormArray;
   multicitySearchData:any=[];
+  minDateArray:any = [];
   private lastKeypress = 0;
   private queryText = '';
   flightFromOptions: any[];
@@ -196,6 +197,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       }
       this.setSearchFilterData()
     });
+
+
   }
 
   currentPeriodClickedN(datePicker: any) {
@@ -203,22 +206,34 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.minDateR=date;
 
   }
-  currentPeriodClicked(datePicker: any, item) {
+  currentPeriodClicked(datePicker: any, item,i) {
     console.log(datePicker , "datepicker");
     console.log(item , "item date");
     let date = datePicker.target.value
     date = moment(date).format('YYYY-MM-DD')
     item.value.departure = date;
-    this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
+    this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
+    if(this.minDateArray.length -1 > i)
+    {
+      this.minDateArray[i+1] = new Date(date);
+    }
+
+
+    // this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
     this.minDateR=date;
   }
-  currentMobilePeriodClicked(datePicker: any, item) {
+  currentMobilePeriodClicked(datePicker: any, item , i) {
     console.log(datePicker , "datepicker");
     console.log(item , "item date");
     let date = datePicker;
     date = moment(date).format('YYYY-MM-DD')
     item.value.departure = date;
-    this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
+    this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
+     if(this.minDateArray.length -1 > i)
+    {
+      this.minDateArray[i+1] = new Date(date);
+    }
+    // this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
     this.minDateR=date;
   }
   currentPeriodArrivalClicked(datePicker: any) {
@@ -238,6 +253,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   searchAutoComplete($event, field, device, index: any) {
+    debugger;
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if (true) {
@@ -258,18 +274,23 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
                   this.searchFlightFromHeader = 'Result';
                   this.flightFromOptions = this.defaultFlightOptions;
                   this.onFromClick(res.hits.hits[0], device, index , null);
+
                 } else {
                   this.searchFlightToHeader = 'Result';
                   this.flightToOptions = this.defaultFlightOptions;
                   this.onToClick(res.hits.hits[0], device, index ,null);
+
                 }
 
               }
             }
 
             if (field == 'fromCity') {
+
               this.searchFlightFromHeader = 'Result';
               this.flightFromOptions = res.hits.hits;
+
+
             } else {
               this.searchFlightToHeader = 'Result';
               this.flightToOptions = res.hits.hits;
@@ -293,7 +314,13 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     }
   }
   onFromClick(values, device, index , i) {
+    debugger
+    // this.fromCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
+      this.multicityFormArr.controls[i].get('flightfrom').setValue( values['_source'].airport_code)
+      this.multicityFormArr.controls[i].get('fromCity').setValue(values['_source'].city)
+      this.multicityFormArr.controls[i].get('fromContry').setValue(values['_source'].country_code)
+      this.multicityFormArr.controls[i].get('fromAirportName').setValue(values['_source'].airport_name)
       index.value.fromCity=values['_source'].city;
       index.value.flightfrom = values['_source'].airport_code;
       index.value.fromContry = values['_source'].country_code;
@@ -328,18 +355,31 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   onToClick(values, device, index, i) {
+    debugger
+    // this.toCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
+      this.multicityFormArr.controls[i].get('flightto').setValue(values['_source'].airport_code)
+      this.multicityFormArr.controls[i].get('toCity').setValue(values['_source'].city)
+      this.multicityFormArr.controls[i].get('toContry').setValue(values['_source'].country_code)
+      this.multicityFormArr.controls[i].get('toAirportName').setValue(values['_source'].airport_name)
       index.value.toCity=values['_source'].city;
       index.value.flightto = values['_source'].airport_code;
       index.value.toContry = values['_source'].country_code;
       index.value.toAirportName = values['_source'].airport_name;
+      if((this.multicityFormArr.controls.length-1) > i)
+      {
+        this.multicityFormArr.controls[i+1].get('flightfrom').setValue(values['_source'].airport_code)
+        this.multicityFormArr.controls[i+1].get('fromCity').setValue(values['_source'].city)
+        this.multicityFormArr.controls[i+1].get('fromContry').setValue(values['_source'].country_code)
+        this.multicityFormArr.controls[i+1].get('fromAirportName').setValue(values['_source'].airport_name)
+      }
       values = values['_source'];
+
       // this.toAirpotName = values.airport_name;
       // this.toCityName = values.city;
       setTimeout(() => {
         let datePickerMulticity = document.getElementById('datePickerMulticity_' + i);
         datePickerMulticity.click();
-        // this.autoFillMutlicityVal();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
     }
@@ -411,8 +451,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   setSearchFilterData() {
     let lastSearch: any = localStorage.getItem('flightLastSearchNew');
    console.log("last:"+lastSearch);
-    if (lastSearch != null || lastSearch != undefined) {
-      lastSearch = JSON.parse(lastSearch);
+
       var multicity = localStorage.getItem('multicityLastSearch');
       if(multicity != null && multicity != '')
       {
@@ -425,6 +464,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray;
         data.forEach((z)=>{
           this.multicityFormArr.push(this.multiCityArrAddItemsDefault(z));
+          this.minDateArray.push(new Date(z.departure))
         });
         if(this.modifySearch)
         {
@@ -432,7 +472,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
 
       }
-      else{
+      else  if (lastSearch != null || lastSearch != undefined) {
+        lastSearch = JSON.parse(lastSearch)
         this.flightData.get('adults').setValue(lastSearch.adults);
         this.flightData.get('child').setValue(lastSearch.child);
         this.flightData.get('flightclass').setValue(lastSearch.flightclass);
@@ -467,7 +508,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
       }
 
-    }
+
 
 
   }
@@ -672,6 +713,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   increaseInfant() {
     if (
       parseInt(this.flightData.value.infants) <
@@ -691,16 +733,21 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.disableinfants = true;
         } else {
           if (
-            parseInt(this.flightData.value.infants) ==
+            parseInt(this.flightData.value.infants) >
             parseInt(this.flightData.value.adults)
           ) {
             this.disableinfants = true;
-          } else {
+            console.log(this.disableinfants);
+
+          }
+          else {
             this.disableinfants = false;
+
           }
         }
       }
     }
+
   }
   decreaseInfant() {
     if (parseInt(this.flightData.value.infants) > 0) {
@@ -806,36 +853,62 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
    multiCityArrAddItems() {
+    var lengthofControls =0;
+    var LastTocity = this.multicityFromCityName;
+    var LastToAirportCode = '';
+    var LastToAirportName = this.multicityFromAirpotName;
+    var LastToCountryName = '';
+
+    if(this.multicityFormArr)
+    {
+      lengthofControls = this.multicityFormArr.controls.length;
+      LastToAirportCode = this.multicityFormArr.controls[lengthofControls - 1].get('flightto').value;
+
+       LastTocity = LastToAirportCode == '' ? this.multicityFromCityName: this.multicityFormArr.controls[lengthofControls - 1].get('toCity').value;
+
+       LastToAirportName = LastToAirportCode == '' ? this.multicityFromAirpotName : this.multicityFormArr.controls[lengthofControls - 1].get('toAirportName').value;
+       LastToCountryName = LastToAirportCode == '' ? '' : this.multicityFormArr.controls[lengthofControls - 1].get('toContry').value;
+       this.minDateArray.push(new Date(this.multicityFormArr.controls[lengthofControls - 1].get('departure').value));
+       console.log(this.minDateArray);
+    }
+    else{
+        this.minDateArray.push(this.minDate);
+    }
+
      return this._fb.group({
-        flightfrom:[],
-        flightto:[],
+      flightfrom:[LastToAirportCode,[Validators.required]],
+      flightto:['',[Validators.required]],
         adults:[this.flightData.value.adults],
         child:[this.flightData.value.child],
         infants:[this.flightData.value.infants],
         channel:['Web'],
         travel:['DOM'],
-        departure:[],
-        fromCity:[this.multicityFromCityName],
+        departure:['',[Validators.required]],
+        fromCity:[LastTocity],
         toCity:[this.multicityToCityName],
-        fromContry:[],
+        fromContry:[LastToCountryName],
         toContry:[],
-        fromAirportName:[this.multicityFromAirpotName],
+        fromAirportName:[LastToAirportName],
         toAirportName:[this.multicityToAirpotName],
         flightclass:[this.flightData.value.flightclass],
         defaultType:['M'],
         sortBy:['asc'],
-      })
+      }
+      ,{
+        validators: MustMatch('flightfrom', 'flightto')
+    }
+)
    }
    multiCityArrAddItemsDefault(obj:any) {
     return this._fb.group({
-       flightfrom:[obj.flightfrom],
-       flightto:[obj.flightto],
+       flightfrom:[obj.flightfrom,[Validators.required]],
+       flightto:[obj.flightto,[Validators.required]],
        adults:[obj.adults],
        child:[obj.child],
        infants:[obj.infants],
        channel:['Web'],
        travel:['DOM'],
-       departure:[obj.departure],
+       departure:[obj.departure,[Validators.required]],
        fromCity:[obj.fromCity],
        toCity:[obj.toCity],
        fromContry:[obj.fromContry],
@@ -845,7 +918,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
        flightclass:[obj.flightclass],
        defaultType:['M'],
        sortBy:['asc'],
-     })
+     }, {
+      validators: MustMatch('flightfrom', 'flightto')
+  })
   }
 
   addNewCitySearchInput() {
@@ -861,6 +936,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   searchMulticityFlight() {
    // debugger
     this.submitted = true;
+    this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray
     console.log(this.multicityFormArr.value , "form");
     if (this.multicityForm.invalid) {
       return

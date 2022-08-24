@@ -478,6 +478,11 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
  }
+ showBusDetails(id){
+ $('#collapseExample_'+id).toggle();
+  $('#onAmenities_'+id).trigger('click');
+ }
+ 
  closeAmenitiesmlite()
  {
    var filterDiv = document.getElementById('Mobileamenities');

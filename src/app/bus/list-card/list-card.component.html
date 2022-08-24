@@ -91,18 +91,18 @@
             </div>
         </div>
         <div class="col-md-3 text-right">
-            <a class="collapse_exp_btn" data-bs-toggle="collapse" href="#collapseExample_{{busrow}}" role="button" aria-expanded="false" aria-controls="collapseExample_{{busrow}}">
+            <a class="collapse_exp_btn" (click)="showBusDetails(busId)" >
                 <span class="mx-3">Bus Details</span>
               </a>
         </div>
     </div>
     </div>
-    <div class="collapse details_collpase" id="collapseExample_{{busrow}}">
+    <div class="collapse details_collpase" id="collapseExample_{{busId}}">
         <div class="">
           
             <ul class="more-details w-33 bus_collapse_ul" id="mat-accordion-tab-details">
 
-                <li (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
+                <li id="onAmenities_{{busId}}" (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
                 <li (click)="onCancellation(mobile=false)" [ngClass]="{'active': showCancellation}">Cancellation policy</li>
                 <li (click)="onDropping(bus.boardingTimes,bus.droppingTimes)" [ngClass]="{'active': showDropping}">Boarding & dropping points</li>
                 <!-- <li *ngIf="show_earnpoints" ><button class="bus-cashback d-show">{{show_earnpoints_text}}</button></li> -->
