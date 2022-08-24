@@ -1982,8 +1982,8 @@ orderRetry:boolean=false;
   bookingSessionExpires(e: CountdownEvent) {
 
     if (e.action == 'done') {
-
-      $('#bookingprocessExpires').modal('show');
+     this.triggerBack();
+      //$('#bookingprocessExpires').modal('show');
     }
 
 
@@ -2910,7 +2910,7 @@ orderRetry:boolean=false;
   triggerBack() {
     $('#bookingprocessFailed').modal('hide');
     let url;
-    
+    this.resetPopups();
     
     if (this.searchData.travel == 'DOM') {
       if (this.searchData.flightdefault == 'R')
