@@ -69,6 +69,10 @@ export class DealsComponent implements OnInit {
     }
 
   }
+  onImgError(event) {
+    event.target.src = 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/hdfcbank.jpg';
+
+  }
   //Get Deals
   getDeals(){
     var getDealParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], category: 'All', sub_category: 'All'})) };
