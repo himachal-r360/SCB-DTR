@@ -931,7 +931,7 @@
             <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
                 <div class="row g-2">
                         <ng-container  formArrayName="multicityFormArr">
-                    <ng-container *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
+                    <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container  [formGroupName]="i">
                         <div class="col-lg-6">
                             <div class="select-root-area">
@@ -1443,7 +1443,7 @@
         <div class="mobile-multi-city-travel" *ngIf="isMobile" [ngClass]="navItemActive == 'Multicity'?'':'d-none'">
             <div class="multi-city-list-area">
               <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
-                <ng-container *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
+                <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                   <ng-container  [formGroupName]="i">
                 <div class="multi-city-list" >
                     <div class="multi-city-list-item" appDropdown>
@@ -1603,7 +1603,7 @@
                                       </div>
                                       <div class="modal-body">
                                           <mat-calendar [minDate]="minDateArray[i]"
-                                          formControlName="departure"
+
                                               (selectedChange)="currentMobilePeriodClicked($event , item ,i)"
                                               [selected]="item.value.departure"></mat-calendar>
                                           </div>
