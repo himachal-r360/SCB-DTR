@@ -1145,7 +1145,7 @@
                                                     <i class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
                                                     <mat-form-field
                                                     style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                    <input matInput [min]="minDate" [matDatepicker]="picker"
+                                                    <input matInput [min]="minDateArray[i]" [matDatepicker]="picker"
                                                     formControlName="departure"
                                                     [(ngModel)]="item.value.departure"
                                                         (dateChange)="currentPeriodClicked($event , item ,i)">
@@ -1198,7 +1198,7 @@
                                                         aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <mat-calendar [minDate]="minDateMlite"
+                                                        <mat-calendar [minDate]="minDate"
                                                             (selectedChange)="onSelectMliteDate($event,'departure')"
                                                             [selected]="departureDate"></mat-calendar>
                                                         </div>
@@ -1601,7 +1601,7 @@
                                           aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body">
-                                          <mat-calendar [minDate]="minDateMlite"
+                                          <mat-calendar [minDate]="minDateArray[i]"
                                           formControlName="departure"
                                               (selectedChange)="currentMobilePeriodClicked($event , item ,i)"
                                               [selected]="item.value.departure"></mat-calendar>
