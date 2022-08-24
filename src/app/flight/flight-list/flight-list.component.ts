@@ -168,8 +168,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
           @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
           @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
-        pageIndex: number = 101;
-        ITEMS_RENDERED_AT_ONCE=100;
+        pageIndex: number = 26;
+        ITEMS_RENDERED_AT_ONCE=25;
         nextIndex=0;
 
         private loadData() {
@@ -937,7 +937,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             if (this.airportsNameJson != null) {
               let layOverFilterObj = {
                 "arrivalAirportCode": arrivalAirportCode,
-                "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
+                "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport] ? this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name : singleFlightList[h].arrivalAirport,
                 "price": priceSummaryList[0].totalFare,
                 "active": false
               };

@@ -1135,7 +1135,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             if (this.airportsNameJson != null) {
               let layOverFilterObj = {
                 "arrivalAirportCode": arrivalAirportCode,
-                "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
+                  "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport] ? this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name : singleFlightList[h].arrivalAirport,
                 "price": priceSummaryList[0].totalFare,
                 "active": false
               };

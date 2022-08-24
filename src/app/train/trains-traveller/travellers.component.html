@@ -74,7 +74,6 @@
         </strong></p>
     </div>
   </div>
-  <input *ngIf="searchData" type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
   <div class="container">
     <div class="row">
 
@@ -91,36 +90,36 @@
 
                   <div class="col-sm-4">
                     <p class="train_name">
-                      LTT VSKP EXP(18520)
+                      {{trainName}}({{trainnumber}})
                     </p>
                     <p class="daily_chart">
                         <span class="text-small-gray" style="color:#000000;">Runs on:</span>
-                        <span >S</span>
-                        <span >M</span>
-                        <span >T</span>
-                        <span >W</span>
-                        <span >T</span>
-                        <span class="active">F</span>
-                        <span >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
                     </p>
                   </div>
                   <div class="col-sm-8">
                     <div class="trainTimeInfo">
                         <div class="">
-                            <p><span class="time">06:05, Sat</span></p>
-                            <p class="place">Lokmantatilak (LTT) </p>
-                            <p class="date">Jul 17, 2022</p>
+                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
                         </div>
                         <div>
                             <div class="duration_train">
-                                <p class="dur_time">13 hrs 35 mins</p>
-                                <div class="range"></div>
+                                <p class="dur_time">{{travelDuration}}</p>
+                                <div class="range m_range"></div>
                             </div>
                         </div>
                         <div>
-                            <p><span class="time">20:30, Sun</span> </p>
-                            <p class="place">Secunderabad Jn (SC)</p>
-                            <p class="date">Jul 17, 2022</p>
+                            <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                            <p class="place">{{tostnDesc}}</p>
+                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
                         </div>
                       </div>
                   </div>
@@ -132,7 +131,7 @@
                     <p class="train_title_label"> Availability Status </p>
                     <div class="common_box">
                       <div>
-                        <p class="ava_status"><span class="coach">SL</span> <span class="list">PQWL106/WL81</span></p>
+                        <p class="ava_status"> <span class="coach">{{enqClass}}</span> <span class="list">{{seacthResult.selectedAvailablityFare.availablityStatus}}</span></p>
                       </div>
                     </div>
                     
@@ -179,7 +178,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
                                                         <mat-form-field class="w-100">
-                                                            <input matInput placeholder="IRCTC Authorised Partner User ID (Case Sensitive)" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);" autofocus>
+                                                            <input matInput placeholder="IRCTC Authorised Partner User ID (Case Sensitive)" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);" >
                                                         </mat-form-field>
                                                         <div class="error" *ngIf="userValidError">
                                                             <small>{{IRCTCUserError}}</small>
@@ -216,7 +215,7 @@
         </form>   
 
           <div class="traveler-details mb-100">
-            <div class="d-grid gap-2 d-md-block">
+            <div class="gap-2 d-md-block">
               <button class="btn btn-primary btn-w" (click)="submitBookingInfo()">Continue</button>
               <button class="btn btn-primary-outline btn-w ms-3">Back</button>
             </div>
@@ -702,7 +701,7 @@
                   
                    <div class="my-2 p-3">
 
-                    <div class="add_new_traveler" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
+                    <div class="add_new_traveler mb-10" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
                       <p class="title pb-10">Traveller Adult details</p>
                       
                       <!--Manaual Passenger Adult-->
@@ -864,7 +863,7 @@
 
 
                       <div class="row">
-                          <div class="col-6">
+                          <div class="">
                               <div class=" add-traveller-btn">
                                   <a class="" (click)="manualAddTraveller(1)" > + Add New Traveller</a>
                               </div>
@@ -886,7 +885,7 @@
 
               <div class="traveller-addbox-details traveller-infants-details">
                 <div class="p-3">
-                  <div class="add_new_traveler" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
+                  <div class="add_new_traveler mb-10" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0" >
                     <p class="title pb-10">Traveller Infant details</p>
     
                     <div *ngIf="travellersArrayM.length>0">
@@ -949,7 +948,7 @@
                   </div>
 
                   <div class="row">
-                      <div class="col-6">
+                      <div class="">
                           <div class=" add-traveller-btn">
                               <a class=""  (click)="manualAddTraveller(2)">+ Add New Infant</a>
                           </div>
@@ -965,9 +964,9 @@
         <div>
         
         
-            <div class="contact-details booking-inner-box " *ngIf="showDestAddressBox">
+            <div class="contact-details booking-inner-box destination_details_train" *ngIf="showDestAddressBox">
                 <div class="contact-header traveller-person-left">
-                   <h6 class="des_title">Your Destination Address</h6>
+                   <h6 class="des_title mb-20">Your Destination Address</h6>
                    <!-- <p>Your ticket and PNR number will be sent to</p> -->
                 </div>
                 <div class="row ">
@@ -1374,28 +1373,241 @@
           </div>
 
           </div>  
-                    
-                    <div class="form-check my-3">
-                      <input class="form-check-input" type="checkbox" id="agree_terms" formControlName="passengerAgree" name="passengerAgree">
-                      <label class="form-check-label" for="agree_terms">
-                        I agree to the <a href="{{domainRedirect}}irctc_TnC" class="link_text" target="_blank">Terms &
-                          Conditions</a> and <a href="{{domainRedirect}}irctc_privacy_policy" class="link_text" target="_blank">Privacy
-                          Policy</a>
-                      </label>
-                    </div>
 
+
+                <div class="agree_conditions mb-100">
+                  <ul class="add-search-ul d-block">
+                    <li class="custom-check-box">
+                      <div class="custom-controls-stacked">
+                        <label class="custom-control material-checkbox">
+                          <input type="checkbox" class="material-control-input" formControlName="passengerAgree"               name="passengerAgree" id="agree_terms"  >
+                          <span class="material-control-indicator"></span>
+                          <!-- <span class="description fs_12 text-black">Add these travellers to  Travellers list.</span> -->
+                          <span class="description fs_12">I agree to the <a href="{{domainRedirect}}terms_conditions" target="_blank" class="link_text" >Terms & Conditions</a> and <a href="{{domainRedirect}}privacy_policy" target="_blank" class="link_text" >Privacy Policy</a></span>
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
                       <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
                           <small *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls['passengerAgree']['errors']['pattern']">Please accept Terms and Conditions.</small>
                       </div>
        
-                        </form>
+            </form>
       </div>
       <!--Step2 Ends-->
       <!--Step3 Starts-->
       <div class="col-md-8" *ngIf="steps==3">
       
-     Review Booking
-       
+          <div>
+
+            <div class="booking-process-content" >
+              <div class="booking-title-box">
+                <h4 class="heading_text">Mumbai to Hyderabad <p class="sub_head_text"> <span
+                  class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
+                      src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                </h4>
+              </div>
+              <div class="booking-inner-box from-to-box">
+                
+                    <div class="row">
+    
+                      <div class="col-sm-4">
+                        <p class="train_name">
+                          LTT VSKP EXP(18520)
+                        </p>
+                        <p class="daily_chart">
+                            <span class="text-small-gray" style="color:#000000;">Runs on:</span>
+                            <span >S</span>
+                            <span >M</span>
+                            <span >T</span>
+                            <span >W</span>
+                            <span >T</span>
+                            <span class="active">F</span>
+                            <span >S</span>
+                        </p>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="trainTimeInfo">
+                            <div class="">
+                                <p><span class="time">06:05, Sat</span></p>
+                                <p class="place">Lokmantatilak (LTT) </p>
+                                <p class="date">Jul 17, 2022</p>
+                            </div>
+                            <div>
+                                <div class="duration_train">
+                                    <p class="dur_time">13 hrs 35 mins</p>
+                                    <div class="range m_range"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <p><span class="time">20:30, Sun</span> </p>
+                                <p class="place">Secunderabad Jn (SC)</p>
+                                <p class="date">Jul 17, 2022</p>
+                            </div>
+                          </div>
+                      </div>
+    
+                    </div>
+                    <div class="row mt-40">
+    
+                      <div class="col-sm-4">
+                        <p class="train_title_label"> Availability Status </p>
+                        <div class="common_box">
+                          <div>
+                            <p class="ava_status"><span class="coach">SL</span> <span class="list">PQWL106/WL81</span></p>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="col-sm-8">
+                                        <!--Show bording stations-->
+                        <p class="train_title_label"> Boarding station </p>
+                        <div class="">
+                          <div class="boarding_point">
+                            <div class="common_box">
+                              <div>
+                                <p class="ava_status"> <span class="list">Lokmanyatilak t (lTT) - 1:20 PM (11 Aug)</span></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="train-schedule-time">
+                            <span>Scheduled time: <span>{{scheduletime}}</span> </span>
+                          </div>
+                          
+                        </div>
+                      </div>
+    
+                    </div>
+    
+              </div>
+    
+              
+            </div>
+              
+    
+              
+              
+              
+            </div>
+
+            <div class="booking-process-content contact_review">
+              <div class="booking-title-box mb-0">
+                <h4 class="heading_text">Contact Details <p class="sub_head_text ps-3">(for all communication) <span
+                      class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
+                          src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                </h4>
+              </div>
+              <div class="booking-inner-box from-to-box">
+                <div class="">
+                  <div class="row gy-4">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                      <p class="label_text">Email</p>
+                      <p class="label_value">{{contactDatails.email}}</p>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                      <p class="label_text">Mobile Number</p>
+                      <p class="label_value">{{contactDatails.mobile}}</p>
+                    </div>
+                  </div>
+    
+                  <div class="contact-whatsapp">
+                    <div class="contact-whatsapp-info me-2">
+                      <span>Send my booking information through</span>
+                      <img src="{{cdnUrl}}/images/icons/whatsapp.png" class="ms-2" alt="">
+                      <span class="fw_7">WhatsApp</span>
+                    </div>
+                    <div class="form-check form-switch m-0 ">
+                      <input class="form-check-input" type="checkbox" role="switch" disabled [checked]="whatsAppCheck" />
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+    
+            </div>
+            <div class="booking-process-content traveller_review">
+              <div class="booking-title-box mb-0">
+    
+    
+                <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
+                      Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span> <span
+                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> <span class="ps-1">
+                      <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{cdnUrl}}/images/icons/edit.png"
+                          alt=""></a></span></p>
+                </h4>
+              </div>
+              <div class="booking-inner-box from-to-box">
+                <div class="p-2">
+                  <div>
+                    <h6>{{travelerDetails.adults}} Adults</h6>
+                    <table class="table  traveller_table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="col-6">Name</th>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                          <th scope="col">Birth Preference</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let adult of paxInfo;let i = index">
+                          <tr *ngIf="adult.type=='ADT'">
+                            <td>Amit Kumar</td>
+                            <td>21</td>
+                            <td>Male</td>
+                            <td>Window side</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- <div *ngIf="travelerDetails.child > 0">
+                    <h6>{{travelerDetails.child}} Child</h6>
+                    <table class="table  traveller_table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="col-6">Name</th>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let adult of paxInfo;let i = index">
+                          <tr *ngIf="adult.type=='ADT'">
+                            <td>Amit Kumar</td>
+                            <td>6 months</td>
+                            <td>Male</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div> -->
+                  <div *ngIf="travelerDetails.infants > 0">
+                    <h6>{{travelerDetails.infants}} Infant</h6>
+                    <table class="table  traveller_table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="col-6">Name</th>
+                          <th scope="col">Age</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let adult of paxInfo;let i = index">
+                          <tr *ngIf="adult.type=='ADT'">
+                            <td>Amit Kumar</td>
+                            <td>6 months</td>
+                            <td>Male</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+    
+            </div>
       </div>
       <!--Step3 Ends-->
 
@@ -1420,220 +1632,222 @@
 
       <div class="col-md-4" *ngIf="totalCollectibleAmount">
         <!-- <app-fare-summary></app-fare-summary> -->
-        <div class="default-sidebar">
-          <div class="d-none d-sm-block">
-            <div class="sidebar-widget session-expires-widget">
-              <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
-                  <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
-                  </countdown> min
-                </strong></p>
-            </div>
-            <div class="sidebar-widget fare-summary-widget">
-              <div class="widget-title">
-                <h4>Fare Summary</h4>
-                <img  src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg"        alt="IRCTC">
+        <div class="sticky_scroll_sidebar">
+          <div class="default-sidebar">
+            <div class="d-none d-sm-block">
+              <div class="sidebar-widget session-expires-widget">
+                <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+                    <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
+                    </countdown> min
+                  </strong></p>
               </div>
-              <div class="widget-content">
-                <ul class="widget-list clearfix">
+              <div class="sidebar-widget fare-summary-widget">
+                <div class="widget-title">
+                  <h4>Fare Summary</h4>
+                  <img  src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg"        alt="IRCTC">
+                </div>
+                <div class="widget-content">
+                  <ul class="widget-list clearfix">
+                    <li class="fare-list-item">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <div (click)="isCollapseShow('BaseFare')">
+                            <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false"
+                              aria-controls="base-collpase"  >
+  
+                              <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
+                                alt=""  *ngIf="!isCollapseBasefare" >
+  
+                                <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
+                                alt="" *ngIf="isCollapseBasefare" >
+  
+                              Ticket Fare</div>
+  
+                          </div>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>₹ {{(totalTicketFare-0) | number : '1.2-2'}}</p>
+                        </div>
+  
+                      </div>
+                      <!--<div *ngIf="AdtBaseFare>0">
+                        <div class="collapse base_fare_collapse" id="base-collpase">
+                          <div class="row ">
+                            <div class="col-md-11 offset-md-1">
+  
+                              <div class="row collapse_row" *ngIf="AdtBaseFare>0">
+                                <div class="col-8 fare-list-left">
+                                   <p>Adult(s) ({{AdtQuantity}} X ₹ {{AdtBaseFare | number}})</p>
+                                </div>
+                                <div class="col-4 fare-list-right">
+                                   <p>₹ {{AdtBaseFare * AdtQuantity | number}}</p>
+                                </div>
+                             </div>
+                            </div>
+                          </div>
+                          </div>
+                        </div>-->
+  
+                    </li>
+                    
+                    <ng-container  >
+                    <li class="fare-list-item">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <p>Travel Insurance Charges (Incl. GST)
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>&#8377; {{((travel_ins_charge-0)+(travel_ins_charge_tax-0)) | number : '1.2-2'}}</p>
+                        </div>
+                      </div>
+                    </li>
                   <li class="fare-list-item">
-                    <div class="fare-list-box">
-                      <div class="fare-list-left">
-                        <div (click)="isCollapseShow('BaseFare')">
-                          <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false"
-                            aria-controls="base-collpase"  >
-
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>Convenience fee (Incl. of GST)
+                  </p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p>&#8377; {{(wp_charge-0)+(wp_charge_tax-0) | number : '1.2-2'}}</p>
+                  </div>
+                  </div>
+                  </li>
+                  
+                  <li class="fare-list-item" *ngIf="campiagn_agent_charges==0">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>SmartBuy Charges (Incl. of GST)</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p> <span class="value-free dash_line">&#8377; {{agent_charges | number : '1.2-2'}}</span> <span class="text-free">FREE</span></p>
+                  </div>
+                  </div>
+                  </li>
+                    
+                    
+                                 <li class="fare-list-item" *ngIf="campiagn_agent_charges < agent_charges && campiagn_agent_charges != 0">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>SmartBuy Charges (Incl. of GST)</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p> <span class="value-free">&#8377; {{agent_charges | number : '1.2-2'}}</span> <span class="text-free">&#8377; {{campiagn_agent_charges | number : '1.2-2'}}</span></p>
+                  </div>
+                  </div>
+                  </li>
+                    
+                                 <li class="fare-list-item"  *ngIf="campiagn_agent_charges == agent_charges">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>SmartBuy Charges (Incl. of GST)</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p> <span class="value-free">&#8377; {{agent_charges | number : '1.2-2'}}</span> </p>
+                  </div>
+                  </div>
+                  </li>
+  
+  
+                           <li class="fare-list-item" *ngIf="pgCharges>0.00">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>PG Charges</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p>&#8377; <b class="value-free">&#8377; {{pgCharges | number : '1.2-2'}}</b> </p>
+                  </div>
+                  </div>
+                  </li>
+  
+  
+  
+                    <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"(click)="isCollapseShow('discount')">
+  
+                          <p>
                             <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
-                              alt=""  *ngIf="!isCollapseBasefare" >
-
-                              <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
-                              alt="" *ngIf="isCollapseBasefare" >
-
-                            Ticket Fare</div>
-
+                            alt=""  *ngIf="!isCollapseDiscount" >
+  
+                            <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
+                            alt="" *ngIf="isCollapseDiscount" >
+                            Discounts
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p class="text-green">- &#8377; {{coupon_amount}}</p>
                         </div>
                       </div>
-                      <div class="fare-list-right">
-                        <p>₹ {{(totalTicketFare-0) | number : '1.2-2'}}</p>
-                      </div>
-
-                    </div>
-                    <!--<div *ngIf="AdtBaseFare>0">
-                      <div class="collapse base_fare_collapse" id="base-collpase">
-                        <div class="row ">
-                          <div class="col-md-11 offset-md-1">
-
-                            <div class="row collapse_row" *ngIf="AdtBaseFare>0">
-                              <div class="col-8 fare-list-left">
-                                 <p>Adult(s) ({{AdtQuantity}} X ₹ {{AdtBaseFare | number}})</p>
-                              </div>
-                              <div class="col-4 fare-list-right">
-                                 <p>₹ {{AdtBaseFare * AdtQuantity | number}}</p>
-                              </div>
-                           </div>
+  
+                      <div >
+                        <div class="collapse base_fare_collapse" id="coupon-collpase">
+                          <div class="row ">
+                            <div class="col-md-11 offset-md-1">
+  
+                              <div class="row collapse_row">
+                                <div class="col-5 fare-list-left">
+                                   <p>Coupoun Code</p>
+                                </div>
+                                <div class="col-7 fare-list-right">
+                                   <p>{{coupon_code}}</p>
+                                </div>
+                             </div>
+  
+  
+                            </div>
                           </div>
-                        </div>
-                        </div>
-                      </div>-->
-
-                  </li>
-                  
-                  <ng-container  >
-                  <li class="fare-list-item">
-                    <div class="fare-list-box">
-                      <div class="fare-list-left">
-                        <p>Travel Insurance Charges (Incl. GST)
-                        </p>
-                      </div>
-                      <div class="fare-list-right">
-                        <p>&#8377; {{((travel_ins_charge-0)+(travel_ins_charge_tax-0)) | number : '1.2-2'}}</p>
-                      </div>
-                    </div>
-                  </li>
-                <li class="fare-list-item">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>Convenience fee (Incl. of GST)
-                </p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; {{(wp_charge-0)+(wp_charge_tax-0) | number : '1.2-2'}}</p>
-                </div>
-                </div>
-                </li>
-                
-                <li class="fare-list-item" *ngIf="campiagn_agent_charges==0">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>SmartBuy Charges (Incl. of GST)</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{agent_charges | number : '1.2-2'}}</b> <span class="text-free">FREE</span></p>
-                </div>
-                </div>
-                </li>
-                  
-                  
-                               <li class="fare-list-item" *ngIf="campiagn_agent_charges < agent_charges && campiagn_agent_charges != 0">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>SmartBuy Charges (Incl. of GST)</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{agent_charges | number : '1.2-2'}}</b> <span class="text-free">Rs. {{campiagn_agent_charges | number : '1.2-2'}}</span></p>
-                </div>
-                </div>
-                </li>
-                  
-                               <li class="fare-list-item"  *ngIf="campiagn_agent_charges == agent_charges">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>SmartBuy Charges (Incl. of GST)</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{agent_charges | number : '1.2-2'}}</b> </p>
-                </div>
-                </div>
-                </li>
-
-
-                         <li class="fare-list-item" *ngIf="pgCharges>0.00">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>PG Charges</p>
-                </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{pgCharges | number : '1.2-2'}}</b> </p>
-                </div>
-                </div>
-                </li>
-
-
-
-                  <li class="fare-list-item" *ngIf="coupon_amount>0.00">
-                    <div class="fare-list-box">
-                      <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"(click)="isCollapseShow('discount')">
-
-                        <p>
-                          <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
-                          alt=""  *ngIf="!isCollapseDiscount" >
-
-                          <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
-                          alt="" *ngIf="isCollapseDiscount" >
-                          Discounts
-                        </p>
-                      </div>
-                      <div class="fare-list-right">
-                        <p class="text-green">- &#8377; {{coupon_amount}}</p>
-                      </div>
-                    </div>
-
-                    <div >
-                      <div class="collapse base_fare_collapse" id="coupon-collpase">
-                        <div class="row ">
-                          <div class="col-md-11 offset-md-1">
-
-                            <div class="row collapse_row">
-                              <div class="col-5 fare-list-left">
-                                 <p>Coupoun Code</p>
-                              </div>
-                              <div class="col-7 fare-list-right">
-                                 <p>{{coupon_code}}</p>
-                              </div>
-                           </div>
-
-
                           </div>
+  
                         </div>
+  
+  
+                    </li>
+  
+  
+                        <li class="fare-list-item" *ngIf="flexipaysummry">
+                  <div class="fare-list-box">
+                  <div class="fare-list-left">
+                  <p>FlexiPay Discount</p>
+                  </div>
+                  <div class="fare-list-right">
+                  <p>&#8377; <b class="value-free">Rs. {{flexiDiscount | number : '1.2-2'}}</b> </p>
+                  </div>
+                  </div>
+                  </li>
+  
+                    <li class="fare-list-item">
+                      <div class="fare-list-box pt-30">
+                        <div class="fare-list-left">
+                          <h6 class="fw_7">Grand Total</h6>
                         </div>
-
+                        <div class="fare-list-right" >
+                          <h6 class="fw_7">₹ {{(totalCollectibleAmount-0)+(pgCharges-0) | number : '1.2-2'}}</h6>
+                           <p class="payment-text pt-1"><sup>*</sup>PG charges as applicable.</p>
+                        </div>
+                            
                       </div>
-
-
-                  </li>
-
-
-                      <li class="fare-list-item" *ngIf="flexipaysummry">
-                <div class="fare-list-box">
-                <div class="fare-list-left">
-                <p>FlexiPay Discount</p>
+                    </li>
+             </ng-container>
+                  </ul>
                 </div>
-                <div class="fare-list-right">
-                <p>&#8377; <b class="value-free">Rs. {{flexiDiscount | number : '1.2-2'}}</b> </p>
-                </div>
-                </div>
-                </li>
-
-                  <li class="fare-list-item">
-                    <div class="fare-list-box pt-30">
-                      <div class="fare-list-left">
-                        <h6 class="fw_7">Grand Total</h6>
-                      </div>
-                      <div class="fare-list-right" >
-                        <h6 class="fw_7">₹ {{(totalCollectibleAmount-0)+(pgCharges-0) | number : '1.2-2'}}</h6>
-                         <p class="payment-text pt-1"><sup>*</sup>PG charges as applicable.</p>
-                      </div>
-                          
-                    </div>
-                  </li>
-           </ng-container>
-                </ul>
+              </div>
+              <div class="continue-widget mb-20">
+   
+                <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
+                  *ngIf="steps==2">Continue</a>
+                <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
+                  *ngIf="steps==3">Continue</a>
+               
               </div>
             </div>
-            <div class="continue-widget mb-20">
- 
-              <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
-                *ngIf="steps==2">Continue</a>
-              <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
-                *ngIf="steps==3">Continue</a>
-             
+            <div *ngIf="steps==4 && !isMobile">
+       <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
+                  [passTotalFare]="totalFare" [passActualFare]="intialTotalFare"
+                  [passConvinenceFee]="convenience_fee" passServiceToken="Bus" [passPartnerToken]="partnerToken"
+                  (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+                </app-coupons>
             </div>
-          </div>
-          <div *ngIf="steps==4 && !isMobile">
-     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-                [passTotalFare]="totalFare" [passActualFare]="intialTotalFare"
-                [passConvinenceFee]="convenience_fee" passServiceToken="Bus" [passPartnerToken]="partnerToken"
-                (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
-              </app-coupons>
           </div>
         </div>
 
