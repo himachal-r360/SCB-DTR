@@ -304,12 +304,25 @@
               </div>
           </div>
           <div class="col-md-12 mt-70" *ngIf="!loading">
-              <div class="mob-listing-fiters">
-                  <a href="javascript:void(0)" (click)="openMobileFilterSection()">
-                      <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                      <span>Sort/Filters</span>
-                  </a>
-              </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="mob-listing-fiters">
+                        <a href="javascript:void(0)" class="train_sort_btn d-flex align-items-center" (click)="openAvailability()">
+                            <img src="{{cdnUrl}}/images/icons/info.svg" alt="">
+                            <span class="px-1">Availability</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 text-right">
+                    <div class="mob-listing-fiters">
+                        <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="train_sort_btn d-flex align-items-center float-end">
+                            <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
+                            <span class="px-1">Sort/Filters</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+              
           </div>
 
 
@@ -341,14 +354,14 @@
         ---------------------------------->
         <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
 
-          <div class="mob-sf-box">
+          <div class="mob-sf-box train_m_sort_popup">
               <div class="mob-title">
                   <h3>Sort & Filters</h3>
                   <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
                       <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                   </a>
               </div>
-              <div class="mob-sf-tabs">
+              <div class="mob-sf-tabs train_mlite_tabs">
                   <ul class="nav nav-tabs">
                       <li>
                           <a class="active" href="#Sort" role="tab" aria-controls="Sort" data-bs-toggle="tab">Sort by</a>
@@ -360,20 +373,50 @@
                   <div class="tab-content clearfix">
                       <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
                           <div class="mob-sf-sort">
-                              <div class="mob-sf-sort-by">
+                              <!-- <div class="mob-sf-sort-by">
                                               <select [(ngModel)]="selected" (ngModelChange)="orderBy(selected)">
                                                 <option *ngIf = "avlQuota.length != 0" value="leave-early">Early Departure</option>
                                                 <option *ngIf = "avlQuota.length != 0" value="leave-late">Late Departure</option>
                                             </select>
-                              </div>
+                              </div> -->
+
+                              <div class="container filter-container">
+                                <div class="row m_sort_flex_div">
+                                    <div class="col-6">
+                                        <label class="checkbox-cust" >
+                                            <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
+                                            <div class="label-filter text-left">
+                                                <p class="m_sort_text">Leave Early</p>
+                                                <p class="m_sort_text50">Earliest</p>
+                                            </div>
+                                            <input checked="checked" type="radio" (click)="orderBy('leave-early')" value="leave-early">
+                                            <span class="checkmark-cust"></span>
+                                        </label>
+                                    </div>
+    
+                                    <div class="col-6">
+                                        <label class="checkbox-cust" >
+                                            <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
+                                            <div class="label-filter text-left">
+                                                <p class="m_sort_text">Leave Late</p>
+                                                <p class="m_sort_text50">Laest</p>
+                                            </div>
+                                            <input checked="checked" type="radio" value="leave-late">
+                                            <span class="checkmark-cust"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                           </div>
+
+
                           <div class="mob-sf-btns">
                               <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
                           </div>
                       </div>
                       <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
                           <div class="mob-sf-filters">
-                              <div class="mob-sf-accordion">
+                              <div class="mob-sf-accordion p-3">
                                    <ng-container *ngIf="trains">
        <app-trains-filter [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
                 [arrivalTimeFilter] = "arrivalTimeFilter" (arriveEvent)="updateArrival($event)"
@@ -397,6 +440,72 @@
               </div>
           </div>
       </div>
+
+      <!-- mobile availability popup design -->
+      <div class="mob-sf-area" id="m_availability_modal" *ngIf="isMobile">
+
+        <div class="mob-sf-box train_m_sort_popup">
+            <div class="mob-title">
+                <h3>Availability</h3>
+                <a href="javascript:void(0)" (click)="CloseAvailabilitySection()" class="mob-close mob-ff-from-close">
+                    <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                </a>
+            </div>
+            <div class="mob-sf-tabs">
+                <div class="avialability_container">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="avai_info_box d-flex align-items-center">
+                                <div class="row">
+                                    <div class="col-2 text-center">
+                                        <img src="{{cdnUrl}}/images/icons/orange_info.svg">
+                                    </div>
+                                    <div class="col-10 ps-0">
+                                        The information set out in this article is based on the information made available by IRCTC Authorised Partner, which may be updated from time to time. Confirm the information set out in this article on IRCTC’s Authorised Partner website.
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="availablity_row">
+                                <p class="availablity_row_hdr">AVAILABLE</p>
+                                <p class="availablity_row_text">Confirmed availability for your ticket.</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="availablity_row">
+                                <p class="availablity_row_hdr">CAN/MOD</p>
+                                <p class="availablity_row_text">Cancelled or modified passenger.</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="availablity_row">
+                                <p class="availablity_row_hdr">CNF/Confirmed</p>
+                                <p class="availablity_row_text">Confirmed (coach or berth number is available after chart preparation).</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="availablity_row">
+                                <p class="availablity_row_hdr">GNWL</p>
+                                <p class="availablity_row_text">General wait list. This is the most common type of wait list and has the highest chance to be confirmed. Upon confirmation, the status changes to RAC.</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="availablity_row no_brdr_btm">
+                                <p class="availablity_row_hdr">NOSB	</p>
+                                <p class="availablity_row_text">No seat berth. This code is generally used for child passengers who aren’t assigned a berth as requested.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+      <!-- end of mobile availability popup design -->
        </div>
       </div>
 </section>

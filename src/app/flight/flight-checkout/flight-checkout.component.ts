@@ -22,6 +22,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { AbstractControl } from '@angular/forms';
 
 
+
 function validateAdultAge(c: FormControl) {
   let journery_date = $('#journery_date').val();
   let check_date = moment(new Date(journery_date)).subtract(12, 'years').calendar();
@@ -684,6 +685,19 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     }, 600);
 
     this._flightService.getFlightInfoMulticity(param, searchData).subscribe((res: any) => {
+    
+    
+            if(res.status=="success"){
+        res= JSON.parse(this.EncrDecr.get(res.result));
+        }else{
+        clearInterval(myInterval3);
+
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 10);
+        }
+    
 
       let baseFare = 0; let taxFare = 0; let totalFare = 0; let totalFareOnward = 0; let totalFareReturn = 0;
       let adultFare = 0; let childFare = 0; let infantFare = 0;
@@ -709,7 +723,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
           if (res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.length > 0) {
           
-          let fareInfo;
+          let fareInfo;let cancellation_array:any=[];
           
             for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
              fareInfo=  res.response.onwardFlightDetails[k];
@@ -748,9 +762,13 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
              if (fareInfo && fareInfo.bg.length > 0)
               this.baggageInfoOnwardMulti[k] = fareInfo.bg;
-              this.cancellationPolicyOnwardMulti[k] = this.emt_cancellationPolicy(fareInfo.cancellationPolicy,this.searchData[k]['flightfrom'],this.searchData[k]['flightto'],'onward');
+              
+              cancellation_array.push(fareInfo.cancellationPolicy);
               
              } 
+             
+             this.emt_cancellationPolicy_Multicity(cancellation_array);
+             
             }
             
 
@@ -1907,7 +1925,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       let obj2Date = new Date(obj2.departureDateTime);
       let obj1Date = new Date(obj1.arrivalDateTime);
       this.dateOnwardHourMulti[j][i]=( (obj2Date.valueOf() - obj1Date.valueOf()) / 1000);
-      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;;    
+      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;    
     }
     
   }
@@ -1919,7 +1937,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       let obj2Date = new Date(obj2.departureDateTime);
       let obj1Date = new Date(obj1.arrivalDateTime);
       this.dateReturnHour[i] = (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
-      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;;
+      return (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
     }
   }
 
@@ -1929,20 +1947,22 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   onwardAirlineMulti: boolean = false;
   returnAirlineMulti: boolean = false;
 
+     onward_airline_array: any= [];
+     return_airline_array : any= [];
+
   durationCalc() {
 
     let totalOnwardStops = -1;
     this.totalOnwardDuration = 0;
      this.totalReturnDuration = 0;
-    let onward_airline_array = [];
-    let return_airline_array = [];
+
 
     const unique = (value, index, self) => {
       return self.indexOf(value) === index
     }
 
     for (let i = 0; i < this.flightOnwardDetails.length; i++) {
-      onward_airline_array.push(this.flightOnwardDetails[i].airline);
+      this.onward_airline_array.push(this.flightOnwardDetails[i].airline);
       this.totalOnwardDuration += this.flightOnwardDetails[i].duration;
       if (this.flightOnwardDetails[i + 1] != null && this.flightOnwardDetails[i + 1] != undefined) {
         this.totalOnwardDuration+=  this.getLayoverHourOnward(this.flightOnwardDetails[i], this.flightOnwardDetails[i + 1],i);
@@ -1965,7 +1985,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
     let totalReturnStops = -1;
     for (let i = 0; i < this.flightReturnDetails.length; i++) {
-      return_airline_array.push(this.flightReturnDetails[i].airline);
+      this.return_airline_array.push(this.flightReturnDetails[i].airline);
       this.totalReturnDuration += this.flightReturnDetails[i].duration;
       if (this.flightReturnDetails[i + 1] != null && this.flightReturnDetails[i + 1] != undefined) {
         this.totalReturnDuration+=   this.getLayoverHourReturn(this.flightReturnDetails[i], this.flightReturnDetails[i + 1],i);
@@ -1985,8 +2005,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     }
 
 
-    const onward_airline_unique = onward_airline_array.filter(unique);
-    const return_airline_unique = return_airline_array.filter(unique);
+    const onward_airline_unique = this.onward_airline_array.filter(unique);
+    const return_airline_unique = this.return_airline_array.filter(unique);
 
     if (onward_airline_unique.length > 1)
       this.onwardAirlineMulti = true;
@@ -2002,7 +2022,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
     totalOnwardStops_data_multi=[];
   onwardAirlineMulti_multi=[];
   totalOnwardDurationMulti=[];
-
+  onward_airline_array_multi:any=[];
   durationCalcMulti() {
     const unique = (value, index, self) => {
       return self.indexOf(value) === index
@@ -2011,7 +2031,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         let totalOnwardStops = -1;
         this.totalOnwardDurationMulti[j] = 0;
         let onward_airline_array = [];
-        let return_airline_array = [];
    this.dateOnwardHourTotalMulti[j]=0;
    this.dateOnwardHourMulti[j]=[];
   
@@ -2026,6 +2045,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
       totalOnwardStops++;
     }
     
+    this.onward_airline_array_multi[j]=onward_airline_array;
 
     if (totalOnwardStops == 0) {
       if (this.flightSessionData.onwardFlights[j]['flights'][0]['stops'] == 0)
@@ -2153,6 +2173,19 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
  
 
     this._flightService.getFlightInfo(param, searchData).subscribe((res: any) => {
+    
+        if(res.status=="success"){
+        res= JSON.parse(this.EncrDecr.get(res.result));
+        }else{
+        clearInterval(myInterval3);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 10);
+        return;
+        }
+    
+    
 
       let baseFare = 0; let taxFare = 0; let totalFare = 0; let totalFareOnward = 0; let totalFareReturn = 0;
       let adultFare = 0; let childFare = 0; let infantFare = 0;
@@ -2313,23 +2346,51 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 totalFareReturn += Number(res.response.comboFare.returnTotalFare);
               }
             }
+            
+            
+                if (res.response && res.response.onwardFlightDetails.bg.length > 0)
+                this.baggageInfoOnward = res.response.onwardFlightDetails.bg;
 
-            if (res.response && res.response.onwardFlightDetails.bg.length > 0)
-              this.baggageInfoOnward = res.response.onwardFlightDetails.bg;
+                if (res.response && res.response.returnFlightDetails && res.response.returnFlightDetails.bg.length > 0)
+                this.baggageInfoReturn = res.response.returnFlightDetails.bg;
 
-            if (res.response && res.response.returnFlightDetails && res.response.returnFlightDetails.bg.length > 0)
-              this.baggageInfoReturn = res.response.returnFlightDetails.bg;
 
+                let baggage_data:any=[];
+
+                if (res.response && res.response.onwardFlightDetails.bg.length > 0)
+                baggage_data.push(res.response.onwardFlightDetails.bg);
+
+                if (res.response && res.response.returnFlightDetails && res.response.returnFlightDetails.bg.length > 0)
+                baggage_data.push( res.response.returnFlightDetails.bg);
+
+                this.baggagePolicy(baggage_data);
+            
             if (partner == 'Easemytrip')
-             this.emt_cancellationPolicy(res.response.onwardFlightDetails.cancellationPolicy,this.searchData['flightfrom'],this.searchData['flightto'],'onward');
+             this.emt_cancellationPolicy('onward');
 
-            if (partner == 'Easemytrip' && res.response.returnFlightDetails && res.response.returnFlightDetails.cancellationPolicy)
-              this.emt_cancellationPolicy(res.response.returnFlightDetails.cancellationPolicy,this.searchData['flightto'],this.searchData['flightfrom'],'return');
+            
+          }else{
+        clearInterval(myInterval3);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 10);
+        return;
           }
         } else {
           /**International**/
-          console.log(res.response);
-           console.log(partner);
+
+     
+        if (res.response && res.response.flight_details && res.response.flight_details.fareKey) { }else{
+        clearInterval(myInterval3);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 10);
+        return;
+        }
+     
+     
           if (partner == 'Yatra') {
             if (res.response.flight_details.fare.O) {
               if (res.response.flight_details.fare.O.ADT) {
@@ -2394,9 +2455,13 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
           if (res.response && res.response.flight_details.bg.length > 0)
             this.baggageInfoOnward = res.response.flight_details.bg;
+            
+            console.log(res.response.flight_details);
+            
+            this.baggagePolicy(res.response.flight_details.bg);
 
           if (partner == 'Easemytrip' && res.response && res.response.flight_details.cancellationPolicy)
-         this.emt_cancellationPolicy(res.response.flight_details.cancellationPolicy,this.searchData['flightto'],this.searchData['flightfrom'],'onward');
+         this.emt_cancellationPolicy('onward');
           // console.log( res.response.flight_details);
         }
 
@@ -2430,22 +2495,286 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
     });
   }
+  
+        baggageInfo:any;
+        
+        baggagePolicy(data){
+        let airlineCode;   let airlineCodeR;
+        if(this.onwardAirlineMulti)
+        airlineCode='Multi';
+        else
+        airlineCode=this.onward_airline_array[0];
+        
+        
+        if(this.returnAirlineMulti)
+        airlineCodeR='Multi';
+        else
+        airlineCodeR=this.return_airline_array[0];
 
-  emt_cancellationPolicy(data,flightfrom,flightto,type) {
+        this.baggageInfo= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">`;
+        
+         if(this.searchData['travel'] !='INT'){
+        
+         this.baggageInfo+= `<ul class="nav nav-tabs travelTab" role="tablist">`;
+        
+        this.baggageInfo+= `<li role="presentation" >
+        <a data-bs-target="#baggagetab" aria-controls="baggagetab" role="tab" data-bs-toggle="tab" aria-expanded="true" class="active" >
+        <div class="rules-flight-items">
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
+        <div class="rules-flight-content">
+        <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightto']+`</h6>
+        </div>
+        </div>
+        </a>
+        </li>`;
+        
+        if(this.searchData['flightdefault']=='R'){
+        this.baggageInfo+= `<li role="presentation" >
+        <a data-bs-target="#baggagetabR" aria-controls="baggagetabR" role="tab" data-bs-toggle="tab" aria-expanded="true"  >
+        <div class="rules-flight-items">
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCodeR+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
+        <div class="rules-flight-content">
+        <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightfrom']+`</h6>
+        </div>
+        </div>
+        </a>
+        </li>`;
+        }
+        
+        this.baggageInfo+= `</ul>`;
+        }
+        
+        this.baggageInfo+= `<div class="tab-content">`;
+        
+        this.baggageInfo+= `<div role="tabpanel" class="tab-pane fade active show" id="baggagetab">`;
+        this.baggageInfo+= `<table class="table-bordered table-content w-100">
+        <tbody>
+        <tr>
+        <td>
+        <p class="fw_6 fs_13">Airline</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Check-in Baggage</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Cabin Baggage</p>
+        </td>
+        </tr>`;
+        
+         for(var i=0;i<this.baggageInfoOnward.length;i++){ 
+         this.baggageInfo+= `<tr >
+        <td>
+        <p class="opacity_05">`+this.baggageInfoOnward[i].flightName+`<br>`+this.baggageInfoOnward[i].flightNo+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnward[i].checkIn+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoOnward[i].cabin+`</p>
+        </td>
+        </tr>`;
+        }
+         this.baggageInfo+= `</tbody>
+        </table>`;
+        this.baggageInfo+= `</div>`;
+        
+        if(this.searchData['flightdefault']=='R'){  
+        this.baggageInfo+= `<div role="tabpanel" class="tab-pane fade " id="baggagetabR">`;
+        this.baggageInfo+= `<table class="table-bordered table-content w-100">
+        <tbody>
+        <tr>
+        <td>
+        <p class="fw_6 fs_13">Airline</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Check-in Baggage</p>
+        </td>
+        <td>
+        <p class="fw_6 fs_13">Cabin Baggage</p>
+        </td>
+        </tr>`;
+        
+         for(var i=0;i<this.baggageInfoReturn.length;i++){ 
+         this.baggageInfo+= `<tr >
+        <td>
+        <p class="opacity_05">`+this.baggageInfoReturn[i].flightName+`<br>`+this.baggageInfoReturn[i].flightNo+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoReturn[i].checkIn+`</p>
+        </td>
+        <td>
+        <p >`+this.baggageInfoReturn[i].cabin+`</p>
+        </td>
+        </tr>`;
+        }
+         this.baggageInfo+= `</tbody>
+        </table>`;
+        this.baggageInfo+= `</div>`;
+        }
+        
+        
+        this.baggageInfo+= `</div>`;
+        this.baggageInfo+= `</div>`;
+  
+       }
+  
+  
+  
+
+      emt_cancellationPolicy_Multicity(data){
+  
+      
+        let aclass='active';let bclass='active show';
+        this.cancellationPolicyOnward= `<div class="border-0 card custom-tabs" style="padding:0px 0px 50px 0px;">
+        <ul class="nav nav-tabs travelTab" role="tablist">`;
+        for(var i=0;i<this.searchData.length;i++){  
+        let airlineCode;
+        if(this.onwardAirlineMulti_multi[i])
+        airlineCode='Multi';
+        else
+        airlineCode=this.onward_airline_array_multi[i][0];
+        
+        console.log(airlineCode);
+
+        if(i >0) aclass='';
+
+        this.cancellationPolicyOnward+= `<li role="presentation" >
+        <a data-bs-target="#onwardtab`+i+`" aria-controls="onwardtab`+i+`" role="tab" data-bs-toggle="tab" aria-expanded="true" class="`+aclass+`" >
+        <div class="rules-flight-items">
+        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
+        <div class="rules-flight-content">
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        </div>
+        </div>
+        </a>
+        </li>`;
+        }       
+        this.cancellationPolicyOnward+= `</ul>`;
+
+        this.cancellationPolicyOnward+= `<div class="tab-content">`;
+        for(var i=0;i<this.searchData.length;i++){   
+        if(i >0) bclass='';
+        this.cancellationPolicyOnward+= `<div role="tabpanel" class="tab-pane fade `+bclass+`" id="onwardtab`+i+`">`;
+
+
+        if (data[i] && data[i].Cancellation) {
+        let cancellation_data = data[i].Cancellation.split('|');
+        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100 mb-20"><tr>
+        <td colspan="2">
+        <p class="fw_6 fs_13">Cancellation Penalty fees (Per passenger)</p>
+        </td>
+        </tr>
+        <tbody class="ng-scope">`;
+
+        for (let i = 0; i < cancellation_data.length; i++) {
+        if (cancellation_data[i]) { 
+        let sp_data = cancellation_data[i].split('Rs.');
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05"> `+sp_data[0]+` </td>
+        <td >₹ `+sp_data[1]+`</td>
+        </tr>`;
+        }
+        }
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td>₹ `+data[i].EMTFee+`</td>
+        </tr>
+        </tbody>
+        </table>`;
+        }
+
+        if (data[i] && data[i].Reschedule) {
+        let reschedule_data = data[i].Reschedule.split('|');  
+
+        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100">
+        <tr>
+        <td colspan="2">
+        <p class="fw_6 fs_13">Reschedule Penalty fees (Per passenger)</p>
+        </td>
+        </tr>
+        <tbody class="ng-scope">`;
+        for (let i = 0; i < reschedule_data.length; i++) {
+
+        if (reschedule_data[i]) { 
+        let rd_data = reschedule_data[i].split('Rs.');
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05"> `+rd_data[0]+` </td>
+        <td >₹ `+rd_data[1]+`</td>
+        </tr>`;
+        }
+        }   
+
+        this.cancellationPolicyOnward+= `<tr>
+        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td>₹ `+data[i].EMTFee+`</td>
+        </tr>
+        </tbody>
+        </table>`;
+        }
+
+        if (data[i] && data[i].Tnc) {  
+        this.cancellationPolicyOnward+= `<div class="imp-Information mt-10"><h6>Terms & Conditions</h6><div class="imp-Information-list"><ul class="imp-Information-list">`;
+         let tnc_data = [];
+         $.each(data[i].Tnc, function (key, value) {
+        tnc_data.push(value);
+        });
+        
+        for (let i = 0; i < tnc_data.length; i++) {
+         this.cancellationPolicyOnward+= `<li>`+tnc_data[i]+`</li>`;
+        }
+        
+        this.cancellationPolicyOnward+= `</ul> </div></div>`;
+        }
+
+        this.cancellationPolicyOnward+= `</div>`;
+        }
+        this.cancellationPolicyOnward+= `</div>`;
+
+  
+       }
+
+  emt_cancellationPolicy(type) {
+      let airlineCode;let airlineCodeR='';
+      
+        if (this.searchData.flightdefault == 'O' || this.searchData.flightdefault == 'R') {
+        if(this.onwardAirlineMulti)
+        airlineCode='Multi';
+        else
+        airlineCode=this.onward_airline_array[0];
+        }
+      
+       if (this.searchData.flightdefault == 'R') {
+        if(this.returnAirlineMulti)
+        airlineCodeR='Multi';
+        else
+        airlineCodeR=this.return_airline_array[0];
+        }
+
+        if (this.searchData.flightdefault == 'M') {
+        if(this.onwardAirlineMulti_multi)
+        airlineCode='Multi';
+        else
+        airlineCode=this.onward_airline_array_multi[0];
+        }
   
         var getCancellationPolicy = {
         itineraryId: this.itineraryid,
         clientName: 'HDFC243',
         serviceName: 'Flight',
+        post_default:this.searchData.flightdefault,
         partnerName: this.partnerToken,
         docKey: this.flightSessionData.docKey,
         flightKeys:this.flightKeys,
         travel:this.searchData['travel'],
         pricingId:this.pricingId,
         onward_flightIdCSV:'',
-        airlineCode:'',
-        flightfrom:flightfrom,
-        flightto:flightto,
+        airlineCode:airlineCode,
+        airlineCodeR:airlineCodeR,
+        flightfrom:this.searchData.flightfrom,
+        flightto:this.searchData.flightto,
         classType:this.searchData['flightclass'],
         };
         console.log(getCancellationPolicy);
@@ -2458,38 +2787,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
          });
         
 
-  /*
-    if (data && data.Cancellation) {
-      let cancellation_data = data.Cancellation.split('|');
-      let reschedule_data = data.Reschedule.split('|');
-      let emt_charges = data.EMTFee;
-
-      let cancellation_updated_data = [];
-      let reschedule_data_data = [];
-      let tnc_data = [];
-      for (let i = 0; i < cancellation_data.length; i++) {
-        if (cancellation_data[i]) {
-          let sp_data = cancellation_data[i].split('Rs.');
-          let rd_data = reschedule_data[i].split('Rs.');
-          cancellation_updated_data.push({ 'data': sp_data[0], 'airline_fee': sp_data[1], 'emt_fee': emt_charges });
-          reschedule_data_data.push({ 'data': rd_data[0], 'airline_fee': rd_data[1], 'emt_fee': emt_charges });
-        }
-      }
-
-
-      $.each(data.Tnc, function (key, value) {
-        tnc_data.push(value);
-      });
-
-
-      return {
-        "cancellation": cancellation_updated_data,
-        "reschedule": reschedule_data_data,
-        "tnc": tnc_data
-      }
-        ;
-    }
-   */
   }
 
   triggerBack() {
@@ -3363,7 +3660,7 @@ orderReferenceNumber:any;
         "returnFareKey": this.flightInfo.returnFlightDetails && this.flightInfo.returnFlightDetails.fareKey ? this.flightInfo.returnFlightDetails.fareKey : '',
         "inputs": input_values
       },
-      "cancellationPolicy": "",
+      "cancellationPolicy": this.cancellationPolicyOnward,
       "checkin": "",
       "checkin_box": null,
       "order_ref_num": order_ref_num ,
