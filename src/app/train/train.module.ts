@@ -21,17 +21,16 @@ import { BusHelper } from 'src/app/shared/utils/bus-helper';
 import {APP_CONFIG, AppConfig} from '../configs/app.config';
 import { IrctcfilterPipe } from 'src/app/shared/pipes/irctc/irctcfilter.pipe';
 import { DecimalPipe } from '@angular/common';
-
-//import { TrainsTravellerModule } from './smartbuy/irctc/trains/trains-traveller/travellers.module';
-
+import {IrctcregComponent } from './trains/irctcreg/irctcreg.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 const routes: Routes = [
   {
     path:"train/search" ,component:TrainsComponent,
   },
   {
     path:"train/checkout" ,component:TrainsTravellerComponent,
-  }
-
+  },
+ { path: 'train/registration', component: IrctcregComponent },
 
 
 ];
@@ -55,7 +54,8 @@ const routes: Routes = [
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
       onSameUrlNavigation: 'reload'
-    })
+    }),
+    MatExpansionModule
   ],
   
   exports: [RouterModule],

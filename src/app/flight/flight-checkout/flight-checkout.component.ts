@@ -3660,7 +3660,7 @@ orderReferenceNumber:any;
         "returnFareKey": this.flightInfo.returnFlightDetails && this.flightInfo.returnFlightDetails.fareKey ? this.flightInfo.returnFlightDetails.fareKey : '',
         "inputs": input_values
       },
-      "cancellationPolicy": this.cancellationPolicyOnward,
+      "cancellationPolicy": '',
       "checkin": "",
       "checkin_box": null,
       "order_ref_num": order_ref_num ,
