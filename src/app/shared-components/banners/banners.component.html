@@ -124,11 +124,12 @@
           <div class="card_benefit">
             <p class="perk_text">Perk</p>
             <div class="perk_flex">
-              <div class="perk_item">
+              <div class="perk_item" *ngIf="display_wb">
                 <div class="benefit_sec" (click)="welcome_benefitsLink()"> 
                   <div class="benefit_text">
                       <p class="text">Welcome Benefit</p>
-                      <p class="value">Rs {{wb_spend}}</p>
+                      <p class="value" *ngIf="display_wb_spend">{{wb_spend}}</p>
+                      <p class="value_transfer" *ngIf="display_wb_link">Avail Now</p>
                   </div>
                   <div class="mt-10" *ngIf="is_wb_progressbar">
                     <div class="progress" >
@@ -138,11 +139,19 @@
                   </div>
                 </div>
               </div>
+              <div class="perk_item" *ngIf="display_tb">
+                <div class="benefit_sec" > 
+                  <div class="benefit_text">
+                      <p class="text">Travel Benefit</p>
+                      <p class="value_transfer" (click)="travel_benefitsLink()">Avail Now</p>
+                  </div>
+                </div>
+              </div>
               <div class="perk_item">
-                <div class="benefit_sec" (click)="milestone_benefitsLink()"> 
+                <div class="benefit_sec" > 
                   <div class="benefit_text">
                       <p class="text">Milestone Benefit</p>
-                      <p class="value_transfer">Premium Voucher</p>
+                      <p class="value_transfer" (click)="milestone_benefitsLink()" *ngIf="display_mb_link">Avail Now</p>
                   </div>
                   <div class="mt-10" *ngIf="is_mb_progressbar">
                     <div class="progress">
