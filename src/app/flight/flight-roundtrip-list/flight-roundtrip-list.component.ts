@@ -1373,9 +1373,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   flightsChange:any; selectedChange:any; flightKeyChange:any; itemChange:any;eventChange:any;
   
   onSelectOnwardSplrt:any;
-  
-  onSelectOnword(flightKey:any,flights:any,item:any,priceDump:any,event:any)
+  selectedFromKey:any ; 
+  onSelectOnword(flightKey:any,flights:any,item:any,priceDump:any,event:any , j:any)
   {
+    debugger;
    if(item.partnerName=='Cleartrip'){
    this.onSelectOnwardSplrt= priceDump.filter((item: any) => {
       if(item.partnerName=='Cleartrip' && item.splrtFareFlight==true )
@@ -1394,6 +1395,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.itemChange=item;
         this.flightKeyChange=flightKey;
         this.eventChange=event;
+        this.selectedFromKey = j;
 
         if (departureAirportSelected != departureAirportUser) {
         this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[departureAirportUser ].city + ". Cheapest flight at ₹"+formatNumber(item.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[departureAirportSelected ].airport_name+ ', ' +this.airportsNameJson[departureAirportSelected ].city + ' (' + departureAirportSelected + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelected ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ').';
@@ -1411,7 +1413,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".onwardbuttons").html('Select');
-      var selected = event.target as HTMLElement
+    var selected = event.target as HTMLElement
+    
+        
+    
       if(selected)
       {
         this.isOnwardSelected = true;
@@ -1419,6 +1424,11 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isFlightsSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
+          console.log(selected , "selected");
+
+
+     
+        
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
@@ -1439,9 +1449,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   
     onSelectOnwordContinue(flightKey:any,flights:any,item:any,event:any)
   {
-  
+    
     $('#flightChangeO').modal('hide');
     $(".onwardbuttons").removeClass('button-selected-style');
+    $(".selected-flight-background").removeClass('selected-flight-background');
     $(".onwardbuttons").html('Select');
       var selected = event.target as HTMLElement
       if(selected)
@@ -1451,6 +1462,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isFlightsSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
+        let selectedOnwardDiv = document.getElementById('selectedOnwardDiv_' + flightKey + "_"+ this.selectedFromKey);
+        selectedOnwardDiv.classList.add('selected-flight-background');
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
@@ -1473,9 +1486,11 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   flightsChangeR:any; selectedChangeR:any; flightKeyChangeR:any; itemChangeR:any;eventChangeR:any;
   onSelectReturnSplrt:any;
   sumval:any;sumvalold:any;  onward_combofareKey:any;return_combofareKey:any;splrtFlight:boolean=false;
- 
-  onSelectReturn(flightKey:any,flights:any,item:any,priceDump:any,event:any)
+  retrunFlightKey:any;
+  onSelectReturn(flightKey:any,flights:any,item:any,priceDump:any,event:any , j:any)
   {
+    debugger
+    this.retrunFlightKey = j;
   if(this.isOnwardSelected == true)
       {
         if(item.partnerName=='Cleartrip'){
@@ -1664,10 +1679,12 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   
     onSelectReturnChange(flightKey:any,flights:any,item:any,event:any)
   {
+    debugger
    $('#flightChangeR').modal('hide');
   if(this.isOnwardSelected == true)
       {
     $(".returnButtons").removeClass('button-selected-style');
+    $(".selected-flight-background-return").removeClass('selected-flight-background-return');
     $(".returnButtons").html('Select');
       var selected = event.target as HTMLElement
       if(selected)
@@ -1675,6 +1692,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isReturnSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
+        console.log(selected);
+        let selectedReturnDiv =  document.getElementById('selectedReturnDiv_'+flightKey + "_" + this.retrunFlightKey)
+        selectedReturnDiv.classList.add('selected-flight-background-return');
       }
 
         this.isDisplayDetail = true;
@@ -1841,5 +1861,6 @@ getLayoverHour(obj1: any, obj2: any) {
   }
   return dateHour;
 }
+
 
 }
