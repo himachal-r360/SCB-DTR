@@ -118,7 +118,7 @@
     </form>
   </div>
 </div>
-<div class="container payment_cnt">
+<div class="container payment_cnt" *ngIf='voucherDiv'>
   <div class="row">
     <div class="col-6"><img src="{{cdnUrl}}images/smartbuy/icons/payment/voucher.png" alt="Voucher"> Have a Voucher?</div>
     <div class="col-6 text-right" >
@@ -195,7 +195,7 @@
     </form>
   </div>
 </div>
-<div class="container payment_cnt">
+<div class="container payment_cnt" *ngIf="addcardDiv">
   <div class="row">
     <div class="col-6"><img src="{{cdnUrl}}images/smartbuy/icons/payment/new_card.png" alt="Voucher"> Would you like use another card</div>
     <div class="col-6 text-right">
@@ -224,23 +224,23 @@
                                 </div>
                             </div>
                             <div class="small-gray-text">First 9 digits and last 4 digits</div>
-                              <div *ngIf="(submitted1 && voucherForm1.controls.first4digit.errors) || (submitted1 && voucherForm1.controls.last4digit.errors)" class="error">
-                            <small *ngIf="voucherForm1.hasError('required','first4digit') || voucherForm1.hasError('required','last4digit')">Please enter first 9 Digits and last 4 digits is required.</small>
-                            <small *ngIf="voucherForm1.hasError('pattern','first4digit') || voucherForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
+                              <div *ngIf="(submitted2 && cardaddForm1.controls.first4digit.errors) || (submitted2 && cardaddForm1.controls.last4digit.errors)" class="error">
+                            <small *ngIf="cardaddForm1.hasError('required','first4digit') || cardaddForm1.hasError('required','last4digit')">Please enter first 9 Digits and last 4 digits is required.</small>
+                            <small *ngIf="cardaddForm1.hasError('pattern','first4digit') || cardaddForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
                         </div>
-                        <div *ngIf="submitted1 && voucherForm1.get('first4digit').dirty" class="error">
-                            <small *ngIf="voucherForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
+                        <div *ngIf="submitted2 && cardaddForm1.get('first4digit').dirty" class="error">
+                            <small *ngIf="cardaddForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
                         </div>
                         </div>
                       
                     <!-- </div> -->
                     <div class="voucher-code-entry col-4">
                         <!-- <div class="small-gray-text"> <small style="color: #aaa;font-size: 10px;">Registered with HDFC bank</small></div> -->
-                        <input type="text" formControlName="applymobile" [(ngModel)]="customermobile" [value]="customermobile" autocomplete="nope" name="applymobile"  maxlength="10" (keypress)="numberInput($event);AvoidSpace($event)" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" placeholder="Mobile Number">
+                        <input type="text" formControlName="applymobile" [(ngModel)]="customermobile" [value]="" autocomplete="nope" name="applymobile"  maxlength="10" (keypress)="numberInput($event);AvoidSpace($event)" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" placeholder="Mobile Number">
 
-                        <div *ngIf="submitted1 && voucherForm1.controls['applymobile']['errors']" class="error">
-                                <small *ngIf="voucherForm1.hasError('required','applymobile')">Please enter the registered mobile number.</small>
-                                <small *ngIf="voucherForm1.hasError('pattern','applymobile')">Please enter a valid 10 digits mobile number.</small>
+                        <div *ngIf="submitted2 && cardaddForm1.controls['applymobile']['errors']" class="error">
+                                <small *ngIf="cardaddForm1.hasError('required','applymobile')">Please enter the registered mobile number.</small>
+                                <small *ngIf="cardaddForm1.hasError('pattern','applymobile')">Please enter a valid 10 digits mobile number.</small>
                         </div>
                         <div class="small-gray-text">Registered with HDFC bank</div>
                     </div>
@@ -249,8 +249,8 @@
                             <input matInput [matDatepicker]="picker1" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob"> 
                             <mat-datepicker-toggle matSuffix [for]="picker1" class="date-icon"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
-                            <div *ngIf="submitted1 && voucherForm1.controls['dob']['errors']" class="error">
-                                <small *ngIf="voucherForm1.hasError('required','dob')">Please enter date of birth.</small>
+                            <div *ngIf="submitted2 && cardaddForm1.controls['dob']['errors']" class="error">
+                                <small *ngIf="cardaddForm1.hasError('required','dob')">Please enter date of birth.</small>
                             </div>
                     </div>
                   </div>
@@ -264,4 +264,39 @@
         </div>
     </form>
   </div>
+</div>
+<div class="container payment_cnt" *ngIf="voucherApplied">
+  <div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-2">
+          <img class="voucherImg" src="{{cdnUrl}}images/smartbuy/icons/payment/voucher_success.png">
+        </div>
+        <div class="col-10">
+          <p class="green-font"><strong>Congratulations! </strong></p>
+          <p class="green-font">Points has been redeemed successfully!</p>
+          <div class="brown-box">
+            <p>Pay remaining amount by cash</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 grey-box">
+      <div class="row">
+      <div class="col-6">
+        <div *ngIf="voucherCodedetails">
+          <p class="vouchertitle">Voucher Code</p>
+          <p>1606202212334475</p>
+        </div>
+      
+    </div>
+    <div class="col-6">
+      <p class="vouchertitle">Redeemed Points</p>
+      <p>{{RedeemedPoints}} Points</p>
+    </div>
+    </div>
+    </div>
+    
+  </div>
+  
 </div>

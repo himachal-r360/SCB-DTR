@@ -326,6 +326,7 @@ export class TrainsTravellerComponent implements OnInit {
         this.masterFood = AppConfig.IRCTC_Food;
 
      this.activatedRoute.url.subscribe(url =>{
+     this.gotoTop();
        this.resetPopups();
       this.steps = 1;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -834,6 +835,7 @@ saveGSTConsent(){
       }
     }
     validateBookingInfoForm() {
+    
         this.submittedUserInfoForm = true;
         //alert(this.idForm.invalid +" ### "+ this.errorInvalid);
         if (this.idForm.invalid || this.errorInvalid == 1) {
@@ -1083,7 +1085,7 @@ saveGSTConsent(){
                     this.passengerForm.controls['destAddressPin'].setValidators([Validators.required,Validators.minLength(6)]);
                     this.passengerForm.controls['destAddressState'].setValidators([Validators.required]);
                     this.passengerForm.controls['destAddressCity'].setValidators([Validators.required]);
-                    // this.passengerForm.controls['destAddressPost'].setValidators([Validators.required]);
+                    this.passengerForm.controls['destAddressPost'].setValidators([Validators.required]);
                     this.passengerForm.controls['destAddressOne'].updateValueAndValidity();
                     this.passengerForm.controls['destAddressTwo'].updateValueAndValidity();
                     this.passengerForm.controls['destAddressThree'].updateValueAndValidity();
@@ -1166,7 +1168,6 @@ saveGSTConsent(){
 
                 this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
                 this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-                this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
 
                 let trackUrlParams = new HttpParams()
                 .set('current_url', window.location.href)

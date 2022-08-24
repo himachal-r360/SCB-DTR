@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, DebugNode, NgModule, ViewChild, ChangeDetectorRef, ElementRef, Inject, ɵConsole, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -20,6 +20,7 @@ import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { stringify } from '@angular/compiler/src/util';
 import { AbstractControl } from '@angular/forms';
+import { filter } from 'rxjs/operators';
 
 
 
@@ -323,7 +324,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapseDiscount: boolean = false;
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
-
+orderRetry:boolean=false;
 
   constructor(private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
@@ -409,7 +410,98 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                 this.enablesavedTraveller = 0;
                 this.syncCustomer(customerInfo);
               } else {
+                this.getQueryParamData();
+                this.flightDetailsArrVal = sessionStorage.getItem(this.randomFlightDetailKey);
+
+                this.flightSessionData = JSON.parse(this.flightDetailsArrVal);
+
+                if (!this.flightSessionData) {
+                  setTimeout(() => {
+                    $("#bookingprocessFailed1").modal('show');
+                  }, 10);
+                } else {
+                  this.searchData = (this.flightSessionData.queryFlightData);
+                  //console.log(this.flightSessionData);
+                  setTimeout(() => {
+                    $("#infoprocess").modal('show');
+                  }, 10);
+                  
+                  if( this.flightSessionData['travel_type']=='M') {
+                  //Multicity
+                this.maxAdults = Number(this.searchData[0].adults);
+                this.maxChilds = Number(this.searchData[0].child);
+                this.maxInfants = Number(this.searchData[0].infants);
+                this.travelerDetails['adults'] = this.searchData[0].adults;
+                this.travelerDetails['child'] = this.searchData[0].child;
+                this.travelerDetails['infants'] = this.searchData[0].infants;
+                this.partnerToken = this.flightSessionData.onwardFlights[0]['priceSummery']['partnerName'];
+                this.flightOnwardDetails = this.flightSessionData.onwardFlights; 
+                this.selectedOnwardVendor = this.flightSessionData.onwardFlights[0]['priceSummery'];
+                this.searchData['adults'] = this.searchData[0].adults;
+                this.searchData['child'] = this.searchData[0].child;
+                this.searchData['infants'] = this.searchData[0].infants;
+                this.searchData['flightclass'] = this.searchData[0].flightclass;
+                
+                this.searchData['travel'] = 'DOM';
+                for (let j = 0; j < this.flightSessionData.queryFlightData.length; j++) {
+                 if(this.flightSessionData.queryFlightData[j]['fromContry'] != 'IN' || this.flightSessionData.queryFlightData[j]['toContry'] != 'IN'){
+                 this.searchData['travel'] = 'INT';
+                 }
+                }
+                
+                
+                this.flightReturnDetails = [];
+                  }else{
+                  
+                  this.maxAdults = Number(this.searchData.adults);
+                  this.maxChilds = Number(this.searchData.child);
+                  this.maxInfants = Number(this.searchData.infants);
+                  this.travelerDetails = this.searchData;
+
+
+                  if (this.flightSessionData.travel == 'DOM') {
+                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
+                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
+                    this.selectedReturnVendor = this.flightSessionData.returnPriceSummary;
+
+                    if (this.flightSessionData.returnFlights)
+                      this.flightReturnDetails = this.flightSessionData.returnFlights;
+                    else
+                      this.flightReturnDetails = [];
+                      
+                  } else {
+
+                    this.flightOnwardDetails = this.flightSessionData.onwardFlights;
+                    this.selectedOnwardVendor = this.flightSessionData.onwardPriceSummary;
+                    this.selectedReturnVendor = [];
+
+
+                    if (this.flightSessionData.returnFlights)
+                      this.flightReturnDetails = this.flightSessionData.returnFlights;
+                    else
+                      this.flightReturnDetails = [];
+
+                  }
+
+
+                  this.partnerToken = this.selectedOnwardVendor.partnerName;
+                 } 
+                  
+                  this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
+                  //console.log(this.partnerToken);
+                  //console.log(this.enableVAS);
+
+                  this.getFlightDetails(this.flightSessionData);
+                }
+                this.REWARD_CUSTOMERID = customerInfo["id"];
+                this.REWARD_EMAILID = customerInfo["email"];
+                this.REWARD_MOBILE = customerInfo["mobile"];
+                this.REWARD_TITLE = customerInfo["title"];
+
+                this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
+                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
                  this.syncCustomer(customerInfo);
+
 
                 const urlSearchParams = new HttpParams()
                   .set('customerid', customerInfo["id"])
@@ -522,6 +614,23 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 
 
     });
+
+
+    this.route.queryParamMap
+    .subscribe((params) => {
+      let order = { ...params.keys, ...params };
+      if(order['params']['retry'] && order['params']['retry'] != undefined) {
+
+       setTimeout(() => {
+        document.getElementById('continueToItinery').click();
+
+        
+      }, 3000);
+       
+      }
+    }
+  );
+
   }
 
   syncCustomer(customerInfo){
@@ -535,7 +644,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
                   }, 10);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
-                  console.log(this.flightSessionData);
+               
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -2195,6 +2304,15 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
         $("#infoprocess").modal('hide');
       }, 10);
 
+      let trackUrlParams = new HttpParams()
+      .set('current_url', window.location.href)
+      .set('category', 'Flight')
+      .set('event', 'Flight Info angf')
+      .set('metadata', JSON.stringify(res));
+
+    const track_body: string = trackUrlParams.toString();
+    this.rest.trackEvents(track_body).subscribe(result => { });
+
       if (res.statusCode == 200) {
         this.flightInfo = res.response;
         var suggestHotels = {
@@ -3679,6 +3797,8 @@ orderReferenceNumber:any;
       orderReferenceNumber: order_ref_num,
       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
     };
+
+      console.log(JSON.stringify(checkoutData));
 
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
