@@ -880,7 +880,6 @@ orderRetry:boolean=false;
               
              } 
              
-                console.log( this.AdtBaseFare);
              
               totalFare += Number(res.response.comboFare.onwardTotalFare);
               baseFare += Number(res.response.comboFare.onwardBaseFare);
