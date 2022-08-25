@@ -36,6 +36,7 @@ import { FilterModule } from './bus/filter/filter.module';
 import { TrainModule } from './train/train.module';
 import { TrainsTravellerModule } from './train/trains-traveller/travellers.module';
 import { IrctcregModule } from './train/trains/irctcreg/irctcreg.module';
+import { DatadogService } from './shared/services/datadog.service';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -76,6 +77,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
    providers: [
    StyleManagerService,
    AppConfigService,
+   DatadogService,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializerFn,
