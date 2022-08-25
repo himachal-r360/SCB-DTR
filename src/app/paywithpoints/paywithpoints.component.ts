@@ -257,7 +257,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
   setSlider(){
     // update slider dynamically
-
+    
+    if(this.pointData !== undefined)
+{
              if(Object.keys(this.pointData['condition']).length!=0){
           var name=this.pointData['condition']['name'];
           var condition_type=this.pointData['condition'].condition_type; 
@@ -283,6 +285,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
             };
             this.value = min_value;
              this.options = opts;
+           }
   }
   checkAvailablePointsforSavedCard(){ 
     var request = {
