@@ -3118,13 +3118,13 @@
         </div>
         <div *ngIf="showName=='gold_switch'" class="tab-content">
             <!-- switch to sidebar -->
-            <div class="m_sidebar_header reg-switch-show reg-switch-block hide">
+            <div class="m_sidebar_header reg-switch-show reg-switch-block hide" *ngIf="cardList.length > 1">
                 <div  class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Switch to</span></div>
 
                 <div class="row mt-4">
-                                        <div class="col-10">
+                                        <div class="col-10" *ngFor="let cardItem of cardList;">
                                             <div class="hdr_privilege_card">
-                                                <a href="">
+                                                <a href="{{mainRedirect}}{{cardItem.program_name | lowercase}}" target="_blank">
                                                 <div class="row cntnt_center">
                                                     <div class="col-3">
                                                         <div class="m_privilege_img_div">
@@ -3132,8 +3132,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-7">
-                                                        <p class="privilege_text_highlight mb-0 ">Regalia</p>
-                                                        <p class="privilege_text">xxx 1234</p>
+                                                        <p class="privilege_text_highlight mb-0 ">{{cardItem.program_name}}</p>
+                                                        <p class="privilege_text">xxx {{cardItem.last4digit}}</p>
                                                     </div>
                                                     <div class="col-2 pl-0">
                                                         <img src="{{cdnUrl}}images/smartbuy/icons/right_icon.svg" width="13px" height="13px">
