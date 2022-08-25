@@ -302,7 +302,7 @@ export class TrainsTravellerComponent implements OnInit {
   isCollapseDiscount: boolean = false;
   isCollapse: boolean = false;
        
-    constructor(private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
+    constructor(private el: ElementRef,private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
         this.serviceSettings=this.appConfigService.getConfig();
         this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
         this.domainName = this.sg['domainName'];
@@ -1577,6 +1577,16 @@ gstReset(){
     }
 
     createTrainItinerary() {
+        alertify.set('notifier', 'position', 'top-center');
+         alertify.dismissAll();
+         this.resetPopups();
+        if (this.travellersArray.length< 1) {
+        alertify.error('Please add adult traveller', '').delay(3);
+        return;
+        }
+
+    
+    
         this.submitted = true;
         if (this.gstSelected == true) {
             this.passengerForm.controls['gstNumber'].setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$'), Validators.minLength(15)]);
@@ -1606,9 +1616,15 @@ gstReset(){
             this.passengerForm.controls['gstState'].updateValueAndValidity();
         }
 
-       console.log(this.passengerForm);
         if (this.passengerForm.invalid || this.error == 1) {
-            return;
+         this.passengerForm.markAllAsTouched();
+        let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid')
+        if (target) {
+        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
+        target.focus();
+        }  
+         return;  
         } else {
          this.generateTrainItinerary();
          this.continueReviewBooking();
