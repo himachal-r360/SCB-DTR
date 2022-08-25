@@ -177,10 +177,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     });
     console.log("========");
     console.log(this.multicityForm);return;
-    
+
   }
  ngAfterContentChecked() {
-    this.cd.detectChanges();    
+    this.cd.detectChanges();
      }
   public Error = (controlName: string, errorName: string) => {
     return this.flightData.controls[controlName].hasError(errorName);
@@ -239,7 +239,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.minDateArray[i+1] = new Date(date);
     }
     // this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
-    this.minDateR=date;
+
   }
   currentPeriodArrivalClicked(datePicker: any) {
     /*let date = datePicker.target.value
@@ -258,7 +258,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   searchAutoComplete($event, field, device, index: any) {
-    debugger;
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if (true) {

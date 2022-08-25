@@ -1738,6 +1738,7 @@ gstReset(){
         } 
 
     }
+    contactDatails:any;
     createTrainItinerary2 (){
     
             this.error = 0;
@@ -1757,9 +1758,7 @@ gstReset(){
                     this.clientTransactionId = partnerResponse.clientTransactionId;
                     this.orderReferenceNumber = partnerResponse.orderReferenceNumber;
                     this.buttonstatus = false;
-                       this.gotoTop();
-                      this.completedSteps = 4;
-                      this.steps = 4; 
+         
                     
                     this.flexipaysummry = false;
                     var whatsappFlag;
@@ -1843,9 +1842,9 @@ gstReset(){
                     const track_body: string = trackUrlParams.toString();
                      this.rest.trackEvents( track_body).subscribe(result => {});
                      
-                        this.gotoTop();
-                        this.completedSteps = 3;
-                        this.steps = 3;
+                                 this.gotoTop();
+                      this.completedSteps = 3;
+                      this.steps = 3; 
 
                 } else {
                     this.showFareSummary = false;
@@ -2135,7 +2134,7 @@ gstReset(){
         }
         this.travellerListArray = travellerList;
        
-       // console.log(this.travellerListArray)
+        console.log(this.travellerListArray)
 
         //INFANT LIST
         var infantList: any = [];
@@ -3319,7 +3318,7 @@ export class ConfirmationDialog {
     //date-picker
     maxDate: any;
 
-    constructor(public dialogRef: MatDialogRef<ConfirmationDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private location: Location, private router: Router, public _irctc: IrctcApiService, private calendar: NgbCalendar, private ngbDateParserFormatter: NgbDateParserFormatter, private sg: SimpleGlobal,private appConfigService:AppConfigService) {
+    constructor(private cd: ChangeDetectorRef,public dialogRef: MatDialogRef<ConfirmationDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private location: Location, private router: Router, public _irctc: IrctcApiService, private calendar: NgbCalendar, private ngbDateParserFormatter: NgbDateParserFormatter, private sg: SimpleGlobal,private appConfigService:AppConfigService) {
         dialogRef.disableClose = true;
      }
 
@@ -3354,6 +3353,9 @@ export class ConfirmationDialog {
         this.checkDate = this.checkmaxDate(dd, mm, yyyy)
 
     }
+     ngAfterContentChecked() {
+    this.cd.detectChanges();
+     }
     onYesClick(): void {
         this.dialogRef.close(true);
 
