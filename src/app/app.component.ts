@@ -1,4 +1,4 @@
-import {Component, OnInit,Inject,HostListener, AfterViewInit, Renderer2} from '@angular/core';
+import {Component, OnInit,Inject,HostListener, AfterViewInit, Renderer2,ChangeDetectorRef} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {NavigationStart,NavigationEnd, Router,ActivatedRoute} from '@angular/router';
 import {AppConfig} from './configs/app.config';
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
      DOMAIN_SETTINGS:string;
      
      
-  constructor(private rest:RestapiService,private location:Location,private title: Title,
+  constructor(private cdref: ChangeDetectorRef,private rest:RestapiService,private location:Location,private title: Title,
               private router: Router,private cookieService: CookieService,private sg: SimpleGlobal,private bnIdle: BnNgIdleService,public dialog: MatDialog, private deviceService: DeviceDetectorService,private activatedRoute: ActivatedRoute,private appConfigService:AppConfigService,private EncrDecr: EncrDecrService, public commonHelper: CommonHelper,@Inject(DOCUMENT) private document: any,
               private renderer: Renderer2) {
         
@@ -134,7 +134,9 @@ export class AppComponent implements OnInit {
         
   }
   
-
+ ngAfterContentChecked() {
+    this.cdref.detectChanges();    
+     }
   
    ngAfterViewInit() {
     let loader = this.renderer.selectRootElement('#loader_1');
@@ -310,7 +312,16 @@ export class AppComponent implements OnInit {
                 this.menuActiveClass='foryou';
                 break;
                 
-                  case '/' :  case '/flight-list':
+                       case '/bus' :  
+                this.menuActiveClass='bus';
+                break;
+                
+                       case '/' :  case '/compare-fly': case '/multicity': case '/flight-list': case '/flight-roundtrip': case '/flight-int': case '/flight-multicity':
+                this.menuActiveClass='flight';
+                break;
+                
+                
+                  case '/train':  case '/train/pnr':
                 this.menuActiveClass='flight';
                 break;
           }     

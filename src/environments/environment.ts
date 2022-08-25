@@ -28,7 +28,7 @@ export const environment = {
   SUB_SITE_URL: 'http://new.reward360.us/',
   ANGULAR_SITE_URL: 'http://new.reward360.us/lite/',
   enableEncryptionRequestResponse: false,
-  'IS_MAIN': 1,
+  'IS_MAIN': 0,
   recaptcha: {
     siteKey: '6Lf7UL0cAAAAAIt_m-d24WG4mA1XFPHE8yVckc5S',
   },

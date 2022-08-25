@@ -1261,7 +1261,7 @@ closeCookieConsent(value){
         this.redirectPopup=2;
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
      }else{
-     if(path !='foryou')
+     if(path !='foryou' && path !='compare-fly' && path !='bus' && path !='train'  && path !='train/pnr')
       this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
      else
      this.router.navigate([this.sg['domainPath']+path]);

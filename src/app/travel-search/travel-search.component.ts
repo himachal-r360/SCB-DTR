@@ -737,7 +737,7 @@ export class TravelSearchComponent implements OnInit {
     this.searchFlightForm.controls["arrival"].updateValueAndValidity();
   }else
   if(event=='M'){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/multicity');
   }else{
   this.showFlightReturn=false;
   this.arrival=null;
@@ -1721,9 +1721,11 @@ console.log(this.searchFlightForm);
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         return;
         }
-         this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+       /*  this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];*/
+         
+       let url='bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
         
-        
+          this.router.navigateByUrl(url);
         break;
         }
         case 'train': {
@@ -1804,8 +1806,10 @@ console.log(this.searchFlightForm);
         return;
         }
         
-         this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
-        
+        /* this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+        */
+        let url='train/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+          this.router.navigateByUrl(url);
 
        
         break;
