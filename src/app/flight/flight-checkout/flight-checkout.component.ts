@@ -826,6 +826,8 @@ orderRetry:boolean=false;
           adult: 1,
           child: 1
         };
+        
+        console.log(this.flightInfo);
 
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
@@ -836,6 +838,8 @@ orderRetry:boolean=false;
                     let baggage_data:any=[];
             for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
              fareInfo=  res.response.onwardFlightDetails[k];
+             
+             console.log(fareInfo);
 
               if (fareInfo.fare) {
                 if (fareInfo.fare.ADT) {
@@ -864,10 +868,6 @@ orderRetry:boolean=false;
               }
 
 
-              totalFare += Number(res.response.comboFare.onwardTotalFare);
-              baseFare += Number(res.response.comboFare.onwardBaseFare);
-              totalFareOnward += Number(res.response.comboFare.onwardTotalFare);
-
 
              if (fareInfo && fareInfo.bg.length > 0){
               this.baggageInfoOnwardMulti[k] = fareInfo.bg;
@@ -877,6 +877,11 @@ orderRetry:boolean=false;
               cancellation_array.push(fareInfo.cancellationPolicy);
               
              } 
+             
+              totalFare += Number(res.response.comboFare.onwardTotalFare);
+              baseFare += Number(res.response.comboFare.onwardBaseFare);
+              totalFareOnward += Number(res.response.comboFare.onwardTotalFare);
+
              this.baggagePolicyMulti(baggage_data);
              this.emt_cancellationPolicy_Multicity(cancellation_array);
             }
