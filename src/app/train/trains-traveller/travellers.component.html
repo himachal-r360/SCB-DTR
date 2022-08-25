@@ -1803,7 +1803,7 @@
   
                     </li>
                     
-                    <ng-container  >
+                    <ng-container *ngIf="steps > 2"  >
                     <li class="fare-list-item">
                       <div class="fare-list-box">
                         <div class="fare-list-left">
@@ -1967,45 +1967,8 @@
     </div>
   </div>
 </section>
-<!-- ------------------------------
-          >>> Modal bookingprocess
-      ---------------------------------->
-<div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body " style="padding: 25px;" *ngIf="searchData">
-        <div class="bookingprocess-items">
-          <div class="bookingprocess-title text-center mb-30">
-            <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
-          </div>
-          <div class="bookingprocess-content">
-            <div class="bookingprocess-flight">
-              <h6>{{searchData.fromCity}},{{searchData.fromContry}} ({{searchData.flightfrom}})</h6>
-              <p class="mt-10">{{searchData.departure | date:'dd.MM.yyyy'}} - <span>{{searchData.adults}}
-                  Adult,</span> <span *ngIf="searchData.child != '0'">{{searchData.child}} Child,</span> <span
-                  *ngIf="searchData.infants != '0'">{{searchData.infants}} Infants,</span>
-                {{searchData.flightclass == "B" ? "Business":null || searchData.flightclass == "E" ? "Economy":null || searchData.flightclass == "F" ? "First":null  || searchData.flightclass == "P" ? "Premium":null}}
-              </p>
-              <h6>{{searchData.toCity}},{{searchData.toContry}} ({{searchData.flightto}})</h6>
-            </div>
-            <div class="bookingprocess-processbar">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
-                  aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                  <span class="title"> &nbsp; </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="refresh-text text-center pt-2">
-            <p>Please don't click or refresh the page</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 
 <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
   tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

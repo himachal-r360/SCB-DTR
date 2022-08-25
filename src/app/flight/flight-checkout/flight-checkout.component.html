@@ -872,7 +872,7 @@
   
         <!--Steps 2 Starts-->
         <div class="col-md-8" [ngClass]="{'showTab':steps==2 , 'hide':steps !=2}">
-          <form [formGroup]="passengerForm" name="passengerForm" ngxScrollToFirstInvalid>
+          <form [formGroup]="passengerForm" name="passengerForm"  accessible-form  >
             <div class="booking-process-content">
               <div class="booking-title-box">
                 <h4>Traveller Details <span>{{travelerDetails.adults}} Adults</span><span
@@ -5289,7 +5289,48 @@
                         </div>
   
                       </div>
-                      <div *ngIf="AdtBaseFare>0">
+                      
+                     <ng-container *ngIf="flightSessionData.travel_type =='M'" >
+                    <div *ngIf="AdtBaseFare>0 ">
+                        <div class="collapse base_fare_collapse" id="base-collpase">
+                          <div class="row ">
+                            <div class="col-md-11 offset-md-1">
+  
+                              <div class="row collapse_row" *ngIf="AdtBaseFare>0">
+                                <div class="col-8 fare-list-left">
+                                   <p>Adult(s) </p>
+                                </div>
+                                <div class="col-4 fare-list-right">
+                                   <p>₹ {{AdtBaseFare  | number}}</p>
+                                </div>
+                             </div>
+  
+                             <div class="row collapse_row" *ngIf="ChildBaseFare>0">
+                               <div class="col-8 fare-list-left">
+                                <p> Children)</p>
+                               </div>
+                               <div class="col-4 fare-list-right">
+                                <p>₹ {{ChildBaseFare | number}}</p>
+                               </div>
+                             </div>
+  
+                             <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
+                                <div class="col-8 fare-list-left">
+                                   <p> Infant </p>
+                                </div>
+                                <div class="col-4 fare-list-right">
+                                   <p>₹ {{InfantBaseFare   | number}}</p>
+                                </div>
+                             </div>
+  
+                            </div>
+                          </div>
+                          </div>
+  
+                        </div>
+                     </ng-container>
+                      <ng-container *ngIf="flightSessionData.travel_type !='M'" >  
+                      <div *ngIf="AdtBaseFare>0 ">
                         <div class="collapse base_fare_collapse" id="base-collpase">
                           <div class="row ">
                             <div class="col-md-11 offset-md-1">
@@ -5326,7 +5367,7 @@
                           </div>
   
                         </div>
-  
+    </ng-container>
                     </li>
                     <li class="fare-list-item">
                       <div class="fare-list-box">
