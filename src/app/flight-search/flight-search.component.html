@@ -108,7 +108,7 @@
         <div class="travel-data" [ngClass]="navItemActive == 'Multicity'?'d-none':''">
             <div class="row g-2">
                 <div class="col-lg-6">
-                    <div class="select-root-area">
+                    <div class="select-root-area" [ngClass]="isMobile && fromCityName == '' ? 'p-3': ''">
                         <div class="select-root-left" appDropdown>
                             <span class="select-roottitle">FROM</span>
                             <h5 class="fw_6 ">{{fromCityName}}</h5>
@@ -217,8 +217,8 @@
                         <div class="select-root-icons" (click)="swap()">
                             <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                         </div>
-                        <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
-                            <span class="select-roottitle">TO</span>
+                        <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" >
+                            <span class="select-roottitle" [ngClass]="isMobile && fromCityName == '' ? 'ps-2': ''">TO</span>
                             <h5 class="fw_6 ">{{toCityName}}</h5>
                             <span class="select-roottitle">{{toAirpotName}}</span>
                             <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('flightto', 'required')">
