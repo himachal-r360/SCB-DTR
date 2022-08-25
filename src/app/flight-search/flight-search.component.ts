@@ -468,8 +468,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.isDisplayModifiedMulticity = true;
         }
 
-      }
-      else  if (lastSearch != null || lastSearch != undefined) {
+      } else  if (lastSearch != null || lastSearch != undefined) {
         lastSearch = JSON.parse(lastSearch)
         this.flightData.get('adults').setValue(lastSearch.adults);
         this.flightData.get('child').setValue(lastSearch.child);
@@ -503,7 +502,25 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "") {
           this.navItemActive = "Round Trip"
         }
-      }
+       }else{
+
+        this.fromCityName='New Delhi';
+        this.toCityName='Mumbai';
+        this.fromAirpotName='Indira Gandhi Airport';
+        this.toAirpotName='Chatrapati Shivaji Airport';
+        
+        this.flightData['controls']['fromCity'].setValue('New Delhi');
+        this.flightData['controls']['toCity'].setValue('Mumbai');
+        this.flightData['controls']['flightfrom'].setValue('DEL');
+        this.flightData['controls']['flightto'].setValue('BOM');
+        
+        this.flightData['controls']['fromContry'].setValue('IN');
+        this.flightData['controls']['fromAirportName'].setValue('Indira Gandhi Airport');
+        this.flightData['controls']['toContry'].setValue('IN');
+        this.flightData['controls']['toAirportName'].setValue('Chatrapati Shivaji Airport');
+        
+
+        } 
 
 
 
@@ -572,7 +589,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.flightSearchCallBack(searchValue);
 
       localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
-      localStorage.setItem('multicityLastSearch','');
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
       if (searchValue.arrival)
