@@ -805,15 +805,17 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
   callMutlicityFunc = true;
   navBarLink(navItem: any) {
+
     this.navItemActive = navItem;
     let datePickerArrival = document.getElementById('datePickerArrival');
     let datePickerOpen = document.getElementById('datePickerOpen');
-
-
+    this.submitted = false;
     if(this.navItemActive == 'Round Trip'){
+
       this.minDateFlightToMlite=this.departureDate;
       this.flightData.controls["arrival"].setValidators(Validators.required);
       this.flightData.controls["arrival"].updateValueAndValidity();
+
    }else{
        this.arrivalDate = '';
        this.flightData.controls["arrival"].setValue('');
