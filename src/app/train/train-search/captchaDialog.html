@@ -1,0 +1,20 @@
+<div class="col-md-12">
+    <form [formGroup]="formDialog" name="formDialog" (ngSubmit)="submitCaptcha()">
+        <div class="captcha my-4">
+            <ngx-recaptcha2 #captchaElem
+                    [siteKey]="siteKey"
+                    [size]="size"
+                    [hl]="lang"
+                    [theme]="theme"
+                    [type]="type"
+                    formControlName="captcha">
+            </ngx-recaptcha2>
+            <div *ngIf="submitted && formDialog.controls['captcha']['errors']" class="error">
+                    <small *ngIf="formDialog.controls['captcha']['errors']['required']">Please enter captcha.</small>
+            </div> 
+        </div>
+        <div class="xs-center mb-4">
+                <button class="btn-c btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
