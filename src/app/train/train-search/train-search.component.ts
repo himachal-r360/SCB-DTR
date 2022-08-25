@@ -37,7 +37,7 @@ export const MY_DATE_FORMATS = {
 @Component({
   selector: 'app-train-search',
   templateUrl: './train-search.component.html',
-  styleUrls: ['./train-search.component.css'],
+  styleUrls: ['./train-search.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ],
