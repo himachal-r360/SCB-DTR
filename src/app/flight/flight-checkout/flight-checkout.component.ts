@@ -839,11 +839,13 @@ orderRetry:boolean=false;
             for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
              fareInfo=  res.response.onwardFlightDetails[k];
              
-             console.log(fareInfo);
+          
 
               if (fareInfo.fare) {
                 if (fareInfo.fare.ADT) {
                   this.AdtFare += Number(fareInfo.fare.ADT.bf * fareInfo.fare.ADT.qt) + Number(fareInfo.fare.ADT.TX);
+                  
+                  
 
                   this.AdtQuantity += Number(fareInfo.fare.ADT.qt);
                   this.AdtBaseFare += Number(fareInfo.fare.ADT.bf);
@@ -877,6 +879,8 @@ orderRetry:boolean=false;
               cancellation_array.push(fareInfo.cancellationPolicy);
               
              } 
+             
+                console.log( this.AdtBaseFare);
              
               totalFare += Number(res.response.comboFare.onwardTotalFare);
               baseFare += Number(res.response.comboFare.onwardBaseFare);
