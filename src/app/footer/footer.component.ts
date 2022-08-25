@@ -97,7 +97,7 @@ currentYear: number=new Date().getFullYear();
         this.redirectPopup=2;
         this.redirectPopupUrl=this.domainRedirect+url;
      }else{
-     this.document.location.href =environment.MAIN_SITE_URL+url;
+     this.document.location.href =this.domainRedirect+url;
      }
     }
 
