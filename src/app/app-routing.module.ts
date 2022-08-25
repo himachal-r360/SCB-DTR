@@ -29,6 +29,9 @@ const routes: Routes = [
     {
     path:"train" , component:HomeComponent 
   },
+      {
+    path:"train/pnr" , component:HomeComponent 
+  },
   
     {
     path:"regalia_gold/compare-fly" , component:HomeComponent 
@@ -44,6 +47,9 @@ const routes: Routes = [
   },
     {
     path:"regalia_gold/train" , component:HomeComponent 
+  },
+      {
+    path:"regalia_gold/train/pnr" , component:HomeComponent 
   },
   
   

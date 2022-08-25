@@ -9,7 +9,7 @@ import {
   OnInit,
   ViewChild,Input, Output, EventEmitter,Inject
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators ,FormsModule,FormControl} from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { FlightService } from '../../common/flight.service';
@@ -20,6 +20,10 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
 import { APP_CONFIG, AppConfig} from '../../configs/app.config';
 import * as moment from 'moment';
+import { HttpParams } from '@angular/common/http';
+import { IrctcApiService } from 'src/app/shared/services/irctc.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { AppConfigService } from '../../app-config.service';
 declare var $: any;
 export const MY_DATE_FORMATS = {
   parse: {
@@ -33,6 +37,10 @@ export const MY_DATE_FORMATS = {
   },
 };
 
+
+export interface DialogData {
+  messageData: string;
+}
 
 @Component({
   selector: 'app-train-search',
@@ -50,6 +58,8 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
  @ViewChild('picker') datePicker: MatDatepicker<Date>;
+  count:number=0;
+    showSearch=true;
    cdnUrl: any;
   fromCityName :any ='From city';
   toCityName:any ='To city';
@@ -66,7 +76,6 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         isClosed:boolean = true;
         isDisabled = false;
         windowItem = window;
-        navItemActive:any;
         sameCity;
         private lastKeypress = 0;
         private queryText = '';
@@ -77,17 +86,35 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         searchTravelToHeader:string="Popular Cities";
     quotaList;
         selectedQuota:any = 'GN';
-        quota:string = 'GN';;
+        quota:string = 'GN';
+        navItemActive:string='train';
+        
+          showPnr=true;
+  showDetails=false;
+  PnrDetails:any;
+  pnrNo:string;
+  errorMessage:string;
+      serviceSettings:any;
+     domainName:any;     
   constructor(
     public _styleManager: StyleManagerService,
     public route: ActivatedRoute,
-      public router: Router,
+      public router: Router,public irctc:IrctcApiService,private dialog: MatDialog,private appConfigService:AppConfigService,
        private _trainService: FlightService,
       private formBuilder: FormBuilder,
       private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService,@Inject(APP_CONFIG) appConfig: any
 
     ) {
+     this.serviceSettings=this.appConfigService.getConfig();
       this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+      
+     if(router.url){
+        switch (router.url) {
+        case ('/train/pnr'):
+        this.navItemActive = 'pnr';
+        break;
+        }  
+     }
       
           //Train Form
       this.searchTrainForm = this.formBuilder.group({
@@ -222,7 +249,108 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         }, 100);
   
   }
+  onSubmit(){ 
+      const message=this.findInvalidControls(this.pnrNumber);
+      // this.submitted=true;
+      if(message){
+        this.submitted=true;
+        this.errorMessage=message;
+        this.pnrNumber="";
+      }else{           
+        let urlParams = new HttpParams()
+        .set('pnrnumber', this.pnrNumber);
+        
+        if(sessionStorage.getItem('-pnr')!=null){
+            var PNR=sessionStorage.getItem('-pnr');
+            var tempPNR=JSON.parse(atob(PNR));
+        }else{
+            sessionStorage.setItem('-pnr', btoa(JSON.stringify(this.pnrNumber)));
+        }
 
+        //console.log(tempPNR +" ## "+ this.pnrNumber);
+        const body:string = urlParams.toString();
+        //if same PNR number is searched second time then,captcha will come
+        
+   
+        //if(tempPNR == this.pnrNumber){
+              const dialogRef2 = this.dialog.open(CaptchaDialog, {
+                panelClass: 'm-captch',
+                disableClose: true,
+              });
+              dialogRef2.afterClosed().subscribe(result => {
+            
+                if(result){
+                  this.submitted=true;
+                    this.irctc.getPnr(body).subscribe(result => {
+                      this.PnrDetails = result.partnerResponse;
+                      //console.log(result)
+                      if(result.errorcode==0){
+                      
+                          if(result.errorDesc=='Sucess'){
+                            this.count=this.count+1;
+                            //if invalid pnr is searched then captcha will come
+                           
+                                // const dialogRef1 = this.dialog.open(CaptchaDialog, {
+                                //   disableClose: true,
+                                // });
+                                //dialogRef1.afterClosed().subscribe(result => {
+                                  this.submitted=true;
+                                  this.showDetails=true;
+                                  this.errorMessage='';
+                                  //this.pnrNumber="";
+                                //});
+                          }else{
+                            sessionStorage.setItem('-pnr', btoa(JSON.stringify(this.pnrNumber)));
+                            this.errorMessage=result.partnerResponse;
+                            this.showDetails=true;
+                          }
+                      }else if(result.errorcode==1){
+                        this.submitted=true;
+                        this.showDetails=true;
+                        this.errorMessage = result.partnerResponse;
+                      }else{
+                        this.submitted=true;
+                        this.showDetails=false;
+                        this.errorMessage='Please enter valid PNR number';
+                        //this.pnrNumber="";
+                      }
+                  });
+                }
+              }); 
+
+
+      }
+  }
+  
+   pnr(){ 
+    this.showPnr=true;
+    this.showSearch=false;
+    this.errorMessage="";
+  }
+
+  pnrNumber:string;
+
+  pnrKeyup(){
+    this.submitted=false;
+  }
+  public findInvalidControls(pnrNo) {
+    if(this.pnrNumber==undefined || this.pnrNumber=="" || this.pnrNumber == "0"){
+      return "Please enter PNR number"; 
+    }
+     if(this.pnrNumber.length !=10 ){
+      return "PNR Number should be 10 digit numeric number."; 
+    }
+    
+  } 
+  
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
   onToClick(values,device) {
         values=values['_source'];
         this.searchTrainForm['controls']['searchTo'].setValue(values.station_name);
@@ -402,6 +530,77 @@ export function MustMatch(controlName: any, matchingControlName: any) {
         matchingControl.setErrors(null);
       }
     }
+  }
+
+}
+
+@Component({
+  selector: 'confirmation-dialog',
+  templateUrl: './dialog.html',
+})
+export class ConfirmationDialog {
+    constructor(public dialogRef: MatDialogRef<ConfirmationDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    onYesClick(): void {
+      this.dialogRef.close(true);
+    }
+}
+@Component({
+  selector: 'dialogforcaptcha',
+  templateUrl: 'captchaDialog.html',
+  styleUrls: ['./train-search.component.scss']
+})
+export class CaptchaDialog {
+  siteKey:any; serviceSettings:any;
+  formDialog: FormGroup;
+  submitted: boolean=false;
+  size:string;lang:string;theme:string;type:string;
+  constructor(public dialogRef1: MatDialogRef<CaptchaDialog>,@Inject(MAT_DIALOG_DATA) public data: DialogData, @Inject(APP_CONFIG) appConfig: any,private appConfigService:AppConfigService) {}
+  
+    ngOnInit(){
+        this.serviceSettings=this.appConfigService.getConfig();
+        this.siteKey=this.serviceSettings.SITEKEY;  
+        this.size="Normal";
+        this.lang="en";
+        this.theme="Light";
+        this.type="Image";
+
+        const formDialog: FormGroup = new FormGroup({});
+        formDialog.addControl('captcha', new FormControl('', [Validators.required]));
+        this.formDialog = formDialog;
+    }
+
+    submitCaptcha(){
+      
+      this.submitted=true;
+      if (this.formDialog.invalid){
+        return;
+      }else{
+        this.dialogRef1.close(true);
+      }
+    }
+
+    // closeDialog(): void {
+    //   this.dialogRef.close(true);
+    // }
+}
+
+@Component({
+  // selector: 'dialog-overview-example-dialog',
+  templateUrl: 'covid-searchPage-popup.html',
+  styleUrls: ['./train-search.component.scss']
+})
+export class DialogOverviewExampleDialog {
+  domainName:any;
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,private sg: SimpleGlobal,) { 
+      this.domainName = this.sg['domainName']
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

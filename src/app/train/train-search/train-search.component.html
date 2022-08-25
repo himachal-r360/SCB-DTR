@@ -4,16 +4,16 @@
     <ul class="nav nav-pills mb-3 train_section" id="train_pill_tabs" role="tablist">
 
         <li class="nav-item" role="">
-          <button class="nav-link active" id="train_search" data-bs-toggle="pill" data-bs-target="#train_search_pill" type="button" role="tab" aria-controls="train_search_pill" aria-selected="true">Search Train</button>
+          <button class="nav-link " [ngClass]="navItemActive == 'train'? 'active':'' " id="train_search" data-bs-toggle="pill" data-bs-target="#train_search_pill" type="button" role="tab" aria-controls="train_search_pill" aria-selected="true">Search Train</button>
         </li>
         <li class="nav-item" role="">
-          <button class="nav-link" id="pnr_check" data-bs-toggle="pill" data-bs-target="#pnr_pill" type="button" role="tab" aria-controls="pnr_pill" aria-selected="false">Check PNR status</button>
+          <button class="nav-link" [ngClass]="navItemActive == 'pnr'? 'active':'' " id="pnr_check" data-bs-toggle="pill" data-bs-target="#pnr_pill" type="button" role="tab" aria-controls="pnr_pill" aria-selected="false">Check PNR status</button>
         </li>
         
       </ul>
       <div class="tab-content" id="pills-trainContent">
 
-        <div class="tab-pane fade show active" id="train_search_pill" role="tabpanel" aria-labelledby="train_search">
+        <div class="tab-pane fade " [ngClass]="navItemActive == 'train'? 'show active':'' " id="train_search_pill" role="tabpanel" aria-labelledby="train_search">
             <form [formGroup]="searchTrainForm">
                 <div class="travel-select-data-area">
                         <div class="travel-data">
@@ -346,18 +346,23 @@
                 </div>
             </form>
         </div>
-        <div class="tab-pane fade" id="pnr_pill" role="tabpanel" aria-labelledby="pnr_check">
+        <div class="tab-pane fade" [ngClass]="navItemActive == 'pnr'? 'show active':'' "  id="pnr_pill" role="tabpanel" aria-labelledby="pnr_check">
             <div>
 
-                <form [formGroup]="">
+                <form *ngIf="showPnr"  name="pnrForm">
+                <div class="container" id="pnrCheckDiv">
                     <div class="travel-select-data-area">
                         <div class="travel-data">
                             <div class="row g-2">
                                 <div class="col-lg-10">
                                     <div class="select-root-area mlight_pnr">
-                                        <div class="" appDropdown>
+                                        <div class="" >
                                             <span class="select-roottitle">PNR NUMBER</span>
-                                            <input type="text" class="pnr_input" placeholder="Enter 10 Digit PNR">
+                                            <input type="text" class="pnr_input" placeholder="Enter 10 Digit PNR" [(ngModel)]="pnrNumber"   name="pnrNumber" id="pnrNumber" maxlength="10"
+                   autocomplete="off" (keyup)="pnrKeyup()" (paste)="onPaste($event)" (keypress)="numberOnly($event);">
+                    <div *ngIf="submitted && errorMessage" class="error">
+                      <small class="validate-msg">{{errorMessage}}</small> 
+                    </div>
                                         </div>
                                     </div>
                                 </div>
@@ -366,15 +371,22 @@
                                 <div class="col-lg-2">
                                     <div class="root-date">
                                         <div class="root-search">
-                                            <button type="button" class="searchbn">Search</button>
+                                            <button type="button" (click)="onSubmit()"  class="searchbn">Search</button>
                                         </div>
                                     </div>
                                 
                                  </div>
+                                <div class="clearfix"></div>
+                                <div class="pt-3">
+                                <p class="m0 pnr-title"><sup>*</sup> PNR Enquiry Can be done only on tickets booked through Smartbuy.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                   </div>  
                 </form>
+                
+                
 
         </div>
 
