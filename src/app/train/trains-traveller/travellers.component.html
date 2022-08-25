@@ -133,19 +133,19 @@
                 <div class="row">
                   <div class="col-6">
                     <p class="train_name">
-                      LTT VSKP EXP(18520)
+                      {{trainName}}({{trainnumber}})
                     </p>
                   </div>
                   <div class="col-6 text-right">
                     <p class="daily_chart">
                       <!-- <span class="text-small-gray" style="color:#000000;">Runs on:</span> -->
-                      <span >S</span>
-                      <span >M</span>
-                      <span >T</span>
-                      <span >W</span>
-                      <span >T</span>
-                      <span class="active">F</span>
-                      <span >S</span>
+                     <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
                   </p>
                   </div>
                 </div>
@@ -153,18 +153,18 @@
                   <div class="row my-2">
                     <div class="col-3">
                       <div>
-                        <p><span class="time">06:05, Sat</span></p>
+                        <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="duration_train">
-                        <p class="dur_time">13 hrs 35 mins</p>
+                        <p class="dur_time">{{travelDuration}}</p>
                         <div class="range m_range"></div>
                       </div>
                     </div>
                     <div class="col-3 text-right">
                       <div>
-                        <p><span class="time">20:30, Sun</span> </p>
+                        <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
                       </div>
                     </div>
                   </div>
@@ -172,15 +172,15 @@
                   <div class="trainTimeInfo d-block">
                     <div class="row">
                         <div class="col-4">
-                            <p class="place">Lokmantatilak (LTT) </p>
-                            <p class="date">Jul 17, 2022</p>
+                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
                         </div>
                         <div class="col-4">
                             
                         </div>
                         <div class="col-4 text-right">
-                            <p class="place">Secunderabad Jn (SC)</p>
-                            <p class="date">Jul 17, 2022</p>
+                            <p class="place">{{tostnDesc}}</p>
+                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
                         </div>
                       </div>
                   </div>
@@ -1475,13 +1475,7 @@
           <div>
 
             <div class="booking-process-content" >
-              <div class="booking-title-box">
-                <h4 class="heading_text">Mumbai to Hyderabad <p class="sub_head_text"> <span
-                  class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
-                      src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
-                </h4>
-              </div>
-              <div class="booking-inner-box from-to-box">
+               <div class="booking-inner-box from-to-box">
                 
                     <!-- Webcode Train Details-->
               <div class="d-none d-sm-block">
@@ -1489,36 +1483,36 @@
 
                   <div class="col-sm-4">
                     <p class="train_name">
-                      LTT VSKP EXP(18520)
+                      {{trainName}}({{trainnumber}})
                     </p>
                     <p class="daily_chart">
                         <span class="text-small-gray" style="color:#000000;">Runs on:</span>
-                        <span >S</span>
-                        <span >M</span>
-                        <span >T</span>
-                        <span >W</span>
-                        <span >T</span>
-                        <span class="active">F</span>
-                        <span >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
                     </p>
                   </div>
                   <div class="col-sm-8">
                     <div class="trainTimeInfo">
                         <div class="">
-                            <p><span class="time">06:05, Sat</span></p>
-                            <p class="place">Lokmantatilak (LTT) </p>
-                            <p class="date">Jul 17, 2022</p>
+                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
                         </div>
                         <div>
                             <div class="duration_train">
-                                <p class="dur_time">13 hrs 35 mins</p>
+                                <p class="dur_time">{{travelDuration}}</p>
                                 <div class="range m_range"></div>
                             </div>
                         </div>
                         <div>
-                            <p><span class="time">20:30, Sun</span> </p>
-                            <p class="place">Secunderabad Jn (SC)</p>
-                            <p class="date">Jul 17, 2022</p>
+                             <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                            <p class="place">{{tostnDesc}}</p>
+                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
                         </div>
                       </div>
                   </div>
@@ -1530,19 +1524,20 @@
                 <div class="row">
                   <div class="col-6">
                     <p class="train_name">
-                      LTT VSKP EXP(18520)
+                      {{trainName}}({{trainnumber}})
                     </p>
                   </div>
                   <div class="col-6 text-right">
                     <p class="daily_chart">
                       <!-- <span class="text-small-gray" style="color:#000000;">Runs on:</span> -->
-                      <span >S</span>
-                      <span >M</span>
-                      <span >T</span>
-                      <span >W</span>
-                      <span >T</span>
-                      <span class="active">F</span>
-                      <span >S</span>
+                       <span class="text-small-gray" style="color:#000000;">Runs on:</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
                   </p>
                   </div>
                 </div>
