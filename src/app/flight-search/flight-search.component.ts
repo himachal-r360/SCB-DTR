@@ -712,6 +712,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   increaseInfant() {
+    if(this.flightData.value.infants >= this.flightData.value.adults){
+        alert("Number of Infants cannot exceed the number of Adults.")
+    }
     if (
       parseInt(this.flightData.value.infants) <
       parseInt(this.flightData.value.adults)
