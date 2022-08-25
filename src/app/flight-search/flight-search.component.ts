@@ -111,8 +111,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   flightToOptions: any[];
   defaultFlightOptions: any[];
   multicityLastSearch = localStorage.getItem('multicityLastSearch');
-  searchFlightFromHeader: string = "Popular Cities";
-  searchFlightToHeader: string = "Popular Cities";
+  searchFlightFromHeader: string = "Popular Searches";
+  searchFlightToHeader: string = "Popular Searches";
   flightData: any = this._fb.group({
     flightfrom: ['', [Validators.required]],
     flightto: ['', [Validators.required]],
