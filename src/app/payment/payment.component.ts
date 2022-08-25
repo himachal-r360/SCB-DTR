@@ -390,14 +390,13 @@ pgSettingsCYBERToken:number=0;
 			this.showVerificationDetails = false;
 			this.showcalcsection = false;
 			this.flexipayOtpResponse = false;
-			this.isLoggedIn = true;
 			// this.REWARD_MOBILE = this.customerInfo['mobile'];
 			if(this.customerInfo['mobile'] == '0'){
 				this.REWARD_MOBILE = '';
 			}else this.REWARD_MOBILE = this.customerInfo['mobile'];
 
 			}
-		this.isLoggedIn = false;
+		this.isLoggedIn = true;
 		}else{
 		this.isLoggedIn = true;
 		}
