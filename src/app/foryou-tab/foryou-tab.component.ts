@@ -41,7 +41,7 @@ public modeselectTrending= 'All';
   saveCard: any;
   custCardsAvailable: Boolean;
   custCardsNotAvailable: Boolean = true;
-  customercards: any; primaryCust: any;
+  customercards: any | []; primaryCust: any;
   selectedCardDetails: any;
   customeravailablepoints: any;
   card_no: any;
@@ -268,7 +268,7 @@ public modeselectTrending= 'All';
           if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
             this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
             this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
-            this.card_no="xx"+(Number(this.customerInfo['ccustomer'].last4digit));
+            this.card_no=this.customerInfo['ccustomer'].first4digit+" ******** "+this.customerInfo['ccustomer'].last4digit;
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
             //this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
             this.IsPointsCardDetails=false;
@@ -941,7 +941,6 @@ public modeselectTrending= 'All';
          return false; 
        }
        this.customerInfo = this.sg['customerInfo'];
-       this.card_no=this.angForm.controls['last_4_digit'].value;
        this.IsCardError=true;
        let URLparams = {
           "mobile": this.angForm.controls['mobile_no'].value,
@@ -969,6 +968,7 @@ public modeselectTrending= 'All';
             this.angForm.reset();
             this.spinnerService.show();  
             this.customeravailablepoints=res.points_available;
+            this.card_no=res.first4digit+" ******** "+res.last4digit;
             this.current_available_points=res.current_available_points;
             this.last_stmt_points=res.last_stmt_points;
           }else{
