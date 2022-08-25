@@ -919,8 +919,9 @@
                                     </a>
                                 </div>
                             </div>
-                            <p class="mt-1 mb-2"><span class="hdr_customer_pts">2890 Pts</span></p>
-                                    <div class="dropdown myaccount-drop">
+                            <p class="mt-1 mb-2" *ngIf="points > 0"><span class="hdr_customer_pts" *ngIf="customeravailableStatus" >{{customeravailablepoints}}</span></p>
+                              <div *ngIf="cardList">
+                                    <div class="dropdown myaccount-drop" *ngIf="cardList.length > 1">
                                         <a class="dropdown-toggle hdr_btn" href="#" role="button" id="dropdown-user1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img src="{{cdnUrl}}/images/smartbuy/icons/card_icn.svg"><span class="btn-text">SWITCH TO</span><i class="fa fa-caret-down hdr_btn_caret" aria-hidden="true"></i>
                                         </a>
@@ -952,7 +953,7 @@
 
                                         </div>
                                     </div>
-                                    
+                              </div>      
                         </div>
 
                     </div>
