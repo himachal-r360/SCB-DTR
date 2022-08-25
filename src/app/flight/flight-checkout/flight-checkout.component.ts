@@ -326,7 +326,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapse: boolean = false;
 orderRetry:boolean=false;
 
-  constructor(private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
+  constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
@@ -3058,6 +3058,7 @@ orderRetry:boolean=false;
 
   continueTravellerDetails() {
     alertify.set('notifier', 'position', 'top-center');
+  alertify.dismissAll();
     if (this.adultsArray.length < this.maxAdults) {
       alertify.error('Please add adult traveller', '').delay(3);
       return;
@@ -3103,10 +3104,21 @@ orderRetry:boolean=false;
       this.passengerForm.controls['gstState'].updateValueAndValidity();
     }
 
-    this.passengerForm.markAllAsTouched();
+   
 
 
     if (this.passengerForm.invalid) {
+     this.passengerForm.markAllAsTouched();
+     
+        let target;
+
+        target = this.el.nativeElement.querySelector('.ng-invalid')
+
+        if (target) {
+        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
+        target.focus();
+        }
+     
       // console.log(this.passengerAdultFormCount);
       return;
     } else {

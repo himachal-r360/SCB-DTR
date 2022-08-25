@@ -203,7 +203,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
           objSearch[objKey] = objKeyVal;
         }
       }
-      console.log(objSearch)
+      
       if (objSearch != null && objSearch != undefined && Object.keys(objSearch).length) {
         flightSearchArr.push(objSearch); // Add object in array.
       }
@@ -215,7 +215,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     });
     this.selectedTripData = this.searchData[0];
     this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
-    console.log(flightSearchArr, "flightSearchArr");
+    
   }
 
   flightSearch() {
@@ -226,9 +226,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       {
         element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
       }
-    console.log(searchObj, "searchObj");
+    
     this.sub = this._flightService.multicityList(searchObj).subscribe((res: any) => {
-      console.log(res , "response");
       if(res.response.journeys)
       {
         this.WithoutFilterFlightList = res.response.journeys;
@@ -238,7 +237,6 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         });
         this.flightListWithOutFilter = this.flightList;
         this.DocKey = res.response.docKey;
-        console.log(this.flightList)
         this.getAirlinelist();
         if (this.flightList.length > 0) {
           this.GetMinAndMaxPriceForFilter();
@@ -1308,8 +1306,7 @@ bookingSummary() {
           this.isError = false;
         }
       }
-      console.log(this.SelectedFlightsOnSector);
-      console.log(this.searchData);
+      
   }
 
   nextFlightSelect()
