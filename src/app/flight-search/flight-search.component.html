@@ -659,8 +659,7 @@
                                             <li>
                                                 <a href="javascript:void(0)" class="" value="E"
                                                     (click)="getClassVal('E')"
-                                                    [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
-                                                    Economy</a>
+                                                    [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy</a>
                                             </li>
                                             <li>
                                                 <a href="javascript:void(0)" class="" value="P"
@@ -934,7 +933,7 @@
             <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
                 <div class="row g-2">
                         <ng-container  formArrayName="multicityFormArr">
-                    <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
+                    <ng-container *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container  [formGroupName]="i">
                         <div class="col-lg-6">
                             <div class="select-root-area">
@@ -1374,8 +1373,7 @@
                                                     <li>
                                                         <a href="javascript:void(0)" class="" value="E"
                                                             (click)="getClassVal('E')"
-                                                            [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
-                                                            Economy</a>
+                                                            [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy</a>
                                                     </li>
                                                     <li>
                                                         <a href="javascript:void(0)" class="" value="P"
@@ -1766,8 +1764,7 @@
                                   <li>
                                       <a href="javascript:void(0)" class="" value="E"
                                           (click)="getClassVal('E')"
-                                          [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
-                                          Economy</a>
+                                          [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy</a>
                                   </li>
                                   <li>
                                       <a href="javascript:void(0)" class="" value="P"
