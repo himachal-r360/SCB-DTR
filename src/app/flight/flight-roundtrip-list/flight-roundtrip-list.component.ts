@@ -108,10 +108,10 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     { name: 'Meals_Included', active: false, value: 'Meals-Included', count: 0 }
   ]
   flight_Timingsitems = [
-    { name: '0_6', active: false, value: '00-06', image: '1.png' },
-    { name: '6_12', active: false, value: '06-12', image: '2.png' },
-    { name: '12_18', active: false, value: '12-18', image: '3.png' },
-    { name: '18_0', active: false, value: '18-00', image: '4.png' }
+    { name: '0_6', active: false, value: 'Before 6 AM', image: '1.png' },
+    { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.png' },
+    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '3.png' },
+    { name: '18_0', active: false, value: 'After 6 PM', image: '4.png' }
   ]
 
   flight_return_Timingsitems = [
@@ -132,11 +132,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   ]
   priceSortingFilteritems = [
     { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.png', sortValue:'Price'},
-    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-l.png',sortValue:'Price' },
-    { name: 'D_E', active: false, value: 'Earliest' , image:'/assets/images/icons/Departure.png',sortValue:'Depart'},
-    { name: 'D_L', active: false, value: 'Latest' ,image:'/assets/images/icons/Departure.png',sortValue:'Depart'},
+    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.png',sortValue:'Price' },
     { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.png',sortValue:'Duration'},
     { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.png',sortValue:'Duration'},
+    { name: 'D_E', active: false, value: 'Earliest' , image:'/assets/images/icons/Departure.png',sortValue:'Departure'},
+    { name: 'D_L', active: false, value: 'Latest' ,image:'/assets/images/icons/Departure.png',sortValue:'Departure'},
     { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
     { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png', sortValue:'Arrival'},
   ]
@@ -168,7 +168,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   pageIndex: number = 101;
   ITEMS_RENDERED_AT_ONCE=100;
   nextIndex=0;
-  
+
     pageIndexR: number = 101;
   nextIndexR=0;
 
@@ -568,7 +568,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       let allFlightsList = [...this.flightList,...this.ReturnflightList]
       if (allFlightsList.length > 0) {
         allFlightsList.filter((e: any)  => {
-        
+
           var flights = e.flights.filter((d: any, indx: number) => { if (d.stops == 0 && indx == 0) { return d; } }); // Non-Stop count
           if (flights.length > 0 && e.flights.length==1 ) {
             this.nonStopCount += 1;
@@ -1177,32 +1177,32 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         isfilterFlightStops = true;
       }
       if (isfilterFlightStops == true) {
-      
+
         var filteredStopsArr: any[] = [];
         if (flightList.length > 0) {
-        
-        
+
+
                 flightList.filter((d: any) => {
-        
+
          if (d.flights.length==1 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "no_stops") { return item; } }).length > 0) &&  d.flights[0].stops == 0) {
                filteredStopsArr.push(d);
          }
-  
+
         if (d.flights.length==1 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "1_stops") { return item; } }).length > 0)&&  d.flights[0].stops == 1) {
                filteredStopsArr.push(d);
          }
-         
+
          if (d.flights.length==2 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "1_stops") { return item; } }).length > 0)) {
                filteredStopsArr.push(d);
          }
-         
+
          if (d.flights.length > 2 && (isStopsFilterItems.filter((item: any) => { if (item.active == true && item.name == "2plus_stops") { return item; } }).length > 0) ) {
            filteredStopsArr.push(d);
          }
-        
+
 
         });
-        
+
 
         }
         updatedflightList = filteredStopsArr;
@@ -1369,11 +1369,11 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   }
   flightChangeDisplay:any;
-  
+
   flightsChange:any; selectedChange:any; flightKeyChange:any; itemChange:any;eventChange:any;
-  
+
   onSelectOnwardSplrt:any;
-  selectedFromKey:any ; 
+  selectedFromKey:any ;
   onSelectOnword(flightKey:any,flights:any,item:any,priceDump:any,event:any , j:any)
   {
     debugger;
@@ -1385,7 +1385,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }else{
     this.onSelectOnwardSplrt=[];
     }
-  
+
         let departureAirportUser=this.searchData.flightfrom;
         let arrivalAirportUser=this.searchData.flightto;
 
@@ -1409,14 +1409,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         $('#flightChangeO').modal('show');
         return;
         }
-  
+
 
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".onwardbuttons").html('Select');
     var selected = event.target as HTMLElement
-    
-        
-    
+
+
+
       if(selected)
       {
         this.isOnwardSelected = true;
@@ -1427,8 +1427,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           console.log(selected , "selected");
 
 
-     
-        
+
+
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
@@ -1446,10 +1446,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     });
 
   }
-  
+
     onSelectOnwordContinue(flightKey:any,flights:any,item:any,event:any)
   {
-    
+
     $('#flightChangeO').modal('hide');
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".selected-flight-background").removeClass('selected-flight-background');
@@ -1482,7 +1482,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   }
     flightChangeDisplayR:any;
-  
+
   flightsChangeR:any; selectedChangeR:any; flightKeyChangeR:any; itemChangeR:any;eventChangeR:any;
   onSelectReturnSplrt:any;
   sumval:any;sumvalold:any;  onward_combofareKey:any;return_combofareKey:any;splrtFlight:boolean=false;
@@ -1510,10 +1510,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         var get_onward_price_new = this.onwardSelectedFlight.priceSummery.totalFare;
         var selected_price_new = item.totalFare;
         this.sumvalold = parseInt(get_onward_price_new) + parseInt(selected_price_new);
-        
-          
+
+
   if(this.onSelectOnwardSplrt.length >0 && this.onSelectReturnSplrt.length>0){
-        
+
         if (onwardAirline == returnAirline) {
         splrt_status = 1;
         }
@@ -1522,7 +1522,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         var onward_combofare = this.onSelectOnwardSplrt;
          for (var i = 0; i < flights.length; i++)  {     returnFlightnumbers.push(flights[i]['flightNumber']);  }
          for (var i = 0; i < this.onwardSelectedFlight.flights.length; i++)  {     onwardFlightnumbers.push(this.onwardSelectedFlight.flights[i]['flightNumber']);  }
-          
+
         if (returnFlightnumbers.length == 1) {
         onward_combofare = onward_combofare.filter(function(a) {
         var clearTripSPLRTComboFlightNO = a.clearTripSPLRTComboFlightNO;
@@ -1531,7 +1531,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         return a;
         }
         });
-       
+
         if (onward_combofare.length > 0) {
         this.onward_combofareKey=onward_combofare[0].clearTripFareKey;
         get_onward_price_new = onward_combofare[0].totalFare;
@@ -1566,7 +1566,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         var return_combofare = this.onSelectReturnSplrt;
         var comboairline =this.onwardSelectedFlight.flights[0]['carrier_id'];
         if (comboairline == '6E' || comboairline == 'SG') { eligibleCombo = 1; }
-        
+
         if (onwardFlightnumbers.length == 1 && eligibleCombo == 1) {
             return_combofare = return_combofare.filter(function(a) {
                 var clearTripSPLRTComboFlightNO = a.clearTripSPLRTComboFlightNO;
@@ -1583,7 +1583,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             return_combofare = return_combofare.filter(function(a) {
                 var clearTripSPLRTComboFlightNO = a.clearTripSPLRTComboFlightNO;
                 var ComboFlightNO = clearTripSPLRTComboFlightNO.split("$");
-                
+
                 var equal = ComboFlightNO.length == onwardFlightnumbers.length; // if array sizes mismatches, then we assume, that they are not equal
                 if (equal) {
                 $.each(ComboFlightNO, function(foo, val) {
@@ -1598,7 +1598,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
                 if (equal) {
                 return a;
                 }
-                
+
             });
             if (return_combofare.length > 0) {
                 this.return_combofareKey=return_combofare[0].clearTripFareKey;
@@ -1608,9 +1608,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
         }
     }
-      
+
   }
-  
+
      var sumval_new = parseInt(get_onward_price_new) + parseInt(selected_price_new);
         if (sumval_new < this.sumvalold && onwardAirline == returnAirline && splrt_status == 1) {
          this.splrtFlight=true;
@@ -1624,10 +1624,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
                console.log(sumval_new);
          console.log(this.sumvalold);
          console.log(this.sumval);
-        
-        
-        
-      
+
+
+
+
         let departureAirportUserR=this.searchData.flightto;
         let arrivalAirportUserR=this.searchData.flightfrom;
 
@@ -1637,8 +1637,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.itemChangeR=item;
         this.flightKeyChangeR=flightKey;
         this.eventChangeR=event;
-      
-      
+
+
        if (departureAirportSelectedR != departureAirportUserR) {
         this.flightChangeDisplayR= "We found more airports near " + this.airportsNameJson[departureAirportUserR ].city + ". Cheapest flight at ₹"+formatNumber(item.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[departureAirportSelectedR ].airport_name+ ', ' +this.airportsNameJson[departureAirportSelectedR ].city + ' (' + departureAirportSelectedR + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelectedR ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelectedR ].city + ' (' + arrivalAirportSelectedR + ').';
         $('#flightChangeR').modal('show');
@@ -1651,9 +1651,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         $('#flightChangeR').modal('show');
         return;
         }
-       
-      
-      
+
+
+
     $(".returnButtons").removeClass('button-selected-style');
     $(".returnButtons").html('Select');
       var selected = event.target as HTMLElement
@@ -1674,9 +1674,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         alert('Please choose onward flight.')
       }
   }
-  
-  
-  
+
+
+
     onSelectReturnChange(flightKey:any,flights:any,item:any,event:any)
   {
     debugger
@@ -1707,8 +1707,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         alert('Please choose onward flight.')
       }
   }
-  
-  
+
+
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
   }
@@ -1742,12 +1742,12 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   navBarLink(navItem:any){
     this.navItemActive = navItem;
   }
-  
+
 
 
   bookingSummary(onwardSelectedFlight: any, returnSelectedFlight: any) {
-  
-  
+
+
         let flightDetailsArr: any = {
         "travel":"DOM",
         "travel_type":"R",
