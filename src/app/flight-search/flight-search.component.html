@@ -932,8 +932,7 @@
           </div>
             <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
                 <div class="row g-2">
-                        <ng-container  formArrayName="multicityFormArr">
-                    <ng-container *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
+                    <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container  [formGroupName]="i">
                         <div class="col-lg-6">
                             <div class="select-root-area">
@@ -1421,7 +1420,6 @@
 
 
                         </div>
-                    </ng-container>
                     </ng-container>
                     </ng-container>
 

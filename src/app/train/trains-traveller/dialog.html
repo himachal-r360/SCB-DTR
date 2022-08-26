@@ -2,7 +2,7 @@
     <ng-container *ngIf="data.errorDialog">
       <mat-dialog-content >
       <p class="py-2"><i class="material-icons" style="font-size: 50px;"> error </i> <br/> <span class="text-dark">{{data.messageData}}</span></p>
-      <button class="btn btn-outline-primary my-3" (click)="onYesClick()" tabindex="1" >Ok</button>
+      <button class="btn btn-outline-primary my-3" (click)="onYesClick()" tabindex="1" >OK</button>
       </mat-dialog-content>
     </ng-container>
 
@@ -12,32 +12,33 @@
       <mat-dialog-content >
       <div *ngIf="step4">
         <form [formGroup]="Form1Submit" name="Form1Submit" (ngSubmit)="forgotDetailsFormSubmit()">
-          <div class="my-2">
+          <div class="my-2 mb-20">
               <div class="title-for">Forgot User ID</div>
               <p class="sub_title-for">Please enter your details</p>
             </div>
             <div class="row">
-              
-            <div class="col-md-6">
-                <mat-form-field>
-                  <input matInput placeholder="Registered Email ID" formControlName="email">
-                </mat-form-field>
-                <div *ngIf="submittedForm1 && Form1Submit.controls.email.errors" class="error text-left">
-                  <small *ngIf="Form1Submit.controls.email.errors.required">Please enter email address.</small>
-                  <small *ngIf="Form1Submit.controls.email.errors.pattern">Please enter a valid email id.</small>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <mat-form-field>
-                    <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <!-- <input matInput placeholder="Date of Birth" formControlName="dob"> -->
-                </mat-form-field>
-                <div *ngIf="submittedForm1 && Form1Submit.controls['dob']['errors']" class="error text-left">
-                  <small *ngIf="Form1Submit.controls['dob']['errors']['required']">Please enter dob.</small>
-                </div>
-            </div>
+              <div class="col-6">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Registered Email ID</mat-label>
+                    <input matInput placeholder="" formControlName="email">
+                  </mat-form-field>
+                  <div *ngIf="submittedForm1 && Form1Submit.controls.email.errors" class="error text-left">
+                    <small *ngIf="Form1Submit.controls.email.errors.required">Please enter email address.</small>
+                    <small *ngIf="Form1Submit.controls.email.errors.pattern">Please enter a valid email id.</small>
+                  </div>
+              </div>
+              <div class="col-6">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Date of Birth</mat-label>
+                      <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="" readonly="true" formControlName="dob">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <!-- <input matInput placeholder="Date of Birth" formControlName="dob"> -->
+                  </mat-form-field>
+                  <div *ngIf="submittedForm1 && Form1Submit.controls['dob']['errors']" class="error text-left">
+                    <small *ngIf="Form1Submit.controls['dob']['errors']['required']">Please enter dob.</small>
+                  </div>
+              </div>
             </div>
             <div>
                 <div class="captcha my-4">

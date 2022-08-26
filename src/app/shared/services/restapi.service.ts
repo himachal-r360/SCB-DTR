@@ -260,13 +260,16 @@ checksavedtravellers(param){
   	return this.http.post(MAIN_SITE_URL+ this.domainPath+'card_validate', param, config).pipe(map((response: any) => response));
 
  }
-createItinerary(param){
-  if(LOCALJSON=='true'){
-    return this.http.get('assets/data/ItineraryResponse.json');
-  }
-  else{
-  return this.http.post( this.endpoint+'createItinerary',param, config).pipe(map((response: any) => response));
-  }
+        createItinerary(param,type){
+        if(LOCALJSON=='true'){
+        if(type=='M')
+         return this.http.get('assets/data/ItineraryResponseMulti.json');
+         else
+        return this.http.get('assets/data/ItineraryResponse.json');
+        }
+        else{
+        return this.http.post( this.endpoint+'createItinerary',param, config).pipe(map((response: any) => response));
+        }
 } 
   IsDcemiEligible (param):Observable<any> {
     if(LOCALJSON=='true'){

@@ -1,337 +1,558 @@
-                        <form [formGroup]="searchTrainForm">
-                            <div class="travel-select-data-area">
-                                    <div class="travel-data">
-                                    <div class="row g-2">
-                                        <div class="col-lg-6">
-                                            <div class="select-root-area">
-                                                <div class="select-root-left" appDropdown>
-                                                    <span class="select-roottitle">FROM</span>
-                                                    <h5 class="fw_6 ">{{fromCityName}}</h5>
-                                                    <span class="select-roottitle">{{fromStateName}}</span>
-                                        <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('fromTravelCode', 'required')">
-                                        <small   class="validate-msg">Please select to city</small>
-                                        </div>
+  
+  
+  <div class="mt-30">
+    <ul class="nav nav-pills mb-3 train_section" id="train_pill_tabs" role="tablist">
+
+        <li class="nav-item" role="">
+          <button class="nav-link " [ngClass]="navItemActive == 'train'? 'active':'' " id="train_search" data-bs-toggle="pill" data-bs-target="#train_search_pill" type="button" role="tab" aria-controls="train_search_pill" aria-selected="true">Search Train</button>
+        </li>
+        <li class="nav-item" role="">
+          <button class="nav-link" [ngClass]="navItemActive == 'pnr'? 'active':'' " id="pnr_check" data-bs-toggle="pill" data-bs-target="#pnr_pill" type="button" role="tab" aria-controls="pnr_pill" aria-selected="false">Check PNR status</button>
+        </li>
+        
+      </ul>
+      <div class="tab-content" id="pills-trainContent">
+
+        <div class="tab-pane fade " [ngClass]="navItemActive == 'train'? 'show active':'' " id="train_search_pill" role="tabpanel" aria-labelledby="train_search">
+            <form [formGroup]="searchTrainForm">
+                <div class="travel-select-data-area">
+                        <div class="travel-data">
+                        <div class="row g-2">
+                            <div class="col-lg-6">
+                                <div class="select-root-area">
+                                    <div class="select-root-left" appDropdown>
+                                        <span class="select-roottitle">FROM</span>
+                                        <h5 class="fw_6 ">{{fromCityName}}</h5>
+                                        <span class="select-roottitle">{{fromStateName}}</span>
+                            <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('fromTravelCode', 'required')">
+                            <small   class="validate-msg">Please select to city</small>
+                            </div>
 
 
-                                        <div class="error_msg w-50" *ngIf="!isMobile && Error('toTravelCode', 'MustMatch')">
-                                        <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
-                                        </div>
+                            <div class="error_msg w-50" *ngIf="!isMobile && Error('toTravelCode', 'MustMatch')">
+                            <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
+                            </div>
 
-                                                 <div class="" *ngIf="isMobile && submitted && Error('fromTravelCode', 'required')">
-                                        <small   class="validate-msg">Please select to city</small>
-                                        </div>
-
-
-                                        <div class="" *ngIf="isMobile && Error('toTravelCode', 'MustMatch')">
-                                        <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
-                                        </div>
+                                     <div class="" *ngIf="isMobile && submitted && Error('fromTravelCode', 'required')">
+                            <small   class="validate-msg">Please select to city</small>
+                            </div>
 
 
-
-
-                                                    <div               class="flight-from-data flight-from-hide ff-form-data dropdown">
-                                                        <div class="mob-title">
-                                                            <h3>Select From City</h3>
-                                                            <a href="javascript:void(0)"
-                                                                class="mob-close mob-ff-from-close close-mobile">
-                                                                <img src="{{cdnUrl}}/images/icons/close.png"
-                                                                     class="close-mobile" alt="" />
-                                                            </a>
-                                                        </div>
-
-                                                   <div class="mob-search" *ngIf="isMobile">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">From</label>
-                                                                        <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
-                                                                        <input type="hidden"  formControlName="fromTravelCode">
-                                                                        <!--<input type="hidden"  formControlName="fromState">-->
-                                                                    </div>
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">To</label>
-                                                                <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');">
-                                                                <input type="hidden"  formControlName="toTravelCode">
-                                                                <!--<input type="hidden"  formControlName="toState">-->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flight-from-data-search" *ngIf="!isMobile">
-
-                                                        <input type="text" autocomplete="off" class="w-100"
-                                                        id="searchFrom" placeholder="Search City"
-                                                        (keyup)="searchAutoComplete($event,'searchFrom' ,'web');"
-                                                       autofocus #fromCityInput
-                                                        >
-                                                        <input type="hidden" name="searchFrom" formControlName="searchFrom">
-
-                                                        <input type="hidden"  formControlName="fromTravelCode">
-                                                        <!--<input type="hidden"  formControlName="fromState">-->
-
-
-
-                                                        </div>
-
-                                                <ul class="flight-from-data-ul" >
-                                                <li class="flight-from-ul-li">
-                                                <p class="flight-Results-text">{{searchTravelFromHeader}}</p>
-                                                </li>
-                          <li class="flight-from-ul-li"  *ngFor="let fromOptions of travelFromOptions;let ind=index;">
-                                        <a  class="flight-from-ul-li-a"   (click)="onFromClick(fromOptions,'web')">
-                                        
-                                              <div class="hotel-from-name">
-                                        <h6><i class="fa fa-train"></i> &nbsp;{{fromOptions._source.station_name}}</h6>
-                                        <p></p>
-                                        </div>
-                                        <div class="flight-from-shortname">
-                                        <h6></h6>
-                                        </div>
-                               
-                                        </a>
-                                        </li>
-                                          <li *ngIf="travelFromOptions.length==0"><a>No Results Found...</a></li>
-                                                </ul>
+                            <div class="" *ngIf="isMobile && Error('toTravelCode', 'MustMatch')">
+                            <small  *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
+                            </div>
 
 
 
 
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="select-root-icons" (click)="swap()">
-                                                    <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
-                                                </div>
-                                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
-                                                    <span class="select-roottitle">TO</span>
-                                                    <h5 class="fw_6 ">{{toCityName}}</h5>
-                                                    <span class="select-roottitle">{{toStateName}}</span>
-                                                                                                     <div class="error_msg w-50"  *ngIf="!isMobile && submitted && Error('toTravelCode', 'required')" >
-                                <small class="validate-msg">Please select to city</small>
-                                </div>
-
-                                              <div class="" *ngIf="isMobile && submitted && Error('toTravelCode', 'required')">
-                                        <small   class="validate-msg">Please select to city</small>
-                                        </div>
-
-
-
-                                                    <div class="flight-to-data flight-from-hide dropdown"
-                                                        #removeClassToCity>
-                                                        <div class="mob-title">
-                                                            <h3>Select To City</h3>
-                                                            <a href="javascript:void(0)"
-                                                                class="mob-close mob-ff-from-close close-mobile">
-                                                                <img src="{{cdnUrl}}/images/icons/close.png"
-                                                                    class="close-mobile" alt="" />
-                                                            </a>
-                                                        </div>
-                                                                            <div class="mob-search" *ngIf="isMobile">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">From</label>
-                                                                        <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
-                                                                        <input type="hidden"  formControlName="fromTravelCode">
-                                                                       <!-- <input type="hidden"  formControlName="fromState">-->
-
-                                                                    </div>
-                                                                    <div class="mob-search-list">
-                                                                        <label for="">To</label>
-                                                                <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
-                                                                <input type="hidden"  formControlName="toTravelCode">
-                                                                <!--<input type="hidden"  formControlName="toState">-->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flight-from-data-search" *ngIf="!isMobile">
-                                                            <input type="text" autocomplete="off" class="w-100"
-                                                                id="searchTo" placeholder="Search City"
-                                                                (keyup)="searchAutoComplete($event,'searchTo' ,'web');"
-                                                                 #toCityInput autofocus
-                                                                id="busToMob">
-                                                            <input type="hidden"  formControlName="searchTo">
-                                                                   <input type="hidden"  formControlName="toTravelCode">
-                                                                            <!--<input type="hidden"  formControlName="toState">-->
-                                                        </div>
-                                                        <ul class="flight-from-data-ul" >
-                                                        <li class="flight-from-ul-li">
-                                                        <p class="flight-Results-text">{{searchTravelToHeader}}</p>
-                                                        </li>
-                                                             <li class="flight-from-ul-li"  *ngFor="let toOptions of travelToOptions;let ind=index;">
-                                        <a  class="flight-from-ul-li-a"   (click)="onToClick(toOptions,'web')">
-                                          <div class="hotel-from-name">
-                                        <h6><i class="fa fa-train"></i> &nbsp;{{toOptions._source.station_name}}</h6>
-                                        <p></p>
-                                        </div>
-                                        <div class="flight-from-shortname">
-                                        <h6></h6>
-                                        </div>
-                                        
-                                        </a>
-                                        </li>
-                                          <li *ngIf="travelToOptions.length==0"><a>No Results Found...</a></li>
-                                                        </ul>
-
-
-                                                    </div>
-
-                                                </div>
+                                        <div               class="flight-from-data flight-from-hide ff-form-data dropdown">
+                                            <div class="mob-title">
+                                                <h3>Select From City</h3>
+                                                <a href="javascript:void(0)"
+                                                    class="mob-close mob-ff-from-close close-mobile">
+                                                    <img src="{{cdnUrl}}/images/icons/close.png"
+                                                         class="close-mobile" alt="" />
+                                                </a>
                                             </div>
 
-                                        </div>
-                                       
-                                        <div class="col-lg-6">
-                                            <div class="root-date">
-
-                                                    <div class="select-root-area" >
-                                                        <div class="select-dep-ret " >
-                                                             <div class="area-root-departure train-area-root">
-    
-                                                                <div class="select-root-departure departure-date">
-                                                                    <span class="select-roottitle">Class</span>
-                                                                    
-                                                                        <mat-form-field class="train-selectClass-mat-field">
-                                                                            <mat-select formControlName="quota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
-                                                                            <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
-                                                                            </mat-select>
-                                                                        </mat-form-field>
-                                                                    
-
-                                                                    <span class="select-roottitle">{{selectedQuota}}</span>
-    
-                                                                </div>
-    
-                                                             </div>
+                                       <div class="mob-search" *ngIf="isMobile">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="mob-search-list">
+                                                            <label for="">From</label>
+                                                            <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
+                                                            <input type="hidden"  formControlName="fromTravelCode">
+                                                            <!--<input type="hidden"  formControlName="fromState">-->
+                                                        </div>
+                                                        <div class="mob-search-list">
+                                                            <label for="">To</label>
+                                                    <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');">
+                                                    <input type="hidden"  formControlName="toTravelCode">
+                                                    <!--<input type="hidden"  formControlName="toState">-->
                                                         </div>
                                                     </div>
-                                                
-                                            <!--Web Date Picker-->
-                                                <div class="select-root-area" *ngIf="!isMobile">
-                                                    <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
-                                                         <div class="area-root-departure train-area-root " (click)="picker.open()"
-                                                            id="datePickerOpen">
-
-                                                            <div class="select-root-departure departure-date">
-                                                                <span class="select-roottitle">DEPARTURE</span>
-                                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-
-                                                                    <span class="select-roottitle d-block w-100" *ngIf="departureDate=='' ||departureDate==undefined">Select Departure</span>
-                                                                <span class="select-roottitle"
-                                                                    *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
-                                                                    }}</span>
-
-                                                            </div>
-
-                                                            <div class="select-root-date"
-                                                                style="position: relative; left: 0;">
-                                                                <i
-                                                                    class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
-
-                                                                <mat-form-field
-                                                                    style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                                    <input matInput [min]="minDate"
-                                                                        [matDatepicker]="picker"
-                                                                        formControlName="departure"
-                                                                        [(ngModel)]="departureDate"
-                                                                       >
-                                                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                                                    </mat-datepicker-toggle>
-                                                                    <mat-datepicker #picker></mat-datepicker>
-                                                                </mat-form-field>
-                                                            </div>
-                                                         </div>
-                                                    </div>
-                                                </div>
-                                            <!--Web Date Picker-->
-                                            <!--Mobile Date Picker-->
-                                                <div class="select-root-area" *ngIf="isMobile">
-                                                    <div class="select-dep-ret " [ngClass]="isMobile == true" >
-                                                        <div class="area-root-departure " (click)="openMliteDatePicker('departure')"  id="datePickerOpen">
-                                                            <div class="select-root-departure departure-date">
-                                                                <span class="select-roottitle">DEPARTURE</span>
-                                                                <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-                                                                   <span class="select-roottitle d-block w-100"
-                                                                    *ngIf="departureDate=='' ||departureDate==undefined">Select
-                                                                      Departure</span>
-                                                                <span class="select-roottitle"
-                                                                    *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
-                                                                    }}</span>
-
-                                                                <div class="mt-30 "  *ngIf="submitted && Error('departure', 'required')" >
-                                                                <small class="validate-msg" >Please select departure date</small>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="select-root-date" style="position: relative; left: 0;">
-                                                                <i   class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
-                                                                <mat-form-field       style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                                                                <input  matInput   [(ngModel)]="departureDate"   autocomplete="off"  readonly formControlName="departure"  id="departure" >
-                                                                </mat-form-field>
-                                                            </div>
-
-                                                        </div>
-                                                         <div class="modal bottom_mlite_popup" id="train_departure_mlite" tabindex="-1" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                <h5 class="modal-title">Select Departure Date</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body" >
-                                                                <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelectMliteDate($event,'departure')" [selected]="departureDate"></mat-calendar>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                <div class="select_city d-block mb-15 flex-fill">
-                                                                <div class="row">
-                                                                <div class="col-6 ">
-                                                                <div class="input_box  date_input_box">
-                                                                        <label>
-                                                                        <span>Departure</span>
-                                                                        <div class="form-group flex_basis dep_m_cal" *ngIf="departureDate">
-                                                                        <b>{{departureDate | date:'dd MMM' }} , </b><span> {{departureDate | date:'EEEE' }}</span>
-                                                                        </div>
-                                                                        </label>
-                                                                </div>
-                                                                </div>
-                                                                <div class="col-6 ">
-                                                                <div class="">
-                                                                </div>
-                                                                </div>
-                                                                </div>
-                                                                </div>
-                                                                <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
-                                                                </div>
-                                                                </div>
-                                                                </div>
-                                                                </div>
-
-                                               
-                                                    </div>
-                                                </div>
-
-                                            <!--Mobile Date Picker Ends-->
-
-                                                <div class="root-search">
-                                                    <button type="button" class="searchbn" (click)="trainSearch()">Search</button>
                                                 </div>
                                             </div>
-                                        <div class="home-error d-flex" *ngIf="!isMobile">
-                                        <div class="error_msg w-35 ml-200"  >
-                                        <small class="validate-msg"  *ngIf="submitted && Error('departure', 'required')">Please select departure date</small>
+                                            <div class="flight-from-data-search" *ngIf="!isMobile">
+
+                                            <input type="text" autocomplete="off" class="w-100"
+                                            id="searchFrom" placeholder="Search City"
+                                            (keyup)="searchAutoComplete($event,'searchFrom' ,'web');"
+                                           autofocus #fromCityInput
+                                            >
+                                            <input type="hidden" name="searchFrom" formControlName="searchFrom">
+
+                                            <input type="hidden"  formControlName="fromTravelCode">
+                                            <!--<input type="hidden"  formControlName="fromState">-->
+
+
+
+                                            </div>
+
+                                    <ul class="flight-from-data-ul" >
+                                    <li class="flight-from-ul-li">
+                                    <p class="flight-Results-text">{{searchTravelFromHeader}}</p>
+                                    </li>
+              <li class="flight-from-ul-li"  *ngFor="let fromOptions of travelFromOptions;let ind=index;">
+                            <a  class="flight-from-ul-li-a"   (click)="onFromClick(fromOptions,'web')">
+                            
+                                  <div class="hotel-from-name">
+                            <h6><i class="fa fa-train"></i> &nbsp;{{fromOptions._source.station_name}}</h6>
+                            <p></p>
+                            </div>
+                            <div class="flight-from-shortname">
+                            <h6></h6>
+                            </div>
+                   
+                            </a>
+                            </li>
+                              <li *ngIf="travelFromOptions.length==0"><a>No Results Found...</a></li>
+                                    </ul>
+
+
+
+
                                         </div>
+
+                                    </div>
+
+                                    <div class="select-root-icons" (click)="swap()">
+                                        <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
+                                    </div>
+                                    <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
+                                        <span class="select-roottitle">TO</span>
+                                        <h5 class="fw_6 ">{{toCityName}}</h5>
+                                        <span class="select-roottitle">{{toStateName}}</span>
+                                                                                         <div class="error_msg w-50"  *ngIf="!isMobile && submitted && Error('toTravelCode', 'required')" >
+                    <small class="validate-msg">Please select to city</small>
+                    </div>
+
+                                  <div class="" *ngIf="isMobile && submitted && Error('toTravelCode', 'required')">
+                            <small   class="validate-msg">Please select to city</small>
+                            </div>
+
+
+
+                                        <div class="flight-to-data flight-from-hide dropdown"
+                                            #removeClassToCity>
+                                            <div class="mob-title">
+                                                <h3>Select To City</h3>
+                                                <a href="javascript:void(0)"
+                                                    class="mob-close mob-ff-from-close close-mobile">
+                                                    <img src="{{cdnUrl}}/images/icons/close.png"
+                                                        class="close-mobile" alt="" />
+                                                </a>
+                                            </div>
+                                                                <div class="mob-search" *ngIf="isMobile">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="mob-search-list">
+                                                            <label for="">From</label>
+                                                            <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
+                                                            <input type="hidden"  formControlName="fromTravelCode">
+                                                           <!-- <input type="hidden"  formControlName="fromState">-->
+
+                                                        </div>
+                                                        <div class="mob-search-list">
+                                                            <label for="">To</label>
+                                                    <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
+                                                    <input type="hidden"  formControlName="toTravelCode">
+                                                    <!--<input type="hidden"  formControlName="toState">-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flight-from-data-search" *ngIf="!isMobile">
+                                                <input type="text" autocomplete="off" class="w-100"
+                                                    id="searchTo" placeholder="Search City"
+                                                    (keyup)="searchAutoComplete($event,'searchTo' ,'web');"
+                                                     #toCityInput autofocus
+                                                    id="busToMob">
+                                                <input type="hidden"  formControlName="searchTo">
+                                                       <input type="hidden"  formControlName="toTravelCode">
+                                                                <!--<input type="hidden"  formControlName="toState">-->
+                                            </div>
+                                            <ul class="flight-from-data-ul" >
+                                            <li class="flight-from-ul-li">
+                                            <p class="flight-Results-text">{{searchTravelToHeader}}</p>
+                                            </li>
+                                                 <li class="flight-from-ul-li"  *ngFor="let toOptions of travelToOptions;let ind=index;">
+                            <a  class="flight-from-ul-li-a"   (click)="onToClick(toOptions,'web')">
+                              <div class="hotel-from-name">
+                            <h6><i class="fa fa-train"></i> &nbsp;{{toOptions._source.station_name}}</h6>
+                            <p></p>
+                            </div>
+                            <div class="flight-from-shortname">
+                            <h6></h6>
+                            </div>
+                            
+                            </a>
+                            </li>
+                              <li *ngIf="travelToOptions.length==0"><a>No Results Found...</a></li>
+                                            </ul>
+
+
                                         </div>
-                                         </div>
+
                                     </div>
                                 </div>
-                            </div>
-                        </form>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p class="sponsor_logo">Powered By: <img src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg" class="ms-2"></p>
+                            </div>
+                           
+                            <div class="col-lg-6">
+                                <div class="root-date">
+
+                                        <div class="select-root-area" >
+                                            <div class="select-dep-ret " >
+                                                 <div class="area-root-departure train-area-root">
+
+                                                    <div class="select-root-departure departure-date">
+                                                        <span class="select-roottitle">Class</span>
+                                                        
+                                                            <mat-form-field class="train-selectClass-mat-field">
+                                                                <mat-select formControlName="quota" id="trainQuota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,'false')">
+                                                                <mat-option *ngFor="let quota of quotaList| keyvalue"  [value]="quota.key">{{quota.value}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        
+
+                                                        <span class="select-roottitle">{{selectedQuota}}</span>
+
+                                                    </div>
+
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    
+                                <!--Web Date Picker-->
+                                    <div class="select-root-area" *ngIf="!isMobile">
+                                        <div class="select-dep-ret " [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''" >
+                                             <div class="area-root-departure train-area-root " (click)="picker.open()"
+                                                id="datePickerOpen">
+
+                                                <div class="select-root-departure departure-date">
+                                                    <span class="select-roottitle">DEPARTURE</span>
+                                                    <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+
+                                                        <span class="select-roottitle d-block w-100" *ngIf="departureDate=='' ||departureDate==undefined">Select Departure</span>
+                                                    <span class="select-roottitle"
+                                                        *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
+                                                        }}</span>
+
+                                                </div>
+
+                                                <div class="select-root-date"
+                                                    style="position: relative; left: 0;">
+                                                    <i
+                                                        class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+
+                                                    <mat-form-field
+                                                        style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                        <input matInput [min]="minDate"
+                                                            [matDatepicker]="picker"
+                                                            formControlName="departure"
+                                                            [(ngModel)]="departureDate"
+                                                           >
+                                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                <!--Web Date Picker-->
+                                <!--Mobile Date Picker-->
+                                    <div class="select-root-area" *ngIf="isMobile">
+                                        <div class="select-dep-ret " [ngClass]="isMobile == true" >
+                                            <div class="area-root-departure " (click)="openMliteDatePicker('departure')"  id="datePickerOpen">
+                                                <div class="select-root-departure departure-date">
+                                                    <span class="select-roottitle">DEPARTURE</span>
+                                                    <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                                       <span class="select-roottitle d-block w-100"
+                                                        *ngIf="departureDate=='' ||departureDate==undefined">Select
+                                                          Departure</span>
+                                                    <span class="select-roottitle"
+                                                        *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
+                                                        }}</span>
+
+                                                    <div class="mt-30 "  *ngIf="submitted && Error('departure', 'required')" >
+                                                    <small class="validate-msg" >Please select departure date</small>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="select-root-date" style="position: relative; left: 0;">
+                                                    <i   class="far fa-calendar-alt single-datepicker me-3 fs_22"></i>
+                                                    <mat-form-field       style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                                                    <input  matInput   [(ngModel)]="departureDate"   autocomplete="off"  readonly formControlName="departure"  id="departure" >
+                                                    </mat-form-field>
+                                                </div>
+
+                                            </div>
+                                             <div class="modal bottom_mlite_popup" id="train_departure_mlite" tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title">Select Departure Date</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body" >
+                                                    <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelectMliteDate($event,'departure')" [selected]="departureDate"></mat-calendar>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <div class="select_city d-block mb-15 flex-fill">
+                                                    <div class="row">
+                                                    <div class="col-6 ">
+                                                    <div class="input_box  date_input_box">
+                                                            <label>
+                                                            <span>Departure</span>
+                                                            <div class="form-group flex_basis dep_m_cal" *ngIf="departureDate">
+                                                            <b>{{departureDate | date:'dd MMM' }} , </b><span> {{departureDate | date:'EEEE' }}</span>
+                                                            </div>
+                                                            </label>
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-6 ">
+                                                    <div class="">
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+
+                                   
+                                        </div>
+                                    </div>
+
+                                <!--Mobile Date Picker Ends-->
+
+                                    <div class="root-search">
+                                        <button type="button" class="searchbn" (click)="trainSearch()">Search</button>
+                                    </div>
+                                </div>
+                            <div class="home-error d-flex" *ngIf="!isMobile">
+                            <div class="error_msg w-35 ml-200"  >
+                            <small class="validate-msg"  *ngIf="submitted && Error('departure', 'required')">Please select departure date</small>
+                            </div>
+                            </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" [ngClass]="navItemActive == 'pnr'? 'show active':'' "  id="pnr_pill" role="tabpanel" aria-labelledby="pnr_check">
+            <div>
+
+                <form *ngIf="showPnr"  name="pnrForm">
+                <div class="container" id="pnrCheckDiv">
+                    <div class="travel-select-data-area">
+                        <div class="travel-data">
+                            <div class="row g-2">
+                                <div class="col-lg-10">
+                                    <div class="select-root-area mlight_pnr">
+                                        <div class="" >
+                                            <span class="select-roottitle">PNR NUMBER</span>
+                                            <input type="text" class="pnr_input" placeholder="Enter 10 Digit PNR" [(ngModel)]="pnrNumber"   name="pnrNumber" id="pnrNumber" maxlength="10"
+                   autocomplete="off" (keyup)="pnrKeyup()" (paste)="onPaste($event)" (keypress)="numberOnly($event);">
+                    <div *ngIf="submitted && errorMessage" class="error">
+                      <small class="validate-msg">{{errorMessage}}</small> 
+                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                               
+                                <div class="col-lg-2">
+                                    <div class="root-date">
+                                        <div class="root-search">
+                                            <button type="button" (click)="onSubmit()"  class="searchbn">Search</button>
+                                        </div>
+                                    </div>
+                                
+                                 </div>
+                                <div class="clearfix"></div>
+                                <div class="pt-3">
+                                <p class="m0 pnr-title"><sup>*</sup> PNR Enquiry Can be done only on tickets booked through Smartbuy.</p>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                   </div>  
+                </form>
+           
+                
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+            <p class="sponsor_logo">Powered By: <img src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg" class="ms-2"></p>
+        </div>
+    </div>
+  </div>
+  
+   <div class="container" *ngIf="showDetails">
+    <div class="pnr-container" *ngIf="PnrDetails.trainName">
+
+    
+    <div class="trans-details train-mrgtop10 bor-data pnr-list">
+            <div class="row  ">
+                <div class="col-md-4">
+                    <p><span>PNR Number : </span> <span class="data">{{PnrDetails.pnrNumber}}</span></p>
+                    <p><span>Train Number : </span> <span class="data">{{PnrDetails.trainNumber}}</span></p>
+                    <p><span>From Station : </span> <span class="data">{{stationsdump[PnrDetails.sourceStation]}}({{PnrDetails.sourceStation}})</span></p>
+                    <p><span>Boarding point : </span> <span class="data">{{stationsdump[PnrDetails.boardingPoint]}}({{PnrDetails.boardingPoint}})</span></p>
+                    <p><span>Class : </span> <span class="data">{{PnrDetails.journeyClass}}</span></p>
+                    <p><span>Charting Status : </span> <span class="data">{{PnrDetails.chartStatus}}</span></p>
+                    <!-- <p><span>Booking Fare : </span> <span class="data">{{PnrDetails.bookingFare}}</span></p> -->
+                    <p><span>Quota : </span> <span class="data">{{PnrDetails.quota}}</span></p>
+                    <!-- <p><span>Remarks : </span> <span class="data"></span></p> -->
+                </div>
+                <div class="col-md-4">
+                        <p><span>Date : </span> <span class="data">{{PnrDetails.dateOfJourney | date: 'dd MMM yyyy'}}</span></p> 
+                        <p><span>Train Name : </span> <span class="data">{{PnrDetails.trainName}}</span></p>
+                        <p><span>To Station : </span> <span class="data">{{stationsdump[PnrDetails.destinationStation]}}({{PnrDetails.destinationStation}}) </span></p>
+                        <p><span>Reservation upto : </span> <span class="data">{{stationsdump[PnrDetails.reservationUpto]}}({{PnrDetails.reservationUpto}})</span></p>
+                        <p><span>No of passengers : </span> <span class="data">{{PnrDetails.numberOfpassenger}}</span></p>
+                        <!-- <p><span>Upgraded Class : </span> <span class="data"> </span></p> -->
+                         <!-- <p><span>Ticket Fare : </span> <span class="data">{{PnrDetails.ticketFare}}</span></p> -->
+                    
+                </div>
+                
+            </div>
+            </div>
+    
+    <h6 class="pt-15-pb-17 col-md-12 float-left m-pl-15">Travellers</h6>
+    <div class='table-responsive'>
+    <table  class="table traveller-list">
+        <thead class="thead-light">
+            <tr>
+              <th>Passenger Number</th>
+                <th>Age</th>
+                <th >Booking Status</th>
+                <th>Current Status</th>
+                <!-- <th>Berth</th>
+                <th>CoachId/BerthNo</th> -->
+            </tr>
+        </thead>
+        <tbody >
+            <tr  *ngFor="let each of PnrDetails.passengerList">
+              <td>{{each.passengerSerialNumber}}</td>
+                 <td>{{each.passengerAge}}</td>
+                  <td>{{each.bookingStatus}}/<span *ngIf="each.bookingCoachId!=''" >{{each.bookingCoachId}}/</span>{{each.bookingBerthNo}}
+                  <span *ngIf = "each.passengerBerthChoice">/{{each.passengerBerthChoice}}</span>
+                  </td>
+                <td>{{each.currentStatus}}<span *ngIf="each.currentStatus!='CNF'">/{{each.currentBerthNo}}</span></td>
+                  <!-- <td >{{each.bookingBerthCode}}</td>
+                  <td >{{each.bookingCoachId}}/{{each.bookingBerthNo}}</td> -->
+            </tr>
+            
+        </tbody>
+
+    </table>
+    </div>
+    
+    
+    <div class="pnr-notes">
+    <div>
+                  <p><span>Note:</span> <span class="data"> </span></p>
+                 <p><span>1. No refund shall be granted on the confirmed ticket after four hours before the scheduled departure of the train. </span></p>
+                 <p><span>2. No refund shall be granted on the RAC or Waitlisted ticket after thirty minutes before the scheduled departure of the train. </span></p>
+                 <p><span>3. In case, on a party e-ticket or a family e-ticket issued for travel of more than one passenger, some passengers have confirmed reservation and others are on RAC or waiting list, full refund of fare , less clerkage, shall be admissible for confirmed passengers also subject to the condition that the ticket shall be cancelled online or online TDR shall be filed for all the passengers upto thirty minutes before the scheduled departure of the train. </span></p>
+                 <p><span>4. Before Cancellation, please refer New Refund Rule 2015 w.e.f 12-Nov-2015. </span></p>
+                 </div>
+                 <div class="pop-two">
+                <div class="title-book-pop">
+                    <h5>Acronyms</h5>  
+                </div>
+                <div>
+                 
+                 <div class="table-responsive">
+                                <table class="table table-bordered" width="99%">
+                                  <tbody><tr>
+                                      <td>CAN</td>
+                                      <td>CANCELLED</td>
+                                    </tr><tr>
+                                      <td>CNF</td>
+                                      <td>CONFIRM</td>
+                                    </tr><tr>
+                                      <td>RAC</td>
+                                      <td>RESERVATION AGAINST CANCELLATION</td>
+                                    </tr><tr>
+                                      <td>WL</td>
+                                      <td>WAITLIST</td>
+                                    </tr><tr>
+                                      <td>RLWL</td>
+                                      <td>REMOTE LOCATION WAITLIST</td>
+                                    </tr><tr>
+                                      <td>PQWL</td>
+                                      <td>POOLED QUOTA WAITLIST</td>
+                                    </tr><tr>
+                                      <td>RSWL</td>
+                                      <td>ROAD-SIDE WAITLIST</td>
+                                    </tr><tr>
+                                      <td>REL</td>
+                                      <td>RELEASED</td>
+                                    </tr><tr>
+                                      <td>NR</td>
+                                      <td>NOROOM</td>
+                                    </tr><tr>
+                                      <td>NOSB</td>
+                                      <td>NO SEAT BERTH</td>
+                                    </tr><tr>
+                                      <td>WEBCAN</td>
+                                      <td>Railway Counter Ticket: Passenger has been cancelled over internet and refund has not been collected.</td>
+                                    </tr><tr>
+                                      <td>WEBCANRF</td>
+                                      <td>Railway Counter Ticket: Passenger has been cancelled over internet and refund has been collected.</td>
+                                    </tr><tr>
+                                      <td>GNWL</td>
+                                      <td>General Waitlist</td>
+                                    </tr><tr>
+                                      <td>TQWL</td>
+                                      <td>Tatkal Waitlist</td>
+                                    </tr><tr>
+                                      <td>FBKG</td>
+                                      <td>Ticket Booked Outside ARP in FT Quota. Seat has not been allotted yet</td>
+                                    </tr>
+                                    <tr>
+                                      <td>GN</td>
+                                      <td>General</td>
+                                    </tr>
+                                    <tr>
+                                      <td>PT</td>
+                                      <td>Premium Tatkal</td>
+                                    </tr>
+                                    <tr>
+                                      <td>LD</td>
+                                      <td>Ladies</td>
+                                    </tr>
+                                    <tr>
+                                      <td>TQ</td>
+                                      <td>Tatkal</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+        </div></div>
+    
+    </div>
+    
+    
+    </div>    
+  
+  
+  
+  
+  
+                        
+
+                        
