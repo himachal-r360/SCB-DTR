@@ -1,72 +1,73 @@
-<div class="flight_mlite_process"  *ngIf="REWARD_CUSTOMERID !='0000'">
-    <section class="mob-flights-listing" *ngIf="searchData && isMobile">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 p-0">
-              <div class="mob-listing-header">
-                <div class="mob-listing-header-left">
-                  <a href="javascript:;" (click)="triggerBack()">
-                    <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-                  </a>
-                </div>
-                <div class="mob-listing-header-center">
-               
-                </div>
-                <div class="mob-listing-header-right">
+<div class="flight_mlite_process" *ngIf="REWARD_CUSTOMERID !='0000'">
+  <section class="mob-flights-listing" *ngIf="searchData && isMobile">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 p-0">
+          <div class="mob-listing-header">
+            <div class="mob-listing-header-left">
+              <a href="javascript:;" (click)="triggerBack()">
+                <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+              </a>
+            </div>
+            <div class="mob-listing-header-center">
 
-                </div>
-              </div>
+            </div>
+            <div class="mob-listing-header-right">
+
             </div>
           </div>
         </div>
-      </section>
-      <section class="details-steps-area mb-40" [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
-          <div class="container">
-            <div class="row justify-content-center ">
-              <div class="col-md-3" >
-                <div class="details-steps-box">
-                  <ul class="m-0 details-steps-ul">
-                    <li>
-                      <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }"
-                        (click)="moveTab(1)">
-                        <!-- steps-done - Class For done steps -->
-                        <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/flight.png" alt="" /></span>
-                        <span class="steps-text">Booking Details</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 2 , 'active':steps==2  }"
-                        (click)="moveTab(2)">
-                        <span class="steps-icons"><img src="{{cdnUrl}}/images/flights_details/payment.png" alt="" /></span>
-                        <span class="steps-text">Payment</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+      </div>
+    </div>
+  </section>
+  <section class="details-steps-area mb-40" [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
+    <div class="container">
+      <div class="row justify-content-center ">
+        <div class="col-md-3">
+          <div class="details-steps-box">
+            <ul class="m-0 details-steps-ul">
+              <li>
+                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }"
+                  (click)="moveTab(1)">
+                  <!-- steps-done - Class For done steps -->
+                  <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/flight.png" alt="" /></span>
+                  <span class="steps-text">Booking Details</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 2 , 'active':steps==2  }"
+                  (click)="moveTab(2)">
+                  <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/payment.png" alt="" /></span>
+                  <span class="steps-text">Payment</span>
+                </a>
+              </li>
+            </ul>
           </div>
-        </section>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
-<main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'" >
+<main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'">
 
   <section class="flight-details-area mt-10">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
       <div class="sidebar-widget session-expires-widget text-center">
-        <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+        <p><img src="{{ cdnUrl }}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
             <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)"></countdown>
             min
           </strong></p>
       </div>
     </div>
-    <input *ngIf="searchData" type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
+    <input *ngIf="searchData" type="hidden" id="journery_date"
+      value='{{ searchData.departure | date:"YYYY-MM-dd" }}' />
     <div class="container">
       <div class="row">
 
         <!--Steps 1-->
         <div class="col-md-8" *ngIf="steps==1">
-          <div class="booking-process-content" >
+          <div class="booking-process-content">
             <div class="booking-title-box">
               <h4>Booking Details</h4>
             </div>
@@ -74,40 +75,48 @@
             <div class="booking-inner-box from-to-box">
 
               <div class="row">
-                <div class="col-sm-2" >
-                  <div><img src="{{cdnUrl}}images/smartbuy/partner/48/svg/redbus.svg" alt=""></div>
-                  
+                <div class="col-sm-2">
+                  <div><img src="{{ cdnUrl }}images/smartbuy/partner/48/svg/redbus.svg" alt=""></div>
+
                 </div>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-9">
                       <div class="bus_details">
-                          <div>
-                            <p class="city">{{seacthResult.searchFrom}}</p>
-                            <p class="time">{{boardingpointTime}} | {{boardingpointName}} <br/>
-                              <span *ngIf = "printdoj; else nextday">{{actualboarding | date:'EEE, dd MMM yyyy'}}</span> <ng-template #nextday>({{actualboarding | date:'EEE, dd MMM yyyy'}})</ng-template> </p>
+                        <div>
+                          <p class="city">{{ seacthResult.searchFrom }}</p>
+                          <p class="time">{{ boardingpointTime }} | {{ boardingpointName }} <br />
+                            <span
+                              *ngIf="printdoj; else nextday">{{ actualboarding | date:'EEE, dd MMM yyyy' }}</span>
+                            <ng-template #nextday>
+                              ({{ actualboarding | date:'EEE, dd MMM yyyy' }})
+                            </ng-template>
+                          </p>
+                        </div>
+                        <div>
+                          <div><img src="{{ cdnUrl }}images/icons/light_right_arw.svg" alt="" width="35px" height="35px">
                           </div>
-                          <div>
-                            <div><img src="{{cdnUrl}}images/icons/light_right_arw.svg" alt="" width="35px" height="35px"></div>
-                          </div>
-                          <div>
-                            <p class="city">{{seacthResult.searchTo}}</p>
-                            <p class="time">{{droppingPointTime}} | {{droppingpointName}} <br/>
-                              {{actualdropping | date:'EEE, dd MMM yyyy'}}</p>
-                          </div>
-                          <div>
+                        </div>
+                        <div>
+                          <p class="city">{{ seacthResult.searchTo }}</p>
+                          <p class="time">{{ droppingPointTime }} | {{ droppingpointName }} <br />
+                            {{ actualdropping | date:'EEE, dd MMM yyyy' }}</p>
+                        </div>
+                        <div>
                         </div>
                       </div>
                     </div>
                     <div class="col-sm-3">
-                        <div>
-                          <p class="seat_cnf_number"> <span *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{seat.name}} <span *ngIf="!lastRow" >, </span> </span></p>
-                        </div>
+                      <div>
+                        <p class="seat_cnf_number"> <span
+                            *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{ seat.name }}
+                            <span *ngIf="!lastRow">, </span> </span></p>
+                      </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="bus_name">
-                      <p>{{onward.travels}} {{onward.busType}}</p>
+                      <p>{{ onward.travels }} {{ onward.busType }}</p>
                     </div>
                   </div>
                 </div>
@@ -117,234 +126,264 @@
 
             <div>
               <div class="info_msg_bus">
-                <i class="material-icons me-2">error</i> Please ensure all the details entered are as per the Govt. ID Proof. <br/>
+                <i class="material-icons me-2">error</i> Please ensure all the details entered are as per the Govt. ID
+                Proof. <br />
                 If primary passenger's ticket is cancelled, the complete ticket will be cancelled.
-             </div>
+              </div>
             </div>
-     
+
           </div>
 
-          <form [formGroup]="passengerForm"  name="passengerForm">
-              <div class="">
-                <div class="booking-inner-box mb-20">
-                  <!-- <ng-container *ngIf="getTravllerShow">
+          <form [formGroup]="passengerForm" name="passengerForm">
+            <div class="">
+              <div class="booking-inner-box mb-20">
+                <!-- <ng-container *ngIf="getTravllerShow">
                     <div class="message-trav"> 
                       <button type="button" class="travel-title btn btn-primary-outline" (click)="chooseFromSavedTravellers()">
                         Choose from Saved Travellers
                         </button>
                     </div>
                   </ng-container> -->
-  
-                  <!-- redbus saved traveller & GST pop up  -->
-                  <ng-template #contentTraveller let-modal>
-                    <div class=" text-center">
-                      <div class="saved_travellers_bus">
+
+                <!-- redbus saved traveller & GST pop up  -->
+                <ng-template #contentTraveller let-modal>
+                  <div class=" text-center">
+                    <div class="saved_travellers_bus">
                       <div class="modal-header" style="background: #dcebf8 !important;">
-                        <h4 class="modal-title"><p>Choose from Saved Travellers</p></h4>
+                        <h4 class="modal-title">
+                          <p>Choose from Saved Travellers</p>
+                        </h4>
                         <!-- <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button> -->
                       </div>
                       <div class="modal-body p-0">
 
                         <div class="travel-userNames">
 
-                          <p> 
-                            <label class="checkbox" *ngFor="let data of travellerlist | slice:0:5;let travellerIndex = index">
-                              <input type="checkbox" name="travellerlist" (change)="fillupTravellerDetailOnCheck($event,data,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
-                              <span class="ps-2">{{data.firstName}} {{data.lastName}}</span>
+                          <p>
+                            <label class="checkbox"
+                              *ngFor="let data of travellerlist | slice:0:5;let travellerIndex = index">
+                              <input type="checkbox" name="travellerlist"
+                                (change)="fillupTravellerDetailOnCheck($event,data,travellerIndex)"
+                                [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
+                              <span class="ps-2">{{ data.firstName }} {{ data.lastName }}</span>
                               <span class="checkmark"></span>
                             </label>
                           </p>
                           <ng-container *ngIf="isExpanded">
                             <ng-container *ngFor="let expandedItem of travellerlist; let i = index">
                               <p *ngIf="i > 5">
-                                 <label class="checkbox">
-                                  <input type="checkbox" name="travellerlist" (change)="fillupTravellerDetailOnCheck($event,expandedItem,i)" [disabled]="disableCheckbox[i]" [checked]="isChecked[i]">
-                                  <span class="ps-2">{{expandedItem.firstName}} {{expandedItem.lastName}}</span>
+                                <label class="checkbox">
+                                  <input type="checkbox" name="travellerlist"
+                                    (change)="fillupTravellerDetailOnCheck($event,expandedItem,i)"
+                                    [disabled]="disableCheckbox[i]" [checked]="isChecked[i]">
+                                  <span class="ps-2">{{ expandedItem.firstName }} {{ expandedItem.lastName }}</span>
                                   <span class="checkmark"></span>
                                 </label>
                               </p>
                             </ng-container>
                           </ng-container>
-                          
+
                         </div>
                       </div>
                       <div class="modal-footer d-block p-0">
                         <div *ngIf="travellerlist.length > 5">
                           <p class="view_more_btn">
                             <a (click)="expandItems()">
-                              {{!isExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
+                              {{ !isExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;' }}
                             </a>
                           </p>
                         </div>
                       </div>
                       <div class="modal-footer mt-0 pt-0">
                         <button type="button" class="btn btn-danger" (click)="travellerReset()">Reset</button>
-                        <button type="button" class="btn btn-primary" aria-label="Close" data-dismiss="modal" id="cloaseSavepop" (click)="modal.dismiss('Cross click')">Close</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" aria-label="Close" data-dismiss="modal"
+                          id="cloaseSavepop" (click)="modal.dismiss('Cross click')">Close</button>
                       </div>
                     </div>
-                  </ng-template>
-  
-                  <div class="button-wrap" >
-                    
-  
-                    <div class="traveller-details" *ngFor="let item of seacthResult.seatdetails; let i = index;let firstRow = first;">
+                  </div>
+                </ng-template>
 
-                      <div class="traveller-header row">
-                        <div class="col-sm-6 col-6">
-                          <p class="travel-num"><b>Traveller {{i+1}}</b> 
-                            <!-- for desktop -->
-                            <span class="">
-                                 <!--  <img src="{{cdnUrl}}images/icons/Seat-1.svg" class="xs-none">  -->
-                                  <span class="ml-3 seat-num"> .{{seacthResult.seatdetails[i].name}}</span> 
-                                  <small *ngIf="seacthResult.seatdetails[i].ladiesSeat" class="ladies_seat"><br>This seat is reserved for ladies</small>
-                            </span>
-                          </p>
-                        </div>
-                        <div class="col-sm-6 col-6 text-right">
-                          <div>
-                            <span class="">
-                              <input class="hidden radio-label" type="radio" id="first-traveller{{i+1}}" [checked]="defaultPrimary==i" (click)="setPrimary(i)" />
-                   
-                              <label class="button-label-{{domainName}}" for="first-traveller{{i+1}}" data-toggle="popover"
-                                data-content="Primary Details" data-placement="bottom">
-                                <h5 *ngIf="defaultPrimary==i" class="primary_pass">Primary Traveller</h5>
-                                <h5 *ngIf="defaultPrimary!=i" class="primary_pass_select">Make this  primary traveller</h5>
-                              </label>
-                            </span>
-                          </div>
-                        </div>
-                        
-  
+                <div class="button-wrap">
+
+                  <div class="row mb-20">
+                    <ng-container *ngIf="getTravllerShow">
+                      <div class="message-trav">
+                        <button type="button" class="travel-title btn btn-primary-outline"
+                          (click)="chooseFromSavedTravellers(i)">
+                          Choose from Saved Travellers
+                        </button>
                       </div>
-                      <!-- <div class=clearfix></div>
-                      <p class="travel-count"><b>Traveller {{i+1}}</b>
+                    </ng-container>
+                  </div>
+
+
+                  <div class="traveller-details"
+                    *ngFor="let item of seacthResult.seatdetails; let i = index;let firstRow = first;">
+
+                    <div class="traveller-header row">
+                      <div class="col-sm-6 col-6">
+                        <p class="travel-num"><b>Traveller {{ i+1 }}</b>
+                          <!-- for desktop -->
+                          <span class="">
+                            <!--  <img src="{{ cdnUrl }}images/icons/Seat-1.svg" class="xs-none">  -->
+                            <span class="ml-3 seat-num"> .{{ seacthResult.seatdetails[i].name }}</span>
+                            <small *ngIf="seacthResult.seatdetails[i].ladiesSeat" class="ladies_seat"><br>This seat is
+                              reserved for ladies</small>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="col-sm-6 col-6 text-right">
+                        <div>
+                          <span class="">
+                            <input class="hidden radio-label" type="radio" id="first-traveller{{ i+1 }}"
+                              [checked]="defaultPrimary==i" (click)="setPrimary(i)" />
+
+                            <label class="button-label-{{ domainName }}" for="first-traveller{{ i+1 }}"
+                              data-toggle="popover" data-content="Primary Details" data-placement="bottom">
+                              <h5 *ngIf="defaultPrimary==i" class="primary_pass">Primary Traveller</h5>
+                              <h5 *ngIf="defaultPrimary!=i" class="primary_pass_select">Make this primary traveller</h5>
+                            </label>
+                          </span>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <!-- <div class=clearfix></div>
+                      <p class="travel-count"><b>Traveller {{ i+1 }}</b>
                         // for desktop
                         <span class="seat-showDesktop xs-none">
                           <p>Seat<p>
-                              <img src="{{cdnUrl}}images/icons/Seat-1.svg" class="xs-none"> <span
-                                class="ml-3 seat-num">{{seacthResult.seatdetails[i].name}}</span> <small
+                              <img src="{{ cdnUrl }}images/icons/Seat-1.svg" class="xs-none"> <span
+                                class="ml-3 seat-num">{{ seacthResult.seatdetails[i].name }}</span> <small
                                 *ngIf="seacthResult.seatdetails[i].ladiesSeat"><br>This seat is reserved for
                                 ladies</small>
                         </span>
                         // for mobile 
                         <span class="seat-showMobile lg-none">
-                          <p>Seat : {{seacthResult.seatdetails[i].name}} <p> <small
+                          <p>Seat : {{ seacthResult.seatdetails[i].name }} <p> <small
                                 *ngIf="seacthResult.seatdetails[i].ladiesSeat">This seat is reserved for ladies</small>
                         </span>
                       </p> -->
-  
-                       <!-- <div class="travel-userNames" *ngIf="saveTravllerShow">
+
+                    <!-- <div class="travel-userNames" *ngIf="saveTravllerShow">
                         <p> <label class="checkbox">Save Traveller
-                           <input type="checkbox"  checked="true" formControlName="saveTraveller{{i}}">
+                           <input type="checkbox"  checked="true" formControlName="saveTraveller{{ i }}">
                            <span class="checkmark"></span>
                          </label>
                         </p>
                       </div>  -->
-  
-                      <div class="traveler-details-info mt-15">
-                        <div class="row">
-                          <div class="col-12 col-lg-4 col-md-6">
+
+                    <div class="traveler-details-info mt-15">
+                      <div class="row">
+                        <div class="col-12 col-lg-4 col-md-6">
+                          <div>
                             <mat-form-field class="w-100" appearance="outline">
                               <mat-label>First Name</mat-label>
-                              <input matInput placeholder="" formControlName="passengerFirstName{{i}}"
-                                name="passengerFirstName{{i}}" id="passengerFirstName{{i}}" (keypress)="flInput($event)" autocomplete="off">
-                            </mat-form-field>
-                            <div *ngIf="submitted && passengerForm.controls['passengerFirstName'+i]['errors']"
-                              class="error">
-                              <small *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['required']">First
-                                Name is required</small>
-                              <small *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['pattern']">Please enter valid name</small>
-                              <small *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['minlength']">Please enter atleast 2 character</small>
+                              <input matInput placeholder="" formControlName="passengerFirstName{{ i }}"
+                                name="passengerFirstName{{ i }}" id="passengerFirstName{{ i }}" (keypress)="flInput($event)"
+                                autocomplete="off">
+                              </mat-form-field>
   
-                            </div>
+                              <span *ngIf="submitted && passengerForm.controls['passengerFirstName'+i]['errors']">  
+                                <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['required']">First
+                                  Name is required</mat-error>
+                                <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['pattern']">Please
+                                  enter valid name</mat-error>
+                                <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['minlength']">Please
+                                  enter atleast 2 character</mat-error> 
+                                 </span> 
                           </div>
-                          <div class="col-12 col-lg-4 col-md-6">
-                            <mat-form-field class="w-100" appearance="outline">
-                              <mat-label>Last Name</mat-label>
-                              <input matInput placeholder="" formControlName="passengerLastName{{i}}"
-                                name="passengerLastName{{i}}" id="passengerLastName{{i}}" (keypress)="flInput($event)" autocomplete="off">
-                            </mat-form-field>
-                            <div *ngIf="submitted && passengerForm.controls['passengerLastName'+i]['errors']"
-                              class="error">
-                              <small *ngIf="passengerForm.controls['passengerLastName'+i]['errors']['required']">Last Name
-                                is required</small>
-                              <small *ngIf="passengerForm.controls['passengerLastName'+i]['errors']['pattern']">Please enter valid name</small>
-                            </div> 
-                          </div>
-                          <div class="col-6 col-lg-4 col-md-6">
-                            <mat-form-field class="w-100" appearance="outline">
-                              <mat-label>Age</mat-label>
-                              <input matInput placeholder="" formControlName="passengerAge{{i}}" type="tel"
-                                name="passengerAge{{i}}" id="passengerAge{{i}}" maxlength="3" autocomplete="off" (keypress)="numberInput($event)" (keyup)="ageCheck($event,i)">
-                            </mat-form-field>
-                            <div *ngIf="submitted && passengerForm.controls['passengerAge'+i]['errors']" class="error">
-                              <small *ngIf="passengerForm.controls['passengerAge'+i]['errors']['required']">Age is required</small>
-                              <small *ngIf="passengerForm.controls['passengerAge'+i]['errors']['pattern']">Age should be numeric</small>
-                              <small *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']">Age should be less than 125</small>
-                            </div>
-                            <div *ngIf="submitted && i==defaultPrimary" class="error">
-                              <small>{{ageValidError}}</small>
-                          </div>
-                          </div>
-                          <!-- For Web Only -->
-                          <div class="col-6 col-lg-4 col-md-6 d-none d-sm-block">
-                            <mat-form-field class="w-100" appearance="outline">
-                              <mat-label>Gender</mat-label>
-                              <mat-select placeholder="" formControlName="passengerGender{{i}}">
-                                <mat-option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat"> Male
-                                </mat-option>
-                                <mat-option value="Female"> Female </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                            <div *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                              <small *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                                required</small>
-                            </div>
-                          </div>
-                          <!-- For Mobile Only -->
-                          <div class="col-6 col-lg-3 col-md-6 offset-lg-1 d-block d-sm-none">
-                            <mat-form-field class="w-100" appearance="outline">
-                              <mat-label>Gender</mat-label>
-                              <select matNativeControl  formControlName="passengerGender{{i}}">
-                                <option value="Gender" disabled>Gender</option>
-                                <option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat" >Male</option>
-                                <option value="Female" >Female</option>
-                              </select>
-                            </mat-form-field>
-                            <div *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                              <small *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                                required</small>
-                            </div>
-                          </div>
+                
                         </div>
-  
-                        <div class="row mb-20">
-                          <ng-container *ngIf="getTravllerShow">
-                            <div class="message-trav"> 
-                              <button type="button" class="travel-title btn btn-primary-outline" (click)="chooseFromSavedTravellers(i)">
-                                Choose from Saved Travellers
-                                </button>
-                            </div>
-                          </ng-container>
+                        <div class="col-12 col-lg-4 col-md-6">
+                          <div>
+                          <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput placeholder="" formControlName="passengerLastName{{ i }}"
+                              name="passengerLastName{{ i }}" id="passengerLastName{{ i }}" (keypress)="flInput($event)"
+                              autocomplete="off">
+                          </mat-form-field>
+                          <span *ngIf="submitted && passengerForm.controls['passengerLastName'+i]['errors']"
+                            class="error">
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerLastName'+i]['errors']['required']">Last Name
+                              is required</mat-error>
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerLastName'+i]['errors']['pattern']">Please
+                              enter valid name</mat-error>
+                          </span>
+                        </div>
+                        </div>
+                        <div class="col-6 col-lg-4 col-md-6">
+                          <div class="age_field">
+                          <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Age</mat-label>
+                            <input matInput placeholder="" formControlName="passengerAge{{ i }}" type="tel"
+                              name="passengerAge{{ i }}" id="passengerAge{{ i }}" maxlength="3" autocomplete="off"
+                              (keypress)="numberInput($event)" (keyup)="ageCheck($event,i)">
+                            
+                        </mat-form-field>
+                        <span *ngIf="submitted && passengerForm.controls['passengerAge'+i]['errors']" class="error">
+                          <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['required'] && !i==defaultPrimary" class="error_bus">Age is
+                            required</mat-error>
+                          <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['pattern']" class="error_bus">Age should be
+                            numeric</mat-error>
+                          <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">Age should be less
+                            than 125</mat-error>
+                            
+                            <mat-error *ngIf="submitted && i==defaultPrimary && !passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">{{ ageValidError }}</mat-error>
+                        </span>
+                      </div>
+                        </div>
+                        <!-- For Web Only -->
+                        <div class="col-6 col-lg-4 col-md-6 d-none d-sm-block">
+                          <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Gender</mat-label>
+                            <mat-select placeholder="" formControlName="passengerGender{{ i }}">
+                              <mat-option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat"> Male
+                              </mat-option>
+                              <mat-option value="Female"> Female </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
+                              required</mat-error>
+                          </span>
+                        </div>
+                        <!-- For Mobile Only -->
+                        <div class="col-6 col-lg-3 col-md-6 offset-lg-1 d-block d-sm-none">
+                          <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Gender</mat-label>
+                            <select matNativeControl formControlName="passengerGender{{ i }}">
+                              <option value="Gender" disabled>Gender</option>
+                              <option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat">Male</option>
+                              <option value="Female">Female</option>
+                            </select>
+                          </mat-form-field>
+                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
+                              required</mat-error>
+                          </span>
                         </div>
                       </div>
-  
-  
-                      <!--<div class="travel-userNames" *ngIf="saveTravllerShow">
+
+
+                    </div>
+
+
+                    <!--<div class="travel-userNames" *ngIf="saveTravllerShow">
                         <p> 
                           <label class="checkbox">Save Traveller
-                          <input type="checkbox"  checked value="true" formControlName="saveTraveller{{i}}">
+                          <input type="checkbox"  checked value="true" formControlName="saveTraveller{{ i }}">
                           <span class="checkmark"></span>
                           </label>
                         </p>
                       </div>-->
-  
-                    </div>
-  
+
                   </div>
-                  
-                    <!-- <div class="travel-userNames" *ngIf="saveTravllerShow">
+
+                </div>
+
+                <!-- <div class="travel-userNames" *ngIf="saveTravllerShow">
                         <p> 
                           <label class="checkbox">Save this traveller for your future travel
                           <input type="checkbox"  value="true" formControlName="saveTraveller" id="save_traveller" >
@@ -353,283 +392,304 @@
                         </p>
                          <span class="save_consent">I give consent to Reward360 to store personal information. Please <a href="javascript:;" (click)="saveTravellerConsent()" >click here</a> for more information.</span>
                       </div> -->
-  
-                      <div class="othertraveller" *ngIf="saveTravllerShow">
-                        <ul class="add-search-ul d-block">
-                          <li class="custom-check-box">
-                            <div class="custom-controls-stacked">
-                              <label class="custom-control material-checkbox">
-                                <input type="checkbox" class="material-control-input" formControlName="saveTraveller"
-                                  name="saveGST" id="save_traveller" [checked]="checked" value="true" >
-                                <span class="material-control-indicator"></span>
-                                <span class="description fs_12 text-black">Add these travellers to  Travellers list.</span>
-                                <span class="description fs_12"><span class="save_consent">I give consent to Reward360 to store personal information. Please <a href="javascript:;" (click)="saveTravellerConsent()" class="link_text" >click here</a> for more information.</span></span>
-                              </label>
-                            </div>
-                          </li>
-                        </ul>
+
+                <div class="othertraveller" *ngIf="saveTravllerShow">
+                  <ul class="add-search-ul d-block">
+                    <li class="custom-check-box">
+                      <div class="custom-controls-stacked">
+                        <label class="custom-control material-checkbox">
+                          <input type="checkbox" class="material-control-input" formControlName="saveTraveller"
+                            name="saveGST" id="save_traveller" [checked]="checked" value="true">
+                          <span class="material-control-indicator"></span>
+                          <span class="description fs_12 text-black">Add these travellers to Travellers list.</span>
+                          <span class="description fs_12"><span class="save_consent">I give consent to Reward360 to
+                              store personal information. Please <a href="javascript:;" (click)="saveTravellerConsent()"
+                                class="link_text">click here</a> for more information.</span></span>
+                        </label>
                       </div>
+                    </li>
+                  </ul>
                 </div>
-                    
-                    <div class="contact_sec booking-inner-box">
-                      <div class="mb-3 traveller-person-left">
-                          <h6 class="title">Contact details</h6>
-                          <p class="note_text">Your booking details will be sent here.</p>
-                      </div>
-                      <div class="row contact-form">
-                          <div class="col-sm-6 col-12">
-                              <div class="">
-                                  <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                      <mat-label>Email</mat-label>
-                                      <input matInput placeholder="Email Id" formControlName="passengerEmail" name="passengerEmail"
-                                      id="passengerEmail" (keypress)="AvoidSpace($event)" autocomplete="off" >
-                                  </mat-form-field>
-                                  <div *ngIf="submitted && passengerForm.controls.passengerEmail.errors" class="error">
-                                    <small *ngIf="passengerForm.controls.passengerEmail.errors.required">Please enter email
-                                      address</small>
-                                    <small *ngIf="passengerForm.controls.passengerEmail.errors.pattern">Please enter a valid email
-                                      id</small>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-sm-6 col-12">
-                              <div class="">
-                                  <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                      <mat-label>Mobile Number</mat-label>
-                                      <input matInput formControlName="passengerMobile" type="tel"
-                                      name="passengerMobile" id="passengerMobile"  autocomplete="off" (keypress)="numberInput($event)" maxlength="10" >
-                                  </mat-form-field>
-                                  <div *ngIf="submitted && passengerForm.controls.passengerMobile.errors" class="error">
-                                    <small *ngIf="passengerForm.controls.passengerMobile.errors.required">Please enter mobile
-                                      number</small>
-                                    <small *ngIf="passengerForm.controls.passengerMobile.errors.pattern">Please enter valid mobile number</small>
-                                    <small *ngIf="passengerForm.controls.passengerMobile.errors.minlength">Please enter valid mobile number</small>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div>
-                           <div class="contact-whatsapp mt-20" *ngIf="whatsappFeature==1">
-                            <div class="contact-whatsapp-info me-2">
-                              <span>Send my booking information through</span>
-                              <img src="{{cdnUrl}}/images/icons/whatsapp.png" class="ms-2" alt="">
-                              <span class="fw_7">WhatsApp</span>
-                            </div>
-                            <div class="form-check form-switch m-0" *ngIf="whatsappFeature==1">
-                              <input class="form-check-input" type="checkbox" role="switch" formControlName="whatsappFlag"
-                                name="whatsappFlag" id="whatsappFlag" [checked]="whatsAppCheck" />
-                            </div>
-                          </div>
-                      </div>
-                      <div>
-                      
-                          
-                      </div>
+              </div>
+
+              <div class="contact_sec booking-inner-box">
+                <div class="mb-3 traveller-person-left">
+                  <h6 class="title">Contact details</h6>
+                  <p class="note_text">Your booking details will be sent here.</p>
+                </div>
+                <div class="row contact-form">
+                  <div class="col-sm-6 col-12">
+                    <div class="">
+                      <mat-form-field class="matField_full_width w-100" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email Id" formControlName="passengerEmail" name="passengerEmail"
+                          id="passengerEmail" (keypress)="AvoidSpace($event)" autocomplete="off">
+                      </mat-form-field>
+                      <span *ngIf="submitted && passengerForm.controls.passengerEmail.errors" class="error">
+                        <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.controls.passengerEmail.errors.required">Please enter email
+                          address</mat-error>
+                        <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.controls.passengerEmail.errors.pattern">Please enter a valid email
+                          id</mat-error>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-12">
+                    <div class="">
+                      <mat-form-field class="matField_full_width w-100" appearance="outline">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput formControlName="passengerMobile" type="tel" name="passengerMobile"
+                          id="passengerMobile" autocomplete="off" (keypress)="numberInput($event)" maxlength="10">
+                      </mat-form-field>
+                      <span *ngIf="submitted && passengerForm.controls.passengerMobile.errors" class="error">
+                        <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.controls.passengerMobile.errors.required">Please enter mobile
+                          number</mat-error>
+                        <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.controls.passengerMobile.errors.pattern">Please enter valid mobile
+                          number</mat-error>
+                        <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.controls.passengerMobile.errors.minlength">Please enter valid mobile
+                          number</mat-error>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="contact-whatsapp mt-20" *ngIf="whatsappFeature==1">
+                    <div class="contact-whatsapp-info me-2">
+                      <span>Send my booking information through</span>
+                      <img src="{{ cdnUrl }}/images/icons/whatsapp.png" class="ms-2" alt="">
+                      <span class="fw_7">WhatsApp</span>
+                    </div>
+                    <div class="form-check form-switch m-0" *ngIf="whatsappFeature==1">
+                      <input class="form-check-input" type="checkbox" role="switch" formControlName="whatsappFlag"
+                        name="whatsappFlag" id="whatsappFlag" [checked]="whatsAppCheck" />
+                    </div>
+                  </div>
+                </div>
+                <div>
+
+
+                </div>
+              </div>
+
+              <div class="booking-inner-box gst-number-box">
+                <h6> <span class="form-switch m-0 mr-10">
+                    <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
+                  </span>GST number for business travel (Optional)</h6>
+                <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST
+                  number
+                </p>
+
+                <div class="row text-lg-end" *ngIf="gstSelected">
+                  <ng-container *ngIf="getGSTShow">
+                    <div class="add-traveller-btn">
+                      <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn"
+                        (click)="openmodal(content)">Choose from Saved GSTs</a>
                     </div>
 
-                    <div class="booking-inner-box gst-number-box">
-                      <h6> <span class="form-switch m-0 mr-10">
-                          <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
-                        </span>GST number for business travel (Optional)</h6>
-                      <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST
-                        number
-                      </p>
-          
-                      <div class="row text-lg-end" *ngIf="gstSelected">
-                        <ng-container *ngIf="getGSTShow">
-                          <div class="add-traveller-btn">
-                            <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn"
-                              (click)="openmodal(content)">Choose from Saved GSTs</a>
-                          </div>
-          
-                        </ng-container>
-                      </div>
-          
-                      <ng-template #content let-modal>
-                        <div class="modal-header modal-inside-header">
-                          <h5 class="modal-title">Choose from Saved GSTs</h5>
-          
+                  </ng-container>
+                </div>
+
+                <ng-template #content let-modal>
+                  <div class="modal-header modal-inside-header">
+                    <h5 class="modal-title">Choose from Saved GSTs</h5>
+
+                  </div>
+                  <div class="modal-body">
+                    <div class="col-lg-12 col-md-6 col-12">
+
+                      <div>
+                        <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                          <input class="form-check-input" type="radio" name="GSTList" id="gst{{ GSTIndex }}"
+                            (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)"
+                            [checked]="gstmodalcheckedvalue[GSTIndex]">
+                          <label class="form-check-label" for="gst{{ GSTIndex }}">
+                            {{ data.gstName }}
+                          </label>
                         </div>
-                        <div class="modal-body">
-                          <div class="col-lg-12 col-md-6 col-12">
-          
-                            <div>
-                              <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}"
-                                  (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)"
-                                  [checked]="gstmodalcheckedvalue[GSTIndex]">
-                                <label class="form-check-label" for="gst{{GSTIndex}}">
-                                  {{data.gstName}}
-                                </label>
-                              </div>
+                      </div>
+                      <ng-container *ngIf="isGstExpanded">
+                        <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
+                          <div *ngIf="i > 5">
+                            <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                              <input class="form-check-input" type="radio" name="GSTList" id="gstL{{ GSTIndex }}"
+                                (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)"
+                                [checked]="gstmodalcheckedvalue[i]">
+                              <label class="form-check-label" for="gstL{{ GSTIndex }}">
+                                {{ gstexpandedItem.gstName }}
+                              </label>
                             </div>
-                            <ng-container *ngIf="isGstExpanded">
-                              <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
-                                <div *ngIf="i > 5">
-                                  <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                    <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}"
-                                      (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)"
-                                      [checked]="gstmodalcheckedvalue[i]">
-                                    <label class="form-check-label" for="gstL{{GSTIndex}}">
-                                      {{gstexpandedItem.gstName}}
-                                    </label>
-                                  </div>
-                                  <!--  <label class="checkbox">{{gstexpandedItem.gstName}}
+                            <!--  <label class="checkbox">{{ gstexpandedItem.gstName }}
                                           <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
                                           <span class="checkmark"></span>
                                           </label> -->
-                                </div>
-                              </ng-container>
-                            </ng-container>
-                            <p *ngIf="GSTList.length > 5">
-                              <label class="checkbox pl-0">
-                                <a (click)="gstExpandItems()">
-                                  {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
-                                </a>
-                              </label>
-                            </p>
                           </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" (click)="gstReset()">Reset</button>
-                          <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
-                        </div>
-                      </ng-template>
-          
-                      <div class="row" *ngIf="gstSelected">
-                        <div class="col-xl-6 col-lg-6 col-md-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>GST Number</mat-label>
-                            <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber"
-                              minlength="15" maxlength="15" autocomplete="off" (keypress)="AvoidSpace($event)"
-                              (keypress)="specialcharInputAddress($event)" (keyup)="convertToUpperCase($event);">
-          
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstNumber')">Please enter gst number.
-                            </mat-error>
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstNumber')">Please enter valid gst number.
-                            </mat-error>
-                          </mat-form-field>
-          
-                        </div>
-                      </div>
-          
-                      <div class="row" *ngIf="gstSelected">
-                        <div class="col-lg-4 col-md-4 col-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Business Name</mat-label>
-                            <input matInput placeholder="Business Name" formControlName="gstBusinessName"
-                              name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off"
-                              (keypress)="specialcharInputAddress($event)">
-          
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business
-                              name.</mat-error>
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
-                            </mat-error>
-                          </mat-form-field>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Business Address</mat-label>
-                            <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress"
-                              id="gstAddress" maxlength="100" (keypress)="specialcharInputAddress($event)" autocomplete="off">
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstAddress')">Please enter business
-                              address.</mat-error>
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstAddress')">Please enter valid address.No
-                              special characters allowed except / - ,</mat-error>
-                          </mat-form-field>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Pincode</mat-label>
-                            <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode"
-                              id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)"
-                              (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstPincode')">Please enter pincode.
-                            </mat-error>
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('minlength','gstPincode')">Please enter 6 digits [0-9]
-                              pincode.</mat-error>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="row" *ngIf="gstSelected">
-                        <div class="col-lg-4 col-md-4 col-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>City / Town</mat-label>
-                            <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"
-                              autocomplete="nope">
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.
-                            </mat-error>
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstCity')">Please enter valid city
-                              name. </mat-error>
-                          </mat-form-field>
-                        </div>
-          
-                        <div class="col-lg-4 col-md-4 col-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>State</mat-label>
-                            <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
-                              (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
-                              readonly="stateCheck" value={{state}}>
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstState')">Please enter state name.
-                            </mat-error>
-                            <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstState')">Please enter valid state
-                              name.</mat-error>
-                          </mat-form-field>
-                        </div>
-          
-                        <div class="othertraveller" *ngIf="gstSelected">
-                          <ul class="add-search-ul d-block">
-                            <li class="custom-check-box">
-                              <div class="custom-controls-stacked">
-                                <label class="custom-control material-checkbox">
-                                  <input type="checkbox" class="material-control-input" formControlName="saveGST"
-                                    name="saveGST" id="saveGST" [checked]="checked">
-                                  <span class="material-control-indicator"></span>
-                                  <span class="description fs_12 text-black">Add these details to
-                                    GST list. </span>
-                                  <span class="description fs_12">You won't have to fill gst info on your next visit</span>
-                                </label>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-          
-          
-                      </div>
+                        </ng-container>
+                      </ng-container>
+                      <p *ngIf="GSTList.length > 5">
+                        <label class="checkbox pl-0">
+                          <a (click)="gstExpandItems()">
+                            {{ !isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;' }}
+                          </a>
+                        </label>
+                      </p>
                     </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="gstReset()">Reset</button>
+                    <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
+                  </div>
+                </ng-template>
+
+                <div class="row" *ngIf="gstSelected">
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>GST Number</mat-label>
+                      <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber"
+                        minlength="15" maxlength="15" autocomplete="off" (keypress)="AvoidSpace($event)"
+                        (keypress)="specialcharInputAddress($event)" (keyup)="convertToUpperCase($event);">
+
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstNumber')">
+                        Please enter gst number.
+                      </mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstNumber')">
+                        Please enter valid gst number.
+                      </mat-error>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="gstSelected">
+                  <div class="col-lg-4 col-md-4 col-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Business Name</mat-label>
+                      <input matInput placeholder="Business Name" formControlName="gstBusinessName"
+                        name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off"
+                        (keypress)="specialcharInputAddress($event)">
+
+                      <mat-error class="error_bus"
+                        *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business
+                        name.</mat-error>
+                      <mat-error class="error_bus"
+                        *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Business Address</mat-label>
+                      <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress"
+                        id="gstAddress" maxlength="100" (keypress)="specialcharInputAddress($event)" autocomplete="off">
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstAddress')">
+                        Please enter business
+                        address.</mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstAddress')">
+                        Please enter valid address.No
+                        special characters allowed except / - ,</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Pincode</mat-label>
+                      <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode"
+                        id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)"
+                        (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstPincode')">
+                        Please enter pincode.
+                      </mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('minlength','gstPincode')">
+                        Please enter 6 digits [0-9]
+                        pincode.</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row" *ngIf="gstSelected">
+                  <div class="col-lg-4 col-md-4 col-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>City / Town</mat-label>
+                      <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"
+                        autocomplete="nope">
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstCity')">
+                        Please enter city name.
+                      </mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstCity')">
+                        Please enter valid city
+                        name. </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>State</mat-label>
+                      <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
+                        (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
+                        readonly="stateCheck" value={{ state }}>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
+                        Please enter state name.
+                      </mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstState')">
+                        Please enter valid state
+                        name.</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="othertraveller" *ngIf="gstSelected">
+                    <ul class="add-search-ul d-block">
+                      <li class="custom-check-box">
+                        <div class="custom-controls-stacked">
+                          <label class="custom-control material-checkbox">
+                            <input type="checkbox" class="material-control-input" formControlName="saveGST"
+                              name="saveGST" id="saveGST" [checked]="checked">
+                            <span class="material-control-indicator"></span>
+                            <span class="description fs_12 text-black">Add these details to
+                              GST list. </span>
+                            <span class="description fs_12">You won't have to fill gst info on your next visit</span>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
 
 
-                    <div class="agree_conditions mb-100">
-                      <ul class="add-search-ul d-block">
-                        <li class="custom-check-box">
-                          <div class="custom-controls-stacked">
-                            <label class="custom-control material-checkbox">
-                              <input type="checkbox" class="material-control-input" formControlName="passengerAgree"
-                                name="passengerAgree" id="agree_terms" [checked]="checked" value="true" >
-                              <span class="material-control-indicator"></span>
-                              <!-- <span class="description fs_12 text-black">Add these travellers to  Travellers list.</span> -->
-                              <span class="description fs_12">I agree to the <a href="{{domainRedirect}}terms_conditions" target="_blank" class="link_text" >Terms & Conditions</a> and <a href="{{domainRedirect}}privacy_policy" target="_blank" class="link_text" >Privacy Policy</a></span>
-                            </label>
-                          </div>
-                        </li>
-                      </ul>
-                      <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
-                        <small *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls.passengerAgree.errors.pattern">Please accept Terms and Conditions</small>
-                      </div>
-                    </div>
-                    
-
+                </div>
               </div>
 
-             
-            </form>
+
+              <div class="agree_conditions mb-100">
+                <ul class="add-search-ul d-block">
+                  <li class="custom-check-box">
+                    <div class="custom-controls-stacked">
+                      <label class="custom-control material-checkbox">
+                        <input type="checkbox" class="material-control-input" formControlName="passengerAgree"
+                          name="passengerAgree" id="agree_terms" [checked]="checked" value="true">
+                        <span class="material-control-indicator"></span>
+                        <!-- <span class="description fs_12 text-black">Add these travellers to  Travellers list.</span> -->
+                        <span class="description fs_12">I agree to the <a href="{{ domainRedirect }}terms_conditions"
+                            target="_blank" class="link_text">Terms & Conditions</a> and <a
+                            href="{{ domainRedirect }}privacy_policy" target="_blank" class="link_text">Privacy
+                            Policy</a></span>
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+                <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
+                  <small
+                    *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls.passengerAgree.errors.pattern">Please
+                    accept Terms and Conditions</small>
+                </div>
+              </div>
+
+
+            </div>
+
+
+          </form>
         </div>
         <!--Step1 Ends-->
 
 
         <!--Steps 2-->
         <div class="col-md-8" *ngIf="steps==2">
-          <div class="booking-process-content" >
+          <div class="booking-process-content">
             <div class="booking-title-box">
               <h4>Payment</h4>
             </div>
@@ -637,8 +697,8 @@
             <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
               [passSavedCardsData]="savedCards" [passSessionKey]="searchBusKey"
               (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalFare"
-              [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
-              [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
+              [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId"
+              [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
               [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
               (sendtotalfare)="recivetotalFare($event)" [passflexiFare]="sendflexiFare">
             </app-payment>
@@ -652,7 +712,7 @@
             <div class="default-sidebar">
               <div class="d-none d-sm-block">
                 <div class="sidebar-widget session-expires-widget">
-                  <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+                  <p><img src="{{ cdnUrl }}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
                       <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
                       </countdown> min
                     </strong></p>
@@ -661,8 +721,8 @@
                   <div class="widget-title">
                     <h4>Fare Summary</h4>
                     <img *ngIf="selectedOnwardVendor"
-                      src="{{cdnUrl}}images/flight_partners/{{selectedOnwardVendor.partnerName}}.png"
-                      alt="{{selectedOnwardVendor.partnerName}}">
+                      src="{{ cdnUrl }}images/flight_partners/{{ selectedOnwardVendor.partnerName }}.png"
+                      alt="{{ selectedOnwardVendor.partnerName }}">
                   </div>
                   <div class="widget-content">
                     <ul class="widget-list clearfix">
@@ -670,130 +730,167 @@
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div (click)="isCollapseShow('BaseFare')">
-                              <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false"
-                                aria-controls="base-collpase"  >
-  
-                                <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
-                                  alt=""  *ngIf="!isCollapseBasefare" >
-  
-                                  <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
-                                  alt="" *ngIf="isCollapseBasefare" >
-  
+                              <div data-bs-toggle="collapse" class="collapse_text bus-collapse-txt" href="#base-collpase" role="button"
+                                aria-expanded="false" aria-controls="base-collpase">
+
+                                <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
+                                  *ngIf="!isCollapseBasefare">
+
+                                <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
+                                  *ngIf="isCollapseBasefare">
+
                                 Base Fare</div>
-  
+
                             </div>
                           </div>
                           <div class="fare-list-right">
-                            <p>₹ {{fareData.totalBaseFare|number}}</p>
+                            <p>₹ {{ fareData.totalBaseFare|number }}</p>
                           </div>
-  
+
                         </div>
-                   
+
+                        <ng-container>
+                          <div>
+                            <div class="collapse base_fare_collapse" id="base-collpase">
+                              <div class="row ">
+                                <div class="col-md-11 offset-md-1">
+
+                                  <div class="row collapse_row mb-10">
+                                    <div class="col-8 fare-list-left">
+                                      <p>{{ fareData.totalseats }} Seat(s) </p>
+                                    </div>
+                                    <div class="col-4 fare-list-right">
+                                      <p> ({{ fareData.totalseats }} X ₹
+                                        {{ fareData.singlePassengerbasefare | number }} ) </p>
+                                    </div>
+                                  </div>
+
+                                  <div class="row collapse_row mb-10">
+                                    <div class="col-8 fare-list-left">
+                                      <p> Seat No(s)</p>
+                                    </div>
+                                    <div class="col-4 fare-list-right">
+                                      <span
+                                        *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{ seat.name }}
+                                        <span *ngIf="!lastRow">, </span> </span>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </ng-container>
+
                       </li>
                       <li class="fare-list-item">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
-                            <p>
-  
+                            <div class="fare-list-font">
+
                               Taxes and Fees
-                            </p>
+                            </div>
                           </div>
                           <div class="fare-list-right">
-                            <p>&#8377; {{fareData.totalTax |number}}</p>
+                            <p>&#8377; {{ fareData.totalTax |number }}</p>
                           </div>
                         </div>
                       </li>
-  
-  
-  
-                      <li class="fare-list-item" *ngIf="convenience_fee>0.00" >
+
+
+
+                      <li class="fare-list-item" *ngIf="convenience_fee>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
-                            <p>
-                             Convenience Fee
-                            </p>
+                            <div class="fare-list-font">
+                              Convenience Fee
+                            </div>
                           </div>
                           <div class="fare-list-right">
-                            <p>&#8377; {{convenience_fee |number}}</p>
+                            <p>&#8377; {{ convenience_fee |number }}</p>
                           </div>
                         </div>
                       </li>
-  
+
                       <li class="fare-list-item" *ngIf="coupon_amount>0.00">
                         <div class="fare-list-box">
-                          <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"(click)="isCollapseShow('discount')">
-  
-                            <p>
-                              <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
-                              alt=""  *ngIf="!isCollapseDiscount" >
-  
-                              <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
-                              alt="" *ngIf="isCollapseDiscount" >
+                          <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text"
+                            href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"
+                            (click)="isCollapseShow('discount')">
+
+                            <div class="fare-list-font">
+                              <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
+                                *ngIf="!isCollapseDiscount">
+
+                              <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
+                                *ngIf="isCollapseDiscount">
                               Discounts
-                            </p>
+                            </div>
                           </div>
                           <div class="fare-list-right">
-                            <p class="text-green">- &#8377; {{coupon_amount}}</p>
+                            <p class="text-green">- &#8377; {{ coupon_amount }}</p>
                           </div>
                         </div>
-  
-                        <div >
+
+                        <div>
                           <div class="collapse base_fare_collapse" id="coupon-collpase">
                             <div class="row ">
                               <div class="col-md-11 offset-md-1">
-  
+
                                 <div class="row collapse_row">
                                   <div class="col-5 fare-list-left">
-                                     <p>Coupoun Code</p>
+                                    <p>Coupoun Code</p>
                                   </div>
                                   <div class="col-7 fare-list-right">
-                                     <p>{{coupon_code}}</p>
+                                    <p>{{ coupon_code }}</p>
                                   </div>
-                               </div>
-  
-  
+                                </div>
+
+
                               </div>
                             </div>
-                            </div>
-  
                           </div>
-  
+
+                        </div>
+
                       </li>
-  
-  
+
+
                       <li class="fare-list-item">
                         <div class="fare-list-box pt-30">
                           <div class="fare-list-left">
                             <h6 class="fw_7">Grand Total</h6>
                           </div>
-                          <div class="fare-list-right" >
-                            <h6 class="fw_7">₹ {{totalFare|number}}</h6>
+                          <div class="fare-list-right">
+                            <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
                             <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                              {{calculateEMI(totalFare)|number: '.2'}}/month</p>
+                              {{ calculateEMI(totalFare)|number: '.2' }}/month</p>
                           </div>
-                               
+
                         </div>
                       </li>
-  
+
                     </ul>
                   </div>
                 </div>
                 <div class="continue-widget mb-20">
                   <a href="javascript:void(0);" class="button-style w-100" (click)="createBusItinerary()"
                     *ngIf="steps==1">Continue</a>
-                 
+
                 </div>
               </div>
               <div *ngIf="steps==2 && !isMobile">
-                <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-                  [passTotalFare]="totalFare" [passActualFare]="intialTotalFare"
-                  [passConvinenceFee]="convenience_fee" passServiceToken="Bus" [passPartnerToken]="partnerToken"
-                  (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+                <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey"
+                  [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
+                  [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
+                  passServiceToken="Bus" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)"
+                  [customerInfo]="customerInfo">
                 </app-coupons>
               </div>
             </div>
           </div>
-          
+
 
         </div>
       </div>
@@ -827,23 +924,23 @@
     <div class="footer-sticky-mlite">
       <div>
         <div class="apply_fare row">
-         <!--  <p *ngIf="steps<5" class="w-75"></p> -->
-            <div class="col-6 text-left">
-                <p *ngIf="steps==2"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
-                    data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
-            </div>
-            <div class="col-6 text-right">
-                <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
-                    data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
-            </div>
+          <!--  <p *ngIf="steps<5" class="w-75"></p> -->
+          <div class="col-6 text-left">
+            <p *ngIf="steps==2"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+                data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+          </div>
+          <div class="col-6 text-right">
+            <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+                data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
+          </div>
         </div>
         <div class="price_sec">
           <div class="row">
             <div class="col-5">
               <div class="">
-                <h6 class="price">₹{{fareData.totalFare|number}}</h6>
+                <h6 class="price">₹{{ fareData.totalFare|number }}</h6>
                 <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                  {{calculateEMI(fareData.totalFare|number)|number: '.2'}}/month</p>
+                  {{ calculateEMI(fareData.totalFare|number)|number: '.2' }}/month</p>
 
               </div>
             </div>
@@ -851,7 +948,7 @@
               <div>
                 <a href="javascript:void(0);" class="button-style btn_pay" (click)="createBusItinerary()"
                   *ngIf="steps==1">Continue</a>
-                
+
               </div>
             </div>
           </div>
@@ -869,12 +966,12 @@
           <h5 class="modal-title">Coupon Code</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" >
+        <div class="modal-body">
 
-          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-            [passTotalFare]="totalFare" [passActualFare]="intialTotalFare"
-            [passConvinenceFee]="convenience_fee" passServiceToken="Bus" [passPartnerToken]="partnerToken"
-            (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey"
+            [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare"
+            [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee" passServiceToken="Bus"
+            [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
           </app-coupons>
         </div>
         <!-- <div class="modal-footer">
@@ -896,64 +993,151 @@
         </div>
         <div class="modal-body pt-0">
           <div>
-           
+
           </div>
           <div class="widget-content">
             <ul class="widget-list clearfix">
               <li class="fare-list-item">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <p>
-                      <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                      Base Fare
-                    </p>
+                    <div (click)="isCollapseShow('BaseFare')">
+                      <div data-bs-toggle="collapse" class="collapse_text bus-collapse-txt" href="#base-collpase" role="button"
+                        aria-expanded="false" aria-controls="base-collpase">
+
+                        <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
+                          *ngIf="!isCollapseBasefare">
+
+                        <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
+                          *ngIf="isCollapseBasefare">
+
+                        Base Fare</div>
+
+                    </div>
                   </div>
                   <div class="fare-list-right">
-                    <p>&#8377;{{fareData.totalBaseFare|number}}</p>
+                    <p>₹ {{ fareData.totalBaseFare|number }}</p>
                   </div>
+
                 </div>
+
+                <ng-container>
+                  <div>
+                    <div class="collapse base_fare_collapse" id="base-collpase">
+                      <div class="row ">
+                        <div class="col-md-11 offset-md-1">
+
+                          <div class="row collapse_row mb-10">
+                            <div class="col-8 fare-list-left">
+                              <p>{{ fareData.totalseats }} Seat(s) </p>
+                            </div>
+                            <div class="col-4 fare-list-right">
+                              <p> ({{ fareData.totalseats }} X ₹
+                                {{ fareData.singlePassengerbasefare | number }} ) </p>
+                            </div>
+                          </div>
+
+                          <div class="row collapse_row mb-10">
+                            <div class="col-8 fare-list-left">
+                              <p> Seat No(s)</p>
+                            </div>
+                            <div class="col-4 fare-list-right">
+                              <span
+                                *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{ seat.name }}
+                                <span *ngIf="!lastRow">, </span> </span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </ng-container>
+
               </li>
               <li class="fare-list-item">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <p>
-                      <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
+                    <div class="fare-list-font">
+
                       Taxes and Fees
-                    </p>
+                    </div>
                   </div>
                   <div class="fare-list-right">
-                    <p>&#8377;{{fareData.totalTax|number}}</p>
+                    <p>&#8377; {{ fareData.totalTax |number }}</p>
                   </div>
                 </div>
               </li>
 
 
-  
-              <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+
+              <li class="fare-list-item" *ngIf="convenience_fee>0.00">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <p>
-                      <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                      Discounts
-                    </p>
+                    <div class="fare-list-font">
+                      Convenience Fee
+                    </div>
                   </div>
                   <div class="fare-list-right">
-                    <p class="text-green">-&#8377;{{coupon_amount}}</p>
+                    <p>&#8377; {{ convenience_fee |number }}</p>
                   </div>
                 </div>
+              </li>
+
+              <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                <div class="fare-list-box">
+                  <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text"
+                    href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"
+                    (click)="isCollapseShow('discount')">
+
+                    <div class="fare-list-font">
+                      <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
+                        *ngIf="!isCollapseDiscount">
+
+                      <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
+                        *ngIf="isCollapseDiscount">
+                      Discounts
+                    </div>
+                  </div>
+                  <div class="fare-list-right">
+                    <p class="text-green">- &#8377; {{ coupon_amount }}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="collapse base_fare_collapse" id="coupon-collpase">
+                    <div class="row ">
+                      <div class="col-md-11 offset-md-1">
+
+                        <div class="row collapse_row">
+                          <div class="col-5 fare-list-left">
+                            <p>Coupoun Code</p>
+                          </div>
+                          <div class="col-7 fare-list-right">
+                            <p>{{ coupon_code }}</p>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
               </li>
               <li class="fare-list-item">
                 <div class="fare-list-box pt-30">
                   <div class="fare-list-left">
                     <h6 class="fw_7">Grand Total </h6>
                   </div>
-                  <div class="fare-list-right" >
-                    <h6 class="fw_7">₹{{fareData.totalFare|number}}</h6>
+                  <div class="fare-list-right">
+                    <h6 class="fw_7">₹{{ fareData.totalFare|number }}</h6>
                     <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @
-                      {{calculateEMI(fareData.totalFare)|number: '.2'}}/month</p>
+                      {{ calculateEMI(fareData.totalFare)|number: '.2' }}/month</p>
                   </div>
 
-          
+
 
                 </div>
               </li>
@@ -978,7 +1162,7 @@
             <div class="" id="after-expiry">
               <div class="">
                 <div class="text-center ">
-                  <div><img src="{{cdnUrl}}images/alert.png" /></div>
+                  <div><img src="{{ cdnUrl }}images/alert.png" /></div>
                 </div>
                 <div class="session-title text-center ">
                   <h2>Sorry!</h2>
@@ -1002,40 +1186,40 @@
 
 </main>
 
-  <!-- ------------------------------
+<!-- ------------------------------
             >>> Modal bookingprocess
         ---------------------------------->
-  <div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body " style="padding: 25px;" >
-          <div class="bookingprocess-items">
-            <div class="bookingprocess-title text-center mb-30">
-              <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
+<div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body " style="padding: 25px;">
+        <div class="bookingprocess-items">
+          <div class="bookingprocess-title text-center mb-30">
+            <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
+          </div>
+          <div class="bookingprocess-content">
+            <div class="bookingprocess-flight">
+              <h6>{{ seacthResult.searchFrom }} </h6>
+              <h6>{{ seacthResult.searchTo }}</h6>
             </div>
-            <div class="bookingprocess-content">
-              <div class="bookingprocess-flight">
-                <h6>{{seacthResult.searchFrom}} </h6>
-                <h6>{{seacthResult.searchTo}}</h6>
-              </div>
-              <div class="bookingprocess-processbar">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
-                    aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                    <span class="title"> &nbsp; </span>
-                  </div>
+            <div class="bookingprocess-processbar">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{ loaderValue }}" aria-valuemin="0"
+                  aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                  <span class="title"> &nbsp; </span>
                 </div>
               </div>
             </div>
-            <div class="refresh-text text-center pt-2">
-              <p>Please don't click or refresh the page</p>
-            </div>
+          </div>
+          <div class="refresh-text text-center pt-2">
+            <p>Please don't click or refresh the page</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 <div class="modal fade bookingprocess" id="bookingprocessFailed1" data-bs-backdrop="static" data-bs-keyboard="false"
   tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
