@@ -111,8 +111,8 @@
                     <div class="select-root-area" [ngClass]="isMobile && fromCityName == '' ? 'p-3': ''">
                         <div class="select-root-left" appDropdown>
                             <span class="select-roottitle">FROM</span>
-                            <h5 class="fw_6 ">{{fromCityName}}</h5>
-                            <span class="select-roottitle">{{ fromAirpotName}}</span>
+                            <h5 class="fw_6 ">{{fromCityName}}<span *ngIf="!isMobile">, {{fromCountryName}}</span></h5>
+                            <span class="select-roottitle">{{flightData.value.flightfrom}}, {{ fromAirpotName}}, {{fromCountryName}}</span>
                             <div class="error_msg w-50"
                                 *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
                                 <small class="validate-msg">Please select from city</small>
@@ -223,8 +223,8 @@
                         </div>
                         <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" >
                             <span class="select-roottitle" [ngClass]="isMobile && fromCityName == '' ? 'ps-2': ''">TO</span>
-                            <h5 class="fw_6 ">{{toCityName}}</h5>
-                            <span class="select-roottitle">{{toAirpotName}}</span>
+                            <h5 class="fw_6 ">{{toCityName}}<span *ngIf="!isMobile">, {{toCountryName}}</span></h5>
+                            <span class="select-roottitle"><span>{{flightData.value.flightto}},</span> {{toAirpotName}}, <span>{{toCountryName}}</span></span>
                             <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('flightto', 'required')">
                                 <small class="validate-msg">Please select to city</small>
                             </div>
