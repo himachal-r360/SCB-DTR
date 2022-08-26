@@ -252,8 +252,23 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     }*/
   }
 
+  fromCitySelect(i:number){
+    debugger;
+    setTimeout(() => {
+      if(i != null ){
+        $('.from-flight-open_' + i).addClass('flight-from-hide');
+        $('#showFlightFrom_' + i).removeClass('flight-from-hide');
+      }
+      else{
+        $('.flight-to-data').addClass('flight-from-hide');
+        $('#showFlightFrom').removeClass('flight-from-hide');
+      }
+    }, 100);
+    
+  }
 
   searchAutoComplete($event, field, device, index: any) {
+    debugger
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if (true) {
@@ -420,6 +435,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       $('#flight_departure_mlite'+index).modal('show');
 
   }
+
+
 
   onSelectMliteDate(event, field) {
 
