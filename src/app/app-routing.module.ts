@@ -18,6 +18,9 @@ const routes: Routes = [
     path:"compare-fly" , component:HomeComponent 
   },
     {
+    path:"multicity" , component:HomeComponent 
+  },
+    {
     path:"compare-stay" , component:HomeComponent 
   },
     {
@@ -26,6 +29,31 @@ const routes: Routes = [
     {
     path:"train" , component:HomeComponent 
   },
+      {
+    path:"train/pnr" , component:HomeComponent 
+  },
+  
+    {
+    path:"regalia_gold/compare-fly" , component:HomeComponent 
+  },
+    {
+    path:"regalia_gold/multicity" , component:HomeComponent 
+  },
+    {
+    path:"regalia_gold/compare-stay" , component:HomeComponent 
+  },
+    {
+    path:"regalia_gold/bus" , component:HomeComponent 
+  },
+    {
+    path:"regalia_gold/train" , component:HomeComponent 
+  },
+      {
+    path:"regalia_gold/train/pnr" , component:HomeComponent 
+  },
+  
+  
+ 
     {
     path: 'partners',
     loadChildren: () => import('./partners/partners.module').then(m => m.PartnersModule)

@@ -86,6 +86,8 @@
           <form [formGroup]="idForm" name="idForm">
           <div class="booking-inner-box from-to-box">
             
+              <!-- Webcode Train Details-->
+              <div class="d-none d-sm-block">
                 <div class="row">
 
                   <div class="col-sm-4">
@@ -125,7 +127,66 @@
                   </div>
 
                 </div>
-                <div class="row mt-40">
+              </div>
+              <!-- Mlitecode Train Details -->
+              <div class="d-block d-sm-none m-light">
+                <div class="row">
+                  <div class="col-6">
+                    <p class="train_name">
+                      {{trainName}}({{trainnumber}})
+                    </p>
+                  </div>
+                  <div class="col-6 text-right">
+                    <p class="daily_chart">
+                      <!-- <span class="text-small-gray" style="color:#000000;">Runs on:</span> -->
+                     <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
+                  </p>
+                  </div>
+                </div>
+                <div class="trainTimeInfo d-block">
+                  <div class="row my-2">
+                    <div class="col-3">
+                      <div>
+                        <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="duration_train">
+                        <p class="dur_time">{{travelDuration}}</p>
+                        <div class="range m_range"></div>
+                      </div>
+                    </div>
+                    <div class="col-3 text-right">
+                      <div>
+                        <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="trainTimeInfo d-block">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
+                        </div>
+                        <div class="col-4">
+                            
+                        </div>
+                        <div class="col-4 text-right">
+                            <p class="place">{{tostnDesc}}</p>
+                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+               
+                <div class="gx-md-4 gy-4 mt-20 row">
 
                   <div class="col-sm-4">
                     <p class="train_title_label"> Availability Status </p>
@@ -266,8 +327,8 @@
                               
                               <ng-container *ngIf="passenger && passenger.age < 5 && saveChildTravellerId[passenger.id] > 0" >  
                               <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerChildBoxId_{{passenger.id}}" />
-                              <div class="travel_details contact-form edit_traveller_sec mt-20">
-                                <div class="inner_input">
+                              <div class=" contact-form edit_traveller_sec mt-20 row">
+                                <div class="inner_input col-md-4 col-12">
                                     <mat-form-field class="matField_full_width" appearance="outline">
                                         <mat-label>Name</mat-label>
                                         <input matInput placeholder="Name" formControlName="childName{{saveChildTravellerId[passenger.id]}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
@@ -281,7 +342,7 @@
                               {{minNameLength}} character.</small>
                                                     </div>
                                 </div>
-                                <div class="inner_input gender_sec">
+                                <div class="inner_input col-md-4 col-12 gender_sec">
                                   <mat-form-field class="matField_full_width" appearance="outline">
                                         <mat-label>Gender</mat-label>
                                         <select matNativeControl formControlName="childGender{{saveChildTravellerId[passenger.id]}}">
@@ -295,7 +356,7 @@
                                   gender.</small>
                                                             </div>
                                 </div>
-                                <div class="inner_input ">
+                                <div class="inner_input col-md-4 col-12 ">
                                   <mat-form-field class="matField_full_width" appearance="outline">
                                         <mat-label>Age</mat-label>
                                         <select matNativeControl formControlName="childAge{{saveChildTravellerId[passenger.id]}}">
@@ -318,8 +379,8 @@
                               <ng-container *ngIf="passenger && passenger.age > 4 && saveTravellerId[passenger.id] > 0" >
                               <input type="hidden" value="{{saveTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
                                 <div class="mt-20">
-                                    <div class="travel_details contact-form edit_traveller_sec">
-                                    <div class="inner_input">
+                                    <div class=" contact-form edit_traveller_sec g-3 row">
+                                    <div class="inner_input col-md-4 col-12">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                             <mat-label>Passenger Name</mat-label>
                                             <input matInput placeholder="Name" formControlName="passengerName{{saveTravellerId[passenger.id]}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onDrag="return false" onDrop="return false">
@@ -335,7 +396,7 @@
                                             atleast {{maxNameLength}} character.</small>
                                         </div>
                                     </div>
-                                    <div class="inner_input gender_sec">
+                                    <div class="inner_input col-md-4 col-6 gender_sec">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                             <mat-label>Gender</mat-label>
                                             <select matNativeControl [(ngModel)]="genderSelectArr[saveTravellerId[passenger.id]]" (ngModelChange)="seniorCitizenArr(genderSelectArr[saveTravellerId[passenger.id]],saveTravellerId[passenger.id])" formControlName="passengerGender{{saveTravellerId[passenger.id]}}">
@@ -349,7 +410,7 @@
                                             select gender.</small>
                                         </div>
                                     </div>
-                                    <div class="inner_input age_sec">
+                                    <div class="inner_input col-md-4 col-6 age_sec">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                             <mat-label>Age</mat-label>
                                             <input matInput placeholder="Age" formControlName="passengerAge{{saveTravellerId[passenger.id]}}" maxlength="3" (keypress)="numberInput($event)" (keyup)="maxAgeLimitArr(saveTravellerId[passenger.id])" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
@@ -363,7 +424,7 @@
                                             <small *ngIf="passengerForm.hasError('max','passengerAge'+saveTravellerId[passenger.id])">{{ageValidErrorArr[saveTravellerId[passenger.id]]}}</small>
                                         </div>
                                     </div>
-                                    <div class="inner_input">
+                                    <div class="inner_input col-md-4 col-12">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                             <mat-label>Seat Preference</mat-label>
                                             <select matNativeControl formControlName="passengerBerthChoice{{saveTravellerId[passenger.id]}}">
@@ -372,7 +433,7 @@
                                             </select>
                                         </mat-form-field>
                                     </div>
-                                    <div class="inner_input">
+                                    <div class="inner_input col-md-4 col-12">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                             <mat-label>Country</mat-label>
                                             <select matNativeControl  [(ngModel)]="defaultCountryArr[saveTravellerId[passenger.id]]" (ngModelChange)="countrySelectAddMore(saveTravellerId[passenger.id])" formControlName="passengerNationality{{saveTravellerId[passenger.id]}}">
@@ -485,8 +546,8 @@
                               
                                 <ng-container *ngIf="passenger && passenger.age < 5 && saveChildTravellerId[passenger.id] > 0" >  
                               <input type="hidden" value="{{saveChildTravellerId[passenger.id]}}" id="passengerChildBoxId_{{passenger.id}}" />
-                              <div class="travel_details contact-form edit_traveller_sec mt-20">
-                                <div class="inner_input">
+                              <div class=" contact-form edit_traveller_sec mt-20 row">
+                                <div class="inner_input col-md-4 col-12">
                                     <mat-form-field class="matField_full_width" appearance="outline">
                                         <mat-label>Name</mat-label>
                                         <input matInput placeholder="Name" formControlName="childName{{saveChildTravellerId[passenger.id]}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
@@ -500,7 +561,7 @@
                               {{minNameLength}} character.</small>
                                                     </div>
                                 </div>
-                                <div class="inner_input gender_sec">
+                                <div class="inner_input col-md-4 col-12 gender_sec">
                                   <mat-form-field class="matField_full_width" appearance="outline">
                                         <mat-label>Gender</mat-label>
                                         <select matNativeControl formControlName="childGender{{saveChildTravellerId[passenger.id]}}">
@@ -514,7 +575,7 @@
                                   gender.</small>
                                                             </div>
                                 </div>
-                                <div class="inner_input ">
+                                <div class="inner_input col-md-4 col-12 ">
                                   <mat-form-field class="matField_full_width" appearance="outline">
                                         <mat-label>Age</mat-label>
                                         <select matNativeControl formControlName="childAge{{saveChildTravellerId[passenger.id]}}">
@@ -539,8 +600,8 @@
                               <input type="hidden" value="{{saveTravellerId[passenger.id]}}" id="passengerBoxId_{{passenger.id}}" />
 
                                     <div>
-                                        <div class="travel_details contact-form edit_traveller_sec">
-                                        <div class="inner_input">
+                                        <div class=" contact-form edit_traveller_sec g-3 row">
+                                        <div class="inner_input col-md-4 col-12">
 
                                             <mat-form-field class="matField_full_width" appearance="outline">
                                                 <mat-label>Passenger Name</mat-label>
@@ -557,7 +618,7 @@
                                                 atleast {{maxNameLength}} character.</small>
                                             </div>
                                         </div>
-                                        <div class="inner_input gender_sec">
+                                        <div class="inner_input col-md-4 col-6 gender_sec">
                                             <mat-form-field class="matField_full_width" appearance="outline">
                                                 <mat-label>Gender</mat-label>
                                                 <select matNativeControl [(ngModel)]="genderSelectArr[saveTravellerId[passenger.id]]" (ngModelChange)="seniorCitizenArr(genderSelectArr[saveTravellerId[passenger.id]],saveTravellerId[passenger.id])" formControlName="passengerGender{{saveTravellerId[passenger.id]}}">
@@ -571,7 +632,7 @@
                                                 select gender.</small>
                                             </div>
                                         </div>
-                                        <div class="inner_input age_sec">
+                                        <div class="inner_input col-md-4 col-6 age_sec">
                                             <mat-form-field class="matField_full_width" appearance="outline">
                                                 <mat-label>Age</mat-label>
                                                 <input matInput placeholder="Age" formControlName="passengerAge{{saveTravellerId[passenger.id]}}" maxlength="3" (keypress)="numberInput($event)" (keyup)="maxAgeLimitArr(saveTravellerId[passenger.id])" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
@@ -585,7 +646,7 @@
                                                 <small *ngIf="passengerForm.hasError('max','passengerAge'+saveTravellerId[passenger.id])">{{ageValidErrorArr[saveTravellerId[passenger.id]]}}</small>
                                             </div>
                                         </div>
-                                        <div class="inner_input">
+                                        <div class="inner_input col-md-4 col-12">
                                             <mat-form-field class="matField_full_width" appearance="outline">
                                                 <mat-label>Seat Preference</mat-label>
                                                 <select matNativeControl formControlName="passengerBerthChoice{{saveTravellerId[passenger.id]}}">
@@ -594,7 +655,7 @@
                                                 </select>
                                             </mat-form-field>
                                         </div>
-                                        <div class="inner_input">
+                                        <div class="inner_input col-md-4 col-12">
                                             <mat-form-field class="matField_full_width" appearance="outline">
                                                 <mat-label>Country</mat-label>
                                                 <select matNativeControl  [(ngModel)]="defaultCountryArr[saveTravellerId[passenger.id]]" (ngModelChange)="countrySelectAddMore(saveTravellerId[passenger.id])" formControlName="passengerNationality{{saveTravellerId[passenger.id]}}">
@@ -711,8 +772,8 @@
                           </p>
       
                           <div>
-                              <div class="travel_details contact-form edit_traveller_sec">
-                              <div class="inner_input">
+                              <div class="row contact-form edit_traveller_sec g-3">
+                              <div class="inner_input col-md-4 col-12">
                                  <mat-form-field class="matField_full_width" appearance="outline">
                                     <mat-label>Passenger Name</mat-label>
                                     <input matInput placeholder="Name" formControlName="passengerName{{traveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onDrag="return false" onDrop="return false">
@@ -728,7 +789,7 @@
                                     atleast {{maxNameLength}} character.</small>
                                  </div>
                               </div>
-                              <div class="inner_input gender_sec">
+                              <div class="inner_input col-md-4 col-6 gender_sec">
                                  <mat-form-field class="matField_full_width" appearance="outline">
                                     <mat-label>Gender</mat-label>
                                     <select matNativeControl [(ngModel)]="genderSelectArr[traveller]" (ngModelChange)="seniorCitizenArr(genderSelectArr[traveller],traveller)" formControlName="passengerGender{{traveller}}">
@@ -742,7 +803,7 @@
                                     select gender.</small>
                                  </div>
                               </div>
-                              <div class="inner_input age_sec">
+                              <div class="inner_input col-md-4 col-6 age_sec">
                                  <mat-form-field class="matField_full_width" appearance="outline">
                                     <mat-label>Age</mat-label>
                                     <input matInput placeholder="Age" formControlName="passengerAge{{traveller}}" maxlength="3" (keypress)="numberInput($event)" (keyup)="maxAgeLimitArr(traveller)" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
@@ -756,7 +817,7 @@
                                     <small *ngIf="passengerForm.hasError('max','passengerAge'+traveller)">{{ageValidErrorArr[traveller]}}</small>
                                  </div>
                               </div>
-                              <div class="inner_input">
+                              <div class="inner_input col-md-4 col-12">
                                  <mat-form-field class="matField_full_width" appearance="outline">
                                     <mat-label>Seat Preference</mat-label>
                                     <select matNativeControl formControlName="passengerBerthChoice{{traveller}}">
@@ -766,7 +827,7 @@
                                  </mat-form-field>
                               </div>
       
-                              <div class="inner_input">
+                              <div class="inner_input col-md-4 col-12">
                                  <mat-form-field class="matField_full_width" appearance="outline">
                                     <mat-label>Country</mat-label>
                                     <select matNativeControl  [(ngModel)]="defaultCountryArr[traveller]" (ngModelChange)="countrySelectAddMore(traveller)" formControlName="passengerNationality{{traveller}}">
@@ -894,8 +955,8 @@
                               <p class="my-2">Infant {{i+1}} 
                                   <span class="remove-traveller float-right text-right" (click)="removeChild(traveller,-1)" ><i class="material-icons" style="color: #007bff;position: relative;top: -7px;">close</i> </span>
                               </p>
-                                    <div class="travel_details contact-form edit_traveller_sec">
-                                      <div class="inner_input">
+                                    <div class="row contact-form edit_traveller_sec">
+                                      <div class="inner_input col-md-4 col-12">
                                           <mat-form-field class="matField_full_width" appearance="outline">
                                               <mat-label>Name</mat-label>
                                                <input matInput placeholder="Name" formControlName="childName{{traveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
@@ -909,7 +970,7 @@
                                     {{minNameLength}} character.</small>
                                                           </div>
                                       </div>
-                                      <div class="inner_input gender_sec">
+                                      <div class="inner_input col-md-4 col-12 gender_sec">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                               <mat-label>Gender</mat-label>
                                               <select matNativeControl formControlName="childGender{{traveller}}">
@@ -923,7 +984,7 @@
                                         gender.</small>
                                                                   </div>
                                       </div>
-                                      <div class="inner_input ">
+                                      <div class="inner_input col-md-4 col-12 ">
                                          <mat-form-field class="matField_full_width" appearance="outline">
                                               <mat-label>Age</mat-label>
                                               <select matNativeControl formControlName="childAge{{traveller}}">
@@ -969,7 +1030,7 @@
                    <h6 class="des_title mb-20">Your Destination Address</h6>
                    <!-- <p>Your ticket and PNR number will be sent to</p> -->
                 </div>
-                <div class="row ">
+                <div class="row g-3">
                    <div class="col-lg-4 col-md-4 col-12">
                       <mat-form-field class="matField_full_width w-100" appearance="outline">
                         <mat-label>Address 1 *</mat-label>
@@ -1109,92 +1170,103 @@
             </div>
 
             <div class="booking-inner-box additional_preference_sec">
-              <p class="mt-3"> <label class="checkbox">Additional Preferences (Optional)
-              <input type="checkbox" (click)="autoUpgrade($event)" formControlName="AdditionalPreference">
-              <span class="checkmark"></span>
-              </label>
+              <p class="mt-3"> 
+                <label class="checkbox">
+                  <input type="checkbox" (click)="autoUpgrade($event)" formControlName="AdditionalPreference">
+                  <span class="ps-2 check_title">Additional Preferences (Optional)</span>
+                  <span class="checkmark"></span>
+                </label>
               </p>
-          <div class="gst-optional-data" *ngIf="addshow">
-          <div class="">
-          <div>
-          <p> <label class="checkbox">Consider for Auto Upgradation
-          <input type="checkbox" formControlName="passengerAutoUpgradation" value="0">
-          <span class="checkmark"></span>
-          </label>
-          </p>
-          </div>
-          <div *ngIf="vikalpInSpecialTrainsAccomFlag" class="">
-          <p> <label class="checkbox">Opted for VIKALP
-          <input type="checkbox" formControlName="vikalpInSpecialTrainsAccomFlag">
-          <span class="checkmark"></span>
-          </label>
-          </p>
-          </div>
-          <div class="add-title">Reservation choice</div>
-          <div class="res-area">
-          <label for="res-none" class="radio">
-          <input type="radio" formControlName="passengerReservationCh" name="passengerReservationCh"
-          value="99" class="hidden" id="res-none" [checked]="true"
-          (change)="passengerReservationChoiceFun($event)" />
-          <span class="label"></span>
-          <span class="res-option">None</span>
-          </label>
-          <label for="res-all" class="radio">
-          <input type="radio" formControlName="passengerReservationCh" name="passengerReservationCh"
-          value="1" class="hidden" id="res-all" (change)="passengerReservationChoiceFun($event)" />
-          <span class="label"></span>
-          <span class="res-option">Book only if all berths are alloted in same coach</span>
-          </label>
-          <label for="res-one" class="radio">
-          <input type="radio" formControlName="passengerReservationCh" name="passengerReservationCh"
-          value="2" class="hidden" id="res-one" (change)="passengerReservationChoiceFun($event)" />
-          <span class="label"></span>
-          <span class="res-option">Book only if atleast 1 lower berth is allotted</span>
-          </label>
-          <label for="res-two" class="radio">
-          <input type="radio" formControlName="passengerReservationCh" name="passengerReservationCh"
-          value="3" class="hidden" id="res-two" (change)="passengerReservationChoiceFun($event)" />
-          <span class="label"></span>
-          <span class="res-option">Book only if 2 lower berths are allotted</span>
-          </label>
-          <label for="res-three" class="radio">
-          <input type="radio" formControlName="passengerReservationCh" name="passengerReservationCh"
-          value="4" class="hidden" id="res-three" (change)="passengerReservationChoiceFun($event)" />
-          <span class="label"></span>
-          <span class="res-option">Book only if tickets are confirmed</span>
-          </label>
 
-          <div class="col-12 contact-form">
-          <mat-form-field  class="matField_full_width" appearance="outline">
-              <mat-label>Coach Preference</mat-label>
-              <input matInput (keypress)="AvoidSpace($event);specialcharInput($event)" placeholder="Enter Coach No" (keyup)="convertToUpperCase($event)" formControlName="coachId" autocomplete="off" maxlength="4">
-          </mat-form-field>
-          </div>
-          <div *ngIf="(submitted && passengerForm.controls['coachId']['errors']) || passengerForm.controls['coachId']['touched']" class="error">
-          <small *ngIf="passengerForm.hasError('pattern','coachId')" class="pl-3">Please enter valid coach
-          number.</small>
-          <small *ngIf="passengerForm.hasError('minlength','coachId')" class="pl-3">Please enter atleast 2
-          characters.</small>
-          <small *ngIf="passengerForm.hasError('maxlength','coachId')" class="pl-3">Please enter maximum 4
-          characters.</small>
-          </div>
+              <div class="gst-optional-data" *ngIf="addshow">
+                <div class="">
+                   <div>
+                      <p> <label class="checkbox">
+                         <input type="checkbox" formControlName="passengerAutoUpgradation" value="0">
+                         <span class="ps-2 check_title">Consider for Auto Upgradation</span>
+                         <span class="checkmark"></span>
+                         </label>
+                      </p>
+                   </div>
+                   <div *ngIf="vikalpInSpecialTrainsAccomFlag" class="">
+                      <p> <label class="checkbox">
+                         <input type="checkbox" formControlName="vikalpInSpecialTrainsAccomFlag">
+                         <span class="ps-2 check_title">Opted for VIKALP</span>
+                         <span class="checkmark"></span>
+                         </label>
+                      </p>
+                   </div>
+                   <div class="add-title-reserve">Reservation choice</div>
+                   <div class="res-area">
+                      
 
-          </div>
-          <div class="imp-note">
-          <p><span class="note-one"> IMPORTANT </span> <span class="note-two"> The booking will fail if
-          the specified berth choice or coach number is not available.</span> </p>
-          </div>
+                      <div class="form-check res_radio">
+                        <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="99" class="" id="res-none" checked (change)="passengerReservationChoiceFun($event)" >
+                        <label class="form-check-label ps-2" for="res-none">
+                          None
+                        </label>
+                      </div>
 
-          </div>
-          </div>
-            </div>
+                      <div class="form-check res_radio">
+                        <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="1" class="" id="res-all"  (change)="passengerReservationChoiceFun($event)" >
+                        <label class="form-check-label ps-2" for="res-all">
+                          Book only if all berths are alloted in same coach
+                        </label>
+                      </div>
+
+                      <div class="form-check res_radio">
+                        <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="2" class="" id="res-one"  (change)="passengerReservationChoiceFun($event)" >
+                        <label class="form-check-label ps-2" for="res-one">
+                          Book only if atleast 1 lower berth is allotted
+                        </label>
+                      </div>
+
+                      <div class="form-check res_radio">
+                        <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="3" class="" id="res-two"  (change)="passengerReservationChoiceFun($event)" >
+                        <label class="form-check-label ps-2" for="res-two">
+                          Book only if atleast 1 lower berth is allotted
+                        </label>
+                      </div>
+
+                      <div class="form-check res_radio">
+                        <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="4" class="" id="res-three"  (change)="passengerReservationChoiceFun($event)" >
+                        <label class="form-check-label ps-2" for="res-three">
+                          Book only if tickets are confirmed
+                        </label>
+                      </div>
+
+                      
+                      <div class="contact-form my-2 w-50">
+                         <mat-form-field  class="matField_full_width w-100" appearance="outline">
+                            <mat-label>Coach Preference</mat-label>
+                            <input matInput (keypress)="AvoidSpace($event);specialcharInput($event)" placeholder="Enter Coach No" (keyup)="convertToUpperCase($event)" formControlName="coachId" autocomplete="off" maxlength="4">
+                         </mat-form-field>
+                      </div>
+                      <div *ngIf="(submitted && passengerForm.controls['coachId']['errors']) || passengerForm.controls['coachId']['touched']" class="error">
+                         <small *ngIf="passengerForm.hasError('pattern','coachId')" class="pl-3">Please enter valid coach
+                         number.</small>
+                         <small *ngIf="passengerForm.hasError('minlength','coachId')" class="pl-3">Please enter atleast 2
+                         characters.</small>
+                         <small *ngIf="passengerForm.hasError('maxlength','coachId')" class="pl-3">Please enter maximum 4
+                         characters.</small>
+                      </div>
+                   </div>
+                   <div class="imp-note">
+                      <p><span class="note-one"> IMPORTANT </span> <span class="note-two"> The booking will fail if
+                         the specified berth choice or coach number is not available.</span> 
+                      </p>
+                   </div>
+                </div>
+             </div>
+              
+        </div>
 
             <div class="booking-inner-box travel_insurance">
               <div class=" traveller-person-left">
                 <h6 class="">Travel Insurance</h6>
              </div>
               <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" id="insurance_check">
+                <input class="form-check-input" type="checkbox" formControlName="travelInsurence"     id="insurance_check"  name="travelInsurence" id="travelInsurence" [checked]="travelInsuranceOpted" />
                 <label class="form-check-label" for="insurance_check">
                   Include travel Insurance (₹ 0.49/person)
                 </label>
@@ -1388,68 +1460,122 @@
                       </div>
                     </li>
                   </ul>
+                  <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
+                    <small *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls['passengerAgree']['errors']['pattern']">Please accept Terms and Conditions.</small>
                 </div>
-                      <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
-                          <small *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls['passengerAgree']['errors']['pattern']">Please accept Terms and Conditions.</small>
-                      </div>
+                </div>
+                      
        
             </form>
       </div>
       <!--Step2 Ends-->
       <!--Step3 Starts-->
       <div class="col-md-8" *ngIf="steps==3">
-      
           <div>
-
             <div class="booking-process-content" >
-              <div class="booking-title-box">
-                <h4 class="heading_text">Mumbai to Hyderabad <p class="sub_head_text"> <span
-                  class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
-                      src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
-                </h4>
-              </div>
-              <div class="booking-inner-box from-to-box">
+               <div class="booking-inner-box from-to-box">
                 
-                    <div class="row">
-    
-                      <div class="col-sm-4">
-                        <p class="train_name">
-                          LTT VSKP EXP(18520)
-                        </p>
-                        <p class="daily_chart">
-                            <span class="text-small-gray" style="color:#000000;">Runs on:</span>
-                            <span >S</span>
-                            <span >M</span>
-                            <span >T</span>
-                            <span >W</span>
-                            <span >T</span>
-                            <span class="active">F</span>
-                            <span >S</span>
-                        </p>
+                    <!-- Webcode Train Details-->
+              <div class="d-none d-sm-block">
+                <div class="row">
+
+                  <div class="col-sm-4">
+                    <p class="train_name">
+                      {{trainName}}({{trainnumber}})
+                    </p>
+                    <p class="daily_chart">
+                        <span class="text-small-gray" style="color:#000000;">Runs on:</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
+                    </p>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="trainTimeInfo">
+                        <div class="">
+                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
+                        </div>
+                        <div>
+                            <div class="duration_train">
+                                <p class="dur_time">{{travelDuration}}</p>
+                                <div class="range m_range"></div>
+                            </div>
+                        </div>
+                        <div>
+                             <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                            <p class="place">{{tostnDesc}}</p>
+                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
+                        </div>
                       </div>
-                      <div class="col-sm-8">
-                        <div class="trainTimeInfo">
-                            <div class="">
-                                <p><span class="time">06:05, Sat</span></p>
-                                <p class="place">Lokmantatilak (LTT) </p>
-                                <p class="date">Jul 17, 2022</p>
-                            </div>
-                            <div>
-                                <div class="duration_train">
-                                    <p class="dur_time">13 hrs 35 mins</p>
-                                    <div class="range m_range"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <p><span class="time">20:30, Sun</span> </p>
-                                <p class="place">Secunderabad Jn (SC)</p>
-                                <p class="date">Jul 17, 2022</p>
-                            </div>
-                          </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- Mlitecode Train Details -->
+              <div class="d-block d-sm-none m-light">
+                <div class="row">
+                  <div class="col-6">
+                    <p class="train_name">
+                      {{trainName}}({{trainnumber}})
+                    </p>
+                  </div>
+                  <div class="col-6 text-right">
+                    <p class="daily_chart">
+                      <!-- <span class="text-small-gray" style="color:#000000;">Runs on:</span> -->
+                       <span class="text-small-gray" style="color:#000000;">Runs on:</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSun=='Y' }"  >S</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningMon=='Y' }">M</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningTue=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningWed=='Y' }">W</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningThu=='Y' }">T</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningFri=='Y' }">F</span>
+                        <span [ngClass]="{'active': seacthResult.selectedTrain.runningSat=='Y' }">S</span>
+                  </p>
+                  </div>
+                </div>
+                <div class="trainTimeInfo d-block">
+                  <div class="row my-2">
+                    <div class="col-3">
+                      <div>
+                        <p><span class="time">06:05, Sat</span></p>
                       </div>
-    
                     </div>
-                    <div class="row mt-40">
+                    <div class="col-6">
+                      <div class="duration_train">
+                        <p class="dur_time">13 hrs 35 mins</p>
+                        <div class="range m_range"></div>
+                      </div>
+                    </div>
+                    <div class="col-3 text-right">
+                      <div>
+                        <p><span class="time">20:30, Sun</span> </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="trainTimeInfo d-block">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="place">Lokmantatilak (LTT) </p>
+                            <p class="date">Jul 17, 2022</p>
+                        </div>
+                        <div class="col-4">
+                            
+                        </div>
+                        <div class="col-4 text-right">
+                            <p class="place">Secunderabad Jn (SC)</p>
+                            <p class="date">Jul 17, 2022</p>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+                    <div class="row mt-40 gy-4">
     
                       <div class="col-sm-4">
                         <p class="train_title_label"> Availability Status </p>
@@ -1479,10 +1605,7 @@
                       </div>
     
                     </div>
-    
               </div>
-    
-              
             </div>
               
     
@@ -1503,11 +1626,11 @@
                   <div class="row gy-4">
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <p class="label_text">Email</p>
-                      <p class="label_value">{{contactDatails.email}}</p>
+                      <p class="label_value">{{passengerItineraryDetails.email}}</p>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <p class="label_text">Mobile Number</p>
-                      <p class="label_value">{{contactDatails.mobile}}</p>
+                      <p class="label_value">{{passengerItineraryDetails.mobileNumber}}</p>
                     </div>
                   </div>
     
@@ -1527,7 +1650,7 @@
     
             </div>
             <div class="booking-process-content traveller_review">
-              <div class="booking-title-box mb-0">
+              <!--<div class="booking-title-box mb-0">
     
     
                 <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
@@ -1562,27 +1685,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <!-- <div *ngIf="travelerDetails.child > 0">
-                    <h6>{{travelerDetails.child}} Child</h6>
-                    <table class="table  traveller_table">
-                      <thead>
-                        <tr>
-                          <th scope="col" class="col-6">Name</th>
-                          <th scope="col">Age</th>
-                          <th scope="col">Gender</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ng-container *ngFor="let adult of paxInfo;let i = index">
-                          <tr *ngIf="adult.type=='ADT'">
-                            <td>Amit Kumar</td>
-                            <td>6 months</td>
-                            <td>Male</td>
-                          </tr>
-                        </ng-container>
-                      </tbody>
-                    </table>
-                  </div> -->
+    
                   <div *ngIf="travelerDetails.infants > 0">
                     <h6>{{travelerDetails.infants}} Infant</h6>
                     <table class="table  traveller_table">
@@ -1605,7 +1708,7 @@
                     </table>
                   </div>
                 </div>
-              </div>
+              </div>-->
     
             </div>
       </div>
@@ -1690,7 +1793,7 @@
   
                     </li>
                     
-                    <ng-container  >
+                    <ng-container *ngIf="steps > 2"  >
                     <li class="fare-list-item">
                       <div class="fare-list-box">
                         <div class="fare-list-left">
@@ -1832,8 +1935,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="continue-widget mb-20">
-   
+              <div class="continue-widget mb-20"> 
                 <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
                   *ngIf="steps==2">Continue</a>
                 <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
@@ -1855,45 +1957,8 @@
     </div>
   </div>
 </section>
-<!-- ------------------------------
-          >>> Modal bookingprocess
-      ---------------------------------->
-<div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body " style="padding: 25px;" *ngIf="searchData">
-        <div class="bookingprocess-items">
-          <div class="bookingprocess-title text-center mb-30">
-            <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
-          </div>
-          <div class="bookingprocess-content">
-            <div class="bookingprocess-flight">
-              <h6>{{searchData.fromCity}},{{searchData.fromContry}} ({{searchData.flightfrom}})</h6>
-              <p class="mt-10">{{searchData.departure | date:'dd.MM.yyyy'}} - <span>{{searchData.adults}}
-                  Adult,</span> <span *ngIf="searchData.child != '0'">{{searchData.child}} Child,</span> <span
-                  *ngIf="searchData.infants != '0'">{{searchData.infants}} Infants,</span>
-                {{searchData.flightclass == "B" ? "Business":null || searchData.flightclass == "E" ? "Economy":null || searchData.flightclass == "F" ? "First":null  || searchData.flightclass == "P" ? "Premium":null}}
-              </p>
-              <h6>{{searchData.toCity}},{{searchData.toContry}} ({{searchData.flightto}})</h6>
-            </div>
-            <div class="bookingprocess-processbar">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
-                  aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                  <span class="title"> &nbsp; </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="refresh-text text-center pt-2">
-            <p>Please don't click or refresh the page</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 
 <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
   tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -1978,16 +2043,10 @@
           </div>
           <div class="col-7">
             <div>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="sendFlightDetails()"
-                *ngIf="steps==1">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueTravellerDetails()"
-                *ngIf="steps==2">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueSeatSelection()"
-                *ngIf="steps==3">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueReviewBooking()"
-                *ngIf="steps==4">Continue</a>
-              <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"
-                *ngIf="steps==5">Continue</a>
+               <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()"
+                  *ngIf="steps==2">Continue</a>
+                <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()"
+                  *ngIf="steps==3">Continue</a>
             </div>
           </div>
         </div>

@@ -138,6 +138,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   enableFlightServices:any;
    serviceSettings:any;
    isDisplayModifiedMulticity:boolean = false;
+   isMulticity:boolean = false;
   constructor(private cd: ChangeDetectorRef,
     public _styleManager: StyleManagerService, private appConfigService:AppConfigService,
     public route: ActivatedRoute,
@@ -175,7 +176,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.multicityForm = this._fb.group({
       multicityFormArr: this._fb.array([this.multiCityArrAddItems()])
     });
-    
+
     return;
 
   }
@@ -215,6 +216,13 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     let date = datePicker.target.value
     date = moment(date).format('YYYY-MM-DD')
     item.value.departure = date;
+    this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
+    if(this.multicityFormArr.controls.length -1 > i){
+      for(var j = i+1; j< this.multicityFormArr.controls.length;j++)
+      {
+        this.multicityFormArr.controls[j].get('departure').setValue('')
+      }
+    }
     this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
     if(this.minDateArray.length -1 > i)
     {
@@ -467,7 +475,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   setSearchFilterData() {
     let lastSearch: any = localStorage.getItem('flightLastSearchNew');
       var multicity = localStorage.getItem('multicityLastSearch');
-      if(multicity != null && multicity != '')
+      var isMulticity =   localStorage.getItem('isMulticitySearch');
+      if(multicity != null && multicity != '' && isMulticity!=null && isMulticity!=undefined && isMulticity=='true' )
       {
         var data = JSON.parse(multicity);
         this.multicitySearchData = data;
@@ -485,8 +494,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.isDisplayModifiedMulticity = true;
         }
 
-      }
-      else  if (lastSearch != null || lastSearch != undefined) {
+      } else  if (lastSearch != null || lastSearch != undefined) {
         lastSearch = JSON.parse(lastSearch)
         this.flightData.get('adults').setValue(lastSearch.adults);
         this.flightData.get('child').setValue(lastSearch.child);
@@ -520,7 +528,25 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "") {
           this.navItemActive = "Round Trip"
         }
-      }
+       }else{
+
+        this.fromCityName='New Delhi';
+        this.toCityName='Mumbai';
+        this.fromAirpotName='Indira Gandhi Airport';
+        this.toAirpotName='Chatrapati Shivaji Airport';
+
+        this.flightData['controls']['fromCity'].setValue('New Delhi');
+        this.flightData['controls']['toCity'].setValue('Mumbai');
+        this.flightData['controls']['flightfrom'].setValue('DEL');
+        this.flightData['controls']['flightto'].setValue('BOM');
+
+        this.flightData['controls']['fromContry'].setValue('IN');
+        this.flightData['controls']['fromAirportName'].setValue('Indira Gandhi Airport');
+        this.flightData['controls']['toContry'].setValue('IN');
+        this.flightData['controls']['toAirportName'].setValue('Chatrapati Shivaji Airport');
+
+
+        } 
 
 
 
@@ -589,7 +615,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.flightSearchCallBack(searchValue);
 
       localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
-      localStorage.setItem('multicityLastSearch','');
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
       if (searchValue.arrival)
@@ -825,15 +850,17 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
   callMutlicityFunc = true;
   navBarLink(navItem: any) {
+
     this.navItemActive = navItem;
     let datePickerArrival = document.getElementById('datePickerArrival');
     let datePickerOpen = document.getElementById('datePickerOpen');
-
-
+    this.submitted = false;
     if(this.navItemActive == 'Round Trip'){
+
       this.minDateFlightToMlite=this.departureDate;
       this.flightData.controls["arrival"].setValidators(Validators.required);
       this.flightData.controls["arrival"].updateValueAndValidity();
+
    }else{
        this.arrivalDate = '';
        this.flightData.controls["arrival"].setValue('');
@@ -843,6 +870,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
     if (this.navItemActive == 'Multicity') {
+      localStorage.setItem('isMulticitySearch','true');
       datePickerOpen.classList.add('roundtrip-area-root-departure');
       datePickerArrival.style.display = 'none'
       if (this.callMutlicityFunc == true) {
@@ -851,6 +879,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.callMutlicityFunc = false;
     }
     else {
+      localStorage.setItem('isMulticitySearch','false');
       datePickerOpen.classList.remove('roundtrip-area-root-departure');
       datePickerArrival.style.display = ''
     }

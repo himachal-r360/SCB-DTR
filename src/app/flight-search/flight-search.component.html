@@ -1,4 +1,4 @@
-<form [formGroup]="flightData">
+<form [formGroup]="flightData"  >
     <div class="travel-select-data-area">
         <div class="travel-select-trip">
             <ul class="travel-select-trip-ul">
@@ -117,7 +117,10 @@
                                 *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
                                 <small class="validate-msg">Please select from city</small>
                             </div>
-
+                            <div class="error_msg w-50"
+                            *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
+                            <small class="validate-msg">Please select from city</small>
+                        </div>
 
                             <div class="error_msg w-50" *ngIf="!isMobile && Error('flightto', 'MustMatch')">
                                 <small *ngIf="!isMobile" class="validate-msg">From and To cannot be same</small>
@@ -657,8 +660,7 @@
                                             <li>
                                                 <a href="javascript:void(0)" class="" value="E"
                                                     (click)="getClassVal('E')"
-                                                    [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
-                                                    Economy</a>
+                                                    [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy</a>
                                             </li>
                                             <li>
                                                 <a href="javascript:void(0)" class="" value="P"
@@ -931,7 +933,6 @@
           </div>
             <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
                 <div class="row g-2">
-                        <ng-container  formArrayName="multicityFormArr">
                     <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container  [formGroupName]="i">
                         <div class="col-lg-6">
@@ -1372,8 +1373,7 @@
                                                     <li>
                                                         <a href="javascript:void(0)" class="" value="E"
                                                             (click)="getClassVal('E')"
-                                                            [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
-                                                            Economy</a>
+                                                            [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy</a>
                                                     </li>
                                                     <li>
                                                         <a href="javascript:void(0)" class="" value="P"
@@ -1421,7 +1421,6 @@
 
 
                         </div>
-                    </ng-container>
                     </ng-container>
                     </ng-container>
 
@@ -1764,8 +1763,7 @@
                                   <li>
                                       <a href="javascript:void(0)" class="" value="E"
                                           (click)="getClassVal('E')"
-                                          [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy/Premium
-                                          Economy</a>
+                                          [ngClass]="this.flightData.value.flightclass == 'E' ? 'active':'' ">Economy</a>
                                   </li>
                                   <li>
                                       <a href="javascript:void(0)" class="" value="P"
