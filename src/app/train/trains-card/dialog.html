@@ -1,4 +1,4 @@
-<mat-dialog-content  class="">
+<mat-dialog-content  class="m_train_confirm_cntnt">
 <!-- For Web Code  -->
 <div class="text-center d-none d-sm-block">
     <div class="confirmation-header">
@@ -26,8 +26,21 @@
         </div>
     </div>
 
-    <div class="my-3">
-        Loader 
+    <div class="my-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="train_m_loader">
+                    <div class="bookingprocess-processbar">
+                        <div class="progress active">
+                          <div class="progress-bar" role="progressbar" attr.aria-valuenow="55" aria-valuemin="0"
+                            aria-valuemax="100" [ngStyle]="{'max-width':55 +'%'}">
+                            <span class="title"> &nbsp; </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            </div>
+        </div>
     </div>
 
     <div class="">
@@ -71,46 +84,83 @@
         <div class="confirmation-header">
            <h4>You are choosing different route</h4>
         </div>
+        <div class="dashed_brdr_div">
         <div class="py-4 px-3 row">
-            <div class="col-12">
-                <p>You seached train for</p>
+            <div class="col-12 p-0 m-0">
+                <p class="small mt-2 mb-2">You searched train for</p>
+                        <div class="row mb-1">
+                            <div class="col-8 offset-2">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="train_duration_dots"></span>
+                                <hr class="m-0 w-100 dot_connct_hr">
+                                <span class="train_duration_dots"></span>
+                            </div>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-5 text-center">
                                 <span class="train-name-conf">{{data.searchfrom|titlecase}} ({{data.frmStn}})</span>
                             </div>
                             <div class="col-2 p-0">
-                                <hr style="margin: 0.6rem 0;">
+                                <span class="train-name-conf">To</span>
                             </div>
-                            <div class="col-5">
+                            <div class="col-5 text-center">
                                 <span class="train-name-conf">{{data.searchto|titlecase}} ({{data.toStn}})</span>
                             </div>
                         </div>
             </div>
             <div class="col-12 py-3">
-                <img src="{{cdnUrl}}images/irctcbw.svg" alt="train-between">
+                <!-- <img src="{{cdnUrl}}images/icons/train_loader.svg" alt="train-between"> -->
+
+                <div class="train_m_loader">
+                <div class="bookingprocess-processbar">
+                    <div class="progress active">
+                      <div class="progress-bar" role="progressbar" attr.aria-valuenow="55" aria-valuemin="0"
+                        aria-valuemax="100" [ngStyle]="{'max-width':55 +'%'}">
+                        <span class="title"> &nbsp; </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
             </div>
+            <div class="col-12 p-0 m-0">
+                <p class="small mt-2 mb-2">But Booking From</p>
+                <div class="row mb-1">
+                    <div class="col-8 offset-2">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <span class="train_duration_dots"></span>
+                        <hr class="m-0 w-100 dot_connct_hr">
+                        <span class="train_duration_dots"></span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12">
-                <p>But Booking From</p>
                         <div class="row">
                             <div class="col-5">
                                 <span class="train-name-conf">{{data.trainFrom|titlecase}} ({{data.fromStnCode}})</span>
                             </div>
                             <div class="col-2 p-0">
-                                <hr style="margin: 0.6rem 0;">
+                                <span class="train-name-conf">To</span>
                             </div>
                             <div class="col-5">
                                 <span class="train-name-conf">{{data.trainTo|titlecase}} ({{data.toStnCode}})</span>
                             </div>
                         </div>
             </div>
-            <div class="continiue-title col-12">
+    </div>
+    </div>
+    <div class="row">
+        <div class="continiue-title col-12">
                     <h4>Do you want to continue with it?</h4>
-            </div>
-        
-            <hr>
-        <div class="text-center col">
-            <button  (click)="onNoClick()" tabindex="1" class="btn btn-b-{{domainName}} mx-2" style="width:90px;">Cancel</button>
-            <button   (click)="onYesClick()" tabindex="2" class="btn btn-c-{{domainName}} mr-2" style="width:90px;">Ok</button>
+        </div>
+        <div class="text-center col-12">
+            <button   (click)="onYesClick()" tabindex="2" class="btn-c-{{domainName}} cnfrm_modal_btn">Yes</button>
+        </div>
+        <div class="text-center col-12 mt-2">
+            <button  (click)="onNoClick()" tabindex="1" class="btn-b-{{domainName}} cnfrm_modal_btn_brdr">Cancel</button>
         </div>
     </div>
     </div>

@@ -390,14 +390,13 @@ pgSettingsCYBERToken:number=0;
 			this.showVerificationDetails = false;
 			this.showcalcsection = false;
 			this.flexipayOtpResponse = false;
-			this.isLoggedIn = true;
 			// this.REWARD_MOBILE = this.customerInfo['mobile'];
 			if(this.customerInfo['mobile'] == '0'){
 				this.REWARD_MOBILE = '';
 			}else this.REWARD_MOBILE = this.customerInfo['mobile'];
 
 			}
-		this.isLoggedIn = false;
+		this.isLoggedIn = true;
 		}else{
 		this.isLoggedIn = true;
 		}
@@ -795,6 +794,9 @@ checkInfo1(event){
    }else{
      $('#tokenization').val(1);
    }  
+}
+updatenewAmounttopay(event:string){
+	this.payTotalFare=event;
 }
 
 
@@ -2512,6 +2514,7 @@ export class PaywithpointsDialog {
 			this.XSRFTOKEN = this.customerInfo["XSRF-TOKEN"];
 			this.customermobile = this.REWARD_MOBILE;
 			this.serviceId=data.serviceId;
+
 	}
 	ngOnInit() {
 		this.serviceSettings=this.appConfigService.getConfig();

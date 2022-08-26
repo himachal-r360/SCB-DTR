@@ -169,7 +169,7 @@ export class HomeComponent implements OnInit {
         case ('/bus'):
         this.navItemActive = 'bus';
         break;
-        case ('/train'):
+        case ('/train'):  case ('/train/pnr'):
         this.navItemActive = 'train';
         break;
         default:

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   LOCALLOGIN: 'true',
   COOKIE_DOMAIN: null,
-  LOCALJSON: 'false',
+  LOCALJSON: 'true', 
   localInstance: 1,
   //  url:"https://smartbuyadminuat.reward360.in/",
   //url:"https://smartbuydev.reward360.in/",
@@ -20,7 +20,7 @@ export const environment = {
     'DINERS': 'https://smartbuydev.reward360.in/diners/api/',
     'INFINIA': 'https://smartbuydev.reward360.in/infinia/api/',
     'REGALIA': 'https://smartbuydev.reward360.in/regalia/api/',
-      'REGALIA_GOLD': 'https://smartbuydev.reward360.in/regalia/api/',
+      'REGALIA_GOLD': 'https://smartbuydev.reward360.in/regalia_gold/api/',
     'CORPORATE': 'https://smartbuydev.reward360.in/corporate/api/',
     'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
   },
@@ -43,7 +43,7 @@ export const environment = {
  'CORPORATE': 'https://smartbuydev.reward360.in/corporate/api/',
  'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
   },
-  
+
   BUS_SITE_URL: {
     'SMARTBUY': 'https://smartbuydev.reward360.in/lite/',
     'DINERS': 'https://smartbuydev.reward360.in/lite/diners/',

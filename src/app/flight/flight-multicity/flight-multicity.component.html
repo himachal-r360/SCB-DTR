@@ -366,9 +366,10 @@
                                                     <p>{{list.flights[list.flights.length-1].arrivalAirport}}</p>
                                                 </div>
                                                 <div class="flight-listing-time" *ngIf="list.flights.length > 0">
-                                                    <h6>{{ list.flights[0].duration | durationTime }}</h6>
-                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
-                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
+                                                    <h6>{{ list.flights | durationTotalTime }}</h6>
+                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
+                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                                    <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
                                                 </div>
                                             </div>
 
@@ -817,10 +818,10 @@
                   </div>
                   <div class="mob-listing-header-center">
                       <h6>{{selectedTripData.fromCity}} - {{selectedTripData.toCity}}</h6>
-                      <p>{{selectedTripData.depart | date:'EEE, dd MMM' }} | {{(selectedTripData.adults + selectedTripData.child + selectedTripData.infants)}} Travellers | <span *ngIf="selectedTripData.classType == 'B'">Business</span>
-                        <span *ngIf="selectedTripData.classType == 'E'">Economy</span>
-                        <span *ngIf="selectedTripData.classType == 'F'">First</span>
-                        <span *ngIf="selectedTripData.classType == 'P'">Premium</span>
+                      <p>{{selectedTripData.departure | date:'EEE, dd MMM' }} | {{TotalPassenger}} Travellers | <span *ngIf="selectedTripData.flightclass == 'B'">Business</span>
+                        <span *ngIf="selectedTripData.flightclass == 'E'">Economy</span>
+                        <span *ngIf="selectedTripData.flightclass == 'F'">First</span>
+                        <span *ngIf="selectedTripData.flightclass == 'P'">Premium</span>
                       </p>
                   </div>
                   <div class="mob-listing-header-right">
@@ -830,7 +831,17 @@
                   </div>
               </div>
           </div>
-          <div class="col-md-12 mt-70" *ngIf="!loader">
+          <div class="col-md-12 p-0 mt-70">
+            <div class="mult-city-listing-flights-box">
+                <div class="mult-city-listing-flights-items" (click)="activeSelectedTrip(i)" [ngClass]="{'mult-city-active': i ==selectedTrip}" *ngFor="let item of searchData; let i = index">
+                    <p class="mult-city-listing-names">{{item.flightfrom}} - {{item.flightto}}</p>
+                    <p class="mult-city-listing-date">{{item.departure | date:"EEE ,dd MMM" }}</p>
+                    <p class="mult-city-listing-selected" *ngIf="item.isSelected== false">Not selected</p>
+                    <p class="mult-city-listing-selected" *ngIf="item.isSelected== true">selected</p>
+                </div>
+            </div>
+        </div>
+          <div class="col-md-12 " *ngIf="!loader">
               <div class="mob-listing-fiters">
                   <h6>{{flightList.length}} Flights Found</h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()">
@@ -898,10 +909,11 @@
                                       <p>{{list.flights[0].departureAirport}}</p>
                                   </div>
                                   <div class="name-bottom-top-center">
-                                      <p>{{ list.flights[0].duration | durationTime }}</p>
+                                      <h6>{{ list.flights | durationTotalTime }}</h6>
                                       <img src="/{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                      <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
-                                      <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
+                                       <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
+                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                                    <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
                                   </div>
                                   <div class="name-bottom-top-right">
                                       <h6>{{list.flights[list.flights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -916,7 +928,7 @@
                       </div>
 
 
-                      <div class="mob-items-book-list" style="display:none;"  id="CompareToFly_{{list.flightKey}}">
+                      <div class="mob-items-book-list" [ngStyle]="{'display': list.isSelected ? 'block' :'none'}"  id="CompareToFly_{{list.flightKey}}">
                           <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                               <div class="mob-book-list-top">
                                   <div class="mob-booking-image">
@@ -929,7 +941,7 @@
                                   </div>
                                   <div class="mob-booking">
                                     <button  class="BtnOnSelect" (click)="onMobileSelect(list.flightKey,list.flights,item,$event)">
-                                      Select
+                                      {{list.isSelected ? 'Selected' :'Select'}}
                                   </button>
                                   </div>
                               </div>
@@ -1746,8 +1758,8 @@
                                   data-bs-target="#fareSummary_mlite">Fare Details</a>
                               </div>
                               <div class="fr-fixed-btn">
-                                  <button *ngIf="!isLast" [disabled]="isError" (click)="nextFlightSelect()" [ngClass]="{'disable-partner':isError}" class="button-style w-100 mt-2">Select Next Flight</button>
-                                  <button *ngIf="isLast" [disabled]="isError" [ngClass]="{'disable-partner':isError}" (click)="bookingSummary()" class="button-style w-100 mt-2">Book</button>
+                                  <button  *ngIf="!isAllSelected && !isLast" [disabled]="isError" (click)="nextFlightSelect()" [ngClass]="{'disable-partner':isError}" class="button-style w-100 mt-2">Select Next Flight</button>
+                                  <button *ngIf="isAllSelected || isLast" [disabled]="isError || isLast" [ngClass]="{'disable-partner':isError || isLast}" (click)="bookingSummary()" class="button-style w-100 mt-2">Book</button>
                               </div>
                           </div>
                       </div>

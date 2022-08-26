@@ -147,7 +147,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
  constructor(private _flightService: FlightService,@Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
   private sg: SimpleGlobal,  @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
   private _bottomSheet: MatBottomSheet, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, plocation: PlatformLocation,private titleService: Title,private appConfigService:AppConfigService,private modalService: NgbModal) {
-  
+
   this.serviceSettings=this.appConfigService.getConfig();
   
    if(this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['BUS']!=1){
@@ -169,7 +169,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
 
  }
-
+  loaderValue = 10;
  public Button_loading: any = 'Processing...';
  public buttonstatus: boolean = false;
  public buttonLoading: boolean = false;
@@ -451,9 +451,19 @@ recivetotalFare($event){
   
     }, 50);
   
-  
+      this.loaderValue = 10;
+    const myInterval3 = setInterval(() => {
+      this.loaderValue = this.loaderValue + 10;
+
+      if (this.loaderValue == 110) {
+        this.loaderValue = 10;
+      }
+    }, 600);
   //Auth verify ends here
-  
+      $("#infoprocess").modal('show');
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        }, 2000);
  
   sessionStorage.removeItem("coupon_amount");
   const jobGroup: FormGroup = new FormGroup({});
@@ -604,6 +614,7 @@ selectedGST:any=[];
 checkedGST:any=[];
 disableGSTCheckbox:any=[];
 @ViewChild("contentTraveller") modalTraveller: TemplateRef<any>;
+
 chooseFromSavedTravellers(){
   this.isExpanded = false;
   this.modalService.open(this.modalTraveller, { centered: true }).result.then((result) => {
@@ -705,7 +716,7 @@ getCustomertravellerInfo(){
       //this.saveTravllerShow=false;
     }
 }
-fillupTravellerDetailOnCheck($event,data,travellerIndex){
+fillupTravellerDetailOnCheck($event,data,travellerIndex,){
   
       if($event.target.checked){                
             this.isChecked[travellerIndex]=true;

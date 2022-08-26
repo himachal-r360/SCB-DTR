@@ -6,14 +6,9 @@
             <ng-template carouselSlide  *ngFor="let hit of topDeals;  odd as isOdd; even as isEven;">
                 <div class="cardblock item">
                     <div class="card_long ">
-                        <div class="img_sec" *ngIf="hit.image!=''" else emptyImage>
-                            <img src="{{cdnDealUrl+hit.image}}" alt="" class="img-fluid radius_8"> 
+                        <div class="img_sec" *ngIf="hit.image">
+                            <img src="{{cdnDealUrl+hit.image}}" alt="if" class="img-fluid radius_8" (error)="onImgError($event)"> 
                         </div>
-                        <ng-template #emptyImage>
-                            <div class="img_sec">
-                            <img src="{cdnUrl}}images/exp-no-pictures.jpg" alt="" class="img-fluid radius_8"> 
-                        </div>
-                        </ng-template>
                         <hr class="visi-hide" />
                         <div>
                             <h1 class="offerCard-title">{{hit.name}}</h1>
@@ -32,3 +27,5 @@
       </span>
     </div>
 </div>
+<app-redirect-popup [redirectPopupTriggerTimestamp]="redirectPopupTriggerTimestamp" [redirectPopupTrigger]="redirectPopupTrigger" [redirectPopup]="redirectPopup" [redirectPopupPartner]="redirectPopupPartner" [redirectPopupType]="redirectPopupType" [redirectPopupUrl]="redirectPopupUrl"
+    [redirectPopupHeader]="redirectPopupHeader" [redirectPopupImpmessage]="redirectPopupImpmessage" [redirectPopupMessage]="redirectPopupMessage"></app-redirect-popup>

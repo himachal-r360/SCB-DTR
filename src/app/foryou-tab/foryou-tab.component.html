@@ -71,11 +71,18 @@
 
                     <div class="card_points_info" [hidden]="IsPointsCardDetails">                                   
                         <div class="bg_place">
-                          <div class="card_select">
+                          <div class="card_select" *ngIf="customercards.length>0 else other_content">
                             <select (change)="selectedCard($event)">
                               <option *ngFor="let each of customercards" value="{{each.id}}"  [attr.selected]="each.primary ==1">{{each.card}}</option>
                             </select>
-                          </div>        
+                          </div>      
+                          <ng-template #other_content>
+                               <div class="card_select">
+                                <select >
+                                  <option value="{{card_no}}">{{card_no}}</option>
+                              </select>
+                              </div>   
+                          </ng-template>  
                           <!-- <p class="card_name">Card Number {{card_no}} <span><a href="javascript:;">View Details</a></span></p> -->
                             <div class="row">
                               <div class="col-md-4 col-4">
@@ -99,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12" *ngIf="isLogged" [hidden]="IsPointsCardDetailsModel">
+                    <div class="col-sm-12"  *ngIf="isLogged" [hidden]="IsPointsCardDetailsModel">
                         <div class="unlock_card">
                             <div class="">
                                  <img src="{{cdnUrl}}images/smartbuy/icons/coin-icn.svg" alt="" class="img-fluid">
@@ -133,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="icon_place" data-bs-toggle="modal" data-bs-target="#unlockCardPopup"> <span><img src="{{cdnUrl}}images/smartbuy/icons/east.svg" alt="icn-right"></span> </div>
+                                    <div class="icon_place" (click)="unlockCardPopup()"> <span><img src="{{cdnUrl}}images/smartbuy/icons/east.svg" alt="icn-right"></span> </div>
                                 </div>
                             </div>
                         </div>
@@ -803,46 +810,46 @@
         <div class="modal-body">
             <div>
                 <form [formGroup]="angForm" novalidate (ngSubmit)="onSubmit()">
-                    <div class="mb-3">
+                    <div class="mb-30 card-container-rel">
                       <input type="text" class="form-control input_control" id="mblNumber" placeholder="Mobile Number" formControlName="mobile_no" (keypress)="onlyNumberKey($event,10)">
                       <div *ngIf="angForm.controls['mobile_no'].invalid && (angForm.controls['mobile_no'].dirty || angForm.controls['mobile_no'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['mobile_no'].errors.required" max-length="10">
-                            Mobile Number is required
+                            <small class="validate-msg">Mobile Number is required</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('pattern')">
-                            Mobile Number must be numeric
+                            <small class="validate-msg">Mobile Number must be numeric</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('minlength')">
-                            Mobile Number must be of 10 digit
+                            <small class="validate-msg">Mobile Number must be of 10 digit</small>
                           </div>
                           <div *ngIf="angForm.controls['mobile_no'].hasError('maxlength')">
-                            Mobile Number must be of 10 digit
+                            <small class="validate-msg">Mobile Number must be of 10 digit</small>
                           </div>
                       </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-30 card-container-rel">
                       <input type="text" class="form-control input_control" id="fourNumber" placeholder="Last 4 Digit of the card" formControlName="last_4_digit" (keypress)="onlyNumberKey($event,4)">
                       <div *ngIf="angForm.controls['last_4_digit'].invalid && (angForm.controls['last_4_digit'].dirty || angForm.controls['last_4_digit'].touched)" class="cardError">
                           <div *ngIf="angForm.controls['last_4_digit'].errors.required">
-                            Last 4 digit of the card is required
+                            <small class="validate-msg">Last 4 digit of the card is required</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('pattern')">
-                             Last 4 digit of the card must be numeric
+                             <small class="validate-msg">Last 4 digit of the card must be numeric</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('minlength')">
-                            Last 4 digit of the card must be of 4 digit
+                           <small class="validate-msg"> Last 4 digit of the card must be of 4 digit</small>
                           </div>
                           <div *ngIf="angForm.controls['last_4_digit'].hasError('maxlength')">
-                            Last 4 digit of the card must be of 4 digit
+                            <small class="validate-msg">Last 4 digit of the card must be of 4 digit</small>
                           </div>
                       </div>
                     </div>
-                    <div class="mb-3 position-relative">
+                    <div class="mb-30 card-container-rel">
                         <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask" (keypress)="onlyNumberKey($event,18)">
                         <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
                         <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
                             <div *ngIf="angForm.controls['dob'].errors.required">
-                              Date of birth is required
+                              <small class="validate-msg">Date of birth is required</small>
                             </div>
                         </div>
                     </div>

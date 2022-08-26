@@ -5,22 +5,22 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { DOCUMENT, NgStyle, DatePipe } from '@angular/common';
-import { APP_CONFIG, AppConfig} from '../../../../configs/app.config';
+import { APP_CONFIG, AppConfig} from '../../../configs/app.config';
 import * as moment from 'moment';
 
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { Location } from '@angular/common';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatBottomSheet} from '@angular/material/bottom-sheet';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
 import { fareEnqueryMultiplePassengers} from 'src/app/shared/interfaces/fareEnqueryMultiplePassengers';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import {NgbDateParserFormatter,NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 // import { ReCaptchaV3Service } from 'ngx-captcha';
-import { AppConfigService } from '../../../../app-config.service';
+import { AppConfigService } from '../../../app-config.service';
 
 @Component({
   selector: 'app-irctcreg',

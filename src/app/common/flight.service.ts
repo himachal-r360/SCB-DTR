@@ -18,7 +18,7 @@ export class FlightService {
   airportsNameList ="assets/Json/airports.json";
   countryList = "assets/Json/country.json";
   flightDetails:any;
-  multicitylisting = environment.url + "api/multicitySearch";
+  multicitylisting = environment.url + "api/flightSearchMulticity";
   // private flightDetailsSubject = new BehaviorSubject<any>();
   private flightDetailsSubject = new BehaviorSubject(null);
   flightDetailsObservable = this.flightDetailsSubject.asObservable();

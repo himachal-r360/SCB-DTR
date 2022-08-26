@@ -120,9 +120,6 @@ export class TrainsTravellerComponent implements OnInit {
     
     travellersFilledArray = [];    infanttravellersFilledArray = [];
     
-    
-    
-    
     seniorCitizenStatus: boolean = false;
     seniorCitizenStatusAddMore: any[] = [false];
     applicableBerthTypes: any[];
@@ -305,7 +302,7 @@ export class TrainsTravellerComponent implements OnInit {
   isCollapseDiscount: boolean = false;
   isCollapse: boolean = false;
        
-    constructor(private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
+    constructor(private el: ElementRef,private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
         this.serviceSettings=this.appConfigService.getConfig();
         this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
         this.domainName = this.sg['domainName'];
@@ -329,6 +326,7 @@ export class TrainsTravellerComponent implements OnInit {
         this.masterFood = AppConfig.IRCTC_Food;
 
      this.activatedRoute.url.subscribe(url =>{
+     this.gotoTop();
        this.resetPopups();
       this.steps = 1;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -338,10 +336,12 @@ export class TrainsTravellerComponent implements OnInit {
         this._flightService.showHeader(true);
       }
            
-        this.moveTop();
+     
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
+        
+        console.log(this.seacthResult);
         
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
      
@@ -533,8 +533,8 @@ export class TrainsTravellerComponent implements OnInit {
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID));
         jobGroup.addControl('whatsappFlag', new FormControl('1'));
         jobGroup.addControl('passengerAgree', new FormControl());
-
-         jobGroup.addControl('gstNumber', new FormControl());
+        jobGroup.addControl('travelInsurence', new FormControl(''));
+        jobGroup.addControl('gstNumber', new FormControl());
         jobGroup.addControl('gstBusinessName', new FormControl());
         jobGroup.addControl('gstAddress', new FormControl());
         jobGroup.addControl('gstCity', new FormControl());
@@ -835,6 +835,7 @@ saveGSTConsent(){
       }
     }
     validateBookingInfoForm() {
+    
         this.submittedUserInfoForm = true;
         //alert(this.idForm.invalid +" ### "+ this.errorInvalid);
         if (this.idForm.invalid || this.errorInvalid == 1) {
@@ -903,8 +904,9 @@ saveGSTConsent(){
              this.spinnerService.hide();
         });
     }
+        travelDuration:any;
     trainSchedlue(stationName) {
-       
+    
         if (stationName != '') {
             let stationCode = stationName.split(" - ");
             this.scheduleParam = {
@@ -934,6 +936,17 @@ saveGSTConsent(){
                         else{
                             this.traveldate = new Date(convDate.add(differenceDate,'d'));  
                         }
+                        
+    
+                var startTime = moment(moment(this.traveldate).format('DD-MM-YYYY')+' '+this.scheduletime, 'DD-MM-YYYY hh:mm');
+                var endTime = moment(moment(this.journeyArrivalDate).format('DD-MM-YYYY')+' '+this.arrivalTime, 'DD-MM-YYYY hh:mm');
+                
+
+                var duration = moment.duration(endTime.diff(startTime));
+                var hours = duration.asMinutes();
+                this.travelDuration= Math.floor(hours / 60)+' hrs '+hours % 60+' mins';
+  
+                        
                     }
                 }
             });
@@ -1072,7 +1085,7 @@ saveGSTConsent(){
                     this.passengerForm.controls['destAddressPin'].setValidators([Validators.required,Validators.minLength(6)]);
                     this.passengerForm.controls['destAddressState'].setValidators([Validators.required]);
                     this.passengerForm.controls['destAddressCity'].setValidators([Validators.required]);
-                    // this.passengerForm.controls['destAddressPost'].setValidators([Validators.required]);
+                    this.passengerForm.controls['destAddressPost'].setValidators([Validators.required]);
                     this.passengerForm.controls['destAddressOne'].updateValueAndValidity();
                     this.passengerForm.controls['destAddressTwo'].updateValueAndValidity();
                     this.passengerForm.controls['destAddressThree'].updateValueAndValidity();
@@ -1155,7 +1168,6 @@ saveGSTConsent(){
 
                 this.passengerForm.controls['passengerMobile'].updateValueAndValidity();
                 this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
-                this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
 
                 let trackUrlParams = new HttpParams()
                 .set('current_url', window.location.href)
@@ -1556,15 +1568,25 @@ gstReset(){
                     data: { messageData: message, }
                 });
                 passportdialog.afterClosed().subscribe(result => {
-                    this.createTrainItinerary1();
+                    this.createTrainItinerary2();
                 });
             }  
             else
-            this.createTrainItinerary1();
+            this.createTrainItinerary2();
             
     }
 
     createTrainItinerary() {
+        alertify.set('notifier', 'position', 'top-center');
+         alertify.dismissAll();
+         this.resetPopups();
+        if (this.travellersArray.length< 1) {
+        alertify.error('Please add adult traveller', '').delay(3);
+        return;
+        }
+
+    
+    
         this.submitted = true;
         if (this.gstSelected == true) {
             this.passengerForm.controls['gstNumber'].setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$'), Validators.minLength(15)]);
@@ -1594,9 +1616,15 @@ gstReset(){
             this.passengerForm.controls['gstState'].updateValueAndValidity();
         }
 
-       console.log(this.passengerForm);
         if (this.passengerForm.invalid || this.error == 1) {
-            return;
+         this.passengerForm.markAllAsTouched();
+        let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid')
+        if (target) {
+        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
+        target.focus();
+        }  
+         return;  
         } else {
          this.generateTrainItinerary();
          this.continueReviewBooking();
@@ -1639,7 +1667,7 @@ gstReset(){
 
                 dialogRef.afterClosed().subscribe(result => {
                     if (result == 1) {
-                        this.createTrainItinerary1();
+                        this.createTrainItinerary2();
                     }
                 });
             } else {
@@ -1686,7 +1714,7 @@ gstReset(){
 
 
 
-
+whatsAppCheck:boolean=false;
     createTrainItinerary1() {
         
         if(this.travelInsuranceEnabled=='true'){
@@ -1726,15 +1754,33 @@ gstReset(){
         } 
 
     }
+    contactDatails:any;
     createTrainItinerary2 (){
     
-            this.error = 0;
-            this.generateTrainItinerary();
-            this.spinnerService.show();
+    
+        if (this.passengerForm.controls['travelInsurence']['value'] == true) {
+        this.travelInsuranceOpted = true;
+        this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+        this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        } else {
+        this.travelInsuranceOpted = false;
+        this.travel_ins_charge = 0;
+        this.travel_ins_charge_tax = 0;
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
 
-            var irctcPassData = {
-                postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
-            };
+        }
+
+        this.error = 0;
+        this.generateTrainItinerary();
+        this.spinnerService.show();
+
+        var irctcPassData = {
+        postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
+        };
+
+             
+                
 
             this._irctc.fareEnquiryMultiplePassengers(irctcPassData).subscribe(response => {
                 let dData = JSON.parse(this.EncrDecr.get(response.result));
@@ -1745,17 +1791,17 @@ gstReset(){
                     this.clientTransactionId = partnerResponse.clientTransactionId;
                     this.orderReferenceNumber = partnerResponse.orderReferenceNumber;
                     this.buttonstatus = false;
-                       this.gotoTop();
-                      this.completedSteps = 4;
-                      this.steps = 4; 
+         
                     
                     this.flexipaysummry = false;
                     var whatsappFlag;
-                    if (this.whatsappFeature == 1)
+                    if (this.whatsappFeature == 1){
                         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-                    else
+                        this.whatsAppCheck=true;
+                    }else{
                         whatsappFlag = 0;
-
+                         this.whatsAppCheck=false;
+                    }
                     this.contactDetails = {
                         "mobile": this.passengerForm.controls['passengerMobile']['value'],
                         "country_code": "91",
@@ -1831,9 +1877,9 @@ gstReset(){
                     const track_body: string = trackUrlParams.toString();
                      this.rest.trackEvents( track_body).subscribe(result => {});
                      
-                        this.gotoTop();
-                        this.completedSteps = 3;
-                        this.steps = 3;
+                                 this.gotoTop();
+                      this.completedSteps = 3;
+                      this.steps = 3; 
 
                 } else {
                     this.showFareSummary = false;
@@ -1897,6 +1943,20 @@ gstReset(){
             }
         }
         return temp;
+    }
+    
+    autoUpgrade($event) {
+        this.addshow = !this.addshow;
+        this.addPreferenceSelected = $event.target.checked;
+        if (this.addPreferenceSelected == true) {
+             this.passengerForm['controls']['passengerAutoUpgradation'].setValue(1);
+            this.passengerForm.controls['coachId'].setValidators([Validators.pattern("^(([a-zA-Z]{1})([0-9]{1,3}))"),Validators.maxLength(4)]);
+            this.passengerForm.controls['coachId'].updateValueAndValidity();
+        } else {
+          this.passengerForm['controls']['passengerAutoUpgradation'].setValue(0);
+            this.passengerForm.get('coachId').clearValidators();
+            this.passengerForm.controls['coachId'].updateValueAndValidity();
+        }
     }
     generateTrainItinerary() { 
         if(this.gstSelected){
@@ -2109,7 +2169,6 @@ gstReset(){
         }
         this.travellerListArray = travellerList;
        
-       // console.log(this.travellerListArray)
 
         //INFANT LIST
         var infantList: any = [];
@@ -3293,7 +3352,7 @@ export class ConfirmationDialog {
     //date-picker
     maxDate: any;
 
-    constructor(public dialogRef: MatDialogRef<ConfirmationDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private location: Location, private router: Router, public _irctc: IrctcApiService, private calendar: NgbCalendar, private ngbDateParserFormatter: NgbDateParserFormatter, private sg: SimpleGlobal,private appConfigService:AppConfigService) {
+    constructor(private cd: ChangeDetectorRef,public dialogRef: MatDialogRef<ConfirmationDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private location: Location, private router: Router, public _irctc: IrctcApiService, private calendar: NgbCalendar, private ngbDateParserFormatter: NgbDateParserFormatter, private sg: SimpleGlobal,private appConfigService:AppConfigService) {
         dialogRef.disableClose = true;
      }
 
@@ -3328,6 +3387,9 @@ export class ConfirmationDialog {
         this.checkDate = this.checkmaxDate(dd, mm, yyyy)
 
     }
+     ngAfterContentChecked() {
+    this.cd.detectChanges();
+     }
     onYesClick(): void {
         this.dialogRef.close(true);
 
