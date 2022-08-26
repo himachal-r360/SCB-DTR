@@ -111,8 +111,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
 
-  pageIndex: number = 26;
-  ITEMS_RENDERED_AT_ONCE = 25;
+  pageIndex: number = 2001;
+  ITEMS_RENDERED_AT_ONCE = 2000;
   nextIndex = 0;
 
   loadData() {
@@ -157,11 +157,11 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
 
   constructor(private route: ActivatedRoute, private _flightService: FlightService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, private scroll: ViewportScroller, public rest: RestapiService, private router: Router) {
     this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
-    $(window).scroll(function (this) {
+  /*  $(window).scroll(function (this) {
       if ($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
         $('#endOfPage').trigger('click');
       }
-    });
+    });*/
   }
 
   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -1358,3 +1358,4 @@ bookingSummary() {
   }
 
 }
+

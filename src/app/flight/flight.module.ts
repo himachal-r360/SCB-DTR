@@ -47,6 +47,26 @@ const routes: Routes = [
 
   },
   {
+    path:"regalia_gold/flight-list" ,component:FlightListComponent,
+  },
+
+   {
+    path:"regalia_gold/flight-checkout" ,component:FlightCheckoutComponent,
+  },
+  {
+    path:"regalia_gold/flight-roundtrip" ,component:FlightRoundtripListComponent,
+  },
+  {
+
+    path:"regalia_gold/flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, }
+
+  },
+  {
+    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
+
+  },
+  
+  {
     path:"flight-checkout/retry" ,component:FlightCheckoutComponent,
 
   }

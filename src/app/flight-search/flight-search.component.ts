@@ -477,44 +477,59 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.isDisplayModifiedMulticity = true;
         }
 
-      }
-      else {
-        if (lastSearch != null || lastSearch != undefined) {
-          lastSearch = JSON.parse(lastSearch)
-          this.flightData.get('adults').setValue(lastSearch.adults);
-          this.flightData.get('child').setValue(lastSearch.child);
-          this.flightData.get('flightclass').setValue(lastSearch.flightclass);
-          this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
-          this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
-          this.flightData.get('flightto').setValue(lastSearch.flightto);
-          this.flightData.get('fromAirportName').setValue(lastSearch.fromAirportName);
-          this.flightData.get('fromCity').setValue(lastSearch.fromCity);
-          this.flightData.get('fromContry').setValue(lastSearch.fromContry);
-          this.flightData.get('infants').setValue(lastSearch.infants);
-          this.flightData.get('toAirportName').setValue(lastSearch.toAirportName);
-          this.flightData.get('toCity').setValue(lastSearch.toCity);
-          this.flightData.get('toContry').setValue(lastSearch.toContry);
-          this.flightData.get('travel').setValue(lastSearch.travel);
-          this.fromCityName = lastSearch.fromCity;
-          this.toCityName = lastSearch.toCity;
-          this.fromAirpotName = lastSearch.fromAirportName;
-          this.toAirpotName = lastSearch.toAirportName;
-          this.departureDate = new Date(lastSearch.departure);
-          this.minDateR=this.departureDate;
-          this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
-          if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
-            this.arrivalDate = new Date(lastSearch.arrival);
-          }
-          this.flightClassVal = lastSearch.flightclass;
-          this.adultsVal = lastSearch.adults;
-          this.childVal = lastSearch.child;
-          this.infantsVal = lastSearch.infants;
-          this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
-          if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "") {
-            this.navItemActive = "Round Trip"
-          }
+      } else  if (lastSearch != null || lastSearch != undefined) {
+        lastSearch = JSON.parse(lastSearch)
+        this.flightData.get('adults').setValue(lastSearch.adults);
+        this.flightData.get('child').setValue(lastSearch.child);
+        this.flightData.get('flightclass').setValue(lastSearch.flightclass);
+        this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
+        this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
+        this.flightData.get('flightto').setValue(lastSearch.flightto);
+        this.flightData.get('fromAirportName').setValue(lastSearch.fromAirportName);
+        this.flightData.get('fromCity').setValue(lastSearch.fromCity);
+        this.flightData.get('fromContry').setValue(lastSearch.fromContry);
+        this.flightData.get('infants').setValue(lastSearch.infants);
+        this.flightData.get('toAirportName').setValue(lastSearch.toAirportName);
+        this.flightData.get('toCity').setValue(lastSearch.toCity);
+        this.flightData.get('toContry').setValue(lastSearch.toContry);
+        this.flightData.get('travel').setValue(lastSearch.travel);
+        this.fromCityName = lastSearch.fromCity;
+        this.toCityName = lastSearch.toCity;
+        this.fromAirpotName = lastSearch.fromAirportName;
+        this.toAirpotName = lastSearch.toAirportName;
+        this.departureDate = new Date(lastSearch.departure);
+        this.minDateR=this.departureDate;
+        this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
+        if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
+          this.arrivalDate = new Date(lastSearch.arrival);
         }
-      }
+        this.flightClassVal = lastSearch.flightclass;
+        this.adultsVal = lastSearch.adults;
+        this.childVal = lastSearch.child;
+        this.infantsVal = lastSearch.infants;
+        this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+        if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "") {
+          this.navItemActive = "Round Trip"
+        }
+       }else{
+
+        this.fromCityName='New Delhi';
+        this.toCityName='Mumbai';
+        this.fromAirpotName='Indira Gandhi Airport';
+        this.toAirpotName='Chatrapati Shivaji Airport';
+
+        this.flightData['controls']['fromCity'].setValue('New Delhi');
+        this.flightData['controls']['toCity'].setValue('Mumbai');
+        this.flightData['controls']['flightfrom'].setValue('DEL');
+        this.flightData['controls']['flightto'].setValue('BOM');
+
+        this.flightData['controls']['fromContry'].setValue('IN');
+        this.flightData['controls']['fromAirportName'].setValue('Indira Gandhi Airport');
+        this.flightData['controls']['toContry'].setValue('IN');
+        this.flightData['controls']['toAirportName'].setValue('Chatrapati Shivaji Airport');
+
+
+        } 
 
 
 
@@ -583,7 +598,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.flightSearchCallBack(searchValue);
 
       localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
-      localStorage.setItem('multicityLastSearch','');
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
       if (searchValue.arrival)

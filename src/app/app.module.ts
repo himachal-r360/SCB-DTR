@@ -36,6 +36,7 @@ import { FilterModule } from './bus/filter/filter.module';
 import { TrainModule } from './train/train.module';
 import { TrainsTravellerModule } from './train/trains-traveller/travellers.module';
 import { IrctcregModule } from './train/trains/irctcreg/irctcreg.module';
+
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -47,7 +48,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
   declarations: [
     AppComponent,
     AlertDialogComponent,CssLoaderComponent
-
   ],
   imports: [
  BrowserModule,
@@ -69,6 +69,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     DirectiveModule,
     CarouselModule,RegaliaGoldModule,
     ToastrModule.forRoot()
+    
 
   ],
   exports:[],

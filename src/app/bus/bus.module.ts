@@ -28,8 +28,13 @@ const routes: Routes = [
   },
   {
     path:"bus/checkout" ,component:BusCheckoutComponent,
+  },
+  {
+    path:"regalia_gold/bus/search" ,component:BuslistComponent,
+  },
+  {
+    path:"regalia_gold/bus/checkout" ,component:BusCheckoutComponent,
   }
-
 
 
 ];
