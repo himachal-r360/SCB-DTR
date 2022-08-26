@@ -326,7 +326,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapse: boolean = false;
 orderRetry:boolean=false;
 
-  constructor(private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
+  constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
@@ -826,6 +826,8 @@ orderRetry:boolean=false;
           adult: 1,
           child: 1
         };
+        
+        console.log(this.flightInfo);
 
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
@@ -836,10 +838,14 @@ orderRetry:boolean=false;
                     let baggage_data:any=[];
             for (let k = 0; k < res.response.onwardFlightDetails.length; k++) {
              fareInfo=  res.response.onwardFlightDetails[k];
+             
+          
 
               if (fareInfo.fare) {
                 if (fareInfo.fare.ADT) {
                   this.AdtFare += Number(fareInfo.fare.ADT.bf * fareInfo.fare.ADT.qt) + Number(fareInfo.fare.ADT.TX);
+                  
+                  
 
                   this.AdtQuantity += Number(fareInfo.fare.ADT.qt);
                   this.AdtBaseFare += Number(fareInfo.fare.ADT.bf);
@@ -864,10 +870,6 @@ orderRetry:boolean=false;
               }
 
 
-              totalFare += Number(res.response.comboFare.onwardTotalFare);
-              baseFare += Number(res.response.comboFare.onwardBaseFare);
-              totalFareOnward += Number(res.response.comboFare.onwardTotalFare);
-
 
              if (fareInfo && fareInfo.bg.length > 0){
               this.baggageInfoOnwardMulti[k] = fareInfo.bg;
@@ -877,6 +879,12 @@ orderRetry:boolean=false;
               cancellation_array.push(fareInfo.cancellationPolicy);
               
              } 
+             
+             
+              totalFare += Number(res.response.comboFare.onwardTotalFare);
+              baseFare += Number(res.response.comboFare.onwardBaseFare);
+              totalFareOnward += Number(res.response.comboFare.onwardTotalFare);
+
              this.baggagePolicyMulti(baggage_data);
              this.emt_cancellationPolicy_Multicity(cancellation_array);
             }
@@ -3050,6 +3058,7 @@ orderRetry:boolean=false;
 
   continueTravellerDetails() {
     alertify.set('notifier', 'position', 'top-center');
+  alertify.dismissAll();
     if (this.adultsArray.length < this.maxAdults) {
       alertify.error('Please add adult traveller', '').delay(3);
       return;
@@ -3095,10 +3104,21 @@ orderRetry:boolean=false;
       this.passengerForm.controls['gstState'].updateValueAndValidity();
     }
 
-    this.passengerForm.markAllAsTouched();
+   
 
 
     if (this.passengerForm.invalid) {
+     this.passengerForm.markAllAsTouched();
+     
+        let target;
+
+        target = this.el.nativeElement.querySelector('.ng-invalid')
+
+        if (target) {
+        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
+        target.focus();
+        }
+     
       // console.log(this.passengerAdultFormCount);
       return;
     } else {

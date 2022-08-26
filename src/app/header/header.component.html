@@ -357,7 +357,7 @@
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                                     <div>
                                         <div>
-                                            <p><a href="javascript:;" (click)="clickUrl('compare-fly')" class="list-travel-font">
+                                            <p><a href="javascript:;" (click)="goTo('compare-fly')" class="list-travel-font">
                                                 Compare & Fly
                                             </a></p>
                                             <p class="points">{{serviceSettings.offer_construct.flight.reward}}X Reward Points | {{serviceSettings.offer_construct.jockey.cashback}}% Cashback</p>
@@ -919,8 +919,9 @@
                                     </a>
                                 </div>
                             </div>
-                            <p class="mt-1 mb-2"><span class="hdr_customer_pts">2890 Pts</span></p>
-                                    <div class="dropdown myaccount-drop">
+                            <p class="mt-1 mb-2" *ngIf="points > 0"><span class="hdr_customer_pts" *ngIf="customeravailableStatus" >{{customeravailablepoints}}</span></p>
+                              <div *ngIf="cardList">
+                                    <div class="dropdown myaccount-drop" *ngIf="cardList.length > 1">
                                         <a class="dropdown-toggle hdr_btn" href="#" role="button" id="dropdown-user1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img src="{{cdnUrl}}/images/smartbuy/icons/card_icn.svg"><span class="btn-text">SWITCH TO</span><i class="fa fa-caret-down hdr_btn_caret" aria-hidden="true"></i>
                                         </a>
@@ -952,7 +953,7 @@
 
                                         </div>
                                     </div>
-                                    
+                              </div>      
                         </div>
 
                     </div>
@@ -1054,7 +1055,7 @@
                         <div class="row">
                             <div class="col-sm-6" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                                 <div class="hdr_travel">
-                                    <a href="javascript:;" (click)="clickUrl('compare-fly')" >
+                                    <a href="javascript:;" (click)="goTo('compare-fly')" >
                                     <div class="row cntnt_center">
                                         <div class="col-sm-2">
                                             <div class="circular_div">
@@ -1062,7 +1063,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-9 pl-1 mr-0 pr-0">
-                                            <a href="javascript:;" (click)="clickUrl('compare-fly')" ><span class="travel_highlight">Flight</span></a>
+                                            <a href="javascript:;" (click)="goTo('compare-fly')" ><span class="travel_highlight">Flight</span></a>
                                             <p class="travel_text">{{serviceSettings.offer_construct.flight.reward}}X Reward Points | {{serviceSettings.offer_construct.jockey.cashback}}% Cashback</p>
                                         </div>
                                         <div class="col-sm-1 pl-0 text-left">
@@ -2072,7 +2073,7 @@
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Flights</h6>
-                                            <a href="javascript:;" (click)="clickUrl('compare-fly')"><span>Compare & Fly</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
+                                            <a href="javascript:;" (click)="goTo('compare-fly')"><span>Compare & Fly</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
                                         </div>
                                     </div>
                                 </li>

@@ -302,7 +302,7 @@ export class TrainsTravellerComponent implements OnInit {
   isCollapseDiscount: boolean = false;
   isCollapse: boolean = false;
        
-    constructor(private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
+    constructor(private el: ElementRef,private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
         this.serviceSettings=this.appConfigService.getConfig();
         this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
         this.domainName = this.sg['domainName'];
@@ -533,8 +533,8 @@ export class TrainsTravellerComponent implements OnInit {
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID));
         jobGroup.addControl('whatsappFlag', new FormControl('1'));
         jobGroup.addControl('passengerAgree', new FormControl());
-
-         jobGroup.addControl('gstNumber', new FormControl());
+        jobGroup.addControl('travelInsurence', new FormControl(''));
+        jobGroup.addControl('gstNumber', new FormControl());
         jobGroup.addControl('gstBusinessName', new FormControl());
         jobGroup.addControl('gstAddress', new FormControl());
         jobGroup.addControl('gstCity', new FormControl());
@@ -1568,15 +1568,25 @@ gstReset(){
                     data: { messageData: message, }
                 });
                 passportdialog.afterClosed().subscribe(result => {
-                    this.createTrainItinerary1();
+                    this.createTrainItinerary2();
                 });
             }  
             else
-            this.createTrainItinerary1();
+            this.createTrainItinerary2();
             
     }
 
     createTrainItinerary() {
+        alertify.set('notifier', 'position', 'top-center');
+         alertify.dismissAll();
+         this.resetPopups();
+        if (this.travellersArray.length< 1) {
+        alertify.error('Please add adult traveller', '').delay(3);
+        return;
+        }
+
+    
+    
         this.submitted = true;
         if (this.gstSelected == true) {
             this.passengerForm.controls['gstNumber'].setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$'), Validators.minLength(15)]);
@@ -1606,9 +1616,15 @@ gstReset(){
             this.passengerForm.controls['gstState'].updateValueAndValidity();
         }
 
-       console.log(this.passengerForm);
         if (this.passengerForm.invalid || this.error == 1) {
-            return;
+         this.passengerForm.markAllAsTouched();
+        let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid')
+        if (target) {
+        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
+        target.focus();
+        }  
+         return;  
         } else {
          this.generateTrainItinerary();
          this.continueReviewBooking();
@@ -1651,7 +1667,7 @@ gstReset(){
 
                 dialogRef.afterClosed().subscribe(result => {
                     if (result == 1) {
-                        this.createTrainItinerary1();
+                        this.createTrainItinerary2();
                     }
                 });
             } else {
@@ -1698,7 +1714,7 @@ gstReset(){
 
 
 
-
+whatsAppCheck:boolean=false;
     createTrainItinerary1() {
         
         if(this.travelInsuranceEnabled=='true'){
@@ -1741,13 +1757,30 @@ gstReset(){
     contactDatails:any;
     createTrainItinerary2 (){
     
-            this.error = 0;
-            this.generateTrainItinerary();
-            this.spinnerService.show();
+    
+        if (this.passengerForm.controls['travelInsurence']['value'] == true) {
+        this.travelInsuranceOpted = true;
+        this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+        this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        } else {
+        this.travelInsuranceOpted = false;
+        this.travel_ins_charge = 0;
+        this.travel_ins_charge_tax = 0;
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
 
-            var irctcPassData = {
-                postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
-            };
+        }
+
+        this.error = 0;
+        this.generateTrainItinerary();
+        this.spinnerService.show();
+
+        var irctcPassData = {
+        postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
+        };
+
+             
+                
 
             this._irctc.fareEnquiryMultiplePassengers(irctcPassData).subscribe(response => {
                 let dData = JSON.parse(this.EncrDecr.get(response.result));
@@ -1762,11 +1795,13 @@ gstReset(){
                     
                     this.flexipaysummry = false;
                     var whatsappFlag;
-                    if (this.whatsappFeature == 1)
+                    if (this.whatsappFeature == 1){
                         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-                    else
+                        this.whatsAppCheck=true;
+                    }else{
                         whatsappFlag = 0;
-
+                         this.whatsAppCheck=false;
+                    }
                     this.contactDetails = {
                         "mobile": this.passengerForm.controls['passengerMobile']['value'],
                         "country_code": "91",
@@ -2134,7 +2169,6 @@ gstReset(){
         }
         this.travellerListArray = travellerList;
        
-        console.log(this.travellerListArray)
 
         //INFANT LIST
         var infantList: any = [];

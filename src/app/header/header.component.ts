@@ -172,6 +172,7 @@ export class HeaderComponent implements OnInit {
         showcards:boolean=false;
         mainRedirect:any;
 
+
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
@@ -203,6 +204,7 @@ export class HeaderComponent implements OnInit {
                 this.sg['card_variant'] = this.customerInfo['ccustomer'].card_variant;
                 else
                  this.sg['card_variant'] = 'Other Credit/Debit Card';
+
               }else{
                 this.customeravailableStatus=false;
                 this.customeravailablepoints="";
@@ -1259,7 +1261,7 @@ closeCookieConsent(value){
         this.redirectPopup=2;
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
      }else{
-     if(path !='foryou')
+     if(path !='foryou' && path !='compare-fly' && path !='bus' && path !='train'  && path !='train/pnr')
       this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
      else
      this.router.navigate([this.sg['domainPath']+path]);
