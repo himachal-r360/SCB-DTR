@@ -385,7 +385,7 @@
                     </div>
                    </div>  
                 </form>
-                
+           
                 
 
         </div>
@@ -399,7 +399,155 @@
     </div>
   </div>
   
-  
+   <div class="container" *ngIf="showDetails">
+    <div class="pnr-container" *ngIf="PnrDetails.trainName">
+
+    
+    <div class="trans-details train-mrgtop10 bor-data pnr-list">
+            <div class="row  ">
+                <div class="col-md-4">
+                    <p><span>PNR Number : </span> <span class="data">{{PnrDetails.pnrNumber}}</span></p>
+                    <p><span>Train Number : </span> <span class="data">{{PnrDetails.trainNumber}}</span></p>
+                    <p><span>From Station : </span> <span class="data">{{stationsdump[PnrDetails.sourceStation]}}({{PnrDetails.sourceStation}})</span></p>
+                    <p><span>Boarding point : </span> <span class="data">{{stationsdump[PnrDetails.boardingPoint]}}({{PnrDetails.boardingPoint}})</span></p>
+                    <p><span>Class : </span> <span class="data">{{PnrDetails.journeyClass}}</span></p>
+                    <p><span>Charting Status : </span> <span class="data">{{PnrDetails.chartStatus}}</span></p>
+                    <!-- <p><span>Booking Fare : </span> <span class="data">{{PnrDetails.bookingFare}}</span></p> -->
+                    <p><span>Quota : </span> <span class="data">{{PnrDetails.quota}}</span></p>
+                    <!-- <p><span>Remarks : </span> <span class="data"></span></p> -->
+                </div>
+                <div class="col-md-4">
+                        <p><span>Date : </span> <span class="data">{{PnrDetails.dateOfJourney | date: 'dd MMM yyyy'}}</span></p> 
+                        <p><span>Train Name : </span> <span class="data">{{PnrDetails.trainName}}</span></p>
+                        <p><span>To Station : </span> <span class="data">{{stationsdump[PnrDetails.destinationStation]}}({{PnrDetails.destinationStation}}) </span></p>
+                        <p><span>Reservation upto : </span> <span class="data">{{stationsdump[PnrDetails.reservationUpto]}}({{PnrDetails.reservationUpto}})</span></p>
+                        <p><span>No of passengers : </span> <span class="data">{{PnrDetails.numberOfpassenger}}</span></p>
+                        <!-- <p><span>Upgraded Class : </span> <span class="data"> </span></p> -->
+                         <!-- <p><span>Ticket Fare : </span> <span class="data">{{PnrDetails.ticketFare}}</span></p> -->
+                    
+                </div>
+                
+            </div>
+            </div>
+    
+    <h6 class="pt-15-pb-17 col-md-12 float-left m-pl-15">Travellers</h6>
+    <div class='table-responsive'>
+    <table  class="table traveller-list">
+        <thead class="thead-light">
+            <tr>
+              <th>Passenger Number</th>
+                <th>Age</th>
+                <th >Booking Status</th>
+                <th>Current Status</th>
+                <!-- <th>Berth</th>
+                <th>CoachId/BerthNo</th> -->
+            </tr>
+        </thead>
+        <tbody >
+            <tr  *ngFor="let each of PnrDetails.passengerList">
+              <td>{{each.passengerSerialNumber}}</td>
+                 <td>{{each.passengerAge}}</td>
+                  <td>{{each.bookingStatus}}/<span *ngIf="each.bookingCoachId!=''" >{{each.bookingCoachId}}/</span>{{each.bookingBerthNo}}
+                  <span *ngIf = "each.passengerBerthChoice">/{{each.passengerBerthChoice}}</span>
+                  </td>
+                <td>{{each.currentStatus}}<span *ngIf="each.currentStatus!='CNF'">/{{each.currentBerthNo}}</span></td>
+                  <!-- <td >{{each.bookingBerthCode}}</td>
+                  <td >{{each.bookingCoachId}}/{{each.bookingBerthNo}}</td> -->
+            </tr>
+            
+        </tbody>
+
+    </table>
+    </div>
+    
+    
+    <div class="pnr-notes">
+    <div>
+                  <p><span>Note:</span> <span class="data"> </span></p>
+                 <p><span>1. No refund shall be granted on the confirmed ticket after four hours before the scheduled departure of the train. </span></p>
+                 <p><span>2. No refund shall be granted on the RAC or Waitlisted ticket after thirty minutes before the scheduled departure of the train. </span></p>
+                 <p><span>3. In case, on a party e-ticket or a family e-ticket issued for travel of more than one passenger, some passengers have confirmed reservation and others are on RAC or waiting list, full refund of fare , less clerkage, shall be admissible for confirmed passengers also subject to the condition that the ticket shall be cancelled online or online TDR shall be filed for all the passengers upto thirty minutes before the scheduled departure of the train. </span></p>
+                 <p><span>4. Before Cancellation, please refer New Refund Rule 2015 w.e.f 12-Nov-2015. </span></p>
+                 </div>
+                 <div class="pop-two">
+                <div class="title-book-pop">
+                    <h5>Acronyms</h5>  
+                </div>
+                <div>
+                 
+                 <div class="table-responsive">
+                                <table class="table table-bordered" width="99%">
+                                  <tbody><tr>
+                                      <td>CAN</td>
+                                      <td>CANCELLED</td>
+                                    </tr><tr>
+                                      <td>CNF</td>
+                                      <td>CONFIRM</td>
+                                    </tr><tr>
+                                      <td>RAC</td>
+                                      <td>RESERVATION AGAINST CANCELLATION</td>
+                                    </tr><tr>
+                                      <td>WL</td>
+                                      <td>WAITLIST</td>
+                                    </tr><tr>
+                                      <td>RLWL</td>
+                                      <td>REMOTE LOCATION WAITLIST</td>
+                                    </tr><tr>
+                                      <td>PQWL</td>
+                                      <td>POOLED QUOTA WAITLIST</td>
+                                    </tr><tr>
+                                      <td>RSWL</td>
+                                      <td>ROAD-SIDE WAITLIST</td>
+                                    </tr><tr>
+                                      <td>REL</td>
+                                      <td>RELEASED</td>
+                                    </tr><tr>
+                                      <td>NR</td>
+                                      <td>NOROOM</td>
+                                    </tr><tr>
+                                      <td>NOSB</td>
+                                      <td>NO SEAT BERTH</td>
+                                    </tr><tr>
+                                      <td>WEBCAN</td>
+                                      <td>Railway Counter Ticket: Passenger has been cancelled over internet and refund has not been collected.</td>
+                                    </tr><tr>
+                                      <td>WEBCANRF</td>
+                                      <td>Railway Counter Ticket: Passenger has been cancelled over internet and refund has been collected.</td>
+                                    </tr><tr>
+                                      <td>GNWL</td>
+                                      <td>General Waitlist</td>
+                                    </tr><tr>
+                                      <td>TQWL</td>
+                                      <td>Tatkal Waitlist</td>
+                                    </tr><tr>
+                                      <td>FBKG</td>
+                                      <td>Ticket Booked Outside ARP in FT Quota. Seat has not been allotted yet</td>
+                                    </tr>
+                                    <tr>
+                                      <td>GN</td>
+                                      <td>General</td>
+                                    </tr>
+                                    <tr>
+                                      <td>PT</td>
+                                      <td>Premium Tatkal</td>
+                                    </tr>
+                                    <tr>
+                                      <td>LD</td>
+                                      <td>Ladies</td>
+                                    </tr>
+                                    <tr>
+                                      <td>TQ</td>
+                                      <td>Tatkal</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+        </div></div>
+    
+    </div>
+    
+    
+    </div>    
   
   
   

@@ -58,6 +58,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   @ViewChild('fromCityInput') fromCityInput!:ElementRef;
   @ViewChild('toCityDiv') toCityDiv!:ElementRef;
  @ViewChild('picker') datePicker: MatDatepicker<Date>;
+   stationsdump:any=[];
   count:number=0;
     showSearch=true;
    cdnUrl: any;
@@ -105,6 +106,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
       private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService,@Inject(APP_CONFIG) appConfig: any
 
     ) {
+      this.stationsdump =  require('src/assets/data/stations.json');
      this.serviceSettings=this.appConfigService.getConfig();
       this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       
