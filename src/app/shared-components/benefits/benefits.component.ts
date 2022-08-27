@@ -30,4 +30,9 @@ export class BenefitsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+scrollToElement($element): void {
+    console.log($element);
+    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+  }
+
 }
