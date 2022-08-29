@@ -54,7 +54,7 @@ export class PaymentComponent implements OnInit {
 		secondCouponDesc: any;
 		thirdCouponDesc: any;
 		showoffer:boolean=false;
-
+		panelOpenState = false;
 		payForm: FormGroup;
 		upiForm: FormGroup;
 		payzappForm: FormGroup;
