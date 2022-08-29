@@ -139,7 +139,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
    this.domainName = this.sg['domainName'];
    this.appConfig = appConfig;
    this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
-  //  this.trainUrl = environment.TRAIN_SITE_URL[this.sg['domainName']];
+    this.trainUrl = environment.TRAIN_SITE_URL[this.sg['domainName']];
   
         this.stationsdump =  require('src/assets/data/stations.json');
         this.travalfrom = this.activatedRoute.snapshot.queryParamMap.get('searchFrom');
