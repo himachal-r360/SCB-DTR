@@ -330,7 +330,7 @@
 
                                                         <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
                                                             <ng-container *ngFor="let item of list.priceSummary; let j = index">
-                                                                <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
+                                                                <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false" id="selectedOnwardDiv_{{list.flightKey}}_{{j}}">
                                                                     <div class="round-options-list-top">
                                                                         <div class="round-list-image-box">
                                                                             <div class="round-list-image">
@@ -373,7 +373,7 @@
                                                               </span>
                                                                             </div>
                                                                             <div class="round-list-btns">
-                                                                                <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,list.priceSummary,$event)">Select</a>
+                                                                                <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</a>
                                                                             </div>
                                                                         </div>
 
@@ -501,7 +501,7 @@
                                                     <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
 
                                                         <ng-container *ngFor="let item of list.priceSummary; let j = index">
-                                                            <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false">
+                                                            <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false" id="selectedReturnDiv_{{list.flightKey}}_{{j}}">
                                                                 <div class="round-options-list-top">
                                                                     <div class="round-list-image-box">
                                                                         <div class="round-list-image">
@@ -544,7 +544,7 @@
                                                               </span>
                                                                         </div>
                                                                         <div class="round-list-btns">
-                                                                            <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event)">Select</button>
+                                                                            <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -734,7 +734,7 @@
                                                                 <h6>₹ {{item.totalFare |number}}</h6>
                                                             </div>
                                                             <div class="mob-booking-Selected">
-                                                                <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event)">Select</a>
+                                                                <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event,j)">Select</a>
                                                             </div>
                                                         </div>
                                                         <div class="mob-book-list-bottom">
@@ -1152,7 +1152,7 @@
                                                                 <h6>₹{{item.totalFare |number}}</h6>
                                                             </div>
                                                             <div class="mob-booking-Selected">
-                                                                <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event)">Select</button>
+                                                                <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event,j)">Select</button>
                                                             </div>
                                                         </div>
                                                         <div class="mob-book-list-bottom">
@@ -1515,9 +1515,9 @@
                         <li class="fare-list-item">
                             <div class="fare-list-box">
                                 <div class="fare-list-left">
-                                    <p>
+                                    <span>
                                         <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> Base Fare
-                                    </p>
+                                    </span>
                                 </div>
                                 <div class="fare-list-right">
                                     <p>&#8377;{{(onwardSelectedFlight.priceSummery.baseFare + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.baseFare : 0))|number}}</p>
@@ -1527,9 +1527,9 @@
                         <li class="fare-list-item">
                             <div class="fare-list-box">
                                 <div class="fare-list-left">
-                                    <p>
+                                    <span>
                                         <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> Taxes and Fees
-                                    </p>
+                                    </span>
                                 </div>
                                 <div class="fare-list-right">
                                     <p>&#8377;{{(onwardSelectedFlight.priceSummery.totalFare-onwardSelectedFlight.priceSummery.baseFare) + (returnSelectedFlight != null ? (returnSelectedFlight.priceSummery.totalFare-returnSelectedFlight.priceSummery.baseFare)

@@ -145,7 +145,7 @@
   <div class="container">
       <div class="row">
           <div class="col-md-12 p-0 fixed-top"  >
-              <div class="mob-listing-header">
+              <div class="mob-listing-header" *ngIf="listing_header">
                   <div class="mob-listing-header-left">
                       <a href="javascript:;" routerLink="/compare-fly" >
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
@@ -166,10 +166,30 @@
                       </a>
                   </div>
               </div>
+              <div class="mob-listing-header" *ngIf="seating_header">
+                <div class="mob-listing-header-left">
+                    <a href="javascript:;" routerLink="/compare-fly" >
+                        <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                    </a>
+                </div>
+                <div class="mob-listing-header-center">
+                    <div class="">
+                            <p>{{departure | date:'EEE, dd MMM' }}   </p>
+                            <h6> bus_travels_name</h6>
+                            <p class="">A/c Sleeper(2+1)</p>
+                    </div>
+                    
+                </div>
+                <div class="mob-listing-header-right">
+                    <span (click)="seatTypeShow()">
+                        <img src="{{cdnUrl}}/images/icons/info_bus.svg" alt="" />
+                    </span>
+                </div>
+            </div>
           </div>
           <div class="col-md-12 mt-70" *ngIf="!loading">
               <div class="mob-listing-fiters">
-                  <h6> <p *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p></h6>
+                  <h6> <p class="bus_found" *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus founds</p></h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()">
                       <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
                       <span class="px-2">Sort/Filters</span>
@@ -361,3 +381,6 @@
         <i class="far fa-dot-circle"></i>
         <span>Top</span>
     </a>
+
+
+    
