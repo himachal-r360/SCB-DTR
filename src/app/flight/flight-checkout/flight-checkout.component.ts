@@ -2079,6 +2079,8 @@ orderRetry:boolean=false;
       return self.indexOf(value) === index
     }
 
+console.log(this.flightOnwardDetails);
+
     for (let i = 0; i < this.flightOnwardDetails.length; i++) {
       this.onward_airline_array.push(this.flightOnwardDetails[i].airline);
       this.totalOnwardDuration += this.flightOnwardDetails[i].duration;
