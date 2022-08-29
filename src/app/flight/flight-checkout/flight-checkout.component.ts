@@ -3615,20 +3615,8 @@ orderRetry:boolean=false;
           
           
           
-        var getCancellationPolicy = {
-        itineraryId: this.itineraryid,
-        clientName: 'HDFC243',
-        serviceName: 'Flight',
-        partnerName: this.partnerToken,
-        docKey: this.flightSessionData.docKey,
-        flightKeys:this.flightKeys,
-        travel:this.searchData['travel'],
-        pricingId:this.pricingId,
-        onward_flightIdCSV:'',
-        airlineCode:'',
-        classType:this.searchData['flightclass'],
-      
-        };
+           this.emt_cancellationPolicy('onward');
+
        // this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(result => { });
           
           
