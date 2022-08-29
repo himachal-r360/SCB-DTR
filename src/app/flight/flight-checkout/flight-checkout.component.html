@@ -1456,7 +1456,7 @@
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="isMobile && adultsArrayM.length>0 ">
+                                            <div *ngIf="isMobile && adultsArrayM.length>0 " class="table-responsive">
                                                 <table class="table  traveller_table">
                                                     <thead>
                                                         <tr>
@@ -2148,7 +2148,7 @@
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="isMobile && childArrayM.length>0 ">
+                                            <div *ngIf="isMobile && childArrayM.length>0 " class="table-responsive">
                                                 <table class="table  traveller_table">
                                                     <thead>
                                                         <tr>
@@ -2843,7 +2843,7 @@
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="isMobile && infantArrayM.length>0 ">
+                                            <div *ngIf="isMobile && infantArrayM.length>0 " class="table-responsive">
                                                 <table class="table  traveller_table">
                                                     <thead>
                                                         <tr>
@@ -4046,10 +4046,18 @@
                                                     <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                                                     <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                                                 </div>
+<<<<<<< HEAD
                                                 </div>
                                                 <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
                                                     <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                                                 </div>
+=======
+                                                
+                                            </div>
+
+                                            <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                                <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+>>>>>>> 8840ac0847f84354e573a134e0a9b70a8b8b9b7b
                                             </div>
 
                                         </div>
@@ -4541,7 +4549,7 @@
                                     <table class="table  traveller_table">
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="col-6">Name</th>
+                                                <th scope="col" class="">Name</th>
                                                 <th scope="col">Date of Birth</th>
                                                 <th scope="col">Gender</th>
                                             </tr>
@@ -4565,12 +4573,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div *ngIf="travelerDetails.child > 0">
+                                <div *ngIf="travelerDetails.child > 0" class="table-responsive">
                                     <h6>{{travelerDetails.child}} Child</h6>
                                     <table class="table  traveller_table">
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="col-6">Name</th>
+                                                <th scope="col" class="">Name</th>
                                                 <th scope="col">Date of Birth</th>
                                                 <th scope="col">Gender</th>
                                             </tr>
@@ -4592,12 +4600,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div *ngIf="travelerDetails.infants > 0">
+                                <div *ngIf="travelerDetails.infants > 0" class="table-responsive">
                                     <h6>{{travelerDetails.infants}} Infant</h6>
                                     <table class="table  traveller_table">
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="col-6">Name</th>
+                                                <th scope="col" class="">Name</th>
                                                 <th scope="col">Date of Birth</th>
                                                 <th scope="col">Gender</th>
                                             </tr>
@@ -4669,7 +4677,7 @@
                                 </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade show active" id="pills-flight-one" role="tabpanel" aria-labelledby="flight_one">
-                                        <div>
+                                        <div class="table-responsive">
                                             <table class="table  traveller_table">
                                                 <thead>
                                                     <tr>
@@ -4694,7 +4702,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="pills-flight-two" role="tabpanel" aria-labelledby="flight_two">
-                                        <div>
+                                        <div class="table-responsive">
                                             <table class="table  traveller_table">
                                                 <thead>
                                                     <tr>
