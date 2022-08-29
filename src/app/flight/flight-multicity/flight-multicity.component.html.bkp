@@ -1,0 +1,1783 @@
+<main class="site-main mob-main">
+    <section class="bradcome-area mt-20 mb-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bradcome-list">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="#">Home</a></li>
+                            <li class="list-inline-item"><span>/</span></li>
+                            <li class="list-inline-item"><a href="#">Travel & Stays</a></li>
+                            <li class="list-inline-item"><span>/</span></li>
+                            <li class="list-inline-item"><span>Flight Search</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="flight-listing-area mt-100" *ngIf="!isMobile">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="travel-box mb-20">
+                        <app-flight-search modifySearch="true" isViewPartner="false"></app-flight-search>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <div class="layout-box">
+                        <div class="layout-left">
+                            <div class="filter-loaders animation-loader" *ngIf="loader">
+                                <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                                    <div class="filter-loader-content ">
+                                        <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                        <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                        <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div [hidden]="loader">
+                                <div class="Filterslayout d-flex justify-content-between align-items-center">
+                                    <h6 class="fs_16">Filters</h6>
+                                    <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
+                                </div>
+                                <hr>
+                                <div class="default-sidebar flight-sidebar" [hidden]="loader">
+                                    <div class="sidebar-widget search-widget">
+                                        <div class="widget-title">
+                                            <h6 class="">Popular Filters</h6>
+                                            <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content">
+                                            <ul class="category-list clearfix mt-2" id="popular-filters">
+
+                                                <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                                    <div class="custom-controls-stacked">
+                                                        <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                              <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                                          </label>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="sidebar-widget partner-widget">
+                                        <div class="widget-title">
+                                            <h6 class="">Partners</h6>
+                                            <a href="javascript:void(0)" (click)="resetPartnerFlightsFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content" id="airline_list">
+                                            <ul class="category-list clearfix mt-2">
+
+                                                <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:0:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                    <div class="custom-controls-stacked">
+                                                        <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{partnerItem.partnerName}}</span>
+                                                          </label>
+                                                    </div>
+                                                </li>
+                                                <ng-container *ngIf="show_airline_more">
+                                                    <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr | slice:5; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{partnerItem.airlineName}}" [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{partnerItem.partnerName}}</span>
+                                                          </label>
+                                                        </div>
+                                                    </li>
+                                                </ng-container>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                        <div class="widget-title">
+                                            <h6 class="">Flight Timings</h6>
+                                            <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content">
+                                            <p class="flighttimings-text">Departing flight ( {{selectedTripData.fromCity}} - {{selectedTripData.toCity}})</p>
+                                            <div class="flighttiming-content flight-departing">
+                                                <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="FlightTimingsFilterFlightData(timingsItems)">
+                                                    <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                    <p [innerHTML]="timingsItems.value"></p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="sidebar-widget Price-widget">
+                                        <div class="widget-title">
+                                            <h6 class="">Price</h6>
+                                            <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content mt-10 mb-30 price-widget-content">
+                                            <div class="price-widget-content-flx">
+                                                <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                                <span class="ms-3 me-3">-</span>
+                                                <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                            </div>
+                                            <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="sidebar-widget stops-widget" id="Flight_Stops">
+                                        <div class="widget-title">
+                                            <h6 class="">Stops</h6>
+                                            <a href="javascript:void(0)" (click)="resetFlightStopsFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content">
+                                            <div class="Stops-content">
+                                                <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" [innerHTML]="FlightStopitem.value">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="sidebar-widget Airlines-widget">
+                                        <div class="widget-title">
+                                            <h6 class="">Airlines</h6>
+                                            <a href="javascript:void(0)" (click)="resetAirlineFlightsFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content" id="airline_list">
+                                            <ul class="category-list clearfix mt-2">
+
+                                                <li class="custom-check-box" *ngFor="let airlineItem of airlines | slice:0:5; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                    <div class="custom-controls-stacked">
+                                                        <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                          </label>
+                                                        <p>&#8377;{{airlineItem.price}}</p>
+                                                    </div>
+                                                </li>
+                                                <ng-container *ngIf="show_airline_more">
+                                                    <li class="custom-check-box" *ngFor="let airlineItem of airlines | slice:5; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                          </label>
+                                                            <p>&#8377;{{airlineItem.price}}</p>
+                                                        </div>
+                                                    </li>
+                                                </ng-container>
+                                            </ul>
+                                            <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="sidebar-widget stopover-widget">
+                                        <div class="widget-title">
+                                            <h6 class="">Stopover</h6>
+                                            <a href="javascript:void(0)" (click)="resetStopOverFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content mt-20 mb-20">
+                                            <!-- <input type="text" class="js-range-slider" name="my_range" value="" /> -->
+
+                                            <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver" [options]="optionsStopOver" (valueChange)="onMinStopOverChange($event)" (highValueChange)="onMaxStopOverChange($event)"></ngx-slider>
+                                            <!-- <div class="price-slider"></div> -->
+                                            <div class="Stopover-value">
+                                                <p class="price-value">{{minStopOver}} hrs</p>
+                                                <p class="price-value2">{{maxStopOver}} hrs</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- lay over airport list -->
+                                    <div class="sidebar-widget layover-airports-widget">
+                                        <div class="widget-title">
+                                            <h6 class="">Layover Airports</h6>
+                                            <a href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
+                                        </div>
+                                        <div class="widget-content" id="layover_airport">
+                                            <ul class="category-list clearfix mt-2">
+
+                                                <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr | slice:0:5; let i = index " [ngClass]="{'active': layoverItem.active}">
+                                                    <div class="custom-controls-stacked">
+                                                        <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                          </label>
+                                                        <p>&#8377;{{layoverItem.price}}</p>
+                                                    </div>
+                                                </li>
+                                                <ng-container *ngIf="show_layover_more">
+                                                    <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr | slice:5; let i = index " [ngClass]="{'active': layoverItem.active}">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active"  (change)="flightLayoverFilterFlightData(layoverItem)"/>
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                          </label>
+                                                            <p>&#8377;{{layoverItem.price}}</p>
+                                                        </div>
+                                                    </li>
+                                                </ng-container>
+                                            </ul>
+                                            <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="layout-right">
+
+                            <div class="Sector-area" id="Sector-area" [hidden]="loader">
+                                <div class="Sector-list" (click)="activeSelectedTrip(i)" [ngClass]="{'active': i ==selectedTrip}" *ngFor="let item of searchData; let i = index">
+                                    <p>Sector {{i+ 1}}</p>
+                                    <h6>{{item.fromCity}} - {{item.toCity}}</h6>
+                                    <p>{{item.depart | date:"EEE ,dd MMM" }}</p>
+                                </div>
+                            </div>
+
+                            <div [hidden]="loader">
+
+                                <div class="flightsfound">
+                                    <div class="flight-tosearch">
+                                        <h6>
+                                            <img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{selectedTripData.fromCity}} to {{selectedTripData.toCity}}
+                                            <small> {{selectedTripData.depart | date:"EEE ,dd MMM"}}</small>
+                                        </h6>
+
+
+                                    </div>
+                                    <div class="flight-search-filters mt-2 ml-0">
+                                        <div class="flight-search-filters-left">
+                                            <p *ngIf="flightList">{{flightList.length}} flights found</p>
+                                        </div>
+                                        <div class="flight-search-filters-right">
+                                            <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterFlightData($event)">
+                                                  <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tabletitle-area" [hidden]="loader">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="tabletitle-content">
+                                            <p>Airlines</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="tabletitle-content tabletitle-departure">
+                                            <p>Departure</p>
+                                            <p>Arrival</p>
+                                            <p>Duration</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="tabletitle-content">
+                                            <p>Partner</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="tabletitle-content">
+                                            <p class="ml-10">Fare</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Listing -->
+                            <div class="flight-listing-area" *ngIf="loader">
+                                <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
+                                    <div class="filter-loader-content w-100">
+                                        <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
+                                        <span class="float-right" style="width:90%;">
+                                <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flight-listing-area">
+                                <ng-container #itemsContainer></ng-container>
+                            </div>
+                            <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
+                            <ng-template #item let-item="item">
+                                <div *ngFor="let list of item; let i = index">
+                                    <div class="flight-listing" *ngIf="list && list.flights.length > 0" id="flight_list_{{list.flightKey}}">
+                                        <div class="flight-listing-content">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="flight-radio">
+                                                        <div class="flight-radio-image" *ngIf="list.flights.length > 0">
+                                                            <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}" class="flight-image">
+                                                        </div>
+                                                        <div class="flight-radio-time" *ngIf="list.flights.length > 0">
+                                                            <h6>{{list.flights[0].airlineName}}</h6>
+                                                            <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <ng-container *ngFor="let details of flightList;">
+                                                        <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                                            Operated by <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                                            <b *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="flight-city-box" *ngIf="list.flights.length > 0">
+                                                        <div class="flight-listing-time">
+                                                            <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} </h6>
+                                                            <p>{{list.flights[0].departureAirport}}</p>
+                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                                                        </div>
+                                                        <div class="flight-listing-time">
+                                                            <h6>{{list.flights[list.flights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                            <p>{{list.flights[list.flights.length-1].arrivalAirport}}</p>
+                                                        </div>
+                                                        <div class="flight-listing-time" *ngIf="list.flights.length > 0">
+                                                            <h6>{{ list.flights[0].duration | durationTime }}</h6>
+                                                            <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
+                                                            <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="flight-listing-pri">
+                                                        <div class="flight-listing-image" *ngIf="list.priceSummary.length > 0">
+                                                            <img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}">
+                                                            <!--<p>{{list.priceSummary[0].partnerName}}</p>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="flight-listing-pri">
+                                                        <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
+                                                            <span class="information-icon">
+                                                     <h6>&#8377; {{list.priceSummary[0].totalFare|number}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                        <!-- <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""> -->
+                                                        <div class="hover-popover">
+                                                            <div class="hover-popover-title">
+                                                                <h6>Price Breakdown</h6>
+                                                            </div>
+                                                            <div class="hover-popover-content">
+                                                                <div class="hover-popover-content-list">
+                                                                    <p>Base Fare</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].baseFare|number}}</p>
+                                                                </div>
+                                                                <div class="hover-popover-content-list">
+                                                                    <p>Charges</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].totalFare - list.priceSummary[0].baseFare |number}}</p>
+                                                                </div>
+                                                                <hr class="m-0" />
+                                                                <div class="hover-popover-content-list popover-total">
+                                                                    <p>Total</p>
+                                                                    <p>&#8377;{{list.priceSummary[0].totalFare|number}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hover-popover-footer">
+                                                                <p>*Partner Convenience Fee is applicable</p>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                            <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
+                                                        </div>
+                                                        <div class="flight-listing-viewfares">
+                                                            <a href="javascript:void(0)" [ngClass]="{'d-none':list.isSelected}" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> View Fares <i class="fa fa-angle-down ml-10"></i></a>
+                                                            <a href="javascript:void(0)" [ngClass]="{'d-none':!list.isSelected}" class="button-style hidefares " id="hidefares_{{list.flightKey}}" (click)="hideFarebutton(list.flightKey,'fare-details',0)"> Hide Fares<i class="fa fa-angle-up ml-10"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flight-info-box" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
+                                            <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
+                                        </div>
+                                        <div class="flight-details-box viewfaresbox" [ngClass]="{'flight-details-box-hide':!list.isSelected}" id="CompareToFly_{{list.flightKey}}">
+                                            <div class="flight-options-box" id="FareDetails_{{list.flightKey}}">
+                                                <div class="flight-options-box-list" *ngFor="let item of list.priceSummary; let j = index">
+                                                    <div class="flight-options-list">
+                                                        <div class="flight-options-list-left">
+                                                            <div class="flight-options-logo">
+                                                                <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="25" height="25">
+                                                                <b class="ml-10">{{item.partnerName}}</b>
+                                                            </div>
+                                                            <div class="flight-options-text">
+                                                                <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
+                                                                <p class="text-red" *ngIf="item.refundStatus != 1">Non-Refundable</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flight-options-list-right">
+                                                            <div class="emi-options" *ngIf="item.totalFare > EMIAvailableLimit">
+                                                                <p>EMI starts at &#8377; {{calculateEMI(item.totalFare)|number}} per month</p>
+                                                            </div>
+                                                            <div class="flight-options-price d-flex align-items-center">
+                                                                <p>&#8377;{{item.totalFare |number}}</p>
+                                                                <span class="information-icon">
+                                                        <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
+                                                        <div class="hover-popover">
+                                                            <div class="hover-popover-title">
+                                                                <h6>Price Breakdown</h6>
+                                                            </div>
+                                                            <div class="hover-popover-content">
+                                                                <div class="hover-popover-content-list">
+                                                                    <p>Base Fare</p>
+                                                                    <p>&#8377;{{item.baseFare | number}}</p>
+                                                                </div>
+                                                                <div class="hover-popover-content-list">
+                                                                    <p>Charges</p>
+                                                                    <p>&#8377;{{item.totalFare - item.baseFare |number}}</p>
+                                                                </div>
+                                                                <hr class="m-0" />
+                                                                <div class="hover-popover-content-list popover-total">
+                                                                    <p>Total</p>
+                                                                    <p>&#8377;{{item.totalFare |number}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hover-popover-footer">
+                                                                <p>*Partner Convenience Fee is applicable</p>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                            </div>
+                                                            <div class="flight-options-book">
+                                                                <!-- <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="bookingSummary(list.flights,item)">Book</a> -->
+                                                                <button class="button-style BtnOnSelect" [ngClass]="{'button-selected-style' : list.isSelected}" (click)="onSelect(list.flightKey,list.flights,item,$event)">{{list.isSelected?'Selected':'Select'}}</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="flight-info-box" *ngIf="(item.totalFare|couponDiplay:flightCoupons:item.partnerName)">
+                                                        <p *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName"><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                                    </div>
+                                                    <div class="flight-info-box ">
+                                                        <ul class="extra-tabs-right-ul">
+                                                            <!-- <li class="ms-0">
+                                                    <p>
+                                                        <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
+                                                    </p>
+                                                    <div class="hover-popover">
+                                                        <div class="hover-popover-content">
+                                                            <p>Extra Baggage</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
+                                                    <div class="hover-popover">
+                                                        <div class="hover-popover-content">
+                                                            <p>Meals Selection</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
+                                                    <div class="hover-popover">
+                                                        <div class="hover-popover-content">
+                                                            <p>Seats Selection</p>
+                                                        </div>
+                                                    </div>
+                                                </li>-->
+                                                        </ul>
+                                                        <a href="javascript:void(0)" class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}_{{j}}" (click)="HideShowCompareToFly(list.flightKey,'flight-details',j)">Flight Details <i class="fa fa-angle-down ml-10"></i></a>
+                                                        <a href="javascript:void(0)" class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}_{{j}}" (click)="hideFarebutton(list.flightKey,'flight-details',j)">Flight Details <i class="fa fa-angle-up ml-10"></i></a>
+                                                    </div>
+                                                    <div class="flight-details-box flightfaresbox flight-details-box-hide" id="FlightDetails_{{list.flightKey}}_{{j}}">
+                                                        <div class="flight-extra-details">
+                                                            <ul class="list-unstyled flight-extra-tabs">
+                                                                <li>
+                                                                    <a href="javascript:void(0); " class="flight-extra-tabs-active" data-bind="FlightDetailsS_{{list.flightKey}}_{{j}}">Flight Details</a>
+                                                                </li>
+                                                                <!-- <li>
+                                                        <a href="javascript:void(0);" data-bind="CancellationDetails"> Cancellation Details</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" data-bind="DateChange"> Date Change</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" data-bind="Fare"> Fare Rules </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" data-bind="Cancellation"> Cancellation Protection </a>
+                                                    </li> -->
+                                                            </ul>
+                                                            <div class="extra-tabs-ara" *ngIf="flightList.length>0">
+                                                                <div id="FlightDetailsS_{{list.flightKey}}_{{j}}" class="flight-extra-content extra-active">
+                                                                    <div class="extra-tabs-details FlightDetails-box">
+                                                                        <div class="extra-tabs-details-top">
+                                                                            <div class="extra-tabs-left">
+                                                                                <p>Depart <span class="ms-2 me-2">|</span>{{selectedTripData.fromCity}} to {{selectedTripData.toCity}}</p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="extra-tabs-details-bottom">
+                                                                            <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
+                                                                                <div class="tabs-depart-one">
+                                                                                    <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" class="flight-image me-2" alt="">IndiGo {{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
+                                                                                    <div class="tabs-depart-left float-none justify-content-between w-100">
+                                                                                        <div class="tabs-depart-times">
+                                                                                            <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                            <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                            <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                        </div>
+                                                                                        <div class="tabs-depart-total w-25 text-center">
+                                                                                            <p>{{details.duration | durationTime}}</p>
+                                                                                            <p class="border-0" *ngIf="details.stopsDetails && details.stopsDetails.length > 0">Via {{details.stopsDetails[0]['layoverAirportName']}} </p>
+                                                                                        </div>
+                                                                                        <div class="tabs-depart-times">
+                                                                                            <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                            <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                            <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!--<div class="tabs-depart-right">
+                                                                            <div class="Baggage">
+                                                                                <h5>Baggage</h5>
+                                                                                <p>Adult</p>
+                                                                            </div>
+                                                                            <div class="departCheck">
+                                                                                <h5>Check-in</h5>
+                                                                                <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                                            </div>
+                                                                            <div class="Cabin">
+                                                                                <h5>Cabin</h5>
+                                                                                <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                                            </div>
+                                                                        </div>-->
+                                                                                </div>
+                                                                                <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                                                                    Operated by <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                                                                    <b *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                                                                </div>
+                                                                                <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.flights[i]  && list.flights[i+1] && getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                                    <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--<div id="CancellationDetails" id="CancellationDetails_{{list.flightKey}}" class="flight-extra-content">
+                                                        <div class="extra-tabs-details CancellationDetails-box">
+                                                            <div class="extra-tabs-details-top">
+                                                                <div class="extra-tabs-left">
+                                                                    <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                                </div>
+                                                                <div class="extra-tabs-right"></div>
+                                                            </div>
+                                                            <div class="extra-tabs-details-bottom">
+                                                                <table class="table-bordered table-content w-100">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Time Frame</p>
+                                                                                <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                <p class="opacity_05">(Per passenger)</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">2 hours to 3 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">3 days to 365 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <p class="oth-text mt-10">*From the date of Departure</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="DateChange" id="DateChange_{{list.flightKey}}" class="flight-extra-content">
+                                                        <div class="extra-tabs-details DateChange-box">
+                                                            <div class="extra-tabs-details-top">
+                                                                <div class="extra-tabs-left">
+                                                                    <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                                </div>
+                                                                <div class="extra-tabs-right"></div>
+                                                            </div>
+                                                            <div class="extra-tabs-details-bottom">
+                                                                <table class="table-bordered table-content w-100">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Time Frame</p>
+                                                                                <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                <p class="opacity_05">(Per passenger)</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">2 hours to 3 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">3 days to 365 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <p class="oth-text mt-10">*From the date of Departure</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="Fare" id="Fare_{{list.flightKey}}" class="flight-extra-content">
+                                                        <div class="extra-tabs-details Fare-box">
+                                                            <div class="extra-tabs-details-top">
+                                                                <div class="extra-tabs-left">
+                                                                    <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                                </div>
+                                                                <div class="extra-tabs-right"></div>
+                                                            </div>
+                                                            <div class="extra-tabs-details-bottom">
+                                                                <table class="table-bordered table-content w-100">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Time Frame</p>
+                                                                                <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                <p class="opacity_05">(Per passenger)</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">2 hours to 3 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">3 days to 365 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <p class="oth-text mt-10">*From the date of Departure</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="Cancellation" id="Cancellation_{{list.flightKey}}" class="flight-extra-content">
+                                                        <div class="extra-tabs-details Cancellation-box">
+                                                            <div class="extra-tabs-details-top">
+                                                                <div class="extra-tabs-left">
+                                                                    <p>Depart <span class="ms-2 me-2">|</span>Mumbai to Hyderabad</p>
+                                                                </div>
+                                                                <div class="extra-tabs-right"></div>
+                                                            </div>
+                                                            <div class="extra-tabs-details-bottom">
+                                                                <ul class="m-0 tabs-list-data">
+                                                                    <li><p>While Booking your flight ticket, select 'Cancellation Protection' option and pay a nominal cancellation premium and enjoy ZERO penalty in case you wish to cancel the booking.</p></li>
+                                                                    <li><p>Cancellation Protection is applicable on select one way domestic flights and starts at only Rs.149</p></li>
+                                                                    <li><p>Cancellation Protection is applicable on select one way domestic flights</p></li>
+                                                                    <li><p>Tickets should be cancelled 25 hrs prior to scheduled departure of the flight to avail this feature.</p></li>
+                                                                    <li><p>Cancellation should be done ONLY on airlines for the cancellation charges to be void.</p></li>
+                                                                    <li><p>Waiver is valid only for FULL cancellations (cancellations of all flights of a particular passenger, booked in an itinerary) for any or all passengers in a booking.</p></li>
+                                                                    <li><p>In case of partial cancellation (cancelation of only some flights booked in an itinerary), waiver will not be given & normal cancelation penalties will be charged.</p></li>
+                                                                    <li><p>ZERO Cancellation service is valid only on complete cancellation of itinerary and not on date change of itinerary.</p></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ng-template>
+                            <div id="endOfPage" (click)="loadData()"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--Mobile Screen starts-->
+
+    <section class="mob-flights-listing" *ngIf="isMobile">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 p-0 fixed-top">
+                    <div class="mob-listing-header">
+                        <div class="mob-listing-header-left">
+                            <a href="javascript:;" routerLink="/compare-fly">
+                                <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="mob-listing-header-center">
+                            <h6>{{selectedTripData.fromCity}} - {{selectedTripData.toCity}}</h6>
+                            <p>{{selectedTripData.depart | date:'EEE, dd MMM' }} | {{(selectedTripData.adults + selectedTripData.child + selectedTripData.infants)}} Travellers | <span *ngIf="selectedTripData.classType == 'B'">Business</span>
+                                <span *ngIf="selectedTripData.classType == 'E'">Economy</span>
+                                <span *ngIf="selectedTripData.classType == 'F'">First</span>
+                                <span *ngIf="selectedTripData.classType == 'P'">Premium</span>
+                            </p>
+                        </div>
+                        <div class="mob-listing-header-right">
+                            <a href="javascript:;" routerLink="/compare-fly">
+                                <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-70" *ngIf="!loader">
+                    <div class="mob-listing-fiters">
+                        <h6>{{flightList.length}} Flights Found</h6>
+                        <a href="javascript:void(0)" (click)="openMobileFilterSection()">
+                            <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
+                            <span>Sort/Filters</span>
+                        </a>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12" *ngIf="!loader">
+                    <div class="mob-all-flight">
+                        <ul>
+                            <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems" value="{{Items.value}}">
+                                <a href="javascript:void(0)" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
+                                    <span *ngIf="Items.name!='no_stops' && Items.active">{{flightList.length}}</span>
+                                    <span *ngIf="Items.name!='All_Flights' && Items.active">{{flightList.length}}</span> {{Items.value}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <ng-container #itemsContainer></ng-container>
+                    <div *ngIf="loader">
+                        <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                            <div class="filter-loader-content w-100">
+                                <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
+                                <span class="w-75 float-right">
+                              <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                               <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                               </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
+                    <ng-template #item let-item="item">
+                        <div *ngFor="let list of item; let i = index">
+                            <div class="mob-list-area" *ngIf="list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
+                                <div class="mob-list-items">
+                                    <div class="mob-list-items-name">
+                                        <div class="mob-list-items-name-top">
+                                            <div class="mob-list-items-image">
+                                                <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}" class="flight-image">
+                                                <div class="mob-list-flight-name" *ngIf="list.flights.length > 0">
+                                                    <h6>{{list.flights[0].airlineName}}</h6>
+                                                    <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="mob-list-items-price" *ngIf="list.priceSummary.length > 0">
+                                                <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
+                                                <p *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="mob-list-items-name-bottom">
+                                            <div class="name-bottom-top">
+                                                <div class="name-bottom-top-left">
+                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                                    <p>{{list.flights[0].departureAirport}}</p>
+                                                </div>
+                                                <div class="name-bottom-top-center">
+                                                    <p>{{ list.flights[0].duration | durationTime }}</p>
+                                                    <img src="/{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
+                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</p>
+                                                    <p *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</p>
+                                                </div>
+                                                <div class="name-bottom-top-right">
+                                                    <h6>{{list.flights[list.flights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                    <p>{{list.flights[list.flights.length-1].arrivalAirport}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="name-bottom-bottom" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
+                                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mob-items-book-list" style="display:none;" id="CompareToFly_{{list.flightKey}}">
+                                        <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
+                                            <div class="mob-book-list-top">
+                                                <div class="mob-booking-image">
+                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40">
+                                                    <span>{{item.partnerName}}</span>
+                                                </div>
+                                                <div class="mob-booking-price">
+                                                    <h6>₹ {{item.totalFare |number}}</h6>
+                                                    <p *ngIf="item.totalFare > EMIAvailableLimit">EMI @ ₹ {{calculateEMI(item.totalFare)|number}}/month</p>
+                                                </div>
+                                                <div class="mob-booking">
+                                                    <button class="BtnOnSelect" (click)="onMobileSelect(list.flightKey,list.flights,item,$event)">
+                                      Select
+                                  </button>
+                                                </div>
+                                            </div>
+                                            <div class="name-bottom-bottom" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
+                                                <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                            </div>
+                                            <div class="mob-book-list-bottom">
+                                                <div class="mob-extra">
+                                                    <ul>
+                                                        <!-- <li>
+                                              <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
+                                          </li>
+                                          <li>
+                                              <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
+                                          </li>
+                                          <li>
+                                              <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
+                                          </li>-->
+                                                    </ul>
+                                                </div>
+                                                <div class="mob-details">
+                                                    <a href="javascript:void(0)" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- flight detail for mobile  -->
+                            <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
+                                <div class="mob-fd-box">
+                                    <div class="mob-title">
+                                        <h3>Flight Details</h3>
+                                        <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
+                                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="mob-fd-filters d-block">
+                                        <div class="mob-fd-accordion">
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="accordion-item">
+                                                    <!--<h2 class="accordion-header" id="headingOne-fd">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-fd"
+                                                        aria-expanded="true" aria-controls="collapseOne-fd" >
+                                                        Flight Details
+                                                    </button>
+                                                </h2>-->
+                                                    <div id="collapseOne-fd" class="accordion-collapse collapse show" aria-labelledby="headingOne-fd" data-bs-parent="#accordionExample">
+                                                        <div class="accordion-body">
+                                                            <div class="extra-tabs-details FlightDetails-box">
+                                                                <div class="extra-tabs-details-top">
+                                                                    <div class="extra-tabs-left">
+                                                                        <p>{{fromCityName}} to {{toCityName}} <br> Depart</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="extra-tabs-details-bottom ">
+                                                                    <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
+                                                                        <div class="tabs-depart-one">
+                                                                            <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                            <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
+                                                                            <div class="tabs-depart-left float-none justify-content-between w-100">
+                                                                                <div class="tabs-depart-times">
+                                                                                    <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                    <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                    <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                </div>
+                                                                                <div class="tabs-depart-total">
+                                                                                    <p>{{details.duration | durationTime}}</p>
+                                                                                </div>
+                                                                                <div class="tabs-depart-times">
+                                                                                    <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                    <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                    <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--<div class="tabs-depart-right">
+                                                                            <div class="Baggage">
+                                                                                <h5>Baggage</h5>
+                                                                                <p>Adult</p>
+                                                                            </div>
+                                                                            <div class="departCheck">
+                                                                                <h5>Check-in</h5>
+                                                                                <p>15 Kgs <span class="opacity_05">(1 piece only)</span></p>
+                                                                            </div>
+                                                                            <div class="Cabin">
+                                                                                <h5>Cabin</h5>
+                                                                                <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
+                                                                            </div>
+                                                                        </div>-->
+                                                                        </div>
+                                                                        <div class="operated_by" *ngIf="details.operatingAirline && details.airline != details.operatingAirline">
+                                                                            Operated by <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
+                                                                            <b *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
+                                                                        </div>
+                                                                        <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                            <!-- <p>Change of planes・3h 0m Layover in Nagpur</p> -->
+                                                                            <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingTwo-fd">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                         aria-expanded="false" aria-controls="collapseTwo-fd" (click)="openFlightDetailMobile(list.flightKey,'cancellation')">
+                                                        Cancellation Details
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseTwo-fd_{{list.flightKey}}" class="accordion-collapse collapse" aria-labelledby="headingTwo-fd"
+                                                    data-bs-parent="#accordionExample" >
+                                                    <div class="accordion-body">
+                                                        <div class="extra-tabs-details Fare-box">
+                                                            <div class="extra-tabs-details-bottom p-0">
+                                                                <table class="table-bordered table-content w-100">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Time Frame</p>
+                                                                                <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                <p class="opacity_05">(Per passenger)</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">2 hours to 3 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">3 days to 365 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <p class="oth-text mt-10">*From the date of Departure</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingThree-fd">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseThree-fd" aria-expanded="false" aria-controls="collapseThree-fd" (click)="openFlightDetailMobile(list.flightKey,'baggagepolicy')">
+                                                        Baggage Policy
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseThree-fd_{{list.flightKey}}" class="accordion-collapse collapse" aria-labelledby="headingThree-fd"
+                                                    data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body" >
+                                                        <div class="" *ngIf="list.flights.length > 0">
+                                                            <div class="rules-flight" >
+                                                                <div class="rules-flight-items" *ngFor="let flightItem of list.flights">
+                                                                    <div class="rules-flight-thumbe">
+                                                                        <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
+                                                                    </div>
+                                                                    <div class="rules-flight-content" >
+                                                                        <h6 >
+                                                                            {{flightItem.departureAirport}}
+                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                                                                            {{flightItem.arrivalAirport}}
+                                                                        </h6>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="rules-flight-items opacity_05">
+                                                                    <div class="rules-flight-thumbe">
+                                                                        <img  src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
+                                                                    </div>
+                                                                    <div class="rules-flight-content">
+                                                                        <h6>
+                                                                            NAG
+                                                                            <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                                                                            HYD
+                                                                        </h6>
+                                                                    </div>
+                                                                </div> -->
+                                                <!--</div>
+                                                        </div>
+                                                        <div class="extra-tabs-details-bottom p-0">
+                                                            <table class="table-bordered table-content w-100">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">Baggage</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">Check-in Baggage</p>
+                                                                            <p class="opacity_05">(Per passenger)</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">Cabin Baggage</p>
+                                                                            <p class="opacity_05">(Per passenger)</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <p class=" ">Adult</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">15 Kgs</p>
+                                                                            <p class="opacity_05">(1 piece only)</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">7 Kgs</p>
+                                                                            <p class="opacity_05">(1 piece only)</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <p class=" ">Child</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">15 Kgs</p>
+                                                                            <p class="opacity_05">(1 piece only)</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">7 Kgs</p>
+                                                                            <p class="opacity_05">(1 piece only)</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <p class=" ">Infant</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">Cabin bag only</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw_6 fs_13">7 Kgs</p>
+                                                                            <p class="opacity_05">(1 piece only)</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <p class="oth-text mt-10">*From the date of Departure</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+                                                <!--
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingfour-fd">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapsefour-fd" aria-expanded="false" aria-controls="collapsefour-fd" (click)="openFlightDetailMobile(list.flightKey,'farerules')">
+                                                        Fare Rules
+                                                    </button>
+                                                </h2>
+                                                <div id="collapsefour-fd_{{list.flightKey}}" class="accordion-collapse collapse" aria-labelledby="headingfour-fd"
+                                                    data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body stops-widget">
+                                                        <div class="extra-tabs-details Fare-box">
+                                                            <div class="extra-tabs-details-bottom p-0">
+                                                                <table class="table-bordered table-content w-100">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Time Frame</p>
+                                                                                <p class="opacity_05">(From Scheduled flight departure)</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="fw_6 fs_13">Airline Fee</p>
+                                                                                <p class="opacity_05">(Per passenger)</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">0 hours to 2 hours*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">2 hours to 3 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="opacity_05">3 days to 365 days*</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>Adult : Non refundable</p>
+                                                                                <p>Child : Non refundable</p>
+                                                                                <p>Infant : Non refundable</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <p class="oth-text mt-10">*From the date of Departure</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            </div>
+                                        </div>
+                                        <!--<div class="mob-sf-btns">
+                                        <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)">Close</a>
+                                    </div>-->
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </ng-template>
+                    <div id="endOfPage" (click)="loadData()"></div>
+                </div>
+
+
+
+                <!-- ------------------------------
+            >>> mobile Sort Filters
+        ---------------------------------->
+                <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
+
+                    <div class="mob-sf-box">
+                        <div class="mob-title">
+                            <h3>Sort & Filters</h3>
+                            <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
+                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                            </a>
+                        </div>
+                        <div class="mob-sf-tabs">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a class="active" href="#Sort" role="tab" aria-controls="Sort" data-bs-toggle="tab">Sort by</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#Filters" role="tab" aria-controls="Filters" data-bs-toggle="tab">Filters</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content clearfix">
+                                <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
+                                    <div class="mob-sf-sort">
+                                        <div class="mob-sf-sort-by">
+                                            <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
+                                                <p>
+                                                    <img [src]="item.image" alt="" />
+                                                    <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mob-sf-btns">
+                                        <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
+                                    <div class="mob-sf-filters">
+                                        <div class="mob-sf-accordion">
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingOne">
+                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                  Popular Filters
+                                              </button>
+                                                    </h2>
+                                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                                                        <div class="accordion-body">
+                                                            <ul class="category-list clearfix ">
+                                                                <li class="custom-check-box" *ngFor="let popularItems of flight_PopularItems" [ngClass]="{'active': popularItems.active}">
+                                                                    <div class="custom-controls-stacked">
+                                                                        <label class="custom-control material-checkbox">
+                                                                  <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)">
+                                                                  <span class="material-control-indicator"></span>
+                                                                  <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                                  <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
+                                                              </label>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="mob-reset text-end">
+                                                                <a href="javascript:void(0)" (click)="resetPopularFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingeight">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseeight" aria-expanded="false" aria-controls="collapseeight">
+                                                Partners
+                                            </button>
+                                                    </h2>
+                                                    <div id="collapseeight" class="accordion-collapse collapse" aria-labelledby="headingeight">
+                                                        <div class="accordion-body">
+                                                            <div class="default-sidebar">
+                                                                <ul class="category-list clearfix mt-2">
+                                                                    <li class="custom-check-box" *ngFor="let partnerItem of partnerFilterArr| slice:0:5 ; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                                        <div class="custom-controls-stacked">
+                                                                            <label class="custom-control material-checkbox">
+                                                                    <input type="checkbox" class="material-control-input" value="{{partnerItem.partnerName}}" [checked]="partnerItem.active"
+                                                                    (change)="flightPartnerFilterFlightData(partnerItem)">
+                                                                    <span class="material-control-indicator"></span>
+                                                                    <span class="description">{{partnerItem.partnerName}}</span>
+                                                                </label>
+                                                                        </div>
+                                                                    </li>
+                                                                    <ng-container *ngIf="show_airline_more">
+                                                                        <li class="custom-check-box" *ngFor="let partnerItem of airlines| slice:5 ; let i = index " [ngClass]="{'active': partnerItem.active}">
+                                                                            <div class="custom-controls-stacked">
+                                                                                <label class="custom-control material-checkbox">
+                                                                        <input type="checkbox" class="material-control-input" value="{{partnerItem.partnerItem}}"
+                                                                            [checked]="partnerItem.active" (change)="flightPartnerFilterFlightData(partnerItem)">
+                                                                        <span class="material-control-indicator"></span>
+                                                                        <span class="description">{{partnerItem.partnerName}}</span>
+                                                                    </label>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ng-container>
+                                                                </ul>
+
+                                                                <div class="mob-reset text-end">
+                                                                    <!-- <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>4">+{{airlines.length-5}} more</a> -->
+                                                                    <a href="javascript:void(0)" class="widget-content-more" (click)="resetPartnerFlightsFilter()">Reset</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingTwo">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                  Flight Timings
+                                              </button>
+                                                    </h2>
+                                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                                                        <div class="accordion-body">
+                                                            <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
+                                                            <div class="flighttiming-content flight-departing">
+                                                                <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="FlightTimingsFilterFlightData(timingsItems)">
+                                                                    <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                                    <p [innerHTML]="timingsItems.value"></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mob-reset text-end">
+                                                                <a href="javascript:void(0)" (click)="resetFlightTimingsFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingThree">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                  Price
+                                              </button>
+                                                    </h2>
+                                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                                                        <div class="accordion-body">
+
+                                                            <div class="widget-content mt-10 mb-30 price-widget-content">
+                                                                <div style="margin:0 0 20px 0">
+                                                                    <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                                                    <span class="ms-3 me-3">-</span>
+                                                                    <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                                                </div>
+                                                                <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
+                                                            </div>
+
+                                                            <div class="mob-reset text-end">
+                                                                <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingfour">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                                                  Stops
+                                              </button>
+                                                    </h2>
+                                                    <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingfour">
+                                                        <div class="accordion-body stops-widget">
+                                                            <div class="Stops-content mt-0">
+                                                                <div class="Stops-list" *ngFor="let FlightStopitem of stopsFilteritems" [ngClass]="{'active': FlightStopitem.active}" (click)="FlightStopsFilterFlightData(FlightStopitem)" [innerHTML]="FlightStopitem.value">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mob-reset text-end">
+                                                                <a href="javascript:void(0)" (click)="resetFlightStopsFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingfive">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+                                                  Airlines
+                                              </button>
+                                                    </h2>
+                                                    <div id="collapsefive" class="accordion-collapse collapse" aria-labelledby="headingfive">
+                                                        <div class="accordion-body">
+                                                            <div class="default-sidebar">
+                                                                <ul class="category-list clearfix mt-2">
+
+                                                                    <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:0:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                                        <div class="custom-controls-stacked">
+                                                                            <label class="custom-control material-checkbox">
+                                                                      <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
+                                                                      (change)="flightAirlineFilterFlightData(airlineItem)">
+                                                                      <span class="material-control-indicator"></span>
+                                                                      <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                                  </label>
+                                                                            <p>₹{{airlineItem.price}}</p>
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <ng-container *ngIf="show_airline_more">
+                                                                        <li class="custom-check-box" *ngFor="let airlineItem of airlines| slice:5 ; let i = index " [ngClass]="{'active': airlineItem.active}">
+                                                                            <div class="custom-controls-stacked">
+                                                                                <label class="custom-control material-checkbox">
+                                                                      <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
+                                                                      (change)="flightAirlineFilterFlightData(airlineItem)">
+                                                                      <span class="material-control-indicator"></span>
+                                                                      <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                                  </label>
+                                                                                <p>₹{{airlineItem.price}}</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ng-container>
+                                                                </ul>
+
+                                                                <div class="d-flex justify-content-between mt-2">
+                                                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
+                                                                    <a href="javascript:void(0)" class="widget-content-more" (click)="resetAirlineFlightsFilter()">Reset</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingsix">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesix" aria-expanded="false" aria-controls="collapsesix">
+                                                  Stopover
+                                              </button>
+                                                    </h2>
+                                                    <div id="collapsesix" class="accordion-collapse collapse" aria-labelledby="headingsix">
+                                                        <div class="accordion-body">
+                                                            <div class="mt-3">
+                                                                <ngx-slider [(value)]="minStopOver" [(highValue)]="maxStopOver" [options]="optionsStopOver" (valueChange)="onMinStopOverChange($event)" (highValueChange)="onMaxStopOverChange($event)"></ngx-slider>
+                                                                <div class="Stopover-value">
+                                                                    <p class="price-value">{{minStopOver}} hrs</p>
+                                                                    <p class="price-value2">{{maxStopOver}} hrs</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mob-reset text-end mt-2">
+                                                                <a href="javascript:void(0)" (click)="resetStopOverFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingseven">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
+                                                  Layover Airports
+                                              </button>
+                                                    </h2>
+                                                    <div id="collapseseven" class="accordion-collapse collapse" aria-labelledby="headingseven">
+                                                        <div class="accordion-body">
+                                                            <div class="default-sidebar">
+                                                                <ul class="category-list clearfix mt-2">
+                                                                    <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr| slice:0:5 ; let i = index " [ngClass]="{'active': layoverItem.active}" (change)="flightLayoverFilterFlightData(layoverItem)">
+                                                                        <div class="custom-controls-stacked">
+                                                                            <label class="custom-control material-checkbox">
+                                                                      <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active" >
+                                                                      <span class="material-control-indicator"></span>
+                                                                      <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                                  </label>
+                                                                            <p>₹{{layoverItem.price}}</p>
+                                                                        </div>
+                                                                    </li>
+                                                                    <ng-container *ngIf="show_layover_more">
+                                                                        <li class="custom-check-box" *ngFor="let layoverItem of layOverFilterArr| slice:5; let i = index " [ngClass]="{'active': layoverItem.active}" (change)="flightLayoverFilterFlightData(layoverItem)">
+                                                                            <div class="custom-controls-stacked">
+                                                                                <label class="custom-control material-checkbox">
+                                                                      <input type="checkbox" class="material-control-input" value="{{layoverItem.arrivalAirportCode}}"  [checked]="layoverItem.active" >
+                                                                      <span class="material-control-indicator"></span>
+                                                                      <span class="description">{{layoverItem.arrivalAirport}}</span>
+                                                                  </label>
+                                                                                <p>₹{{layoverItem.price}}</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ng-container>
+
+                                                                </ul>
+
+                                                                <div class="d-flex justify-content-between mt-2">
+                                                                    <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
+                                                                    <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
+                                                                    <a class="widget-content-more" href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="mob-sf-btns">
+                                            <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Mobile Screen ends-->
+
+
+</main>
+<!-- ------------------------------
+    >>> multi-city-flight-fixed-area
+    ---------------------------------->
+<div class="multi-city-flight-fixed-area" *ngIf="isSelectedSectorFlight && !isMobile">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="flight-fixed">
+                    <div class="flight-fixed-left">
+                        <div class="flight-fixed-list" [ngClass]="{'after-none':i==(searchData.length-1)}" *ngFor="let item of searchData;let i=index">
+                            <div class="flight-fixed-list-image" *ngIf="item.isSelected">
+                                <img src="{{cdnUrl}}/images/airlines/{{item.selectedFlight.flights[0].airline}}.gif" alt="">
+                            </div>
+                            <div class="flight-fixed-list-content">
+                                <h6 [ngClass]="{'text-secondory':!item.isSelected}">{{item.flightfrom}} - {{item.flightto}}</h6>
+                                <p *ngIf="!item.isSelected" class="text-secondory">Flight not selected</p>
+                                <p *ngIf="item.isSelected">&#8377; {{item == null ? 0:item.selectedFlight.priceSummery.totalFare|number}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight-fixed-right">
+                        <div class="fixedright-content">
+                            <div class="fixedright-image">
+                                <img src="{{cdnUrl}}/images/flight_partners/small-no/{{searchData[0].selectedFlight.priceSummery.partnerName}}.png" alt="" width="52px">
+                            </div>
+                            <div class="fixedright-price">
+                                <h6>
+                                    ₹ {{TotalFare | number}}
+                                    <span *ngIf="TotalFare > EMIAvailableLimit">EMI @{{calculateEMI(TotalFare)|number}}/month</span>
+                                </h6>
+                            </div>
+                            <div class="fixedright-otherinfo">
+                                <!-- <span class="mainprice">₹ 5,000</span>
+                                  <span class="price-off">10% off</span> -->
+                                <div class="ff-Viewfaredetails">
+                                    <a href="#" class="rr-Viewfare">View Fare Details</a>
+                                    <div class="hover-popover" style="left: -82px;">
+                                        <div class="hover-popover-title">
+                                            <h6>Price Breakdown</h6>
+                                        </div>
+                                        <div class="hover-popover-content">
+                                            <div class="hover-popover-content-list">
+                                                <p>Base Fare</p>
+                                                <p>₹{{BaseFare | number}}</p>
+                                            </div>
+                                            <div class="hover-popover-content-list">
+                                                <p>Tax</p>
+                                                <p>₹{{Tax | number}}</p>
+                                            </div>
+                                            <hr class="m-0">
+                                            <div class="hover-popover-content-list popover-total">
+                                                <p>Total</p>
+                                                <p>₹{{TotalFare | number}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="hover-popover-footer">
+                                            <p>*Partner Convenience Fee is applicable</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-fixed-btn">
+                            <a (click)="nextFlightSelect()" *ngIf="!isAllSelected && !isLast" class="button-style ms-2">Select Next Flight</a>
+                            <button *ngIf="isAllSelected || isLast" [disabled]="isError || isLast" [ngClass]="{'disable-partner':isError || isLast}" (click)="bookingSummary()" class="button-style ms-2">Book</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ------------------------------
+    >>> mult-city-error-area
+    ---------------------------------->
+<div class="mult-city-error-area" *ngIf="isError && !isMobile">
+    <div class="container">
+        <div class="row justify-content-center ">
+            <div class="col-md-6">
+                <div class="mult-city-error-content">
+                    <p>{{ErrorMessage}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ------------------------------
+    >>> mult-city-error-area-mobile
+    ---------------------------------->
+<div class="mult-city-error-area-mobile" *ngIf="isError && isMobile">
+    <div class="container">
+        <div class="row justify-content-center ">
+            <div class="col-md-6">
+                <div class="mult-city-error-content">
+                    <p>{{ErrorMessage}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ------------------------------
+        >>> Mobile flight fixed
+        ---------------------------------->
+<div class="fr-flight-fixed-area" *ngIf="isSelectedSectorFlight && isMobile ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="fr-flight-fixed-box">
+                    <div class="fr-flight-fixed-top">
+                        <div class="fr-applycoupon">
+                            <span>Multicity</span>
+                        </div>
+                        <div class="fr-faresummary">
+                            <img src="{{cdnUrl}}/images/flight_partners/small-no/{{mobileSelected.priceSummery.partnerName}}.png" alt="">
+                        </div>
+                    </div>
+                    <div class="mob-ff-name">
+                        <h6>{{selectedTripData.fromCity}} to {{selectedTripData.toCity}}</h6>
+                    </div>
+                    <div class="fr-flight-fixed-bottom">
+                        <div class="fr-fixed-price">
+                            <h6>₹ {{mobileSelected.priceSummery.totalFare | number}} </h6>
+                            <p *ngIf="mobileSelected.priceSummery.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(mobileSelected.priceSummery.totalFare)|number}}/month </p>
+                            <span>|</span>
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Details</a>
+                        </div>
+                        <div class="fr-fixed-btn">
+                            <button *ngIf="!isLast" [disabled]="isError" (click)="nextFlightSelect()" [ngClass]="{'disable-partner':isError}" class="button-style w-100 mt-2">Select Next Flight</button>
+                            <button *ngIf="isLast" [disabled]="isError" [ngClass]="{'disable-partner':isError}" (click)="bookingSummary()" class="button-style w-100 mt-2">Book</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Mlite Fare Summary Popup -->
+<div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel" aria-hidden="true" *ngIf="isSelectedSectorFlight && isMobile">
+    <div class="modal-dialog" style="
+      margin: 0;
+      display:flex;
+      align-items: flex-end;
+      min-height: calc(100% - 0px);
+    ">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <h5 class="modal-title">Fare Summary</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+                <div>
+                    <img src="{{cdnUrl}}/images/flight_partners/small-no/{{mobileSelected.priceSummery.partnerName}}.png" alt="{{mobileSelected.priceSummery.partnerName}}">
+                </div>
+                <div class="widget-content">
+                    <ul class="widget-list clearfix">
+                        <li class="fare-list-item">
+                            <div class="fare-list-box">
+                                <div class="fare-list-left">
+                                    <span>
+                                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> Base Fare
+                                    </span>
+                                </div>
+                                <div class="fare-list-right">
+                                    <p>&#8377;{{mobileSelected.priceSummery.baseFare|number}}</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="fare-list-item">
+                            <div class="fare-list-box">
+                                <div class="fare-list-left">
+                                    <span>
+                                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> Taxes and Fees
+                                    </span>
+                                </div>
+                                <div class="fare-list-right">
+                                    <p>&#8377;{{(mobileSelected.priceSummery.totalFare-mobileSelected.priceSummery.baseFare) |number}}
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="fare-list-item">
+                            <div class="fare-list-box pt-30">
+                                <div class="fare-list-left">
+                                    <h6 class="fw_7">Grand Total</h6>
+                                </div>
+                                <div class="fare-list-right">
+                                    <h6 class="fw_7">₹{{mobileSelected.priceSummery.totalFare | number}}</h6>
+                                    <p class="opacity_05" *ngIf="mobileSelected.priceSummery.totalFare > EMIAvailableLimit">EMI @ {{calculateEMI(mobileSelected.priceSummery.totalFare )|number: '.2'}}/month</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary">Save changes</button>
+                 </div> -->
+        </div>
+    </div>
+</div>
