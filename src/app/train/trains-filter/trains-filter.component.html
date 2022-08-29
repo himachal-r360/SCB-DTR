@@ -5,38 +5,40 @@
   </div>
   <div class="col-md-12 float-left p0" id="filter-nav">
         <ng-template >
-          <label class="checkbox-cust" >
-            <div class="icons-filter"> 
-                <img src="{{cdnUrl}}images/icons/before6AM.svg" />
-            </div>
-            <div class="label-filter"  >Before 06 AM</div>
-            <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected"  [checked]="departureTimeFilter[0].selected" >
-            <span class="checkmark-cust"></span>
-          </label>
-          <label class="checkbox-cust">
-            <div class="icons-filter">
-                <img src="{{cdnUrl}}images/icons/6AMTo12PM.svg" />
-            </div>
-            <div class="label-filter">06 AM - 12 PM</div>
-            <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[1])" [(ngModel)]="departureTimeFilter[1].selected"  [checked]="departureTimeFilter[1].selected">
-            <span class="checkmark-cust"></span>
-          </label>
-          <label class="checkbox-cust">
-            <div class="icons-filter">
-                <img src="{{cdnUrl}}images/icons/12to6PM.svg" />
-            </div>
-            <div class="label-filter">12 PM - 06 PM</div>
-            <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[2])" [(ngModel)]="departureTimeFilter[2].selected"  [checked]="departureTimeFilter[2].selected">
-            <span class="checkmark-cust"></span>
-          </label>
-          <label class="checkbox-cust">
-            <div class="icons-filter">
-                <img src="{{cdnUrl}}images/icons/After6PM.svg" />
-            </div>
-            <div class="label-filter">After 06 PM</div>
-            <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[3])" [(ngModel)]="departureTimeFilter[3].selected"  [checked]="departureTimeFilter[3].selected">
-            <span class="checkmark-cust"></span>
-          </label>
+          <div class="">
+            <label class="checkbox-cust" >
+              <div class="icons-filter"> 
+                  <img src="{{cdnUrl}}images/icons/before6AM.svg" />
+              </div>
+              <div class="label-filter"  >Before 06 AM</div>
+              <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected"  [checked]="departureTimeFilter[0].selected" >
+              <span class="checkmark-cust"></span>
+            </label>
+            <label class="checkbox-cust">
+              <div class="icons-filter">
+                  <img src="{{cdnUrl}}images/icons/6AMTo12PM.svg" />
+              </div>
+              <div class="label-filter">06 AM - 12 PM</div>
+              <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[1])" [(ngModel)]="departureTimeFilter[1].selected"  [checked]="departureTimeFilter[1].selected">
+              <span class="checkmark-cust"></span>
+            </label>
+            <label class="checkbox-cust">
+              <div class="icons-filter">
+                  <img src="{{cdnUrl}}images/icons/12to6PM.svg" />
+              </div>
+              <div class="label-filter">12 PM - 06 PM</div>
+              <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[2])" [(ngModel)]="departureTimeFilter[2].selected"  [checked]="departureTimeFilter[2].selected">
+              <span class="checkmark-cust"></span>
+            </label>
+            <label class="checkbox-cust">
+              <div class="icons-filter">
+                  <img src="{{cdnUrl}}images/icons/After6PM.svg" />
+              </div>
+              <div class="label-filter">After 06 PM</div>
+              <input type="checkbox" checked="checked" (change)="updateDepartureTimeFilter(departureTimeFilter[3])" [(ngModel)]="departureTimeFilter[3].selected"  [checked]="departureTimeFilter[3].selected">
+              <span class="checkmark-cust"></span>
+            </label>
+          </div>
         </ng-template>
 
         <ng-template >
@@ -137,8 +139,7 @@
       </mat-expansion-panel-header>
       <div class="mb-3">
         <p class="train_timeTitle">Departing Train (BOM-HYD)</p>
-
-      <div class="departure_check">
+      <div class="departure_check flex-items">
 
         <label class="checkbox-cust " [ngClass]="{ 'active_bg': departureTimeFilter[0].selected }">
           <div class="icons-filter">
@@ -166,7 +167,7 @@
         </label>
       </div>
       <p class="train_timeTitle">Arrival Train (BOM-HYD)</p>
-      <div class="arrival_check">
+      <div class="arrival_check flex-items">
         <label class="checkbox-cust" [ngClass]="{ 'active_bg': arrivalTimeFilter[0].selected }">
           <div class="icons-filter">
               <img src="{{cdnUrl}}images/icons/before6AM.svg" />

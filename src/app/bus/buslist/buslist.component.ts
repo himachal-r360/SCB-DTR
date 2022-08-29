@@ -150,6 +150,9 @@ export class BuslistComponent implements OnInit,OnDestroy {
         domainName:any;
         tag:any;
         tracksearchObj:any;
+        listing_header:boolean = true;
+        seating_header:boolean = false;
+
  constructor(public rest:RestapiService,private busService: BusService, public dialog: MatDialog, private router: Router, private location: Location,  private activatedRoute: ActivatedRoute, private http: HttpClient, private changeDetector: ChangeDetectorRef, public commonHelper: CommonHelper, public busHelper: BusHelper, private sg: SimpleGlobal, private formBuilder: FormBuilder, private _bottomSheet: MatBottomSheet, private busfilter: BusfilterPipe, plocation: PlatformLocation, @Inject(APP_CONFIG) appConfig: any,private cookieService: CookieService,private titleService: Title,private appConfigService:AppConfigService,private _flightService: FlightService,public _styleManager: StyleManagerService) {
   this.serviceSettings=this.appConfigService.getConfig();
   
