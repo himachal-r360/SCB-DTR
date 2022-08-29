@@ -301,6 +301,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "programName":this.sg['domainName'],
       "_token":this.XSRFTOKEN
     };
+
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
     };
