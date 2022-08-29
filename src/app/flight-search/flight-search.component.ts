@@ -276,7 +276,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         $('#showFlightFrom').removeClass('flight-from-hide');
       }
     }, 100);
-    
+
   }
 
   searchAutoComplete($event, field, device, index: any) {
@@ -538,11 +538,21 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         this.departureDate = new Date(lastSearch.departure);
-        this.minDateR=this.departureDate;
-        this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
         if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
           this.arrivalDate = new Date(lastSearch.arrival);
         }
+        if(this.departureDate < (new Date()).setHours(0,0,0,0))
+        {
+          this.departureDate = '';
+          this.arrivalDate = '';
+          this.minDate = new Date();
+          this.minDateR = new Date();
+        }
+        else{
+          this.minDateR=this.departureDate;
+        }
+        this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
+
         this.flightClassVal = lastSearch.flightclass;
         this.adultsVal = lastSearch.adults;
         this.childVal = lastSearch.child;
@@ -550,6 +560,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
         if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "" && isMulticity !='true') {
           this.navItemActive = "Round Trip"
+          this.flightData.controls["arrival"].setValidators(Validators.required);
+          this.flightData.controls["arrival"].updateValueAndValidity();
         }
        }else{
 
