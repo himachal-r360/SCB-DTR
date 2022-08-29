@@ -122,6 +122,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
                   var customerInfo =this.sg['customerInfo'];
                  // console.log(customerInfo);
                   this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+
                   setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
                   this.REWARD_CUSTOMERID = '';
                   this.REWARD_EMAILID = '';
@@ -259,7 +260,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     // update slider dynamically
     
     if(this.pointData !== undefined)
-{
+    {
              if(Object.keys(this.pointData['condition']).length!=0){
           var name=this.pointData['condition']['name'];
           var condition_type=this.pointData['condition'].condition_type; 
@@ -270,9 +271,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           var monthly_trn_limit=this.pointData['condition'].monthly_trn_limit;
           var monthly_trn_value=this.pointData['condition'].monthly_trn_value;
           var total_count=this.pointData['condition'].total_count;
-          var total_transvalue=this.pointData['condition'].total_transvalue;
-
-         
+          var total_transvalue=this.pointData['condition'].total_transvalue;   
       }
       var max_value_redemption = (Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100);
       if(max_value<max_value_redemption){
@@ -285,9 +284,11 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
             };
             this.value = min_value;
              this.options = opts;
-           }
+    }
   }
   checkAvailablePointsforSavedCard(){ 
+    this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
+    this.ctype = sessionStorage.getItem(this.passSessionKey+'-ctype');
     var request = {
       "takecard":this.selectedCardDetails.id,
       "type":"available_points",
@@ -585,11 +586,72 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
 
     }
   }
-  addCard(){
+  addcardform(){
     this.submitted2=true;
     if (this.cardaddForm1.status !='VALID') {
       return;
     }else{
+      console.log(this.cardaddForm1);
+      var first9digit = this.cardaddForm1.controls['first4digit'].value;
+      var first4digit = first9digit.substring(0, 4).trim();
+      var last4digit = this.cardaddForm1.controls['last4digit'].value;
+      var mobile = this.cardaddForm1.controls['applymobile'].value;
+      var dob = this.cardaddForm1.controls['dob'].value;
+      var datePipe = new DatePipe('en-US'); 
+      var dobStr = datePipe.transform(dob,'dd/MM/yyyy');
+      // if(this.cardaddForm1.controls['savecard'].value==true){
+      //   var savecard=1;
+      // }else{
+      //   var savecard=0;
+      // }
+      var request = {
+        "first4digit":first4digit,
+        "last4digit":last4digit,
+        "mobile":mobile,
+        "DOB":dobStr,
+        "type":"available_points",
+        "bin":first9digit,
+        "clientToken":this.sg['domainName'].toUpperCase(),
+        "services_id":this.serviceId,
+        "partner_id":42,
+        "modal":"DIGITAL",
+        "noopt": 1,
+        "savecard":1,
+        "customer_id":this.sg["customerInfo"]["customerid"],
+        "programName":this.sg['domainName'],
+        "_token":this.XSRFTOKEN,
+      };
+      //console.log(request);
+      var passData = {
+        postData: this.EncrDecr.set(JSON.stringify(request))
+      };
+      this.pay.availablePoints(passData).subscribe(response => {
+        this.response1 = response;
+        if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
+        {
+          // this.errorMsg="";
+          var customername=this.response1['customername'];
+          this.points_available=this.response1['points_available'];
+          this.points_percentage=this.response1['points_percentage'];
+          var client_type=this.response1['client_type'];
+          var card_type=this.response1['card_type'];
+          this.CcCharges = this.response1['CcCharges'];
+          // this.intitialconversionptoc();
+        }else{
+          // this.errorMsg="Something went wrong";
+          if(this.response1['message']!=undefined)
+          {
+            // this.errorMsg=this.response1['message'];
+          }
+        }
+      }), (err: HttpErrorResponse) => {
+        var message = 'Something went wrong';
+        // alert(message);
+        // this.errorMsg="";
+        // this.buttonContinue2=true; 
+        // this.showCloseBtn=true;
+        // this.collapseStatus2="collapse";
+      };
     }
 
   }

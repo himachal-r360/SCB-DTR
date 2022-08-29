@@ -81,7 +81,7 @@ export class EncrDecrService {
     try {
     return decrypted.toString(CryptoJS.enc.Utf8);
     } catch (error) {
-    // window.location.reload();
+     window.location.reload();
     }
     }
   }
