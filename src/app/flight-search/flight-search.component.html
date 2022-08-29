@@ -718,7 +718,7 @@
               <div class="select-root-area">
                 <div class="select-root-left" appDropdown>
                   <span class="select-roottitle">FROM</span>
-                  <h5 class="fw_6 ">{{multicitySearchData[0].fromCity}}</h5>
+                  <h5 class="fw_6 ">{{multicitySearchData[0].fromCity}}<span *ngIf="!isMobile">,{{multicitysearch[0].fromCountryFullName}}</span></h5>
                   <span class="select-roottitle">{{multicitySearchData[0].fromAirportName}}</span>
                           <div class="flight-from-data flight-from-hide ff-form-data dropdown">
                               <div class="mob-title" *ngIf="isMobile">
@@ -743,6 +743,7 @@
                                           id="fromCitySearch">
                                       <input type="hidden" formControlName="flightfrom">
                                       <input type="hidden" formControlName="fromContry">
+                                      <input type="hidden" formControlName="fromCountryFullName"> 
                                       <input type="hidden" formControlName="fromAirportName">
                                   </div>
                                   <div class="mob-search-list">
@@ -753,6 +754,7 @@
                                           (keyup)="searchAutoComplete($event,'toCity' ,'mobile');">
                                           <input type="hidden" formControlName="flightto">
                                           <input type="hidden" formControlName="toContry">
+                                          <input type="hidden" formControlName="toContryFullName">
                                       <input type="hidden" formControlName="toAirportName">
                                   </div>
                               </div>
@@ -773,7 +775,10 @@
                           <input type="hidden"
                               formControlName="fromContry">
                               <input type="hidden"
+                              formControlName="fromCountryFullName"> 
+                              <input type="hidden"
                               formControlName="fromAirportName">
+                              <input type="hidden" formControlName="fromCountryFullName">
                           </div>
                       <ul class="flight-from-data-ul">
                           <li class="flight-from-ul-li">
@@ -833,6 +838,7 @@
                                         <input type="hidden" formControlName="flightfrom">
                                         <input type="hidden" formControlName="fromContry">
                                         <input type="hidden" formControlName="fromAirportName">
+                                        <input type="hidden" formControlName="fromCountryFullName">
                                     </div>
                                     <div class="mob-search-list">
                                         <label for="">To</label>
@@ -844,6 +850,7 @@
                                         <input type="hidden" formControlName="flightto">
                                         <input type="hidden" formControlName="toContry">
                                         <input type="hidden" formControlName="toAirportName">
+                                        <input type="hidden" formControlName="toContryFullName">
                                     </div>
                                 </div>
                             </div>
@@ -862,6 +869,7 @@
                                 formControlName="toContry">
                             <input type="hidden"
                                 formControlName="toAirportName">
+                                <input type="hidden" formControlName="toContryFullName"> 
                         </div>
                         <ul class="flight-from-data-ul">
                             <li class="flight-from-ul-li">
@@ -973,6 +981,7 @@
                                                         <input type="hidden" formControlName="flightfrom">
                                                         <input type="hidden" formControlName="fromContry">
                                                         <input type="hidden" formControlName="fromAirportName">
+                                                        <input type="hidden" formControlName="fromCountryFullName">
                                                     </div>
                                                     <!-- <div class="mob-search-list">
                                                         <label for="">To</label>
@@ -1003,6 +1012,7 @@
                                                 formControlName="fromContry">
                                                 <input type="hidden"
                                                 formControlName="fromAirportName">
+                                                <input type="hidden" formControlName="fromCountryFullName">   
                                             </div>
                                         <ul class="flight-from-data-ul">
                                             <li class="flight-from-ul-li">
@@ -1062,6 +1072,7 @@
                                                         <input type="hidden" formControlName="flightfrom">
                                                         <input type="hidden" formControlName="fromContry">
                                                         <input type="hidden" formControlName="fromAirportName">
+                                                        <input type="hidden" formControlName="fromCountryFullName">
                                                     </div>
                                                     <div class="mob-search-list">
                                                         <label for="">To</label>
@@ -1073,6 +1084,7 @@
                                                         <input type="hidden" formControlName="flightto">
                                                         <input type="hidden" formControlName="toContry">
                                                         <input type="hidden" formControlName="toAirportName">
+                                                        <input type="hidden" formControlName="toContryFullName">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1091,6 +1103,7 @@
                                                 formControlName="toContry">
                                             <input type="hidden"
                                                 formControlName="toAirportName">
+                                            <input type="hidden" formControlName="toContryFullName">    
                                         </div>
                                         <ul class="flight-from-data-ul">
                                             <li class="flight-from-ul-li">
@@ -1474,6 +1487,7 @@
                                           <input type="hidden" formControlName="flightfrom">
                                           <input type="hidden" formControlName="fromContry">
                                           <input type="hidden" formControlName="fromAirportName">
+                                          <input type="hidden" formControlName="fromCountryFullName">
                                       </div>
                                       <div class="mob-search-list">
                                           <label for="">To</label>
@@ -1484,6 +1498,7 @@
                                               <input type="hidden" formControlName="flightto">
                                               <input type="hidden" formControlName="toContry">
                                           <input type="hidden" formControlName="toAirportName">
+                                          <input type="hidden" formControlName="toContryFullName">
                                       </div>
                                   </div>
                               </div>
@@ -1540,6 +1555,7 @@
                                               <input type="hidden" formControlName="flightfrom">
                                               <input type="hidden" formControlName="fromContry">
                                               <input type="hidden" formControlName="fromAirportName">
+                                              <input type="hidden" formControlName="fromCountryFullName">
                                           </div>
                                           <div class="mob-search-list">
                                               <label for="">To</label>
@@ -1551,6 +1567,7 @@
                                               <input type="hidden" formControlName="flightto">
                                               <input type="hidden" formControlName="toContry">
                                               <input type="hidden" formControlName="toAirportName">
+                                              <input type="hidden" formControlName="toContryFullName">
                                           </div>
                                       </div>
                                   </div>

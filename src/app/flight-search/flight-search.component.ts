@@ -341,17 +341,19 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     }
   }
   onFromClick(values, device, index , i) {
-   // debugger
+   debugger
     // this.fromCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
       this.multicityFormArr.controls[i].get('flightfrom').setValue( values['_source'].airport_code)
       this.multicityFormArr.controls[i].get('fromCity').setValue(values['_source'].city)
       this.multicityFormArr.controls[i].get('fromContry').setValue(values['_source'].country_code)
       this.multicityFormArr.controls[i].get('fromAirportName').setValue(values['_source'].airport_name)
+      this.multicityFormArr.controls[i].get('fromCountryFullName').setValue(values['_source'].country)
       index.value.fromCity=values['_source'].city;
       index.value.flightfrom = values['_source'].airport_code;
       index.value.fromContry = values['_source'].country_code;
       index.value.fromAirportName = values['_source'].airport_name;
+      index.value.fromCountryFullName = values['_source'].country;
       values = values['_source'];
       this.flightFromOptions = this.defaultFlightOptions;
       // this.fromAirpotName = values.airport_name;
@@ -917,6 +919,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     var LastToAirportCode = '';
     var LastToAirportName = this.multicityFromAirpotName;
     var LastToCountryName = '';
+    var LastFromCountryFullName = '';
+    var LastToCountryFullName = '';
 
     if(this.multicityFormArr)
     {
@@ -924,7 +928,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       LastToAirportCode = this.multicityFormArr.controls[lengthofControls - 1].get('flightto').value;
 
        LastTocity = LastToAirportCode == '' ? this.multicityFromCityName: this.multicityFormArr.controls[lengthofControls - 1].get('toCity').value;
-
+       LastFromCountryFullName = LastToAirportCode== ''? this.multicityFromCityName: this.multicityFormArr.controls[lengthofControls - 1].get('toCountryFullName').value;   
        LastToAirportName = LastToAirportCode == '' ? this.multicityFromAirpotName : this.multicityFormArr.controls[lengthofControls - 1].get('toAirportName').value;
        LastToCountryName = LastToAirportCode == '' ? '' : this.multicityFormArr.controls[lengthofControls - 1].get('toContry').value;
        this.minDateArray.push(new Date(this.multicityFormArr.controls[lengthofControls - 1].get('departure').value));
@@ -946,6 +950,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         toCity:[this.multicityToCityName],
         fromContry:[LastToCountryName],
         toContry:[],
+        fromCountryFullName:[LastFromCountryFullName],
+        toCountryFullName:[],
         fromAirportName:[LastToAirportName],
         toAirportName:[this.multicityToAirpotName],
         flightclass:[this.flightData.value.flightclass],
@@ -971,6 +977,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
        toCity:[obj.toCity],
        fromContry:[obj.fromContry],
        toContry:[obj.toContry],
+       fromCountryFullName:[obj.fromCountryFullName],
+       toCountryFullName:[obj.toCountryFullName],
        fromAirportName:[obj.fromAirportName],
        toAirportName:[obj.toAirportName],
        flightclass:[obj.flightclass],
