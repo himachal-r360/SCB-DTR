@@ -90,7 +90,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-    this.getCustomerCards();
+    
     this.Formotpvalidate = this.formBuilder.group({
           otp:['', [Validators.required,Validators.pattern("^[0-9]*$")]]
         });
@@ -114,6 +114,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
 
   ngOnInit() {
+    this.getCustomerCards();
            setTimeout(() => {
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
@@ -287,7 +288,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
   checkAvailablePointsforSavedCard(){ 
     this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
-    this.ctype = sessionStorage.getItem(this.passSessionKey+'-ctype');
+    // this.ctype = sessionStorage.getItem(this.passSessionKey+'-ctype');
     var request = {
       "takecard":this.selectedCardDetails.id,
       "type":"available_points",
