@@ -123,7 +123,8 @@
                                 </div>
 
 
-                                <div class="Flight-One" *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+                                <div  *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+                                <div class="Flight-One">
                                     <div class="Booking-Flight-name">
                                         <div class="Booking-Flight-name-left">
                                             <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}" class="flight-image mr-10">
@@ -196,6 +197,7 @@
                                         <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                                         <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                                     </div>
+                                   </div> 
                                     <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
                                         <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                                     </div>
@@ -374,7 +376,9 @@
                                 </div>
                             </div>
 
-                            <div class="Flight-One" *ngFor="let flights of flightOnwardDetails;let i = index">
+                            <div  *ngFor="let flights of flightOnwardDetails;let i = index">
+                            
+                              <div class="Flight-One">
                                 <div class="Booking-Flight-name">
                                     <div class="Booking-Flight-name-left">
                                         <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}" class="flight-image mr-10">
@@ -447,6 +451,9 @@
                                     <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                                     <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                                 </div>
+                                </div>
+                                
+                                
                                 <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
                                     <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                                 </div>
@@ -559,7 +566,8 @@
                                 </div>
                             </div>
 
-                            <div class="Flight-One" *ngFor="let flights of flightReturnDetails;let i = index">
+                            <div *ngFor="let flights of flightReturnDetails;let i = index">
+                             <div  class="Flight-One" >
                                 <div class="Booking-Flight-name">
                                     <div class="Booking-Flight-name-left">
                                         <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}" class="flight-image mr-10">
@@ -633,6 +641,7 @@
                                     <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                                     <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                                 </div>
+                               </div> 
                                 <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
                                     <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                                 </div>
@@ -877,6 +886,7 @@
                                                                                     <mat-option value="Mr"> Mr </mat-option>
                                                                                     <mat-option value="Mrs">Mrs</mat-option>
                                                                                     <mat-option value="Ms">Ms</mat-option>
+                                                                                     <mat-option value="Miss">Miss</mat-option>
                                                                                 </mat-select>
                                                                                 <mat-error class="error_flight  error_tv" *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
                                                                                     Select title</mat-error>
@@ -1047,6 +1057,7 @@
                                                                                         <mat-option value="Mr"> Mr </mat-option>
                                                                                         <mat-option value="Mrs">Mrs</mat-option>
                                                                                         <mat-option value="Ms">Ms</mat-option>
+                                                                                         <mat-option value="Miss">Miss</mat-option>
                                                                                     </mat-select>
 
                                                                                     <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
@@ -1208,6 +1219,7 @@
                                                                             <mat-option value="Mr"> Mr </mat-option>
                                                                             <mat-option value="Mrs">Mrs</mat-option>
                                                                             <mat-option value="Ms">Ms</mat-option>
+                                                                             <mat-option value="Miss">Miss</mat-option>
                                                                         </mat-select>
                                                                         <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Select title</mat-error>
                                                                     </mat-form-field>
@@ -1371,6 +1383,7 @@
                                                                                                     <mat-option value="Mr"> Mr </mat-option>
                                                                                                     <mat-option value="Mrs">Mrs</mat-option>
                                                                                                     <mat-option value="Ms">Ms</mat-option>
+                                                                                                     <mat-option value="Miss">Miss</mat-option>
                                                                                                 </mat-select>
                                                                                                 <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','adult_title'+traveller)">
                                                                                                     Select title</mat-error>
@@ -1443,7 +1456,7 @@
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="isMobile && adultsArrayM.length>0 ">
+                                            <div *ngIf="isMobile && adultsArrayM.length>0 " class="table-responsive">
                                                 <table class="table  traveller_table">
                                                     <thead>
                                                         <tr>
@@ -1463,6 +1476,7 @@
                                                                         <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
                                                                         <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
                                                                         <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                                                         <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
                                                                         <ng-template ngSwitchDefault></ng-template>
                                                                     </div>
                                                                 </td>
@@ -2134,7 +2148,7 @@
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="isMobile && childArrayM.length>0 ">
+                                            <div *ngIf="isMobile && childArrayM.length>0 " class="table-responsive">
                                                 <table class="table  traveller_table">
                                                     <thead>
                                                         <tr>
@@ -2829,7 +2843,7 @@
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="isMobile && infantArrayM.length>0 ">
+                                            <div *ngIf="isMobile && infantArrayM.length>0 " class="table-responsive">
                                                 <table class="table  traveller_table">
                                                     <thead>
                                                         <tr>
@@ -3963,7 +3977,8 @@
                                         </div>
                                         <hr *ngIf="!last">
                                         <div class="collapse" id="flight_review_collapse{{searchi}}">
-                                            <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+                                            <div class=" flight_detail_review" *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+                                            <div  class="Flight-One">
                                                 <div class="Booking-Flight-name">
                                                     <div class="Booking-Flight-name-left">
                                                         <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" alt="{{flights.airline}}" class="flight-image mr-10">
@@ -4031,9 +4046,18 @@
                                                     <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                                                     <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                                                 </div>
+<<<<<<< HEAD
+                                                </div>
                                                 <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
                                                     <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                                                 </div>
+=======
+                                                
+                                            </div>
+
+                                            <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                                <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+>>>>>>> 8840ac0847f84354e573a134e0a9b70a8b8b9b7b
                                             </div>
 
                                         </div>
@@ -4165,7 +4189,8 @@
 
                             <ng-container *ngIf="flightSessionData.travel_type !='M'">
                                 <div class="collapse" id="flight_review_collapse">
-                                    <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
+                                    <div class="flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
+                                      <div class="Flight-One">
                                         <div class="Booking-Flight-name">
                                             <div class="Booking-Flight-name-left">
                                                 <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" alt="{{flights.airline}}" class="flight-image mr-10">
@@ -4236,6 +4261,7 @@
                                             Operated by
                                             <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                                             <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
+                                        </div>
                                         </div>
                                         <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
                                             <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
@@ -4370,7 +4396,8 @@
 
 
                             <div class="collapse" id="flight_review_collapse_return">
-                                <div class="Flight-One flight_detail_review" *ngFor="let flights of flightReturnDetails;let i = index">
+                                <div class="flight_detail_review" *ngFor="let flights of flightReturnDetails;let i = index">
+                                 <div class="Flight-One">
                                     <div class="Booking-Flight-name">
                                         <div class="Booking-Flight-name-left">
                                             <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" alt="{{flights.airline}}" class="flight-image mr-10">
@@ -4441,6 +4468,7 @@
                                         Operated by
                                         <span *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                                         <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
+                                    </div>
                                     </div>
                                     <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
                                         <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
@@ -4521,7 +4549,7 @@
                                     <table class="table  traveller_table">
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="col-6">Name</th>
+                                                <th scope="col" class="">Name</th>
                                                 <th scope="col">Date of Birth</th>
                                                 <th scope="col">Gender</th>
                                             </tr>
@@ -4536,6 +4564,7 @@
                                                             <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
                                                             <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
                                                             <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                                            <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
                                                             <ng-template ngSwitchDefault></ng-template>
                                                         </div>
                                                     </td>
@@ -4544,12 +4573,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div *ngIf="travelerDetails.child > 0">
+                                <div *ngIf="travelerDetails.child > 0" class="table-responsive">
                                     <h6>{{travelerDetails.child}} Child</h6>
                                     <table class="table  traveller_table">
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="col-6">Name</th>
+                                                <th scope="col" class="">Name</th>
                                                 <th scope="col">Date of Birth</th>
                                                 <th scope="col">Gender</th>
                                             </tr>
@@ -4571,12 +4600,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div *ngIf="travelerDetails.infants > 0">
+                                <div *ngIf="travelerDetails.infants > 0" class="table-responsive">
                                     <h6>{{travelerDetails.infants}} Infant</h6>
                                     <table class="table  traveller_table">
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="col-6">Name</th>
+                                                <th scope="col" class="">Name</th>
                                                 <th scope="col">Date of Birth</th>
                                                 <th scope="col">Gender</th>
                                             </tr>
@@ -4648,7 +4677,7 @@
                                 </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade show active" id="pills-flight-one" role="tabpanel" aria-labelledby="flight_one">
-                                        <div>
+                                        <div class="table-responsive">
                                             <table class="table  traveller_table">
                                                 <thead>
                                                     <tr>
@@ -4673,7 +4702,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="pills-flight-two" role="tabpanel" aria-labelledby="flight_two">
-                                        <div>
+                                        <div class="table-responsive">
                                             <table class="table  traveller_table">
                                                 <thead>
                                                     <tr>
@@ -4844,7 +4873,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="fare-list-right">
-                                                    <p>&#8377; {{Tax |number}}</p>
+                                                    <p>&#8377; {{(totalCollectibleAmount-BaseFare)-partnerConvFee |number}}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -5221,7 +5250,7 @@
                     </span>
                                     </div>
                                     <div class="fare-list-right">
-                                        <p>&#8377;{{Tax |number}}</p>
+                                        <p>&#8377;{{(totalCollectibleAmount-BaseFare)-partnerConvFee |number}}</p>
                                     </div>
                                 </div>
                             </li>
