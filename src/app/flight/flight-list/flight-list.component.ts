@@ -591,13 +591,17 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       var end = this.maxStopOver;
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
-        var flights = [];
-        e.flights.forEach((d: any) => {
-          if ((d.duration / 60) / 60 >= start && (d.duration / 60 / 60) <= end) {
-            flights.push(d);
+        var flights = e.flights;
+        var totalOnwardDuration = 0;
+        for (let i = 0; i < flights.length; i++) {
+          totalOnwardDuration += flights[i].duration;
+          if (flights[i + 1] != null && flights[i + 1] != undefined) {
+          let obj2Date = new Date(flights[i + 1].departureDateTime);
+          let obj1Date = new Date(flights[i ].arrivalDateTime);
+          totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
           }
-        })
-        if (flights.length > 0) {
+        }
+        if ((totalOnwardDuration/60)/60 >= start && (totalOnwardDuration/60)/60 <= end) {
           filteredStopOver.push(e);
         }
       });
