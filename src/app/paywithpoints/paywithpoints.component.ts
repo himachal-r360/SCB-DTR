@@ -39,6 +39,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   @Input() Partnertoken;
   @Input() payTotalFare;
   @Input() passSessionKey;
+  @Input() ctype;
   @Output() amountToPay = new EventEmitter<string>();
   value: number = 0;
   savedCards: any = [];
@@ -51,7 +52,6 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   };
  serviceSettings:any;
  selectedCardDetails:any;
- ctype:any;
  response1:any;
  pointData:any;
  errorMsg0:any;
@@ -114,7 +114,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
 
   ngOnInit() {
-     
+     console.log(this.ctype);
            setTimeout(() => {
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
