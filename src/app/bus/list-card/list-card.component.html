@@ -223,9 +223,9 @@
                     <div class="row ">
                         <div class="col-md-12">
                            <ul class="bus_details_filter nav nav-tabs" role="tablist">
-                                <li><button class="bus_details_filter_btn active"  data-bs-target="#seat-all" aria-controls="seat" role="tab" data-bs-toggle="tab" aria-expanded="true">All ({{bus.availableSeats | number }})</button></li>
+                                <li><button class="bus_details_filter_btn active"  data-bs-target="#seat-{{bus.id}}-0" aria-controls="seat" (click)="showSeatsFilter(bus.id,0)" role="tab" data-bs-toggle="tab" aria-expanded="true">All ({{bus.availableSeats | number }})</button></li>
                                 <ng-container *ngIf="pricesplit.length > 1">
-                                <li *ngFor="let price of pricesplit"><button class="bus_details_filter_btn" data-bs-target="#seat{{price.actfare}}" aria-controls="seat{{price.actfare}}" role="tab" data-bs-toggle="tab" >₹{{price.actfare | number }} ({{price.seattotal}}) </button></li>
+                                <li *ngFor="let price of pricesplit"><button class="bus_details_filter_btn" (click)="showSeatsFilter(bus.id,price.actfare)" data-bs-target="#seat-{{bus.id}}-{{price.actfare}}" aria-controls="seat-{{bus.id}}-{{price.actfare}}" role="tab" data-bs-toggle="tab" >₹{{price.actfare | number }} ({{price.seattotal}}) </button></li>
                                 </ng-container>
                             </ul>
                         </div>
@@ -287,7 +287,7 @@
                             </div> -->
                             <!-- <ng-container *ngIf="show_dialog"> -->
                               <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade active show" id="seat-all">
+                                    <div role="tabpanel" class="tab-pane-seat tab-pane fade active show" id="seat-{{bus.id}}-0">
                                         <!-- <div class="errorMessage">{{maxSeatMessage}}</div> -->
                                         <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
                                         <span *ngIf="totalUpperDeck">
@@ -349,7 +349,8 @@
                                 </div>
     
                                 <ng-container *ngIf="pricesplit.length > 1">
-                                         <div role="tabpanel" *ngFor="let price of pricesplit" class="tab-pane fade " id="seat-{{price.actfare}}">
+                                
+                                         <div role="tabpanel" *ngFor="let price of pricesplit" class="tab-pane-seat tab-pane fade " id="seat-{{bus.id}}-{{price.actfare}}">
                                                 <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
                                         <span  *ngIf="totalUpperDeck">
                                                         <div class="label-small">Lower</div>

@@ -336,6 +336,12 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   this.maxSeatMessage = "";
   this.rtcseatcall = false;
  }
+ showSeatsFilter(id,tab_id){
+   var tab_content = "#seat-"+id+'-'+tab_id;
+    $('.tab-pane-seat').removeClass("active show");
+   $(tab_content).addClass("active show");
+ console.log(tab_content);
+ }
 
  onSeats(tripId, rowvalue, bus, mobile = false) {
   $('#collapseExample_'+tripId).hide();
