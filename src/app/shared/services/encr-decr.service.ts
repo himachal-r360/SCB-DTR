@@ -56,7 +56,7 @@ export class EncrDecrService {
   set( value){
   let keys=  sessionStorage.getItem("tokenKey");
     if (sessionStorage.getItem('tokenKey')!.length == 0 || keys=='RELOAD') {
-      window.location.reload();
+     window.location.reload();
     }else{
     var key = CryptoJS.enc.Utf8.parse(keys);
     var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(value.toString()), key,
@@ -81,7 +81,7 @@ export class EncrDecrService {
     try {
     return decrypted.toString(CryptoJS.enc.Utf8);
     } catch (error) {
-     window.location.reload();
+    // window.location.reload();
     }
     }
   }
