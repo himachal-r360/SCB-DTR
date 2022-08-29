@@ -459,11 +459,14 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     let lastSearch: any = localStorage.getItem('flightLastSearchNew');
       var multicity = localStorage.getItem('multicityLastSearch');
       var isMulticity =   localStorage.getItem('isMulticitySearch');
-      if(multicity != null && multicity != '' && isMulticity!=null && isMulticity!=undefined && isMulticity=='true' )
+      if(multicity != null && multicity != ''  )
       {
         var data = JSON.parse(multicity);
         this.multicitySearchData = data;
-        this.navItemActive = 'Multicity';
+        if(isMulticity!=undefined && isMulticity=='true'&& isMulticity!=null )
+        {
+          this.navItemActive = 'Multicity';
+        }
         this.multicityForm = this._fb.group({
           multicityFormArr: this._fb.array([])
         })
@@ -477,7 +480,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.isDisplayModifiedMulticity = true;
         }
 
-      } else  if (lastSearch != null || lastSearch != undefined) {
+      }
+       if (lastSearch != null || lastSearch != undefined) {
         lastSearch = JSON.parse(lastSearch)
         this.flightData.get('adults').setValue(lastSearch.adults);
         this.flightData.get('child').setValue(lastSearch.child);
@@ -508,7 +512,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.childVal = lastSearch.child;
         this.infantsVal = lastSearch.infants;
         this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
-        if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "") {
+        if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "" && isMulticity !='true') {
           this.navItemActive = "Round Trip"
         }
        }else{
@@ -854,6 +858,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
     if (this.navItemActive == 'Multicity') {
       localStorage.setItem('isMulticitySearch','true');
+      var multicity = localStorage.getItem('multicityLastSearch');
+      if(multicity != null && multicity != ''  )
+      {
+        this.callMutlicityFunc = false;
+      }
       datePickerOpen.classList.add('roundtrip-area-root-departure');
       datePickerArrival.style.display = 'none'
       if (this.callMutlicityFunc == true) {

@@ -16,7 +16,7 @@
                   </p>
                 </div>
                 <div class="mob-listing-header-right">
-  
+
                 </div>
               </div>
             </div>
@@ -82,11 +82,11 @@
             <p class="journey_details">Wed, 15jul | 4 Travellers | Economy</p>
         </div>
         <div class="col-2">
-  
+
         </div>
     </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
-  
+
   <section class="flight-details-area mt-10">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
@@ -98,12 +98,12 @@
       </div>
     </div>
     <input *ngIf="searchData && flightSessionData.travel_type !='M'" type="hidden" id="journery_date" value='{{searchData.departure | date:"YYYY-MM-dd"}}' />
-    
+
     <input *ngIf="searchData && flightSessionData.travel_type =='M'" type="hidden" id="journery_date" value='{{searchData[0].departure | date:"YYYY-MM-dd"}}' />
-      
+
     <div class="container">
       <div class="row">
-  
+
         <!--Steps 1-->
         <div class="col-md-8" *ngIf="steps==1">
           <div class="booking-process-content" *ngIf="flightOnwardDetails">
@@ -112,8 +112,8 @@
             </div>
             <!--Multicity form starts-->
              <div class="booking-inner-box from-to-box" *ngIf="searchData && flightSessionData.travel_type =='M'">
-             
-             <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
+
+             <ng-container *ngFor="let searchDatad of searchData;let searchi = index">
             <div class="booking-inner-title">
                 <div class="booking-inner-title-left">
                   <h6>
@@ -129,9 +129,9 @@
                   <p class="refundable" *ngIf="flightOnwardDetails[searchi]['priceSummery']['refundStatus'] == 1">REFUNDABLE</p>
                 </div>
               </div>
-           
-  
-              <div class="Flight-One" *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+
+              <ng-container  *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
+              <div class="Flight-One" >
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
                     <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
@@ -155,7 +155,7 @@
                       {{flights.stopsDetails[0]['layoverAirportName']}}</p>
                   </div>
                 </div>
-  
+
                 <div class="Booking-Flight-time">
                   <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
                   <span class="round"></span>
@@ -164,7 +164,7 @@
                     <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                   </div>
                 </div>
-  
+
                 <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnwardMulti[searchi] && baggageInfoOnwardMulti[searchi][i]">
                   <div class="row">
                     <div class="col-md-2 col-4">
@@ -196,9 +196,9 @@
                       <ng-template #cabin_content>{{baggageInfoOnwardMulti[searchi][i].cabin}}</ng-template>
                       <ng-template #cabin_blank>NA</ng-template>
                     </div>
-  
+
                   </div>
-  
+
                 </div>
                 <div class="operated_by"
                   *ngIf="airlinesNameJson && flights.operatingAirline && flights.airline != flights.operatingAirline">
@@ -207,13 +207,14 @@
                     *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                   <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                 </div>
-                <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
-                  <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in
-                    {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
-                </div>
+
               </div>
-  
-  
+              <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
+                <h6>Change of planes・{{dateOnwardHourMulti[searchi][i] | durationTime}} Layover in
+                  {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+              </div>
+            </ng-container >
+
               <div class="luggage-box" *ngIf="enableVAS==1">
                 <div class="luggage-text">
                   <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
@@ -308,19 +309,19 @@
                   </div>
                 </div>
               </div>
-                    </ng-container> 
+                    </ng-container>
             </div>
-  
-            
-            <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0 && flightSessionData.travel_type =='M'">   
+
+
+            <div class="booking-inner-box fare-rules-box"  *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0 && flightSessionData.travel_type =='M'">
               <div class="fare-rules-title">
                 <h6>Fare Rules</h6>
               </div>
               <div class="flight-extra-details">
-  
+
                <!-- <div class="rules-flight">
-  
-                <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
+
+                <ng-container *ngFor="let searchDatad of searchData;let searchi = index">
                           <a href="javascript:void(0);" (click)="changeFareRuleTabOnwardMult(searchi,$event)" data-bind="onwardFareDetails{{searchi}}"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
                           <div class="rules-flight-items">
                           <div class="rules-flight-thumbe">
@@ -336,12 +337,12 @@
                           </div>
                           </div>
                           </a>
-  
+
              </ng-container>
-  
-  
+
+
                 </div>-->
-             <ng-container *ngFor="let searchDatad of searchData;let searchi = index"> 
+             <ng-container *ngFor="let searchDatad of searchData;let searchi = index">
                 <!--Onward-->
                 <div id="onwardFareDetails{{searchi}}" class="flight-extra-content-onward " [ngClass]="{'hide': searchi !=0  }">
                   <ul class="list-unstyled flight-extra-tabs">
@@ -355,32 +356,32 @@
                         [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }" data-bind="BaggageDetails{{searchi}}"
                         (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'BaggageDetails')">Baggage Policy</a>
                     </li>
-  
+
                   </ul>
-  
+
                   <div class="extra-tabs-ara">
-               
+
                    <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnward"           [ngClass]="{'extra-active': cancellationPolicyOnward  }">
                     <span [innerHtml]="cancellationPolicyOnward | safeHtml" ></span>
-                     
+
                     </div>
-               
+
                    <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfo"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
                       <span [innerHtml]="baggageInfo | safeHtml" ></span>
-                     
+
                     </div>
                   </div>
-  
+
                 </div>
             </ng-container>
-             
-             </div> 
-               </div> 
+
+             </div>
+               </div>
             <!--Multicity form ends-->
-            
-  
+
+
             <div class="booking-inner-box from-to-box" *ngIf="searchData && flightSessionData.travel_type !='M'">
-  
+
               <div class="booking-inner-title">
                 <div class="booking-inner-title-left" *ngIf="searchData">
                   <h6>
@@ -396,8 +397,8 @@
                   <p class="refundable" *ngIf="selectedOnwardVendor.refundStatus == 1">REFUNDABLE</p>
                 </div>
               </div>
-  
-              <div class="Flight-One" *ngFor="let flights of flightOnwardDetails;let i = index">
+<ng-container *ngFor="let flights of flightOnwardDetails;let i = index">
+              <div class="Flight-One" >
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
                     <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
@@ -421,7 +422,7 @@
                       {{flights.stopsDetails[0]['layoverAirportName']}}</p>
                   </div>
                 </div>
-  
+
                 <div class="Booking-Flight-time">
                   <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
                   <span class="round"></span>
@@ -430,7 +431,7 @@
                     <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                   </div>
                 </div>
-  
+
                 <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnward[i]">
                   <div class="row">
                     <div class="col-md-2 col-4">
@@ -462,9 +463,9 @@
                       <ng-template #cabin_content>{{baggageInfoOnward[i].cabin}}</ng-template>
                       <ng-template #cabin_blank>NA</ng-template>
                     </div>
-  
+
                   </div>
-  
+
                 </div>
                 <div class="operated_by"
                   *ngIf="airlinesNameJson && flights.operatingAirline && flights.airline != flights.operatingAirline">
@@ -473,13 +474,14 @@
                     *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                   <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                 </div>
-                <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
-                  <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in
-                    {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
-                </div>
+
               </div>
-  
-  
+              <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                <h6>Change of planes・{{dateOnwardHour[i] | durationTime}} Layover in
+                  {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+              </div>
+            </ng-container>
+
               <div class="luggage-box" *ngIf="enableVAS==1">
                 <div class="luggage-text">
                   <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
@@ -574,9 +576,9 @@
                   </div>
                 </div>
               </div>
-  
+
               <!--Return Flight Starts-->
-  
+
               <div class="booking-inner-title" *ngIf="flightReturnDetails.length > 0">
                 <div class="booking-inner-title-left" *ngIf="searchData">
                   <h6>
@@ -592,8 +594,9 @@
                   <p class="refundable" *ngIf="selectedReturnVendor.refundStatus == 1">REFUNDABLE</p>
                 </div>
               </div>
-  
-              <div class="Flight-One" *ngFor="let flights of flightReturnDetails;let i = index">
+
+              <ng-container  *ngFor="let flights of flightReturnDetails;let i = index">
+              <div class="Flight-One">
                 <div class="Booking-Flight-name">
                   <div class="Booking-Flight-name-left">
                     <img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image" alt="{{flights.airline}}"
@@ -612,13 +615,13 @@
                   <div class="Flight-time-name" *ngIf="airportsNameJson">
                     <h6>{{airportsNameJson[flights.departureAirport].city}}</h6>
                     <p>{{airportsNameJson[flights.departureAirport].airport_name}}</p>
-  
+
                     <span class="round-time mt-20 d-inline-block">{{flights.duration | durationTime}} </span>
                     <p class="text-gray" *ngIf="flights.stopsDetails && flights.stopsDetails.length > 0">Via
                       {{flights.stopsDetails[0]['layoverAirportName']}}</p>
                   </div>
                 </div>
-  
+
                 <div class="Booking-Flight-time">
                   <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
                   <span class="round"></span>
@@ -627,7 +630,7 @@
                     <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                   </div>
                 </div>
-  
+
                 <div class="Booking-Flight-passanger" *ngIf="baggageInfoReturn[i]">
                   <div class="row">
                     <div class="col-md-2 col-4">
@@ -659,9 +662,9 @@
                       <ng-template #cabin_content>{{baggageInfoReturn[i].cabin}}</ng-template>
                       <ng-template #cabin_blank>NA</ng-template>
                     </div>
-  
+
                   </div>
-  
+
                 </div>
                 <div class="operated_by"
                   *ngIf="airlinesNameJson && flights.operatingAirline && flights.airline != flights.operatingAirline">
@@ -670,13 +673,13 @@
                     *ngIf="flights.operatingAirline && airlinesNameJson[flights.operatingAirline]">{{airlinesNameJson[flights.operatingAirline].name}}</span>
                   <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{flights.operatingAirline}}</span>
                 </div>
-                <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
-                  <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in
-                    {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
-                </div>
               </div>
-  
-  
+              <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
+                <h6>Change of planes・{{dateReturnHour[i] | durationTime}} Layover in
+                  {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
+              </div>
+            </ng-container>
+
               <div class="luggage-box" *ngIf="enableVAS==1">
                 <div class="luggage-text">
                   <img src="{{cdnUrl}}/images/icons/luggage.png" alt="">
@@ -772,15 +775,15 @@
                 </div>
               </div>
               <!--Return Flight Ends-->
-  
+
             </div>
-            
+
             <div class="booking-inner-box fare-rules-box" *ngIf="baggageInfoOnward || cancellationPolicyOnward && flightSessionData.travel_type !='M'">
               <div class="fare-rules-title">
                 <h6>Fare Rules</h6>
               </div>
               <div class="flight-extra-details">
-  
+
                <!-- <div class="rules-flight">
                     <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails"  *ngIf="cancellationPolicyOnward || baggageInfoOnward" >
                   <div class="rules-flight-items">
@@ -797,8 +800,8 @@
                       </div>
                     </div>
                 </a>
-  
-  
+
+
                 <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails"  *ngIf="cancellationPolicyReturn || baggageInfoReturn">
                   <div class="rules-flight-items" *ngIf="flightReturnDetails[0]">
                       <div class="rules-flight-thumbe">
@@ -814,7 +817,7 @@
                       </div>
                     </div>
                 </a>
-  
+
                 </div>-->
                 <!--Onward-->
                 <div id="onwardFareDetails" class="flight-extra-content-onward">
@@ -829,26 +832,26 @@
                         [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }" data-bind="BaggageDetails"
                         (click)="changeFareRuleTabBottomOnward($event)">Baggage Policy</a>
                     </li>
-  
+
                   </ul>
-  
+
                   <div class="extra-tabs-ara">
                   <div id="CancellationDetails" class="flight-extra-content-o"   *ngIf="cancellationPolicyOnward"           [ngClass]="{'extra-active': cancellationPolicyOnward  }">
                     <span [innerHtml]="cancellationPolicyOnward | safeHtml" ></span>
-                     
+
                     </div>
                     <div id="BaggageDetails" class="flight-extra-content-o "   *ngIf="baggageInfo"  [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
                       <span [innerHtml]="baggageInfo | safeHtml" ></span>
-                     
+
                     </div>
                   </div>
-  
+
                 </div>
-  
-             
-  
+
+
+
               </div>
-  
+
             </div>
             <div class="booking-inner-box important-information-box">
               <div class="imp-Information">
@@ -869,7 +872,7 @@
           </div>
         </div>
         <!--Steps 1 Ends-->
-  
+
         <!--Steps 2 Starts-->
         <div class="col-md-8" [ngClass]="{'showTab':steps==2 , 'hide':steps !=2}">
           <form [formGroup]="passengerForm" name="passengerForm"  accessible-form  >
@@ -889,7 +892,7 @@
                     <p class="text-color">Name should be same as in Government ID proof</p>
                   </div>
                 </div>
-  
+
                 <!--Adult starts-->
                 <div class="traveller-addbox traveller-adults">
                   <div class="traveller-addbox-title">
@@ -913,7 +916,7 @@
                               <span class="description fw_5 "> {{passenger.gender}}</span>
                             </label>
                           </div>
-  
+
                           <div>
                             <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                               <ng-container
@@ -936,7 +939,7 @@
                                           Select title</mat-error>
                                       </mat-form-field>
                                     </div>
-  
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>First Name</mat-label>
@@ -992,12 +995,12 @@
                                               Please Enter Valid DOB
                                             </mat-error>
                                         </mat-form-field>
-  
-  
+
+
                                       </div>
                                     </div>
-  
-  
+
+
                                     <ng-container *ngIf="searchData.travel=='INT'">
                                       <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-6">
@@ -1009,23 +1012,23 @@
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                               Please enter atleast 8 digits.</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                               Cannot exceed more than 12 characters.</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                               This field must contain only letters</mat-error>
-  
+
                                           </mat-form-field>
-  
+
                                         </div>
-  
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Passport Expiry Date</mat-label>
@@ -1040,8 +1043,8 @@
                                   Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
-  
-  
+
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Passport Issue Date</mat-label>
@@ -1051,12 +1054,12 @@
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                                 Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
-  
+
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
@@ -1072,8 +1075,8 @@
                                                 Select passport issuing country</mat-error>
                                             </mat-form-field>
                                           </div>
-  
-  
+
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>PAX Nationality</mat-label>
@@ -1089,19 +1092,19 @@
                                             </mat-form-field>
                                           </div>
                                         </div>
-  
+
                                       </div>
                                     </ng-container>
-  
-  
-  
+
+
+
                                   </div>
                                 </div>
-  
+
                               </ng-container>
                             </div>
                           </div>
-  
+
                         </li>
                         <ng-container *ngIf="adultTravellerList && adultTravellerList.length >3 && isAdultExpanded ">
                           <li class="custom-check-box" *ngFor="let passenger of adultTravellerList | slice:3; ">
@@ -1117,9 +1120,9 @@
                                 <span class="description fw_5"> {{passenger.gender}}</span>
                               </label>
                             </div>
-  
-  
-  
+
+
+
                             <div>
                               <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                                 <ng-container
@@ -1138,14 +1141,14 @@
                                             <mat-option value="Mrs">Mrs</mat-option>
                                             <mat-option value="Ms">Ms</mat-option>
                                           </mat-select>
-  
+
                                           <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
                                             Select title</mat-error>
-  
+
                                         </mat-form-field>
                                       </div>
-  
+
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>First Name</mat-label>
@@ -1191,7 +1194,7 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="adult_dob{{saveAdultTravellerId[passenger.id]}}"
                                               placeholder="Date Of Birth" name="dateOfBirth">
-  
+
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
                                               Please enter dob</mat-error>
@@ -1204,7 +1207,7 @@
                                           </mat-form-field>
                                         </div>
                                       </div>
-  
+
                                       <ng-container *ngIf="searchData.travel=='INT'">
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
@@ -1216,23 +1219,23 @@
                                               <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                 Please enter passport number</mat-error>
-  
+
                                                 <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                 Please enter atleast 8 digits.</mat-error>
-  
+
                                                 <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                 Cannot exceed more than 12 characters.</mat-error>
-  
+
                                                 <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                 This field must contain only letters</mat-error>
-  
+
                                             </mat-form-field>
-  
+
                                           </div>
-  
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Expiry Date</mat-label>
@@ -1247,8 +1250,8 @@
   Please enter a valid expiry date</mat-error>
                                             </mat-form-field>
                                           </div>
-  
-  
+
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Issue Date</mat-label>
@@ -1262,7 +1265,7 @@
                                                   Please enter a valid issued date.</mat-error>
                                             </mat-form-field>
                                           </div>
-  
+
                                           <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
@@ -1278,8 +1281,8 @@
                                                   Select passport issuing country</mat-error>
                                               </mat-form-field>
                                             </div>
-  
-  
+
+
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>PAX Nationality</mat-label>
@@ -1295,20 +1298,20 @@
                                               </mat-form-field>
                                             </div>
                                           </div>
-  
+
                                         </div>
                                       </ng-container>
-  
-  
-  
+
+
+
                                     </div>
                                   </div>
-  
+
                                 </ng-container>
                               </div>
-  
+
                             </div>
-  
+
                           </li>
                         </ng-container>
                       </ul>
@@ -1325,7 +1328,7 @@
                                 *ngIf="adultsArray.length > 0"><i class="material-icons"
                                   style="color: #007bff;position: relative;top: -7px;">close</i> </span>
                             </p>
-  
+
                             <div>
                               <div class="row">
                                 <div class="col-xl-2 col-lg-2 col-md-6">
@@ -1340,7 +1343,7 @@
                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Select title</mat-error>
                                   </mat-form-field>
                                 </div>
-  
+
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                   <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>First Name</mat-label>
@@ -1355,7 +1358,7 @@
                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller) && !passengerForm.hasError('pattern','adult_first_name'+traveller)">
                                       Please enter maximum 26 character</mat-error>
                                   </mat-form-field>
-  
+
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
                                   <mat-form-field appearance="outline" class="w-100">
@@ -1370,7 +1373,7 @@
                                       Please enter atleast 2 character</mat-error>
                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">
                                       Please enter maximum 26 character</mat-error>
-  
+
                                   </mat-form-field>
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
@@ -1380,22 +1383,22 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="adult_dob{{traveller}}" placeholder="Date Of Birth"
                                         name="dateOfBirth">
-  
+
                                       <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please
                                         enter dob</mat-error>
                                       <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">Adult
                                         age should be above 12 years.</mat-error>
-  
+
                                         <mat-error class="error-flight-checkout"  *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
                                           Please Enter Valid DOB
                                         </mat-error>
-  
+
                                     </mat-form-field>
-  
+
                                   </div>
                                 </div>
-  
+
                                 <ng-container *ngIf="searchData.travel=='INT'">
                                   <div class="row">
                                     <div class="col-xl-4 col-lg-4 col-md-6">
@@ -1406,23 +1409,23 @@
                                         <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
-  
+
                                           <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','adult_passport_num'+traveller)">
                                           Please enter atleast 8 digits.</mat-error>
-  
+
                                           <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+traveller)">
                                           Cannot exceed more than 12 characters.</mat-error>
-  
+
                                           <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','adult_passport_num'+traveller)">
                                           This field must contain only letters</mat-error>
-  
+
                                       </mat-form-field>
-  
+
                                     </div>
-  
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Expiry Date</mat-label>
@@ -1437,8 +1440,8 @@
                                           Please enter a valid expiry date</mat-error>
                                       </mat-form-field>
                                     </div>
-  
-  
+
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Issue Date</mat-label>
@@ -1448,13 +1451,13 @@
                                         <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
                                           Please enter passport issue date</mat-error>
-  
+
                                       <mat-error class="error-flight-checkout"  *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+traveller) && !passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
                                           Please enter a valid issued date.</mat-error>
-  
+
                                       </mat-form-field>
                                     </div>
-  
+
                                     <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
@@ -1469,8 +1472,8 @@
                                             Select passport issuing country</mat-error>
                                         </mat-form-field>
                                       </div>
-  
-  
+
+
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>PAX Nationality</mat-label>
@@ -1485,15 +1488,15 @@
                                         </mat-form-field>
                                       </div>
                                     </div>
-  
+
                                   </div>
                                 </ng-container>
-  
-  
-  
+
+
+
                               </div>
                             </div>
-  
+
                           </ng-container>
                         </div>
                       </div>
@@ -1532,7 +1535,7 @@
                                                   Select title</mat-error>
                                               </mat-form-field>
                                             </div>
-  
+
                                             <div class="col-12">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
@@ -1551,7 +1554,7 @@
                                                   *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller)">
                                                   Please enter maximum 26 character</mat-error>
                                               </mat-form-field>
-  
+
                                             </div>
                                             <div class="col-xl-3 col-lg-3 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
@@ -1570,7 +1573,7 @@
                                                 <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">
                                                   Please enter maximum 26 character</mat-error>
-  
+
                                               </mat-form-field>
                                             </div>
                                             <div class="col-12">
@@ -1580,26 +1583,26 @@
                                                   <input matInput [inputMask]="dateInputMask"
                                                     formControlName="adult_dob{{traveller}}" placeholder="Date Of Birth"
                                                     name="dateOfBirth">
-  
+
                                                   <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">
                                                     Please enter dob</mat-error>
                                                   <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+traveller)">
                                                     Adult age should be above 12 years.</mat-error>
-  
+
                                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
                                                       Please Enter Valid DOB
                                                     </mat-error>
-  
+
                                                 </mat-form-field>
-  
+
                                               </div>
                                             </div>
-  
-  
-  
-  
+
+
+
+
                                             <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('adult',traveller)">Add</button> </div>
                                           </div>
@@ -1613,7 +1616,7 @@
                           </div>
                         </div>
                       </div>
-  
+
                       <div *ngIf="isMobile && adultsArrayM.length>0 ">
                         <table class="table  traveller_table">
                           <thead>
@@ -1648,7 +1651,7 @@
                           </tbody>
                         </table>
                       </div>
-  
+
                       <div class="add-traveller-btn" *ngIf="adultsArray.length < travelerDetails.adults">
                         <div class="d-none d-sm-block"><a href="javascript:void(0);" class="Addnew-Adult-btn"
                             (click)="manualAdultTraveller(1)">+ Add New Adult</a></div>
@@ -1660,7 +1663,7 @@
                   </div>
                 </div>
                 <!--Adult Part ends-->
-  
+
                 <!--Child starts-->
                 <div class="traveller-addbox traveller-adults" *ngIf="maxChilds > 0">
                   <div class="traveller-addbox-title">
@@ -1684,7 +1687,7 @@
                               <span class="description fw_5"> {{passenger.gender}}</span>
                             </label>
                           </div>
-  
+
                           <div>
                             <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                               <ng-container *ngIf="passenger &&  saveChildTravellerId[passenger.id] > 0">
@@ -1700,14 +1703,14 @@
                                           <mat-option value="Mstr"> Mstr </mat-option>
                                           <mat-option value="Miss">Miss</mat-option>
                                         </mat-select>
-  
+
                                         <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
                                           Select title</mat-error>
-  
+
                                       </mat-form-field>
                                     </div>
-  
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>First Name</mat-label>
@@ -1753,7 +1756,7 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="child_dob{{saveChildTravellerId[passenger.id]}}"
                                             placeholder="Date Of Birth" name="dateOfBirth">
-  
+
                                           <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
@@ -1763,7 +1766,7 @@
                                         </mat-form-field>
                                       </div>
                                     </div>
-  
+
                                     <ng-container *ngIf="searchData.travel=='INT'">
                                       <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-6">
@@ -1775,22 +1778,22 @@
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
-  
+
                                         <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
                                         Please enter atleast 8 digits.</mat-error>
-  
+
                                         <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
                                         Cannot exceed more than 12 characters.</mat-error>
-  
+
                                         <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
                                         This field must contain only letters</mat-error>
                                           </mat-form-field>
-  
+
                                         </div>
-  
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Passport Expiry Date</mat-label>
@@ -1800,14 +1803,14 @@
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout"
   *ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
   Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
-  
-  
+
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Passport Issue Date</mat-label>
@@ -1821,7 +1824,7 @@
                                                 Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
-  
+
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
@@ -1837,8 +1840,8 @@
                                                 Select passport issuing country</mat-error>
                                             </mat-form-field>
                                           </div>
-  
-  
+
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>PAX Nationality</mat-label>
@@ -1854,18 +1857,18 @@
                                             </mat-form-field>
                                           </div>
                                         </div>
-  
+
                                       </div>
                                     </ng-container>
-  
-  
+
+
                                   </div>
                                 </div>
-  
+
                               </ng-container>
                             </div>
                           </div>
-  
+
                         </li>
                         <ng-container *ngIf="childTravellerList && childTravellerList.length >3 && isChildExpanded ">
                           <li class="custom-check-box" *ngFor="let passenger of childTravellerList | slice:3; ">
@@ -1881,9 +1884,9 @@
                                 <span class="description fw_5"> {{passenger.gender}}</span>
                               </label>
                             </div>
-  
-  
-  
+
+
+
                             <div>
                               <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                                 <ng-container
@@ -1901,14 +1904,14 @@
                                             <mat-option value="Mstr"> Mstr </mat-option>
                                             <mat-option value="Miss">Miss</mat-option>
                                           </mat-select>
-  
+
                                           <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
                                             Select title</mat-error>
-  
+
                                         </mat-form-field>
                                       </div>
-  
+
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>First Name</mat-label>
@@ -1954,7 +1957,7 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="child_dob{{saveChildTravellerId[passenger.id]}}"
                                               placeholder="Date Of Birth" name="dateOfBirth">
-  
+
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
                                               Please enter dob</mat-error>
@@ -1975,23 +1978,23 @@
                                               <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                                 Please enter passport number</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
                                               Please enter atleast 8 digits.</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
                                               Cannot exceed more than 12 characters.</mat-error>
-  
+
                                               <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
                                               This field must contain only letters</mat-error>
-  
+
                                             </mat-form-field>
-  
+
                                           </div>
-  
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Expiry Date</mat-label>
@@ -2006,8 +2009,8 @@
   Please enter a valid expiry date</mat-error>
                                             </mat-form-field>
                                           </div>
-  
-  
+
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Issue Date</mat-label>
@@ -2021,7 +2024,7 @@
                                                   Please enter a valid issued date.</mat-error>
                                             </mat-form-field>
                                           </div>
-  
+
                                           <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
@@ -2037,8 +2040,8 @@
                                                   Select passport issuing country</mat-error>
                                               </mat-form-field>
                                             </div>
-  
-  
+
+
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>PAX Nationality</mat-label>
@@ -2054,26 +2057,26 @@
                                               </mat-form-field>
                                             </div>
                                           </div>
-  
+
                                         </div>
                                       </ng-container>
-  
-  
+
+
                                     </div>
                                   </div>
-  
+
                                 </ng-container>
                               </div>
-  
+
                             </div>
-  
+
                           </li>
                         </ng-container>
                       </ul>
                       <p class="view_more_btn othertraveller"
                         *ngIf="!isChildExpanded && childTravellerList && childTravellerList.length >3 "><a
                           href="javascript:;" (click)="expandItemsChild()">View More</a></p>
-  
+
                       <div class="add_new_traveler p-20" *ngIf="!isMobile && childArrayM.length>0 ">
                         <div *ngIf="childArrayM.length>0">
                           <!--Manaual Passenger Child-->
@@ -2084,7 +2087,7 @@
                                 *ngIf="childArray.length > 0"><i class="material-icons"
                                   style="color: #007bff;position: relative;top: -7px;">close</i> </span>
                             </p>
-  
+
                             <div>
                               <div class="row">
                                 <div class="col-xl-2 col-lg-2 col-md-6">
@@ -2098,7 +2101,7 @@
                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','child_title'+traveller)">Select title</mat-error>
                                   </mat-form-field>
                                 </div>
-  
+
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                   <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>First Name</mat-label>
@@ -2113,7 +2116,7 @@
                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','child_first_name'+traveller)">
                                       Please enter maximum 26 character</mat-error>
                                   </mat-form-field>
-  
+
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
                                   <mat-form-field appearance="outline" class="w-100">
@@ -2128,7 +2131,7 @@
                                       Please enter atleast 2 character</mat-error>
                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','child_last_name'+traveller)">
                                       Please enter maximum 26 character</mat-error>
-  
+
                                   </mat-form-field>
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
@@ -2138,7 +2141,7 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="child_dob{{traveller}}" placeholder="Date Of Birth"
                                         name="dateOfBirth">
-  
+
                                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','child_dob'+traveller)">Please
                                         enter dob</mat-error>
                                       <mat-error class="error-flight-checkout"
@@ -2157,22 +2160,22 @@
                                         <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
-  
+
                                       <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
                                       Please enter atleast 8 digits.</mat-error>
-  
+
                                       <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
                                       Cannot exceed more than 12 characters.</mat-error>
-  
+
                                       <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
                                       This field must contain only letters</mat-error>
                                       </mat-form-field>
-  
+
                                     </div>
-  
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Expiry Date</mat-label>
@@ -2187,8 +2190,8 @@
   Please enter a valid expiry date</mat-error>
                                       </mat-form-field>
                                     </div>
-  
-  
+
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Issue Date</mat-label>
@@ -2202,7 +2205,7 @@
                                             Please enter a valid issued date.</mat-error>
                                       </mat-form-field>
                                     </div>
-  
+
                                     <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
@@ -2217,8 +2220,8 @@
                                             Select passport issuing country</mat-error>
                                         </mat-form-field>
                                       </div>
-  
-  
+
+
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>PAX Nationality</mat-label>
@@ -2233,18 +2236,18 @@
                                         </mat-form-field>
                                       </div>
                                     </div>
-  
+
                                   </div>
                                 </ng-container>
                               </div>
                             </div>
-  
+
                           </ng-container>
                         </div>
                       </div>
-  
-  
-  
+
+
+
                       <div *ngIf="isMobile">
                         <!-- Mlite Add Traveller Popup -->
                         <div class=" modal coupon_mlite_popup" id="childTraveller_mlite" tabindex="-1"
@@ -2279,7 +2282,7 @@
                                                   Select title</mat-error>
                                               </mat-form-field>
                                             </div>
-  
+
                                             <div class="col-12">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
@@ -2298,7 +2301,7 @@
                                                   *ngIf="passengerForm.hasError('maxlength','child_first_name'+traveller)">
                                                   Please enter maximum 26 character</mat-error>
                                               </mat-form-field>
-  
+
                                             </div>
                                             <div class="col-xl-3 col-lg-3 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
@@ -2317,7 +2320,7 @@
                                                 <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('maxlength','child_last_name'+traveller)">
                                                   Please enter maximum 26 character</mat-error>
-  
+
                                               </mat-form-field>
                                             </div>
                                             <div class="col-12">
@@ -2327,7 +2330,7 @@
                                                   <input matInput [inputMask]="dateInputMask"
                                                     formControlName="child_dob{{traveller}}" placeholder="Date Of Birth"
                                                     name="dateOfBirth">
-  
+
                                                   <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','child_dob'+traveller)">
                                                     Please enter dob</mat-error>
@@ -2335,7 +2338,7 @@
                                                     *ngIf="passengerForm.hasError('validateChildAge','child_dob'+traveller)">
                                                     Child age should be between 2 - 12 years.</mat-error>
                                                 </mat-form-field>
-  
+
                                               </div>
                                             </div>
                                             <ng-container *ngIf="searchData.travel=='INT'">
@@ -2348,22 +2351,22 @@
                                                     <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
                                                       Please enter passport number</mat-error>
-  
+
                                                       <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
                                                       Please enter atleast 8 digits.</mat-error>
-  
+
                                                       <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
                                                       Cannot exceed more than 12 characters.</mat-error>
-  
+
                                                       <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
                                                       This field must contain only letters</mat-error>
                                                   </mat-form-field>
-  
+
                                                 </div>
-  
+
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Expiry Date</mat-label>
@@ -2378,8 +2381,8 @@
   Please enter a valid expiry date</mat-error>
                                                   </mat-form-field>
                                                 </div>
-  
-  
+
+
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Issue Date</mat-label>
@@ -2389,12 +2392,12 @@
                                                     <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
                                                       Please enter passport issue date</mat-error>
-  
+
                                                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+traveller)">
                                                         Please enter a valid issued date.</mat-error>
                                                   </mat-form-field>
                                                 </div>
-  
+
                                                 <div class="row">
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
@@ -2411,8 +2414,8 @@
                                                         Select passport issuing country</mat-error>
                                                     </mat-form-field>
                                                   </div>
-  
-  
+
+
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
                                                       <mat-label>PAX Nationality</mat-label>
@@ -2428,7 +2431,7 @@
                                                     </mat-form-field>
                                                   </div>
                                                 </div>
-  
+
                                               </div>
                                             </ng-container>
                                             <div> <button class="btn btn-primary w-100"
@@ -2444,7 +2447,7 @@
                           </div>
                         </div>
                       </div>
-  
+
                       <div *ngIf="isMobile && childArrayM.length>0 ">
                         <table class="table  traveller_table">
                           <thead>
@@ -2476,17 +2479,17 @@
                           </tbody>
                         </table>
                       </div>
-  
+
                       <div class="add-traveller-btn" *ngIf="childArray.length < travelerDetails.child">
                         <div class="d-none d-sm-block">
                           <a href="javascript:void(0);" class="Addnew-Adult-btn" (click)="manualChildTraveller(1)">+ Add
                             New Child</a>
                         </div>
-  
+
                         <div class="d-block d-sm-none">
                           <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn"
                               (click)="manualMobileChildTraveller(1)">+ Add New Child</a>
-  
+
                           </div>
                         </div>
                       </div>
@@ -2494,7 +2497,7 @@
                   </div>
                 </div>
                 <!--Child Part ends-->
-  
+
                 <!--Infant starts-->
                 <div class="traveller-addbox traveller-adults" *ngIf="maxInfants > 0">
                   <div class="traveller-addbox-title">
@@ -2518,7 +2521,7 @@
                               <span class="description fw_5"> {{passenger.gender}}</span>
                             </label>
                           </div>
-  
+
                           <div>
                             <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                               <ng-container *ngIf="passenger &&  saveInfantTravellerId[passenger.id] > 0">
@@ -2535,14 +2538,14 @@
                                           <mat-option value="Mstr"> Mstr </mat-option>
                                           <mat-option value="Miss">Miss</mat-option>
                                         </mat-select>
-  
+
                                         <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">
                                           Select title</mat-error>
-  
+
                                       </mat-form-field>
                                     </div>
-  
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>First Name</mat-label>
@@ -2588,7 +2591,7 @@
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="infant_dob{{saveInfantTravellerId[passenger.id]}}"
                                             placeholder="Date Of Birth" name="dateOfBirth">
-  
+
                                           <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
@@ -2598,7 +2601,7 @@
                                         </mat-form-field>
                                       </div>
                                     </div>
-  
+
                                     <ng-container *ngIf="searchData.travel=='INT'">
                                       <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-6">
@@ -2610,23 +2613,23 @@
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
-  
+
                                           <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('minlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                           Please enter atleast 8 digits.</mat-error>
-  
+
                                           <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                           Cannot exceed more than 12 characters.</mat-error>
-  
+
                                           <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                           This field must contain only letters</mat-error>
-  
+
                                           </mat-form-field>
-  
+
                                         </div>
-  
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Passport Expiry Date</mat-label>
@@ -2641,8 +2644,8 @@
   Please enter a valid expiry date</mat-error>
                                           </mat-form-field>
                                         </div>
-  
-  
+
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Passport Issue Date</mat-label>
@@ -2656,7 +2659,7 @@
                                                 Please enter a valid issued date.</mat-error>
                                           </mat-form-field>
                                         </div>
-  
+
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
@@ -2672,8 +2675,8 @@
                                                 Select passport issuing country</mat-error>
                                             </mat-form-field>
                                           </div>
-  
-  
+
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>PAX Nationality</mat-label>
@@ -2689,17 +2692,17 @@
                                             </mat-form-field>
                                           </div>
                                         </div>
-  
+
                                       </div>
                                     </ng-container>
-  
+
                                   </div>
                                 </div>
-  
+
                               </ng-container>
                             </div>
                           </div>
-  
+
                         </li>
                         <ng-container *ngIf="infantTravellerList && infantTravellerList.length >3 && isInfantExpanded ">
                           <li class="custom-check-box" *ngFor="let passenger of infantTravellerList | slice:3; ">
@@ -2715,9 +2718,9 @@
                                 <span class="description fw_5"> {{passenger.gender}}</span>
                               </label>
                             </div>
-  
-  
-  
+
+
+
                             <div>
                               <div class="mt-3 hide" id="passengerBox_{{passenger.id}}">
                                 <ng-container
@@ -2735,14 +2738,14 @@
                                             <mat-option value="Mstr"> Mstr </mat-option>
                                             <mat-option value="Miss">Miss</mat-option>
                                           </mat-select>
-  
+
                                           <mat-error class="error-flight-checkout"
                                             *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">
                                             Select title</mat-error>
-  
+
                                         </mat-form-field>
                                       </div>
-  
+
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>First Name</mat-label>
@@ -2788,7 +2791,7 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="infant_dob{{saveInfantTravellerId[passenger.id]}}"
                                               placeholder="Date Of Birth" name="dateOfBirth">
-  
+
                                             <mat-error class="error-flight-checkout"
                                               *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">
                                               Please enter dob</mat-error>
@@ -2798,7 +2801,7 @@
                                           </mat-form-field>
                                         </div>
                                       </div>
-  
+
                                       <ng-container *ngIf="searchData.travel=='INT'">
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
@@ -2810,22 +2813,22 @@
                                               <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                                 Please enter passport number</mat-error>
-  
+
                                                 <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('minlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                                 Please enter atleast 8 digits.</mat-error>
-  
+
                                                 <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                                 Cannot exceed more than 12 characters.</mat-error>
-  
+
                                                 <mat-error class="error-flight-checkout"
                                                 *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                                 This field must contain only letters</mat-error>
                                             </mat-form-field>
-  
+
                                           </div>
-  
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Expiry Date</mat-label>
@@ -2840,8 +2843,8 @@
   Please enter a valid expiry date</mat-error>
                                             </mat-form-field>
                                           </div>
-  
-  
+
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Issue Date</mat-label>
@@ -2855,7 +2858,7 @@
                                                   Please enter a valid issued date.</mat-error>
                                             </mat-form-field>
                                           </div>
-  
+
                                           <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
@@ -2871,8 +2874,8 @@
                                                   Select passport issuing country</mat-error>
                                               </mat-form-field>
                                             </div>
-  
-  
+
+
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>PAX Nationality</mat-label>
@@ -2888,28 +2891,28 @@
                                               </mat-form-field>
                                             </div>
                                           </div>
-  
+
                                         </div>
                                       </ng-container>
-  
+
                                     </div>
                                   </div>
-  
+
                                 </ng-container>
                               </div>
-  
+
                             </div>
-  
+
                           </li>
                         </ng-container>
                       </ul>
                       <p class="view_more_btn othertraveller"
                         *ngIf="!isInfantExpanded && infantTravellerList && infantTravellerList.length >3 "><a
                           href="javascript:;" (click)="expandItemsInfant()">View More</a></p>
-  
+
                       <div class="add_new_traveler p-20" *ngIf="!isMobile && infantArrayM.length>0 ">
                         <div *ngIf="infantArrayM.length>0">
-  
+
                           <!--Manaual Passenger Infant-->
                           <ng-container
                             *ngFor="let traveller of infantArrayM; index as i; trackBy: trackByTraveller;let last = last;">
@@ -2918,7 +2921,7 @@
                                 *ngIf="infantArray.length > 0"><i class="material-icons"
                                   style="color: #007bff;position: relative;top: -7px;">close</i> </span>
                             </p>
-  
+
                             <div>
                               <div class="row">
                                 <div class="col-xl-2 col-lg-2 col-md-6">
@@ -2933,7 +2936,7 @@
                                       Select title</mat-error>
                                   </mat-form-field>
                                 </div>
-  
+
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                   <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>First Name</mat-label>
@@ -2950,7 +2953,7 @@
                                       *ngIf="passengerForm.hasError('maxlength','infant_first_name'+traveller)">Please
                                       enter maximum 26 character</mat-error>
                                   </mat-form-field>
-  
+
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
                                   <mat-form-field appearance="outline" class="w-100">
@@ -2965,7 +2968,7 @@
                                       Please enter atleast 2 character</mat-error>
                                     <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('maxlength','infant_last_name'+traveller)">
                                       Please enter maximum 26 character</mat-error>
-  
+
                                   </mat-form-field>
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
@@ -2975,7 +2978,7 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="infant_dob{{traveller}}" placeholder="Date Of Birth"
                                         name="dateOfBirth">
-  
+
                                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">
                                         Please enter dob</mat-error>
                                       <mat-error class="error-flight-checkout"
@@ -2994,22 +2997,22 @@
                                         <mat-error class="error-flight-checkout"
                                           *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
-  
+
                                       <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('minlength','infant_passport_num'+traveller)">
                                       Please enter atleast 8 digits.</mat-error>
-  
+
                                       <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+traveller)">
                                       Cannot exceed more than 12 characters.</mat-error>
-  
+
                                       <mat-error class="error-flight-checkout"
                                       *ngIf="passengerForm.hasError('pattern','infant_passport_num'+traveller)">
                                       This field must contain only letters</mat-error>
                                       </mat-form-field>
-  
+
                                     </div>
-  
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Expiry Date</mat-label>
@@ -3024,8 +3027,8 @@
   Please enter a valid expiry date</mat-error>
                                       </mat-form-field>
                                     </div>
-  
-  
+
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Issue Date</mat-label>
@@ -3039,7 +3042,7 @@
                                             Please enter a valid issued date.</mat-error>
                                       </mat-form-field>
                                     </div>
-  
+
                                     <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
@@ -3054,8 +3057,8 @@
                                             Select passport issuing country</mat-error>
                                         </mat-form-field>
                                       </div>
-  
-  
+
+
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>PAX Nationality</mat-label>
@@ -3070,18 +3073,18 @@
                                         </mat-form-field>
                                       </div>
                                     </div>
-  
+
                                   </div>
                                 </ng-container>
-  
-  
+
+
                               </div>
                             </div>
-  
+
                           </ng-container>
                         </div>
                       </div>
-  
+
                       <div *ngIf="isMobile">
                         <!-- Mlite Add Traveller Popup -->
                         <div class=" modal coupon_mlite_popup" id="infantTraveller_mlite" tabindex="-1"
@@ -3115,7 +3118,7 @@
                                                   Select title</mat-error>
                                               </mat-form-field>
                                             </div>
-  
+
                                             <div class="col-12">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
@@ -3134,7 +3137,7 @@
                                                   *ngIf="passengerForm.hasError('maxlength','infant_first_name'+traveller)">
                                                   Please enter maximum 26 character</mat-error>
                                               </mat-form-field>
-  
+
                                             </div>
                                             <div class="col-xl-3 col-lg-3 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
@@ -3153,7 +3156,7 @@
                                                 <mat-error class="error-flight-checkout"
                                                   *ngIf="passengerForm.hasError('maxlength','infant_last_name'+traveller)">
                                                   Please enter maximum 26 character</mat-error>
-  
+
                                               </mat-form-field>
                                             </div>
                                             <div class="col-12">
@@ -3163,7 +3166,7 @@
                                                   <input matInput [inputMask]="dateInputMask"
                                                     formControlName="infant_dob{{traveller}}"
                                                     placeholder="Date Of Birth" name="dateOfBirth">
-  
+
                                                   <mat-error class="error-flight-checkout"
                                                     *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">
                                                     Please enter dob</mat-error>
@@ -3171,7 +3174,7 @@
                                                     *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+traveller)">
                                                     Infant age should be between 0 - 2 years.</mat-error>
                                                 </mat-form-field>
-  
+
                                               </div>
                                             </div>
                                             <ng-container *ngIf="searchData.travel=='INT'">
@@ -3184,22 +3187,22 @@
                                                     <mat-error class="error-flight-checkout"
                                                       *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">
                                                       Please enter passport number</mat-error>
-  
+
                                         <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('minlength','infant_passport_num'+traveller)">
                                         Please enter atleast 8 digits.</mat-error>
-  
+
                                         <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('maxlength','infant_passport_num'+traveller)">
                                         Cannot exceed more than 12 characters.</mat-error>
-  
+
                                         <mat-error class="error-flight-checkout"
                                         *ngIf="passengerForm.hasError('pattern','infant_passport_num'+traveller)">
                                         This field must contain only letters</mat-error>
                                                   </mat-form-field>
-  
+
                                                 </div>
-  
+
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Expiry Date</mat-label>
@@ -3214,8 +3217,8 @@
   Please enter a valid expiry date</mat-error>
                                                   </mat-form-field>
                                                 </div>
-  
-  
+
+
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Issue Date</mat-label>
@@ -3229,7 +3232,7 @@
                                                         Please enter a valid issued date.</mat-error>
                                                   </mat-form-field>
                                                 </div>
-  
+
                                                 <div class="row">
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
@@ -3246,8 +3249,8 @@
                                                         Select passport issuing country</mat-error>
                                                     </mat-form-field>
                                                   </div>
-  
-  
+
+
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
                                                       <mat-label>PAX Nationality</mat-label>
@@ -3263,10 +3266,10 @@
                                                     </mat-form-field>
                                                   </div>
                                                 </div>
-  
+
                                               </div>
                                             </ng-container>
-  
+
                                             <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('infant',traveller)">Add</button> </div>
                                           </div>
@@ -3280,7 +3283,7 @@
                           </div>
                         </div>
                       </div>
-  
+
                       <div *ngIf="isMobile && infantArrayM.length>0 ">
                         <table class="table  traveller_table">
                           <thead>
@@ -3312,7 +3315,7 @@
                           </tbody>
                         </table>
                       </div>
-  
+
                       <div class="add-traveller-btn" *ngIf="infantArray.length < travelerDetails.infants">
                         <div class="d-none d-sm-block">
                           <a href="javascript:void(0);" class="Addnew-Adult-btn" (click)="manualInfantTraveller(1)">+
@@ -3321,17 +3324,17 @@
                           <a href="javascript:void(0);" class="Addnew-Adult-btn "
                             (click)="manualMobileInfantTraveller()">+ Add New Infant</a>
                         </div>
-  
+
                       </div>
-  
+
                     </div>
                   </div>
                 </div>
                 <!--Infant Part ends-->
-  
-  
-  
-  
+
+
+
+
                 <div class="othertraveller">
                   <ul class="add-search-ul d-block">
                     <li class="custom-check-box">
@@ -3350,11 +3353,11 @@
                   </ul>
                 </div>
               </div>
-  
+
               <div class="booking-inner-box gst-number-box">
                 <h6>Contact Details</h6>
                 <p>Your booking information will be sent here</p>
-  
+
                 <div class="row gy-4">
                   <div class="col-xl-6 col-lg-6 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
@@ -3364,12 +3367,12 @@
                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','passengerEmail')">Please enter email address
                       </mat-error>
                     </mat-form-field>
-  
+
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Mobile Number</mat-label>
-  
+
                       <input matInput placeholder="Mobile Number" formControlName="passengerMobile"
                         name="passengerMobile" id="passengerMobile" (keypress)="AvoidSpace($event)">
                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','passengerMobile')">Please enter mobile
@@ -3381,7 +3384,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-  
+
                 <div class="contact-whatsapp">
                   <div class="contact-whatsapp-info me-2">
                     <span>Send my booking information through</span>
@@ -3394,8 +3397,8 @@
                   </div>
                 </div>
               </div>
-  
-  
+
+
               <div class="booking-inner-box gst-number-box">
                 <h6> <span class="form-switch m-0 mr-10">
                     <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
@@ -3403,25 +3406,25 @@
                 <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST
                   number
                 </p>
-  
+
                 <div class="row text-lg-end" *ngIf="gstSelected">
                   <ng-container *ngIf="getGSTShow">
                     <div class="add-traveller-btn">
                       <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn"
                         (click)="openmodal(content)">Choose from Saved GSTs</a>
                     </div>
-  
+
                   </ng-container>
                 </div>
-  
+
                 <ng-template #content let-modal>
                   <div class="modal-header modal-inside-header">
                     <h5 class="modal-title">Choose from Saved GSTs</h5>
-  
+
                   </div>
                   <div class="modal-body">
                     <div class="col-lg-12 col-md-6 col-12">
-  
+
                       <div>
                         <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
                           <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}"
@@ -3464,7 +3467,7 @@
                     <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
                   </div>
                 </ng-template>
-  
+
                 <div class="row" *ngIf="gstSelected">
                   <div class="col-xl-6 col-lg-6 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
@@ -3472,16 +3475,16 @@
                       <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber"
                         minlength="15" maxlength="15" autocomplete="off" (keypress)="AvoidSpace($event)"
                         (keypress)="specialcharInputAddress($event)" (keyup)="convertToUpperCase($event);">
-  
+
                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstNumber')">Please enter gst number.
                       </mat-error>
                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstNumber')">Please enter valid gst number.
                       </mat-error>
                     </mat-form-field>
-  
+
                   </div>
                 </div>
-  
+
                 <div class="row" *ngIf="gstSelected">
                   <div class="col-lg-4 col-md-4 col-6">
                     <mat-form-field appearance="outline" class="w-100">
@@ -3489,7 +3492,7 @@
                       <input matInput placeholder="Business Name" formControlName="gstBusinessName"
                         name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off"
                         (keypress)="specialcharInputAddress($event)">
-  
+
                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business
                         name.</mat-error>
                       <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
@@ -3532,7 +3535,7 @@
                         name. </mat-error>
                     </mat-form-field>
                   </div>
-  
+
                   <div class="col-lg-4 col-md-4 col-6">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>State</mat-label>
@@ -3545,7 +3548,7 @@
                         name.</mat-error>
                     </mat-form-field>
                   </div>
-  
+
                   <div class="othertraveller" *ngIf="gstSelected">
                     <ul class="add-search-ul d-block">
                       <li class="custom-check-box">
@@ -3562,8 +3565,8 @@
                       </li>
                     </ul>
                   </div>
-  
-  
+
+
                 </div>
               </div>
             </div>
@@ -4142,7 +4145,7 @@
                                 <div class="bg-transparent">31</div>
                               </div>
                             </div>
-  
+
                             <!-- exit -->
                             <div class="flight-exit">
                               <div class="exit-door exit-left">
@@ -4161,7 +4164,7 @@
                               </div>
                               <div class="flight-Galley" data-bs-toggle="tooltip" title="Galley">
                                 <img src="{{cdnUrl}}/images/icons/Galley.png" alt="">
-  
+
                               </div>
                             </div>
                           </div>
@@ -4187,7 +4190,7 @@
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                       data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                       <img src="{{cdnUrl}}/images/icons/Meals-1.png" class="me-2" alt=""> Buy in-flight meal
-  
+
                     </button>
                   </h4>
                   <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -4302,7 +4305,7 @@
                           </li>
                         </ul>
                       </div>
-  
+
                       <div class="meal-data">
                         <div class="luggage-add-list">
                           <div class="luggage-add-name">
@@ -4370,7 +4373,7 @@
                           </div>
                         </div>
                       </div>
-  
+
                       <div class="remove-area">
                         <div class="Remove-left">
                           <a href="" class="Removeall">Remove all Selections</a>
@@ -4388,7 +4391,7 @@
           </div>
         </div>
         <!--Step3 Ends-->
-  
+
         <!--Steps 4-->
         <div class="col-md-8" *ngIf="steps==4">
           <div class="booking-process-content" *ngIf="flightOnwardDetails">
@@ -4399,7 +4402,7 @@
               <div class="web_code d-none d-sm-block">
                 <!--Multicity-->
                 <ng-container *ngIf="searchData && flightSessionData.travel_type =='M'" >
-                <ng-container *ngFor="let searchDatad of searchData;let searchi = index ;let last = last"> 
+                <ng-container *ngFor="let searchDatad of searchData;let searchi = index ;let last = last">
                 <div class="booking-inner-title ">
                   <div class="booking-inner-title-left" *ngIf="searchDatad">
                     <div class="head_info">
@@ -4424,7 +4427,7 @@
                       </h6>
                     </div>
                   </div>
-                  
+
                   <div>
                     <div class="head_info">
                       <div>
@@ -4452,8 +4455,8 @@
                     <a class="arrow" data-bs-toggle="collapse" href="#flight_review_collapse{{searchi}}" role="button"
                       aria-expanded="false"> <span class=""></span></a>
                   </div>
-                  
-                  </div> 
+
+                  </div>
                   <hr *ngIf="!last">
                   <div class="collapse" id="flight_review_collapse{{searchi}}">
                 <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
@@ -4479,7 +4482,7 @@
                         {{flights.stopsDetails[0]['layoverAirportName']}}</p>
                     </div>
                   </div>
-  
+
                   <div class="Booking-Flight-time">
                     <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
                     <span class="round"></span>
@@ -4488,7 +4491,7 @@
                       <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                     </div>
                   </div>
-  
+
                   <div class="Booking-Flight-passanger"*ngIf="baggageInfoOnwardMulti[searchi] && baggageInfoOnwardMulti[searchi][i]">
                     <div class="row">
                       <div class="col-md-2">
@@ -4516,9 +4519,9 @@
                         <ng-template #cabin_content>{{baggageInfoOnwardMulti[searchi][i].cabin}}</ng-template>
                         <ng-template #cabin_blank>NA</ng-template>
                       </div>
-  
+
                     </div>
-  
+
                   </div>
                   <div class="operated_by"
                     *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
@@ -4532,10 +4535,10 @@
                       {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                   </div>
                 </div>
-  
+
               </div>
-  
-  
+
+
               <div class="edit_baggage" *ngIf="enableVAS==1">
                 <div class="luggage-box-edit">
                   <div class="luggage-text">
@@ -4545,9 +4548,9 @@
                   </div>
                 </div>
               </div>
-                  </ng-container> 
-                 </ng-container> 
-                
+                  </ng-container>
+                 </ng-container>
+
                 <ng-container *ngIf="flightSessionData.travel_type !='M'" >
                  <div class="booking-inner-title ">
                   <div class="booking-inner-title-left" *ngIf="searchData">
@@ -4573,7 +4576,7 @@
                       </h6>
                     </div>
                   </div>
-                  
+
                   <div>
                     <div class="head_info">
                       <div>
@@ -4603,13 +4606,13 @@
                         <!--<i class="fas fa-angle-down rotate-icon"></i>--></span></a>
                   </div>
                    </div>
-                 </ng-container> 
-               
+                 </ng-container>
+
               </div>
               <div class="web_code d-block d-sm-none">
                 <div class="booking-inner-title mlite_code d-block d-sm-none">
                   <div class="booking-inner-title-left" *ngIf="searchData">
-  
+
                     <div class="head_info mb-20">
                       <div class="float-start">
                         <img *ngIf="onward_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif"                 class="flight-image  mx-2" alt="Multi">
@@ -4637,7 +4640,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="d-flex justify-content-evenly">
                     <div class="head_info">
                       <div>
@@ -4661,13 +4664,13 @@
                       </div>
                     </div>
                   </div>
-  
-  
+
+
                 </div>
               </div>
-              
 
-  
+
+
         <ng-container *ngIf="flightSessionData.travel_type !='M'" >
               <div class="collapse" id="flight_review_collapse">
                 <div class="Flight-One flight_detail_review" *ngFor="let flights of flightOnwardDetails;let i = index">
@@ -4693,7 +4696,7 @@
                         {{flights.stopsDetails[0]['layoverAirportName']}}</p>
                     </div>
                   </div>
-  
+
                   <div class="Booking-Flight-time">
                     <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
                     <span class="round"></span>
@@ -4702,7 +4705,7 @@
                       <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                     </div>
                   </div>
-  
+
                   <div class="Booking-Flight-passanger" *ngIf="baggageInfoOnward[i]">
                     <div class="row">
                       <div class="col-md-2">
@@ -4734,9 +4737,9 @@
                         <ng-template #cabin_content>{{baggageInfoOnward[i].cabin}}</ng-template>
                         <ng-template #cabin_blank>NA</ng-template>
                       </div>
-  
+
                     </div>
-  
+
                   </div>
                   <div class="operated_by"
                     *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
@@ -4750,10 +4753,10 @@
                       {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                   </div>
                 </div>
-  
+
               </div>
-  
-  
+
+
               <div class="edit_baggage" *ngIf="enableVAS==1">
                 <div class="luggage-box-edit">
                   <div class="luggage-text">
@@ -4765,10 +4768,10 @@
               </div>
               </ng-container>
             </div>
-  
-  
+
+
             <!--Return --->
-  
+
             <div class="booking-inner-box from-to-box pb-0" *ngIf="flightReturnDetails.length > 0">
               <div class="web_code d-none d-sm-block">
                 <div class="booking-inner-title ">
@@ -4828,7 +4831,7 @@
               <div class="web_code d-block d-sm-none">
                 <div class="booking-inner-title mlite_code d-block d-sm-none">
                   <div class="booking-inner-title-left" *ngIf="searchData">
-  
+
                     <div class="head_info mb-20">
                       <div class="float-start">
                         <img *ngIf="return_airline_unique" src="{{cdnUrl}}/images/airlines/Multi.gif"                  class="flight-image mx-2" alt="">
@@ -4856,7 +4859,7 @@
                       </div>
                     </div>
                   </div>
-  
+
                   <div class="d-flex justify-content-evenly">
                     <div class="head_info">
                       <div>
@@ -4880,12 +4883,12 @@
                       </div>
                     </div>
                   </div>
-  
-  
+
+
                 </div>
               </div>
-  
-  
+
+
               <div class="collapse" id="flight_review_collapse_return">
                 <div class="Flight-One flight_detail_review" *ngFor="let flights of flightReturnDetails;let i = index">
                   <div class="Booking-Flight-name">
@@ -4909,7 +4912,7 @@
                         {{flights.stopsDetails[0]['layoverAirportName']}}</p>
                     </div>
                   </div>
-  
+
                   <div class="Booking-Flight-time">
                     <h6>{{flights.arrivalDateTime | date:'HH:mm'}}</h6>
                     <span class="round"></span>
@@ -4918,7 +4921,7 @@
                       <p>{{airportsNameJson[flights.arrivalAirport].airport_name}}</p>
                     </div>
                   </div>
-  
+
                   <div class="Booking-Flight-passanger" *ngIf="baggageInfoReturn[i]">
                     <div class="row">
                       <div class="col-md-2">
@@ -4950,9 +4953,9 @@
                         <ng-template #cabin_content>{{baggageInfoReturn[i].cabin}}</ng-template>
                         <ng-template #cabin_blank>NA</ng-template>
                       </div>
-  
+
                     </div>
-  
+
                   </div>
                   <div class="operated_by"
                     *ngIf="flights.operatingAirline && flights.airline != flights.operatingAirline">
@@ -4966,10 +4969,10 @@
                       {{airportsNameJson[flights.arrivalAirport].airport_name}} </h6>
                   </div>
                 </div>
-  
+
               </div>
-  
-  
+
+
               <div class="edit_baggage" *ngIf="enableVAS==1">
                 <div class="luggage-box-edit">
                   <div class="luggage-text">
@@ -4979,14 +4982,14 @@
                   </div>
                 </div>
               </div>
-  
+
             </div>
             <!--Return-->
-  
-  
-  
-  
-  
+
+
+
+
+
           </div>
           <div class="booking-process-content contact_review">
             <div class="booking-title-box mb-0">
@@ -5007,7 +5010,7 @@
                     <p class="label_value">{{contactDatails.mobile}}</p>
                   </div>
                 </div>
-  
+
                 <div class="contact-whatsapp">
                   <div class="contact-whatsapp-info me-2">
                     <span>Send my booking information through</span>
@@ -5019,14 +5022,14 @@
                   </div>
                 </div>
               </div>
-  
+
             </div>
-  
+
           </div>
           <div class="booking-process-content traveller_review">
             <div class="booking-title-box mb-0">
-  
-  
+
+
               <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
                     Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span> <span
                     *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> <span class="ps-1">
@@ -5120,7 +5123,7 @@
                 </div>
               </div>
             </div>
-  
+
           </div>
           <div class="booking-process-content seats_review" *ngIf="enableVAS==1">
             <div class="booking-title-box mb-0">
@@ -5166,7 +5169,7 @@
                       </div>
                     </button>
                   </li>
-  
+
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                   <div class="tab-pane fade show active" id="pills-flight-one" role="tabpanel"
@@ -5222,20 +5225,20 @@
                   </div>
                 </div>
               </div>
-  
+
             </div>
-  
+
           </div>
         </div>
         <!--Step4 Ends-->
-  
+
         <!--Steps 5-->
         <div class="col-md-8" *ngIf="steps==5">
           <div class="booking-process-content" *ngIf="flightOnwardDetails">
             <div class="booking-title-box">
               <h4>Payment</h4>
             </div>
-  
+
             <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
               [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey"
               (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
@@ -5247,7 +5250,7 @@
           </div>
         </div>
         <!--Step5 Ends-->
-  
+
         <div class="col-md-4" *ngIf="totalCollectibleAmount">
           <!-- <app-fare-summary></app-fare-summary> -->
           <div class="default-sidebar">
@@ -5273,29 +5276,29 @@
                           <div (click)="isCollapseShow('BaseFare')">
                             <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false"
                               aria-controls="base-collpase"  >
-  
+
                               <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
                                 alt=""  *ngIf="!isCollapseBasefare" >
-  
+
                                 <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
                                 alt="" *ngIf="isCollapseBasefare" >
-  
+
                               Base Fare</div>
-  
+
                           </div>
                         </div>
                         <div class="fare-list-right">
                           <p>₹ {{BaseFare|number}}</p>
                         </div>
-  
+
                       </div>
-                      
+
                      <ng-container *ngIf="flightSessionData.travel_type =='M'" >
                     <div *ngIf="AdtBaseFare>0 ">
                         <div class="collapse base_fare_collapse" id="base-collpase">
                           <div class="row ">
                             <div class="col-md-11 offset-md-1">
-  
+
                               <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                                 <div class="col-8 fare-list-left">
                                    <p>Adult(s) </p>
@@ -5304,7 +5307,7 @@
                                    <p>₹ {{AdtBaseFare  | number}}</p>
                                 </div>
                              </div>
-  
+
                              <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                                <div class="col-8 fare-list-left">
                                 <p> Children)</p>
@@ -5313,7 +5316,7 @@
                                 <p>₹ {{ChildBaseFare | number}}</p>
                                </div>
                              </div>
-  
+
                              <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                                 <div class="col-8 fare-list-left">
                                    <p> Infant </p>
@@ -5322,19 +5325,19 @@
                                    <p>₹ {{InfantBaseFare   | number}}</p>
                                 </div>
                              </div>
-  
+
                             </div>
                           </div>
                           </div>
-  
+
                         </div>
                      </ng-container>
-                      <ng-container *ngIf="flightSessionData.travel_type !='M'" >  
+                      <ng-container *ngIf="flightSessionData.travel_type !='M'" >
                       <div *ngIf="AdtBaseFare>0 ">
                         <div class="collapse base_fare_collapse" id="base-collpase">
                           <div class="row ">
                             <div class="col-md-11 offset-md-1">
-  
+
                               <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                                 <div class="col-8 fare-list-left">
                                    <p>Adult(s) ({{AdtQuantity}} X ₹ {{AdtBaseFare | number}})</p>
@@ -5343,7 +5346,7 @@
                                    <p>₹ {{AdtBaseFare * AdtQuantity | number}}</p>
                                 </div>
                              </div>
-  
+
                              <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                                <div class="col-8 fare-list-left">
                                 <p> Children ({{ChildQuantity}} X ₹ {{ChildBaseFare | number}})</p>
@@ -5352,7 +5355,7 @@
                                 <p>₹ {{ChildBaseFare * ChildQuantity | number}}</p>
                                </div>
                              </div>
-  
+
                              <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                                 <div class="col-8 fare-list-left">
                                    <p> Infant ({{InfantQuantity}} X ₹ {{InfantBaseFare | number}})</p>
@@ -5361,11 +5364,11 @@
                                    <p>₹ {{InfantBaseFare * InfantQuantity  | number}}</p>
                                 </div>
                              </div>
-  
+
                             </div>
                           </div>
                           </div>
-  
+
                         </div>
     </ng-container>
                     </li>
@@ -5373,7 +5376,7 @@
                       <div class="fare-list-box">
                         <div class="fare-list-left">
                           <p>
-  
+
                             Taxes and Fees
                           </p>
                         </div>
@@ -5382,20 +5385,20 @@
                         </div>
                       </div>
                     </li>
-  
-  
+
+
                     <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
                       <div class="fare-list-box">
                         <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#baggageSeat-collpase" role="button" aria-expanded="false" aria-controls="baggageSeat-collpase" (click)="isCollapseShow('vas')">
-  
-  
+
+
                           <p>
                             <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
                             alt=""  *ngIf="!isCollapseVas" >
-  
+
                             <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
                             alt="" *ngIf="isCollapseVas" >
-  
+
                             Baggage/Seat/Meals
                           </p>
                         </div>
@@ -5403,12 +5406,12 @@
                           <p>&#8377; {{vas_amount}}</p>
                         </div>
                       </div>
-  
+
                       <div >
                         <div class="collapse base_fare_collapse" id="baggageSeat-collpase">
                           <div class="row ">
                             <div class="col-md-11 offset-md-1">
-  
+
                               <div class="row collapse_row">
                                 <div class="col-8 fare-list-left">
                                    <p>Baggage</p>
@@ -5417,7 +5420,7 @@
                                    <p>₹ 1000</p>
                                 </div>
                              </div>
-  
+
                              <div class="row collapse_row" >
                                <div class="col-8 fare-list-left">
                                 <p> Seats </p>
@@ -5426,7 +5429,7 @@
                                 <p>₹ 700</p>
                                </div>
                              </div>
-  
+
                              <div class="row collapse_row" >
                               <div class="col-8 fare-list-left">
                                <p> Meals </p>
@@ -5435,17 +5438,17 @@
                                <p>₹ 500</p>
                               </div>
                             </div>
-  
-  
-  
+
+
+
                             </div>
                           </div>
                           </div>
-  
+
                         </div>
-  
+
                     </li>
-  
+
                     <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3" >
                       <div class="fare-list-box">
                         <div class="fare-list-left">
@@ -5458,15 +5461,15 @@
                         </div>
                       </div>
                     </li>
-  
+
                     <li class="fare-list-item" *ngIf="coupon_amount>0.00">
                       <div class="fare-list-box">
                         <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"(click)="isCollapseShow('discount')">
-  
+
                           <p>
                             <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png"
                             alt=""  *ngIf="!isCollapseDiscount" >
-  
+
                             <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png"
                             alt="" *ngIf="isCollapseDiscount" >
                             Discounts
@@ -5476,12 +5479,12 @@
                           <p class="text-green">- &#8377; {{coupon_amount}}</p>
                         </div>
                       </div>
-  
+
                       <div >
                         <div class="collapse base_fare_collapse" id="coupon-collpase">
                           <div class="row ">
                             <div class="col-md-11 offset-md-1">
-  
+
                               <div class="row collapse_row">
                                 <div class="col-5 fare-list-left">
                                    <p>Coupoun Code</p>
@@ -5490,17 +5493,17 @@
                                    <p>{{coupon_code}}</p>
                                 </div>
                              </div>
-  
-  
+
+
                             </div>
                           </div>
                           </div>
-  
+
                         </div>
-  
+
                     </li>
-  
-  
+
+
                     <li class="fare-list-item">
                       <div class="fare-list-box pt-30">
                         <div class="fare-list-left">
@@ -5518,7 +5521,7 @@
                         </div>
                       </div>
                     </li>
-  
+
                   </ul>
                 </div>
               </div>
@@ -5543,7 +5546,7 @@
 
             </div>
           </div>
-  
+
         </div>
       </div>
     </div>
@@ -5560,10 +5563,10 @@
             <div class="bookingprocess-title text-center mb-30">
               <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
             </div>
-            
+
              <ng-container *ngIf="flightSessionData.travel_type !='M'" >
             <div class="bookingprocess-content" >
-              
+
               <div class="bookingprocess-flight" >
                 <h6>{{searchData.fromCity}},{{searchData.fromContry}} ({{searchData.flightfrom}})</h6>
                 <p class="mt-10">{{searchData.departure | date:'dd.MM.yyyy'}} - <span>{{searchData.adults}}
@@ -5573,8 +5576,8 @@
                 </p>
                 <h6>{{searchData.toCity}},{{searchData.toContry}} ({{searchData.flightto}})</h6>
               </div>
-              
-              
+
+
               <div class="bookingprocess-processbar">
                 <div class="progress">
                   <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
@@ -5583,10 +5586,10 @@
                   </div>
                 </div>
               </div>
-              
-              
+
+
             </div>
-            </ng-container>  
+            </ng-container>
                <ng-container *ngIf="flightSessionData.travel_type =='M'" >
            <div class="bookingprocess-content" *ngFor="let searchD of searchData;">
               <div class="bookingprocess-flight" >
@@ -5598,8 +5601,8 @@
                 </p>
                 <h6>{{searchD.toCity}},{{searchD.toContry}} ({{searchD.flightto}})</h6>
               </div>
-              
-              
+
+
               <div class="bookingprocess-processbar">
                 <div class="progress">
                   <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{loaderValue}}" aria-valuemin="0"
@@ -5608,12 +5611,12 @@
                   </div>
                 </div>
               </div>
-          
-              
+
+
             </div>
-             </ng-container>   
-          
-            
+             </ng-container>
+
+
             <div class="refresh-text text-center pt-2">
               <p>Please don't click or refresh the page</p>
             </div>
@@ -5622,7 +5625,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -5640,8 +5643,8 @@
       </div>
     </div>
   </div>
-  
-  
+
+
   <div class="modal fade bookingprocess" id="bookingprocessPriceChange" data-bs-backdrop="static"
     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -5678,7 +5681,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Mlite Footer Price Section  -->
   <div class="d-block d-sm-none">
     <div class="footer-sticky-mlite">
@@ -5701,7 +5704,7 @@
                 <h6 class="price">₹{{totalCollectibleAmount|number}}</h6>
                 <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @
                   {{calculateEMI(totalCollectibleAmount)|number}}/month</p>
-  
+
               </div>
             </div>
             <div class="col-7">
@@ -5723,7 +5726,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
     aria-hidden="true" *ngIf="steps==5 && isMobile">
@@ -5734,7 +5737,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" >
-  
+
           <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
             [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
             [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
@@ -5748,7 +5751,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Mlite Fare Summary Popup -->
   <div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel"
     aria-hidden="true">
@@ -5792,7 +5795,7 @@
                   </div>
                 </div>
               </li>
-  
+
               <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3 ">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
@@ -5842,13 +5845,13 @@
                     <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @
                       {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number}}/month</p>
                   </div>
-  
+
                   <div class="fare-list-right" *ngIf="steps > 3">
                     <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
                     <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
                       {{calculateEMI(totalCollectibleAmount)|number}}/month</p>
                   </div>
-  
+
                 </div>
               </li>
             </ul>
@@ -5861,8 +5864,8 @@
       </div>
     </div>
   </div>
-  
-  
+
+
   <div class="modal fade bookingprocess" id="bookingprocessExpires" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -5886,14 +5889,14 @@
                 </div>
               </div>
             </div>
-  
-  
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   </main>
   <div class="modal fade bookingprocess" id="bookingprocessFailed1" data-bs-backdrop="static" data-bs-keyboard="false"
   tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
