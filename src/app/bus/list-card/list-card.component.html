@@ -210,7 +210,7 @@
 
       <!-- Web Bus Layout -->
       <ng-container>
-        <div class="seat-layout" [ngClass]="rowvalue==seatlayout ? 'active' : 'hide'" id="seat-layout{{bus.id}}" *ngIf="showSeatLayout">
+        <div class="seat-layout " [ngClass]="rowvalue==seatlayout ? 'active' : 'hide'" id="seat-layout{{bus.id}}" *ngIf="showSeatLayout">
             
             <div class="row">
                 <div id="tab-seats-new">
@@ -220,13 +220,13 @@
                         <div class="gray_text_small">Click on seat to select/ deselect</div>
                     </div>
                     <!-- static filter button -->
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-md-12">
-                            <ul class="bus_details_filter">
-                                <li><button class="bus_details_filter_btn active">All ({{bus.availableSeats | number }})</button></li>
-                                <span class="bus_details_filter" *ngIf="pricesplit.length > 1">
-                                <li *ngFor="let price of pricesplit"><button class="bus_details_filter_btn">₹{{price.actfare | number }} ({{price.seattotal}})</button></li>
-                                </span>
+                           <ul class="bus_details_filter nav nav-tabs" role="tablist">
+                                <li><button class="bus_details_filter_btn active"  data-bs-target="#seat-all" aria-controls="seat" role="tab" data-bs-toggle="tab" aria-expanded="true">All ({{bus.availableSeats | number }})</button></li>
+                                <ng-container *ngIf="pricesplit.length > 1">
+                                <li *ngFor="let price of pricesplit"><button class="bus_details_filter_btn" data-bs-target="#seat{{price.actfare}}" aria-controls="seat{{price.actfare}}" role="tab" data-bs-toggle="tab" >₹{{price.actfare | number }} ({{price.seattotal}}) </button></li>
+                                </ng-container>
                             </ul>
                         </div>
                     </div>
@@ -286,8 +286,8 @@
                                 </div>
                             </div> -->
                             <!-- <ng-container *ngIf="show_dialog"> -->
-                                <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
-                                    <mat-tab label="All ({{bus.availableSeats | number }})">
+                              <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade active show" id="seat-all">
                                         <!-- <div class="errorMessage">{{maxSeatMessage}}</div> -->
                                         <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
                                         <span *ngIf="totalUpperDeck">
@@ -346,11 +346,10 @@
                                             </div>
                             <!-- <span class="pos-rear">REAR</span> -->
                                         </span>
-                                </mat-tab>
+                                </div>
     
-                                <span *ngIf="pricesplit.length > 1">
-                                    <span>
-                                        <mat-tab  *ngFor="let price of pricesplit" label=" Rs.{{price.actfare | number }} ({{price.seattotal}})">
+                                <ng-container *ngIf="pricesplit.length > 1">
+                                         <div role="tabpanel" *ngFor="let price of pricesplit" class="tab-pane fade " id="seat-{{price.actfare}}">
                                                 <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
                                         <span  *ngIf="totalUpperDeck">
                                                         <div class="label-small">Lower</div>
@@ -431,11 +430,10 @@
                         
                                             <!-- <span class="pos-rear">REAR</span> -->
                                         </span>
-                                        </mat-tab>
-                                    </span>
-                                </span>
+                                        </div>
+                                </ng-container>
             
-                                </mat-tab-group>
+                               </div>
                             <!-- </ng-container> -->
                         </div>
                     </ng-template>
