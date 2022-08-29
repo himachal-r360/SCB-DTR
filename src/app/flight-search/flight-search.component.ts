@@ -392,16 +392,20 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.multicityFormArr.controls[i].get('toCity').setValue(values['_source'].city)
       this.multicityFormArr.controls[i].get('toContry').setValue(values['_source'].country_code)
       this.multicityFormArr.controls[i].get('toAirportName').setValue(values['_source'].airport_name)
+      this.multicityFormArr.controls[i].get('toCountryFullName').setValue(values['_source'].country);
       index.value.toCity=values['_source'].city;
       index.value.flightto = values['_source'].airport_code;
       index.value.toContry = values['_source'].country_code;
       index.value.toAirportName = values['_source'].airport_name;
+      index.value.toCountryFullName = values['_source'].country;
+
       if((this.multicityFormArr.controls.length-1) > i)
       {
         this.multicityFormArr.controls[i+1].get('flightfrom').setValue(values['_source'].airport_code)
         this.multicityFormArr.controls[i+1].get('fromCity').setValue(values['_source'].city)
         this.multicityFormArr.controls[i+1].get('fromContry').setValue(values['_source'].country_code)
         this.multicityFormArr.controls[i+1].get('fromAirportName').setValue(values['_source'].airport_name)
+        this.multicityFormArr.controls[i+1].get('fromCountryFullName').setValue(values['_source'].country);
       }
       values = values['_source'];
 
@@ -490,6 +494,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       {
         var data = JSON.parse(multicity);
         this.multicitySearchData = data;
+        
         if(isMulticity!=undefined && isMulticity=='true'&& isMulticity!=null )
         {
           this.navItemActive = 'Multicity';
