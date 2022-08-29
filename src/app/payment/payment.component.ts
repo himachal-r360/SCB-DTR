@@ -1122,9 +1122,7 @@ openNoneligibleforcouponDialog(){
 
 payNow(ptype){ 
 
-console.log(sessionStorage.getItem(this.passSessionKey+'-ctype'));
 
-return;
 	if(this.openNoneligiblecouponDialog == 1){
 	var searchValue;
 	var passpgtype;

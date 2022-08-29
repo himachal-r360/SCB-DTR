@@ -1376,7 +1376,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   selectedFromKey:any ;
   onSelectOnword(flightKey:any,flights:any,item:any,priceDump:any,event:any , j:any)
   {
-    debugger;
+    //debugger;
    if(item.partnerName=='Cleartrip'){
    this.onSelectOnwardSplrt= priceDump.filter((item: any) => {
       if(item.partnerName=='Cleartrip' && item.splrtFareFlight==true )
@@ -1678,7 +1678,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
     onSelectReturnChange(flightKey:any,flights:any,item:any,event:any)
   {
-    debugger
+   // debugger
    $('#flightChangeR').modal('hide');
   if(this.isOnwardSelected == true)
       {
