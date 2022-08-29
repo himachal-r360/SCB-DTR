@@ -173,7 +173,7 @@ export class HomeComponent implements OnInit {
         this.navItemActive = 'train';
         break;
         default:
-        this.navItemActive = '/'+this.sg['domainPath']+'flight';
+        this.navItemActive ='flight';
         break;
         }  
      }
