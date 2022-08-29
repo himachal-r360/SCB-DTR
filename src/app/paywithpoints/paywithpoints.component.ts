@@ -114,7 +114,6 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
 
   ngOnInit() {
-     console.log(this.ctype);
            setTimeout(() => {
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
