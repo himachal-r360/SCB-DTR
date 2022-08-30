@@ -156,7 +156,7 @@
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsNETBANKING">
                                       <a id="tab-netBanking" href="#pane-netBanking" class="nav-link" data-bs-toggle="tab" role="tab">
-                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">Net Banking</span>
+                                          <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">HDFC Net Banking</span>
                                       </a>
                                     </li>
                                     <li class="nav-item" *ngIf="pgSettingsEMI && emiArray.length >0">
@@ -540,7 +540,7 @@
                                     <div class="panel-heading">
                                         <div class="" *ngIf="pgSettingsNETBANKING">
                                             <a id="tab-netBanking" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-netBanking" aria-expanded="false" aria-controls="collapse-netBanking">
-                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">Net Banking</span>
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">HDFC Net Banking</span>
                                                 
                                             </a>
                                         </div>
@@ -555,7 +555,7 @@
                                                             <div>
                                                                 <img src="{{cdnUrl}}images/hdfc_logo.svg" alt="hdfc" class="mb-3">
                                                             </div>
-                                                            <span class="">Using Net Banking</span>
+                                                            <span class="">Using HDFC Net Banking</span>
                                                           </div>
                                                         <div>
                                                             <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title" >PG Charges Applicable</span>
@@ -640,7 +640,7 @@
                                                                                 <h6 class="payTitle">Get upto 10x Reward Points on your Credit card EMI payments!</h6>
 
 
-                                                                                <div *ngFor="let emi of emiArray; let firstRow = first; let evenRow = even;">
+                                                                                <!-- <div *ngFor="let emi of emiArray; let firstRow = first; let evenRow = even;">
                                                                                     <label for="payemi-subOne{{emi.key}}" class="radio">
                                                                                         <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow" />
                                                                                         <span class="label"></span>
@@ -650,16 +650,42 @@
                                                                                         <p class="emi-tenure"> {{emiInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }} paid as interest in complete EMI tenure) </p>
                                                                                         </div>
                                                                                     </label>
+                                                                                </div> -->
+
+                                                                               <div class="inner-content-emi">
+                                                                                <div *ngFor="let emi of emiArray; let firstRow = first; let evenRow = even;" class="emi_check_radio">
+                                                                                    <label for="payemi-subOne{{emi.key}}" class="radio">
+                                                                                        <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow" />
+                                                                                        <span class="label"></span>
+                                                                                        <div class="sub-info">
+                                                                                        <p class="emi-duration" > ₹{{emi.value | number:'1.2-2' }} <span class="middle_text">x {{emi.key}} months | @ {{emiInterst[emi.key]}}% interest | Total:</span> <b> ₹22,682</b> </p>
+                                                                                        <div class="emiTenure">
+                                                                                            <div>
+                                                                                                <p class="title">EMI/Month</p>
+                                                                                                <p class="value">₹{{emi.value | number:'1.2-2' }}</p>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <p class="title">Interest Charged by Bank	</p>
+                                                                                                <p class="value">₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }}</p>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <p class="title">Total Cost</p>
+                                                                                                <p class="value">₹22,682</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        </div>
+                                                                                    </label>
                                                                                 </div>
-                                                                                
-                                                                                
+                                                                               </div>
+
+
                                                                                 <hr />
 
                                                                             
 
+                                                                               <div class="p-3">
                                                                                 <div style="width: 100%; padding: 10px 15px 10px 20px; border-radius: 4px; background-color: rgba(0, 74, 143, 0.17);">
-                                                                                    <span class="medium-dark-text"> Note: </span><span style="font-size: 12px;font-style: normal;"> A fee of Rs 199 + GST will be charged by HDFC Bank on your Credit card for providing the EMI service.
-                                                                        </span>
+                                                                                    <span class="medium-dark-text"> Note: </span><span style="font-size: 12px;font-style: normal;"> A fee of Rs 199 + GST will be charged by HDFC Bank on your Credit card for providing the EMI service.</span>
                                                                                 </div>
 
 
@@ -682,6 +708,7 @@
                                                                                     </div>
                                                                                     <button class="btn btn-paynow " (click)="payNow(3)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
                                                                                 </div>
+                                                                               </div>
                                                                             </div>
                                                                         </div>
 
