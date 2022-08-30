@@ -282,6 +282,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   totalReturnDuration: number = 0
   randomFlightDetailKey: any;
   searchData: any;
+  searchDataOrg:any;
   BaseFare: any;
   Tax: any;
   TotalFare: any;
@@ -423,6 +424,7 @@ orderRetry:boolean=false;
                   }, 10);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
+                   this.searchDataOrg = this.searchData ;
                   //console.log(this.flightSessionData);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
@@ -2077,6 +2079,7 @@ orderRetry:boolean=false;
       return self.indexOf(value) === index
     }
 
+
     for (let i = 0; i < this.flightOnwardDetails.length; i++) {
       this.onward_airline_array.push(this.flightOnwardDetails[i].airline);
       this.totalOnwardDuration += this.flightOnwardDetails[i].duration;
@@ -2984,12 +2987,29 @@ orderRetry:boolean=false;
         
 
   }
+  ConvertObjToQueryStringMutlticity(obj: any) {
+    var strUrl = "";
+    for (var i = 0; i < obj.length; i++) {
+      var str: any = [];
+      let obj1: any = obj[i];
+      for (var p in obj1) {
+        if (obj1.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "[" + i + "]=" + encodeURIComponent(obj1[p]));
+        }
+      }
+      strUrl = strUrl + "&" + str.join("&");
+    }
+    return strUrl
 
+  }
   triggerBack() {
     $('#bookingprocessFailed').modal('hide');
     let url;
     this.resetPopups();
     
+     if( this.flightSessionData['travel_type']=='M') {
+      url = "flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.searchDataOrg))
+    }else{
     if (this.searchData.travel == 'DOM') {
       if (this.searchData.flightdefault == 'R')
         url = "flight-roundtrip?" + decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
@@ -2997,6 +3017,7 @@ orderRetry:boolean=false;
         url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
     } else {
       url = "flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
+    }
     }
     this.router.navigateByUrl(url);
 
@@ -3297,7 +3318,6 @@ orderRetry:boolean=false;
     var m=1;
     
     let flightSearchDetails=[];
-
       if( this.flightSessionData['travel_type']=='M') {
         for (let i = 0; i < (this.flightSessionData.onwardFlights.length); i++) {
         
@@ -3322,16 +3342,17 @@ orderRetry:boolean=false;
         }
       }
 
-        this.input_values=[];
+      
         let flightfrom_array=[]; let fcode_array=[]; let flightto_array=[];let tcode_array=[];let flightdeparture_array=[];
-        this.input_values['Default']='M';
-        this.input_values['t']='ZWFybg==';
-        this.input_values['multiclass']=this.searchData['flightclass'];
-        this.input_values['adults']=this.searchData['adults'];
-        this.input_values['child']=this.searchData['child'];
-        this.input_values['infants']=this.searchData['infants'];
-          
-          
+        
+        let flightfromCountry_array=[];
+        let flightfromCountryCode_array=[];
+        
+        let flighttoCountry_array=[];
+        let flighttoCountryCode_array=[];
+        
+           
+       
        
        for (let v = 0; v < (this.searchData.length); v++) {
         flightSearchDetails.push({ "leavingFrom": this.searchData[v]['flightfrom'], "goingTo":  this.searchData[v]['flightto'], "depart": this.searchData[v]['departure']});
@@ -3341,15 +3362,38 @@ orderRetry:boolean=false;
         flightto_array.push(this.searchData[v]['toCity']);
         tcode_array.push(this.searchData[v]['flightto']);
         flightdeparture_array.push(this.searchData[v]['departure']);
+        
+        flightfromCountry_array.push(this.searchData[v]['fromContry']);
+        flightfromCountryCode_array.push(this.searchData[v]['fromContry']);
+        flighttoCountry_array.push(this.searchData[v]['toContry']);
+        flighttoCountryCode_array.push(this.searchData[v]['toContry']);
+        
     
        }
        
-     
-        this.input_values['flightfrom']=flightfrom_array;
-        this.input_values['fcode']=fcode_array;
-        this.input_values['flightto']=flightto_array;
-        this.input_values['tcode']=tcode_array;
-        this.input_values['flightdeparture']=flightdeparture_array; 
+                this.input_values={
+                "Default": 'M',
+                "adults": this.searchData.adults,
+                "child": this.searchData.child,
+                "multiclass": this.searchData.flightclass,
+                "fcode":fcode_array,
+                "flightdeparture": flightdeparture_array,
+                "flightfrom": flightfrom_array,
+                "flightfromCity": flightfrom_array,
+                "flightfromCountry": flightfromCountry_array,
+                "flightfromCountryCode": flightfromCountryCode_array,
+                "flightreturn": '',
+                "flightto": flightto_array,
+                "flighttoCity": flightto_array,
+                "flighttoCountry": flighttoCountry_array,
+                "flighttoCountryCode": flighttoCountryCode_array,
+                "infants": this.searchData.infants,
+                "t": "ZWFybg==",
+                "tcode": tcode_array,
+                "post_partner": this.selectedOnwardVendor.partnerName,
+                "post_default": 'O',
+                "travel": this.searchData.travel
+                };
          
       
       }else{
@@ -3504,9 +3548,14 @@ orderRetry:boolean=false;
       if (this.searchData.arrival)
         this.itineraryRequest["returnCheckInDate"] = moment(this.searchData.arrival).format('YYYY-MM-DD');
         
-      if( this.flightSessionData['travel_type']=='M')  
+        var type;
+        
+      if( this.flightSessionData['travel_type']=='M') { 
+       type='M';
        this.itineraryRequest["flightSearchDetails"] = flightSearchDetails;
-
+       }else{
+       type='';
+       }
 
 
       this.resetPopups();
@@ -3525,7 +3574,7 @@ orderRetry:boolean=false;
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryRequest))
       };
-      this.rest.createItinerary(requestParamsEncrpt).subscribe(response => {
+      this.rest.createItinerary(requestParamsEncrpt,type).subscribe(response => {
 
         this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
   console.log(this.itinararyResponse);
@@ -3577,20 +3626,8 @@ orderRetry:boolean=false;
           
           
           
-        var getCancellationPolicy = {
-        itineraryId: this.itineraryid,
-        clientName: 'HDFC243',
-        serviceName: 'Flight',
-        partnerName: this.partnerToken,
-        docKey: this.flightSessionData.docKey,
-        flightKeys:this.flightKeys,
-        travel:this.searchData['travel'],
-        pricingId:this.pricingId,
-        onward_flightIdCSV:'',
-        airlineCode:'',
-        classType:this.searchData['flightclass'],
-      
-        };
+           this.emt_cancellationPolicy('onward');
+
        // this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(result => { });
           
           
@@ -3668,7 +3705,7 @@ orderReferenceNumber:any;
       
        input_values=this.input_values;
       onwardFareKey=this.fareKeys;
-      
+
       itineraryId= this.itinararyResponse.itineraryResponseDetails.itineraryId;
         for (let i = 0; i < (this.flightSessionData.onwardFlights.length); i++) {
         
@@ -3834,6 +3871,7 @@ orderReferenceNumber:any;
       whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
     else
       whatsappFlag = 0;
+      
 
     let checkoutData = {
       "itineraryid": this.itineraryid,
@@ -3881,14 +3919,13 @@ orderReferenceNumber:any;
     };
     this.orderReferenceNumber=order_ref_num;
     
-    console.log(checkoutData);
 
     var saveCheckoutData = {
       orderReferenceNumber: order_ref_num,
       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
     };
 
-      console.log(JSON.stringify(checkoutData));
+      console.log((checkoutData));
 
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
@@ -4084,3 +4121,4 @@ orderReferenceNumber:any;
 
 
 }
+

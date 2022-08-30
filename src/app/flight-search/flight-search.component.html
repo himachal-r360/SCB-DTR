@@ -95,8 +95,8 @@
 
                 </li>
                 <li>
-                    <mat-select class=" ms-4" formControlName="flightclass">
-                        <mat-option value="B">Business Class</mat-option>
+                    <mat-select class=" ms-4 mt-1" formControlName="flightclass">
+                        <mat-option value="B" >Business Class</mat-option>
                         <mat-option value="E">Economy Class</mat-option>
                         <mat-option value="F">First Class</mat-option>
                         <mat-option value="P">Premium Economy</mat-option>
@@ -111,8 +111,8 @@
                     <div class="select-root-area" [ngClass]="isMobile && fromCityName == '' ? 'p-3': ''">
                         <div class="select-root-left" appDropdown>
                             <span class="select-roottitle">FROM</span>
-                            <h5 class="fw_6 ">{{fromCityName}}</h5>
-                            <span class="select-roottitle">{{ fromAirpotName}}</span>
+                            <h5 class="fw_6 ">{{fromCityName}}<span *ngIf="!isMobile">, {{fromCountryName}}</span></h5>
+                            <span class="select-roottitle">{{flightData.value.flightfrom}}, {{ fromAirpotName}}, {{fromCountryName}}</span>
                             <div class="error_msg w-50"
                                 *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
                                 <small class="validate-msg">Please select from city</small>
@@ -138,7 +138,8 @@
 
 
 
-                            <div class="flight-from-data flight-from-hide ff-form-data dropdown">
+                            <div class="flight-from-data flight-from-hide ff-form-data dropdown" id="showFlightFrom" 
+                           >
                                 <div class="mob-title" *ngIf="isMobile">
                                     <h3 >Select From City</h3>
                                     <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile">
@@ -222,8 +223,8 @@
                         </div>
                         <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" >
                             <span class="select-roottitle" [ngClass]="isMobile && fromCityName == '' ? 'ps-2': ''">TO</span>
-                            <h5 class="fw_6 ">{{toCityName}}</h5>
-                            <span class="select-roottitle">{{toAirpotName}}</span>
+                            <h5 class="fw_6 ">{{toCityName}}<span *ngIf="!isMobile">, {{toCountryName}}</span></h5>
+                            <span class="select-roottitle"><span>{{flightData.value.flightto}},</span> {{toAirpotName}}, <span>{{toCountryName}}</span></span>
                             <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('flightto', 'required')">
                                 <small class="validate-msg">Please select to city</small>
                             </div>
@@ -248,7 +249,7 @@
                                                 <label for="">From</label>
                                                 <input type="text" autocomplete="off" class="w-100"
                                                     placeholder="Search City" name="fromCity" formControlName="fromCity"
-                                                    (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');">
+                                                    (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');" (click)="fromCitySelect(null)">
                                                 <input type="hidden" formControlName="flightfrom">
                                                 <input type="hidden" formControlName="fromContry">
                                                 <input type="hidden" formControlName="fromAirportName">
@@ -259,7 +260,7 @@
                                                 <input type="text" autocomplete="off" class="w-100"
                                                     placeholder="Search City" name="toCity" formControlName="toCity"
                                                     (keyup)="searchAutoComplete($event,'toCity' ,'mobile');"
-                                                    id="toCitySearch" #toCityInput autofocus>
+                                                    id="toCitySearch" #toCityInput autofocus >
                                                 <input type="hidden" formControlName="flightto">
                                                 <input type="hidden" formControlName="toContry">
                                                 <input type="hidden" formControlName="toAirportName">
@@ -349,7 +350,7 @@
                                             *ngIf="arrivalDate!='' ||arrivalDate!=undefined || navItemActive != 'One Way'">
                                             {{arrivalDate | date:'dd MMM' }}</h5>
 
-                                        <span class="select-roottitle d-block w-100"
+                                        <span class="select-roottitle d-block w-100" style="font-size:15px ;"
                                             *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">
                                             Select Return</span>
                                         <span class="select-roottitle"
@@ -717,7 +718,7 @@
               <div class="select-root-area">
                 <div class="select-root-left" appDropdown>
                   <span class="select-roottitle">FROM</span>
-                  <h5 class="fw_6 ">{{multicitySearchData[0].fromCity}}</h5>
+                  <h5 class="fw_6 ">{{multicitySearchData[0].fromCity}}<span *ngIf="multicitySearchData[0].fromCountryFullName != ''" >, {{multicitySearchData[0].fromCountryFullName}}</span></h5>
                   <span class="select-roottitle">{{multicitySearchData[0].fromAirportName}}</span>
                           <div class="flight-from-data flight-from-hide ff-form-data dropdown">
                               <div class="mob-title" *ngIf="isMobile">
@@ -742,6 +743,7 @@
                                           id="fromCitySearch">
                                       <input type="hidden" formControlName="flightfrom">
                                       <input type="hidden" formControlName="fromContry">
+                                      <input type="hidden" formControlName="fromCountryFullName"> 
                                       <input type="hidden" formControlName="fromAirportName">
                                   </div>
                                   <div class="mob-search-list">
@@ -752,6 +754,7 @@
                                           (keyup)="searchAutoComplete($event,'toCity' ,'mobile');">
                                           <input type="hidden" formControlName="flightto">
                                           <input type="hidden" formControlName="toContry">
+                                          <input type="hidden" formControlName="toCountryFullName">
                                       <input type="hidden" formControlName="toAirportName">
                                   </div>
                               </div>
@@ -772,7 +775,10 @@
                           <input type="hidden"
                               formControlName="fromContry">
                               <input type="hidden"
+                              formControlName="fromCountryFullName"> 
+                              <input type="hidden"
                               formControlName="fromAirportName">
+                              <input type="hidden" formControlName="fromCountryFullName">
                           </div>
                       <ul class="flight-from-data-ul">
                           <li class="flight-from-ul-li">
@@ -801,7 +807,7 @@
                   </div>
                   <div class="select-root-right" appDropdown #toCityDiv >
                     <span class="select-roottitle">TO</span>
-                    <h5 class="fw_6 ">{{multicitySearchData[0].toCity}}</h5>
+                    <h5 class="fw_6 ">{{multicitySearchData[0].toCity}}<span *ngIf="multicitySearchData[0].toCountryFullName != ''">, {{multicitySearchData[0].toCountryFullName}}</span></h5>
                     <span class="select-roottitle">{{multicitySearchData[0].toAirportName}}</span>
                     <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('flightto').errors.required"> <small
                         class="validate-msg"> Please select departure date.</small></mat-error>   -->
@@ -832,6 +838,7 @@
                                         <input type="hidden" formControlName="flightfrom">
                                         <input type="hidden" formControlName="fromContry">
                                         <input type="hidden" formControlName="fromAirportName">
+                                        <input type="hidden" formControlName="fromCountryFullName">
                                     </div>
                                     <div class="mob-search-list">
                                         <label for="">To</label>
@@ -843,6 +850,7 @@
                                         <input type="hidden" formControlName="flightto">
                                         <input type="hidden" formControlName="toContry">
                                         <input type="hidden" formControlName="toAirportName">
+                                        <input type="hidden" formControlName="toCountryFullName">
                                     </div>
                                 </div>
                             </div>
@@ -861,6 +869,7 @@
                                 formControlName="toContry">
                             <input type="hidden"
                                 formControlName="toAirportName">
+                                <input type="hidden" formControlName="toCountryFullName"> 
                         </div>
                         <ul class="flight-from-data-ul">
                             <li class="flight-from-ul-li">
@@ -938,8 +947,9 @@
                             <div class="select-root-area">
                                 <div class="select-root-left" appDropdown>
                                     <span class="select-roottitle">FROM</span>
-                                    <h5 class="fw_6 ">{{item.value.fromCity}}</h5>
-                                    <span class="select-roottitle">{{item.value.fromAirportName}}</span>
+                                    <h5 class="fw_6 ">{{item.value.fromCity}}<span *ngIf="!isMobile && item.value.fromCountryFullName != ''">, {{item.value.fromCountryFullName}}</span>
+                                    </h5>
+                                    <span class="select-roottitle"><span *ngIf="item.value.fligtfrom != ''">{{item.value.flightfrom}},</span> {{item.value.fromAirportName}}</span>
 
                                                 <mat-error *ngIf="submitted && item.get('flightfrom').errors  && item.get('flightfrom').hasError('required')"><small
                                                     class="validate-msg"> Please select from city.</small></mat-error>
@@ -972,6 +982,7 @@
                                                         <input type="hidden" formControlName="flightfrom">
                                                         <input type="hidden" formControlName="fromContry">
                                                         <input type="hidden" formControlName="fromAirportName">
+                                                        <input type="hidden" formControlName="fromCountryFullName">
                                                     </div>
                                                     <!-- <div class="mob-search-list">
                                                         <label for="">To</label>
@@ -1002,6 +1013,7 @@
                                                 formControlName="fromContry">
                                                 <input type="hidden"
                                                 formControlName="fromAirportName">
+                                                <input type="hidden" formControlName="fromCountryFullName">   
                                             </div>
                                         <ul class="flight-from-data-ul">
                                             <li class="flight-from-ul-li">
@@ -1031,8 +1043,10 @@
                                 </div>
                                 <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv_{{i}}">
                                     <span class="select-roottitle">TO</span>
-                                    <h5 class="fw_6 ">{{item.value.toCity}}</h5>
-                                    <span class="select-roottitle">{{item.value.toAirportName}}</span>
+                                    <h5 class="fw_6 ">{{item.value.toCity}}<span *ngIf="item.value.toCountryFullName != null ">, {{item.value.toCountryFullName}}</span>
+                                       
+                                    </h5>
+                                    <span class="select-roottitle"><span *ngIf="item.value.fligtto != ''">{{item.value.flightto}},</span> {{item.value.toAirportName}}</span>
 
                                                 <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('required')"><small
                                                     class="validate-msg"> Please select to city.</small></mat-error>
@@ -1061,6 +1075,7 @@
                                                         <input type="hidden" formControlName="flightfrom">
                                                         <input type="hidden" formControlName="fromContry">
                                                         <input type="hidden" formControlName="fromAirportName">
+                                                        <input type="hidden" formControlName="fromCountryFullName">
                                                     </div>
                                                     <div class="mob-search-list">
                                                         <label for="">To</label>
@@ -1072,6 +1087,7 @@
                                                         <input type="hidden" formControlName="flightto">
                                                         <input type="hidden" formControlName="toContry">
                                                         <input type="hidden" formControlName="toAirportName">
+                                                        <input type="hidden" formControlName="toCountryFullName">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1090,6 +1106,7 @@
                                                 formControlName="toContry">
                                             <input type="hidden"
                                                 formControlName="toAirportName">
+                                            <input type="hidden" formControlName="toCountryFullName">    
                                         </div>
                                         <ul class="flight-from-data-ul">
                                             <li class="flight-from-ul-li">
@@ -1452,10 +1469,10 @@
                         <mat-error *ngIf="submitted && item.get('flightfrom').errors  && item.get('flightfrom').hasError('required')"><small
                           class="validate-msg"> Please select from city.</small></mat-error>
 
-                        <div class="flight-from-hide ff-form-data dropdown" >
+                        <div class="flight-from-hide ff-form-data dropdown " id="showFlightFrom_{{i}}">
                             <div class="flight-from-data">
                                 <div class="mob-title">
-                                    <h3>Select City</h3>
+                                    <h3>Select From City</h3>
                                     <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile"  (click)="onClose()">
                                         <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="">
                                     </a>
@@ -1466,23 +1483,25 @@
                                       <div class="mob-search-list">
                                           <label for="">From</label>
                                           <input type="text" autocomplete="off" class="w-100"
-                                              placeholder="Search City" name="flightfrom"
-                                              formControlName="flightfrom"
+                                              placeholder="Search City" name="fromCity"
+                                              formControlName="fromCity"
                                               (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');"
                                               id="fromCitySearch">
                                           <input type="hidden" formControlName="flightfrom">
                                           <input type="hidden" formControlName="fromContry">
                                           <input type="hidden" formControlName="fromAirportName">
+                                          <input type="hidden" formControlName="fromCountryFullName">
                                       </div>
                                       <div class="mob-search-list">
                                           <label for="">To</label>
                                           <input type="text" autocomplete="off" class="w-100"
                                               placeholder="Search City" name="toCity"
-                                              formControlName="flightto"
+                                              formControlName="toCity"
                                               (keyup)="searchAutoComplete($event,'toCity' ,'mobile');">
                                               <input type="hidden" formControlName="flightto">
                                               <input type="hidden" formControlName="toContry">
                                           <input type="hidden" formControlName="toAirportName">
+                                          <input type="hidden" formControlName="toCountryFullName">
                                       </div>
                                   </div>
                               </div>
@@ -1519,10 +1538,10 @@
                           <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('MustMatch')"><small
                               class="validate-msg"> From and To cannot be same.</small></mat-error>
 
-                        <div class="flight-from-hide ff-form-data dropdown">
+                        <div class="flight-from-hide ff-form-data dropdown from-flight-open_{{i}}">
                             <div class="flight-from-data">
                                 <div class="mob-title">
-                                    <h3>Select City</h3>
+                                    <h3>Select To City</h3>
                                     <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile"  (click)="onClose()">
                                       <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="">
                                   </a>
@@ -1535,10 +1554,11 @@
                                               <input type="text" autocomplete="off" class="w-100"
                                                   placeholder="Search City" name="fromCity"
                                                   formControlName="fromCity"
-                                                  (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');">
+                                                  (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');" (click)="fromCitySelect(i)">
                                               <input type="hidden" formControlName="flightfrom">
                                               <input type="hidden" formControlName="fromContry">
                                               <input type="hidden" formControlName="fromAirportName">
+                                              <input type="hidden" formControlName="fromCountryFullName">
                                           </div>
                                           <div class="mob-search-list">
                                               <label for="">To</label>
@@ -1550,6 +1570,7 @@
                                               <input type="hidden" formControlName="flightto">
                                               <input type="hidden" formControlName="toContry">
                                               <input type="hidden" formControlName="toAirportName">
+                                              <input type="hidden" formControlName="toCountryFullName">
                                           </div>
                                       </div>
                                   </div>

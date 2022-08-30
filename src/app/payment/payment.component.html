@@ -37,7 +37,7 @@
     </ng-container> -->
 
     <ng-container>
-        <app-paywithpoints *ngIf="pointsPG" [serviceId]="serviceId" [Partnertoken]="Partnertoken" [passSessionKey]="passSessionKey" [payTotalFare]="payTotalFare" (amountToPay)="updatenewAmounttopay($event)"></app-paywithpoints>  
+        <app-paywithpoints *ngIf="pointsPG" [serviceId]="serviceId" [Partnertoken]="Partnertoken" [ctype]="ctype"  [passSessionKey]="passSessionKey" [payTotalFare]="payTotalFare" (amountToPay)="updatenewAmounttopay($event)"></app-paywithpoints>  
     </ng-container>
 
     <ng-container *ngIf="showProceedPayment">
@@ -190,6 +190,7 @@
                                 
                             </div>
                         </div>
+
                         <div class="col-md-8 col-12 ps-md-0">
                             <div id="content" class="tab-content payment-content p-3" role="tablist">
 
@@ -551,6 +552,9 @@
 
                                                   
                                                         <div class="common_title">
+                                                            <div>
+                                                                <img src="{{cdnUrl}}images/hdfc_logo.svg" alt="hdfc" class="mb-3">
+                                                            </div>
                                                             <span class="">Using Net Banking</span>
                                                           </div>
                                                         <div>
@@ -628,7 +632,7 @@
                                                                         <span class="">Pay With Credit Card EMI</span>
                                                                     </div>
                                                                 <form [formGroup]="emiForm">
-                                                                    <div id="payCreditEmiOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG && 
+                                                                    <div id="payCreditEmiOption"  [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG && 
                                                     pgSettingsEMI && emiArray.length >0 }" data-bs-parent="#allPayments" name="paymentModule">
 
                                                                         <div class="pay-emi-info">
@@ -638,15 +642,17 @@
 
                                                                                 <div *ngFor="let emi of emiArray; let firstRow = first; let evenRow = even;">
                                                                                     <label for="payemi-subOne{{emi.key}}" class="radio">
-                                                                            <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow" />
-                                                                            <span class="label"></span>
-                                                                            <div class="sub-info">
-                                                                            <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
-                                                                                Value</span></p>
-                                                                            <p class="emi-tenure"> {{emiInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }} paid as interest in complete EMI tenure) </p>
-                                                                            </div>
-                                                                        </label>
+                                                                                        <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow" />
+                                                                                        <span class="label"></span>
+                                                                                        <div class="sub-info">
+                                                                                        <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
+                                                                                            Value</span></p>
+                                                                                        <p class="emi-tenure"> {{emiInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }} paid as interest in complete EMI tenure) </p>
+                                                                                        </div>
+                                                                                    </label>
                                                                                 </div>
+                                                                                
+                                                                                
                                                                                 <hr />
 
                                                                             
@@ -1585,12 +1591,19 @@
 
                             </div>
                         </div>
+
                     </div>
                     
                 </div>
             </div>
-            
         </div>      
+
+            <div class="col-12 mb-25">
+                <div class="hdfc_note">
+                    Payment only through HDFC Bank cards/ account is accepted. For booking assistance please contact concierge at 18604251188.
+                </div>
+            </div>
+            
         
         
         

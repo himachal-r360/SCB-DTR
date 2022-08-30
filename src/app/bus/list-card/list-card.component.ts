@@ -123,6 +123,10 @@ export class ListComponent implements OnInit,AfterViewInit {
  serviceSettings:any;
  domainName:any;
  tracksearchObj:any;
+ seating_header:boolean = true;
+ seatTypeMliteData:boolean = false;
+
+
  constructor(public rest:RestapiService,private activatedRoute: ActivatedRoute, public busHelper: BusHelper, public busService: BusService, private router: Router, private sg: SimpleGlobal, private dialog: MatDialog, @Inject(DOCUMENT) private document: any, private EncrDecr: EncrDecrService, @Inject(APP_CONFIG) appConfig: any,private appConfigService:AppConfigService, private commonHelper: CommonHelper) {
  this.serviceSettings=this.appConfigService.getConfig();
  this.domainName = this.sg['domainName'];
@@ -331,6 +335,12 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   this.showSeatLayout = false;
   this.maxSeatMessage = "";
   this.rtcseatcall = false;
+ }
+ showSeatsFilter(id,tab_id){
+   var tab_content = "#seat-"+id+'-'+tab_id;
+    $('.tab-pane-seat').removeClass("active show");
+   $(tab_content).addClass("active show");
+ console.log(tab_content);
  }
 
  onSeats(tripId, rowvalue, bus, mobile = false) {
@@ -660,6 +670,13 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
  }
  public onValChange(val: string) {
   this.selecteddeck = val;
+ }
+
+ seatTypeShow(){
+  this.seatTypeMliteData = true;
+ }
+ seatTypeClose(){
+  this.seatTypeMliteData = false;
  }
 
  onSubmitSeats(tripid: string, busdetails, rowvalue, mobile) {
