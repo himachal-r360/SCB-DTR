@@ -205,6 +205,17 @@
 
                 <div class="button-wrap">
 
+                  <div class="row mb-20">
+                    <ng-container *ngIf="getTravllerShow">
+                      <div class="message-trav">
+                        <button type="button" class="travel-title btn btn-primary-outline"
+                          (click)="chooseFromSavedTravellers(i)">
+                          Choose from Saved Travellers
+                        </button>
+                      </div>
+                    </ng-container>
+                  </div>
+
 
                   <div class="traveller-details"
                     *ngFor="let item of seacthResult.seatdetails; let i = index;let firstRow = first;">
@@ -310,18 +321,16 @@
                               (keypress)="numberInput($event)" (keyup)="ageCheck($event,i)">
                           </mat-form-field>
                           <span *ngIf="submitted && passengerForm.controls['passengerAge'+i]['errors']" class="error">
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['required'] && !i==defaultPrimary" class="error_bus">Age is
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['required'] && !i==defaultPrimary" >Age is
                               required</mat-error>
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['pattern']" class="error_bus">Age should be
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['pattern']" >Age should be
                               numeric</mat-error>
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">Age should be less
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']" >Age should be less
                               than 125</mat-error>
                               
                               <mat-error *ngIf="submitted && i==defaultPrimary && !passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">{{ ageValidError }}</mat-error>
                           </span>
-                          <div *ngIf="submitted && i==defaultPrimary" class="error">
-                            <small>{{ ageValidError }}</small>
-                          </div>
+
                         </div>
                         <!-- For Web Only -->
                         <div class="col-6 col-lg-4 col-md-6 d-none d-sm-block">
@@ -355,16 +364,6 @@
                         </div>
                       </div>
 
-                      <div class="row mb-20">
-                        <ng-container *ngIf="getTravllerShow">
-                          <div class="message-trav">
-                            <button type="button" class="travel-title btn btn-primary-outline"
-                              (click)="chooseFromSavedTravellers(i)">
-                              Choose from Saved Travellers
-                            </button>
-                          </div>
-                        </ng-container>
-                      </div>
                     </div>
 
 
@@ -991,7 +990,7 @@
 
           </div>
           <div class="widget-content">
-            \ <ul class="widget-list clearfix">
+             <ul class="widget-list clearfix">
               <li class="fare-list-item">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
