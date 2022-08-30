@@ -144,6 +144,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   domainName:any;
   isExpanded:boolean = false;
   isGstExpanded:boolean = false;
+  isCollapseBasefare: boolean = false;
+  isCollapseDiscount: boolean = false;
+  isCollapseVas: boolean = false;
+  isCollapse: boolean = false;
+SeatNumber: any ;
+  
  constructor(private _flightService: FlightService,@Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
   private sg: SimpleGlobal,  @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
   private _bottomSheet: MatBottomSheet, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, plocation: PlatformLocation,private titleService: Title,private appConfigService:AppConfigService,private modalService: NgbModal) {
@@ -295,7 +301,7 @@ recivetotalFare($event){
  }
 
  /**----------REMOVE COUPON----------**/
- removeCoupon(coupon_id, coupon_amount) { alert('hi')
+ removeCoupon(coupon_id, coupon_amount) { 
   this.coupon_id = '';
   this.coupon_name = '';
   this.coupon_code = '';
@@ -306,6 +312,20 @@ recivetotalFare($event){
   sessionStorage.setItem(this.searchBusKey + '-passData', this.EncrDecr.set(JSON.stringify(this.busData)));
   sessionStorage.setItem(this.searchBusKey + '-totalFare', String(this.totalFare));
  }
+
+ isCollapseShow(identifyCollpase) {
+
+  if (identifyCollpase == 'BaseFare') {
+    this.isCollapseBasefare = !this.isCollapseBasefare;
+  } else if (identifyCollpase == 'vas') {
+    this.isCollapseVas = !this.isCollapseVas;
+  } else if (identifyCollpase == 'discount') {
+    this.isCollapseDiscount = !this.isCollapseDiscount;
+  } else {
+    this.isCollapse = !this.isCollapse;
+  }
+
+}
  
   
 
@@ -544,12 +564,18 @@ else{
     totalFare = totalFare + fare.fare;
     totalTax = totalTax + fare.markupFareAbsolute + fare.serviceTaxAbsolute;
    }
+  
+   
+   
+
    this.fareData = {
     totalBaseFare: totalBaseFare,
     totalFare: totalFare+totalbookingFee,
     totalTax: totalTax,
     data: fares,
-    totalbookingFee: totalbookingFee
+    totalbookingFee: totalbookingFee,
+    totalseats : fares.length,
+    singlePassengerbasefare : fares[0].baseFare,
    }
 
    this.totalFare = Number(totalFare) + Number(totalbookingFee);
@@ -1652,7 +1678,6 @@ export class ExpiryDialog {
   });
   this.dialogRef.close(true);
  }
-
 
 
 }
