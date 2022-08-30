@@ -4566,9 +4566,10 @@
                       <div>
                         <div>
                           <p class="duration_flight">{{ totalOnwardDuration | durationTime }}</p>
-                          <p class="date_text">
-                            {{ flightOnwardDetails[searchi]['flights'][0].stops }} Stop
-                          </p>
+                                            
+                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights'][0].stops==0">non stop</p>
+                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights']s[0].stops==1">{{flightOnwardDetails[searchi]['flights'][0].stops}} stop</p>
+                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length > 1">{{flightOnwardDetails[searchi]['flights'].length-1}} stop</p>
                         </div>
                       </div>
                       <div class="booking-inner-title-right">
@@ -4579,7 +4580,7 @@
                     </div>
                     <hr *ngIf="!last">
                     <div class="collapse" id="flight_review_collapse{{ searchi }}">
-                      <div class=" flight_detail_review"
+                      <div class=" border-0"
                         *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index">
                         <div class="Flight-One">
                           <div class="Booking-Flight-name">
@@ -4664,22 +4665,16 @@
                             <span
                               *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                           </div>
-                          <<<<<<< HEAD </div>
+                         </div>
                             <div class="change-planes"
                               *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
                               <h6>Change of planes・{{ dateOnwardHourMulti[searchi][i] | durationTime }}
                                 Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                             </div>
-                            =======
 
                         </div>
 
-                        <div class="change-planes"
-                          *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
-                          <h6>Change of planes・{{ dateOnwardHourMulti[searchi][i] | durationTime }} Layover
-                            in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
-                          >>>>>>> 8840ac0847f84354e573a134e0a9b70a8b8b9b7b
-                        </div>
+                 
 
                       </div>
 
@@ -4752,7 +4747,9 @@
                     <div>
                       <div>
                         <p class="duration_flight">{{ totalOnwardDuration | durationTime }}</p>
-                        <p class="date_text">{{ flightOnwardDetails[0].stops }} Stop</p>
+                                       <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights'][0].stops==0">non stop</p>
+                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights']s[0].stops==1">{{flightOnwardDetails[searchi]['flights'][0].stops}} stop</p>
+                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length > 1">{{flightOnwardDetails[searchi]['flights'].length-1}} stop</p>
                       </div>
                     </div>
                     <div class="booking-inner-title-right">
@@ -4823,7 +4820,9 @@
                     <div>
                       <div>
                         <p class="duration_flight">{{ totalOnwardDuration | durationTime }}</p>
-                        <p class="date_text">{{ flightOnwardDetails[0].stops }} Stop</p>
+                                       <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights'][0].stops==0">non stop</p>
+                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights']s[0].stops==1">{{flightOnwardDetails[searchi]['flights'][0].stops}} stop</p>
+                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length > 1">{{flightOnwardDetails[searchi]['flights'].length-1}} stop</p>
                       </div>
                     </div>
                   </div>
