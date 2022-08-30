@@ -651,15 +651,17 @@
                                                                                         </div>
                                                                                     </label>
                                                                                 </div> -->
+                                                                                
+
 
                                                                                <div class="inner-content-emi">
-                                                                                <div *ngFor="let emi of emiArray; let firstRow = first; let evenRow = even;" class="emi_check_radio">
+                                                                                <div *ngFor="let emi of emiArray; let firstRow = first; let evenRow = even;" class="emi_check_radio emi_check_radio-{{emi.key}}" [ngClass]="{'emi-active':  firstRow }">
                                                                                     <label for="payemi-subOne{{emi.key}}" class="radio">
-                                                                                        <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow" />
+                                                                                        <input type="radio" name="payemi-sub" id="payemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow"  (click)="emiOptionChange(emi.key)" />
                                                                                         <span class="label"></span>
                                                                                         <div class="sub-info">
-                                                                                        <p class="emi-duration" > ₹{{emi.value | number:'1.2-2' }} <span class="middle_text">x {{emi.key}} months | @ {{emiInterst[emi.key]}}% interest | Total:</span> <b> ₹22,682</b> </p>
-                                                                                        <div class="emiTenure">
+                                                                                        <p class="emi-duration" > ₹{{emi.value | number:'1.2-2' }} <span class="middle_text">x {{emi.key}} months | @ {{emiInterst[emi.key]}}% interest | Total:</span> <b> ₹{{(emi.value*emi.key)| number:'1.2-2' }}</b> </p>
+                                                                                        <div class="emiTenure emiTenure-{{emi.key}}" [ngClass]="{'hidden':  !firstRow }">
                                                                                             <div>
                                                                                                 <p class="title">EMI/Month</p>
                                                                                                 <p class="value">₹{{emi.value | number:'1.2-2' }}</p>
@@ -670,7 +672,7 @@
                                                                                             </div>
                                                                                             <div>
                                                                                                 <p class="title">Total Cost</p>
-                                                                                                <p class="value">₹22,682</p>
+                                                                                                <p class="value">₹{{(emi.value*emi.key)| number:'1.2-2' }}</p>
                                                                                             </div>
                                                                                         </div>
                                                                                         </div>
