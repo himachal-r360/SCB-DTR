@@ -441,6 +441,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
 
  onDetails(tripId, rowvalue, bus) {
+  $('.mlist-header').removeClass('fixed-top');
   let body = document.getElementsByTagName('body')[0];
   body.classList.add("noscroll"); //add the class  
   var mobile = true;

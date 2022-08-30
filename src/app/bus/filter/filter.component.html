@@ -5,7 +5,7 @@
   </div> -->
   <div class="col-md-12 float-left p0" id="filter-nav">
   <ng-template >
-        <label class="checkbox-cust" [ngClass]="{ 'active_bg': departureTimeFilter[0].selected }">
+        <label class="checkbox-cust" [ngClass]="{ 'active_bg': departureTimeFilter[0].selected }">{{departureTimeFilter[0].selected}}
           <div class="icons-filter"><img src="{{cdnUrl}}images/before6AM.svg" /></div>
           <div class="label-filter"  >Before 06 AM</div>
           <input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[0])" [(ngModel)]="departureTimeFilter[0].selected" [checked]="departureTimeFilter[0].selected">
