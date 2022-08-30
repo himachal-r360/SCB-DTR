@@ -137,6 +137,11 @@ export class PayService {
     return this.http.post(this.endpoint+'getcustomercardpoints', param, config).pipe(map((response:any) => response));
   }
 }
+  getcustomercardpoint(param){
+
+    return this.http.post(this.endpoint+'getcustomercardpoint_angular', param, config).pipe(map((response:any) => response));
+  
+}
   generateVoucherOtp(param){
     
   if(LOCALJSON=='true'){
