@@ -14,7 +14,7 @@
             
               <h6><span *ngFor="let searchDatad of searchData;let searchi = index ;let last = last" >{{ searchDatad.flightfrom }} - {{ searchDatad.flightto }} <span *ngIf="!last">|</span> </span></h6>
                   
-              <p><span *ngFor="let searchDatad of searchData;let searchi = index ;let last = last" >{{ searchDatad.departure }} <span *ngIf="!last">|</span></span> {{ maxAdults+maxChilds+maxInfants }} Travellers | {{ flightClasses[searchData.flightclass] }}
+              <p><span *ngFor="let searchDatad of searchData;let searchi = index ;let last = last" >{{ searchData.departure | date:"EEE,dd MMM" }} |</span> {{ maxAdults+maxChilds+maxInfants }} Travellers | {{ flightClasses[searchData.flightclass] }}
               </p>
             </div>
             
