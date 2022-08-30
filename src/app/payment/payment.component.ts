@@ -54,7 +54,7 @@ export class PaymentComponent implements OnInit {
 		secondCouponDesc: any;
 		thirdCouponDesc: any;
 		showoffer:boolean=false;
-
+		panelOpenState = false;
 		payForm: FormGroup;
 		upiForm: FormGroup;
 		payzappForm: FormGroup;
@@ -370,8 +370,9 @@ pgSettingsCYBERToken:number=0;
 		this.serviceSettings=this.appConfigService.getConfig();
 		this.domainPath=this.sg['domainPath'];
 		this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-		this.spinnerService.show();
+	
 		
+		this.spinnerService.show();
 		      setTimeout(() => {
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
@@ -520,6 +521,10 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 	this.siteKey=this.serviceSettings.SITEKEY;
 		this.Partnertoken = "Flight";
 		this.ServiceToken = "BUS";
+		
+                this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
+
+
 		
 		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['Flight'] == 1) {
 			this.showRewardsBox=true;
@@ -1116,6 +1121,8 @@ openNoneligibleforcouponDialog(){
 }
 
 payNow(ptype){ 
+
+
 	if(this.openNoneligiblecouponDialog == 1){
 	var searchValue;
 	var passpgtype;
@@ -1255,6 +1262,7 @@ payNow(ptype){
 			}
 
 		} 
+
 
 		this.orderReferenceNumber=sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber');
 		this.bookingRefNumber=sessionStorage.getItem(this.passSessionKey+'-clientTransactionId');
@@ -2318,6 +2326,7 @@ export class spcDialog {
 		this.newOrderAmt=Number(this.finalAmount) - Number(this.convenienceFee);
 		this.oldOrderAmtWithFee=Number(this.oldAmount);
 		this.newOrderAmtWithFee=Number(this.finalAmount);
+		
 	}
 	applyNonSpcOffer(){
 		var request = {

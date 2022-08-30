@@ -737,7 +737,7 @@ this.searchFlightForm.controls["arrival"].setValidators(Validators.required);
 this.searchFlightForm.controls["arrival"].updateValueAndValidity();
 }else
 if(event=='M'){
-this.router.navigateByUrl('/home');
+this.router.navigate([this.sg['domainPath']+'multicity']); 
 }else{
 this.showFlightReturn=false;
 this.arrival=null;

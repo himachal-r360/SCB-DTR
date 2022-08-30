@@ -676,15 +676,19 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         var end = this.maxStopOver;
         var filteredStopOver: any[] = [];
         this.flightList.forEach((e: any) => {
-          var flights = [];
-          e.flights.forEach((d: any) => {
-            if ((d.duration / 60) / 60 >= start && (d.duration / 60 / 60) <= end) {
-              flights.push(d);
-            }
-          })
-          if (flights.length > 0) {
-            filteredStopOver.push(e);
+          var flights = e.flights;
+        var totalOnwardDuration = 0;
+        for (let i = 0; i < flights.length; i++) {
+          totalOnwardDuration += flights[i].duration;
+          if (flights[i + 1] != null && flights[i + 1] != undefined) {
+          let obj2Date = new Date(flights[i + 1].departureDateTime);
+          let obj1Date = new Date(flights[i ].arrivalDateTime);
+          totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
           }
+        }
+        if ((totalOnwardDuration/60)/60 >= start && (totalOnwardDuration/60)/60 <= end) {
+          filteredStopOver.push(e);
+        }
         });
         this.flightList = filteredStopOver;
       }
@@ -695,15 +699,19 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         var end = this.maxStopOver;
         var filteredStopOver: any[] = [];
         this.ReturnflightList.forEach((e: any) => {
-          var flights = [];
-          e.flights.forEach((d: any) => {
-            if ((d.duration / 60) / 60 >= start && (d.duration / 60 / 60) <= end) {
-              flights.push(d);
-            }
-          })
-          if (flights.length > 0) {
-            filteredStopOver.push(e);
+          var flights = e.flights;
+        var totalOnwardDuration = 0;
+        for (let i = 0; i < flights.length; i++) {
+          totalOnwardDuration += flights[i].duration;
+          if (flights[i + 1] != null && flights[i + 1] != undefined) {
+          let obj2Date = new Date(flights[i + 1].departureDateTime);
+          let obj1Date = new Date(flights[i ].arrivalDateTime);
+          totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
           }
+        }
+        if ((totalOnwardDuration/60)/60 >= start && (totalOnwardDuration/60)/60 <= end) {
+          filteredStopOver.push(e);
+        }
         });
         this.ReturnflightList = filteredStopOver;
       }
@@ -1376,7 +1384,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   selectedFromKey:any ;
   onSelectOnword(flightKey:any,flights:any,item:any,priceDump:any,event:any , j:any)
   {
-    debugger;
+    //debugger;
    if(item.partnerName=='Cleartrip'){
    this.onSelectOnwardSplrt= priceDump.filter((item: any) => {
       if(item.partnerName=='Cleartrip' && item.splrtFareFlight==true )
@@ -1489,7 +1497,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   retrunFlightKey:any;
   onSelectReturn(flightKey:any,flights:any,item:any,priceDump:any,event:any , j:any)
   {
-    debugger
     this.retrunFlightKey = j;
   if(this.isOnwardSelected == true)
       {
@@ -1679,7 +1686,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
     onSelectReturnChange(flightKey:any,flights:any,item:any,event:any)
   {
-    debugger
+   // debugger
    $('#flightChangeR').modal('hide');
   if(this.isOnwardSelected == true)
       {
