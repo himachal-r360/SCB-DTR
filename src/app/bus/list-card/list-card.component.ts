@@ -455,6 +455,12 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    this.showDropping = false;
   }
  }
+ onCloseDetail(){
+   $('.mlist-header').addClass('fixed-top');
+  this.showDetails = false;
+    this.showAmenities = false;
+   this.showDropping = false;
+ }
  active() {
   this.empty = !this.empty;
   this.seatselected = !this.seatselected;
