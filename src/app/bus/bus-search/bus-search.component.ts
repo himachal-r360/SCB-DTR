@@ -55,6 +55,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
   fromStateName:any='From city';
   toStateName:any='From city';
   departureDate:any = "";
+  recentDepartureDate : any = "";
   continueSearchBuss:any=[]
   submitted = false;
    searchBusForm: FormGroup;
@@ -252,7 +253,11 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
         this.searchBusForm['controls']['toTravelCode'].setValue(lastSearch.toTravelCode);
         this.searchBusForm['controls']['fromState'].setValue(lastSearch.fromState);
         this.searchBusForm['controls']['toState'].setValue(lastSearch.toState);
-        this.departureDate = new Date(lastSearch.departure);
+
+        this.recentDepartureDate = this.calculateDiff(new Date(lastSearch.departure));
+
+        if(this.recentDepartureDate) { this.departureDate = new Date(lastSearch.departure); }
+
         this.searchBusForm.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
     }else{
         this.fromCityName='Delhi';
@@ -269,6 +274,16 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
     }
   }
   
+  calculateDiff(dateSent){
+    let currentDate = new Date();
+    dateSent = new Date(dateSent);
+
+    var diff = Math.floor((Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate()) - Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) ) /(1000 * 60 * 60 * 24));
+
+    if(diff >= 0) { return true; } else { return false }
+
+   }
+
   
   swap() {
       
