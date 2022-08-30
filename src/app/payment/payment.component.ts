@@ -206,7 +206,9 @@ export class PaymentComponent implements OnInit {
 		};
 		
 		
-		Partnertoken:any;ServiceToken:any;      
+		Partnertoken:any;
+		ServiceToken:any;  
+		@Input() partnerToken;    
 		MAIN_SITE_URL:string;
 		monthArray:any[];
 		yearArray:any[];
@@ -519,7 +521,7 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			
 	ngOnInit() {
 	this.siteKey=this.serviceSettings.SITEKEY;
-		this.Partnertoken = "Flight";
+		this.Partnertoken = this.partnerToken;
 		this.ServiceToken = "BUS";
 		
                 this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');

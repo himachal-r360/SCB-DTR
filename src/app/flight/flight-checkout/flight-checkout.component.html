@@ -4713,7 +4713,7 @@
 
                         <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
                             [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE"
-                            [passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)" [passflexiFare]="sendflexiFare">
+                            [passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)" [passflexiFare]="sendflexiFare" [partnerToken]="partnerToken">
                         </app-payment>
                     </div>
                 </div>
@@ -4731,7 +4731,7 @@
                             </div>
                             <div class="sidebar-widget fare-summary-widget">
                                 <div class="widget-title">
-                                    <h4>Fare Summary</h4>
+                                    <h4>Fare Summary </h4>
                                     <img *ngIf="selectedOnwardVendor" src="{{cdnUrl}}images/flight_partners/{{selectedOnwardVendor.partnerName}}.png" alt="{{selectedOnwardVendor.partnerName}}">
                                 </div>
                                 <div class="widget-content">

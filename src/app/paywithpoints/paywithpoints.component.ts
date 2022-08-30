@@ -299,13 +299,14 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "noopt": 1,
       // "customer_id":this.customerInfo["customerid"],
       "programName":this.sg['domainName'],
+      "partnertoken":this.Partnertoken,
+      "serviceToken":this.serviceId,
       "_token":this.XSRFTOKEN
     };
-
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
     };
-    this.pay.getcustomercardpoints(passData).subscribe(response => {
+    this.pay.getcustomercardpoint(passData).subscribe(response => {
       this.response1=response;
       if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
       {
