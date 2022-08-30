@@ -331,20 +331,20 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   }
  }
  HideSeats(tripId, rowvalue, bus, mobile = false) {
-  //$(".amenities-list").hide(); 
   this.showSeatLayout = false;
   this.maxSeatMessage = "";
   this.rtcseatcall = false;
  }
  showSeatsFilter(id,tab_id){
    var tab_content = "#seat-"+id+'-'+tab_id;
-    $('.tab-pane-seat').removeClass("active show");
+    $('.tab-pane-seat-'+id).removeClass("active show");
    $(tab_content).addClass("active show");
- console.log(tab_content);
  }
 
  onSeats(tripId, rowvalue, bus, mobile = false) {
   $('#collapseExample_'+tripId).hide();
+ // $('.seat-layout').removeClass('active');
+ // this.showSeatLayout=false;
   this.loading = true;
   this.showAmenities = false;
   this.showCancellation = false;
