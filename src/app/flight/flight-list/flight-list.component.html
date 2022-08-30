@@ -196,7 +196,7 @@
                                 </div>
                                 <hr>
                                 <!-- lay over airport list -->
-                                <div class="sidebar-widget layover-airports-widget">
+                                <!-- <div class="sidebar-widget layover-airports-widget">
                                     <div class="widget-title">
                                         <h6 class="">Layover Airports</h6>
                                         <a href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
@@ -230,7 +230,7 @@
                                         <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                     </div>
                                 </div>
-                                <hr>
+                                <hr> -->
 
                             </div>
                         </div>
@@ -410,7 +410,7 @@
                                                             </div>
                                                         </div>
                                                     </span>
-                                                        <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
+                                                        <a href="javascript:void(0)" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                     </div>
                                                     <div class="flight-listing-viewfares">
                                                         <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> View Fares <i class="fa fa-angle-down ml-10"></i></a>

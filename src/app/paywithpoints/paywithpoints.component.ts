@@ -303,6 +303,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "serviceToken":this.serviceId,
       "_token":this.XSRFTOKEN
     };
+    
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
     };

@@ -2079,6 +2079,7 @@ orderRetry:boolean=false;
       return self.indexOf(value) === index
     }
 
+
     for (let i = 0; i < this.flightOnwardDetails.length; i++) {
       this.onward_airline_array.push(this.flightOnwardDetails[i].airline);
       this.totalOnwardDuration += this.flightOnwardDetails[i].duration;
@@ -3344,9 +3345,14 @@ orderRetry:boolean=false;
       
         let flightfrom_array=[]; let fcode_array=[]; let flightto_array=[];let tcode_array=[];let flightdeparture_array=[];
         
+        let flightfromCountry_array=[];
+        let flightfromCountryCode_array=[];
+        
+        let flighttoCountry_array=[];
+        let flighttoCountryCode_array=[];
         
            
-          
+       
        
        for (let v = 0; v < (this.searchData.length); v++) {
         flightSearchDetails.push({ "leavingFrom": this.searchData[v]['flightfrom'], "goingTo":  this.searchData[v]['flightto'], "depart": this.searchData[v]['departure']});
@@ -3356,6 +3362,12 @@ orderRetry:boolean=false;
         flightto_array.push(this.searchData[v]['toCity']);
         tcode_array.push(this.searchData[v]['flightto']);
         flightdeparture_array.push(this.searchData[v]['departure']);
+        
+        flightfromCountry_array.push(this.searchData[v]['fromContry']);
+        flightfromCountryCode_array.push(this.searchData[v]['fromContry']);
+        flighttoCountry_array.push(this.searchData[v]['toContry']);
+        flighttoCountryCode_array.push(this.searchData[v]['toContry']);
+        
     
        }
        
@@ -3367,14 +3379,14 @@ orderRetry:boolean=false;
                 "fcode":fcode_array,
                 "flightdeparture": flightdeparture_array,
                 "flightfrom": flightfrom_array,
-                "flightfromCity": '',
-                "flightfromCountry": '',
-                "flightfromCountryCode": '',
+                "flightfromCity": flightfrom_array,
+                "flightfromCountry": flightfromCountry_array,
+                "flightfromCountryCode": flightfromCountryCode_array,
                 "flightreturn": '',
                 "flightto": flightto_array,
-                "flighttoCity": '',
-                "flighttoCountry": '',
-                "flighttoCountryCode": '',
+                "flighttoCity": flightto_array,
+                "flighttoCountry": flighttoCountry_array,
+                "flighttoCountryCode": flighttoCountryCode_array,
                 "infants": this.searchData.infants,
                 "t": "ZWFybg==",
                 "tcode": tcode_array,
@@ -3383,7 +3395,6 @@ orderRetry:boolean=false;
                 "travel": this.searchData.travel
                 };
          
-        
       
       }else{
 
@@ -3615,20 +3626,8 @@ orderRetry:boolean=false;
           
           
           
-        var getCancellationPolicy = {
-        itineraryId: this.itineraryid,
-        clientName: 'HDFC243',
-        serviceName: 'Flight',
-        partnerName: this.partnerToken,
-        docKey: this.flightSessionData.docKey,
-        flightKeys:this.flightKeys,
-        travel:this.searchData['travel'],
-        pricingId:this.pricingId,
-        onward_flightIdCSV:'',
-        airlineCode:'',
-        classType:this.searchData['flightclass'],
-      
-        };
+           this.emt_cancellationPolicy('onward');
+
        // this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(result => { });
           
           

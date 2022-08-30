@@ -51,7 +51,7 @@ export class RestapiService {
           this.domainPath="business/";
 	break;
 	case ('regalia_gold'):
-        this.domainName='REGALIA GOLD';
+        this.domainName='REGALIA_GOLD';
           this.domainPath="regalia_gold/";
 	break;
 	default:

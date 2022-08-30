@@ -144,10 +144,10 @@
 <section class="mob-flights-listing" *ngIf="isMobile">
   <div class="container">
       <div class="row">
-          <div class="col-md-12 p-0 fixed-top"  >
-              <div class="mob-listing-header" *ngIf="listing_header">
+          <div class="col-md-12 p-0 fixed-top mlist-header"  >
+              <div class="mob-listing-header" >
                   <div class="mob-listing-header-left">
-                      <a href="javascript:;" routerLink="/compare-fly" >
+                      <a href="javascript:;" routerLink="/bus" >
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>
@@ -166,26 +166,7 @@
                       </a>
                   </div>
               </div>
-              <div class="mob-listing-header" *ngIf="seating_header">
-                <div class="mob-listing-header-left">
-                    <a href="javascript:;" routerLink="/compare-fly" >
-                        <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-                    </a>
-                </div>
-                <div class="mob-listing-header-center">
-                    <div class="">
-                            <p>{{departure | date:'EEE, dd MMM' }}   </p>
-                            <h6> bus_travels_name</h6>
-                            <p class="">A/c Sleeper(2+1)</p>
-                    </div>
-                    
-                </div>
-                <div class="mob-listing-header-right">
-                    <span (click)="seatTypeShow()">
-                        <img src="{{cdnUrl}}/images/icons/info_bus.svg" alt="" />
-                    </span>
-                </div>
-            </div>
+          
           </div>
           <div class="col-md-12 mt-70" *ngIf="!loading">
               <div class="mob-listing-fiters">
@@ -331,7 +312,7 @@
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Late</p>
-                                            <p class="m_sort_text50">Laest</p>
+                                            <p class="m_sort_text50">Latest</p>
                                         </div>
                                         <input checked="checked" type="radio" (click)="orderBy('leave-late')" value="Leave Late">
                                         <span class="checkmark-cust"></span>
