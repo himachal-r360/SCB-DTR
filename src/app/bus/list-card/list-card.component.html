@@ -649,7 +649,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="">
+                                    <div class="" *ngIf="Lowerdecks.length">
                                         <div class="layout">
                                            
                                             <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
@@ -683,16 +683,16 @@
             
                                                   
                                                 </div>
-                                                <div class="text-center my-3" id="toggle">
+                                                <!--<div class="text-center my-3" id="toggle">
                                                     <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
                                                         <mat-button-toggle value="lower" checked>Lower</mat-button-toggle>
                                                     </mat-button-toggle-group>
-                                                </div>
+                                                </div>-->
             
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="">
+                                    <div class="" *ngIf="Upperdecks.length">
                                         <div class="layout">
                                            
                                             <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
@@ -726,11 +726,11 @@
                                                     </table>
                                                     <!-- <span class="pos-rear">REAR</span> -->
                                                 </div>
-                                                <div class="text-center my-3" id="toggle">
+                                                <!--<div class="text-center my-3" id="toggle">
                                                     <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
                                                         <mat-button-toggle value="upper">upper</mat-button-toggle>
                                                     </mat-button-toggle-group>
-                                                </div>
+                                                </div>-->
             
                                             </div>
                                         </div>
@@ -834,15 +834,15 @@
         </table>
         
         </div>
-        <div class="text-center my-3" id="toggle">
+        <!--<div class="text-center my-3" id="toggle">
         <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
         <mat-button-toggle value="lower" checked>Lower</mat-button-toggle>
         </mat-button-toggle-group>
-        </div>
+        </div>-->
         </div>
         </div>
      </div>
-     <div class="">
+     <div class="" *ngIf="Upperdecks.length">
         <div class="layout">
         <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
         <div class="margin-auto content">
@@ -871,11 +871,11 @@
         </tr>
         </table>
         </div>
-        <div class="text-center my-3" id="toggle">
+        <!--<div class="text-center my-3" id="toggle">
         <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
         <mat-button-toggle value="upper">upper</mat-button-toggle>
         </mat-button-toggle-group>
-        </div>
+        </div>-->
         </div>
         </div>
          </div>
