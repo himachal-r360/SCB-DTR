@@ -378,11 +378,12 @@ pgSettingsCYBERToken:number=0;
 		      setTimeout(() => {
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
+           this.customerInfo=this.sg['customerInfo'];
+           console.log( this.customerInfo);
 		  if(this.sg['customerInfo']["org_session"]==1){
 		var customerInfo = this.sg['customerInfo'];
 
 		this.rest.updateCardDetails(customerInfo);
-		this.customerInfo=customerInfo;
 		this.guestLogin = this.customerInfo["guestLogin"];
 		if(customerInfo["guestLogin"]==true){
 		if(this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY==1){
