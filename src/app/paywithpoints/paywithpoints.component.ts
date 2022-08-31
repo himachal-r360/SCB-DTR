@@ -284,6 +284,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
             };
             this.value = min_value;
              this.options = opts;
+             
     }
   }
   checkAvailablePointsforSavedCard(){ 
@@ -297,13 +298,13 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "ctype":this.ctype,
       "modal":"DIGITAL",
       "noopt": 1,
-      // "customer_id":this.customerInfo["customerid"],
+      "customer_id":this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
       "partnertoken":this.Partnertoken,
       "serviceToken":this.serviceId,
-      "_token":this.XSRFTOKEN
+      "_token":this.XSRFTOKEN,
+      "guestLogin":this.sg['customerInfo']['guestLogin']
     };
-    
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
     };
@@ -320,9 +321,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         var card_type=this.response1['card_type'];
         this.CcCharges = this.response1['CcCharges'];
         this.pointData = this.response1;
-        this.cardmobile = this.response1['mobile'];
+        this.cardmobile = this.sg['customerInfo']['ccustomer']['mobile'];
         this.cardbin = this.response1['bin'];
-        this.carddob = this.response1['dob'];
+        this.carddob = this.sg['customerInfo']['ccustomer']['DOB'];
         this.setSlider();
         // this.intitialconversionptoc();
       }else{
@@ -380,10 +381,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   generateVoucherOtp(){
     this.submittedotpform=true;
     if (this.Formotp.status !='VALID') {
-      console.log('here1');
       return;
     }else{
-      console.log('here2');
+     
       this.submittedotpform=false;
       this.otpaccepted = false;
        let URLparams = {
@@ -396,6 +396,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "savecard":1,
       "user_id":this.sg["customerInfo"]["id"],
     }
+
       this.otpGenerate(URLparams);
    
   }    
@@ -445,6 +446,8 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           "passwordValue":this.Formotpvalidate.controls['otp'].value,
           "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
         }
+        this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
+        this.RedeemedPoints = this.value;
       this.otpVerify(URLparams);
     }
   }
@@ -463,6 +466,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherDiv=false; 
           this.addcardDiv=false; 
           this.voucherCodedetails=false; 
+          
           this.updateAmountToPay(this.RemaingAmount);
         }
       }else{
