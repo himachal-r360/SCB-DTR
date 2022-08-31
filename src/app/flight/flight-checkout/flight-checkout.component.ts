@@ -425,7 +425,7 @@ orderRetry:boolean=false;
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
                    this.searchDataOrg = this.searchData ;
-                  //console.log(this.flightSessionData);
+                  console.log(this.searchDataOrg);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
