@@ -1,14 +1,14 @@
 
         <main class="site-main mob-main">
-          <section class="bradcome-area mt-20 mb-10">
+          <section class="bradcome-area mt-110 mb-10">
               <div class="container">
                   <div class="row">
                       <div class="col-md-12">
                           <div class="bradcome-list">
                               <ul class="list-inline">
-                                  <li class="list-inline-item"><a href="#">Home</a></li>
+                                  <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Home</a></li>
                                   <li class="list-inline-item"><span>/</span></li>
-                                  <li class="list-inline-item"><a href="#">Travel & Stays</a></li>
+                                  <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
                                   <li class="list-inline-item"><span>/</span></li>
                                   <li class="list-inline-item"><span>Flight Search</span></li>
                               </ul>
@@ -18,7 +18,7 @@
               </div>
           </section>
 
-          <section class="flight-listing-area mt-100" *ngIf="!isMobile">
+          <section class="flight-listing-area mt-10" *ngIf="!isMobile">
               <div class="container">
                   <div class="row">
                       <div class="col-lg-12">
@@ -260,7 +260,7 @@
                                       <div class="Sector-list" (click)="activeSelectedTrip(i)" [ngClass]="{'active': i ==selectedTrip}" *ngFor="let item of searchData; let i = index">
                                           <p>Sector {{i+ 1}}</p>
                                           <h6>{{item.fromCity}} - {{item.toCity}}</h6>
-                                          <p>{{item.depart | date:"EEE ,dd MMM" }}</p>
+                                          <p>{{item.departure | date:"EEE ,dd MMM" }}</p>
                                       </div>
                                   </div>
 
@@ -1663,7 +1663,7 @@
                                   <!-- <span class="mainprice">₹ 5,000</span>
                                   <span class="price-off">10% off</span> -->
                                   <div class="ff-Viewfaredetails">
-                                      <a href="#" class="rr-Viewfare">View Fare Details</a>
+                                      <a href="javascript:void(0)" class="rr-Viewfare">View Fare Details</a>
                                       <div class="hover-popover" style="left: -82px;">
                                           <div class="hover-popover-title">
                                               <h6>Price Breakdown</h6>
