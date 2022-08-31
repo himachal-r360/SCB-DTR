@@ -23,6 +23,7 @@ import { AppConfigService } from '../../app-config.service';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { FlightService } from 'src/app/common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
+import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 @Component({
  selector: 'app-buslist',
  templateUrl: './buslist.component.html',
@@ -152,8 +153,9 @@ export class BuslistComponent implements OnInit,OnDestroy {
         tracksearchObj:any;
         listing_header:boolean = true;
         seating_header:boolean = false;
+        busFilterlengthZero :boolean = false;
 
- constructor(public rest:RestapiService,private busService: BusService, public dialog: MatDialog, private router: Router, private location: Location,  private activatedRoute: ActivatedRoute, private http: HttpClient, private changeDetector: ChangeDetectorRef, public commonHelper: CommonHelper, public busHelper: BusHelper, private sg: SimpleGlobal, private formBuilder: FormBuilder, private _bottomSheet: MatBottomSheet, private busfilter: BusfilterPipe, plocation: PlatformLocation, @Inject(APP_CONFIG) appConfig: any,private cookieService: CookieService,private titleService: Title,private appConfigService:AppConfigService,private _flightService: FlightService,public _styleManager: StyleManagerService) {
+ constructor(public rest:RestapiService,private busService: BusService, public dialog: MatDialog, private router: Router, private location: Location,  private activatedRoute: ActivatedRoute, private http: HttpClient, private changeDetector: ChangeDetectorRef, public commonHelper: CommonHelper, public busHelper: BusHelper, private sg: SimpleGlobal, private formBuilder: FormBuilder, private _bottomSheet: MatBottomSheet, private busfilter: BusfilterPipe, plocation: PlatformLocation, @Inject(APP_CONFIG) appConfig: any,private cookieService: CookieService,private titleService: Title,private appConfigService:AppConfigService,private _flightService: FlightService,public _styleManager: StyleManagerService, private EncrDecr: EncrDecrService) {
   this.serviceSettings=this.appConfigService.getConfig();
   
   
@@ -221,7 +223,7 @@ ngOnInit(): void {
         this.departureStr = previousDay.setDate(previousDay.getDate() - 1);
         var departureDateNumber = datePipe.transform(departureTimestamp, 'yyyyMMdd');
         var todayDt = datePipe.transform(new Date(), 'yyyy-MM-dd');
-        var todayDateNumber = datePipe.transform(todayDt, 'yyyyMMdd');
+        var todayDateNumber = datePipe.transform(todayDt, 'yyyyMMdd'); 
         if (parseInt(todayDateNumber) > parseInt(departureDateNumber)) { 
         this.datePreviousStatus = false;
         } else {
@@ -234,11 +236,11 @@ ngOnInit(): void {
         }
         );
 
-        let trackUrlParams = new HttpParams()
-        .set('current_url', window.location.href)
-        .set('category', 'RedBus')
-        .set('event', 'Search listing1')
-        .set('metadata',JSON.stringify(this.tracksearchObj));
+        let trackUrlParams = new HttpParams();
+        trackUrlParams.set('current_url', window.location.href)
+        trackUrlParams.set('category', 'RedBus')
+        trackUrlParams.set('event', 'Search listing1')
+        trackUrlParams.set('metadata',this.EncrDecr.set(JSON.stringify(this.tracksearchObj)));
 
         const track_body: string = trackUrlParams.toString();
         this.rest.trackEvents( track_body).subscribe(result => {});
@@ -588,6 +590,8 @@ ngOnInit(): void {
    return true;
   });
   var filteredValues = this.busfilter.transform(this.busResults, this.minSeletedPriceValue, this.maxSeletedPriceValue, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
+
+  
   this.availableClasses = this.busHelper.getBusTypesFilter(filteredValues, this.filterClasses);
 
 
@@ -626,6 +630,10 @@ ngOnInit(): void {
 
  updateCommonFilter() { 
   var filteredValues = this.busfilter.transform(this.busResults, this.minSeletedPriceValue, this.maxSeletedPriceValue, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
+
+  this.busFilterlengthZero = false;
+  if(filteredValues.length ==0 ) this.busFilterlengthZero = true; 
+
   this.allAvailableClasses = this.availableClasses = this.busHelper.getBusTypesFilter(filteredValues, this.filterClasses);
   this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, filteredValues, this.filterOperators);
   this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, filteredValues, 'boardingTimes', this.filterboardingpoints);
@@ -647,6 +655,9 @@ ngOnInit(): void {
  updateFilterBusType() {
   var filteredValues = this.busfilter.transform(this.busResults, this.minSeletedPriceValue, this.maxSeletedPriceValue, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
 
+  this.busFilterlengthZero = false;
+  if(filteredValues.length ==0 ) this.busFilterlengthZero = true; 
+
   this.allAvailableClasses = this.availableClasses = this.busHelper.getBusTypesFilterNew(this.allAvailableClasses, filteredValues, this.filterClasses);
   this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, filteredValues, this.filterOperators);
   this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, filteredValues, 'boardingTimes', this.filterboardingpoints);
@@ -662,9 +673,42 @@ ngOnInit(): void {
    this.totalrtc.push(rtc);
    this.rtctotal[rtc[0].lowercase] = false;
   }
+ 
   this.filterrtc();
   this.moveTop();
  }
+
+ clearDepartureSelection(){
+  this.filterDeparture = [];
+  this.departureTimeFilter.forEach((item) => {
+   item.selected = false;
+  });
+ }
+
+ clearArrivalTimeSelection(){
+  this.filterArrival = [];
+  this.arrivalTimeFilter.forEach((item) => {
+   item.selected = false;
+  });
+ }
+
+ clearClassesSelection(){
+  this.filterClasses = [];
+  this.availableClasses.forEach((item) => {
+   item.selected = false;
+  });
+  
+}
+
+clearAmenitiesSelection(){
+  this.filteramenities = [];
+  this.amenities.forEach((item) => {
+   item.selected = false;
+  });
+
+  this.moveTop();
+  
+}
 
  clearSelectionAll() {
   this.filterDeparture = [];

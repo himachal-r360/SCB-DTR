@@ -46,6 +46,10 @@
                         [amenities] = "amenities" (amenitiesfilterEvent)="updateamenitiesFilter($event)"
                         (applyFilter) = "onFilter()"
                         (searchboard) = "searchboarding($event)"
+                        (removeDeparturefilters) = "clearDepartureSelection()"
+                        (removeArrivalTimefilters)  = "clearArrivalTimeSelection()"
+                        (removeClassesfilters)  = "clearClassesSelection()"
+                        (removeamenitiesfilters)  = "clearAmenitiesSelection()"
                         ></app-filter>
                         </ng-container>
                         </div>
@@ -131,6 +135,14 @@
 
                         </div>
                          <div class="text-center" *ngIf="!loading && busResults.length < 1">No bus found</div>
+
+                         <div class="card_details_row card_brdr_btm" *ngIf="busFilterlengthZero">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>No buses Found</h5>
+                                </div>
+                            </div>
+                        </div>
                         
                     </div>
                 </div>
@@ -327,7 +339,7 @@
                           </div>
                       </div>
                       <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
-                          <div class="mob-sf-filters">
+                          <div class="mob-sf-filters"> 
                               <div class="mob-sf-accordion">
                                    <ng-container *ngIf="busResults">
                         <app-filter [busResults]="busResults" (childEvent)="updateDeparture($event)" (arrivalFilterEvent)="updateArrival($event)" [boardingpoints] = "boardingpoints" (boardingfilterEvent)="updateBoardingFilter($event)"
@@ -340,6 +352,10 @@
                         [amenities] = "amenities" (amenitiesfilterEvent)="updateamenitiesFilter($event)"
                         (applyFilter) = "onFilter()"
                         (searchboard) = "searchboarding($event)"
+                        (removeDeparturefilters) = "clearDepartureSelection()"
+                        (removeArrivalTimefilters)  = "clearArrivalTimeSelection()"
+                        (removeClassesfilters)  = "clearClassesSelection()"
+                        (removeamenitiesfilters)  = "clearAmenitiesSelection()"
                         ></app-filter>
                         </ng-container>
                                 
