@@ -244,7 +244,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.fromCityName=lastSearch.searchFrom;
-        this.toCityName=lastSearch.searchTo;
+        this.toCityName=lastSearch.searchTo; 
         this.fromStateName=lastSearch.fromState;
         this.toStateName=lastSearch.toState;
         this.searchBusForm['controls']['searchFrom'].setValue(lastSearch.searchFrom);

@@ -71,7 +71,7 @@ export class FilterComponent implements OnInit {
 
   updateBoardingFilter(appt) {
     this.boardingfilterEvent.emit(appt);
-  }
+  } 
   updateDroppingFilter(appt) {
     this.droppingfilterEvent.emit(appt);
   }
