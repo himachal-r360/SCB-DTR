@@ -95,13 +95,21 @@
 
                 </li>
                 <li>
-                    <mat-select class=" ms-4 mt-1" formControlName="flightclass">
+                    <mat-select class=" ms-4 mt-1" matNativeControl  formControlName="flightclass">
                         <mat-option value="B" >Business Class</mat-option>
                         <mat-option value="E">Economy Class</mat-option>
                         <mat-option value="F">First Class</mat-option>
                         <mat-option value="P">Premium Economy</mat-option>
                     </mat-select>
-
+                    
+                <!-- <mat-form-field appearance="none">
+                <select matNativeControl formControlName="flightclass" class=" ms-4 mt-1">
+                    <option value="B">Business Class </option>
+                    <option value="E">Economy Class</option>
+                    <option value="F">First Class</option>
+                    <option value="P">Premium Economy</option>
+                </select>
+                </mat-form-field> -->
                 </li>
             </ul>
         </div>
@@ -389,17 +397,20 @@
                                 <div class="area-root-departure " (click)="openMliteDatePicker('departure',0)"
                                     id="datePickerOpen">
                                     <div class="select-root-departure departure-date" >
-                                        <span class="select-roottitle">DEPARTURE</span>
-                                        <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-                                        <span class="select-roottitle d-block w-100"
-                                            *ngIf="departureDate=='' ||departureDate==undefined">Select
-                                            Departure</span>
-                                        <span class="select-roottitle"
-                                            *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
-                                            }}</span>
+                                        <div>
+                                            <span class="select-roottitle">DEPARTURE</span>
+                                            <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
+                                            <span class="select-roottitle d-block w-100"
+                                                *ngIf="departureDate=='' ||departureDate==undefined">Select
+                                                Departure</span>
+                                            <span class="select-roottitle"
+                                                *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
+                                                }}</span>
+    
+                                            <div class="mt-30" *ngIf="submitted && Error('departure', 'required')">
+                                                <small class="validate-msg">Please select departure date</small>
+                                            </div>
 
-                                        <div class="mt-30" *ngIf="submitted && Error('departure', 'required')">
-                                            <small class="validate-msg">Please select departure date</small>
                                         </div>
 
                                     </div>
