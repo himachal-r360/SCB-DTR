@@ -144,11 +144,11 @@ export class PayService {
 }
   generateVoucherOtp(param){
     
-  if(LOCALJSON=='true'){
-    return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
-  }else{
+  // if(LOCALJSON=='true'){
+  //   return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
+  // }else{
     return this.http.post(this.endpoint+'generateVoucherOtp', param, config).pipe(map((response:any) => response));
-  }
+  // }
 }
 otp_validation(param){
     
