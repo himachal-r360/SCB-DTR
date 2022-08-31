@@ -35,7 +35,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   @Input() passSessionKey;
   @Input() ctype;
   @Input() customerInfo;
-  @Output() amountToPay = new EventEmitter<string>();
+  @Output() amountToPay =new EventEmitter<any>();
   value: number = 0;
   savedCards: any = [];
   cards:any[];
@@ -128,8 +128,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         }
 
   }
-    updateAmountToPay(value: string) {
-    this.amountToPay.emit(value);
+    updateAmountToPay(code: string,value: string) {
+    var values={code: code, value:value}; 
+    this.amountToPay.emit(values);
   }
   setSlider(){
     // update slider dynamically
@@ -148,9 +149,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           var total_count=this.pointData['condition'].total_count;
           var total_transvalue=this.pointData['condition'].total_transvalue;   
       }
-      var max_value_redemption = (Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100);
+      var max_value_redemption = Number((Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100));
       if(max_value<max_value_redemption){
-        max_value_redemption = max_value;
+        max_value_redemption = Number (max_value);
       }
 
        let opts: Options = {
@@ -181,7 +182,6 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "guestLogin":this.customerInfo['guestLogin']
     };
     
-    console.log(request);
     
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
@@ -285,6 +285,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       postData: this.EncrDecr.set(JSON.stringify(URLparams))
     };
         this.pay.generateVoucherOtp(passData).subscribe(response => {
+        console.log("otpGenerate");
+        console.log(response);
+        
         if(response.reward_message='successful'){
           this.voucherOtp = true;
           this.voucherslider = false;
@@ -330,6 +333,10 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         postData: this.EncrDecr.set(JSON.stringify(URLparams))
       };
        this.pay.otp_validation(passData).subscribe(resp =>{
+       
+          console.log("otpVerify");
+        console.log(resp);
+       
   if(typeof resp.status != undefined && resp.status){
         //validate otp success
         if(resp.status !='false'){
@@ -340,7 +347,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.addcardDiv=false; 
           this.voucherCodedetails=false; 
           
-          this.updateAmountToPay(this.RemaingAmount);
+          this.updateAmountToPay('XXXXX',this.RemaingAmount);
         }
       }else{
 
@@ -450,7 +457,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherOtp=false; 
           this.voucherDiv=false; 
           this.addcardDiv=false; 
-          this.updateAmountToPay(this.RemaingAmount);
+          this.updateAmountToPay(this.vouchertransID,this.RemaingAmount);
         }else{
           // this.errorMsg3="Something went wrong";
           if(this.applyVoucherRes['message']!=undefined)

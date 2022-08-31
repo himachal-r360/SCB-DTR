@@ -40,7 +40,8 @@ export class PaymentComponent implements OnInit {
 	        
 	        autoApplyError:number=0;
 	        selectedPg:string='CYBER';
-					@Output() sendtotalfare = new EventEmitter<any>();
+		
+		@Output() sendtotalfare = new EventEmitter<any>();
 
 		flexiOtpButtonActive:boolean=true;
 	        
@@ -808,9 +809,17 @@ checkInfo1(event){
      $('#tokenization').val(1);
    }  
 }
-updatenewAmounttopay(event:string){
-	this.payTotalFare=event;
+@Output() sendPointsPlusEvent = new EventEmitter<any>();
+updatenewAmounttopay(event:any){
+  this.payTotalFare=event.value;
+    this.sendPointsPlusEvent.emit(event);	  
+  this.sendtotalfare.emit(this.payTotalFare);
+
 }
+
+
+
+
 
 
 securemycard() {
@@ -997,6 +1006,8 @@ this.spinnerService.show();
 			this.flexiOtpButtonActive = true;
 			};
 	}
+		
+
 		
 
 	

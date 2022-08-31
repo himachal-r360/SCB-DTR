@@ -36,7 +36,7 @@
     </div>
     
       <div class="col-6">Pay with Points and Money</div>
-      <div class="col-6"><span id="selectedPoints" class="minpoints" *ngIf="value>0">{{value}} pts <span *ngIf="value>0 && (orderamount - value*points_percentage)>0">+</span></span><span class="balamt" *ngIf="(orderamount - value*points_percentage)>0">  &#8377; {{orderamount - value*points_percentage}}</span>
+      <div class="col-6"><span id="selectedPoints" class="minpoints" *ngIf="value>0">{{value |number}} pts <span *ngIf="value>0 && (orderamount - value*points_percentage)>0">+</span></span><span class="balamt" *ngIf="(orderamount - value*points_percentage)>0">  &#8377; {{orderamount - value*points_percentage |number}}</span>
       </div>
        <div class="box-m " *ngIf="voucherslider">
           <div class="box-sub showslider">
@@ -53,7 +53,7 @@
             <form [formGroup]="Formotp" (ngSubmit)="generateVoucherOtp()">
             <div class="col-md-12">
               <p>Please note that you can pay maximum {{redemption_value}}% of the transaction amount through Points i.e,<br>
-              &#8377; <span>{{orderamount* (redemption_value/100)}}</span> ({{redemption_value}}% of &#8377;<span>{{orderamount}}</span>) only. Balance amount should be paid by Card or Account. </p>
+              &#8377; <span>{{(orderamount* (redemption_value/100)) |number}}</span> ({{redemption_value |number}}% of &#8377;<span>{{orderamount |number}}</span>) only. Balance amount should be paid by Card or Account. </p>
                <div class="form-check pt-10">
                 <input class="form-check-input" [(ngModel)]="otpaccepted" type="checkbox" formControlName="termsconditionvoucher" name="termsconditionvoucher" id="termsconditionvoucher">
                 <label class="form-check-label xs-check-font" for="termsconditionvoucher" >

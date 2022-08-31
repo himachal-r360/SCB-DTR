@@ -5598,13 +5598,15 @@
               <h4>Payment</h4>
             </div>
 
-            <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
+            <app-payment (sendCouponEvent)="receiveCouponDetails ($event)" [remove_Coupon]="remove_Coupon"
               [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey"
               (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
               [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee"
               [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
               [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
-              (sendtotalfare)="recivetotalFare($event)" [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken">
+              (sendtotalfare)="recivetotalFare($event)" 
+              (sendPointsPlusEvent)="receivePointsPlus($event)" 
+              [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken">
             </app-payment>
           </div>
         </div>
