@@ -22,6 +22,8 @@ import { BusfilterPipe } from 'src/app/shared/pipes/busfilter.pipe';
 import { BusCheckoutComponent } from './bus-checkout/bus-checkout.component';
 import { DecimalPipe } from '@angular/common';
 import { CheckoutBottomSheetComponent } from './bus-checkout/bottom-sheet/bottom-sheet.component';
+
+
 const routes: Routes = [
   {
     path:"bus/search" ,component:BuslistComponent,
