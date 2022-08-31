@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   LOCALLOGIN: 'true',
   COOKIE_DOMAIN: null,
-  LOCALJSON: 'true', 
+  LOCALJSON: 'truea', 
   localInstance: 1,
   //  url:"https://smartbuyadminuat.reward360.in/",
   //url:"http://new.reward360.us/",
