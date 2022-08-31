@@ -333,7 +333,7 @@ recivetotalFare($event){
     this.titleService.setTitle('Home | RedBus');
    
     this.activatedRoute.url.subscribe(url => {
-    
+     this.buttonSubmitted=false;
      this.resetPopups();
       this.steps = 1;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -1045,8 +1045,10 @@ gstReset(){
   }
  }
 
+ buttonSubmitted:boolean=false;
  createBusItinerary() { 
   this.submitted = true;
+  this.buttonSubmitted=true;
   var checkage = this.passengerForm.controls['passengerAge' + this.defaultPrimary]['value'];
   if (!(Number(checkage) >= 12)) {
    this.ageValidError = "Primary traveller's age should be above 11 years";
@@ -1086,6 +1088,7 @@ gstReset(){
   }
 
   if (this.passengerForm.invalid || this.passengerFormerror == 1) {
+    this.buttonSubmitted=false;
    return;
   } else {
    this.spinnerService.show();
@@ -1265,7 +1268,7 @@ gstReset(){
    this.busSubscription = this.busService.blockbusSeats(JSON.stringify(itineraryParam)).subscribe(data => {
 
      let dData = JSON.parse(this.EncrDecr.get(data.result));
-
+ this.buttonSubmitted=false;
      this.blockResponse = < BusResponse > dData;
      var orderId = this.blockResponse.orderId;
      var keyStatus = this.blockResponse.errorCode;
@@ -1304,12 +1307,13 @@ gstReset(){
       sessionStorage.setItem(this.searchBusKey + '-totalFare', String(this.totalFare));
       sessionStorage.setItem(this.searchBusKey + '-passData', this.EncrDecr.set(JSON.stringify(this.busData)));
       sessionStorage.setItem(this.searchBusKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
-      this.continueStatus = true;
       this.spinnerService.hide();
+       this.buttonSubmitted=false;
       this.steps=2;
        this.completedSteps=2;
       }else{
             this.spinnerService.hide();
+             this.buttonSubmitted=false;
       this.buttonLoading = false;
       const dialogRef = this.dialog.open(ConfirmationDialog, {
        width: '600px',
@@ -1327,6 +1331,7 @@ gstReset(){
       
      } else {
       this.spinnerService.hide();
+       this.buttonSubmitted=false;
       this.buttonLoading = false;
       const dialogRef = this.dialog.open(ConfirmationDialog, {
        width: '600px',
@@ -1340,6 +1345,7 @@ gstReset(){
      }
     },
     (err: HttpErrorResponse) => {
+     this.buttonSubmitted=false;
      this.spinnerService.hide();
      this.buttonLoading = false;
      const dialogRef = this.dialog.open(ConfirmationDialog, {

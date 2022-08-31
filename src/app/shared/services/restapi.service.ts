@@ -329,7 +329,6 @@ checksavedtravellers(param){
      }else{
      return this.http.post( this.endpoint+'validatePGDataFlight',param, config).pipe(map((response: any) => response));
      } 
-     //return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
   }
    isFlexiPayEligible (param):Observable<any> {
   if(LOCALJSON=='true'){

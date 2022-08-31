@@ -65,7 +65,6 @@ export function appInitializerFn(appConfig: AppConfigService) {
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
     MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,BusSearchModule,TrainSearchModule,
-    BrowserAnimationsModule,
     MaterialModule,
     DirectiveModule,
     CarouselModule,RegaliaGoldModule,

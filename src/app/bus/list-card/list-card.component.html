@@ -29,7 +29,7 @@
                 <div class="col-md-3 float-right w-33">
                     <div class="float-left">
                         <div class="label-gray">From</div>
-                        <div class="label-name"> Rs. {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+                        <div class="label-name"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
                     </div>
                 </div>
             </div>
@@ -162,13 +162,13 @@
                             <tr *ngFor="let cancel of retvalues">
                                 <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
                                 <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                                <td class="text-left"> Rs. {{cancel.cancharges }}</td>
+                                <td class="text-left"> ₹ {{cancel.cancharges }}</td>
                             </tr>
                             <tr> </tr>
                         </tbody>
                     </table>
                     <ul>
-                        <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text"><b>Refund amount shown above is indicative and calculated on ticket price Rs. {{bus.fareDetails[0].baseFare | commaSeparator }}</b></li>
+                        <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text"><b>Refund amount shown above is indicative and calculated on ticket price ₹ {{bus.fareDetails[0].baseFare | commaSeparator }}</b></li>
                         <li style="width: 100%;list-style: circle;margin-left: 25px;" class="cancel-text" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation is allowed for this ticket. Please note that primary passenger booking cannot be cancelled.</b></li>
                         <ng-template #noPartial>
                             <li class="cancel-text" style="width: 100%;list-style: circle;margin-left: 25px;">
@@ -184,8 +184,8 @@
                         <li> 70%</li>
                         <li>70%</li>
                         <li class="text-bold">Refund Amount</li>
-                        <li> Rs. 225</li>
-                        <li> Rs. 225</li> -->
+                        <li> ₹ 225</li>
+                        <li> ₹ 225</li> -->
                 </ul>
             </div>
         </div>
@@ -253,8 +253,13 @@
     
             <div class="row">
                 <div class="col-md-8">
+
                     <div class=" layout-w" *ngIf="loading; else listng">
-                        <app-loader></app-loader>
+                        <div class="mt-150 d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        </div>
                     </div>
     
                     <ng-template #listng>
@@ -455,7 +460,7 @@
                                 </div>
                                 <div class="black-medium col-5 text-right"> 
                                     <div class="fareTotal">
-                                        Rs. {{seats.seatfaretotal | number:'1.2-2'}}
+                                        ₹ {{seats.seatfaretotal | number:'1.2-2'}}
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -471,8 +476,8 @@
                                     </span>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <span class="titleLable black-medium"><span *ngIf="totalfare > 0; else zero"> Rs. {{totalfare | number:'1.2-2'}}</span>
-                                        <ng-template #zero> Rs. {{totalfare}}</ng-template>
+                                    <span class="titleLable black-medium"><span *ngIf="totalfare > 0; else zero"> ₹ {{totalfare | number:'1.2-2'}}</span>
+                                        <ng-template #zero> ₹ {{totalfare}}</ng-template>
                                     </span>
                                 </div>
                             </div>
@@ -536,7 +541,7 @@
         <div class="col-5 pt20">
             <div class=" d-flex align-items-center text-right bus_fare_pos">
                 <div class="label-gray px-1">From</div>
-                <div class="label-name-large text-right"> Rs. {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+                <div class="label-name-large text-right"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
             </div>
         </div>
         <div class="col-12">
@@ -599,7 +604,11 @@
    
     <div class="mlite_seat_layout">
         <div class="col-md-8 float-left layout-w" *ngIf="loading; else listngMlite">
-            <app-loader></app-loader>
+            <div class="mt-150 d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        </div>
         </div>
         <ng-template #listngMlite>
                 <div id="tab-seats-m">
@@ -796,7 +805,7 @@
                                             <div>Seat no(s): {{seats.selseats}} </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="text-right"> Rs. {{seats.totalbaseFare | number:'1.2-2'}} </div>
+                                            <div class="text-right"> ₹ {{seats.totalbaseFare | number:'1.2-2'}} </div>
                                         </div>
                                     </div>
                                     <!-- <li > <span></span></li> -->
@@ -806,7 +815,7 @@
                                         <div>Taxes</div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="text-right">Rs. {{totServtax | number:'1.2-2'}}</div>
+                                        <div class="text-right">₹ {{totServtax | number:'1.2-2'}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -815,7 +824,7 @@
 
                         <span *ngIf="pricesplit.length > 1">
     <span>
-    <mat-tab  *ngFor="let price of pricesplit" label=" Rs.{{price.actfare | number}} ({{price.seattotal}})">
+    <mat-tab  *ngFor="let price of pricesplit" label=" ₹{{price.actfare | number}} ({{price.seattotal}})">
                     
         <div class="seat_layover">
           <div class="bus_seats_view">
@@ -899,8 +908,8 @@
     <div class="row">
         <div class="col" (click)="openBottomSheet()">
             <div class="xs-text">Total</div>
-            <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> Rs.{{totalfare | number:'1.2'}}</span>
-                <ng-template #zero1> Rs. {{totalfare | number:'1.2'}}</ng-template>
+            <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> ₹{{totalfare | number:'1.2'}}</span>
+                <ng-template #zero1> ₹ {{totalfare | number:'1.2'}}</ng-template>
             </div>
         </div>
         <div class="col p0" (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
@@ -927,7 +936,7 @@
                 <div>Seat no(s): {{seats.selseats}} </div>
             </div>
             <div class="col-6">
-                <div class="text-right"> Rs. {{seats.totalbaseFare | number:'1.2-2'}} </div>
+                <div class="text-right"> ₹ {{seats.totalbaseFare | number:'1.2-2'}} </div>
             </div>
         </div>
         <!-- <li > <span></span></li> -->
@@ -937,7 +946,7 @@
             <div>Taxes</div>
         </div>
         <div class="col-6">
-            <div class="text-right">Rs. {{totServtax | number:'1.2-2'}}</div>
+            <div class="text-right">₹ {{totServtax | number:'1.2-2'}}</div>
         </div>
     </div>
     </div>
@@ -1253,7 +1262,7 @@
                                                             <tr *ngFor="let cancel of retvalues">
                                                                 <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
                                                                 <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                                                                <td class="text-center"> Rs. {{cancel.cancharges}}</td>
+                                                                <td class="text-center"> ₹ {{cancel.cancharges}}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
