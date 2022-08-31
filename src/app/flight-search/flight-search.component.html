@@ -111,8 +111,12 @@
                     <div class="select-root-area" [ngClass]="isMobile && fromCityName == '' ? 'p-3': ''">
                         <div class="select-root-left" appDropdown>
                             <span class="select-roottitle">FROM</span>
-                            <h5 class="fw_6 text-dotted">{{fromCityName}}<span *ngIf="!isMobile">, {{fromCountryName}}</span></h5>
-                            <span class="select-roottitle ">{{flightData.value.flightfrom}}, {{ fromAirpotName}}, {{fromCountryName}}</span>
+                            <!-- <h5 class="fw_6 ">{{fromCityName}}<span *ngIf="!isMobile">, {{fromCountryName}}</span></h5> -->
+                            <h5 class="fw_6 " *ngIf="!isMobile">{{(fromCityName | slice:0:10) + ","}} {{( fromCountryName.length > 8)? (fromCountryName | slice:0:10)+'..':(fromCountryName)}}</h5>
+                            <h5 class="fw_6 " *ngIf="isMobile">{{(fromCityName | slice:0:10) }}</h5>
+                            <!-- <span class="select-roottitle">{{flightData.value.flightfrom}}, {{ fromAirpotName}}</span> -->
+                            <span class="select-roottitle" *ngIf="!isMobile">{{flightData.value.flightfrom}}, {{( fromAirpotName.length > 20)? (fromAirpotName | slice:0:25)+'..':(fromAirpotName)}}</span>
+                            <span class="select-roottitle" *ngIf="isMobile">{{flightData.value.flightfrom}}</span>
                             <div class="error_msg w-50"
                                 *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
                                 <small class="validate-msg">Please select from city</small>
@@ -223,8 +227,12 @@
                         </div>
                         <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" >
                             <span class="select-roottitle" [ngClass]="isMobile && fromCityName == '' ? 'ps-2': ''">TO</span>
-                            <h5 class="fw_6 text-dotted">{{toCityName}}<span *ngIf="!isMobile">, {{toCountryName}}</span></h5>
-                            <span class="select-roottitle"><span>{{flightData.value.flightto}},</span> {{toAirpotName}}, <span>{{toCountryName}}</span></span>
+                            <!-- <h5 class="fw_6 ">{{toCityName}}<span *ngIf="!isMobile">, {{toCountryName}}</span></h5> -->
+                            <h5 class="fw_6 " *ngIf="!isMobile">{{(toCityName | slice:0:10) + ","}} {{(toCountryName.length > 8)? (toCountryName | slice:0:10)+'..':(toCountryName)}}</h5>
+                            <h5 class="fw_6 " *ngIf="isMobile">{{(toCityName | slice:0:10)}} </h5>
+                            <!-- <span class="select-roottitle"><span>{{flightData.value.flightto}},</span> {{toAirpotName}}, <span>{{toCountryName}}</span></span> -->
+                            <span class="select-roottitle" *ngIf="!isMobile">{{flightData.value.flightto + ","}} {{( toAirpotName.length > 20)? (toAirpotName | slice:0:25)+'..':(toAirpotName)}}</span>
+                            <span class="select-roottitle" *ngIf="isMobile">{{flightData.value.flightto }}</span>
                             <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('flightto', 'required')">
                                 <small class="validate-msg">Please select to city</small>
                             </div>
@@ -317,7 +325,7 @@
                                         <span class="select-roottitle">DEPARTURE</span>
                                         <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
 
-                                        <span class="select-roottitle d-block w-100"
+                                        <span class="select-roottitle d-block w-100 " style="font-size: 15px;"
                                             *ngIf="departureDate=='' ||departureDate==undefined">Select Departure</span>
                                         <span class="select-roottitle"
                                             *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
@@ -380,7 +388,7 @@
                                 [ngClass]="isMobile == true && navItemActive == 'Round Trip' ? 'mob-select-dep-ret':''">
                                 <div class="area-root-departure " (click)="openMliteDatePicker('departure',0)"
                                     id="datePickerOpen">
-                                    <div class="select-root-departure departure-date">
+                                    <div class="select-root-departure departure-date" >
                                         <span class="select-roottitle">DEPARTURE</span>
                                         <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
                                         <span class="select-roottitle d-block w-100"
@@ -718,8 +726,11 @@
               <div class="select-root-area">
                 <div class="select-root-left" appDropdown>
                   <span class="select-roottitle">FROM</span>
-                  <h5 class="fw_6 text-dotted">{{multicitySearchData[0].fromCity}}<span *ngIf="multicitySearchData[0].fromCountryFullName != ''" >, {{multicitySearchData[0].fromCountryFullName}}</span></h5>
-                  <span class="select-roottitle">{{multicitySearchData[0].fromAirportName}}</span>
+                  <!-- <h5 class="fw_6 ">{{multicitySearchData[0].fromCity}}<span *ngIf="multicitySearchData[0].fromCountryFullName != ''" >, {{multicitySearchData[0].fromCountryFullName}}</span></h5> -->
+                  <h5 class="fw_6 ">{{(multicitySearchData[0].fromCity |slice:0:10) + ","}}{{( multicitySearchData[0].fromCountryFullName.length > 20)? (multicitySearchData[0].fromCountryFullName | slice:0:25)+'..':(multicitySearchData[0].fromCountryFullName)}}</h5>
+
+                  <!-- <span class="select-roottitle"><span *ngIf="multicitySearchData[0].flightfrom != null">{{multicitySearchData[0].flightfrom}},</span> {{multicitySearchData[0].fromAirportName}}</span> -->
+                  <span class="select-roottitle">{{multicitySearchData[0].flightfrom + ","}} {{( multicitySearchData[0].fromAirportName.length > 20)? (multicitySearchData[0].fromAirportName | slice:0:25)+'..':(multicitySearchData[0].fromAirportName)}}</span>
                           <div class="flight-from-data flight-from-hide ff-form-data dropdown">
                               <div class="mob-title" *ngIf="isMobile">
                                   <h3>Select From City</h3>
@@ -807,8 +818,10 @@
                   </div>
                   <div class="select-root-right" appDropdown #toCityDiv >
                     <span class="select-roottitle">TO</span>
-                    <h5 class="fw_6 text-dotted">{{multicitySearchData[0].toCity}}<span *ngIf="multicitySearchData[0].toCountryFullName != ''">, {{multicitySearchData[0].toCountryFullName}}</span></h5>
-                    <span class="select-roottitle">{{multicitySearchData[0].toAirportName}}</span>
+                    <!-- <h5 class="fw_6 ">{{multicitySearchData[0].toCity}}<span *ngIf="multicitySearchData[0].toCountryFullName != ''">, {{multicitySearchData[0].toCountryFullName}}</span></h5> -->
+                    <h5 class="fw_6 ">{{(multicitySearchData[0].toCity |slice:0:10) + ","}} {{(multicitySearchData[0].toCountryFullName.length > 8)? (multicitySearchData[0].toCountryFullName | slice:0:10)+'..':(multicitySearchData[0].toCountryFullName)}}</h5>
+                    <!-- <span class="select-roottitle"><span *ngIf="multicitySearchData[0].flightto != null">{{multicitySearchData[0].flightto}},</span> {{multicitySearchData[0].toAirportName}}</span> -->
+                    <span class="select-roottitle">{{multicitySearchData[0].flightto + ","}} {{( multicitySearchData[0].toAirportName.length > 20)? (multicitySearchData[0].toAirportName | slice:0:25)+'..':(multicitySearchData[0].toAirportName)}}</span>
                     <!-- <mat-error class="w-50 error_msg w-50" *ngIf="multicityFormArr.controls[i].get('flightto').errors.required"> <small
                         class="validate-msg"> Please select departure date.</small></mat-error>   -->
                     <!-- <mat-error class="w-50 error_msg w-50" *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('required')"> <small
@@ -916,9 +929,10 @@
                             <div class="select-root-area">
                                 <div class="select-root-left" appDropdown>
                                     <span class="select-roottitle">FROM</span>
-                                    <h5 class="fw_6 text-dotted">{{item.value.fromCity}}<span *ngIf="!isMobile && item.value.fromCountryFullName != ''">, {{item.value.fromCountryFullName}}</span>
-                                    </h5>
-                                    <span class="select-roottitle"><span *ngIf="item.value.fligtfrom != ''">{{item.value.flightfrom}},</span> {{item.value.fromAirportName}}</span>
+                                    <!-- <h5 class="fw_6 ">{{item.value.fromCity}}<span *ngIf="!isMobile && item.value.fromCountryFullName != ''">, {{item.value.fromCountryFullName}}</span> -->
+                                    <h5 class="fw_6 " *ngIf="item.value.fromCity">{{(item.value.fromCity|slice:0:10) + "," }} {{(item.value.fromCountryFullName.length > 8)? (item.value.fromCountryFullName | slice:0:10)+'..':(item.value.fromCountryFullName)}}</h5>
+                                    <!-- <span class="select-roottitle" *ngIf="item.value.flightfrom != ''"><span >{{item.value.flightfrom + ","}}</span> {{item.value.fromAirportName}}</span> -->
+                                    <span class="select-roottitle" *ngIf="item.value.flightfrom">{{item.value.flightfrom + ","}} {{( item.value.fromAirportName.length > 20)? (item.value.fromAirportName | slice:0:25)+'..':(item.value.fromAirportName)}}</span>
 
                                                 <mat-error *ngIf="submitted && item.get('flightfrom').errors  && item.get('flightfrom').hasError('required')"><small
                                                     class="validate-msg"> Please select from city.</small></mat-error>
@@ -1012,10 +1026,8 @@
                                 </div>
                                 <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv_{{i}}">
                                     <span class="select-roottitle">TO</span>
-                                    <h5 class="fw_6 text-dotted">{{item.value.toCity}}<span *ngIf="item.value.toCountryFullName != null ">, {{item.value.toCountryFullName}}</span>
-
-                                    </h5>
-                                    <span class="select-roottitle"><span *ngIf="item.value.fligtto != ''">{{item.value.flightto}},</span> {{item.value.toAirportName}}</span>
+                                    <h5 class="fw_6 " *ngIf="item.value.toCountryFullName">{{(item.value.toCity|slice:0:10) + ","}} {{(item.value.toCountryFullName.length > 8)? (item.value.toCountryFullName | slice:0:10)+'..':(item.value.toCountryFullName)}}</h5>
+                                    <span class="select-roottitle" *ngIf="item.value.flightto != ''" >{{item.value.flightto + "," }} {{( item.value.toAirportName.length > 20)? (item.value.toAirportName | slice:0:25)+'..':(item.value.toAirportName)}} </span>
 
                                                 <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('required')"><small
                                                     class="validate-msg"> Please select to city.</small></mat-error>
