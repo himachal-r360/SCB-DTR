@@ -128,8 +128,8 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         }
 
   }
-    updateAmountToPay(code: string,value: string) {
-    var values={code: code, value:value}; 
+    updateAmountToPay(code: string,value: string,remain_value: string) {
+    var values={code: code, value:value,remain_value:remain_value}; 
     this.amountToPay.emit(values);
   }
   setSlider(){
@@ -323,6 +323,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
         }
         this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
+        this.AmountRedeemed =((this.value)*Number(this.points_percentage));
         this.RedeemedPoints = this.value;
       this.otpVerify(URLparams);
     }
@@ -347,7 +348,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.addcardDiv=false; 
           this.voucherCodedetails=false; 
           
-          this.updateAmountToPay('XXXXX',this.RemaingAmount);
+          this.updateAmountToPay('XXXXX',this.AmountRedeemed,this.RemaingAmount);
         }
       }else{
 
@@ -457,7 +458,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherOtp=false; 
           this.voucherDiv=false; 
           this.addcardDiv=false; 
-          this.updateAmountToPay(this.vouchertransID,this.RemaingAmount);
+          this.updateAmountToPay(this.vouchertransID,this.AmountRedeemed,this.RemaingAmount);
         }else{
           // this.errorMsg3="Something went wrong";
           if(this.applyVoucherRes['message']!=undefined)

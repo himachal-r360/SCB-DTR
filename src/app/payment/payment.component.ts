@@ -811,8 +811,8 @@ checkInfo1(event){
 }
 @Output() sendPointsPlusEvent = new EventEmitter<any>();
 updatenewAmounttopay(event:any){
-  this.payTotalFare=event.value;
-   this.sendPointsPlusEvent.emit(event);	  
+  this.payTotalFare=event.remain_value;
+  this.sendPointsPlusEvent.emit(event);	  
   this.sendtotalfare.emit(this.payTotalFare);
 
 }
