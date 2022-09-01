@@ -40,7 +40,8 @@ export class PaymentComponent implements OnInit {
 	        
 	        autoApplyError:number=0;
 	        selectedPg:string='CYBER';
-					@Output() sendtotalfare = new EventEmitter<any>();
+		
+		@Output() sendtotalfare = new EventEmitter<any>();
 
 		flexiOtpButtonActive:boolean=true;
 	        
@@ -206,7 +207,9 @@ export class PaymentComponent implements OnInit {
 		};
 		
 		
-		Partnertoken:any;ServiceToken:any;      
+		Partnertoken:any;
+		ServiceToken:any;  
+		@Input() partnerToken;    
 		MAIN_SITE_URL:string;
 		monthArray:any[];
 		yearArray:any[];
@@ -376,11 +379,12 @@ pgSettingsCYBERToken:number=0;
 		      setTimeout(() => {
     //Check Laravel Seesion
         if(this.sg['customerInfo']){
+           this.customerInfo=this.sg['customerInfo'];
+           console.log( this.customerInfo);
 		  if(this.sg['customerInfo']["org_session"]==1){
 		var customerInfo = this.sg['customerInfo'];
 
 		this.rest.updateCardDetails(customerInfo);
-		this.customerInfo=customerInfo;
 		this.guestLogin = this.customerInfo["guestLogin"];
 		if(customerInfo["guestLogin"]==true){
 		if(this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY==1){
@@ -519,7 +523,7 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 			
 	ngOnInit() {
 	this.siteKey=this.serviceSettings.SITEKEY;
-		this.Partnertoken = "Flight";
+		this.Partnertoken = this.partnerToken;
 		this.ServiceToken = "BUS";
 		
                 this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
@@ -690,7 +694,12 @@ if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
 	@Output() sendflexiAmount = new EventEmitter<any>();
 
 	//validate guest mobile number
-
+emiOptionChange(key){
+$('.emiTenure').addClass('hidden');
+$('.emiTenure-'+key).removeClass('hidden');
+$('.emi_check_radio').removeClass('emi-active');
+$('.emi_check_radio-'+key).addClass('emi-active');
+}
 	fpGuestmobile(){
 
 	this.flexiGuestformSubmitted = true;
@@ -800,9 +809,17 @@ checkInfo1(event){
      $('#tokenization').val(1);
    }  
 }
-updatenewAmounttopay(event:string){
-	this.payTotalFare=event;
+@Output() sendPointsPlusEvent = new EventEmitter<any>();
+updatenewAmounttopay(event:any){
+  this.payTotalFare=event.remain_value;
+  this.sendPointsPlusEvent.emit(event);	  
+  this.sendtotalfare.emit(this.payTotalFare);
+
 }
+
+
+
+
 
 
 securemycard() {
@@ -989,6 +1006,8 @@ this.spinnerService.show();
 			this.flexiOtpButtonActive = true;
 			};
 	}
+		
+
 		
 
 	

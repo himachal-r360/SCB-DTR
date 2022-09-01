@@ -79,12 +79,12 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   flight_Timingsitems = [
     { name: '0_6', active: false, value: 'Before 6 AM', image: '1.png' },
     { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.png' },
-    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '3.png' },
-    { name: '18_0', active: false, value: 'After 6 PM', image: '4.png' }
+    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.png' },
+    { name: '18_0', active: false, value: 'After 6 PM', image: '3.png' }
   ]
   stopsFilteritems = [
-    { name: 'no_stops', active: false, value: '<p>No <br> stops</p>' },
-    { name: '1_stops', active: false, value: '<p>1 <br> stops</p>' },
+    { name: 'no_stops', active: false, value: '<p>Non <br> stop</p>' },
+    { name: '1_stops', active: false, value: '<p>1 <br> stop</p>' },
     { name: '2plus_stops', active: false, value: '<p>2+ <br> stops</p>' }
   ]
   toggleStopsFilteritems = [
@@ -271,6 +271,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   }
   activeSelectedTrip(i : number)
   {
+    this.loader = true;
+    this.resetAllFilters();
     if(i == (this.searchData.length-1) && !this.isAllSelected)
     {
       this.isLast = true;
@@ -317,7 +319,10 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
        this.sliderRange(this, this.minPrice, this.maxPrice);
      }
+
     this.popularFilterFlightData();
+    this.loader = false;
+
   }
 
   HideShowCompareToFly(i: number, fromCall: string, j: number) {

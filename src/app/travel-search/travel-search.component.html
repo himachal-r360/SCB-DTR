@@ -737,6 +737,7 @@
                                         <input type="text" class="inputField  flightFromPop" value="{{fromCityDisp}}" readonly    (click)="hideShowForms('web', 'fromCity','flights')" >
                                         <input type="hidden" formControlName="flightfrom" name="flightfrom" id="flightfrom" >
                                         <input type="hidden"  formControlName="fromContry">
+                                        <input type="hidden" formControlName="fromCountryFullName">
                                         <input type="hidden"  formControlName="fromAirportName">
                                         <p class="truncate" title="{{flightFromText}}">
                                             <span  title="" class=" airPortName ">{{flightFromText}}</span>
@@ -797,6 +798,7 @@
                                         
                                         <input type="hidden" formControlName="flightto" name="flightto" id="flightto" >
                                                                             <input type="hidden"  formControlName="toContry">
+                                                                            <input type="hidden" formControlName="toCountryFullName">
                                                                               <input type="hidden"  formControlName="toAirportName">
                                         <p class="truncate" title="">
                                             <span  title="" class=" airPortName ">{{flightToText}}</span>
@@ -1564,6 +1566,7 @@
                                             <input type="text" [(ngModel)]="fromCity" (ngModelChange)="selectCheck(fromCity,toCity,'flights')" class="inputField"  formControlName="fromCity" id="fromCity" placeholder="From" name="fromCity" (focus)="hideShowForms('mobile', 'fromCity','flights')" (keyup)="searchAutoComplete($event,'flights','fromCity' ,'mobile');" (keypress)="charInput($event)"  autocomplete="off" >
                                                 <input type="hidden" formControlName="flightfrom" name="flightfrom" id="flightfrom" >
                                                 <input type="hidden"  formControlName="fromContry">
+                                                <input type="hidden" formControlName="fromCountryFullName">
                                                 <input type="hidden"  formControlName="fromAirportName">
                                             <p class="truncate" title="{{flightFromText}}">
                                                 <span  title="" class=" airPortName ">{{flightFromText}}</span>
@@ -1585,6 +1588,7 @@
                                             <input type="text" [(ngModel)]="toCity" (ngModelChange)="selectCheck(fromCity,toCity,'flights')" class="inputField" formControlName="toCity" id="toCity" placeholder="To" name="toCity" (focus)="hideShowForms('mobile', 'toCity','flights')" (keyup)="searchAutoComplete($event,'flights','toCity'  ,'mobile')" (keypress)="charInput($event)" autocomplete="off">
                                             <input type="hidden" formControlName="flightto" name="flightto" id="flightto" >
                                                                             <input type="hidden"  formControlName="toContry">
+                                                                            <input type="hidden" formControlName="toCountryFullName">
                                                                               <input type="hidden"  formControlName="toAirportName">
                                             <p class="truncate" title="">
                                                 <span  title="" class=" airPortName ">{{flightToText}}</span>

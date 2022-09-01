@@ -137,13 +137,18 @@ export class PayService {
     return this.http.post(this.endpoint+'getcustomercardpoints', param, config).pipe(map((response:any) => response));
   }
 }
+  getcustomercardpoint(param){
+
+    return this.http.post(this.endpoint+'getcustomercardpoint_angular', param, config).pipe(map((response:any) => response));
+  
+}
   generateVoucherOtp(param){
     
-  if(LOCALJSON=='true'){
-    return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
-  }else{
+  // if(LOCALJSON=='true'){
+  //   return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
+  // }else{
     return this.http.post(this.endpoint+'generateVoucherOtp', param, config).pipe(map((response:any) => response));
-  }
+  // }
 }
 otp_validation(param){
     

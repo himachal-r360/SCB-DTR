@@ -246,13 +246,13 @@ export class TravelSearchComponent implements OnInit {
 
 	if(this.enableEs){
 	this.defaultFlightOptions=[
-	{"_source":{"city":"New Delhi","airport_code":"DEL","airport_name":"Indira Gandhi Airport","country_code":"IN"}},
-	{"_source":{"city":"Mumbai","airport_code":"BOM","airport_name":"Chatrapati Shivaji Airport","country_code":"IN"}},
-	{"_source":{"city":"Bangalore","airport_code":"BLR","airport_name":"Kempegowda International Airport","country_code":"IN"}},
-	{"_source":{"city":"Goa","airport_code":"GOI","airport_name":"Dabolim Airport","country_code":"IN"}},
-	{"_source":{"city":"Chennai","airport_code":"MAA","airport_name":"Chennai Airport","country_code":"IN"}},
-	{"_source":{"city":"Kolkata","airport_code":"CCU","airport_name":"Netaji Subhas Chandra Bose Airport","country_code":"IN"}},
-	{"_source":{"city":"Hyderabad","airport_code":"HYD","airport_name":"Hyderabad Airport","country_code":"IN"}},
+	{"_source":{"city":"New Delhi","airport_code":"DEL","airport_name":"Indira Gandhi Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Mumbai","airport_code":"BOM","airport_name":"Chatrapati Shivaji Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Bangalore","airport_code":"BLR","airport_name":"Kempegowda International Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Goa","airport_code":"GOI","airport_name":"Dabolim Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Chennai","airport_code":"MAA","airport_name":"Chennai Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Kolkata","airport_code":"CCU","airport_name":"Netaji Subhas Chandra Bose Airport","country_code":"IN","country":"India"}},
+	{"_source":{"city":"Hyderabad","airport_code":"HYD","airport_name":"Hyderabad Airport","country_code":"IN","country":"India"}},
 	];
 
 
@@ -341,6 +341,8 @@ export class TravelSearchComponent implements OnInit {
         toCity: ['',[Validators.required]],
         fromContry: ['',[Validators.required]],
         toContry: ['',[Validators.required]],
+        fromCountryFullName:[''],
+        toCountryFullName:[''],
         fromAirportName: ['',[Validators.required]],
         toAirportName: ['',[Validators.required]],
         flightclass: ['E', Validators.required],
@@ -350,6 +352,8 @@ export class TravelSearchComponent implements OnInit {
         adults: ['1',[Validators.required]],
         child: ['0'],
         infants: ['0'],
+        mobFromAddress: [''],
+        mobToAddress: [''],
         travel: ['',[Validators.required]]
         }, {
         validators: MustMatch('fromCity', 'toCity')
@@ -995,6 +999,8 @@ check_traveller_count(type) {
         this.searchFlightForm['controls']['fromContry'].setValue(lastFlightSearchValue.fromContry);
         this.searchFlightForm['controls']['fromAirportName'].setValue(lastFlightSearchValue.fromAirportName);
         this.searchFlightForm['controls']['toContry'].setValue(lastFlightSearchValue.toContry);
+            this.searchFlightForm['controls']['fromCountryFullName'].setValue(lastFlightSearchValue.fromCountryFullName);
+       this.searchFlightForm['controls']['toCountryFullName'].setValue(lastFlightSearchValue.toCountryFullName);
         this.searchFlightForm['controls']['toAirportName'].setValue(lastFlightSearchValue.toAirportName);
         
         this.searchFlightForm['controls']['flightclass'].setValue(lastFlightSearchValue.flightclass);
@@ -1036,6 +1042,9 @@ check_traveller_count(type) {
         this.searchFlightForm['controls']['toCity'].setValue('Mumbai');
         this.searchFlightForm['controls']['flightfrom'].setValue('DEL');
         this.searchFlightForm['controls']['flightto'].setValue('BOM');
+        
+                this.searchFlightForm['controls']['fromCountryFullName'].setValue('India');
+        this.searchFlightForm['controls']['toCountryFullName'].setValue('India');
         
         this.searchFlightForm['controls']['fromContry'].setValue('IN');
         this.searchFlightForm['controls']['fromAirportName'].setValue('Indira Gandhi Airport');
@@ -1287,12 +1296,13 @@ check_traveller_count(type) {
 	var tempFromSearchCode= this.searchFlightForm.controls.flightfrom.value;
 	var tempFromSearchCountry= this.searchFlightForm.controls.fromContry.value;
 	var tempFromSearchAirport= this.searchFlightForm.controls.fromAirportName.value;
-	
+	var tempFromSearchCountryFull= this.searchFlightForm.controls.fromCountryFullName.value;
 	
 	var tempSearchTo= this.searchFlightForm.controls.toCity.value;
 	var tempToSearchCode= this.searchFlightForm.controls.flightto.value;
 	var tempToSearchCountry= this.searchFlightForm.controls.toContry.value;
 	var tempToSearchAirport= this.searchFlightForm.controls.toAirportName.value;
+	var tempToSearchCountryFull= this.searchFlightForm.controls.toCountryFullName.value;
 	
 
 	var tempSearchFromText= this.flightFromText;
@@ -1304,12 +1314,14 @@ check_traveller_count(type) {
 	this.searchFlightForm['controls']['toCity'].setValue(tempSearchFrom);
 	this.searchFlightForm['controls']['flightto'].setValue(tempFromSearchCode);
 	this.searchFlightForm['controls']['toContry'].setValue(tempFromSearchCountry);
-	this.searchFlightForm['controls']['toAirportName'].setValue(tempFromSearchAirport);
+	this.searchFlightForm['controls']['toCountryFullName'].setValue(tempFromSearchCountry);
+	this.searchFlightForm['controls']['toAirportName'].setValue(tempFromSearchCountryFull);
 	
 	
 	this.searchFlightForm['controls']['fromCity'].setValue(tempSearchTo);
 	this.searchFlightForm['controls']['flightfrom'].setValue(tempToSearchCode);
 	this.searchFlightForm['controls']['fromContry'].setValue(tempToSearchCountry);
+	this.searchFlightForm['controls']['fromCountryFullName'].setValue(tempToSearchCountryFull);
 	this.searchFlightForm['controls']['fromAirportName'].setValue(tempToSearchAirport);
 
         this.fromCityDisp=tempSearchToCityDisp;
@@ -2035,6 +2047,7 @@ switch(service) {
         this.searchFlightForm['controls']['fromCity'].setValue(values.city);
         this.searchFlightForm['controls']['flightfrom'].setValue(values.airport_code);
         this.searchFlightForm['controls']['fromContry'].setValue(values.country_code);
+        this.searchFlightForm['controls']['fromCountryFullName'].setValue(values.country);
         this.searchFlightForm['controls']['fromAirportName'].setValue(values.airport_name);
         
         this.flightFromText=values.airport_code+', '+values.airport_name;
@@ -2096,6 +2109,7 @@ switch(service) {
         this.searchFlightForm['controls']['toCity'].setValue(values.city);
         this.searchFlightForm['controls']['flightto'].setValue(values.airport_code);
         this.searchFlightForm['controls']['toContry'].setValue(values.country_code);
+              this.searchFlightForm['controls']['toCountryFullName'].setValue(values.country);
         this.searchFlightForm['controls']['toAirportName'].setValue(values.airport_name);
         
          this.toCityDisp=values.city;

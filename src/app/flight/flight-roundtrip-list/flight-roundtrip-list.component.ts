@@ -110,20 +110,20 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   flight_Timingsitems = [
     { name: '0_6', active: false, value: 'Before 6 AM', image: '1.png' },
     { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.png' },
-    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '3.png' },
-    { name: '18_0', active: false, value: 'After 6 PM', image: '4.png' }
+    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.png' },
+    { name: '18_0', active: false, value: 'After 6 PM', image: '3.png' }
   ]
 
   flight_return_Timingsitems = [
-    { name: '0_6', active: false, value: '00-06', image: '1.png' },
-    { name: '6_12', active: false, value: '06-12', image: '2.png' },
-    { name: '12_18', active: false, value: '12-18', image: '3.png' },
-    { name: '18_0', active: false, value: '18-00', image: '4.png' }
+    { name: '0_6', active: false, value: 'Before 6 AM', image: '1.png' },
+    { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.png' },
+    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.png' },
+    { name: '18_0', active: false, value: 'After 6 PM', image: '3.png' }
   ]
 
   stopsFilteritems = [
-    { name: 'no_stops', active: false, value: '<p>No <br> stops</p>' },
-    { name: '1_stops', active: false, value: '<p>1 <br> stops</p>' },
+    { name: 'no_stops', active: false, value: '<p>Non <br> stop</p>' },
+    { name: '1_stops', active: false, value: '<p>1 <br> stop</p>' },
     { name: '2plus_stops', active: false, value: '<p>2+ <br> stops</p>' }
   ]
   toggleStopsFilteritems = [

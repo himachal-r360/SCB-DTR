@@ -694,7 +694,7 @@
               [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId"
               [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
               [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
-              (sendtotalfare)="recivetotalFare($event)" [passflexiFare]="sendflexiFare">
+              (sendtotalfare)="recivetotalFare($event)"  (sendPointsPlusEvent)="receivePointsPlus($event)"  [passflexiFare]="sendflexiFare">
             </app-payment>
           </div>
         </div>
@@ -869,8 +869,8 @@
                   </div>
                 </div>
                 <div class="continue-widget mb-20">
-                  <a href="javascript:void(0);" class="button-style w-100" (click)="createBusItinerary()"
-                    *ngIf="steps==1">Continue</a>
+                  <button class="btn-primary button-style w-100" (click)="createBusItinerary()"
+                    *ngIf="steps==1" [disabled]="buttonSubmitted">Continue</button>
 
                 </div>
               </div>
@@ -940,8 +940,8 @@
             </div>
             <div class="col-7">
               <div>
-                <a href="javascript:void(0);" class="button-style btn_pay" (click)="createBusItinerary()"
-                  *ngIf="steps==1">Continue</a>
+                <button class="btn-primary btn_pay" [disabled]="buttonSubmitted" (click)="createBusItinerary()"
+                  *ngIf="steps==1">Continue</button>
 
               </div>
             </div>
@@ -1229,3 +1229,4 @@
     </div>
   </div>
 </div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-running-dots" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

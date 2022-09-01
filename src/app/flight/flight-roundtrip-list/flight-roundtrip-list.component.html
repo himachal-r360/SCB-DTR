@@ -1,23 +1,23 @@
 <main class="site-main mob-main">
-    <section class="bradcome-area mt-20 mb-10" *ngIf="!isMobile">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="bradcome-list">
-                        <ul class="list-inline">
-                            <li class="list-inline-item"><a href="#">Home</a></li>
-                            <li class="list-inline-item"><span>/</span></li>
-                            <li class="list-inline-item"><a href="#">Travel & Stays</a></li>
-                            <li class="list-inline-item"><span>/</span></li>
-                            <li class="list-inline-item"><span>Flight Search</span></li>
-                        </ul>
-                    </div>
+  <section class="bradcome-area mt-110 mb-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><span>Flight Search</span></li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="flight-listing-area mt-100" *ngIf="!isMobile">
+    <section class="flight-listing-area mt-10" *ngIf="!isMobile">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -734,7 +734,7 @@
                                                                 <h6>₹ {{item.totalFare |number}}</h6>
                                                             </div>
                                                             <div class="mob-booking-Selected">
-                                                                <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,$event,j)">Select</a>
+                                                                <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</a>
                                                             </div>
                                                         </div>
                                                         <div class="mob-book-list-bottom">
@@ -1152,7 +1152,7 @@
                                                                 <h6>₹{{item.totalFare |number}}</h6>
                                                             </div>
                                                             <div class="mob-booking-Selected">
-                                                                <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,$event,j)">Select</button>
+                                                                <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</button>
                                                             </div>
                                                         </div>
                                                         <div class="mob-book-list-bottom">
