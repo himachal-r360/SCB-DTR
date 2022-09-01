@@ -130,6 +130,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
     updateAmountToPay(code: string,value: string,remain_value: string) {
     var values={code: code, value:value,remain_value:remain_value}; 
+    console.log(values);
     this.amountToPay.emit(values);
   }
   setSlider(){

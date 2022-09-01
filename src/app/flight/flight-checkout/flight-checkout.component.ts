@@ -3943,7 +3943,7 @@ orderReferenceNumber:any;
           "onward": "",
           "return": ""
         },
-        "baggage": this.baggageInfoData,
+        "baggage": JSON.stringify(this.baggageInfoData),
         "passengerDetails": this.paxInfo,
         "fare": this.fareData,
         "onwardFareKey": onwardFareKey ,
@@ -4137,7 +4137,7 @@ orderReferenceNumber:any;
 
   receivePointsPlus($event) {
     this.voucher_code=$event.code;
-    this.voucher_amount=this.totalCollectibleAmount- $event.value;
+    this.voucher_amount=$event.value;
    console.log($event);
   }
 
