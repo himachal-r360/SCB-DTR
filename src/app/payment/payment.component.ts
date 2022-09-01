@@ -82,6 +82,7 @@ export class PaymentComponent implements OnInit {
 		lastFourdigitsofcardNumber:any;
                 cardData;
 		@Input() passSessionKey;
+		@Input() isMobile;
                 //@Input() passSavedCardsData;
  		 domainPath:string;
  		appConfig: any;

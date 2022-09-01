@@ -5688,15 +5688,22 @@
               <h4>Payment</h4>
             </div>
 
-            <app-payment (sendCouponEvent)="receiveCouponDetails ($event)" [remove_Coupon]="remove_Coupon"
-              [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey"
-              (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
-              [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee"
+            <app-payment 
+              (sendCouponEvent)="receiveCouponDetails ($event)" 
+              [remove_Coupon]="remove_Coupon"
+              [passSavedCardsData]="savedCards"
+              [passSessionKey]="randomFlightDetailKey"
+              (sendflexiAmount)='reciveflexiAmount($event)' 
+              [passTotalFare]="totalCollectibleAmount"
+              [passActualFare]="totalCollectibleAmountFromPartnerResponse" 
+              [passConvinenceFee]="convenience_fee"
               [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
               [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
               (sendtotalfare)="recivetotalFare($event)" 
               (sendPointsPlusEvent)="receivePointsPlus($event)" 
-              [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken">
+              [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken"
+              [isMobile]="isMobile"
+              >
             </app-payment>
           </div>
         </div>
@@ -6176,8 +6183,8 @@
                   *ngIf="steps==3">Continue</a>
                 <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueReviewBooking()"
                   *ngIf="steps==4">Continue</a>
-               <!-- <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"
-                  *ngIf="steps==5">Pay now</a>-->
+               <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"
+                  *ngIf="steps==5">Pay now</a>
               </div>
             </div>
           </div>
