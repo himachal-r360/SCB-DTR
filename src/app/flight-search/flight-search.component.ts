@@ -341,7 +341,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     }
   }
   onFromClick(values, device, index , i) {
-   debugger
+   //debugger
     // this.fromCityInput.nativeElement.focus();
     if (index != undefined || index != null) {
       this.multicityFormArr.controls[i].get('flightfrom').setValue( values['_source'].airport_code)
@@ -533,8 +533,15 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.flightData.get('toCountryFullName').setValue(lastSearch.toCountryFullName);
         this.fromCityName = lastSearch.fromCity;
         this.toCityName = lastSearch.toCity;
-        this.fromCountryName = lastSearch.fromCountryFullName
+        if(lastSearch.fromCountryFullName)
+        this.fromCountryName = lastSearch.fromCountryFullName;
+        else
+         this.fromCountryName ='';
+        if(lastSearch.toCountryFullName) 
         this.toCountryName = lastSearch.toCountryFullName;
+        else
+        this.toCountryName ='';
+        
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         this.departureDate = new Date(lastSearch.departure);
@@ -869,17 +876,20 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   swap() {
-    var FromData = { flightFrom: this.flightData.value.flightfrom, fromAirpotName: this.flightData.value.fromAirportName, fromCityName: this.flightData.value.fromCity, fromContry: this.flightData.value.fromContry }
+    var FromData = { flightFrom: this.flightData.value.flightfrom, fromAirpotName: this.flightData.value.fromAirportName, fromCityName: this.flightData.value.fromCity, fromContry: this.flightData.value.fromContry,fromCountryFullName: this.flightData.value.fromCountryFullName }
 
     this.flightData.get('flightfrom').setValue(this.flightData.value.flightto);
     this.flightData.get('fromCity').setValue(this.flightData.value.toCity);
     this.flightData.get('fromContry').setValue(this.flightData.value.toContry);
+     this.flightData.get('fromCountryFullName').setValue(this.flightData.value.toCountryFullName);
+    
     this.flightData.get('fromAirportName').setValue(this.flightData.value.toAirportName);
     this.fromAirpotName = this.flightData.value.toAirportName;
     this.fromCityName = this.flightData.value.toCity;
     this.flightData.get('flightto').setValue(FromData.flightFrom);
     this.flightData.get('toCity').setValue(FromData.fromCityName);
     this.flightData.get('toContry').setValue(FromData.fromContry);
+      this.flightData.get('toCountryFullName').setValue(FromData.fromCountryFullName);
     this.flightData.get('toAirportName').setValue(FromData.fromAirpotName);
     this.toAirpotName = FromData.fromAirpotName;
     this.toCityName = FromData.fromCityName;
