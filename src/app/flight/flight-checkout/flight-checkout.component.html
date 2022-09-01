@@ -4523,7 +4523,7 @@
                 <ng-container *ngIf="searchData && flightSessionData.travel_type =='M'">
                   <ng-container *ngFor="let searchDatad of searchData;let searchi = index ;let last = last">
                     <div class="booking-inner-title ">
-                      <div class="booking-inner-title-left" *ngIf="searchDatad">
+                      <div class="booking-inner-title-left flight_review_count" *ngIf="searchDatad">
                         <div class="head_info">
                           <div class="float-start">
                             <img *ngIf="onward_airline_unique" src="{{ cdnUrl }}/images/airlines/Multi.gif"
@@ -5595,7 +5595,7 @@
         <div class="col-md-8" *ngIf="steps==5">
           <div class="booking-process-content" *ngIf="flightOnwardDetails">
             <div class="booking-title-box">
-              <h4>Payment</h4>
+              <h4>Choose Payment Mode</h4>
             </div>
 
             <app-payment (sendCouponEvent)="receiveCouponDetails ($event)" [remove_Coupon]="remove_Coupon"
