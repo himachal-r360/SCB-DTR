@@ -265,7 +265,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   fromCitySelect(i:number){
-    debugger;
+   // debugger;
     setTimeout(() => {
       if(i != null ){
         $('.from-flight-open_' + i).addClass('flight-from-hide');
@@ -280,7 +280,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   searchAutoComplete($event, field, device, index: any) {
-    debugger
+   // debugger
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if (true) {
