@@ -424,6 +424,16 @@ pgSettingsCYBERToken:number=0;
 		this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
 	}
 	
+	hidecheckoutPay(type){
+	
+	 if(type==1)
+	  $('.chkout-btn_pay').hide();
+	  else
+	  $('.chkout-btn_pay').show(); 
+	
+	
+	}
+	
 	pgSelect(pgType){
 		//console.log(pgType);
 		if(pgType=='DEBIT_EMI' && this.customerInfo["guestLogin"]==true){

@@ -972,10 +972,7 @@ orderRetry:boolean=false;
 
 isPaynowClicked:boolean=false;
 continuePayment(){
-
 //console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
-
-
 switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
@@ -990,13 +987,22 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         $('.btn-pay-netbanking').trigger('click');
         break;  
         case 'tab-ccdcCards':
-         if($(".addCardTab[aria-selected='true']").attr("aria-selected"))
-         $('.btn-pay-card').trigger('click');
+        if($(".addCardTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-card').trigger('click');
+
+        if($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-rupay').trigger('click');
+
+        break;  
+
+        case 'tab-emi': 
+        if($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-emi-cc').trigger('click');
          
-         if($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
-         $('.btn-pay-rupay').trigger('click');
          
-          break;  
+        break;  
+          
+          
          case 'tab-testPg': 
         $('.btn-pay-test').trigger('click');
         break;  
@@ -2902,7 +2908,13 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
         if (data[i] && data[i].Cancellation) {
         let cancellation_data = data[i].Cancellation.split('|');
-        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100 mb-20"><tr>
+        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100 mb-20">
+        <tr class="hidden">
+        <td colspan="2">
+        <p class="fw_6 fs_13"><h6>`+this.searchData[i]['fromCity']+` to `+this.searchData[i]['toCity']+`</h6></p>
+        </td>
+        </tr>
+        <tr>
         <td colspan="2">
         <p class="fw_6 fs_13">Cancellation Penalty fees (Per passenger)</p>
         </td>

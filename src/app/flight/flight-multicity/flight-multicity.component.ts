@@ -169,6 +169,9 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   }
   ngOnInit(): void {
     this.route.url.subscribe(url =>{
+    this.SelectedFlightsOnSector=[];
+     this.searchData=[];
+             this.isSelectedSectorFlight = false;
     this.loader = true;
     this.isMobile = window.innerWidth < 991 ? true : false;
     this.getQueryParamData();
