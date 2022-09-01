@@ -974,69 +974,85 @@
                                 <div>
                                   <div class="row">
                                     <div class="col-xl-2 col-lg-2 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Title</mat-label>
-                                        <mat-select
-                                          formControlName="adult_title{{ saveAdultTravellerId[passenger.id] }}">
-                                          <mat-option value=""> Select </mat-option>
-                                          <mat-option value="Mr"> Mr </mat-option>
-                                          <mat-option value="Mrs">Mrs</mat-option>
-                                          <mat-option value="Ms">Ms</mat-option>
-                                          <mat-option value="Miss">Miss</mat-option>
-                                        </mat-select>
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
-                                          Select title</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Title</mat-label>
+                                            <mat-select
+                                              formControlName="adult_title{{ saveAdultTravellerId[passenger.id] }}">
+                                              <mat-option value=""> Select </mat-option>
+                                              <mat-option value="Mr"> Mr </mat-option>
+                                              <mat-option value="Mrs">Mrs</mat-option>
+                                              <mat-option value="Ms">Ms</mat-option>
+                                              <mat-option value="Miss">Miss</mat-option>
+                                            </mat-select>
+                                            
+                                          </mat-form-field>
+                                          <span >
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
+                                              Select title</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>First Name</mat-label>
-                                        <input matInput placeholder="First Name" name="adult_first_name"
-                                          data-test="adult_first_name{{ saveAdultTravellerId[passenger.id] }}"
-                                          formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter first name</mat-error>
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('pattern','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter valid first name</mat-error>
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('minlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter atleast 2 character</mat-error>
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('maxlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter maximum 26 character</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>First Name</mat-label>
+                                            <input matInput placeholder="First Name" name="adult_first_name"
+                                              data-test="adult_first_name{{ saveAdultTravellerId[passenger.id] }}"
+                                              formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter first name</mat-error>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('pattern','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter valid first name</mat-error>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('minlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter atleast 2 character</mat-error>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('maxlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter maximum 26 character</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Last Name</mat-label>
-                                        <input matInput placeholder="Last Name"
-                                          formControlName="adult_last_name{{ saveAdultTravellerId[passenger.id] }}">
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter first name</mat-error>
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('pattern','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter valid first name</mat-error>
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('minlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter atleast 2 character</mat-error>
-                                        <mat-error class="error_flight  error_tv"
-                                          *ngIf="passengerForm.hasError('maxlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                          Please enter maximum 26 character</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Last Name</mat-label>
+                                            <input matInput placeholder="Last Name"
+                                              formControlName="adult_last_name{{ saveAdultTravellerId[passenger.id] }}">
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter first name</mat-error>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('pattern','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter valid first name</mat-error>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('minlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter atleast 2 character</mat-error>
+                                            <mat-error class="error_flight  error_tv"
+                                              *ngIf="passengerForm.hasError('maxlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                              Please enter maximum 26 character</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6">
-                                      <div class="form-group">
+                                      <div class="">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>Date Of Birth</mat-label>
                                           <input matInput [inputMask]="dateInputMask"
                                             formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}"
                                             placeholder="Date Of Birth" name="dateOfBirth">
-                                          <mat-error class="error_flight  error_tv"
+                                          
+                                        </mat-form-field>
+                                        <span>
+                                            <mat-error class="error_flight  error_tv"
                                             *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
                                           <mat-error class="error_flight  error_tv"
@@ -1046,8 +1062,7 @@
                                             *ngIf="passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).touched && passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).getError('younger')">
                                             Please Enter Valid DOB
                                           </mat-error>
-                                        </mat-form-field>
-
+                                        </span>
 
                                       </div>
                                     </div>
@@ -1056,93 +1071,115 @@
                                     <ng-container *ngIf="searchData.travel=='INT'">
                                       <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-6">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Passport Number</mat-label>
-                                            <input matInput
-                                              formControlName="adult_passport_num{{ saveAdultTravellerId[passenger.id] }}"
-                                              placeholder="Passport Number" name="PassportNumber">
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                              Please enter passport number</mat-error>
-
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                              Please enter atleast 8 digits.</mat-error>
-
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                              Cannot exceed more than 12 characters.</mat-error>
-
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                              This field must contain only letters</mat-error>
-
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Number</mat-label>
+                                                <input matInput
+                                                  formControlName="adult_passport_num{{ saveAdultTravellerId[passenger.id] }}"
+                                                  placeholder="Passport Number" name="PassportNumber">
+                                              </mat-form-field>
+                                              <span >
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter passport number</mat-error>
+    
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter atleast 8 digits.</mat-error>
+    
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                  Cannot exceed more than 12 characters.</mat-error>
+    
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                  This field must contain only letters</mat-error>
+                                              </span>
+                                          </div>
 
                                         </div>
 
                                         <div class="col-xl-4 col-lg-4 col-md-6">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Passport Expiry Date</mat-label>
-                                            <input matInput [inputMask]="dateInputMask"
-                                              formControlName="adult_passport_expiry_date{{ saveAdultTravellerId[passenger.id] }}"
-                                              placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
-                                              Please enter passport issue date</mat-error>
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
-                                              Please enter a valid expiry date</mat-error>
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Expiry Date</mat-label>
+                                                <input matInput [inputMask]="dateInputMask"
+                                                  formControlName="adult_passport_expiry_date{{ saveAdultTravellerId[passenger.id] }}"
+                                                  placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                              </mat-form-field>
+                                              <span>
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter passport issue date</mat-error>
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter a valid expiry date</mat-error>
+                                              </span>
+                                          </div>
                                         </div>
 
 
                                         <div class="col-xl-4 col-lg-4 col-md-6">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Passport Issue Date</mat-label>
-                                            <input matInput [inputMask]="dateInputMask"
-                                              formControlName="adult_passport_issue_date{{ saveAdultTravellerId[passenger.id] }}"
-                                              placeholder="Passport Issue Date" name="PassportIssueDate">
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
-                                              Please enter passport issue date</mat-error>
-
-                                            <mat-error class="error_flight  error_tv"
-                                              *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
-                                              Please enter a valid issued date.</mat-error>
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Issue Date</mat-label>
+                                                <input matInput [inputMask]="dateInputMask"
+                                                  formControlName="adult_passport_issue_date{{ saveAdultTravellerId[passenger.id] }}"
+                                                  placeholder="Passport Issue Date" name="PassportIssueDate">
+                                                
+                                              </mat-form-field>
+                                              <span>
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter passport issue date</mat-error>
+    
+                                                <mat-error class="error_flight  error_tv"
+                                                  *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter a valid issued date.</mat-error>
+                                              </span>
+                                          </div>
                                         </div>
 
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Issuing Country</mat-label>
-                                              <mat-select
-                                                formControlName="adult_passport_issuing_country{{ saveAdultTravellerId[passenger.id] }}">
-                                                <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;"
-                                                  value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                              </mat-select>
-                                              <mat-error class="error_flight  error_tv"
-                                                *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
-                                                Select passport issuing country</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Issuing Country</mat-label>
+                                                    <mat-select
+                                                      formControlName="adult_passport_issuing_country{{ saveAdultTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight  error_tv"
+                                                      *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
+                                                      Select passport issuing country</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
 
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>PAX Nationality</mat-label>
-                                              <mat-select
-                                                formControlName="adult_pax_nationality{{ saveAdultTravellerId[passenger.id] }}">
-                                                <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;"
-                                                  value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                              </mat-select>
-                                              <mat-error class="error_flight  error_tv"
-                                                *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
-                                                Select nationality</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>PAX Nationality</mat-label>
+                                                    <mat-select
+                                                      formControlName="adult_pax_nationality{{ saveAdultTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight  error_tv"
+                                                      *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
+                                                      Select nationality</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
                                         </div>
 
@@ -1185,173 +1222,209 @@
                                   <div>
                                     <div class="row">
                                       <div class="col-xl-2 col-lg-2  col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>Title</mat-label>
-                                          <mat-select
-                                            formControlName="adult_title{{ saveAdultTravellerId[passenger.id] }}">
-                                            <mat-option value=""> Select </mat-option>
-                                            <mat-option value="Mr"> Mr </mat-option>
-                                            <mat-option value="Mrs">Mrs</mat-option>
-                                            <mat-option value="Ms">Ms</mat-option>
-                                            <mat-option value="Miss">Miss</mat-option>
-                                          </mat-select>
-
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
-                                            Select title</mat-error>
-
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Title</mat-label>
+                                                <mat-select
+                                                  formControlName="adult_title{{ saveAdultTravellerId[passenger.id] }}">
+                                                  <mat-option value=""> Select </mat-option>
+                                                  <mat-option value="Mr"> Mr </mat-option>
+                                                  <mat-option value="Mrs">Mrs</mat-option>
+                                                  <mat-option value="Ms">Ms</mat-option>
+                                                  <mat-option value="Miss">Miss</mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
+                                                  Select title</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>First Name</mat-label>
-                                          <input matInput placeholder="First Name" name="adult_first_name"
-                                            formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter first name</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('pattern','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter valid first name</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('minlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter atleast 2 character</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('maxlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter maximum 26 character</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>First Name</mat-label>
+                                                <input matInput placeholder="First Name" name="adult_first_name"
+                                                  formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter first name</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('pattern','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter valid first name</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('minlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter atleast 2 character</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('maxlength','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter maximum 26 character</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
                                       <div class="col-xl-3 col-lg-3 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>Last Name</mat-label>
-                                          <input matInput placeholder="Last Name"
-                                            formControlName="adult_last_name{{ saveAdultTravellerId[passenger.id] }}">
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter first name</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('pattern','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter valid first name</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('minlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter atleast 2 character</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('maxlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
-                                            Please enter maximum 26 character</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Last Name</mat-label>
+                                                <input matInput placeholder="Last Name"
+                                                  formControlName="adult_last_name{{ saveAdultTravellerId[passenger.id] }}">
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter first name</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('pattern','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter valid first name</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('minlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter atleast 2 character</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('maxlength','adult_last_name'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter maximum 26 character</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
                                       <div class="col-xl-3 col-lg-3 col-md-6">
                                         <div class="form-group">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Date Of Birth</mat-label>
-                                            <input matInput [inputMask]="dateInputMask"
-                                              formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}"
-                                              placeholder="Date Of Birth" name="dateOfBirth">
-
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
-                                              Please enter dob</mat-error>
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">
-                                              Adult age should be above 12 years.</mat-error>
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).touched && passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).getError('younger')">
-                                              Please Enter Valid DOB
-                                            </mat-error>
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Date Of Birth</mat-label>
+                                                <input matInput [inputMask]="dateInputMask"
+                                                  formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}"
+                                                  placeholder="Date Of Birth" name="dateOfBirth">
+                                              </mat-form-field>
+                                              <span>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
+                                                  Please enter dob</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('validateAdultAge','adult_dob'+saveAdultTravellerId[passenger.id])">
+                                                  Adult age should be above 12 years.</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).touched && passengerForm.get('adult_dob'+saveAdultTravellerId[passenger.id]).getError('younger')">
+                                                  Please Enter Valid DOB
+                                                </mat-error>
+                                              </span>
+                                          </div>
                                         </div>
                                       </div>
 
                                       <ng-container *ngIf="searchData.travel=='INT'">
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Number</mat-label>
-                                              <input matInput
-                                                formControlName="adult_passport_num{{ saveAdultTravellerId[passenger.id] }}"
-                                                placeholder="Passport Number" name="PassportNumber">
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                                Please enter passport number</mat-error>
-
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                                Please enter atleast 8 digits.</mat-error>
-
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                                Cannot exceed more than 12 characters.</mat-error>
-
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
-                                                This field must contain only letters</mat-error>
-
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Number</mat-label>
+                                                    <input matInput
+                                                      formControlName="adult_passport_num{{ saveAdultTravellerId[passenger.id] }}"
+                                                      placeholder="Passport Number" name="PassportNumber">
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                      Please enter passport number</mat-error>
+      
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('minlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                      Please enter atleast 8 digits.</mat-error>
+      
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                      Cannot exceed more than 12 characters.</mat-error>
+      
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('pattern','adult_passport_num'+saveAdultTravellerId[passenger.id])">
+                                                      This field must contain only letters</mat-error>
+                                                  </span>
+                                            </div>
 
                                           </div>
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Expiry Date</mat-label>
-                                              <input matInput [inputMask]="dateInputMask"
-                                                formControlName="adult_passport_expiry_date{{ saveAdultTravellerId[passenger.id] }}"
-                                                placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
-                                                Please enter passport issue date</mat-error>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
-                                                Please enter a valid expiry date</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Expiry Date</mat-label>
+                                                    <input matInput [inputMask]="dateInputMask"
+                                                      formControlName="adult_passport_expiry_date{{ saveAdultTravellerId[passenger.id] }}"
+                                                      placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+                                                      Please enter passport issue date</mat-error>
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
+                                                      Please enter a valid expiry date</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
 
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Issue Date</mat-label>
-                                              <input matInput [inputMask]="dateInputMask"
-                                                formControlName="adult_passport_issue_date{{ saveAdultTravellerId[passenger.id] }}"
-                                                placeholder="Passport Issue Date" name="PassportIssueDate">
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
-                                                Please enter passport issue date</mat-error>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
-                                                Please enter a valid issued date.</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Issue Date</mat-label>
+                                                    <input matInput [inputMask]="dateInputMask"
+                                                      formControlName="adult_passport_issue_date{{ saveAdultTravellerId[passenger.id] }}"
+                                                      placeholder="Passport Issue Date" name="PassportIssueDate">
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                                      Please enter passport issue date</mat-error>
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
+                                                      Please enter a valid issued date.</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
 
                                           <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
-                                              <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>Passport Issuing Country</mat-label>
-                                                <mat-select
-                                                  formControlName="adult_passport_issuing_country{{ saveAdultTravellerId[passenger.id] }}">
-                                                  <mat-option value=""> Select </mat-option>
-                                                  <mat-option *ngFor="let country of countryJson;"
-                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                                </mat-select>
-                                                <mat-error class="error_flight"
-                                                  *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
-                                                  Select passport issuing country</mat-error>
-                                              </mat-form-field>
+                                              <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Issuing Country</mat-label>
+                                                    <mat-select
+                                                      formControlName="adult_passport_issuing_country{{ saveAdultTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
+                                                      Select passport issuing country</mat-error>
+                                                  </span>
+                                              </div>
                                             </div>
 
 
                                             <div class="col-xl-4 col-lg-4 col-md-6">
-                                              <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>PAX Nationality</mat-label>
-                                                <mat-select
-                                                  formControlName="adult_pax_nationality{{ saveAdultTravellerId[passenger.id] }}">
-                                                  <mat-option value=""> Select </mat-option>
-                                                  <mat-option *ngFor="let country of countryJson;"
-                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                                </mat-select>
-                                                <mat-error class="error_flight"
-                                                  *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
-                                                  Select nationality</mat-error>
-                                              </mat-form-field>
+                                             <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>PAX Nationality</mat-label>
+                                                    <mat-select
+                                                      formControlName="adult_pax_nationality{{ saveAdultTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
+                                                      Select nationality</mat-error>
+                                                  </span>
+                                             </div>
                                             </div>
                                           </div>
 
@@ -1374,7 +1447,7 @@
                       <p class="view_more_btn othertraveller"
                         *ngIf="!isAdultExpanded && adultTravellerList && adultTravellerList.length >3 "><a
                           href="javascript:;" (click)="expandItemsAdult()">View More</a></p>
-                      <div class=" add_new_traveler p-20" *ngIf="!isMobile && adultsArrayM.length>0 ">
+                      <div class=" add_new_traveler p-10" *ngIf="!isMobile && adultsArrayM.length>0 ">
                         <div *ngIf="adultsArrayM.length>0">
                           <!--Manaual Passenger Adult-->
                           <ng-container
@@ -1388,70 +1461,85 @@
                             <div>
                               <div class="row">
                                 <div class="col-xl-2 col-lg-2 col-md-6">
-                                  <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>Title</mat-label>
-                                    <mat-select formControlName="adult_title{{ traveller }}">
-                                      <mat-option value=""> Select </mat-option>
-                                      <mat-option value="Mr"> Mr </mat-option>
-                                      <mat-option value="Mrs">Mrs</mat-option>
-                                      <mat-option value="Ms">Ms</mat-option>
-                                      <mat-option value="Miss">Miss</mat-option>
-                                    </mat-select>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Select title
-                                    </mat-error>
-                                  </mat-form-field>
+                                  <div>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Title</mat-label>
+                                        <mat-select formControlName="adult_title{{ traveller }}">
+                                          <mat-option value=""> Select </mat-option>
+                                          <mat-option value="Mr"> Mr </mat-option>
+                                          <mat-option value="Mrs">Mrs</mat-option>
+                                          <mat-option value="Ms">Ms</mat-option>
+                                          <mat-option value="Miss">Miss</mat-option>
+                                        </mat-select>
+                                        
+                                      </mat-form-field>
+                                      <span>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Select title
+                                        </mat-error>
+                                      </span>
+                                  </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-6">
-                                  <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>First Name</mat-label>
-                                    <input matInput placeholder="First Name" name="adult_first_name"
-                                      formControlName="adult_first_name{{ traveller }}">
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">
-                                      Please enter first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('pattern','adult_first_name'+traveller) && !passengerForm.hasError('required','adult_first_name'+traveller)">
-                                      Please enter valid first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('minlength','adult_first_name'+traveller) && !passengerForm.hasError('pattern','adult_first_name'+traveller)">
-                                      Please enter atleast 2 character</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller) && !passengerForm.hasError('pattern','adult_first_name'+traveller)">
-                                      Please enter maximum 26 character</mat-error>
-                                  </mat-form-field>
+                                  <div>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name" name="adult_first_name"
+                                          formControlName="adult_first_name{{ traveller }}">
+                                        
+                                      </mat-form-field>
+                                      <span>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">
+                                          Please enter first name</mat-error>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('pattern','adult_first_name'+traveller) && !passengerForm.hasError('required','adult_first_name'+traveller)">
+                                          Please enter valid first name</mat-error>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('minlength','adult_first_name'+traveller) && !passengerForm.hasError('pattern','adult_first_name'+traveller)">
+                                          Please enter atleast 2 character</mat-error>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('maxlength','adult_first_name'+traveller) && !passengerForm.hasError('pattern','adult_first_name'+traveller)">
+                                          Please enter maximum 26 character</mat-error>
+                                      </span>
+                                  </div>
 
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
-                                  <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>Last Name</mat-label>
-                                    <input matInput placeholder="Last Name"
-                                      formControlName="adult_last_name{{ traveller }}">
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">
-                                      Please enter first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('pattern','adult_last_name'+traveller) && !passengerForm.hasError('required','adult_last_name'+traveller)">
-                                      Please enter valid first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('minlength','adult_last_name'+traveller) && !passengerForm.hasError('pattern','adult_last_name'+traveller)">
-                                      Please enter atleast 2 character</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">
-                                      Please enter maximum 26 character</mat-error>
-
-                                  </mat-form-field>
+                                  <div>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name"
+                                          formControlName="adult_last_name{{ traveller }}">
+                                      </mat-form-field>
+                                      <span>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">
+                                          Please enter first name</mat-error>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('pattern','adult_last_name'+traveller) && !passengerForm.hasError('required','adult_last_name'+traveller)">
+                                          Please enter valid first name</mat-error>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('minlength','adult_last_name'+traveller) && !passengerForm.hasError('pattern','adult_last_name'+traveller)">
+                                          Please enter atleast 2 character</mat-error>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('maxlength','adult_last_name'+traveller)">
+                                          Please enter maximum 26 character</mat-error>
+                                      </span>
+                                  </div>
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
-                                  <div class="form-group">
+                                  <div class="">
                                     <mat-form-field appearance="outline" class="w-100">
                                       <mat-label>Date Of Birth</mat-label>
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="adult_dob{{ traveller }}" placeholder="Date Of Birth"
                                         name="dateOfBirth">
 
-                                      <mat-error class="error_flight"
+                                    </mat-form-field>
+                                    <span>
+                                        <mat-error class="error_flight"
                                         *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please enter
                                         dob</mat-error>
                                       <mat-error class="error_flight"
@@ -1462,8 +1550,7 @@
                                         *ngIf="passengerForm.get('adult_dob'+traveller).touched && passengerForm.get('adult_dob'+traveller).getError('younger')">
                                         Please Enter Valid DOB
                                       </mat-error>
-
-                                    </mat-form-field>
+                                    </span>
 
                                   </div>
                                 </div>
@@ -1471,91 +1558,114 @@
                                 <ng-container *ngIf="searchData.travel=='INT'">
                                   <div class="row">
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Passport Number</mat-label>
-                                        <input matInput formControlName="adult_passport_num{{ traveller }}"
-                                          placeholder="Passport Number" name="PassportNumber">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">
-                                          Please enter passport number</mat-error>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('minlength','adult_passport_num'+traveller)">
-                                          Please enter atleast 8 digits.</mat-error>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+traveller)">
-                                          Cannot exceed more than 12 characters.</mat-error>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('pattern','adult_passport_num'+traveller)">
-                                          This field must contain only letters</mat-error>
-
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Passport Number</mat-label>
+                                            <input matInput formControlName="adult_passport_num{{ traveller }}"
+                                              placeholder="Passport Number" name="PassportNumber">
+    
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">
+                                              Please enter passport number</mat-error>
+    
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('minlength','adult_passport_num'+traveller)">
+                                              Please enter atleast 8 digits.</mat-error>
+    
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('maxlength','adult_passport_num'+traveller)">
+                                              Cannot exceed more than 12 characters.</mat-error>
+    
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('pattern','adult_passport_num'+traveller)">
+                                              This field must contain only letters</mat-error>
+                                          </span>
+                                      </div>
 
                                     </div>
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Passport Expiry Date</mat-label>
-                                        <input matInput [inputMask]="dateInputMask"
-                                          formControlName="adult_passport_expiry_date{{ traveller }}"
-                                          placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+traveller)">
-                                          Please enter passport issue date</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+traveller)">
-                                          Please enter a valid expiry date</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Passport Expiry Date</mat-label>
+                                            <input matInput [inputMask]="dateInputMask"
+                                              formControlName="adult_passport_expiry_date{{ traveller }}"
+                                              placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+traveller)">
+                                              Please enter passport issue date</mat-error>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('validatePassportExp','adult_passport_expiry_date'+traveller)">
+                                              Please enter a valid expiry date</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
 
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Passport Issue Date</mat-label>
-                                        <input matInput [inputMask]="dateInputMask"
-                                          formControlName="adult_passport_issue_date{{ traveller }}"
-                                          placeholder="Passport Issue Date" name="PassportIssueDate">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
-                                          Please enter passport issue date</mat-error>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+traveller) && !passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
-                                          Please enter a valid issued date.</mat-error>
-
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Passport Issue Date</mat-label>
+                                            <input matInput [inputMask]="dateInputMask"
+                                              formControlName="adult_passport_issue_date{{ traveller }}"
+                                              placeholder="Passport Issue Date" name="PassportIssueDate">
+                                            
+    
+                                          </mat-form-field>
+                                          <span>
+                                                <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
+                                            Please enter passport issue date</mat-error>
+    
+                                            <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('validatePassportIssue','adult_passport_issue_date'+traveller) && !passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
+                                            Please enter a valid issued date.</mat-error>
+                                          </span>
+                                        </div>
                                     </div>
 
                                     <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>Passport Issuing Country</mat-label>
-                                          <mat-select formControlName="adult_passport_issuing_country{{ traveller }}">
-                                            <mat-option value=""> Select </mat-option>
-                                            <mat-option *ngFor="let country of countryJson;"
-                                              value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                          </mat-select>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+traveller)">
-                                            Select passport issuing country</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Issuing Country</mat-label>
+                                                <mat-select formControlName="adult_passport_issuing_country{{ traveller }}">
+                                                  <mat-option value=""> Select </mat-option>
+                                                  <mat-option *ngFor="let country of countryJson;"
+                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                </mat-select>
+                                               
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+traveller)">
+                                                  Select passport issuing country</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
 
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>PAX Nationality</mat-label>
-                                          <mat-select formControlName="adult_pax_nationality{{ traveller }}">
-                                            <mat-option value=""> Select </mat-option>
-                                            <mat-option *ngFor="let country of countryJson;"
-                                              value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                          </mat-select>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','adult_pax_nationality'+traveller)">
-                                            Select nationality</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>PAX Nationality</mat-label>
+                                                <mat-select formControlName="adult_pax_nationality{{ traveller }}">
+                                                  <mat-option value=""> Select </mat-option>
+                                                  <mat-option *ngFor="let country of countryJson;"
+                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                </mat-select>
+                                                
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','adult_pax_nationality'+traveller)">
+                                                  Select nationality</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
                                     </div>
 
@@ -1772,167 +1882,205 @@
                                 <div>
                                   <div class="row">
                                     <div class="col-xl-2 col-lg-2 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Title</mat-label>
-                                        <mat-select
-                                          formControlName="child_title{{ saveChildTravellerId[passenger.id] }}">
-                                          <mat-option value=""> Select </mat-option>
-                                          <mat-option value="Mstr"> Mstr </mat-option>
-                                          <mat-option value="Miss">Miss</mat-option>
-                                        </mat-select>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
-                                          Select title</mat-error>
-
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Title</mat-label>
+                                            <mat-select
+                                              formControlName="child_title{{ saveChildTravellerId[passenger.id] }}">
+                                              <mat-option value=""> Select </mat-option>
+                                              <mat-option value="Mstr"> Mstr </mat-option>
+                                              <mat-option value="Miss">Miss</mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
+                                              Select title</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>First Name</mat-label>
-                                        <input matInput placeholder="First Name" name="child_first_name"
-                                          formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter first name</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('pattern','child_first_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter valid first name</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('minlength','child_first_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter atleast 2 character</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('maxlength','child_first_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter maximum 26 character</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>First Name</mat-label>
+                                            <input matInput placeholder="First Name" name="child_first_name"
+                                              formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
+                                          </mat-form-field>
+                                        <span>
+                                            <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
+                                            Please enter first name</mat-error>
+                                          <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('pattern','child_first_name'+saveChildTravellerId[passenger.id])">
+                                            Please enter valid first name</mat-error>
+                                          <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('minlength','child_first_name'+saveChildTravellerId[passenger.id])">
+                                            Please enter atleast 2 character</mat-error>
+                                          <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('maxlength','child_first_name'+saveChildTravellerId[passenger.id])">
+                                            Please enter maximum 26 character</mat-error>
+                                        </span>
+                                      </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Last Name</mat-label>
-                                        <input matInput placeholder="Last Name"
-                                          formControlName="child_last_name{{ saveChildTravellerId[passenger.id] }}">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','child_last_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter first name</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('pattern','child_last_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter valid first name</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('minlength','child_last_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter atleast 2 character</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('maxlength','child_last_name'+saveChildTravellerId[passenger.id])">
-                                          Please enter maximum 26 character</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Last Name</mat-label>
+                                            <input matInput placeholder="Last Name"
+                                              formControlName="child_last_name{{ saveChildTravellerId[passenger.id] }}">
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','child_last_name'+saveChildTravellerId[passenger.id])">
+                                              Please enter first name</mat-error>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('pattern','child_last_name'+saveChildTravellerId[passenger.id])">
+                                              Please enter valid first name</mat-error>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('minlength','child_last_name'+saveChildTravellerId[passenger.id])">
+                                              Please enter atleast 2 character</mat-error>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('maxlength','child_last_name'+saveChildTravellerId[passenger.id])">
+                                              Please enter maximum 26 character</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6">
                                       <div class="form-group">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>Date Of Birth</mat-label>
-                                          <input matInput [inputMask]="dateInputMask"
-                                            formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}"
-                                            placeholder="Date Of Birth" name="dateOfBirth">
-
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
-                                            Please enter dob</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">
-                                            Child age should be between 2 - 12 years.</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Date Of Birth</mat-label>
+                                                <input matInput [inputMask]="dateInputMask"
+                                                  formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}"
+                                                  placeholder="Date Of Birth" name="dateOfBirth">
+      
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
+                                                  Please enter dob</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">
+                                                  Child age should be between 2 - 12 years.</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
                                     </div>
 
                                     <ng-container *ngIf="searchData.travel=='INT'">
                                       <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-6">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Passport Number</mat-label>
-                                            <input matInput
-                                              formControlName="child_passport_num{{ saveChildTravellerId[passenger.id] }}"
-                                              placeholder="Passport Number" name="PassportNumber">
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                              Please enter passport number</mat-error>
-
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                              Please enter atleast 8 digits.</mat-error>
-
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                              Cannot exceed more than 12 characters.</mat-error>
-
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                              This field must contain only letters</mat-error>
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Number</mat-label>
+                                                <input matInput
+                                                  formControlName="child_passport_num{{ saveChildTravellerId[passenger.id] }}"
+                                                  placeholder="Passport Number" name="PassportNumber">
+                                                
+                                              </mat-form-field>
+                                              <span>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                  Please enter passport number</mat-error>
+    
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                  Please enter atleast 8 digits.</mat-error>
+    
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                  Cannot exceed more than 12 characters.</mat-error>
+    
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                  This field must contain only letters</mat-error>
+                                              </span>
+                                          </div>
 
                                         </div>
 
                                         <div class="col-xl-4 col-lg-4 col-md-6">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Passport Expiry Date</mat-label>
-                                            <input matInput [inputMask]="dateInputMask"
-                                              formControlName="child_passport_expiry_date{{ saveChildTravellerId[passenger.id] }}"
-                                              placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
-                                              Please enter passport issue date</mat-error>
-
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
-                                              Please enter a valid expiry date</mat-error>
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Expiry Date</mat-label>
+                                                <input matInput [inputMask]="dateInputMask"
+                                                  formControlName="child_passport_expiry_date{{ saveChildTravellerId[passenger.id] }}"
+                                                  placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                                
+                                              </mat-form-field>
+                                              <span>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+                                                  Please enter passport issue date</mat-error>
+    
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+                                                  Please enter a valid expiry date</mat-error>
+                                              </span>
+                                          </div>
                                         </div>
 
 
                                         <div class="col-xl-4 col-lg-4 col-md-6">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Passport Issue Date</mat-label>
-                                            <input matInput [inputMask]="dateInputMask"
-                                              formControlName="child_passport_issue_date{{ saveChildTravellerId[passenger.id] }}"
-                                              placeholder="Passport Issue Date" name="PassportIssueDate">
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
-                                              Please enter passport issue date</mat-error>
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
-                                              Please enter a valid issued date.</mat-error>
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Issue Date</mat-label>
+                                                <input matInput [inputMask]="dateInputMask"
+                                                  formControlName="child_passport_issue_date{{ saveChildTravellerId[passenger.id] }}"
+                                                  placeholder="Passport Issue Date" name="PassportIssueDate">
+                                              </mat-form-field>
+                                              <span>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                                  Please enter passport issue date</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                                  Please enter a valid issued date.</mat-error>
+                                              </span>
+                                          </div>
                                         </div>
 
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Issuing Country</mat-label>
-                                              <mat-select
-                                                formControlName="child_passport_issuing_country{{ saveChildTravellerId[passenger.id] }}">
-                                                <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;"
-                                                  value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                              </mat-select>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
-                                                Select passport issuing country</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Issuing Country</mat-label>
+                                                    <mat-select
+                                                      formControlName="child_passport_issuing_country{{ saveChildTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
+                                                      Select passport issuing country</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
 
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>PAX Nationality</mat-label>
-                                              <mat-select
-                                                formControlName="child_pax_nationality{{ saveChildTravellerId[passenger.id] }}">
-                                                <mat-option value=""> Select </mat-option>
-                                                <mat-option *ngFor="let country of countryJson;"
-                                                  value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                              </mat-select>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
-                                                Select nationality</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>PAX Nationality</mat-label>
+                                                    <mat-select
+                                                      formControlName="child_pax_nationality{{ saveChildTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
+                                                      Select nationality</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
                                         </div>
 
@@ -1974,47 +2122,59 @@
                                   <div>
                                     <div class="row">
                                       <div class="col-xl-2 col-lg-2  col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>Title</mat-label>
-                                          <mat-select
-                                            formControlName="child_title{{ saveChildTravellerId[passenger.id] }}">
-                                            <mat-option value=""> Select </mat-option>
-                                            <mat-option value="Mstr"> Mstr </mat-option>
-                                            <mat-option value="Miss">Miss</mat-option>
-                                          </mat-select>
-
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
-                                            Select title</mat-error>
-
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Title</mat-label>
+                                                <mat-select
+                                                  formControlName="child_title{{ saveChildTravellerId[passenger.id] }}">
+                                                  <mat-option value=""> Select </mat-option>
+                                                  <mat-option value="Mstr"> Mstr </mat-option>
+                                                  <mat-option value="Miss">Miss</mat-option>
+                                                </mat-select>
+      
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
+                                                  Select title</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>First Name</mat-label>
-                                          <input matInput placeholder="First Name" name="child_first_name"
-                                            formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
-                                            Please enter first name</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('pattern','child_first_name'+saveChildTravellerId[passenger.id])">
-                                            Please enter valid first name</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('minlength','child_first_name'+saveChildTravellerId[passenger.id])">
-                                            Please enter atleast 2 character</mat-error>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('maxlength','child_first_name'+saveChildTravellerId[passenger.id])">
-                                            Please enter maximum 26 character</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>First Name</mat-label>
+                                                <input matInput placeholder="First Name" name="child_first_name"
+                                                  formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
+                                                
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
+                                                  Please enter first name</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('pattern','child_first_name'+saveChildTravellerId[passenger.id])">
+                                                  Please enter valid first name</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('minlength','child_first_name'+saveChildTravellerId[passenger.id])">
+                                                  Please enter atleast 2 character</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('maxlength','child_first_name'+saveChildTravellerId[passenger.id])">
+                                                  Please enter maximum 26 character</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
                                       <div class="col-xl-3 col-lg-3 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>Last Name</mat-label>
-                                          <input matInput placeholder="Last Name"
-                                            formControlName="child_last_name{{ saveChildTravellerId[passenger.id] }}">
-                                          <mat-error class="error_flight"
+                                        
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Last Name</mat-label>
+                                                <input matInput placeholder="Last Name"
+                                                  formControlName="child_last_name{{ saveChildTravellerId[passenger.id] }}">
+                                              </mat-form-field>
+                                            <span>
+                                                <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','child_last_name'+saveChildTravellerId[passenger.id])">
                                             Please enter first name</mat-error>
                                           <mat-error class="error_flight"
@@ -2026,114 +2186,142 @@
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('maxlength','child_last_name'+saveChildTravellerId[passenger.id])">
                                             Please enter maximum 26 character</mat-error>
-                                        </mat-form-field>
+                                            </span>
+                                        </div>
                                       </div>
                                       <div class="col-xl-3 col-lg-3 col-md-6">
                                         <div class="form-group">
-                                          <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>Date Of Birth</mat-label>
-                                            <input matInput [inputMask]="dateInputMask"
-                                              formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}"
-                                              placeholder="Date Of Birth" name="dateOfBirth">
-
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
-                                              Please enter dob</mat-error>
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">
-                                              Child age should be between 2 - 12 years.</mat-error>
-                                          </mat-form-field>
+                                          <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Date Of Birth</mat-label>
+                                                <input matInput [inputMask]="dateInputMask"
+                                                  formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}"
+                                                  placeholder="Date Of Birth" name="dateOfBirth">
+                                              </mat-form-field>
+                                              <span>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
+                                                  Please enter dob</mat-error>
+                                                <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('validateChildAge','child_dob'+saveChildTravellerId[passenger.id])">
+                                                  Child age should be between 2 - 12 years.</mat-error>
+                                              </span>
+                                          </div>
                                         </div>
                                       </div>
                                       <ng-container *ngIf="searchData.travel=='INT'">
                                         <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Number</mat-label>
-                                              <input matInput
-                                                formControlName="child_passport_num{{ saveChildTravellerId[passenger.id] }}"
-                                                placeholder="Passport Number" name="PassportNumber">
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                                Please enter passport number</mat-error>
-
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                                Please enter atleast 8 digits.</mat-error>
-
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                                Cannot exceed more than 12 characters.</mat-error>
-
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
-                                                This field must contain only letters</mat-error>
-
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Number</mat-label>
+                                                    <input matInput
+                                                      formControlName="child_passport_num{{ saveChildTravellerId[passenger.id] }}"
+                                                      placeholder="Passport Number" name="PassportNumber">
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                      Please enter passport number</mat-error>
+      
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('minlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                      Please enter atleast 8 digits.</mat-error>
+      
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('maxlength','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                      Cannot exceed more than 12 characters.</mat-error>
+      
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('pattern','child_passport_num'+saveChildTravellerId[passenger.id])">
+                                                      This field must contain only letters</mat-error>
+                                                  </span>
+                                            </div>
 
                                           </div>
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Expiry Date</mat-label>
-                                              <input matInput [inputMask]="dateInputMask"
-                                                formControlName="child_passport_expiry_date{{ saveChildTravellerId[passenger.id] }}"
-                                                placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
-                                                Please enter passport issue date</mat-error>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
-                                                Please enter a valid expiry date</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Expiry Date</mat-label>
+                                                    <input matInput [inputMask]="dateInputMask"
+                                                      formControlName="child_passport_expiry_date{{ saveChildTravellerId[passenger.id] }}"
+                                                      placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+                                                      Please enter passport issue date</mat-error>
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
+                                                      Please enter a valid expiry date</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
 
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                              <mat-label>Passport Issue Date</mat-label>
-                                              <input matInput [inputMask]="dateInputMask"
-                                                formControlName="child_passport_issue_date{{ saveChildTravellerId[passenger.id] }}"
-                                                placeholder="Passport Issue Date" name="PassportIssueDate">
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
-                                                Please enter passport issue date</mat-error>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
-                                                Please enter a valid issued date.</mat-error>
-                                            </mat-form-field>
+                                            <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Issue Date</mat-label>
+                                                    <input matInput [inputMask]="dateInputMask"
+                                                      formControlName="child_passport_issue_date{{ saveChildTravellerId[passenger.id] }}"
+                                                      placeholder="Passport Issue Date" name="PassportIssueDate">
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                      <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                                      Please enter passport issue date</mat-error>
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
+                                                      Please enter a valid issued date.</mat-error>
+                                                  </span>
+                                            </div>
                                           </div>
 
                                           <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
-                                              <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>Passport Issuing Country</mat-label>
-                                                <mat-select
-                                                  formControlName="child_passport_issuing_country{{ saveChildTravellerId[passenger.id] }}">
-                                                  <mat-option value=""> Select </mat-option>
-                                                  <mat-option *ngFor="let country of countryJson;"
-                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                                </mat-select>
-                                                <mat-error class="error_flight"
-                                                  *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
-                                                  Select passport issuing country</mat-error>
-                                              </mat-form-field>
+                                              <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>Passport Issuing Country</mat-label>
+                                                    <mat-select
+                                                      formControlName="child_passport_issuing_country{{ saveChildTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                    
+                                                  </mat-form-field>
+                                                  <span>
+                                                    <mat-error class="error_flight"
+                                                      *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
+                                                      Select passport issuing country</mat-error>
+                                                  </span>
+                                              </div>
                                             </div>
 
 
                                             <div class="col-xl-4 col-lg-4 col-md-6">
-                                              <mat-form-field appearance="outline" class="w-100">
-                                                <mat-label>PAX Nationality</mat-label>
-                                                <mat-select
-                                                  formControlName="child_pax_nationality{{ saveChildTravellerId[passenger.id] }}">
-                                                  <mat-option value=""> Select </mat-option>
-                                                  <mat-option *ngFor="let country of countryJson;"
-                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                                </mat-select>
-                                                <mat-error class="error_flight"
-                                                  *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
-                                                  Select nationality</mat-error>
-                                              </mat-form-field>
+                                              <div>
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-label>PAX Nationality</mat-label>
+                                                    <mat-select
+                                                      formControlName="child_pax_nationality{{ saveChildTravellerId[passenger.id] }}">
+                                                      <mat-option value=""> Select </mat-option>
+                                                      <mat-option *ngFor="let country of countryJson;"
+                                                        value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                    </mat-select>
+                                                   
+                                                  </mat-form-field>
+                                                  <span>
+                                                    <mat-error class="error_flight"
+                                                    *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
+                                                    Select nationality</mat-error>
+                                                  </span>
+                                              </div>
                                             </div>
                                           </div>
 
@@ -2156,7 +2344,7 @@
                         *ngIf="!isChildExpanded && childTravellerList && childTravellerList.length >3 "><a
                           href="javascript:;" (click)="expandItemsChild()">View More</a></p>
 
-                      <div class="add_new_traveler p-20" *ngIf="!isMobile && childArrayM.length>0 ">
+                      <div class="add_new_traveler p-10" *ngIf="!isMobile && childArrayM.length>0 ">
                         <div *ngIf="childArrayM.length>0">
                           <!--Manaual Passenger Child-->
                           <ng-container
@@ -2170,161 +2358,205 @@
                             <div>
                               <div class="row">
                                 <div class="col-xl-2 col-lg-2 col-md-6">
-                                  <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>Title</mat-label>
-                                    <mat-select formControlName="child_title{{ traveller }}">
-                                      <mat-option value=""> Select </mat-option>
-                                      <mat-option value="Mstr"> Mstr </mat-option>
-                                      <mat-option value="Miss">Miss</mat-option>
-                                    </mat-select>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('required','child_title'+traveller)">Select title
-                                    </mat-error>
-                                  </mat-form-field>
+                                  <div>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Title</mat-label>
+                                        <mat-select formControlName="child_title{{ traveller }}">
+                                          <mat-option value=""> Select </mat-option>
+                                          <mat-option value="Mstr"> Mstr </mat-option>
+                                          <mat-option value="Miss">Miss</mat-option>
+                                        </mat-select>
+                                        
+                                      </mat-form-field>
+                                      <span>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('required','child_title'+traveller)">Select title
+                                        </mat-error>
+                                      </span>
+                                  </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-6">
-                                  <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>First Name</mat-label>
-                                    <input matInput placeholder="First Name" name="child_first_name"
-                                      formControlName="child_first_name{{ traveller }}">
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('required','child_first_name'+traveller)">
-                                      Please enter first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('pattern','child_first_name'+traveller)">
-                                      Please enter valid first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('minlength','child_first_name'+traveller)">
-                                      Please enter atleast 2 character</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('maxlength','child_first_name'+traveller)">
-                                      Please enter maximum 26 character</mat-error>
-                                  </mat-form-field>
+                                  <div>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name" name="child_first_name"
+                                          formControlName="child_first_name{{ traveller }}">
+                                       
+                                      </mat-form-field>
+                                      <span>
+                                        <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('required','child_first_name'+traveller)">
+                                        Please enter first name</mat-error>
+                                      <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('pattern','child_first_name'+traveller)">
+                                        Please enter valid first name</mat-error>
+                                      <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('minlength','child_first_name'+traveller)">
+                                        Please enter atleast 2 character</mat-error>
+                                      <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('maxlength','child_first_name'+traveller)">
+                                        Please enter maximum 26 character</mat-error>
+                                      </span>
+                                  </div>
 
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
-                                  <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>Last Name</mat-label>
-                                    <input matInput placeholder="Last Name"
-                                      formControlName="child_last_name{{ traveller }}">
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('required','child_last_name'+traveller)">
-                                      Please enter first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('pattern','child_last_name'+traveller)">
-                                      Please enter valid first name</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('minlength','child_last_name'+traveller)">
-                                      Please enter atleast 2 character</mat-error>
-                                    <mat-error class="error_flight"
-                                      *ngIf="passengerForm.hasError('maxlength','child_last_name'+traveller)">
-                                      Please enter maximum 26 character</mat-error>
+                                  <div>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name"
+                                          formControlName="child_last_name{{ traveller }}">
+                                    </mat-form-field>
 
-                                  </mat-form-field>
+                                       <span>
+                                        <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('required','child_last_name'+traveller)">
+                                        Please enter first name</mat-error>
+                                      <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('pattern','child_last_name'+traveller)">
+                                        Please enter valid first name</mat-error>
+                                      <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('minlength','child_last_name'+traveller)">
+                                        Please enter atleast 2 character</mat-error>
+                                      <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('maxlength','child_last_name'+traveller)">
+                                        Please enter maximum 26 character</mat-error>
+                                       </span>
+                                  </div>
+
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
                                   <div class="form-group">
+                                   <div>
                                     <mat-form-field appearance="outline" class="w-100">
-                                      <mat-label>Date Of Birth</mat-label>
-                                      <input matInput [inputMask]="dateInputMask"
-                                        formControlName="child_dob{{ traveller }}" placeholder="Date Of Birth"
-                                        name="dateOfBirth">
-
-                                      <mat-error class="error_flight"
-                                        *ngIf="passengerForm.hasError('required','child_dob'+traveller)">Please enter
-                                        dob</mat-error>
-                                      <mat-error class="error_flight"
-                                        *ngIf="passengerForm.hasError('validateChildAge','child_dob'+traveller)">Child
-                                        age should be between 2 - 12 years.</mat-error>
-                                    </mat-form-field>
+                                        <mat-label>Date Of Birth</mat-label>
+                                        <input matInput [inputMask]="dateInputMask"
+                                          formControlName="child_dob{{ traveller }}" placeholder="Date Of Birth"
+                                          name="dateOfBirth">
+  
+                                      </mat-form-field>
+                                      <span>
+                                          <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('required','child_dob'+traveller)">Please enter
+                                          dob</mat-error>
+                                        <mat-error class="error_flight"
+                                          *ngIf="passengerForm.hasError('validateChildAge','child_dob'+traveller)">Child
+                                          age should be between 2 - 12 years.</mat-error>
+                                      </span>
+                                   </div>
                                   </div>
                                 </div>
                                 <ng-container *ngIf="searchData.travel=='INT'">
                                   <div class="row">
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Passport Number</mat-label>
-                                        <input matInput formControlName="child_passport_num{{ traveller }}"
-                                          placeholder="Passport Number" name="PassportNumber">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
-                                          Please enter passport number</mat-error>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
-                                          Please enter atleast 8 digits.</mat-error>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
-                                          Cannot exceed more than 12 characters.</mat-error>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
-                                          This field must contain only letters</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Passport Number</mat-label>
+                                            <input matInput formControlName="child_passport_num{{ traveller }}"
+                                              placeholder="Passport Number" name="PassportNumber">
+                                            
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
+                                              Please enter passport number</mat-error>
+    
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('minlength','child_passport_num'+traveller)">
+                                              Please enter atleast 8 digits.</mat-error>
+    
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('maxlength','child_passport_num'+traveller)">
+                                              Cannot exceed more than 12 characters.</mat-error>
+    
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('pattern','child_passport_num'+traveller)">
+                                              This field must contain only letters</mat-error>
+                                          </span>
+                                      </div>
 
                                     </div>
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Passport Expiry Date</mat-label>
-                                        <input matInput [inputMask]="dateInputMask"
-                                          formControlName="child_passport_expiry_date{{ traveller }}"
-                                          placeholder="Passport Expiry Date" name="PassportExpiryDate">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+traveller)">
-                                          Please enter passport issue date</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+traveller)">
-                                          Please enter a valid expiry date</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Passport Expiry Date</mat-label>
+                                            <input matInput [inputMask]="dateInputMask"
+                                              formControlName="child_passport_expiry_date{{ traveller }}"
+                                              placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                            
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+traveller)">
+                                              Please enter passport issue date</mat-error>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('validatePassportExp','child_passport_expiry_date'+traveller)">
+                                              Please enter a valid expiry date</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
 
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
-                                      <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Passport Issue Date</mat-label>
-                                        <input matInput [inputMask]="dateInputMask"
-                                          formControlName="child_passport_issue_date{{ traveller }}"
-                                          placeholder="Passport Issue Date" name="PassportIssueDate">
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
-                                          Please enter passport issue date</mat-error>
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+traveller)">
-                                          Please enter a valid issued date.</mat-error>
-                                      </mat-form-field>
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Passport Issue Date</mat-label>
+                                            <input matInput [inputMask]="dateInputMask"
+                                              formControlName="child_passport_issue_date{{ traveller }}"
+                                              placeholder="Passport Issue Date" name="PassportIssueDate">
+                                            
+                                          </mat-form-field>
+                                          <span>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
+                                              Please enter passport issue date</mat-error>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('validatePassportIssue','child_passport_issue_date'+traveller)">
+                                              Please enter a valid issued date.</mat-error>
+                                          </span>
+                                      </div>
                                     </div>
 
                                     <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>Passport Issuing Country</mat-label>
-                                          <mat-select formControlName="child_passport_issuing_country{{ traveller }}">
-                                            <mat-option value=""> Select </mat-option>
-                                            <mat-option *ngFor="let country of countryJson;"
-                                              value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                          </mat-select>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+traveller)">
-                                            Select passport issuing country</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Passport Issuing Country</mat-label>
+                                                <mat-select formControlName="child_passport_issuing_country{{ traveller }}">
+                                                  <mat-option value=""> Select </mat-option>
+                                                  <mat-option *ngFor="let country of countryJson;"
+                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                </mat-select>
+                                               
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+traveller)">
+                                                  Select passport issuing country</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
 
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                          <mat-label>PAX Nationality</mat-label>
-                                          <mat-select formControlName="child_pax_nationality{{ traveller }}">
-                                            <mat-option value=""> Select </mat-option>
-                                            <mat-option *ngFor="let country of countryJson;"
-                                              value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
-                                          </mat-select>
-                                          <mat-error class="error_flight"
-                                            *ngIf="passengerForm.hasError('required','child_pax_nationality'+traveller)">
-                                            Select nationality</mat-error>
-                                        </mat-form-field>
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>PAX Nationality</mat-label>
+                                                <mat-select formControlName="child_pax_nationality{{ traveller }}">
+                                                  <mat-option value=""> Select </mat-option>
+                                                  <mat-option *ngFor="let country of countryJson;"
+                                                    value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
+                                                </mat-select>
+                                                
+                                              </mat-form-field>
+                                              <span>
+                                                  <mat-error class="error_flight"
+                                                  *ngIf="passengerForm.hasError('required','child_pax_nationality'+traveller)">
+                                                  Select nationality</mat-error>
+                                              </span>
+                                        </div>
                                       </div>
                                     </div>
 
@@ -3007,7 +3239,7 @@
                         *ngIf="!isInfantExpanded && infantTravellerList && infantTravellerList.length >3 "><a
                           href="javascript:;" (click)="expandItemsInfant()">View More</a></p>
 
-                      <div class="add_new_traveler p-20" *ngIf="!isMobile && infantArrayM.length>0 ">
+                      <div class="add_new_traveler p-10" *ngIf="!isMobile && infantArrayM.length>0 ">
                         <div *ngIf="infantArrayM.length>0">
 
                           <!--Manaual Passenger Infant-->

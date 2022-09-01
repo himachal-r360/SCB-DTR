@@ -639,6 +639,8 @@ orderRetry:boolean=false;
 
   }
 
+
+
   syncCustomer(customerInfo){
   
                   this.getQueryParamData();
@@ -1145,6 +1147,8 @@ orderRetry:boolean=false;
 
 
       this.passengerAdultFormCount++;
+
+      /* console.log(this.passengerForm); */
 
       if (checkboxIndex != -1) {
         $('#travelPassenger_' + checkboxIndex).prop('checked', true);
@@ -4048,6 +4052,7 @@ orderReferenceNumber:any;
           this.completedSteps=4;
           }*/
   }
+  
 
   moveTab(page) {
     this.gotoTop();
