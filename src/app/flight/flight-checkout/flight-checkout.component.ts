@@ -970,6 +970,22 @@ orderRetry:boolean=false;
     $('#infantTraveller_mlite').modal('show');
   }
 
+isPaynowClicked:boolean=false;
+continuePayment(){
+
+ if ($('#tab-savedCards').attr('aria-expanded') === "true") {
+ 
+ console.log('true');
+ 
+  }
+  
+   console.log('=======');
+   console.log($(".accordion-button[aria-expanded='true']").attr("id"))
+ console.log($('.payment-content').find('a[aria-expanded]').attr('aria-expanded'));
+ 
+ $('.btn-saved-card').trigger('click');
+
+}
 
   validateMliteForm(type, traveller) {
     this.passengerForm.markAllAsTouched();
