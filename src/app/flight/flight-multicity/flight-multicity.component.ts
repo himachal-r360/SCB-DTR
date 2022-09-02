@@ -1,5 +1,5 @@
 import { ViewportScroller } from '@angular/common';
-import { AfterViewInit, Component, EventEmitter, HostListener, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, HostListener,NgZone, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { Options } from 'ng5-slider';
@@ -24,6 +24,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   selectedTripData: any;
   flightList: any = [];
   flightListWithOutFilter: any = [];
+  SelectedPartnerImage:string;
   WithoutFilterFlightList: any = [];
   dummyForLoader = Array(10).fill(0).map((x, i) => i);
   EMIAvailableLimit: number = 3000;
@@ -155,24 +156,37 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     //  this.gotoTop();
   }
 
-  constructor(private route: ActivatedRoute, private _flightService: FlightService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, private scroll: ViewportScroller, public rest: RestapiService, private router: Router) {
+  constructor(private route: ActivatedRoute, private _flightService: FlightService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, private scroll: ViewportScroller, public rest: RestapiService, private router: Router,private ngZone:NgZone) {
     this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
   /*  $(window).scroll(function (this) {
       if ($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
         $('#endOfPage').trigger('click');
       }
     });*/
+
   }
 
   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
     this.isMobile = window.innerWidth < 991 ? true : false;
   }
   ngOnInit(): void {
+
     this.route.url.subscribe(url =>{
     this.SelectedFlightsOnSector=[];
      this.searchData=[];
              this.isSelectedSectorFlight = false;
     this.loader = true;
+    this.isAllSelected = false;
+    this.isLast = false;
+    this.isError = false;
+    this.isSelectedSectorFlight = false;
+    this.TotalFare = 0;
+    this.BaseFare=0;
+    this.Tax=0;
+    this.SelectedFlightsOnSector= []
+    this.searchData= [];
+    this.SelectedPartnerImage = '';
+    this.selectedTrip = 0;
     this.isMobile = window.innerWidth < 991 ? true : false;
     this.getQueryParamData();
     this.flightSearch();
@@ -469,14 +483,18 @@ bookingSummary() {
         if (h < singleFlightList.length) {
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             if (this.airportsNameJson != null) {
-              let layOverFilterObj = {
-                "arrivalAirportCode": arrivalAirportCode,
-                "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
-                "price": priceSummaryList[0].totalFare,
-                "active": false
-              };
+              if(this.airportsNameJson[singleFlightList[h].arrivalAirport] != undefined)
+              {
+                let layOverFilterObj = {
+                  "arrivalAirportCode": arrivalAirportCode,
+                  "arrivalAirport": this.airportsNameJson[singleFlightList[h].arrivalAirport].airport_name,
+                  "price": priceSummaryList[0].totalFare,
+                  "active": false
+                };
 
-              layOverArr.push(layOverFilterObj);
+                layOverArr.push(layOverFilterObj);
+              }
+
             }
           }
         }
@@ -1286,11 +1304,12 @@ bookingSummary() {
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
       }
-      this.TotalFare = this.TotalFare + item.totalFare;
-      this.BaseFare = this.BaseFare + item.baseFare;
-      this.Tax = this.Tax + (item.totalFare-item.baseFare)
+      this.TotalFare = this.TotalFare - (this.SelectedFlightsOnSector[this.sector] != undefined ? this.SelectedFlightsOnSector[this.sector].priceSummery.totalFare : 0) + item.totalFare;
+      this.BaseFare = this.BaseFare + item.baseFare -(this.SelectedFlightsOnSector[this.sector] != undefined ? this.SelectedFlightsOnSector[this.sector].priceSummery.baseFare : 0);
+      this.Tax = this.Tax  + (item.totalFare-item.baseFare) -(this.SelectedFlightsOnSector[this.sector] != undefined ? this.SelectedFlightsOnSector[this.sector].priceSummery.totalFare - this.SelectedFlightsOnSector[this.sector].priceSummery.baseFare: 0)
 
       var SelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item,index:this.sector};
+      this.SelectedPartnerImage = item.partnerName;
       this.isSelectedSectorFlight = true;
       this.SelectedFlightsOnSector[this.sector] = SelectedFlight;
       this.searchData[this.sector].isSelected = true;
@@ -1305,18 +1324,22 @@ bookingSummary() {
       }
       for(var i =0 ; i< (this.SelectedFlightsOnSector.length -1); i++)
       {
-        var diff = new Date(this.SelectedFlightsOnSector[i+1].flights[0].departureDateTime).valueOf() -new Date(this.SelectedFlightsOnSector[i].flights[(this.SelectedFlightsOnSector[i].flights.length -1)].arrivalDateTime).valueOf();
-        var diffInHours = diff/1000/60/60;
-
-        if(diffInHours <= 2)
+        if(this.SelectedFlightsOnSector[i+1] != undefined && this.SelectedFlightsOnSector[i+1] != null && this.SelectedFlightsOnSector[i] != undefined && this.SelectedFlightsOnSector[i] != null)
         {
-          this.isError = true;
-          this.ErrorMessage = "Flights overlap with each other.Please change the selection.";
-          break;
+          var diff = new Date(this.SelectedFlightsOnSector[i+1].flights[0].departureDateTime).valueOf() -new Date(this.SelectedFlightsOnSector[i].flights[(this.SelectedFlightsOnSector[i].flights.length -1)].arrivalDateTime).valueOf();
+          var diffInHours = diff/1000/60/60;
+
+          if(diffInHours <= 2)
+          {
+            this.isError = true;
+            this.ErrorMessage = "Flights overlap with each other.Please change the selection.";
+            break;
+          }
+          else{
+            this.isError = false;
+          }
         }
-        else{
-          this.isError = false;
-        }
+
       }
 
   }
@@ -1338,6 +1361,7 @@ bookingSummary() {
       }
     var SelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item,index:this.sector};
     this.isSelectedSectorFlight = true;
+    this.SelectedPartnerImage = item.partnerName;
     this.SelectedFlightsOnSector[this.sector] = SelectedFlight;
       this.searchData[this.sector].isSelected = true;
       this.searchData[this.sector].selectedFlight = SelectedFlight;
