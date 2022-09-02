@@ -3137,7 +3137,9 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
   fareKeys:any;
   
   itineratyButton:boolean=false;
+  submitted : boolean = false;
   continueTravellerDetails() {
+    this.submitted = true;
     alertify.set('notifier', 'position', 'top-center');
   alertify.dismissAll();
     if (this.adultsArray.length < this.maxAdults) {
