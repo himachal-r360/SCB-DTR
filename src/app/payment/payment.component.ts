@@ -1822,7 +1822,7 @@ checkNonSpcOfferforHDFCcards(){
 			"partnerId":this.Partnertoken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-			"orderAmount": this.payActualFare,
+			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
 			"binNumber":btoa(splitCard),
 			"last4Digit":btoa(last4Digit),
