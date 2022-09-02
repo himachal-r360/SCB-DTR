@@ -3200,6 +3200,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         target.focus();
         }
       this.itineratyButton=false;
+      /* $('.error_flight').addClass('d-block'); */
       // console.log(this.passengerAdultFormCount);
       return;
     } else {

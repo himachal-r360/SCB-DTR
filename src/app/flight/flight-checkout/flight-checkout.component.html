@@ -1003,7 +1003,7 @@
                                               data-test="adult_first_name{{ saveAdultTravellerId[passenger.id] }}"
                                               formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                             <mat-error class="error_flight  error_tv"
                                               *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                               Please enter first name</mat-error>
@@ -1078,7 +1078,7 @@
                                                   formControlName="adult_passport_num{{ saveAdultTravellerId[passenger.id] }}"
                                                   placeholder="Passport Number" name="PassportNumber">
                                               </mat-form-field>
-                                              <span >
+                                              <span *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                 <mat-error class="error_flight  error_tv"
                                                   *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                   Please enter passport number</mat-error>
