@@ -3545,6 +3545,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
       };
 
 
+
       let segement_values:any;
       
       if( this.flightSessionData['travel_type']=='M') {
@@ -3696,7 +3697,7 @@ this.itineratyButton=false;
             "adults": this.searchData.adults,
             "infants": this.searchData.infants,
             "total": Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
-            "others": this.Tax,
+            "others":  (Number(this.totalCollectibleAmountFromPartnerResponseOrg)) - this.BaseFare,
             "totalbf": this.BaseFare,
             "coupon_code": this.coupon_code ? this.coupon_code : '',
             "pass_break": {
@@ -3713,6 +3714,8 @@ this.itineratyButton=false;
             "couponcode": this.coupon_code,
             "ticket_class": this.flightClasses[this.searchData.flightclass]
           };
+          
+          
         //  console.log(this.new_fare); console.log(this.partnerConvFee); console.log(this.old_fare);
 
           if (this.new_fare  != this.old_fare) {

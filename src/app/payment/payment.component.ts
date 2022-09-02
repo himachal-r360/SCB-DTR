@@ -1384,6 +1384,7 @@ payNow(ptype){
 				'dcemi_interestRate':this.dcemi_interestRate,
 				'dcemi_tenure':this.dcemi_tenure,
 			};
+			
 			var postPgvalidateParams = {
 			orderReferenceNumber:this.orderReferenceNumber,
 			postData:this.EncrDecr.set(JSON.stringify(validatePGParams))
@@ -1821,7 +1822,7 @@ checkNonSpcOfferforHDFCcards(){
 			"partnerId":this.Partnertoken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-			"orderAmount": this.payActualFare,
+			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
 			"binNumber":btoa(splitCard),
 			"last4Digit":btoa(last4Digit),
