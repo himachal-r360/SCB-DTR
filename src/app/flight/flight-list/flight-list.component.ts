@@ -1374,4 +1374,5 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
    }
    return disable;
   }
+
 }
