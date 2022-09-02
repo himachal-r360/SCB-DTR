@@ -1003,7 +1003,7 @@
                                               data-test="adult_first_name{{ saveAdultTravellerId[passenger.id] }}"
                                               formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
                                           </mat-form-field>
-                                          <span *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
+                                          <span>
                                             <mat-error class="error_flight  error_tv"
                                               *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                               Please enter first name</mat-error>
@@ -6063,10 +6063,10 @@
                     <li class="fare-list-item">
                       <div class="fare-list-box">
                         <div class="fare-list-left">
-                          <p>
+                          <div>
 
                             Taxes and Fees
-                          </p>
+                          </div>
                         </div>
                         <div class="fare-list-right">
                           <p>&#8377; {{ (totalCollectibleAmountFromPartnerResponse-BaseFare)-partnerConvFee |number }}
@@ -6083,12 +6083,12 @@
                           aria-controls="baggageSeat-collpase" (click)="isCollapseShow('vas')">
 
 
-                          <p>
+                          <div>
                             <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt="" *ngIf="!isCollapseVas">
 
                             <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt="" *ngIf="isCollapseVas">
                             Baggage/Seat/Meals
-                          </p>
+                          </div>
                         </div>
                         <div class="fare-list-right">
                           <p>&#8377; {{ vas_amount }}</p>
@@ -6140,24 +6140,12 @@
                     <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
                       <div class="fare-list-box">
                         <div class="fare-list-left">
-                          <p>
+                          <div>
                             {{ selectedOnwardVendor.partnerName }} Convenience Fee
-                          </p>
+                          </div>
                         </div>
                         <div class="fare-list-right">
                           <p>&#8377; {{ partnerConvFee |number }}</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left">
-                          <p>
-                            Voucher Amount
-                          </p>
-                        </div>
-                        <div class="fare-list-right">
-                          <p>&#8377; {{ voucher_amount |number }}</p>
                         </div>
                       </div>
                     </li>
@@ -6584,10 +6572,9 @@
               <li class="fare-list-item">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <p>
-
+                    <div>
                       Taxes and Fees
-                    </p>
+                    </div>
                   </div>
                   <div class="fare-list-right">
                     <p>&#8377; {{ Tax |number }}</p>
@@ -6598,9 +6585,9 @@
               <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <p>
+                    <div>
                       {{ selectedOnwardVendor.partnerName }} Convenience Fee
-                    </p>
+                    </div>
                   </div>
                   <div class="fare-list-right">
                     <p>&#8377; {{ partnerConvFee |number }}</p>
