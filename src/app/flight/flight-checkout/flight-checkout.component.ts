@@ -639,6 +639,8 @@ orderRetry:boolean=false;
 
   }
 
+
+
   syncCustomer(customerInfo){
   
                   this.getQueryParamData();
@@ -970,6 +972,47 @@ orderRetry:boolean=false;
     $('#infantTraveller_mlite').modal('show');
   }
 
+isPaynowClicked:boolean=false;
+continuePayment(){
+//console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
+switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+        case 'tab-savedCards':
+        $('.btn-pay-saved-card').trigger('click');
+        break;
+        case 'tab-testPg':
+        $('.btn-pay-test').trigger('click');
+        break;   
+        case 'tab-payzapp':
+        $('.btn-pay-payz').trigger('click');
+        break;  
+        case 'tab-netBanking':
+        $('.btn-pay-netbanking').trigger('click');
+        break;  
+        case 'tab-ccdcCards':
+        if($(".addCardTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-card').trigger('click');
+
+        if($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-rupay').trigger('click');
+
+        break;  
+
+        case 'tab-emi': 
+        if($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-emi-cc').trigger('click');
+         
+         
+        break;  
+          
+          
+         case 'tab-testPg': 
+        $('.btn-pay-test').trigger('click');
+        break;  
+      }
+
+
+
+}
 
   validateMliteForm(type, traveller) {
     this.passengerForm.markAllAsTouched();
@@ -1145,6 +1188,8 @@ orderRetry:boolean=false;
 
 
       this.passengerAdultFormCount++;
+
+      /* console.log(this.passengerForm); */
 
       if (checkboxIndex != -1) {
         $('#travelPassenger_' + checkboxIndex).prop('checked', true);
@@ -2867,7 +2912,13 @@ orderRetry:boolean=false;
 
         if (data[i] && data[i].Cancellation) {
         let cancellation_data = data[i].Cancellation.split('|');
-        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100 mb-20"><tr>
+        this.cancellationPolicyOnward+= `<table class="table-bordered table-content w-100 mb-20">
+        <tr class="hidden">
+        <td colspan="2">
+        <p class="fw_6 fs_13"><h6>`+this.searchData[i]['fromCity']+` to `+this.searchData[i]['toCity']+`</h6></p>
+        </td>
+        </tr>
+        <tr>
         <td colspan="2">
         <p class="fw_6 fs_13">Cancellation Penalty fees (Per passenger)</p>
         </td>
@@ -4048,6 +4099,7 @@ orderReferenceNumber:any;
           this.completedSteps=4;
           }*/
   }
+  
 
   moveTab(page) {
     this.gotoTop();

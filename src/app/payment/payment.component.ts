@@ -82,6 +82,7 @@ export class PaymentComponent implements OnInit {
 		lastFourdigitsofcardNumber:any;
                 cardData;
 		@Input() passSessionKey;
+		@Input() isMobile;
                 //@Input() passSavedCardsData;
  		 domainPath:string;
  		appConfig: any;
@@ -421,6 +422,16 @@ pgSettingsCYBERToken:number=0;
 		this.enableNONSPCForCoupon = this.serviceSettings.enableNONSPCForCoupon;
 		this.showNONSPCsuccessModal = this.serviceSettings.showNONSPCsuccessModal;
 		this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
+	}
+	
+	hidecheckoutPay(type){
+	
+	 if(type==1)
+	  $('.chkout-btn_pay').hide();
+	  else
+	  $('.chkout-btn_pay').show(); 
+	
+	
 	}
 	
 	pgSelect(pgType){
