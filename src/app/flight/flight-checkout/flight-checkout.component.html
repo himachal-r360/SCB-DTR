@@ -6149,6 +6149,18 @@
                         </div>
                       </div>
                     </li>
+                    <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <p>
+                            Voucher Amount
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>&#8377; {{ voucher_amount |number }}</p>
+                        </div>
+                      </div>
+                    </li>
 
                     <li class="fare-list-item" *ngIf="coupon_amount>0.00">
                       <div class="fare-list-box">
