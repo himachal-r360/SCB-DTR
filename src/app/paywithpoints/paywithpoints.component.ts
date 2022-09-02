@@ -570,6 +570,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       event.preventDefault();
     }
   }
+    convertToUpperCase($event) {
+    $event.target.value = $event.target.value.toUpperCase();
+  }
 
   calldialog(event) {
     var message=event;
