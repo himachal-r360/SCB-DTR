@@ -297,7 +297,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
             //On Enter Key Pressed
             if (keycode == 13) {
               if (res.hits.total > 0) {
-                if (field == 'fromCity') {
+                if (field == 'fromCity'+index) {
                   this.searchFlightFromHeader = 'Result';
                   this.flightFromOptions = this.defaultFlightOptions;
                   this.onFromClick(res.hits.hits[0], device, index , null);
@@ -502,11 +502,41 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.multicityForm = this._fb.group({
           multicityFormArr: this._fb.array([])
         })
+        var adaults = 1;
+        var child = 0;
+        var infants = 0;
+        var Flightclass = '';
         this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray;
+        var isOldDate = false;
         data.forEach((z)=>{
+          if(new Date(z.departure).setHours(0,0,0,0) < (new Date()).setHours(0,0,0,0))
+          {
+            isOldDate = true;
+          }
+          if(isOldDate)
+          {
+            z.departure = '';
+          }
           this.multicityFormArr.push(this.multiCityArrAddItemsDefault(z));
+          adaults = z.adults;
+          child = z.child;
+          infants = z.infants;
+          Flightclass= z.flightclass;
           this.minDateArray.push(new Date(z.departure))
         });
+        this.flightClassVal = Flightclass;
+        this.adultsVal = adaults;
+        this.childVal = child;
+        this.infantsVal = infants;
+        this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+        this.flightData.value.infants = infants;
+        this.flightData.value.child = child;
+        this.flightData.value.adaults = adaults;
+        this.flightData.value.flightclass = Flightclass;
+        this.flightData.get('adults').setValue(adaults);
+        this.flightData.get('child').setValue(child);
+        this.flightData.get('infants').setValue(infants);
+        this.flightData.get('flightclass').setValue(Flightclass);
         if(this.modifySearch)
         {
           this.isDisplayModifiedMulticity = true;
@@ -515,16 +545,16 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       }
        if (lastSearch != null || lastSearch != undefined) {
         lastSearch = JSON.parse(lastSearch)
-        this.flightData.get('adults').setValue(lastSearch.adults);
-        this.flightData.get('child').setValue(lastSearch.child);
-        this.flightData.get('flightclass').setValue(lastSearch.flightclass);
+        // this.flightData.get('adults').setValue(lastSearch.adults);
+        // this.flightData.get('child').setValue(lastSearch.child);
+        // this.flightData.get('flightclass').setValue(lastSearch.flightclass);
         this.flightData.get('flightdefault').setValue(lastSearch.flightdefault);
         this.flightData.get('flightfrom').setValue(lastSearch.flightfrom);
         this.flightData.get('flightto').setValue(lastSearch.flightto);
         this.flightData.get('fromAirportName').setValue(lastSearch.fromAirportName);
         this.flightData.get('fromCity').setValue(lastSearch.fromCity);
         this.flightData.get('fromContry').setValue(lastSearch.fromContry);
-        this.flightData.get('infants').setValue(lastSearch.infants);
+        //this.flightData.get('infants').setValue(lastSearch.infants);
         this.flightData.get('toAirportName').setValue(lastSearch.toAirportName);
         this.flightData.get('toCity').setValue(lastSearch.toCity);
         this.flightData.get('toContry').setValue(lastSearch.toContry);
@@ -559,12 +589,19 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.minDateR=this.departureDate;
         }
         this.flightData.get('departure').setValue(moment(this.departureDate).format('YYYY-MM-DD'));
+ if(isMulticity!='true')
+ {
+  this.flightData.get('adults').setValue(lastSearch.adults);
+  this.flightData.get('child').setValue(lastSearch.child);
+  this.flightData.get('flightclass').setValue(lastSearch.flightclass);
+  this.flightData.get('infants').setValue(lastSearch.infants);
+  this.flightClassVal = lastSearch.flightclass;
+  this.adultsVal = lastSearch.adults;
+  this.childVal = lastSearch.child;
+  this.infantsVal = lastSearch.infants;
+  this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+ }
 
-        this.flightClassVal = lastSearch.flightclass;
-        this.adultsVal = lastSearch.adults;
-        this.childVal = lastSearch.child;
-        this.infantsVal = lastSearch.infants;
-        this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
         if (lastSearch.arrival != null && lastSearch.arrival != undefined && lastSearch.arrival != "" && isMulticity !='true') {
           this.navItemActive = "Round Trip"
           this.flightData.controls["arrival"].setValidators(Validators.required);

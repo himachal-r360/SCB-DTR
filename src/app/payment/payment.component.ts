@@ -1384,6 +1384,7 @@ payNow(ptype){
 				'dcemi_interestRate':this.dcemi_interestRate,
 				'dcemi_tenure':this.dcemi_tenure,
 			};
+			
 			var postPgvalidateParams = {
 			orderReferenceNumber:this.orderReferenceNumber,
 			postData:this.EncrDecr.set(JSON.stringify(validatePGParams))
