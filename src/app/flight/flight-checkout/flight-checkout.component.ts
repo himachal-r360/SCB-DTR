@@ -1869,115 +1869,13 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
     this.passengerForm['controls']['gstState'].setValue('');
     this.passengerForm['controls']['saveGST'].setValue('');
   }
-  saveTravellerFunc() {
-    var saveTravellerArray: any = [];
-    var ii = 1;
-
-    if (this.adultsArray.length > 0) {
-      for (let i of this.adultsArray) {
-
-        var checksaveTraveller;
-        if (this.passengerForm.controls['saveTraveller']['value'] == true) {
-          checksaveTraveller = 1;
-        } else {
-          checksaveTraveller = 0;
-        }
-
-        if (checksaveTraveller == 1) {
-          var gender;
-          if (this.passengerForm.controls['passengerGender' + i]['value'] == "Male") {
-            gender = 'M';
-          } else if (this.passengerForm.controls['passengerGender' + i]['value'] == "Female") {
-            gender = 'F';
-          } else {
-            gender = this.passengerForm.controls['passengerGender' + i]['value'];
-          }
-          saveTravellerArray.push({
-            "age": this.passengerForm.controls['passengerAge' + i]['value'],
-            "birthPreference": this.passengerForm.controls['passengerBerthChoice' + i]['value'],
-            "concessionType": '',
-            "customerId": this.REWARD_CUSTOMERID,
-            "dateOfBirth": "",
-            "emailId": this.passengerForm.controls['passengerEmail']['value'],
-            "firstName": this.passengerForm.controls['passengerName' + i]['value'].trim(),
-            "gender": gender,
-            "id": i,
-            "lastName": '',
-            "mobileNumber": this.passengerForm.controls['passengerMobile']['value'],
-            "passportExpiryDate": "",
-            "passportIssueCountry": "",
-            "passportIssueDate": "",
-            "passportNumber": "",
-            "paxBirthCountry": "",
-            "paxNationality": "",
-            "status": 0,
-            "title": ""
-          });
-
-        }
-
-        ii++;
-      }
-
-    }
-
-    if (this.childArray.length > 0) {
-      for (let i of this.childArray) {
-
-        var checksaveTravellerInfant;
-        if (this.passengerForm.controls['saveTraveller']['value'] == true) {
-          checksaveTravellerInfant = 1;
-        } else {
-          checksaveTravellerInfant = 0;
-        }
-
-        if (checksaveTravellerInfant == 1) {
-          var gender;
-          if (this.passengerForm.controls['childGender' + i]['value'] == "Male") {
-            gender = 'M';
-          } else if (this.passengerForm.controls['childGender' + i]['value'] == "Female") {
-            gender = 'F';
-          } else {
-            gender = this.passengerForm.controls['childGender' + i]['value'];
-          }
-          saveTravellerArray.push({
-            "age": this.passengerForm.controls['childAge' + i]['value'],
-            "birthPreference": '',
-            "concessionType": '',
-            "customerId": this.REWARD_CUSTOMERID,
-            "dateOfBirth": "",
-            "emailId": this.passengerForm.controls['passengerEmail']['value'],
-            "firstName": this.passengerForm.controls['childName' + i]['value'].trim(),
-            "gender": gender,
-            "id": i,
-            "lastName": '',
-            "mobileNumber": this.passengerForm.controls['passengerMobile']['value'],
-            "passportExpiryDate": "",
-            "passportIssueCountry": "",
-            "passportIssueDate": "",
-            "passportNumber": "",
-            "paxBirthCountry": "",
-            "paxNationality": "",
-            "status": 0,
-            "title": ""
-          });
-
-        }
-
-        ii++;
-      }
-
-    }
-
-
-    if (this.enablesavedTraveller == 1 && saveTravellerArray.length > 0) {
-      var requestParamsEncrpt = {
-        postData: this.EncrDecr.set(JSON.stringify(saveTravellerArray))
-      };
-      this.rest.saveCustomertravellerInfo(requestParamsEncrpt).subscribe(response => {
-      })
-    }
-  }
+saveTravellerFunc(saveTravellerArray){
+  var requestParamsEncrpt = {
+   postData:this.EncrDecr.set(JSON.stringify(saveTravellerArray)) 
+  };
+  this.rest.saveCustomertravellerInfo(requestParamsEncrpt).subscribe(response => {
+  })
+}
 
 
   saveCustomerGst() {
@@ -3129,7 +3027,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
 
 
-
+saveTravellerArray=[];
   paxInfo = []; fareData: any; itineraryRequest: any;
   contactDatails: any;
   continueWithNewFareInterval: any;
@@ -3250,6 +3148,16 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
       var paxInfoCnt = 1;
       this.paxInfo = [];
 
+      this.saveTravellerArray=[];
+      
+        var saveTraveller;
+        if(this.passengerForm.controls['saveTraveller' ]['value'] == true)
+        saveTraveller=1;
+        else
+        saveTraveller=0;
+      
+      
+
       for (let i = 1; i < (this.passengerAdultFormCount); i++) {
 
         let adult_data = {};
@@ -3273,12 +3181,39 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
             passport_data['passportNumber'] = this.passengerForm.controls['adult_passport_num' + i]['value'];
             passport_data['passportIssueDate'] = moment(this.passengerForm.controls['adult_passport_issue_date' + i]['value']).format('YYYY-MM-DD');
             passport_data['passportExpDate'] = moment(this.passengerForm.controls['adult_passport_expiry_date' + i]['value']).format('YYYY-MM-DD');
-            passport_data['passportIssuingCountry'] = this.passengerForm.controls['adult_passport_num' + i]['value'];
+            passport_data['passportIssuingCountry'] = this.passengerForm.controls['adult_passport_issuing_country' + i]['value'];
             adult_data['passportDetail'] = passport_data;
           }
         }
 
         this.paxInfo.push(adult_data);
+        
+        
+        if(saveTraveller == 1){
+        this.saveTravellerArray.push({
+        "age": '',
+        "birthPreference": "",
+        "concessionType": "",
+        "customerId": this.REWARD_CUSTOMERID,
+        "dateOfBirth": moment(this.passengerForm.controls['adult_dob' + i]['value']).format('DD/MM/YYYY'),
+        "emailId": this.passengerForm.controls['passengerMobile']['value'],
+        "firstName":  this.passengerForm.controls['adult_first_name' + i]['value'].trim(),
+        "gender": '',
+        "id": i,
+        "lastName":  this.passengerForm.controls['adult_last_name' + i]['value'].trim(),
+        "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
+        "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_expiry_date' + i]['value'] : '',
+        "passportIssueCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_issuing_country' + i]['value'] : '',
+        "passportIssueDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_issue_date' + i]['value'] : '',
+        "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_num' + i]['value'] : '',
+        "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
+        "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
+        "status": 1,
+        "title": this.passengerForm.controls['adult_title' + i]['value']
+        });
+        }
+        
+        
 
         paxInfoCnt++;
       }
@@ -3308,12 +3243,39 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
             passport_data['passportNumber'] = this.passengerForm.controls['child_passport_num' + i]['value'];
             passport_data['passportIssueDate'] = moment(this.passengerForm.controls['child_passport_issue_date' + i]['value']).format('YYYY-MM-DD');
             passport_data['passportExpDate'] = moment(this.passengerForm.controls['child_passport_expiry_date' + i]['value']).format('YYYY-MM-DD');
-            passport_data['passportIssuingCountry'] = this.passengerForm.controls['child_passport_num' + i]['value'];
+            passport_data['passportIssuingCountry'] = this.passengerForm.controls['child_passport_issue_date' + i]['value'];
             child_data['passportDetail'] = passport_data;
           }
         }
 
         this.paxInfo.push(child_data);
+        
+        
+                if(saveTraveller == 1){
+        this.saveTravellerArray.push({
+        "age": '',
+        "birthPreference": "",
+        "concessionType": "",
+        "customerId": this.REWARD_CUSTOMERID,
+        "dateOfBirth": moment(this.passengerForm.controls['child_dob' + i]['value']).format('DD/MM/YYYY'),
+        "emailId": this.passengerForm.controls['passengerMobile']['value'],
+        "firstName":  this.passengerForm.controls['child_first_name' + i]['value'].trim(),
+        "gender": '',
+        "id": i,
+        "lastName":  this.passengerForm.controls['child_last_name' + i]['value'].trim(),
+        "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
+        "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_expiry_date' + i]['value'] : '',
+        "passportIssueCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_issuing_country' + i]['value'] : '',
+        "passportIssueDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_issue_date' + i]['value'] : '',
+        "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_num' + i]['value'] : '',
+        "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_pax_nationality' + i]['value'] : '',
+        "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_pax_nationality' + i]['value'] : '',
+        "status": 1,
+        "title": this.passengerForm.controls['child_title' + i]['value']
+        });
+        }
+        
+        
 
         paxInfoCnt++;
       }
@@ -3347,10 +3309,39 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         }
 
         this.paxInfo.push(infant_data);
+        
+        
+                        if(saveTraveller == 1){
+        this.saveTravellerArray.push({
+        "age": '',
+        "birthPreference": "",
+        "concessionType": "",
+        "customerId": this.REWARD_CUSTOMERID,
+        "dateOfBirth": moment(this.passengerForm.controls['infant_dob' + i]['value']).format('DD/MM/YYYY'),
+        "emailId": this.passengerForm.controls['passengerMobile']['value'],
+        "firstName":  this.passengerForm.controls['infantfirst_name' + i]['value'].trim(),
+        "gender": '',
+        "id": i,
+        "lastName":  this.passengerForm.controls['infant_last_name' + i]['value'].trim(),
+        "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
+        "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_expiry_date' + i]['value'] : '',
+        "passportIssueCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_issuing_country' + i]['value'] : '',
+        "passportIssueDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_issue_date' + i]['value'] : '',
+        "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_num' + i]['value'] : '',
+        "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_pax_nationality' + i]['value'] : '',
+        "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_pax_nationality' + i]['value'] : '',
+        "status": 1,
+        "title": this.passengerForm.controls['infant_title' + i]['value']
+        });
+        }
+        
 
         paxInfoCnt++;
       }
 
+
+   if( this.enablesavedTraveller==1 && this.saveTravellerArray.length >0)
+   this.saveTravellerFunc(this.saveTravellerArray);
 
 
       let fareDetails = [];
@@ -3963,8 +3954,8 @@ orderReferenceNumber:any;
         "stopsDetails": this.flightSessionData.returnFlights[i]['stopsDetails']
       });
     }
-
-
+    
+    
 
     var whatsappFlag;
     if (this.whatsappFeature == 1)
