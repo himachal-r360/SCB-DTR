@@ -1422,9 +1422,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".onwardbuttons").html('Select');
     var selected = event.target as HTMLElement
-
-
-
       if(selected)
       {
         this.isOnwardSelected = true;
@@ -1433,14 +1430,18 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
           console.log(selected , "selected");
-
-
-
-
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
     var partner = item.partnerName;
+    if(this.returnSelectedFlight != null && this.returnSelectedFlight != undefined)
+    {
+      if(partner != this.returnSelectedFlight.priceSummery.partnerName)
+      {
+        this.returnSelectedFlight = null;
+        this.isReturnSelected = false;
+      }
+    }
     this.ReturnflightList.forEach((z:any)=>{
         z.priceSummary.forEach((a:any)=>{
           if(a.partnerName == partner)
@@ -1476,6 +1477,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
     var partner = item.partnerName;
+    if(this.returnSelectedFlight != null && this.returnSelectedFlight != undefined)
+    {
+      if(partner != this.returnSelectedFlight.priceSummery.partnerName)
+      {
+        this.returnSelectedFlight = null;
+        this.isReturnSelected = false;
+      }
+    }
     this.ReturnflightList.forEach((z:any)=>{
         z.priceSummary.forEach((a:any)=>{
           if(a.partnerName == partner)
