@@ -156,7 +156,7 @@ otperrormsg :any;
       }
       var max_value_redemption = Number((Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100));
       if(max_value<max_value_redemption){
-        max_value_redemption = Number (max_value);
+        max_value_redemption = Number (max_value.toFixed(2));
       }
 
        let opts: Options = {
@@ -373,7 +373,18 @@ otperrormsg :any;
           this.otperrormsg = resp.error;
         }
       }else{
-
+        this.submittedFormotpvalidate=false;
+          this.otpCounter = false;
+     this.voucherApplied=false;
+          this.hasCards=false; 
+          this.voucherOtp=true; 
+          this.voucherDiv=false; 
+          this.addcardDiv=true; 
+          this.voucherCodedetails=true; 
+          // this.otp.reset();
+          this.Formotpvalidate.setValue({otp: ''});
+          this.otperror = true;
+          this.otperrormsg = resp.message;
 
     } 
    
