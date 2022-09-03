@@ -105,7 +105,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   resetMinPrice: number = 0;
   resetMaxPrice: number = 10000;
   minStopOver: number = 0;
-  maxStopOver: number = 24;
+  maxStopOver: number = 96;
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
@@ -126,7 +126,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   optionsStopOver: Options = {
     floor: 0,
-    ceil: 24,
+    ceil: 96,
     translate: (value: number): string => {
       return '';
     }
@@ -378,7 +378,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
 
     }
     if(!this.isMobile)

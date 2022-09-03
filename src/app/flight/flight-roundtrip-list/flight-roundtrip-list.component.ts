@@ -76,7 +76,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   resetMinPrice: number = 0;
   resetMaxPrice: number = 10000;
   minStopOver: number = 0;
-  maxStopOver: number = 24;
+  maxStopOver: number = 96;
   airlines: any;
   airportsNameJson: any;
   layOverFilterArr: any;
@@ -95,7 +95,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   };
   optionsStopOver: Options = {
     floor: 0,
-    ceil: 24,
+    ceil: 96,
     translate: (value: number): string => {
       return '';
     }
@@ -363,17 +363,71 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
         //It is used for getting min and max price.
         if (this.flightList.length > 0) {
-          this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-          this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+         this.GetMinAndMaxPriceForFilter();
+          //this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+         // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
+        
+         
+        
         this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
 
     }, (error) => { console.log(error) });
   }
-
+  GetMinAndMaxPriceForFilter() {
+  
+        let oneway_minPrice=0;
+        let oneway_maxPrice=0;
+        let return_minPrice=0;
+        let return_maxPrice=0;
+  
+    if (this.flightList.length > 0) {
+      oneway_minPrice = this.flightList[0].priceSummary[0].totalFare;
+      oneway_maxPrice= this.flightList[0].priceSummary[0].totalFare;
+      this.flightList.forEach((z: any) => {
+        var temp = z.priceSummary[0].totalFare;
+        if (temp < oneway_minPrice) {
+          oneway_minPrice = temp;
+        }
+        if (temp > oneway_maxPrice) {
+          oneway_maxPrice = temp;
+        }
+      });
+    } 
+    
+    
+     if (this.ReturnflightList.length > 0) {
+      return_minPrice = this.ReturnflightList[0].priceSummary[0].totalFare;
+      return_maxPrice = this.ReturnflightList[0].priceSummary[0].totalFare;
+      this.ReturnflightList.forEach((z: any) => {
+        var temp = z.priceSummary[0].totalFare;
+        if (temp < return_minPrice) {
+          return_minPrice = temp;
+        }
+        if (temp > return_maxPrice) {
+          return_maxPrice = temp;
+        }
+      });
+    } 
+    
+    if(oneway_minPrice < return_minPrice){
+     this.minPrice = oneway_minPrice;
+    }else{
+     this.minPrice = return_minPrice;
+    }
+    
+    
+    if(oneway_maxPrice < return_maxPrice){
+     this.maxPrice = oneway_maxPrice;
+    }else{
+     this.maxPrice = return_maxPrice;
+    }
+    
+    this.Initslider();
+  }
 
   ascPriceSummaryFlighs(flightsData:any)
   {
@@ -503,7 +557,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   resetStopOverFilter() {
     this.minStopOver = 0;
-    this.maxStopOver = 24;
+    this.maxStopOver = 48;
     this.popularFilterFlightData();
   }
   resetLayOverFilter() {
@@ -666,6 +720,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         })
 
       }
+      
+
       // Airlines Filter
       this.flightList = this.airlineFilterFlights(this.flightList);
       this.ReturnflightList = this.airlineFilterFlights(this.ReturnflightList);
@@ -692,7 +748,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         });
         this.flightList = filteredStopOver;
       }
-
+      /*
       //StopOverFilter return
       if (this.ReturnflightList.length > 0) {
         var start = this.minStopOver;
@@ -753,7 +809,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       // Layover Filter Flights
       this.flightList = this.layoverFilterFlights(this.flightList);
       this.ReturnflightList = this.layoverFilterFlights(this.ReturnflightList);
-
+*/
       this.container.clear();
       this.returnContainer.clear();
       if(this.flightList.length > 0)
@@ -1069,10 +1125,11 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     popularItems.active = !popularItems.active;
     if (popularItems.name == "Morning_Departures") {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
-      this.flight_return_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
+      this.flight_return_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = true; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
+      
     }
     if(!this.isMobile)
     {
@@ -1393,6 +1450,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }else{
     this.onSelectOnwardSplrt=[];
     }
+    
+     $('.returnButtons').removeClass('button-selected-style');  $('.returnButtons').html('Select');
+
 
         let departureAirportUser=this.searchData.flightfrom;
         let arrivalAirportUser=this.searchData.flightto;
