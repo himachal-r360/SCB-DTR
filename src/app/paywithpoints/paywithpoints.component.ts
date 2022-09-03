@@ -69,6 +69,10 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  RemaingAmount:any;
  RedeemedPoints:any;
  vouchertransID:any;
+ otp:any;
+otperror :Boolean=false;
+otpCounter :Boolean=true;
+otperrormsg :any;
  redemption_value:any;
  voucherOtp:Boolean=false;
  otpaccepted:Boolean=false;
@@ -271,7 +275,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "customer_id": this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
       "last4digit":this.selectedCardDetails.card.slice(-4),
-      "_token":this.sg["customerInfo"]["XSRF-TOKEN"],
+      "_token":this.customerInfo["XSRF-TOKEN"],
       "DOB":this.carddob,
       "savecard":1,
       "user_id":this.sg["customerInfo"]["id"],
@@ -314,15 +318,18 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           "mobile": this.cardmobile,
           "customer_id": this.sg["customerInfo"]["customerid"],
           "programName":this.sg['domainName'],
-          "first4digit":this.selectedCardDetails.card.slice(4),
+          "first4digit":this.selectedCardDetails.card.slice(0,4),
           "last4digit":this.selectedCardDetails.card.slice(-4),
           "points":this.value,
           "ORDER_POINTS":this.value,
           "voucherINRvalue":this.value * this.points_percentage,
            "DOB":this.carddob,
            "bin":this.cardbin,
+           "services_id": this.serviceId,
+           "clientToken":this.sg['domainName'].toUpperCase(),
+           "total_amount": this.payTotalFare,
           "passwordValue":this.Formotpvalidate.controls['otp'].value,
-          "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
+          "_token":this.customerInfo["XSRF-TOKEN"]
         }
         this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
         this.AmountRedeemed =((this.value)*Number(this.points_percentage));
@@ -331,7 +338,6 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     }
   }
   otpVerify(URLparams:any){
-     
          var passData = {
         postData: this.EncrDecr.set(JSON.stringify(URLparams))
       };
@@ -348,13 +354,26 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherOtp=false; 
           this.voucherDiv=false; 
           this.addcardDiv=false; 
-          this.voucherCodedetails=false; 
+          this.voucherCodedetails=false;
+          this.otperror =false; 
           
           this.updateAmountToPay('XXXXX',this.AmountRedeemed,this.RemaingAmount);
+        }else{
+          this.submittedFormotpvalidate=false;
+          this.otpCounter = false;
+     this.voucherApplied=false;
+          this.hasCards=false; 
+          this.voucherOtp=true; 
+          this.voucherDiv=false; 
+          this.addcardDiv=true; 
+          this.voucherCodedetails=true; 
+          // this.otp.reset();
+          this.Formotpvalidate.setValue({otp: ''});
+          this.otperror = true;
+          this.otperrormsg = resp.error;
         }
       }else{
 
-     //validate otp fail
 
     } 
    
@@ -377,7 +396,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "customer_id": this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
       "last4digit":this.selectedCardDetails.card.slice(-4),
-      "_token":this.sg["customerInfo"]["XSRF-TOKEN"],
+      "_token":this.customerInfo["XSRF-TOKEN"],
       "DOB":this.carddob,
       "savecard":1,
       "user_id":this.sg["customerInfo"]["id"],

@@ -93,7 +93,7 @@
                           <a href="javascript:" (click)="resendOTP(cd1)"> Resend OTP</a>
                        </div>
 
-                        <div class="time-left pt-2">
+                        <div class="time-left pt-2" *ngIf="otpCounter">
                             <p><span class="voucherotpcountdown">
                                 <countdown #cd1 [config]="{ leftTime: 900, format: 'mm:ss'}" (finished)="onFinishedTimer()" (event)="handleEvent($event,cd1)"></countdown>
                             </span> Mintues Left</p>
@@ -101,7 +101,12 @@
                         <div *ngIf="submittedFormotpvalidate && Formotpvalidate.controls.otp.errors" class="error">
                                 <small *ngIf="Formotpvalidate.controls.otp.errors.required">Please enter OTP.</small>
                                 <small *ngIf="Formotpvalidate.controls.otp.errors.pattern">Please enter a valid OTP.</small>
+                                
                         </div>
+                        <div class="error" *ngIf="otperror">
+                          <small *ngIf="otperror">{{otperrormsg}}</small>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
