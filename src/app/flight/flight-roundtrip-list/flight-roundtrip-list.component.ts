@@ -14,7 +14,7 @@ import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { formatNumber } from '@angular/common';
 declare var $: any;
-
+declare var bootstrap:any;
 @Component({
   selector: 'app-flight-roundtrip-list',
   templateUrl: './flight-roundtrip-list.component.html',
@@ -221,6 +221,13 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
     }
+  }
+  
+  toggle(event){
+   $("#onwardlist_"+event).prop("checked", true);
+  }
+    toggleR(event){
+   $("#return_roundlist_"+event).prop("checked", true);
   }
 
   private loadReturnData() {

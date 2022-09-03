@@ -287,17 +287,22 @@
                                                 </div>
                                             </div>
                                             <div class="flight-listing-area">
+                                                <div class="accordion accordion-flush" id="accordionFlushOnward" >
                                                 <ng-container #itemsContainer></ng-container>
+                                                </div>
                                                 <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                                             </div>
+                                          
                                             <ng-template #item let-item="item">
-                                                <div *ngFor="let list of item; let i = index" id="flight_list_{{list.flightKey}}">
-                                                    <div class="round-flight-listing round-click" appToggleDetail *ngIf="list">
-                                                        <div class="round-flight-listing-content">
+                                                   <ng-container  *ngFor="let list of item; let i = index">
+                                                <div class="round-flight-listing round-click" *ngIf="list">
+                                               
+                                             
+                                             <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
                                                             <div class="round-content-left">
                                                                 <div class="round-content-radio">
                                                                     <div>
-                                                                        <input id="onwardlist_{{list.flightKey}}" name="onwardRadio" class="RadioClass" type="radio">
+                                                                        <input id="onwardlist_{{list.flightKey}}" name="onwardRadio" class="RadioClass" type="radio"  >
                                                                         <label for="onwardlist_{{list.flightKey}}" class="css-label"></label>
                                                                     </div>
                                                                 </div>
@@ -327,9 +332,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="round-options-box flight-from-hide dropdown-flight not-close" id="CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
-                                                            <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                                <div id="flush-collapse{{list.flightKey}}" class="collapse round-options-box" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushOnward">
+                                               <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                                                 <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false" id="selectedOnwardDiv_{{list.flightKey}}_{{j}}">
                                                                     <div class="round-options-list-top">
                                                                         <div class="round-list-image-box">
@@ -417,13 +421,15 @@
 
                                                                 </div>
                                                             </ng-container>
-                                                        </div>
-                                                    </div>
                                                 </div>
+                                                </div>
+                                                   </ng-container >
                                             </ng-template>
+                                             </div>
                                             <div id="endOfPage" (click)="loadData()"></div>
+                                           
                                         </div>
-                                    </div>
+                                    
                                     <div class="col-md-6">
                                         <div class="round-flight-listing round-from-box" [hidden]="loader">
                                             <div class="round-from">
@@ -456,15 +462,20 @@
                                             </div>
                                         </div>
                                         <div class="flight-listing-area">
-                                            <ng-container #itemsReturnContainer></ng-container>
+                                            
+                                           <div class="accordion accordion-flush" id="accordionFlushReturn" >
+                                                <ng-container #itemsReturnContainer></ng-container>
+                                            </div>
+                                            
                                             <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">No flights found</div>
-                                        </div>
-                                        <ng-template #returnItem let-item="item">
-                                            <div *ngFor="let list of item; let i = index" id="return_flight_list_{{list.flightKey}}">
-                                                <div class="round-flight-listing round-click" appToggleDetail *ngIf="list">
-                                                    <div class="round-flight-listing-content">
-                                                        <div class="round-content-left">
-                                                            <div class="round-content-radio">
+                                            <ng-template #returnItem let-item="item">
+                                                   <ng-container  *ngFor="let list of item; let i = index">
+                                                <div class=" round-flight-listing round-click" *ngIf="list">
+                                               
+                                             
+                                             <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
+                                                            <div class="round-content-left">
+                                                               <div class="round-content-radio">
                                                                 <div>
                                                                     <input name="return_roundlist" id="return_roundlist_{{list.flightKey}}" class="RadioClass" (change)="onReturnRadioChange(i,$event)" type="radio">
                                                                     <label for="return_roundlist_{{list.flightKey}}" class="css-label"></label>
@@ -480,9 +491,9 @@
                                                                     <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
                                                                 </p>
                                                             </div>
-                                                        </div>
-                                                        <div class="round-content-right">
-                                                            <div class="round-content-stops">
+                                                            </div>
+                                                            <div class="round-content-right">
+                                                                 <div class="round-content-stops">
                                                                 <h6>{{ list.flights | durationTotalTime }}</h6>
                                                                 <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
                                                                 <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
@@ -495,12 +506,10 @@
                                                                 <a href="javascript:void(0)" class="moreview" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more </a>
                                                                 <a href="javascript:void(0)" class="moreview" style="cursor:default ;" *ngIf="!(list.priceSummary.length > 1)">&nbsp; </a>
                                                             </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="round-options-box flight-from-hide dropdown-flight not-close" id="Return_CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
-
-                                                        <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                                <div id="flush-collapser{{list.flightKey}}" class="collapse round-options-box" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushReturn">
+<ng-container *ngFor="let item of list.priceSummary; let j = index">
                                                             <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false" id="selectedReturnDiv_{{list.flightKey}}_{{j}}">
                                                                 <div class="round-options-list-top">
                                                                     <div class="round-list-image-box">
@@ -585,11 +594,14 @@
                                                       </a>
                                                                 </div>
                                                             </div>
+                                                           
                                                         </ng-container>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-template>
+                                                </div>
+                                                   </ng-container >
+                                            </ng-template>
+                                        </div>
+                                       
                                         <div id="endOfReturnPage" (click)="loadReturnData()"></div>
                                     </div>
                                 </div>
@@ -670,12 +682,15 @@
                                 <div class="mob-fr-list-title" [hidden]="loader">
                                     <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{fromCityName}} To {{toCityName}}</h6>
                                 </div>
+                                <div class="accordion accordion-flush" id="accordionFlushOnward" >
                                 <ng-container #itemsContainer></ng-container>
+                                </div>
                                 <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                                 <ng-template #item let-item="item">
-                                    <div *ngFor="let list of item; let i = index">
-                                        <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileOnward_{{list.flightKey}}">
-                                            <div class="mob-list-items-name">
+                                    <ng-container  *ngFor="let list of item; let i = index">
+                                    <div >
+                                        <div class="mob-list-items"  *ngIf="list" id="MobileOnward_{{list.flightKey}}">
+                                            <div class="mob-list-items-name collapsed"  type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
                                                 <div class="mob-list-items-name-top">
                                                     <div class="mob-list-items-image">
                                                         <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
@@ -724,7 +739,7 @@
                                           </div>-->
                                                 </div>
                                             </div>
-                                            <div class="mob-items-book-list flight-from-hide dropdown-flight not-close">
+                                            <div class="mob-items-book-list collapse"  id="flush-collapse{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushOnward">
                                                 <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                                     <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
                                                         <div class="mob-book-list-top">
@@ -782,7 +797,7 @@
                                                                 Flight Details
                                                             </button>
                                                         </h2> -->
-                                                                    <div id="collapseOne-fd" class="accordion-collapse collapse show" aria-labelledby="headingOne-fd" data-bs-parent="#accordionExample">
+                                                                    <div id="collapseOne-fd">
                                                                         <div class="accordion-body">
                                                                             <div class="extra-tabs-details FlightDetails-box">
                                                                                 <div class="extra-tabs-details-top">
@@ -1066,6 +1081,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                        </ng-container >
                                 </ng-template>
                                 <div id="endOfPage" (click)="loadData()"></div>
                             </div>
@@ -1089,12 +1105,15 @@
                                 <div class="mob-fr-list-title" [hidden]="loader">
                                     <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{toCityName}} To {{fromCityName}}</h6>
                                 </div>
-                                <ng-container #itemsReturnContainer></ng-container>
+                                <div class="accordion accordion-flush" id="accordionFlushReturn" >
+                                                <ng-container #itemsReturnContainer></ng-container>
+                                            </div>
                                 <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">No flights found</div>
                                 <ng-template #returnItem let-item="item">
-                                    <div *ngFor="let list of item; let i = index">
-                                        <div class="mob-list-items" appToggleDetail *ngIf="list" id="MobileReturn_{{list.flightKey}}">
-                                            <div class="mob-list-items-name">
+                                    <ng-container  *ngFor="let list of item; let i = index">
+                                    <div >
+                                        <div class="mob-list-items"  *ngIf="list" id="MobileReturn_{{list.flightKey}}">
+                                            <div class="mob-list-items-name  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
                                                 <div class="mob-list-items-name-top">
                                                     <div class="mob-list-items-image">
                                                         <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
@@ -1143,7 +1162,7 @@
                                           </div>-->
                                                 </div>
                                             </div>
-                                            <div class="mob-items-book-list flight-from-hide dropdown-flight not-close">
+                                            <div class="mob-items-book-list collapse" id="flush-collapser{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushReturn">
                                                 <ng-container *ngFor="let item of list.priceSummary; let j = index;let last=last;">
                                                     <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
                                                         <div class="mob-book-list-top">
@@ -1200,7 +1219,7 @@
                                                                 Flight Details
                                                             </button>
                                                         </h2> -->
-                                                                    <div id="collapseOne-fd" class="accordion-collapse collapse show" aria-labelledby="headingOne-fd" data-bs-parent="#accordionExample">
+                                                                    <div id="collapseOne-fd" >
                                                                         <div class="accordion-body">
                                                                             <div class="extra-tabs-details FlightDetails-box">
                                                                                 <div class="extra-tabs-details-top">
@@ -1484,6 +1503,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                        </ng-container>
                                 </ng-template>
                                 <div id="endOfReturnPage" (click)="loadReturnData()"></div>
                             </div>
