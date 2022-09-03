@@ -3942,7 +3942,7 @@
                   </div>
                 </div>
 
-                <div class="row" *ngIf="gstSelected">
+                <div class="row" >
                   <div class="col-lg-4 col-md-4 col-6">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Business Name</mat-label>
@@ -3985,7 +3985,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="row" *ngIf="gstSelected">
+                <div class="row" >
                   <div class="col-lg-4 col-md-4 col-6">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>City / Town</mat-label>
@@ -4004,7 +4004,7 @@
                       <mat-label>State</mat-label>
                       <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
                         (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
-                        readonly="stateCheck" value={{ state }}>
+                        readonly="stateCheck" value="{{ state }}">
                       <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstState')">Please enter
                         state name.
                       </mat-error>
@@ -4014,7 +4014,7 @@
                     </mat-form-field>
                   </div>
 
-                  <div class="othertraveller" *ngIf="gstSelected">
+                  <div class="othertraveller" >
                     <ul class="add-search-ul d-block">
                       <li class="custom-check-box">
                         <div class="custom-controls-stacked">

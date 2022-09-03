@@ -3024,8 +3024,56 @@ saveTravellerFunc(saveTravellerArray){
     }
     return result;
   }
-
-
+      state:any;
+response: any = [];
+   pincodeError:any;
+    urlparam:any;
+    cityList:any;
+    getCityResidence($event) {
+     this.cityList=[];
+        let pincodevalue = this.passengerForm.controls['gstPincode']['value'];
+       
+      if(pincodevalue.length==6){
+        if(this.passengerForm.controls['gstPincode']['status']){
+            let pincode = this.passengerForm.controls['gstPincode']['value'];
+            this.urlparam = {
+              "pinCode": pincode
+            };
+            var param1Str = JSON.stringify(this.urlparam);
+            this._irctc.findCity(param1Str).subscribe(data => {
+                this.response=data;
+                if(this.passengerForm.controls['gstCity']['value'] != undefined){
+                 // this.findPinResidence();
+                }
+if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.partnerResponse.error)){   
+                  this.cityList=this.response.partnerResponse.cityList;
+                  this.pincodeError="";
+                }else if(Array.isArray(this.response.partnerResponse.cityList)==false && !(this.response.partnerResponse.error)){ 
+                  this.cityList.push(this.response.partnerResponse.cityList);
+                  this.pincodeError="";
+                }else if(this.response.partnerResponse.error){ 
+                  this.pincodeError=this.response.partnerResponse.error; 
+                  this.cityList=[];
+                }else{  
+                  this.cityList=[];
+                  this.pincodeError="";
+                }
+                this.state=this.response.partnerResponse.state;
+            },
+            (err: HttpErrorResponse) => {
+                var message='Something went wrong !';
+             alertify.error(message, '').delay(3);
+            });
+        }
+      }else{
+        this.passengerForm['controls']['gstCity'].setValue('');
+        this.cityList=[];
+        this.pincodeError="";
+        //this.stateCheck=true;
+        this.state="";
+        //this.postOfficeList=[];
+      }
+    }
 
 saveTravellerArray=[];
   paxInfo = []; fareData: any; itineraryRequest: any;
@@ -3087,6 +3135,7 @@ saveTravellerArray=[];
 
    this.itineratyButton=true;
 
+console.log(this.passengerForm);
 
     if (this.passengerForm.invalid) {
      this.passengerForm.markAllAsTouched();
@@ -3199,7 +3248,7 @@ saveTravellerArray=[];
         "emailId": this.passengerForm.controls['passengerMobile']['value'],
         "firstName":  this.passengerForm.controls['adult_first_name' + i]['value'].trim(),
         "gender": '',
-        "id": i,
+        "id": 0,
         "lastName":  this.passengerForm.controls['adult_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
         "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_expiry_date' + i]['value'] : '',
@@ -3208,7 +3257,7 @@ saveTravellerArray=[];
         "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_num' + i]['value'] : '',
         "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
         "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
-        "status": 1,
+        "status": 0,
         "title": this.passengerForm.controls['adult_title' + i]['value']
         });
         }
@@ -3261,7 +3310,7 @@ saveTravellerArray=[];
         "emailId": this.passengerForm.controls['passengerMobile']['value'],
         "firstName":  this.passengerForm.controls['child_first_name' + i]['value'].trim(),
         "gender": '',
-        "id": i,
+        "id": 0,
         "lastName":  this.passengerForm.controls['child_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
         "passportExpiryDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['child_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
@@ -3270,7 +3319,7 @@ saveTravellerArray=[];
         "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_num' + i]['value'] : '',
         "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_pax_nationality' + i]['value'] : '',
         "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_pax_nationality' + i]['value'] : '',
-        "status": 1,
+        "status": 0,
         "title": this.passengerForm.controls['child_title' + i]['value']
         });
         }
@@ -3321,7 +3370,7 @@ saveTravellerArray=[];
         "emailId": this.passengerForm.controls['passengerMobile']['value'],
         "firstName":  this.passengerForm.controls['infantfirst_name' + i]['value'].trim(),
         "gender": '',
-        "id": i,
+        "id": 0,
         "lastName":  this.passengerForm.controls['infant_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
         "passportExpiryDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['infant_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
@@ -3330,7 +3379,7 @@ saveTravellerArray=[];
         "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_num' + i]['value'] : '',
         "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_pax_nationality' + i]['value'] : '',
         "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_pax_nationality' + i]['value'] : '',
-        "status": 1,
+        "status": 0,
         "title": this.passengerForm.controls['infant_title' + i]['value']
         });
         }
