@@ -138,9 +138,11 @@ export class PayService {
   }
 }
   getcustomercardpoint(param){
-
+    if(LOCALJSON=='true'){
+    return this.http.get('assets/data/availablepoints.json').pipe(map((response:any) => response));
+  }else{
     return this.http.post(this.endpoint+'getcustomercardpoint_angular', param, config).pipe(map((response:any) => response));
-  
+  }
 }
   generateVoucherOtp(param){
     
@@ -155,7 +157,7 @@ otp_validation(param){
   // if(LOCALJSON=='true'){
   //   return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
   // }else{
-    return this.http.post(this.endpoint+'generateVoucherOtp', param, config).pipe(map((response:any) => response));
+    return this.http.post(this.endpoint+'otpvalidate', param, config).pipe(map((response:any) => response));
   // }
 }
 
