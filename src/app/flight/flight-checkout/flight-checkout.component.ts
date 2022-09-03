@@ -3191,7 +3191,7 @@ saveTravellerArray=[];
         
         if(saveTraveller == 1){
         this.saveTravellerArray.push({
-        "age": '',
+        "age": moment().diff(moment(this.passengerForm.controls['adult_dob' + i]['value']).format('YYYY-MM-DD'), 'years'),
         "birthPreference": "",
         "concessionType": "",
         "customerId": this.REWARD_CUSTOMERID,
@@ -3203,8 +3203,8 @@ saveTravellerArray=[];
         "lastName":  this.passengerForm.controls['adult_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
         "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_expiry_date' + i]['value'] : '',
-        "passportIssueCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_issuing_country' + i]['value'] : '',
-        "passportIssueDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_issue_date' + i]['value'] : '',
+        "passportIssueCountry": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['adult_passport_issuing_country' + i]['value'] ).format('DD/MM/YYYY'): '',
+        "passportIssueDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['adult_passport_issue_date' + i]['value']).format('DD/MM/YYYY') : '',
         "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_num' + i]['value'] : '',
         "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
         "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
@@ -3253,7 +3253,7 @@ saveTravellerArray=[];
         
                 if(saveTraveller == 1){
         this.saveTravellerArray.push({
-        "age": '',
+        "age": moment().diff(moment(this.passengerForm.controls['child_dob' + i]['value']).format('YYYY-MM-DD'), 'years'),
         "birthPreference": "",
         "concessionType": "",
         "customerId": this.REWARD_CUSTOMERID,
@@ -3264,9 +3264,9 @@ saveTravellerArray=[];
         "id": i,
         "lastName":  this.passengerForm.controls['child_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
-        "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_expiry_date' + i]['value'] : '',
+        "passportExpiryDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['child_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
         "passportIssueCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_issuing_country' + i]['value'] : '',
-        "passportIssueDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_issue_date' + i]['value'] : '',
+        "passportIssueDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['child_passport_issue_date' + i]['value']).format('DD/MM/YYYY') : '',
         "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_passport_num' + i]['value'] : '',
         "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_pax_nationality' + i]['value'] : '',
         "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['child_pax_nationality' + i]['value'] : '',
@@ -3313,7 +3313,7 @@ saveTravellerArray=[];
         
                         if(saveTraveller == 1){
         this.saveTravellerArray.push({
-        "age": '',
+        "age": moment().diff(moment(this.passengerForm.controls['infant_dob' + i]['value']).format('YYYY-MM-DD'), 'years'),
         "birthPreference": "",
         "concessionType": "",
         "customerId": this.REWARD_CUSTOMERID,
@@ -3324,9 +3324,9 @@ saveTravellerArray=[];
         "id": i,
         "lastName":  this.passengerForm.controls['infant_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
-        "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_expiry_date' + i]['value'] : '',
+        "passportExpiryDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['infant_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
         "passportIssueCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_issuing_country' + i]['value'] : '',
-        "passportIssueDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_issue_date' + i]['value'] : '',
+        "passportIssueDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['infant_passport_issue_date' + i]['value']).format('DD/MM/YYYY') : '',
         "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_passport_num' + i]['value'] : '',
         "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_pax_nationality' + i]['value'] : '',
         "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['infant_pax_nationality' + i]['value'] : '',
@@ -3743,6 +3743,14 @@ this.itineratyButton=false;
 
     }
   }
+  
+  gstExpandItems() {
+  if(this.isGstExpanded == false){
+    this.isGstExpanded = true;
+  }else if(this.isGstExpanded == true){
+    this.isGstExpanded = false;
+  }
+}
 orderReferenceNumber:any;
   saveCheckout(myInterval1) {
     // console.log(this.flightSessionData);

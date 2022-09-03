@@ -360,6 +360,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   applySortingMobile() {
+  
+    let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     let sortingBtn = document.getElementById('sortMobileFilter');
     if(sortingBtn)
     {
@@ -1301,6 +1304,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   openMobileFilterSection()
   {
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.add("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1311,6 +1316,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   CloseSortingSection()
   {
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1318,6 +1325,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }
   }
   onApplyFilter(){
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
