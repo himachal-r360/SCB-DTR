@@ -105,7 +105,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   resetMinPrice: number = 0;
   resetMaxPrice: number = 10000;
   minStopOver: number = 0;
-  maxStopOver: number = 24;
+  maxStopOver: number = 96;
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
@@ -126,7 +126,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   optionsStopOver: Options = {
     floor: 0,
-    ceil: 24,
+    ceil: 96,
     translate: (value: number): string => {
       return '';
     }
@@ -360,6 +360,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   applySortingMobile() {
+  
+    let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     let sortingBtn = document.getElementById('sortMobileFilter');
     if(sortingBtn)
     {
@@ -375,7 +378,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
 
     }
     if(!this.isMobile)
@@ -1301,6 +1304,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   openMobileFilterSection()
   {
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.add("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1311,6 +1316,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   CloseSortingSection()
   {
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1318,6 +1325,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }
   }
   onApplyFilter(){
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {

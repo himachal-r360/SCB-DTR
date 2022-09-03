@@ -322,13 +322,13 @@
                                                                     <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
                                                                     <img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1">
                                                                     <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
-                                                                    <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more </a>
+                                                                    <a href="javascript:void(0)" class="moreview" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more </a>
                                                                     <a href="javascript:void(0)" class="moreview" style="cursor: default;" *ngIf="!(list.priceSummary.length > 1)">&nbsp; </a>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="round-options-box flight-from-hide dropdown not-close" id="CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
+                                                        <div class="round-options-box flight-from-hide dropdown-flight not-close" id="CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
                                                             <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                                                 <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false" id="selectedOnwardDiv_{{list.flightKey}}_{{j}}">
                                                                     <div class="round-options-list-top">
@@ -492,13 +492,13 @@
                                                                 <h6>₹ {{list.priceSummary[0].totalFare | number}}</h6>
                                                                 <img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1">
                                                                 <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
-                                                                <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more </a>
+                                                                <a href="javascript:void(0)" class="moreview" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more </a>
                                                                 <a href="javascript:void(0)" class="moreview" style="cursor:default ;" *ngIf="!(list.priceSummary.length > 1)">&nbsp; </a>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="round-options-box flight-from-hide dropdown not-close" id="Return_CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
+                                                    <div class="round-options-box flight-from-hide dropdown-flight not-close" id="Return_CompareToFly_{{list.flightKey}}" *ngIf="list && list.priceSummary.length > 0">
 
                                                         <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                                             <div class="round-options-box-list" *ngIf="item.splrtFareFlight==false" id="selectedReturnDiv_{{list.flightKey}}_{{j}}">
@@ -700,8 +700,9 @@
                                                     </div>
                                                     <div class="mob-fr-time">
                                                         <p>{{ list.flights | durationTotalTime }} |
-                                                            <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
-                                                            <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
+                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</span>
+                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</span>
+                                                                    <span  *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</span>
                                                         </p>
                                                     </div>
                                                     <div class="mob-items-book-list-items">
@@ -713,7 +714,7 @@
                                                                 <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
                                                             </div>
                                                             <div class="mob-more-flight">
-                                                                <a href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more</a>
+                                                                <a href="javascript:void(0)" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more</a>
 
                                                             </div>
                                                         </div>
@@ -723,7 +724,7 @@
                                           </div>-->
                                                 </div>
                                             </div>
-                                            <div class="mob-items-book-list flight-from-hide dropdown not-close">
+                                            <div class="mob-items-book-list flight-from-hide dropdown-flight not-close">
                                                 <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                                     <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
                                                         <div class="mob-book-list-top">
@@ -1117,9 +1118,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="mob-fr-time">
-                                                        <p>{{ list.flights | durationTotalTime }} |
-                                                            <span *ngIf="list.flights.length > 0 && list.flights[0].stops==0">non stop</span>
-                                                            <span *ngIf="list.flights.length > 0 && list.flights[0].stops!=0">{{list.flights[0].stops}} stop</span>
+                                                                    <p>{{ list.flights | durationTotalTime }} |
+                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</span>
+                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</span>
+                                                                    <span  *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</span>
                                                         </p>
                                                     </div>
                                                     <div class="mob-items-book-list-items">
@@ -1131,7 +1133,7 @@
                                                                 <h6>₹ {{list.priceSummary[0].totalFare|number}}</h6>
                                                             </div>
                                                             <div class="mob-more-flight">
-                                                                <a href="javascript:void(0)" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary | filterUnique}} more</a>
+                                                                <a href="javascript:void(0)" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more</a>
 
                                                             </div>
                                                         </div>
@@ -1141,7 +1143,7 @@
                                           </div>-->
                                                 </div>
                                             </div>
-                                            <div class="mob-items-book-list flight-from-hide dropdown not-close">
+                                            <div class="mob-items-book-list flight-from-hide dropdown-flight not-close">
                                                 <ng-container *ngFor="let item of list.priceSummary; let j = index;let last=last;">
                                                     <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
                                                         <div class="mob-book-list-top">
@@ -2191,8 +2193,10 @@
                                 <div class="round-ff-right">
                                     <div class="round-content-stops">
                                         <h6> {{onwardSelectedFlight.flights | durationTotalTime}}</h6>
-                                        <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops==0">non stop</p>
-                                        <p *ngIf="onwardSelectedFlight.flights.length > 0 && onwardSelectedFlight.flights[0].stops!=0">{{onwardSelectedFlight.flights[0].stops}} stop</p>
+                                        <p *ngIf="onwardSelectedFlight.flights.length ==1 && onwardSelectedFlight.flights[0].stops==0">non stop</p>
+                                        <p *ngIf="onwardSelectedFlight.flights.length ==1 && onwardSelectedFlight.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                        <p  *ngIf="onwardSelectedFlight.flights.length > 1">{{list.flights.length-1}} stop</p>
+
                                     </div>
                                     <div class="round-ff-price">
                                         <h6>₹ {{(onwardSelectedFlight.priceSummery.totalFare /totalPassenger) |number}}</h6>
@@ -2219,8 +2223,12 @@
                                 <div class="round-ff-right">
                                     <div class="round-content-stops">
                                         <h6>{{returnSelectedFlight.flights | durationTotalTime}}</h6>
-                                        <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops==0">non stop</p>
-                                        <p *ngIf="returnSelectedFlight.flights.length > 0 && returnSelectedFlight.flights[0].stops!=0">{{returnSelectedFlight.flights[0].stops}} stop</p>
+                                        
+                                        
+                                        <p *ngIf="returnSelectedFlight.flights.length ==1 && returnSelectedFlight.flights[0].stops==0">non stop</p>
+                                        <p *ngIf="returnSelectedFlight.flights.length ==1 && returnSelectedFlight.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                        <p  *ngIf="returnSelectedFlight.flights.length > 1">{{list.flights.length-1}} stop</p>
+
                                     </div>
                                     <div class="round-ff-price">
                                         <h6>₹ {{(returnSelectedFlight.priceSummery.totalFare/totalPassenger) |number}}</h6>
