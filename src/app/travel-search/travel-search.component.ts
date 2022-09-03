@@ -1503,13 +1503,17 @@ check_traveller_count(type) {
         this.searchFlightForm.get('travel').setValue('INT');
         }
 
-console.log(this.searchFlightForm);
 
         if(this.searchFlightForm.invalid || this.dateValidation==true){
         return
         }
         else {
+         this.searchFlightForm['controls']['adults'].setValue(this.adult_cnt);
+           this.searchFlightForm['controls']['child'].setValue(this.child_cnt);
+             this.searchFlightForm['controls']['infants'].setValue(this.infant_cnt);
         let searchValue = this.searchFlightForm.value;
+        
+        
 
 
         this.flightSearchCallBack(searchValue);

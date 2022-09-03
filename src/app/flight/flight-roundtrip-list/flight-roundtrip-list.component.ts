@@ -557,7 +557,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   resetStopOverFilter() {
     this.minStopOver = 0;
-    this.maxStopOver = 48;
+    this.maxStopOver = 96;
     this.popularFilterFlightData();
   }
   resetLayOverFilter() {
@@ -565,6 +565,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     this.popularFilterFlightData();
   }
   resetAllFilters() {
+       this.toggleStopsFilteritems = [
+    { name: 'All_Flights', active: true, value: 'All Flights' },
+    { name: 'no_stops', active: false, value: 'Non-Stop' },
+    ];
     this.resetPopularFilter();
     this.resetFlightTimingsFilter();
     this.resetPriceFilter();
