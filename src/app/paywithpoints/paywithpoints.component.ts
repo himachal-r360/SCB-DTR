@@ -156,7 +156,7 @@ otperrormsg :any;
       }
       var max_value_redemption = Number((Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100));
       if(max_value<max_value_redemption){
-        max_value_redemption = Number (max_value.toFixed(2));
+        max_value_redemption = Number (max_value);
       }
 
        let opts: Options = {
@@ -291,21 +291,20 @@ otperrormsg :any;
       postData: this.EncrDecr.set(JSON.stringify(URLparams))
     };
         this.pay.generateVoucherOtp(passData).subscribe(response => {
-        console.log("otpGenerate");
-        console.log(response);
-        
-        if(response.reward_message='successful'){
+        if(response.status==true){
           this.voucherOtp = true;
+          this.voucheraddform=false; 
           this.voucherslider = false;
-
         }else{
+          this.addCardCancel(); 
           this.voucherOtp = false;
           this.voucherslider = true;
+          alert(response.message);
         }
     }), (err: HttpErrorResponse) => {
-      this.voucherOtp = false;
-      this.voucherslider = true;
-      this.errorMsg0="";
+        this.voucherOtp = false;
+        this.voucherslider = true;
+        this.errorMsg0="";
       
     };
   }
@@ -373,18 +372,7 @@ otperrormsg :any;
           this.otperrormsg = resp.error;
         }
       }else{
-        this.submittedFormotpvalidate=false;
-          this.otpCounter = false;
-     this.voucherApplied=false;
-          this.hasCards=false; 
-          this.voucherOtp=true; 
-          this.voucherDiv=false; 
-          this.addcardDiv=true; 
-          this.voucherCodedetails=true; 
-          // this.otp.reset();
-          this.Formotpvalidate.setValue({otp: ''});
-          this.otperror = true;
-          this.otperrormsg = resp.message;
+
 
     } 
    
@@ -504,6 +492,24 @@ otperrormsg :any;
         alert(message);
       };
 
+    }
+  }
+  GenerateOTPform(){
+    this.submitted2=true;
+    if (this.cardaddForm1.status !='VALID') {
+      return;
+    }else{
+        let URLparams = {
+           "mobile": this.cardaddForm1.controls['applymobile'].value,
+           "customer_id": this.sg["customerInfo"]["customerid"],
+           "programName":this.sg['domainName'],
+           "last4digit":this.cardaddForm1.controls['last4digit'].value,
+           "_token":this.customerInfo["XSRF-TOKEN"],
+           "DOB":this.cardaddForm1.controls['dob'].value,
+           "savecard":1,
+           "user_id":this.sg["customerInfo"]["id"],
+        }
+       this.otpGenerate(URLparams);
     }
   }
   addcardform(){
