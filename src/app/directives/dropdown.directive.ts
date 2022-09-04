@@ -11,6 +11,9 @@ export class DropdownDirective{
     // }
     @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
       var element = event?.target as HTMLElement
+      
+      //console.log(event);
+      
         //this.isOpen = this.elRef.nativeElement.contains(event.target) ? !this.isOpen : false;
       // let fromCitySearch = document.getElementById('fromCitySearch');
       // let toCitySearch = document.getElementById('toCitySearch');

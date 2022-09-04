@@ -17,7 +17,6 @@ import { MatDialog,MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS} from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker'
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import { formatDate } from '@angular/common';
@@ -25,26 +24,12 @@ import * as moment from 'moment';
 declare var require: any;
  declare var $: any;
 
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'M/D/YYYY',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
 
 
 @Component({
   selector: 'app-travel-search',
   templateUrl: './travel-search.component.html',
   styleUrls: ['./travel-search.component.scss'],
-   providers: [
-        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
 })
 export class TravelSearchComponent implements OnInit {
         @Input() searchDisplayForm;
@@ -1519,7 +1504,7 @@ check_traveller_count(type) {
         this.flightSearchCallBack(searchValue);
 
         localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
-
+        localStorage.setItem('isMulticitySearch','false');
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
         if(searchValue.arrival)

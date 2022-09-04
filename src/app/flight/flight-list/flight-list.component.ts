@@ -362,7 +362,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   applySortingMobile() {
   
     let body = document.getElementsByTagName('body')[0];
-  body.classList.remove("noscroll"); 
+    body.classList.remove("noscroll"); 
     let sortingBtn = document.getElementById('sortMobileFilter');
     if(sortingBtn)
     {
@@ -558,6 +558,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           })
         }
       })
+      
 
       //Ascending Descending Order
       this.priceSortingFilteritems.filter((item: any) => {
@@ -580,13 +581,15 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
         }
         else if (item.name == 'A_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime() - new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime());
         }
         else if (item.name == 'A_L' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime() - new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime());
         }
 
-      })
+      });
+      
+      
     }
 
     // Airlines Filter
@@ -1290,6 +1293,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   OpenPartner(i:number)
   {
+      $('.mob-list-items').removeClass('mob-items-book-list-selected');
+      $('#flight_listitem_'+i).addClass('mob-items-book-list-selected');
+  
         $(".mob-items-book-list").css('display','none')
         var SelectedElement = document.getElementById('CompareToFly_'+i);
         if(SelectedElement)

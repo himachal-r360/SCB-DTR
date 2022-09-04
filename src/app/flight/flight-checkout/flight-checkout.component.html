@@ -101,8 +101,7 @@
         </div>
     </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
-
-  <section class="flight-details-area mt-10">
+  <section class="flight-details-area mt-10" *ngIf="totalCollectibleAmount>0">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
       <div class="sidebar-widget session-expires-widget text-center">
@@ -6007,7 +6006,7 @@
 
                                 <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p>Adult(s) </p>
+                                    <p>{{ AdtQuantity }} X Adult(s) </p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ AdtBaseFare | number }}</p>
@@ -6016,7 +6015,7 @@
 
                                 <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p> Children)</p>
+                                    <p> {{ ChildQuantity }} X Children</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ ChildBaseFare | number }}</p>
@@ -6025,7 +6024,7 @@
 
                                 <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p> Infant </p>
+                                    <p> {{ InfantQuantity }} X Infant </p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ InfantBaseFare | number }}</p>
@@ -6457,7 +6456,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==5 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -6473,10 +6472,6 @@
             (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
           </app-coupons>
         </div>
-        <!-- <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
       </div>
     </div>
   </div>
@@ -6527,7 +6522,7 @@
 
                           <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p>Adult(s) </p>
+                              <p>{{ AdtQuantity }} X Adult(s) </p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ AdtBaseFare  | number }}</p>
@@ -6536,7 +6531,7 @@
 
                           <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Children)</p>
+                              <p> {{ ChildQuantity }} X Children</p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ ChildBaseFare | number }}</p>
@@ -6545,7 +6540,7 @@
 
                           <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Infant </p>
+                              <p>{{ InfantQuantity }} X Infant </p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ InfantBaseFare   | number }}</p>

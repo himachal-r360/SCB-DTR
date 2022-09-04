@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FlightSearchComponent } from './flight-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DirectiveModule } from '../directives/directive.module';
+import { DirectiveModule } from 'src/app/directives/directive.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';

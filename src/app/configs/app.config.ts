@@ -4,11 +4,6 @@ export const AppConfig: any = {
   routes: {
     error404: '404'
   },
-  snackBarDuration: 3000, 
-
-repositoryURL: '',
-sentryDSN: '',
-HAMMOCK:'false',
 enable_dcemi2:true,
 
 IRCTC_Classes:{ 
