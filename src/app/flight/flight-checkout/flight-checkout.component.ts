@@ -4244,7 +4244,7 @@ orderReferenceNumber:any;
   receivePointsPlus($event) {
     this.voucher_code=$event.code;
     this.voucher_amount=$event.value;
-   console.log($event);
+   console.log('voucher amount',this.voucher_amount);
   }
 
 
