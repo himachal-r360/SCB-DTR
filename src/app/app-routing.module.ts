@@ -9,9 +9,7 @@ import { SharedComponentsModule } from './shared-components/shared-components.mo
 import { OrdersRetryComponent } from './orders-retry/orders-retry.component';
 import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
 const routes: Routes = [
-  {
-    path:"" ,   component:HomeComponent 
-  },
+  { path: '**', redirectTo: '/foryou' },
   {
     path:"compare-fly" , component:HomeComponent 
   },
