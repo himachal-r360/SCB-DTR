@@ -441,7 +441,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.toCityName = values.city;
       this.toCountryName = values.country
       setTimeout(() => {
-        this.datePicker.open();
+      //  this.datePicker.open();
         $('.flight-to-data').addClass('flight-from-hide');
       }, 100);
     }

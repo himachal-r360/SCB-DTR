@@ -601,22 +601,22 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
         else if (item.name == 'D_Short' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => a.flights[0].duration - b.flights[0].duration);
+          this.flightList.sort((a: any, b: any) => a.onwardflights[0].duration - b.onwardflights[0].duration);
         }
         else if (item.name == 'D_Long' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
+          this.flightList.sort((a: any, b: any) => b.onwardflights[0].duration - a.onwardflights[0].duration);
         }
         else if (item.name == 'D_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(a.onwardflights[0].departureDateTime).getTime() - new Date(b.onwardflights[0].departureDateTime).getTime());
         }
         else if (item.name == 'D_L' && item.active == true) {
-        this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
+        this.flightList.sort((a: any, b: any) => new Date(b.onwardflights[0].departureDateTime).getTime() - new Date(a.onwardflights[0].departureDateTime).getTime());
         }
         else if (item.name == 'A_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(a.onwardflights[a.onwardflights.length-1].arrivalDateTime).getTime() - new Date(b.onwardflights[b.onwardflights.length-1].arrivalDateTime).getTime());
         }
         else if (item.name == 'A_L' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(b.onwardflights[b.onwardflights.length-1].arrivalDateTime).getTime() - new Date(a.onwardflights[a.onwardflights.length-1].arrivalDateTime).getTime());
         }
 
       })

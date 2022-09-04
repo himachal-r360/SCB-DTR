@@ -689,7 +689,7 @@
                                 <ng-template #item let-item="item">
                                     <ng-container  *ngFor="let list of item; let i = index">
                                     <div >
-                                        <div class="mob-list-items"  *ngIf="list" id="MobileOnward_{{list.flightKey}}">
+                                        <div class="mob-list-itemsr mob-list-itemsor"  *ngIf="list" id="MobileOnward_{{list.flightKey}}">
                                             <div class="mob-list-items-name collapsed"  type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
                                                 <div class="mob-list-items-name-top">
                                                     <div class="mob-list-items-image">
@@ -741,7 +741,7 @@
                                             </div>
                                             <div class="mob-items-book-list collapse"  id="flush-collapse{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushOnward">
                                                 <ng-container *ngFor="let item of list.priceSummary; let j = index">
-                                                    <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
+                                                    <div class="mob-items-book-list-items mob-items-book-list-itemso" id="mob-items-book-list-itemso_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
                                                         <div class="mob-book-list-top">
                                                             <div class="mob-booking-image">
                                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
@@ -1112,7 +1112,7 @@
                                 <ng-template #returnItem let-item="item">
                                     <ng-container  *ngFor="let list of item; let i = index">
                                     <div >
-                                        <div class="mob-list-items"  *ngIf="list" id="MobileReturn_{{list.flightKey}}">
+                                        <div class="mob-list-itemsr mob-list-itemsrr"  *ngIf="list" id="MobileReturn_{{list.flightKey}}">
                                             <div class="mob-list-items-name  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
                                                 <div class="mob-list-items-name-top">
                                                     <div class="mob-list-items-image">
@@ -1164,7 +1164,7 @@
                                             </div>
                                             <div class="mob-items-book-list collapse" id="flush-collapser{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushReturn">
                                                 <ng-container *ngFor="let item of list.priceSummary; let j = index;let last=last;">
-                                                    <div class="mob-items-book-list-items" *ngIf="item.splrtFareFlight==false">
+                                                    <div class="mob-items-book-list-items mob-items-book-list-itemsr" id="mob-items-book-list-itemsr_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
                                                         <div class="mob-book-list-top">
                                                             <div class="mob-booking-image">
                                                                 <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
@@ -1521,7 +1521,7 @@
 
 
 <!-- Mlite Fare Summary Popup -->
-<div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel" aria-hidden="true" *ngIf="isOnwardSelected">
+<div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel" aria-hidden="true" *ngIf="isOnwardSelected && onwardSelectedFlight">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pb-0">
@@ -1529,7 +1529,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pt-0">
-                <div>
+                <div >
                     <img src="{{cdnUrl}}/images/flight_partners/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
                 </div>
                 <div class="widget-content">
