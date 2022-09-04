@@ -7,6 +7,8 @@ import { BannersComponent } from './shared-components/banners/banners.component'
 import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 import { OrdersRetryComponent } from './orders-retry/orders-retry.component';
+import { AppConfig } from './configs/app.config';
+import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
 /*import { DinersModule } from './diners/diners.module';
 import { InfiniaModule } from './infinia/infinia.module';
 */
@@ -52,8 +54,6 @@ const routes: Routes = [
     path:"regalia_gold/train/pnr" , component:HomeComponent 
   },
   
-  
- 
     {
     path: 'partners',
     loadChildren: () => import('./partners/partners.module').then(m => m.PartnersModule)
@@ -96,7 +96,11 @@ const routes: Routes = [
   {
     path: 'order-retry', component:OrdersRetryComponent 
 
-  }
+  },
+  
+  { path: AppConfig.routes.error404, component: Error404PageComponent },
+  // otherwise redirect to 404
+  { path: '**', redirectTo: '/' + AppConfig.routes.error404 },
 ];
 
 @NgModule({
