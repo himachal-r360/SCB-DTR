@@ -1519,7 +1519,7 @@ check_traveller_count(type) {
         this.flightSearchCallBack(searchValue);
 
         localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
-
+        localStorage.setItem('isMulticitySearch','false');
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
         if(searchValue.arrival)

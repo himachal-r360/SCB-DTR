@@ -835,7 +835,7 @@ orderRetry:boolean=false;
           child: 1
         };
         
-        console.log(this.flightInfo);
+        //console.log(this.flightInfo);
 
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 

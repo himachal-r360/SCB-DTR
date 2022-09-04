@@ -70,7 +70,6 @@
                                 </div>
                             </li>
                             <li>
-
                                 <div class="Travellers-passengers-data">
                                     <div class="Travellers-name">
                                         <h6>Infant</h6>
@@ -92,7 +91,6 @@
                             </li>
                         </ul>
                     </div>
-
                 </li>
                 <li>
                     <mat-select class=" ms-4 mt-1" matNativeControl  formControlName="flightclass">
@@ -102,14 +100,6 @@
                         <mat-option value="P">Premium Economy</mat-option>
                     </mat-select>
 
-                <!-- <mat-form-field appearance="none">
-                <select matNativeControl formControlName="flightclass" class=" ms-4 mt-1">
-                    <option value="B">Business Class </option>
-                    <option value="E">Economy Class</option>
-                    <option value="F">First Class</option>
-                    <option value="P">Premium Economy</option>
-                </select>
-                </mat-form-field> -->
                 </li>
             </ul>
         </div>
@@ -354,9 +344,7 @@
                                             <mat-datepicker #picker></mat-datepicker>
                                         </mat-form-field>
 
-
                                     </div>
-
                                 </div>
                                 <div class="area-root-reutrn" (click)="picker2.open()" id="datePickerArrival"
                                     [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'">
@@ -730,7 +718,126 @@
             </div>
         </div>
 
-        <!-- Multicity Block Start-->
+        <!-- Preferred-OTA-Partner -->
+        <!--<div class="add-search-area">
+          <div class="add-search-content">
+              <div class="Preferred-area" appDropdown>
+                  <h5 class="Preferred-title">Preferred Airline <img
+                          src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
+                  <div class="Preferred-data  flight-from-hide dropdown">
+                      <div class="mob-title" *ngIf="isMobile">
+                          <h3>Preferred Airline</h3>
+                          <a href="#" class="mob-close mob-preferred-close close-mobile">
+                              <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile"
+                                  alt="" />
+                          </a>
+                      </div>
+                      <div class="Preferred-search">
+                          <input type="text" name="" class="w-100" id=""
+                              placeholder="Search Airline">
+                      </div>
+                      <ul class="Preferred-items mCustomScrollbar" data-mcs-theme="dark">
+                          <li class="Preferred-list">
+                              <p class="">Results</p>
+                          </li>
+                          <li class="Preferred-list">
+                              <a href="#" class="">
+                                  IndiGo
+                              </a>
+                          </li>
+                          <li class="Preferred-list">
+                              <a href="#" class="">
+                                  SpiceJet
+                              </a>
+                          </li>
+                          <li class="Preferred-list">
+                              <a href="#" class="">
+                                  Vistara
+                              </a>
+                          </li>
+                          <li class="Preferred-list">
+                              <a href="#" class="">
+                                  Go First
+                              </a>
+                          </li>
+                      </ul>
+                      <div class="mob-Preferred-done">
+                          <a href="">Done</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+      <div class="Preferred-OTA-Partner-area ms-3" *ngIf="!isMobile && displayPartners" >
+          <ul class="Preferred-OTA-Partner-ul">
+              <li style="display: flex;flex-direction: column;">
+                  <span>Preferred </span>
+                  <span>OTA Partner:</span>
+              </li>
+              <li *ngFor="let service of enableFlightServices">
+                  <div class="OTA-Partner-list">
+                      <input type="checkbox" name="" id="">
+                      <img src="{{cdnUrl}}/images/flight_partners/small-no/{{service.name}}.png" alt="{{service.name}}" />
+                  </div>
+              </li>
+
+          </ul>
+      </div>
+      </div>-->
+        <!-- Mobile Preferred-OTA-Partner -->
+        <!--<div class="mob-Preferred-OTA-Partner-area"  *ngIf="isMobile && displayPartners">
+          <div class="mob-Preferred-area" (click)="showPartner()">
+              <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
+          </div>
+
+          <div class="mob-OTA-box" [ngClass]="isShowPartner == true?'d-block':'d-none'">
+              <div class="mob-ota-bg">
+                  <div class="mob-title">
+                      <h3>Select Preferred OTA Partner</h3>
+                      <a href="javascript:void(0)" class="mob-close mob-OTA-close" >
+                          <img src="{{cdnUrl}}/images/icons/close.png" alt="" (click)="hidePartner()">
+                      </a>
+                  </div>
+                  <div class="mob-OTA-listed">
+                      <ul class="mob-Preferred-OTA-Partner-ul">
+                          <li>
+                              <div class="mob-OTA-Partner-list">
+                                  <input type="checkbox" name="" id="">
+                                  <img src="assets/images/flights/1.png" alt="" />
+                              </div>
+                          </li>
+                          <li>
+                              <div class="mob-OTA-Partner-list">
+                                  <input type="checkbox" name="" id="" checked>
+                                  <img src="assets/images/flights/2.png" alt="" />
+                              </div>
+                          </li>
+                          <li>
+                              <div class="mob-OTA-Partner-list">
+                                  <input type="checkbox" name="" id="">
+                                  <img src="assets/images/flights/4.png" alt="" />
+                              </div>
+                          </li>
+                          <li>
+                              <div class="mob-OTA-Partner-list">
+                                  <input type="checkbox" name="" id="">
+                                  <img src="assets/images/flights/3.png" alt="" />
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="mob-sf-btns">
+                      <a href="">Done</a>
+                  </div>
+              </div>
+          </div>
+      </div>-->
+    </div>
+</form>
+
+  <!-- Multicity Block Start-->
+              <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
         <div class="travel-data" *ngIf="!isMobile" [ngClass]="navItemActive == 'Multicity'?'':'d-none'">
           <div class="row g-2"*ngIf="isDisplayModifiedMulticity && modifySearch">
             <div class="col-lg-6">
@@ -934,7 +1041,7 @@
                 </div>
         </div>
           </div>
-            <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
+
                 <div class="row g-2">
                     <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container  [formGroupName]="i">
@@ -1445,10 +1552,11 @@
                         </div>
                     </div>
                 </div>
-            </form>
+       
 
         </div>
-        <!-- Multicity Block End-->
+        <!--Multicity Mlite-->
+        
         <!-- start 23-08-2022 -->
         <div class="mobile-multi-city-travel" *ngIf="isMobile" [ngClass]="navItemActive == 'Multicity'?'':'d-none'">
             <div class="multi-city-list-area">
@@ -1698,7 +1806,7 @@
                               <li>
                                   <div class="Travellers-passengers-data">
                                       <div class="Travellers-name">
-                                          <h6>Adult</h6>
+                                          <h6>Adult </h6>
                                           <p>12 years &amp; above</p>
                                       </div>
                                       <div class="Travellers-qty">
@@ -1706,12 +1814,14 @@
                                           <div class="quantity buttons_added">
                                               <input type="button" (click)="decreaseAdult()" value="-"
                                                   class="qty-buttons minus">
+                                                  
                                               <input type="number" step="1"
                                                   oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)"
-                                                  min="1" max="9" name="quantity" value="0" title="Qty"
+                                                  min="1" max="9" name="quantity"  title="Qty"
                                                   class="input-text qty text quantity_adult1_events"
-                                                  formControlName="adults" size="4" pattern="" inputmode=""
-                                                  [(ngModel)]="flightData.value.adults">
+                                                   size="4" pattern="" inputmode=""
+                                                  [value]="adultsVal">
+                                                  
                                               <input type="button" (click)="increaseAdult()" value="+"
                                                   [disabled]="disableParent" class="qty-buttons plus">
                                               <!-- <input type="button" value="-" class="qty-buttons minus">
@@ -1732,10 +1842,10 @@
                                               <input type="button" (click)="decreaseChild()" value="-"
                                                   class="qty-buttons minus">
                                               <input type="number" step="1" min="0" max="6" name="quantity"
-                                                  value="0" title="Qty"
+                                                  title="Qty"
                                                   class="input-text qty text quantity_adult1_events" size="4"
-                                                  pattern="" inputmode="" formControlName="child"
-                                                  [(ngModel)]="flightData.value.child">
+                                                  pattern="" inputmode="" 
+                                                 [value]="childVal">
                                               <input type="button" (click)="increaseChild()"
                                                   [disabled]="disablechildren" value="+"
                                                   class="qty-buttons plus">
@@ -1757,10 +1867,10 @@
                                               <input type="button" (click)="decreaseInfant()" value="-"
                                                   class="qty-buttons minus">
                                               <input type="number" step="1" min="0" max="6" name="quantity"
-                                                  value="0" title="Qty"
+                                                  [value]="infantsVal" title="Qty"
                                                   class="input-text qty text quantity_adult1_events" size="4"
-                                                  pattern="" formControlName="infants"
-                                                  [(ngModel)]="flightData.value.infants" inputmode="">
+                                                  pattern="" 
+                                                 inputmode="">
                                               <input type="button" (click)="increaseInfant()"
                                                   [disabled]="disableinfants" value="+"
                                                   class="qty-buttons plus">
@@ -1816,123 +1926,13 @@
         <div  *ngIf="isMobile && navItemActive == 'Multicity'" class="mutl-searchbn-area mt-3">
           <a href="javascript:void(0)" (click)="searchMulticityFlight()" class="searchbn mutl-searchbn">Search</a>
       </div>
-        <!-- Preferred-OTA-Partner -->
-        <!--<div class="add-search-area">
-          <div class="add-search-content">
-              <div class="Preferred-area" appDropdown>
-                  <h5 class="Preferred-title">Preferred Airline <img
-                          src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
-                  <div class="Preferred-data  flight-from-hide dropdown">
-                      <div class="mob-title" *ngIf="isMobile">
-                          <h3>Preferred Airline</h3>
-                          <a href="#" class="mob-close mob-preferred-close close-mobile">
-                              <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile"
-                                  alt="" />
-                          </a>
-                      </div>
-                      <div class="Preferred-search">
-                          <input type="text" name="" class="w-100" id=""
-                              placeholder="Search Airline">
-                      </div>
-                      <ul class="Preferred-items mCustomScrollbar" data-mcs-theme="dark">
-                          <li class="Preferred-list">
-                              <p class="">Results</p>
-                          </li>
-                          <li class="Preferred-list">
-                              <a href="#" class="">
-                                  IndiGo
-                              </a>
-                          </li>
-                          <li class="Preferred-list">
-                              <a href="#" class="">
-                                  SpiceJet
-                              </a>
-                          </li>
-                          <li class="Preferred-list">
-                              <a href="#" class="">
-                                  Vistara
-                              </a>
-                          </li>
-                          <li class="Preferred-list">
-                              <a href="#" class="">
-                                  Go First
-                              </a>
-                          </li>
-                      </ul>
-                      <div class="mob-Preferred-done">
-                          <a href="">Done</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-
-      <div class="Preferred-OTA-Partner-area ms-3" *ngIf="!isMobile && displayPartners" >
-          <ul class="Preferred-OTA-Partner-ul">
-              <li style="display: flex;flex-direction: column;">
-                  <span>Preferred </span>
-                  <span>OTA Partner:</span>
-              </li>
-              <li *ngFor="let service of enableFlightServices">
-                  <div class="OTA-Partner-list">
-                      <input type="checkbox" name="" id="">
-                      <img src="{{cdnUrl}}/images/flight_partners/small-no/{{service.name}}.png" alt="{{service.name}}" />
-                  </div>
-              </li>
-
-          </ul>
-      </div>
-      </div>-->
+        <!--Multicity Mlite-->
+        
+        
+             </form>
 
 
 
-        <!-- Mobile Preferred-OTA-Partner -->
-        <!--<div class="mob-Preferred-OTA-Partner-area"  *ngIf="isMobile && displayPartners">
-          <div class="mob-Preferred-area" (click)="showPartner()">
-              <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
-          </div>
+<!--Multicity Ends-->
 
-          <div class="mob-OTA-box" [ngClass]="isShowPartner == true?'d-block':'d-none'">
-              <div class="mob-ota-bg">
-                  <div class="mob-title">
-                      <h3>Select Preferred OTA Partner</h3>
-                      <a href="javascript:void(0)" class="mob-close mob-OTA-close" >
-                          <img src="{{cdnUrl}}/images/icons/close.png" alt="" (click)="hidePartner()">
-                      </a>
-                  </div>
-                  <div class="mob-OTA-listed">
-                      <ul class="mob-Preferred-OTA-Partner-ul">
-                          <li>
-                              <div class="mob-OTA-Partner-list">
-                                  <input type="checkbox" name="" id="">
-                                  <img src="assets/images/flights/1.png" alt="" />
-                              </div>
-                          </li>
-                          <li>
-                              <div class="mob-OTA-Partner-list">
-                                  <input type="checkbox" name="" id="" checked>
-                                  <img src="assets/images/flights/2.png" alt="" />
-                              </div>
-                          </li>
-                          <li>
-                              <div class="mob-OTA-Partner-list">
-                                  <input type="checkbox" name="" id="">
-                                  <img src="assets/images/flights/4.png" alt="" />
-                              </div>
-                          </li>
-                          <li>
-                              <div class="mob-OTA-Partner-list">
-                                  <input type="checkbox" name="" id="">
-                                  <img src="assets/images/flights/3.png" alt="" />
-                              </div>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="mob-sf-btns">
-                      <a href="">Done</a>
-                  </div>
-              </div>
-          </div>
-      </div>-->
-    </div>
-</form>
+

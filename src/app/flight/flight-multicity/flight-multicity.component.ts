@@ -174,6 +174,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.route.url.subscribe(url =>{
     this.SelectedFlightsOnSector=[];
      this.searchData=[];
+     this.selectedTripData=[];
              this.isSelectedSectorFlight = false;
     this.loader = true;
     this.isAllSelected = false;
@@ -207,6 +208,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   getQueryParamData() {
     const urlParam = this.route.snapshot.queryParams;
     this.searchData = urlParam;
+    
     var flightSearchArr = [];
     for (var i = 0; i < 5; i++) // for generating array by object.
     {

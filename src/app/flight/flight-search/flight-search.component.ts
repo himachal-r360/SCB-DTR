@@ -14,13 +14,13 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FlightService } from '../common/flight.service';
+import { FlightService } from '../../common/flight.service';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { SimpleGlobal } from 'ng2-simple-global';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
-import { AppConfigService } from '../app-config.service';
+import { AppConfigService } from '../../app-config.service';
 import * as moment from 'moment';
 declare var $: any;
 export const MY_DATE_FORMATS = {
@@ -482,9 +482,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  adultsVal: any
-  childVal: any
-  infantsVal: any
+  adultsVal: any=1;
+  childVal : any=0;
+  infantsVal:  any=0;
   flightFromInput: any;
   setSearchFilterData() {
     let lastSearch: any = localStorage.getItem('flightLastSearchNew');
@@ -779,6 +779,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
         }
       }
+      this.adultsVal=this.flightData.value.adults;
+      this.childVal=this.flightData.value.child;
+      this.infantsVal=this.flightData.value.infants;
+      
     }
     //this.flightData.value.adults = parseInt(this.flightData.value.adults) + 1;
   }
@@ -814,6 +818,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.disableinfants = false;
         }
       }
+            this.adultsVal=this.flightData.value.adults;
+      this.childVal=this.flightData.value.child;
+      this.infantsVal=this.flightData.value.infants;
     }
 
     //  this.flightData.value.adults = parseInt(this.flightData.value.adults) - 1;
@@ -832,6 +839,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.disablechildren = true;
         this.disableinfants = true;
       }
+            this.adultsVal=this.flightData.value.adults;
+      this.childVal=this.flightData.value.child;
+      this.infantsVal=this.flightData.value.infants;
     }
   }
   decreaseChild() {
@@ -855,6 +865,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.disableinfants = false;
         }
       }
+            this.adultsVal=this.flightData.value.adults;
+      this.childVal=this.flightData.value.child;
+      this.infantsVal=this.flightData.value.infants;
     }
   }
 
@@ -893,7 +906,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         }
       }
     }
-
+      this.adultsVal=this.flightData.value.adults;
+      this.childVal=this.flightData.value.child;
+      this.infantsVal=this.flightData.value.infants;
   }
   decreaseInfant() {
     if (parseInt(this.flightData.value.infants) > 0) {
@@ -910,6 +925,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.disableinfants = false;
       }
     }
+          this.adultsVal=this.flightData.value.adults;
+      this.childVal=this.flightData.value.child;
+      this.infantsVal=this.flightData.value.infants;
   }
 
   swap() {
