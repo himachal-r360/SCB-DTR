@@ -1489,7 +1489,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         return;
         }
 
-
+    $(".selectedOnwardDiv").removeClass('selected-flight-background');
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".onwardbuttons").html('Select');
     var selected = event.target as HTMLElement
@@ -1500,7 +1500,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isFlightsSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
-          console.log(selected , "selected");
+        let selectedOnwardDiv = document.getElementById('selectedOnwardDiv_' + flightKey + "_"+ this.selectedFromKey);
+        selectedOnwardDiv.classList.add('selected-flight-background');
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
@@ -1532,6 +1533,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
     $('#flightChangeO').modal('hide');
     $(".onwardbuttons").removeClass('button-selected-style');
+        $(".selectedOnwardDiv").removeClass('selected-flight-background');
     $(".selected-flight-background").removeClass('selected-flight-background');
     $(".onwardbuttons").html('Select');
       var selected = event.target as HTMLElement
@@ -1740,7 +1742,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
 
 
-
+       $(".selectedReturnDiv").removeClass('selected-flight-background-return');
     $(".returnButtons").removeClass('button-selected-style');
     $(".returnButtons").html('Select');
       var selected = event.target as HTMLElement
@@ -1749,6 +1751,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isReturnSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
+            let selectedReturnDiv =  document.getElementById('selectedReturnDiv_'+flightKey + "_" + this.retrunFlightKey)
+        selectedReturnDiv.classList.add('selected-flight-background-return');
       }
 
         this.isDisplayDetail = true;
@@ -1770,6 +1774,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
    $('#flightChangeR').modal('hide');
   if(this.isOnwardSelected == true)
       {
+           $(".selectedReturnDiv").removeClass('selected-flight-background-return');
     $(".returnButtons").removeClass('button-selected-style');
     $(".selected-flight-background-return").removeClass('selected-flight-background-return');
     $(".returnButtons").html('Select');
@@ -1779,7 +1784,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isReturnSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
-        console.log(selected);
         let selectedReturnDiv =  document.getElementById('selectedReturnDiv_'+flightKey + "_" + this.retrunFlightKey)
         selectedReturnDiv.classList.add('selected-flight-background-return');
       }
