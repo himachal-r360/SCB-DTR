@@ -176,6 +176,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
      this.searchData=[];
      this.selectedTripData=[];
              this.isSelectedSectorFlight = false;
+             this.selectedTrip=0;
+             this.sector=0;
     this.loader = true;
     this.isAllSelected = false;
     this.isLast = false;

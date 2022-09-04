@@ -101,8 +101,7 @@
         </div>
     </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
-
-  <section class="flight-details-area mt-10">
+  <section class="flight-details-area mt-10" *ngIf="totalCollectibleAmount>0">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
       <div class="sidebar-widget session-expires-widget text-center">
@@ -6511,7 +6510,7 @@
 
                           <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p>Adult(s) </p>
+                              <p>{{ AdtQuantity }} X Adult(s) </p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ AdtBaseFare  | number }}</p>
@@ -6520,7 +6519,7 @@
 
                           <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Children)</p>
+                              <p> {{ ChildQuantity }} X Children</p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ ChildBaseFare | number }}</p>
@@ -6529,7 +6528,7 @@
 
                           <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Infant </p>
+                              <p>{{ InfantQuantity }} X Infant </p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ InfantBaseFare   | number }}</p>

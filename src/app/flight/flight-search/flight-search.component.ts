@@ -147,6 +147,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     public _styleManager: StyleManagerService, private appConfigService:AppConfigService,
     public route: ActivatedRoute,
       public router: Router,
+      
       private _fb: FormBuilder,
       private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService
 
@@ -197,7 +198,19 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
+  
     this.route.url.subscribe(url => {
+    
+    
+        if(this.router.url){
+        switch (this.router.url) {
+        case ('/'+this.sg['domainPath']+'multicity'):
+         this.navItemActive = 'Multicity';
+        break;
+       
+        }  
+     }
+    
       this._flightService.showHeader(true);
       this.displayPartners = this.isViewPartner == "false" ? false : true;
       this.isMobile = window.innerWidth < 991 ? true : false;
