@@ -37,7 +37,7 @@ import { TrainModule } from './train/train.module';
 import { TrainsTravellerModule } from './train/trains-traveller/travellers.module';
 import { IrctcregModule } from './train/trains/irctcreg/irctcreg.module';
 //import { DatadogService } from './shared/services/datadog.service';
-
+import {  LOCALE_ID } from '@angular/core';
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -74,6 +74,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   ],
   exports:[],
    providers: [
+   { provide: LOCALE_ID, useValue: 'en-nz' },
    StyleManagerService,
    AppConfigService,
     {
