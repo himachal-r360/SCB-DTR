@@ -307,7 +307,6 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
 
-
         this.fromCityName = this.queryFlightData.fromCity;
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);

@@ -817,7 +817,7 @@
                       </a>
                   </div>
                   <div class="mob-listing-header-center">
-                      <h6>{{selectedTripData.fromCity}} - {{selectedTripData.toCity}}</h6>
+                      <h6>{{searchData[0].fromCity}} - {{searchData[searchData.length-1].toCity}}</h6>
                       <p>{{selectedTripData.departure | date:'EEE, dd MMM' }} | {{TotalPassenger}} Travellers | <span *ngIf="selectedTripData.flightclass == 'B'">Business</span>
                         <span *ngIf="selectedTripData.flightclass == 'E'">Economy</span>
                         <span *ngIf="selectedTripData.flightclass == 'F'">First</span>
