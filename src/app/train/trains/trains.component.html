@@ -2,6 +2,17 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Travel & Stays</a></li>
+                        <li class="breadcrumb-item train-breadcrumb-item active" aria-current="page">Train Search</li>
+                    </ol>
+                </nav>
+
+            </div>
+            <div class="col-lg-12">
                 <div class="travel-box mb-20" >
                     <app-train-search modifySearch="true"  isViewPartner="false"></app-train-search>
                  </div>
@@ -225,17 +236,18 @@
                                 </ng-template>
                                 </mat-tab>
                                </mat-tab-group>-->
-                               
-                                <mat-form-field>
-                                <mat-select placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)" >
-                                <mat-option *ngFor = "let quota of avlQuota " [value]="quota.quotaCode"><span>{{quota.quotaName}}</span></mat-option>
-                                </mat-select>
-                                </mat-form-field>
+                                <div class="train_sort_btn">
+                                    <mat-form-field>
+                                        <mat-select placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)" >
+                                            <mat-option *ngFor = "let quota of avlQuota " [value]="quota.quotaCode"><span>{{quota.quotaName}}</span></mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
                                      <p class="train-avi-info" data-bs-toggle="modal" data-bs-target=".train-availability"> <i class="fa fa-exclamation-circle pe-2" aria-hidden="true"></i> Availability </p>
                                 </div>
                       
 
-                                <div class="flight-search-filters-right">
+                                <div class="flight-search-filters-right train_sort_btn">
                                 
                                 <mat-form-field>
                                     <mat-select placeholder="Selected Quota" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
@@ -249,6 +261,21 @@
                        
        
                            </div>
+
+                           <!-- no train found new design web -->
+                        <div class="row p-2 d-none">
+                            <div class="col-md-12 text-center">
+                                <div class="empty_list_hdr">Yikes! No direct trains found.</div>
+                                <div>
+                                    <img src="{{cdnUrl}}/images/empty_list_train.svg">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-3 text-center">
+                                <p class="empty_list_text">Try another route or date</p>
+                                <button class="empty_list_btn">Go back to search page</button>
+                            </div>
+                        </div>
+                        <!-- end of no train found new design web -->
                      
                         <!-- Listing -->
                         <div class="flight-listing-area bg-white p-3" *ngIf="loading" >
@@ -271,7 +298,6 @@
                               
 
                         </div>
-                      
                         
                     </div>
                 </div>
@@ -340,7 +366,24 @@
                           </div>
                       </div>
                  </div>
-                  <div class="text-center" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length < 1">No train found</div>
+                  <div class="text-center" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length < 1">
+
+                    <!-- no train found new design mlite -->
+                    <div class="row p-2">
+                        <div class="col-md-12 text-center">
+                            <div class="empty_list_hdr">Yikes! No direct trains found.</div>
+                            <div>
+                                <img src="{{cdnUrl}}/images/empty_list_train.svg" width="200px">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3 text-center">
+                            <p class="empty_list_text">Try another route or date</p>
+                            <button class="empty_list_btn">Go back to search page</button>
+                        </div>
+                    </div>
+                    <!-- end of no train found new design mlite -->
+
+                  </div>
               <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length > 0" >  
                                  <trains-card *ngFor="let train of trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy ; let traintrow = index;let isFirstRow=first;" [train]="train" [stationsdump]="stationsdump" [tag]="tag"  [quota] = "quota" [rowvalue] = "traintrow" repeatBooking="0"  [repeatBookingData]=""  [fastestTrain]="fastestTrain" [passParam]="passParam"></trains-card> 
                                 </span>
@@ -370,7 +413,7 @@
                           <a href="#Filters" role="tab" aria-controls="Filters" data-bs-toggle="tab">Filters</a>
                       </li>
                   </ul>
-                  <div class="tab-content clearfix">
+                  <div class="tab-content clearfix train_mobile_sort_content">
                       <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
                           <div class="mob-sf-sort">
                               <!-- <div class="mob-sf-sort-by">
@@ -415,7 +458,7 @@
                           </div>
                       </div>
                       <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
-                          <div class="mob-sf-filters">
+                          <div class="mob-sf-filters train_filter_part">
                               <div class="mob-sf-accordion p-3">
                                    <ng-container *ngIf="trains">
        <app-trains-filter [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
@@ -508,6 +551,8 @@
       <!-- end of mobile availability popup design -->
        </div>
       </div>
+
+
 </section>
 <!--Mobile Screen ends-->
 
