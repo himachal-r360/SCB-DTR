@@ -14,7 +14,7 @@ import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { formatNumber } from '@angular/common';
 declare var $: any;
-
+declare var bootstrap:any;
 @Component({
   selector: 'app-flight-roundtrip-list',
   templateUrl: './flight-roundtrip-list.component.html',
@@ -76,7 +76,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   resetMinPrice: number = 0;
   resetMaxPrice: number = 10000;
   minStopOver: number = 0;
-  maxStopOver: number = 24;
+  maxStopOver: number = 96;
   airlines: any;
   airportsNameJson: any;
   layOverFilterArr: any;
@@ -95,7 +95,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   };
   optionsStopOver: Options = {
     floor: 0,
-    ceil: 24,
+    ceil: 96,
     translate: (value: number): string => {
       return '';
     }
@@ -220,6 +220,24 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.container.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+    }
+  }
+  
+  toggle(event){
+   $("#onwardlist_"+event).prop("checked", true);
+   
+   if(this.isMobile){
+    $('.mob-list-itemsor').removeClass('mob-list-itemsr-selected');
+    $('#MobileOnward_'+event).addClass('mob-list-itemsr-selected');
+    }
+   
+  }
+    toggleR(event){
+   $("#return_roundlist_"+event).prop("checked", true);
+   
+      if(this.isMobile){
+    $('.mob-list-itemsrr').removeClass('mob-list-itemsr-selected');
+    $('#MobileReturn_'+event).addClass('mob-list-itemsr-selected');
     }
   }
 
@@ -363,17 +381,71 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
         //It is used for getting min and max price.
         if (this.flightList.length > 0) {
-          this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-          this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+         this.GetMinAndMaxPriceForFilter();
+          //this.minPrice = this.flightList[0].priceSummary[0].totalFare;
+         // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
+        
+         
+        
         this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
 
     }, (error) => { console.log(error) });
   }
-
+  GetMinAndMaxPriceForFilter() {
+  
+        let oneway_minPrice=0;
+        let oneway_maxPrice=0;
+        let return_minPrice=0;
+        let return_maxPrice=0;
+  
+    if (this.flightList.length > 0) {
+      oneway_minPrice = this.flightList[0].priceSummary[0].totalFare;
+      oneway_maxPrice= this.flightList[0].priceSummary[0].totalFare;
+      this.flightList.forEach((z: any) => {
+        var temp = z.priceSummary[0].totalFare;
+        if (temp < oneway_minPrice) {
+          oneway_minPrice = temp;
+        }
+        if (temp > oneway_maxPrice) {
+          oneway_maxPrice = temp;
+        }
+      });
+    } 
+    
+    
+     if (this.ReturnflightList.length > 0) {
+      return_minPrice = this.ReturnflightList[0].priceSummary[0].totalFare;
+      return_maxPrice = this.ReturnflightList[0].priceSummary[0].totalFare;
+      this.ReturnflightList.forEach((z: any) => {
+        var temp = z.priceSummary[0].totalFare;
+        if (temp < return_minPrice) {
+          return_minPrice = temp;
+        }
+        if (temp > return_maxPrice) {
+          return_maxPrice = temp;
+        }
+      });
+    } 
+    
+    if(oneway_minPrice < return_minPrice){
+     this.minPrice = oneway_minPrice;
+    }else{
+     this.minPrice = return_minPrice;
+    }
+    
+    
+    if(oneway_maxPrice < return_maxPrice){
+     this.maxPrice = oneway_maxPrice;
+    }else{
+     this.maxPrice = return_maxPrice;
+    }
+    
+    this.Initslider();
+  }
 
   ascPriceSummaryFlighs(flightsData:any)
   {
@@ -503,7 +575,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   resetStopOverFilter() {
     this.minStopOver = 0;
-    this.maxStopOver = 24;
+    this.maxStopOver = 96;
     this.popularFilterFlightData();
   }
   resetLayOverFilter() {
@@ -511,6 +583,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     this.popularFilterFlightData();
   }
   resetAllFilters() {
+       this.toggleStopsFilteritems = [
+    { name: 'All_Flights', active: true, value: 'All Flights' },
+    { name: 'no_stops', active: false, value: 'Non-Stop' },
+    ];
     this.resetPopularFilter();
     this.resetFlightTimingsFilter();
     this.resetPriceFilter();
@@ -630,10 +706,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
           }
           else if (item.name == 'A_E' && item.active == true) {
-            this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
+            this.flightList.sort((a: any, b: any) => new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime() - new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime());
           }
           else if (item.name == 'A_L' && item.active == true) {
-            this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
+            this.flightList.sort((a: any, b: any) => new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime() - new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime());
           }
         })
 
@@ -658,14 +734,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.ReturnflightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
           }
           else if (item.name == 'A_E' && item.active == true) {
-            this.ReturnflightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
+            this.ReturnflightList.sort((a: any, b: any) => new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime() - new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime());
           }
           else if (item.name == 'A_L' && item.active == true) {
-            this.ReturnflightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
+            this.ReturnflightList.sort((a: any, b: any) => new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime() - new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime());
           }
         })
 
       }
+      
+
       // Airlines Filter
       this.flightList = this.airlineFilterFlights(this.flightList);
       this.ReturnflightList = this.airlineFilterFlights(this.ReturnflightList);
@@ -692,7 +770,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         });
         this.flightList = filteredStopOver;
       }
-
+      /*
       //StopOverFilter return
       if (this.ReturnflightList.length > 0) {
         var start = this.minStopOver;
@@ -753,7 +831,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       // Layover Filter Flights
       this.flightList = this.layoverFilterFlights(this.flightList);
       this.ReturnflightList = this.layoverFilterFlights(this.ReturnflightList);
-
+*/
       this.container.clear();
       this.returnContainer.clear();
       if(this.flightList.length > 0)
@@ -1069,10 +1147,11 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     popularItems.active = !popularItems.active;
     if (popularItems.name == "Morning_Departures") {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
-      this.flight_return_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
+      this.flight_return_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = true; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
+      
     }
     if(!this.isMobile)
     {
@@ -1384,6 +1463,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   selectedFromKey:any ;
   onSelectOnword(flightKey:any,flights:any,item:any,priceDump:any,event:any , j:any)
   {
+  this.selectedFromKey=j;
     //debugger;
    if(item.partnerName=='Cleartrip'){
    this.onSelectOnwardSplrt= priceDump.filter((item: any) => {
@@ -1393,6 +1473,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }else{
     this.onSelectOnwardSplrt=[];
     }
+    
+     $('.onwardbuttons').removeClass('button-selected-style');  $('.onwardbuttons').html('Select');
+
 
         let departureAirportUser=this.searchData.flightfrom;
         let arrivalAirportUser=this.searchData.flightto;
@@ -1403,7 +1486,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.itemChange=item;
         this.flightKeyChange=flightKey;
         this.eventChange=event;
-        this.selectedFromKey = j;
 
         if (departureAirportSelected != departureAirportUser) {
         this.flightChangeDisplay= "We found more airports near " + this.airportsNameJson[departureAirportUser ].city + ". Cheapest flight at ₹"+formatNumber(item.totalFare,"en-US", "1.0")+" from " + this.airportsNameJson[departureAirportSelected ].airport_name+ ', ' +this.airportsNameJson[departureAirportSelected ].city + ' (' + departureAirportSelected + ')' + ' to ' + this.airportsNameJson[arrivalAirportSelected ].airport_name  + ', ' + this.airportsNameJson[arrivalAirportSelected ].city + ' (' + arrivalAirportSelected + ').';
@@ -1418,13 +1500,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         return;
         }
 
-
+    $(".selectedOnwardDiv").removeClass('selected-flight-background');
     $(".onwardbuttons").removeClass('button-selected-style');
     $(".onwardbuttons").html('Select');
     var selected = event.target as HTMLElement
-
-
-
       if(selected)
       {
         this.isOnwardSelected = true;
@@ -1432,15 +1511,27 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isFlightsSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
-          console.log(selected , "selected");
 
-
-
-
+                if(this.isMobile){
+        $('.mob-items-book-list-itemso').removeClass('mob-list-itemsr-selected-dark');
+          $('#mob-items-book-list-itemso_'+flightKey+'_'+item.partnerName).addClass('mob-list-itemsr-selected-dark');
+        }else{
+                let selectedOnwardDiv = document.getElementById('selectedOnwardDiv_' + flightKey + "_"+ this.selectedFromKey);
+        selectedOnwardDiv.classList.add('selected-flight-background');
+        }
+        
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
     var partner = item.partnerName;
+    if(this.returnSelectedFlight != null && this.returnSelectedFlight != undefined)
+    {
+      if(partner != this.returnSelectedFlight.priceSummery.partnerName)
+      {
+        this.returnSelectedFlight = null;
+        this.isReturnSelected = false;
+      }
+    }
     this.ReturnflightList.forEach((z:any)=>{
         z.priceSummary.forEach((a:any)=>{
           if(a.partnerName == partner)
@@ -1460,6 +1551,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
     $('#flightChangeO').modal('hide');
     $(".onwardbuttons").removeClass('button-selected-style');
+        $(".selectedOnwardDiv").removeClass('selected-flight-background');
     $(".selected-flight-background").removeClass('selected-flight-background');
     $(".onwardbuttons").html('Select');
       var selected = event.target as HTMLElement
@@ -1470,12 +1562,27 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isFlightsSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
-        let selectedOnwardDiv = document.getElementById('selectedOnwardDiv_' + flightKey + "_"+ this.selectedFromKey);
+
+        if(this.isMobile){
+        $('.mob-items-book-list-itemso').removeClass('mob-list-itemsr-selected-dark');
+         $('#mob-items-book-list-itemso_'+flightKey+'_'+item.partnerName).addClass('mob-list-itemsr-selected-dark');
+        }else{
+        console.log('selectedOnwardDiv_' + flightKey + "_"+ this.selectedFromKey);
+                let selectedOnwardDiv = document.getElementById('selectedOnwardDiv_' + flightKey + "_"+ this.selectedFromKey);
         selectedOnwardDiv.classList.add('selected-flight-background');
+        }
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
     var partner = item.partnerName;
+    if(this.returnSelectedFlight != null && this.returnSelectedFlight != undefined)
+    {
+      if(partner != this.returnSelectedFlight.priceSummery.partnerName)
+      {
+        this.returnSelectedFlight = null;
+        this.isReturnSelected = false;
+      }
+    }
     this.ReturnflightList.forEach((z:any)=>{
         z.priceSummary.forEach((a:any)=>{
           if(a.partnerName == partner)
@@ -1628,10 +1735,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.return_combofareKey='';
         }
 
-               console.log(sumval_new);
-         console.log(this.sumvalold);
-         console.log(this.sumval);
-
 
 
 
@@ -1660,7 +1763,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
 
 
-
+       $(".selectedReturnDiv").removeClass('selected-flight-background-return');
     $(".returnButtons").removeClass('button-selected-style');
     $(".returnButtons").html('Select');
       var selected = event.target as HTMLElement
@@ -1669,6 +1772,17 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isReturnSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
+
+        
+        
+                if(this.isMobile){
+        $('.mob-items-book-list-itemsr').removeClass('mob-list-itemsr-selected-dark');
+         $('#mob-items-book-list-itemsr_'+flightKey+'_'+item.partnerName).addClass('mob-list-itemsr-selected-dark');
+        }else{
+              let selectedReturnDiv =  document.getElementById('selectedReturnDiv_'+flightKey + "_" + this.retrunFlightKey)
+        selectedReturnDiv.classList.add('selected-flight-background-return');
+        }
+        
       }
 
         this.isDisplayDetail = true;
@@ -1690,6 +1804,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
    $('#flightChangeR').modal('hide');
   if(this.isOnwardSelected == true)
       {
+           $(".selectedReturnDiv").removeClass('selected-flight-background-return');
     $(".returnButtons").removeClass('button-selected-style');
     $(".selected-flight-background-return").removeClass('selected-flight-background-return');
     $(".returnButtons").html('Select');
@@ -1699,9 +1814,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.isReturnSelected = true;
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
-        console.log(selected);
-        let selectedReturnDiv =  document.getElementById('selectedReturnDiv_'+flightKey + "_" + this.retrunFlightKey)
+
+                if(this.isMobile){
+        $('.mob-items-book-list-itemsr').removeClass('mob-list-itemsr-selected-dark');
+        $('#mob-items-book-list-itemsr_'+flightKey+'_'+item.partnerName).addClass('mob-list-itemsr-selected-dark');
+        }else{
+              let selectedReturnDiv =  document.getElementById('selectedReturnDiv_'+flightKey + "_" + this.retrunFlightKey)
         selectedReturnDiv.classList.add('selected-flight-background-return');
+        }
       }
 
         this.isDisplayDetail = true;

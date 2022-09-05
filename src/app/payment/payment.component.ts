@@ -424,6 +424,16 @@ pgSettingsCYBERToken:number=0;
 		this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
 	}
 	
+	hidecheckoutPay(type){
+	
+	 if(type==1)
+	  $('.chkout-btn_pay').hide();
+	  else
+	  $('.chkout-btn_pay').show(); 
+	
+	
+	}
+	
 	pgSelect(pgType){
 		//console.log(pgType);
 		if(pgType=='DEBIT_EMI' && this.customerInfo["guestLogin"]==true){
@@ -1374,6 +1384,7 @@ payNow(ptype){
 				'dcemi_interestRate':this.dcemi_interestRate,
 				'dcemi_tenure':this.dcemi_tenure,
 			};
+			
 			var postPgvalidateParams = {
 			orderReferenceNumber:this.orderReferenceNumber,
 			postData:this.EncrDecr.set(JSON.stringify(validatePGParams))
@@ -1811,7 +1822,7 @@ checkNonSpcOfferforHDFCcards(){
 			"partnerId":this.Partnertoken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-			"orderAmount": this.payActualFare,
+			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
 			"binNumber":btoa(splitCard),
 			"last4Digit":btoa(last4Digit),
@@ -1926,7 +1937,7 @@ var checkCyberValue = searchValue.indexOf(5);
 			"partnerId":this.Partnertoken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-			"orderAmount": this.payActualFare,
+			"orderAmount": (this.payActualFare- this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
 			"binNumber":btoa(splitCard),
 			"last4Digit":btoa(last4Digit),

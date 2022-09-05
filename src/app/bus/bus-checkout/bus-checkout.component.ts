@@ -1149,7 +1149,7 @@ gstReset(){
           "emailId": email,
           "firstName": this.passengerForm.controls['passengerFirstName' + i]['value'].trim(),
           "gender": gender,
-          "id": i,
+          "id": 0,
           "lastName": this.passengerForm.controls['passengerLastName' + i]['value'].trim(),
           "mobileNumber": mobile,
           "passportExpiryDate": "",

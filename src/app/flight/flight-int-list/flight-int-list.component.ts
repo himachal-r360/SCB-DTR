@@ -105,7 +105,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
   resetMinPrice: number = 0;
   resetMaxPrice: number = 10000;
   minStopOver: number = 0;
-  maxStopOver: number = 24;
+  maxStopOver: number = 96;
   airlines: any;
   partnerFilterArr: any;
   flightIcons: any;
@@ -126,7 +126,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
   };
   optionsStopOver: Options = {
     floor: 0,
-    ceil: 24,
+    ceil: 96,
     translate: (value: number): string => {
       return '';
     }
@@ -379,7 +379,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
     }
     if(!this.isMobile)
     {
@@ -449,7 +449,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   resetStopOverFilter() {
     this.minStopOver = 0;
-    this.maxStopOver = 24;
+    this.maxStopOver = 96;
     this.popularFilterFlightData();
   }
   resetLayOverFilter() {
@@ -457,6 +457,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     this.popularFilterFlightData();
   }
   resetAllFilters() {
+       this.toggleStopsFilteritems = [
+    { name: 'All_Flights', active: true, value: 'All Flights' },
+    { name: 'no_stops', active: false, value: 'Non-Stop' },
+    ];
     this.resetPopularFilter();
     this.resetFlightTimingsFilter();
     this.resetPriceFilter();
@@ -597,22 +601,22 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
         else if (item.name == 'D_Short' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => a.flights[0].duration - b.flights[0].duration);
+          this.flightList.sort((a: any, b: any) => a.onwardflights[0].duration - b.onwardflights[0].duration);
         }
         else if (item.name == 'D_Long' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
+          this.flightList.sort((a: any, b: any) => b.onwardflights[0].duration - a.onwardflights[0].duration);
         }
         else if (item.name == 'D_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(a.onwardflights[0].departureDateTime).getTime() - new Date(b.onwardflights[0].departureDateTime).getTime());
         }
         else if (item.name == 'D_L' && item.active == true) {
-        this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
+        this.flightList.sort((a: any, b: any) => new Date(b.onwardflights[0].departureDateTime).getTime() - new Date(a.onwardflights[0].departureDateTime).getTime());
         }
         else if (item.name == 'A_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(a.onwardflights[a.onwardflights.length-1].arrivalDateTime).getTime() - new Date(b.onwardflights[b.onwardflights.length-1].arrivalDateTime).getTime());
         }
         else if (item.name == 'A_L' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(b.onwardflights[b.onwardflights.length-1].arrivalDateTime).getTime() - new Date(a.onwardflights[a.onwardflights.length-1].arrivalDateTime).getTime());
         }
 
       })

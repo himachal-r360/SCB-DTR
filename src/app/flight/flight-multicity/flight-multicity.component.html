@@ -551,7 +551,7 @@
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport]!= undefined ?  this.airportsNameJson[details.departureAirport].airport_name : 'unknown'}} ({{details.departureAirport}})</p>
                                                                             </div>
                                                                             <div class="tabs-depart-total w-25 text-center">
                                                                                 <p>{{details.duration | durationTime}}</p>
@@ -560,7 +560,7 @@
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport] != undefined ? this.airportsNameJson[details.arrivalAirport].airport_name : 'unknown'}} ({{details.arrivalAirport}})</p>
                                                                             </div>
                                                                         </div>
                                                                         <!--<div class="tabs-depart-right">
@@ -583,7 +583,7 @@
                                         <b   *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
                                         </div>
                                                                     <div class="tabs-depart-two" *ngIf="this.airportsNameJson && list.flights[i]  && list.flights[i+1] && getLayoverHour(list.flights[i],list.flights[i+1])">
- <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+ <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport] != undefined ? this.airportsNameJson[details.arrivalAirport].airport_name : 'unknown'}}</p>
                                                                   </div>
 
                                                                 </div>
@@ -1019,7 +1019,7 @@
                                                                             <div class="tabs-depart-times">
                                                                                 <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
                                                                                 <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                                <p class="mt-1 opacity_05"  *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                <p class="mt-1 opacity_05"  *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport] != undefined ? this.airportsNameJson[details.arrivalAirport].airport_name : 'unknown'}} ({{details.arrivalAirport}})</p>
                                                                             </div>
                                                                         </div>
                                                                         <!--<div class="tabs-depart-right">
@@ -1043,7 +1043,7 @@
                                         </div>
                                                                     <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
                                                                         <!-- <p>Change of planes・3h 0m Layover in Nagpur</p> -->
-                                                                        <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                        <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport] != undefined ? this.airportsNameJson[details.arrivalAirport].airport_name : 'unknown'}}</p>
                                                                     </div>
 
                                                                 </div>
@@ -1651,7 +1651,7 @@
                       <div class="flight-fixed-right">
                           <div class="fixedright-content">
                               <div class="fixedright-image" >
-                                  <img src="{{cdnUrl}}/images/flight_partners/small-no/{{searchData[0].selectedFlight.priceSummery.partnerName}}.png" alt="" width="52px">
+                                  <img src="{{cdnUrl}}/images/flight_partners/small-no/{{SelectedPartnerImage}}.png" alt="" width="52px">
                               </div>
                               <div class="fixedright-price">
                                   <h6>
@@ -1794,10 +1794,10 @@
                <li class="fare-list-item">
                  <div class="fare-list-box">
                    <div class="fare-list-left">
-                     <p>
+                     <div>
                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
                        Base Fare
-                     </p>
+                     </div>
                    </div>
                    <div class="fare-list-right">
                      <p>&#8377;{{mobileSelected.priceSummery.baseFare|number}}</p>
@@ -1807,10 +1807,10 @@
                <li class="fare-list-item">
                  <div class="fare-list-box">
                    <div class="fare-list-left">
-                     <p>
+                     <div>
                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
                        Taxes and Fees
-                     </p>
+                     </div>
                    </div>
                    <div class="fare-list-right">
                      <p>&#8377;{{(mobileSelected.priceSummery.totalFare-mobileSelected.priceSummery.baseFare)

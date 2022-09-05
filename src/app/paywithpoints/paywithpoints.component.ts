@@ -27,6 +27,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   voucherApplied: boolean=false;
   addcardDiv: boolean=true;
   voucherDiv: boolean=true;
+  otp_verify : boolean=false;
   voucherCodedetails: boolean=true;
   cdnUrl: any;
   @Input() serviceId;
@@ -69,6 +70,10 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  RemaingAmount:any;
  RedeemedPoints:any;
  vouchertransID:any;
+ otp:any;
+otperror :Boolean=false;
+otpCounter :Boolean=true;
+otperrormsg :any;
  redemption_value:any;
  voucherOtp:Boolean=false;
  otpaccepted:Boolean=false;
@@ -165,6 +170,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     }
   }
   checkAvailablePointsforSavedCard(){ 
+    console.log('checkAvailablePointsforSavedCard');
     this.XSRFTOKEN = this.customerInfo['XSRF-TOKEN'];
     // this.ctype = sessionStorage.getItem(this.passSessionKey+'-ctype');
     var request = {
@@ -270,12 +276,13 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "customer_id": this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
       "last4digit":this.selectedCardDetails.card.slice(-4),
-      "_token":this.sg["customerInfo"]["XSRF-TOKEN"],
+      "_token":this.customerInfo["XSRF-TOKEN"],
       "DOB":this.carddob,
       "savecard":1,
+      "services_id": this.serviceId,
       "user_id":this.sg["customerInfo"]["id"],
     }
-
+      this.otp_verify=true;
       this.otpGenerate(URLparams);
    
   }    
@@ -286,21 +293,21 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       postData: this.EncrDecr.set(JSON.stringify(URLparams))
     };
         this.pay.generateVoucherOtp(passData).subscribe(response => {
-        console.log("otpGenerate");
-        console.log(response);
-        
-        if(response.reward_message='successful'){
+        if(response.status==true){
           this.voucherOtp = true;
+          this.voucheraddform=false; 
           this.voucherslider = false;
-
+    
         }else{
+          this.addCardCancel(); 
           this.voucherOtp = false;
           this.voucherslider = true;
+          alert(response.message);
         }
     }), (err: HttpErrorResponse) => {
-      this.voucherOtp = false;
-      this.voucherslider = true;
-      this.errorMsg0="";
+        this.voucherOtp = false;
+        this.voucherslider = true;
+        this.errorMsg0="";
       
     };
   }
@@ -309,28 +316,78 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     if (this.Formotpvalidate.status !='VALID') {
       return;
     }else{
-       let URLparams = {
-          "mobile": this.cardmobile,
-          "customer_id": this.sg["customerInfo"]["customerid"],
-          "programName":this.sg['domainName'],
-          "first4digit":this.selectedCardDetails.card.slice(4),
-          "last4digit":this.selectedCardDetails.card.slice(-4),
-          "points":this.value,
-          "ORDER_POINTS":this.value,
-          "voucherINRvalue":this.value * this.points_percentage,
-           "DOB":this.carddob,
-           "bin":this.cardbin,
-          "passwordValue":this.Formotpvalidate.controls['otp'].value,
-          "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
-        }
-        this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
-        this.AmountRedeemed =((this.value)*Number(this.points_percentage));
-        this.RedeemedPoints = this.value;
-      this.otpVerify(URLparams);
+       if(this.otp_verify==true){ 
+         let URLparams = {
+            "mobile": this.cardmobile,
+            "customer_id": this.sg["customerInfo"]["customerid"],
+            "programName":this.sg['domainName'],
+            "first4digit":this.selectedCardDetails.card.slice(0,4),
+            "last4digit":this.selectedCardDetails.card.slice(-4),
+            "points":this.value,
+            "ORDER_POINTS":this.value,
+            "voucherINRvalue":this.value * this.points_percentage,
+             "DOB":this.carddob,
+             "bin":this.cardbin,
+             "services_id": this.serviceId,
+             "clientToken":this.sg['domainName'].toUpperCase(),
+             "total_amount": this.payTotalFare,
+            "passwordValue":this.Formotpvalidate.controls['otp'].value,
+            "_token":this.customerInfo["XSRF-TOKEN"]
+          }
+          this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
+          this.AmountRedeemed =((this.value)*Number(this.points_percentage));
+          this.RedeemedPoints = this.value;
+          this.otpVerify(URLparams);
+       }else{
+              let URLparams = {
+                "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+                "last4digit":this.cardaddForm1.controls['last4digit'].value,
+                "mobile": this.cardaddForm1.controls['applymobile'].value,
+                "DOB":this.cardaddForm1.controls['dob'].value,
+                "type":"available_points",
+                "bin":this.cardaddForm1.controls['first4digit'].value,
+                "clientToken":this.sg['domainName'].toUpperCase(),
+                "services_id":this.serviceId,
+                "partner_id":42,
+                "modal":"DIGITAL",
+                "noopt": 1,
+                "savecard":1,
+                "customer_id": this.sg["customerInfo"]["customerid"],
+                "programName":this.sg['domainName'],
+                "_token":this.customerInfo["XSRF-TOKEN"],
+                "user_id":this.sg["customerInfo"]["id"],
+                "passwordValue":this.Formotpvalidate.controls['otp'].value,
+              }
+              this.otpVerifyAddCard(URLparams);
+       }   
     }
   }
+  otpVerifyAddCard(URLparams:any){
+    console.log('otpVerifyAddCard');
+         var passData = {
+          postData: this.EncrDecr.set(JSON.stringify(URLparams))
+        };
+         this.pay.otp_validation_addcard(passData).subscribe(resp =>{
+            if(typeof resp.opt_status != undefined && resp.otp_status){
+              if(resp.otp_status==true){
+                this.addCardCancel();
+                this.otperror=false; 
+                this.cards = resp.carddetails;
+                this.selectedCardDetails = this.cards[0];
+                this.checkAvailablePointsforSavedCard();
+              //  var res=this.getCustomerCards();
+                //console.log(res);
+              }else{ 
+                this.Formotpvalidate.setValue({otp: ''});
+                this.otperror = true;
+                this.otperrormsg = "OTP not matching";
+              }
+            } 
+         }),(err:HttpErrorResponse)=>{
+           alert("Something went wrong, please try again");
+        };
+  }  
   otpVerify(URLparams:any){
-     
          var passData = {
         postData: this.EncrDecr.set(JSON.stringify(URLparams))
       };
@@ -347,13 +404,26 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherOtp=false; 
           this.voucherDiv=false; 
           this.addcardDiv=false; 
-          this.voucherCodedetails=false; 
+          this.voucherCodedetails=false;
+          this.otperror =false; 
           
           this.updateAmountToPay('XXXXX',this.AmountRedeemed,this.RemaingAmount);
+        }else{
+          this.submittedFormotpvalidate=false;
+          this.otpCounter = false;
+     this.voucherApplied=false;
+          this.hasCards=false; 
+          this.voucherOtp=true; 
+          this.voucherDiv=false; 
+          this.addcardDiv=true; 
+          this.voucherCodedetails=true; 
+          // this.otp.reset();
+          this.Formotpvalidate.setValue({otp: ''});
+          this.otperror = true;
+          this.otperrormsg = resp.error;
         }
       }else{
 
-     //validate otp fail
 
     } 
    
@@ -376,7 +446,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "customer_id": this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
       "last4digit":this.selectedCardDetails.card.slice(-4),
-      "_token":this.sg["customerInfo"]["XSRF-TOKEN"],
+      "_token":this.customerInfo["XSRF-TOKEN"],
       "DOB":this.carddob,
       "savecard":1,
       "user_id":this.sg["customerInfo"]["id"],
@@ -475,6 +545,33 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
 
     }
   }
+  GenerateOTPform(){
+    this.submitted2=true;
+    if (this.cardaddForm1.status !='VALID') {
+      return;
+    }else{
+        let URLparams = {
+           "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+           "last4digit":this.cardaddForm1.controls['last4digit'].value,
+           "mobile": this.cardaddForm1.controls['applymobile'].value,
+           "DOB":this.cardaddForm1.controls['dob'].value,
+           "type":"available_points",
+           "bin":this.cardaddForm1.controls['first4digit'].value,
+           "clientToken":this.sg['domainName'].toUpperCase(),
+           "services_id":this.serviceId,
+           "partner_id":42,
+           "modal":"DIGITAL",
+           "noopt": 1,
+           "savecard":1,
+           "customer_id": this.sg["customerInfo"]["customerid"],
+           "programName":this.sg['domainName'],
+           "_token":this.customerInfo["XSRF-TOKEN"],
+           "user_id":this.sg["customerInfo"]["id"],
+        }
+        this.otp_verify=false;
+       this.otpGenerate(URLparams);
+    }
+  }
   addcardform(){
     this.submitted2=true;
     if (this.cardaddForm1.status !='VALID') {
@@ -510,7 +607,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         "programName":this.sg['domainName'],
         "_token":this.XSRFTOKEN,
       };
-      //console.log(request);
+      console.log(request);
       var passData = {
         postData: this.EncrDecr.set(JSON.stringify(request))
       };
@@ -569,6 +666,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     (keycode == 165)){
       event.preventDefault();
     }
+  }
+    convertToUpperCase($event) {
+    $event.target.value = $event.target.value.toUpperCase();
   }
 
   calldialog(event) {

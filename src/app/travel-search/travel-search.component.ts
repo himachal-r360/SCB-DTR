@@ -17,7 +17,6 @@ import { MatDialog,MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS} from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker'
 import { IrctcApiService } from 'src/app/shared/services/irctc.service';
 import { formatDate } from '@angular/common';
@@ -25,26 +24,12 @@ import * as moment from 'moment';
 declare var require: any;
  declare var $: any;
 
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'M/D/YYYY',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
 
 
 @Component({
   selector: 'app-travel-search',
   templateUrl: './travel-search.component.html',
   styleUrls: ['./travel-search.component.scss'],
-   providers: [
-        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
 })
 export class TravelSearchComponent implements OnInit {
         @Input() searchDisplayForm;
@@ -778,6 +763,8 @@ export class TravelSearchComponent implements OnInit {
      case 'minus': {
         var a =this.adult_label;
         var b = (a) - 1;
+        
+       if(a> 1){ 
         if (b > 1) {
         this.adult_label=b;
         $(".adult .plus").removeClass('disabled');
@@ -793,6 +780,7 @@ export class TravelSearchComponent implements OnInit {
         }
         this.adult_cnt=this.adult_label;
         this.updatetraveller();
+        }
       break;
       }
      }
@@ -1503,19 +1491,23 @@ check_traveller_count(type) {
         this.searchFlightForm.get('travel').setValue('INT');
         }
 
-console.log(this.searchFlightForm);
 
         if(this.searchFlightForm.invalid || this.dateValidation==true){
         return
         }
         else {
+         this.searchFlightForm['controls']['adults'].setValue(this.adult_cnt);
+           this.searchFlightForm['controls']['child'].setValue(this.child_cnt);
+             this.searchFlightForm['controls']['infants'].setValue(this.infant_cnt);
         let searchValue = this.searchFlightForm.value;
+        
+        
 
 
         this.flightSearchCallBack(searchValue);
 
         localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
-
+        localStorage.setItem('isMulticitySearch','false');
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
         if(searchValue.arrival)

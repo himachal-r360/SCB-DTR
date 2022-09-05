@@ -105,7 +105,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   resetMinPrice: number = 0;
   resetMaxPrice: number = 10000;
   minStopOver: number = 0;
-  maxStopOver: number = 24;
+  maxStopOver: number = 96;
   airlines: any;
   flightIcons: any;
   airportsNameJson: any;
@@ -126,7 +126,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   optionsStopOver: Options = {
     floor: 0,
-    ceil: 24,
+    ceil: 96,
     translate: (value: number): string => {
       return '';
     }
@@ -360,6 +360,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   applySortingMobile() {
+  
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("noscroll"); 
     let sortingBtn = document.getElementById('sortMobileFilter');
     if(sortingBtn)
     {
@@ -375,7 +378,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
 
     }
     if(!this.isMobile)
@@ -446,7 +449,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   resetStopOverFilter() {
     this.minStopOver = 0;
-    this.maxStopOver = 24;
+    this.maxStopOver = 96;
     this.popularFilterFlightData();
   }
   resetLayOverFilter() {
@@ -454,6 +457,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     this.popularFilterFlightData();
   }
   resetAllFilters() {
+     this.toggleStopsFilteritems = [
+    { name: 'All_Flights', active: true, value: 'All Flights' },
+    { name: 'no_stops', active: false, value: 'Non-Stop' },
+    ];
     this.resetPopularFilter();
     this.resetFlightTimingsFilter();
     this.resetPriceFilter();
@@ -551,6 +558,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           })
         }
       })
+      
 
       //Ascending Descending Order
       this.priceSortingFilteritems.filter((item: any) => {
@@ -573,13 +581,15 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         this.flightList.sort((a: any, b: any) => new Date(b.flights[0].departureDateTime).getTime() - new Date(a.flights[0].departureDateTime).getTime());
         }
         else if (item.name == 'A_E' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(a.flights[0].arrivalDateTime).getTime() - new Date(b.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime() - new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime());
         }
         else if (item.name == 'A_L' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => new Date(b.flights[0].arrivalDateTime).getTime() - new Date(a.flights[0].arrivalDateTime).getTime());
+          this.flightList.sort((a: any, b: any) => new Date(b.flights[b.flights.length-1].arrivalDateTime).getTime() - new Date(a.flights[a.flights.length-1].arrivalDateTime).getTime());
         }
 
-      })
+      });
+      
+      
     }
 
     // Airlines Filter
@@ -1283,6 +1293,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   OpenPartner(i:number)
   {
+      $('.mob-list-items').removeClass('mob-items-book-list-selected');
+      $('#flight_listitem_'+i).addClass('mob-items-book-list-selected');
+  
         $(".mob-items-book-list").css('display','none')
         var SelectedElement = document.getElementById('CompareToFly_'+i);
         if(SelectedElement)
@@ -1301,6 +1314,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   openMobileFilterSection()
   {
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.add("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1311,6 +1326,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   CloseSortingSection()
   {
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1318,6 +1335,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }
   }
   onApplyFilter(){
+      let body = document.getElementsByTagName('body')[0];
+  body.classList.remove("noscroll"); 
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1374,4 +1393,5 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
    }
    return disable;
   }
+
 }

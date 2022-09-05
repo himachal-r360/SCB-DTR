@@ -101,8 +101,7 @@
         </div>
     </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
-
-  <section class="flight-details-area mt-10">
+  <section class="flight-details-area mt-10" *ngIf="totalCollectibleAmount>0">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
       <div class="sidebar-widget session-expires-widget text-center">
@@ -987,7 +986,7 @@
                                             </mat-select>
                                             
                                           </mat-form-field>
-                                          <span >
+                                          <span *ngIf="submitted && passengerForm.controls['adult_title'+saveAdultTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight  error_tv"
                                               *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
                                               Select title</mat-error>
@@ -1003,7 +1002,7 @@
                                               data-test="adult_first_name{{ saveAdultTravellerId[passenger.id] }}"
                                               formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['adult_first_name'+saveAdultTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight  error_tv"
                                               *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                               Please enter first name</mat-error>
@@ -1026,7 +1025,7 @@
                                             <input matInput placeholder="Last Name"
                                               formControlName="adult_last_name{{ saveAdultTravellerId[passenger.id] }}">
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['adult_last_name'+saveAdultTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight  error_tv"
                                               *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                               Please enter first name</mat-error>
@@ -1051,7 +1050,7 @@
                                             placeholder="Date Of Birth" name="dateOfBirth">
                                           
                                         </mat-form-field>
-                                        <span>
+                                        <span *ngIf="submitted && passengerForm.controls['adult_dob'+saveAdultTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight  error_tv"
                                             *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
@@ -1069,7 +1068,7 @@
 
 
                                     <ng-container *ngIf="searchData.travel=='INT'">
-                                      <div class="row">
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <div>
                                             <mat-form-field appearance="outline" class="w-100">
@@ -1078,7 +1077,7 @@
                                                   formControlName="adult_passport_num{{ saveAdultTravellerId[passenger.id] }}"
                                                   placeholder="Passport Number" name="PassportNumber">
                                               </mat-form-field>
-                                              <span >
+                                              <span *ngIf="submitted && passengerForm.controls['adult_passport_num'+saveAdultTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight  error_tv"
                                                   *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                   Please enter passport number</mat-error>
@@ -1107,7 +1106,7 @@
                                                   formControlName="adult_passport_expiry_date{{ saveAdultTravellerId[passenger.id] }}"
                                                   placeholder="Passport Expiry Date" name="PassportExpiryDate">
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_passport_expiry_date'+saveAdultTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight  error_tv"
                                                   *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
                                                   Please enter passport issue date</mat-error>
@@ -1118,7 +1117,6 @@
                                           </div>
                                         </div>
 
-
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <div>
                                             <mat-form-field appearance="outline" class="w-100">
@@ -1128,7 +1126,7 @@
                                                   placeholder="Passport Issue Date" name="PassportIssueDate">
                                                 
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_passport_issue_date'+saveAdultTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight  error_tv"
                                                   *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                                   Please enter passport issue date</mat-error>
@@ -1140,7 +1138,6 @@
                                           </div>
                                         </div>
 
-                                        <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -1153,14 +1150,13 @@
                                                     </mat-select>
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['adult_passport_issuing_country'+saveAdultTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight  error_tv"
                                                       *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
                                                       Select passport issuing country</mat-error>
                                                   </span>
                                             </div>
                                           </div>
-
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
@@ -1174,16 +1170,14 @@
                                                     </mat-select>
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['adult_pax_nationality'+saveAdultTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight  error_tv"
                                                       *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
                                                       Select nationality</mat-error>
                                                   </span>
                                             </div>
                                           </div>
-                                        </div>
 
-                                      </div>
                                     </ng-container>
 
 
@@ -1234,7 +1228,7 @@
                                                   <mat-option value="Miss">Miss</mat-option>
                                                 </mat-select>
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_title'+saveAdultTravellerId[passenger.id]]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','adult_title'+saveAdultTravellerId[passenger.id])">
                                                   Select title</mat-error>
@@ -1249,7 +1243,7 @@
                                                 <input matInput placeholder="First Name" name="adult_first_name"
                                                   formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_first_name'+saveAdultTravellerId[passenger.id]]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','adult_first_name'+saveAdultTravellerId[passenger.id])">
                                                   Please enter first name</mat-error>
@@ -1272,7 +1266,7 @@
                                                 <input matInput placeholder="Last Name"
                                                   formControlName="adult_last_name{{ saveAdultTravellerId[passenger.id] }}">
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_last_name'+saveAdultTravellerId[passenger.id]]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','adult_last_name'+saveAdultTravellerId[passenger.id])">
                                                   Please enter first name</mat-error>
@@ -1297,7 +1291,7 @@
                                                   formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}"
                                                   placeholder="Date Of Birth" name="dateOfBirth">
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_dob'+saveAdultTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','adult_dob'+saveAdultTravellerId[passenger.id])">
                                                   Please enter dob</mat-error>
@@ -1314,7 +1308,7 @@
                                       </div>
 
                                       <ng-container *ngIf="searchData.travel=='INT'">
-                                        <div class="row">
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -1323,7 +1317,7 @@
                                                       formControlName="adult_passport_num{{ saveAdultTravellerId[passenger.id] }}"
                                                       placeholder="Passport Number" name="PassportNumber">
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['adult_passport_num'+saveAdultTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','adult_passport_num'+saveAdultTravellerId[passenger.id])">
                                                       Please enter passport number</mat-error>
@@ -1353,7 +1347,7 @@
                                                       placeholder="Passport Expiry Date" name="PassportExpiryDate">
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['adult_passport_expiry_date'+saveAdultTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+saveAdultTravellerId[passenger.id])">
                                                       Please enter passport issue date</mat-error>
@@ -1364,7 +1358,6 @@
                                             </div>
                                           </div>
 
-
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -1374,7 +1367,7 @@
                                                       placeholder="Passport Issue Date" name="PassportIssueDate">
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['adult_passport_issue_date'+saveAdultTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+saveAdultTravellerId[passenger.id])">
                                                       Please enter passport issue date</mat-error>
@@ -1385,7 +1378,6 @@
                                             </div>
                                           </div>
 
-                                          <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -1398,14 +1390,13 @@
                                                     </mat-select>
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['adult_passport_issuing_country'+saveAdultTravellerId[passenger.id]]['errors']">
                                                     <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+saveAdultTravellerId[passenger.id])">
                                                       Select passport issuing country</mat-error>
                                                   </span>
                                               </div>
                                             </div>
-
 
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                              <div>
@@ -1419,16 +1410,14 @@
                                                     </mat-select>
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['adult_pax_nationality'+saveAdultTravellerId[passenger.id]]['errors']">
                                                     <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','adult_pax_nationality'+saveAdultTravellerId[passenger.id])">
                                                       Select nationality</mat-error>
                                                   </span>
                                              </div>
                                             </div>
-                                          </div>
 
-                                        </div>
                                       </ng-container>
 
 
@@ -1473,7 +1462,7 @@
                                         </mat-select>
                                         
                                       </mat-form-field>
-                                      <span>
+                                      <span *ngIf="submitted && passengerForm.controls['adult_title'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','adult_title'+traveller)">Select title
                                         </mat-error>
@@ -1489,7 +1478,7 @@
                                           formControlName="adult_first_name{{ traveller }}">
                                         
                                       </mat-form-field>
-                                      <span>
+                                      <span *ngIf="submitted && passengerForm.controls['adult_first_name'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','adult_first_name'+traveller)">
                                           Please enter first name</mat-error>
@@ -1513,7 +1502,7 @@
                                         <input matInput placeholder="Last Name"
                                           formControlName="adult_last_name{{ traveller }}">
                                       </mat-form-field>
-                                      <span>
+                                      <span *ngIf="submitted && passengerForm.controls['adult_last_name'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','adult_last_name'+traveller)">
                                           Please enter first name</mat-error>
@@ -1538,7 +1527,7 @@
                                         name="dateOfBirth">
 
                                     </mat-form-field>
-                                    <span>
+                                    <span *ngIf="submitted && passengerForm.controls['adult_dob'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                         *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">Please enter
                                         dob</mat-error>
@@ -1556,7 +1545,7 @@
                                 </div>
 
                                 <ng-container *ngIf="searchData.travel=='INT'">
-                                  <div class="row">
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <div>
                                         <mat-form-field appearance="outline" class="w-100">
@@ -1565,7 +1554,7 @@
                                               placeholder="Passport Number" name="PassportNumber">
     
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['adult_passport_num'+traveller]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','adult_passport_num'+traveller)">
                                               Please enter passport number</mat-error>
@@ -1594,7 +1583,7 @@
                                               formControlName="adult_passport_expiry_date{{ traveller }}"
                                               placeholder="Passport Expiry Date" name="PassportExpiryDate">
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['adult_passport_expiry_date'+traveller]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','adult_passport_expiry_date'+traveller)">
                                               Please enter passport issue date</mat-error>
@@ -1604,7 +1593,6 @@
                                           </span>
                                       </div>
                                     </div>
-
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <div>
@@ -1616,7 +1604,7 @@
                                             
     
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['adult_passport_issue_date'+traveller]['errors']">
                                                 <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','adult_passport_issue_date'+traveller)">
                                             Please enter passport issue date</mat-error>
@@ -1628,7 +1616,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <div>
                                             <mat-form-field appearance="outline" class="w-100">
@@ -1640,14 +1627,13 @@
                                                 </mat-select>
                                                
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_passport_issuing_country'+traveller]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','adult_passport_issuing_country'+traveller)">
                                                   Select passport issuing country</mat-error>
                                               </span>
                                         </div>
                                       </div>
-
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <div>
@@ -1660,16 +1646,14 @@
                                                 </mat-select>
                                                 
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['adult_pax_nationality'+traveller]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','adult_pax_nationality'+traveller)">
                                                   Select nationality</mat-error>
                                               </span>
                                         </div>
                                       </div>
-                                    </div>
 
-                                  </div>
                                 </ng-container>
 
 
@@ -1682,9 +1666,8 @@
                       </div>
                       <div *ngIf="isMobile">
                         <!-- Mlite Add Traveller Popup -->
-                        <div class=" modal coupon_mlite_popup" id="addTraveller_mlite" tabindex="-1"
-                          aria-labelledby="addTraveller_mlite" aria-hidden="true" data-bs-backdrop="static"
-                          data-bs-keyboard="false">
+                        <div class=" modal coupon_mlite_popup" id="addTraveller_mlite"  data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="add_new_traveler pt-0" *ngIf="adultsArrayM.length>0 ">
@@ -1782,7 +1765,7 @@
                                               </div>
                                             </div>
 
- <ng-container *ngIf="searchData.travel=='INT'">
+                                  <ng-container *ngIf="searchData.travel=='INT'">
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Number</mat-label>
@@ -1823,7 +1806,6 @@
                                       </mat-form-field>
                                     </div>
 
-
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Issue Date</mat-label>
@@ -1841,7 +1823,6 @@
                                       </mat-form-field>
                                     </div>
 
-                                    <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>Passport Issuing Country</mat-label>
@@ -1856,7 +1837,6 @@
                                         </mat-form-field>
                                       </div>
 
-
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>PAX Nationality</mat-label>
@@ -1870,7 +1850,6 @@
                                             Select nationality</mat-error>
                                         </mat-form-field>
                                       </div>
-                                    </div>
 
                                 </ng-container>
 
@@ -1982,7 +1961,7 @@
                                               <mat-option value="Miss">Miss</mat-option>
                                             </mat-select>
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['child_title'+saveChildTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
                                               Select title</mat-error>
@@ -1997,7 +1976,7 @@
                                             <input matInput placeholder="First Name" name="child_first_name"
                                               formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
                                           </mat-form-field>
-                                        <span>
+                                        <span *ngIf="submitted && passengerForm.controls['child_first_name'+saveChildTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
                                             Please enter first name</mat-error>
@@ -2020,7 +1999,7 @@
                                             <input matInput placeholder="Last Name"
                                               formControlName="child_last_name{{ saveChildTravellerId[passenger.id] }}">
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['child_last_name'+saveChildTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','child_last_name'+saveChildTravellerId[passenger.id])">
                                               Please enter first name</mat-error>
@@ -2046,7 +2025,7 @@
                                                   placeholder="Date Of Birth" name="dateOfBirth">
       
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_dob'+saveChildTravellerId[passenger.id]]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
                                                   Please enter dob</mat-error>
@@ -2059,7 +2038,6 @@
                                     </div>
 
                                     <ng-container *ngIf="searchData.travel=='INT'">
-                                      <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <div>
                                             <mat-form-field appearance="outline" class="w-100">
@@ -2069,7 +2047,7 @@
                                                   placeholder="Passport Number" name="PassportNumber">
                                                 
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_passport_num'+saveChildTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                                   Please enter passport number</mat-error>
@@ -2099,7 +2077,7 @@
                                                   placeholder="Passport Expiry Date" name="PassportExpiryDate">
                                                 
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_passport_expiry_date'+saveChildTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
                                                   Please enter passport issue date</mat-error>
@@ -2111,7 +2089,6 @@
                                           </div>
                                         </div>
 
-
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <div>
                                             <mat-form-field appearance="outline" class="w-100">
@@ -2120,7 +2097,7 @@
                                                   formControlName="child_passport_issue_date{{ saveChildTravellerId[passenger.id] }}"
                                                   placeholder="Passport Issue Date" name="PassportIssueDate">
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_passport_issue_date'+saveChildTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
                                                   Please enter passport issue date</mat-error>
@@ -2131,7 +2108,6 @@
                                           </div>
                                         </div>
 
-                                        <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -2144,14 +2120,13 @@
                                                     </mat-select>
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['child_passport_issuing_country'+saveChildTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
                                                       Select passport issuing country</mat-error>
                                                   </span>
                                             </div>
                                           </div>
-
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
@@ -2165,16 +2140,14 @@
                                                     </mat-select>
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['child_pax_nationality'+saveChildTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
                                                       Select nationality</mat-error>
                                                   </span>
                                             </div>
                                           </div>
-                                        </div>
 
-                                      </div>
                                     </ng-container>
 
 
@@ -2223,7 +2196,7 @@
                                                 </mat-select>
       
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_title'+saveChildTravellerId[passenger.id]]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_title'+saveChildTravellerId[passenger.id])">
                                                   Select title</mat-error>
@@ -2239,7 +2212,7 @@
                                                   formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
                                                 
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_first_name'+saveChildTravellerId[passenger.id]]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_first_name'+saveChildTravellerId[passenger.id])">
                                                   Please enter first name</mat-error>
@@ -2263,7 +2236,7 @@
                                                 <input matInput placeholder="Last Name"
                                                   formControlName="child_last_name{{ saveChildTravellerId[passenger.id] }}">
                                               </mat-form-field>
-                                            <span>
+                                            <span *ngIf="submitted && passengerForm.controls['child_last_name'+saveChildTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','child_last_name'+saveChildTravellerId[passenger.id])">
                                             Please enter first name</mat-error>
@@ -2288,7 +2261,7 @@
                                                   formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}"
                                                   placeholder="Date Of Birth" name="dateOfBirth">
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_dob'+saveChildTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_dob'+saveChildTravellerId[passenger.id])">
                                                   Please enter dob</mat-error>
@@ -2300,7 +2273,7 @@
                                         </div>
                                       </div>
                                       <ng-container *ngIf="searchData.travel=='INT'">
-                                        <div class="row">
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -2310,7 +2283,7 @@
                                                       placeholder="Passport Number" name="PassportNumber">
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['child_passport_num'+saveChildTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','child_passport_num'+saveChildTravellerId[passenger.id])">
                                                       Please enter passport number</mat-error>
@@ -2340,7 +2313,7 @@
                                                       placeholder="Passport Expiry Date" name="PassportExpiryDate">
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['child_passport_expiry_date'+saveChildTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+saveChildTravellerId[passenger.id])">
                                                       Please enter passport issue date</mat-error>
@@ -2351,7 +2324,6 @@
                                             </div>
                                           </div>
 
-
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -2361,7 +2333,7 @@
                                                       placeholder="Passport Issue Date" name="PassportIssueDate">
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['child_passport_issue_date'+saveChildTravellerId[passenger.id]]['errors']">
                                                       <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','child_passport_issue_date'+saveChildTravellerId[passenger.id])">
                                                       Please enter passport issue date</mat-error>
@@ -2372,7 +2344,6 @@
                                             </div>
                                           </div>
 
-                                          <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <div>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -2385,14 +2356,13 @@
                                                     </mat-select>
                                                     
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span *ngIf="submitted && passengerForm.controls['child_passport_issuing_country'+saveChildTravellerId[passenger.id]]['errors']">
                                                     <mat-error class="error_flight"
                                                       *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+saveChildTravellerId[passenger.id])">
                                                       Select passport issuing country</mat-error>
                                                   </span>
                                               </div>
                                             </div>
-
 
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <div>
@@ -2406,16 +2376,14 @@
                                                     </mat-select>
                                                    
                                                   </mat-form-field>
-                                                  <span>
+                                                  <span  *ngIf="submitted && passengerForm.controls['child_pax_nationality'+saveChildTravellerId[passenger.id]]['errors']">
                                                     <mat-error class="error_flight"
                                                     *ngIf="passengerForm.hasError('required','child_pax_nationality'+saveChildTravellerId[passenger.id])">
                                                     Select nationality</mat-error>
                                                   </span>
                                               </div>
                                             </div>
-                                          </div>
 
-                                        </div>
                                       </ng-container>
 
 
@@ -2458,7 +2426,7 @@
                                         </mat-select>
                                         
                                       </mat-form-field>
-                                      <span>
+                                      <span *ngIf="submitted && passengerForm.controls['child_title'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','child_title'+traveller)">Select title
                                         </mat-error>
@@ -2474,7 +2442,7 @@
                                           formControlName="child_first_name{{ traveller }}">
                                        
                                       </mat-form-field>
-                                      <span>
+                                      <span *ngIf="submitted && passengerForm.controls['child_first_name'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                         *ngIf="passengerForm.hasError('required','child_first_name'+traveller)">
                                         Please enter first name</mat-error>
@@ -2499,7 +2467,7 @@
                                           formControlName="child_last_name{{ traveller }}">
                                     </mat-form-field>
 
-                                       <span>
+                                       <span *ngIf="submitted && passengerForm.controls['child_last_name'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                         *ngIf="passengerForm.hasError('required','child_last_name'+traveller)">
                                         Please enter first name</mat-error>
@@ -2526,7 +2494,7 @@
                                           name="dateOfBirth">
   
                                       </mat-form-field>
-                                      <span>
+                                      <span *ngIf="submitted && passengerForm.controls['child_dob'+traveller]['errors']">
                                           <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','child_dob'+traveller)">Please enter
                                           dob</mat-error>
@@ -2538,7 +2506,6 @@
                                   </div>
                                 </div>
                                 <ng-container *ngIf="searchData.travel=='INT'">
-                                  <div class="row">
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <div>
                                         <mat-form-field appearance="outline" class="w-100">
@@ -2547,7 +2514,7 @@
                                               placeholder="Passport Number" name="PassportNumber">
                                             
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['child_passport_num'+traveller]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','child_passport_num'+traveller)">
                                               Please enter passport number</mat-error>
@@ -2577,7 +2544,7 @@
                                               placeholder="Passport Expiry Date" name="PassportExpiryDate">
                                             
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['child_passport_expiry_date'+traveller]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','child_passport_expiry_date'+traveller)">
                                               Please enter passport issue date</mat-error>
@@ -2588,7 +2555,6 @@
                                       </div>
                                     </div>
 
-
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <div>
                                         <mat-form-field appearance="outline" class="w-100">
@@ -2598,7 +2564,7 @@
                                               placeholder="Passport Issue Date" name="PassportIssueDate">
                                             
                                           </mat-form-field>
-                                          <span>
+                                          <span *ngIf="submitted && passengerForm.controls['child_passport_issue_date'+traveller]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','child_passport_issue_date'+traveller)">
                                               Please enter passport issue date</mat-error>
@@ -2609,7 +2575,6 @@
                                       </div>
                                     </div>
 
-                                    <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <div>
                                             <mat-form-field appearance="outline" class="w-100">
@@ -2621,14 +2586,13 @@
                                                 </mat-select>
                                                
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_passport_issuing_country'+traveller]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_passport_issuing_country'+traveller)">
                                                   Select passport issuing country</mat-error>
                                               </span>
                                         </div>
                                       </div>
-
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <div>
@@ -2641,16 +2605,14 @@
                                                 </mat-select>
                                                 
                                               </mat-form-field>
-                                              <span>
+                                              <span *ngIf="submitted && passengerForm.controls['child_pax_nationality'+traveller]['errors']">
                                                   <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','child_pax_nationality'+traveller)">
                                                   Select nationality</mat-error>
                                               </span>
                                         </div>
                                       </div>
-                                    </div>
 
-                                  </div>
                                 </ng-container>
                               </div>
                             </div>
@@ -2663,9 +2625,8 @@
 
                       <div *ngIf="isMobile">
                         <!-- Mlite Add Traveller Popup -->
-                        <div class=" modal coupon_mlite_popup" id="childTraveller_mlite" tabindex="-1"
-                          aria-labelledby="addTraveller_mlite" aria-hidden="true" data-bs-backdrop="static"
-                          data-bs-keyboard="false">
+                        <div class=" modal coupon_mlite_popup" id="childTraveller_mlite"                   data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="add_new_traveler p-20" *ngIf="childArrayM.length>0 ">
@@ -2755,7 +2716,7 @@
                                               </div>
                                             </div>
                                             <ng-container *ngIf="searchData.travel=='INT'">
-                                              <div class="row">
+
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Number</mat-label>
@@ -2795,7 +2756,6 @@
                                                   </mat-form-field>
                                                 </div>
 
-
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Issue Date</mat-label>
@@ -2812,7 +2772,6 @@
                                                   </mat-form-field>
                                                 </div>
 
-                                                <div class="row">
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
                                                       <mat-label>Passport Issuing Country</mat-label>
@@ -2829,7 +2788,6 @@
                                                     </mat-form-field>
                                                   </div>
 
-
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
                                                       <mat-label>PAX Nationality</mat-label>
@@ -2844,9 +2802,7 @@
                                                         Select nationality</mat-error>
                                                     </mat-form-field>
                                                   </div>
-                                                </div>
 
-                                              </div>
                                             </ng-container>
                                             <div> <button class="btn btn-primary w-100"
                                                 (click)="validateMliteForm('child',traveller)">Add</button> </div>
@@ -2955,12 +2911,13 @@
                                           <mat-option value="Mstr"> Mstr </mat-option>
                                           <mat-option value="Miss">Miss</mat-option>
                                         </mat-select>
-
-                                        <mat-error class="error_flight"
-                                          *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">
-                                          Select title</mat-error>
-
                                       </mat-form-field>
+
+                                      <span *ngIf="submitted && passengerForm.controls['infant_title'+saveInfantTravellerId[passenger.id]]['errors']">
+                                        <mat-error class="error_flight"
+                                        *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">
+                                        Select title</mat-error>
+                                      </span>
                                     </div>
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
@@ -2968,6 +2925,9 @@
                                         <mat-label>First Name</mat-label>
                                         <input matInput placeholder="First Name" name="infant_first_name"
                                           formControlName="infant_first_name{{ saveInfantTravellerId[passenger.id] }}">
+                                        
+                                      </mat-form-field>
+                                      <span *ngIf="submitted && passengerForm.controls['infant_first_name'+saveInfantTravellerId[passenger.id]]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
@@ -2980,13 +2940,16 @@
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('maxlength','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
-                                      </mat-form-field>
+                                      </span>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Last Name</mat-label>
                                         <input matInput placeholder="Last Name"
                                           formControlName="infant_last_name{{ saveInfantTravellerId[passenger.id] }}">
+                                        
+                                      </mat-form-field>
+                                      <span *ngIf="submitted && passengerForm.controls['infant_last_name'+saveInfantTravellerId[passenger.id]]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter first name</mat-error>
@@ -2999,7 +2962,7 @@
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('maxlength','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                           Please enter maximum 26 character</mat-error>
-                                      </mat-form-field>
+                                      </span>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6">
                                       <div class="form-group">
@@ -3009,24 +2972,31 @@
                                             formControlName="infant_dob{{ saveInfantTravellerId[passenger.id] }}"
                                             placeholder="Date Of Birth" name="dateOfBirth">
 
+                                          
+                                        </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls['infant_dob'+saveInfantTravellerId[passenger.id]]['errors']">
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">
                                             Please enter dob</mat-error>
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+saveChildTravellerId[passenger.id])">
                                             Infant age should be between 0 - 2 years.</mat-error>
-                                        </mat-form-field>
+                                        </span>
                                       </div>
                                     </div>
 
                                     <ng-container *ngIf="searchData.travel=='INT'">
-                                      <div class="row">
+
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Passport Number</mat-label>
                                             <input matInput
                                               formControlName="infant_passport_num{{ saveInfantTravellerId[passenger.id] }}"
                                               placeholder="Passport Number" name="PassportNumber">
+                                            
+                                          </mat-form-field>
+
+                                          <span *ngIf="submitted && passengerForm.controls['infant_passport_num'+saveInfantTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport number</mat-error>
@@ -3042,8 +3012,7 @@
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                               This field must contain only letters</mat-error>
-
-                                          </mat-form-field>
+                                          </span>
 
                                         </div>
 
@@ -3053,15 +3022,17 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="infant_passport_expiry_date{{ saveInfantTravellerId[passenger.id] }}"
                                               placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                            
+                                          </mat-form-field>
+                                          <span *ngIf="submitted && passengerForm.controls['infant_passport_expiry_date'+saveInfantTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                               Please enter passport issue date</mat-error>
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                               Please enter a valid expiry date</mat-error>
-                                          </mat-form-field>
+                                          </span>
                                         </div>
-
 
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                           <mat-form-field appearance="outline" class="w-100">
@@ -3069,16 +3040,18 @@
                                             <input matInput [inputMask]="dateInputMask"
                                               formControlName="infant_passport_issue_date{{ saveInfantTravellerId[passenger.id] }}"
                                               placeholder="Passport Issue Date" name="PassportIssueDate">
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
-                                              Please enter passport issue date</mat-error>
-                                            <mat-error class="error_flight"
-                                              *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
-                                              Please enter a valid issued date.</mat-error>
+                                            
                                           </mat-form-field>
+                                          <span *ngIf="submitted && passengerForm.controls['infant_passport_issue_date'+saveInfantTravellerId[passenger.id]]['errors']">
+                                            <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                            Please enter passport issue date</mat-error>
+                                          <mat-error class="error_flight"
+                                            *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                            Please enter a valid issued date.</mat-error>
+                                          </span>
                                         </div>
 
-                                        <div class="row">
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Issuing Country</mat-label>
@@ -3088,12 +3061,14 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
                                               </mat-select>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+saveInfantTravellerId[passenger.id])">
-                                                Select passport issuing country</mat-error>
+                                              
                                             </mat-form-field>
+                                            <span *ngIf="submitted && passengerForm.controls['infant_passport_issuing_country'+saveInfantTravellerId[passenger.id]]['errors']">
+                                              <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+saveInfantTravellerId[passenger.id])">
+                                              Select passport issuing country</mat-error>
+                                            </span>
                                           </div>
-
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
@@ -3104,14 +3079,15 @@
                                                 <mat-option *ngFor="let country of countryJson;"
                                                   value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
                                               </mat-select>
+                                              
+                                            </mat-form-field>
+                                            <span *ngIf="submitted && passengerForm.controls['infant_pax_nationality'+saveInfantTravellerId[passenger.id]]['errors']">
                                               <mat-error class="error_flight"
                                                 *ngIf="passengerForm.hasError('required','infant_pax_nationality'+saveInfantTravellerId[passenger.id])">
                                                 Select nationality</mat-error>
-                                            </mat-form-field>
+                                            </span>
                                           </div>
-                                        </div>
 
-                                      </div>
                                     </ng-container>
 
                                   </div>
@@ -3157,11 +3133,13 @@
                                             <mat-option value="Miss">Miss</mat-option>
                                           </mat-select>
 
+                                        </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls['infant_title'+saveInfantTravellerId[passenger.id]]['errors']">
+                                          
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','infant_title'+saveInfantTravellerId[passenger.id])">
                                             Select title</mat-error>
-
-                                        </mat-form-field>
+                                        </span>
                                       </div>
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
@@ -3169,6 +3147,9 @@
                                           <mat-label>First Name</mat-label>
                                           <input matInput placeholder="First Name" name="infant_first_name"
                                             formControlName="infant_first_name{{ saveInfantTravellerId[passenger.id] }}">
+                                        </mat-form-field>
+
+                                        <span *ngIf="submitted && passengerForm.controls['infant_first_name'+saveInfantTravellerId[passenger.id]]['errors']">
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                             Please enter first name</mat-error>
@@ -3181,13 +3162,16 @@
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('maxlength','infant_first_name'+saveInfantTravellerId[passenger.id])">
                                             Please enter maximum 26 character</mat-error>
-                                        </mat-form-field>
+                                        </span>
                                       </div>
                                       <div class="col-xl-3 col-lg-3 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>Last Name</mat-label>
                                           <input matInput placeholder="Last Name"
                                             formControlName="infant_last_name{{ saveInfantTravellerId[passenger.id] }}">
+                                          
+                                        </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls['infant_last_name'+saveInfantTravellerId[passenger.id]]['errors']">
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                             Please enter first name</mat-error>
@@ -3200,7 +3184,7 @@
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('maxlength','infant_last_name'+saveInfantTravellerId[passenger.id])">
                                             Please enter maximum 26 character</mat-error>
-                                        </mat-form-field>
+                                        </span>
                                       </div>
                                       <div class="col-xl-3 col-lg-3 col-md-6">
                                         <div class="form-group">
@@ -3210,24 +3194,30 @@
                                               formControlName="infant_dob{{ saveInfantTravellerId[passenger.id] }}"
                                               placeholder="Date Of Birth" name="dateOfBirth">
 
+                                            
+                                          </mat-form-field>
+                                          <span *ngIf="submitted && passengerForm.controls['infant_dob'+saveInfantTravellerId[passenger.id]]['errors']">
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('required','infant_dob'+saveInfantTravellerId[passenger.id])">
                                               Please enter dob</mat-error>
                                             <mat-error class="error_flight"
                                               *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+saveChildTravellerId[passenger.id])">
                                               Infant age should be between 0 - 2 years.</mat-error>
-                                          </mat-form-field>
+                                          </span>
                                         </div>
                                       </div>
 
                                       <ng-container *ngIf="searchData.travel=='INT'">
-                                        <div class="row">
+
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
                                               <mat-label>Passport Number</mat-label>
                                               <input matInput
                                                 formControlName="infant_passport_num{{ saveInfantTravellerId[passenger.id] }}"
                                                 placeholder="Passport Number" name="PassportNumber">
+                                              
+                                            </mat-form-field>
+                                            <span *ngIf="submitted && passengerForm.controls['infant_passport_num'+saveInfantTravellerId[passenger.id]]['errors']">
                                               <mat-error class="error_flight"
                                                 *ngIf="passengerForm.hasError('required','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                                 Please enter passport number</mat-error>
@@ -3243,7 +3233,7 @@
                                               <mat-error class="error_flight"
                                                 *ngIf="passengerForm.hasError('pattern','infant_passport_num'+saveInfantTravellerId[passenger.id])">
                                                 This field must contain only letters</mat-error>
-                                            </mat-form-field>
+                                            </span>
 
                                           </div>
 
@@ -3253,15 +3243,17 @@
                                               <input matInput [inputMask]="dateInputMask"
                                                 formControlName="infant_passport_expiry_date{{ saveInfantTravellerId[passenger.id] }}"
                                                 placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                              
+                                            </mat-form-field>
+                                            <span *ngIf="submitted && passengerForm.controls['infant_passport_expiry_date'+saveInfantTravellerId[passenger.id]]['errors']">
                                               <mat-error class="error_flight"
                                                 *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                                 Please enter passport issue date</mat-error>
                                               <mat-error class="error_flight"
                                                 *ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+saveInfantTravellerId[passenger.id])">
                                                 Please enter a valid expiry date</mat-error>
-                                            </mat-form-field>
+                                            </span>
                                           </div>
-
 
                                           <div class="col-xl-4 col-lg-4 col-md-6">
                                             <mat-form-field appearance="outline" class="w-100">
@@ -3269,16 +3261,18 @@
                                               <input matInput [inputMask]="dateInputMask"
                                                 formControlName="infant_passport_issue_date{{ saveInfantTravellerId[passenger.id] }}"
                                                 placeholder="Passport Issue Date" name="PassportIssueDate">
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
-                                                Please enter passport issue date</mat-error>
-                                              <mat-error class="error_flight"
-                                                *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
-                                                Please enter a valid issued date.</mat-error>
+                                              
                                             </mat-form-field>
+                                            <span *ngIf="submitted && passengerForm.controls['infant_passport_issue_date'+saveInfantTravellerId[passenger.id]]['errors']">
+                                              <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                              Please enter passport issue date</mat-error>
+                                            <mat-error class="error_flight"
+                                              *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+saveInfantTravellerId[passenger.id])">
+                                              Please enter a valid issued date.</mat-error>
+                                            </span>
                                           </div>
 
-                                          <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>Passport Issuing Country</mat-label>
@@ -3288,12 +3282,14 @@
                                                   <mat-option *ngFor="let country of countryJson;"
                                                     value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
                                                 </mat-select>
+                                                
+                                              </mat-form-field>
+                                              <span *ngIf="submitted && passengerForm.controls['infant_passport_issuing_country'+saveInfantTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
                                                   *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+saveInfantTravellerId[passenger.id])">
                                                   Select passport issuing country</mat-error>
-                                              </mat-form-field>
+                                              </span>
                                             </div>
-
 
                                             <div class="col-xl-4 col-lg-4 col-md-6">
                                               <mat-form-field appearance="outline" class="w-100">
@@ -3304,14 +3300,15 @@
                                                   <mat-option *ngFor="let country of countryJson;"
                                                     value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
                                                 </mat-select>
-                                                <mat-error class="error_flight"
-                                                  *ngIf="passengerForm.hasError('required','infant_pax_nationality'+saveInfantTravellerId[passenger.id])">
-                                                  Select nationality</mat-error>
+                                                
                                               </mat-form-field>
+                                              <span *ngIf="submitted && passengerForm.controls['infant_pax_nationality'+saveInfantTravellerId[passenger.id]]['errors']">
+                                                <mat-error class="error_flight"
+                                                *ngIf="passengerForm.hasError('required','infant_pax_nationality'+saveInfantTravellerId[passenger.id])">
+                                                Select nationality</mat-error>
+                                              </span>
                                             </div>
-                                          </div>
 
-                                        </div>
                                       </ng-container>
 
                                     </div>
@@ -3351,10 +3348,13 @@
                                       <mat-option value="Mstr"> Mstr </mat-option>
                                       <mat-option value="Miss">Miss</mat-option>
                                     </mat-select>
+                                    
+                                  </mat-form-field>
+                                  <span *ngIf="submitted && passengerForm.controls['infant_title'+traveller]['errors']">
                                     <mat-error class="error_flight"
                                       *ngIf="passengerForm.hasError('required','infant_title'+traveller)">
                                       Select title</mat-error>
-                                  </mat-form-field>
+                                  </span>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-6">
@@ -3362,6 +3362,9 @@
                                     <mat-label>First Name</mat-label>
                                     <input matInput placeholder="First Name" name="infant_first_name"
                                       formControlName="infant_first_name{{ traveller }}">
+                                    
+                                  </mat-form-field>
+                                  <span *ngIf="submitted && passengerForm.controls['infant_first_name'+traveller]['errors']">
                                     <mat-error class="error_flight"
                                       *ngIf="passengerForm.hasError('required','infant_first_name'+traveller)">
                                       Please enter first name</mat-error>
@@ -3374,7 +3377,7 @@
                                     <mat-error class="error_flight"
                                       *ngIf="passengerForm.hasError('maxlength','infant_first_name'+traveller)">Please
                                       enter maximum 26 character</mat-error>
-                                  </mat-form-field>
+                                  </span>
 
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
@@ -3382,6 +3385,10 @@
                                     <mat-label>Last Name</mat-label>
                                     <input matInput placeholder="Last Name"
                                       formControlName="infant_last_name{{ traveller }}">
+                                    
+
+                                  </mat-form-field>
+                                  <span *ngIf="submitted && passengerForm.controls['infant_last_name'+traveller]['errors']">
                                     <mat-error class="error_flight"
                                       *ngIf="passengerForm.hasError('required','infant_last_name'+traveller)">
                                       Please enter first name</mat-error>
@@ -3394,8 +3401,7 @@
                                     <mat-error class="error_flight"
                                       *ngIf="passengerForm.hasError('maxlength','infant_last_name'+traveller)">
                                       Please enter maximum 26 character</mat-error>
-
-                                  </mat-form-field>
+                                  </span>
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-6">
                                   <div class="form-group">
@@ -3404,23 +3410,27 @@
                                       <input matInput [inputMask]="dateInputMask"
                                         formControlName="infant_dob{{ traveller }}" placeholder="Date Of Birth"
                                         name="dateOfBirth">
-
+                                    </mat-form-field>
+                                    <span *ngIf="submitted && passengerForm.controls['infant_dob'+traveller]['errors']">
                                       <mat-error class="error_flight"
                                         *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">
                                         Please enter dob</mat-error>
                                       <mat-error class="error_flight"
                                         *ngIf="passengerForm.hasError('validateInfantAge','infant_dob'+traveller)">
                                         Infant age should be between 0 - 2 years.</mat-error>
-                                    </mat-form-field>
+                                    </span>
                                   </div>
                                 </div>
                                 <ng-container *ngIf="searchData.travel=='INT'">
-                                  <div class="row">
+
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Passport Number</mat-label>
                                         <input matInput formControlName="infant_passport_num{{ traveller }}"
                                           placeholder="Passport Number" name="PassportNumber">
+                                        
+                                      </mat-form-field>
+                                      <span *ngIf="submitted && passengerForm.controls['infant_passport_num'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','infant_passport_num'+traveller)">
                                           Please enter passport number</mat-error>
@@ -3436,7 +3446,7 @@
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('pattern','infant_passport_num'+traveller)">
                                           This field must contain only letters</mat-error>
-                                      </mat-form-field>
+                                      </span>
 
                                     </div>
 
@@ -3446,15 +3456,17 @@
                                         <input matInput [inputMask]="dateInputMask"
                                           formControlName="infant_passport_expiry_date{{ traveller }}"
                                           placeholder="Passport Expiry Date" name="PassportExpiryDate">
+                                        
+                                      </mat-form-field>
+                                      <span *ngIf="submitted && passengerForm.controls['infant_passport_expiry_date'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','infant_passport_expiry_date'+traveller)">
                                           Please enter passport issue date</mat-error>
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('validatePassportExp','infant_passport_expiry_date'+traveller)">
                                           Please enter a valid expiry date</mat-error>
-                                      </mat-form-field>
+                                      </span>
                                     </div>
-
 
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
@@ -3462,16 +3474,18 @@
                                         <input matInput [inputMask]="dateInputMask"
                                           formControlName="infant_passport_issue_date{{ traveller }}"
                                           placeholder="Passport Issue Date" name="PassportIssueDate">
+                                        
+                                      </mat-form-field>
+                                      <span *ngIf="submitted && passengerForm.controls['infant_passport_issue_date'+traveller]['errors']">
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('required','infant_passport_issue_date'+traveller)">
                                           Please enter passport issue date</mat-error>
                                         <mat-error class="error_flight"
                                           *ngIf="passengerForm.hasError('validatePassportIssue','infant_passport_issue_date'+traveller)">
                                           Please enter a valid issued date.</mat-error>
-                                      </mat-form-field>
+                                      </span>
                                     </div>
 
-                                    <div class="row">
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>Passport Issuing Country</mat-label>
@@ -3480,12 +3494,14 @@
                                             <mat-option *ngFor="let country of countryJson;"
                                               value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
                                           </mat-select>
+                                          
+                                        </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls['infant_passport_issuing_country'+traveller]['errors']">
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','infant_passport_issuing_country'+traveller)">
                                             Select passport issuing country</mat-error>
-                                        </mat-form-field>
+                                        </span>
                                       </div>
-
 
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
@@ -3495,14 +3511,15 @@
                                             <mat-option *ngFor="let country of countryJson;"
                                               value="{{ country.countryCode }}"> {{ country.country }} </mat-option>
                                           </mat-select>
+                                          
+                                        </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls['infant_pax_nationality'+traveller]['errors']">
                                           <mat-error class="error_flight"
                                             *ngIf="passengerForm.hasError('required','infant_pax_nationality'+traveller)">
                                             Select nationality</mat-error>
-                                        </mat-form-field>
+                                        </span>
                                       </div>
-                                    </div>
 
-                                  </div>
                                 </ng-container>
 
 
@@ -3515,9 +3532,8 @@
 
                       <div *ngIf="isMobile">
                         <!-- Mlite Add Traveller Popup -->
-                        <div class=" modal coupon_mlite_popup" id="infantTraveller_mlite" tabindex="-1"
-                          aria-labelledby="addTraveller_mlite" aria-hidden="true" data-bs-backdrop="static"
-                          data-bs-keyboard="false">
+                        <div class=" modal coupon_mlite_popup" id="infantTraveller_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="add_new_traveler p-20" *ngIf="infantArrayM.length>0 ">
@@ -3606,7 +3622,7 @@
                                               </div>
                                             </div>
                                             <ng-container *ngIf="searchData.travel=='INT'">
-                                              <div class="row">
+
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Number</mat-label>
@@ -3646,7 +3662,6 @@
                                                   </mat-form-field>
                                                 </div>
 
-
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                   <mat-form-field appearance="outline" class="w-100">
                                                     <mat-label>Passport Issue Date</mat-label>
@@ -3662,7 +3677,6 @@
                                                   </mat-form-field>
                                                 </div>
 
-                                                <div class="row">
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
                                                       <mat-label>Passport Issuing Country</mat-label>
@@ -3679,7 +3693,6 @@
                                                     </mat-form-field>
                                                   </div>
 
-
                                                   <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <mat-form-field appearance="outline" class="w-100">
                                                       <mat-label>PAX Nationality</mat-label>
@@ -3694,9 +3707,7 @@
                                                         Select nationality</mat-error>
                                                     </mat-form-field>
                                                   </div>
-                                                </div>
 
-                                              </div>
                                             </ng-container>
 
                                             <div> <button class="btn btn-primary w-100"
@@ -3921,10 +3932,16 @@
                       </mat-error>
                     </mat-form-field>
 
+                    <!-- <span *ngIf="submitted && passengerForm.controls[gstNumber]['errors']">
+                      <mat-error class="error_flight"
+                        *ngIf="passengerForm.hasError('required','infant_pax_nationality'+traveller)">
+                        Select nationality</mat-error>
+                    </span> -->
+
                   </div>
                 </div>
 
-                <div class="row" *ngIf="gstSelected">
+                <div class="row" *ngIf="gstSelected" >
                   <div class="col-lg-4 col-md-4 col-6">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Business Name</mat-label>
@@ -3986,7 +4003,7 @@
                       <mat-label>State</mat-label>
                       <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
                         (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
-                        readonly="stateCheck" value={{ state }}>
+                        readonly="stateCheck" value="{{ state }}">
                       <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstState')">Please enter
                         state name.
                       </mat-error>
@@ -5989,7 +6006,7 @@
 
                                 <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p>Adult(s) </p>
+                                    <p>{{ AdtQuantity }} X Adult(s) </p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ AdtBaseFare | number }}</p>
@@ -5998,7 +6015,7 @@
 
                                 <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p> Children)</p>
+                                    <p> {{ ChildQuantity }} X Children</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ ChildBaseFare | number }}</p>
@@ -6007,7 +6024,7 @@
 
                                 <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p> Infant </p>
+                                    <p> {{ InfantQuantity }} X Infant </p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ InfantBaseFare | number }}</p>
@@ -6063,10 +6080,10 @@
                     <li class="fare-list-item">
                       <div class="fare-list-box">
                         <div class="fare-list-left">
-                          <p>
+                          <div>
 
                             Taxes and Fees
-                          </p>
+                          </div>
                         </div>
                         <div class="fare-list-right">
                           <p>&#8377; {{ (totalCollectibleAmountFromPartnerResponse-BaseFare)-partnerConvFee |number }}
@@ -6083,12 +6100,12 @@
                           aria-controls="baggageSeat-collpase" (click)="isCollapseShow('vas')">
 
 
-                          <p>
+                          <div>
                             <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt="" *ngIf="!isCollapseVas">
 
                             <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt="" *ngIf="isCollapseVas">
                             Baggage/Seat/Meals
-                          </p>
+                          </div>
                         </div>
                         <div class="fare-list-right">
                           <p>&#8377; {{ vas_amount }}</p>
@@ -6140,12 +6157,24 @@
                     <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
                       <div class="fare-list-box">
                         <div class="fare-list-left">
-                          <p>
+                          <div>
                             {{ selectedOnwardVendor.partnerName }} Convenience Fee
-                          </p>
+                          </div>
                         </div>
                         <div class="fare-list-right">
                           <p>&#8377; {{ partnerConvFee |number }}</p>
+                        </div>
+                      </div>
+                    </li>
+                      <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <p>
+                            Voucher Amount
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>&#8377; {{ voucher_amount |number }}</p>
                         </div>
                       </div>
                     </li>
@@ -6415,7 +6444,7 @@
                   *ngIf="steps==3">Continue</a>
                 <a href="javascript:void(0);" class="button-style btn_pay" (click)="continueReviewBooking()"
                   *ngIf="steps==4">Continue</a>
-               <a href="javascript:void(0);" class="button-style btn_pay" (click)="continuePayment()"
+               <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()"
                   *ngIf="steps==5">Pay now</a>
               </div>
             </div>
@@ -6426,8 +6455,8 @@
   </div>
 
   <!-- Mlite Apply Coupon Popup -->
-  <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-    aria-hidden="true" *ngIf="steps==5 && isMobile">
+  <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==5 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -6443,17 +6472,13 @@
             (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
           </app-coupons>
         </div>
-        <!-- <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
       </div>
     </div>
   </div>
 
   <!-- Mlite Fare Summary Popup -->
-  <div class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel"
-    aria-hidden="true">
+  <div class="modal coupon_mlite_popup" id="fareSummary_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header pb-0">
@@ -6497,7 +6522,7 @@
 
                           <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p>Adult(s) </p>
+                              <p>{{ AdtQuantity }} X Adult(s) </p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ AdtBaseFare  | number }}</p>
@@ -6506,7 +6531,7 @@
 
                           <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Children)</p>
+                              <p> {{ ChildQuantity }} X Children</p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ ChildBaseFare | number }}</p>
@@ -6515,7 +6540,7 @@
 
                           <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Infant </p>
+                              <p>{{ InfantQuantity }} X Infant </p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ InfantBaseFare   | number }}</p>
@@ -6572,10 +6597,9 @@
               <li class="fare-list-item">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <p>
-
+                    <div>
                       Taxes and Fees
-                    </p>
+                    </div>
                   </div>
                   <div class="fare-list-right">
                     <p>&#8377; {{ Tax |number }}</p>
@@ -6586,9 +6610,9 @@
               <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <p>
+                    <div>
                       {{ selectedOnwardVendor.partnerName }} Convenience Fee
-                    </p>
+                    </div>
                   </div>
                   <div class="fare-list-right">
                     <p>&#8377; {{ partnerConvFee |number }}</p>

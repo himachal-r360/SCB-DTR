@@ -138,24 +138,33 @@ export class PayService {
   }
 }
   getcustomercardpoint(param){
-
+    if(LOCALJSON=='true'){
+    return this.http.get('assets/data/availablepoints.json').pipe(map((response:any) => response));
+  }else{
     return this.http.post(this.endpoint+'getcustomercardpoint_angular', param, config).pipe(map((response:any) => response));
-  
+  }
 }
   generateVoucherOtp(param){
-    
-  // if(LOCALJSON=='true'){
-  //   return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
-  // }else{
+   if(LOCALJSON=='true'){
+     return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
+   }else{
     return this.http.post(this.endpoint+'generateVoucherOtp', param, config).pipe(map((response:any) => response));
-  // }
+   }
 }
 otp_validation(param){
     
   // if(LOCALJSON=='true'){
   //   return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
   // }else{
-    return this.http.post(this.endpoint+'generateVoucherOtp', param, config).pipe(map((response:any) => response));
+    return this.http.post(this.endpoint+'otpvalidate', param, config).pipe(map((response:any) => response));
+  // }
+}
+otp_validation_addcard(param){
+    
+  // if(LOCALJSON=='true'){
+  //   return this.http.get('assets/data/generateOtp.json').pipe(map((response:any) => response));
+  // }else{
+    return this.http.post(this.endpoint+'otp_validation_addCard', param, config).pipe(map((response:any) => response));
   // }
 }
 
