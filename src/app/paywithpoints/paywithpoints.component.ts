@@ -407,26 +407,26 @@ otperrormsg :any;
           this.addcardDiv=false; 
           this.voucherCodedetails=false;
           this.otperror =false;
-        let URLparams = {
-                "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
-                "last4digit":this.cardaddForm1.controls['last4digit'].value,
-                "mobile": this.cardaddForm1.controls['applymobile'].value,
-                "DOB":this.cardaddForm1.controls['dob'].value,
-                "bin":this.cardaddForm1.controls['first4digit'].value,
-                "services_id":this.serviceId,
-                "partner_id":42,
-                "modal":"DIGITAL",
-                 "total_amount": this.payTotalFare,
-          "ctype": this.ctype,
-          'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-          "_token":this.XSRFTOKEN 
-              }
-      var passData = {
-        postData: this.EncrDecr.set(JSON.stringify(URLparams))
-      };
-      this.pay.voucherRedemption(passData).subscribe(response => {
-        console.log(response);
-      });
+      //   let URLparams = {
+      //           "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+      //           "last4digit":this.cardaddForm1.controls['last4digit'].value,
+      //           "mobile": this.cardaddForm1.controls['applymobile'].value,
+      //           "DOB":this.cardaddForm1.controls['dob'].value,
+      //           "bin":this.cardaddForm1.controls['first4digit'].value,
+      //           "services_id":this.serviceId,
+      //           "partner_id":42,
+      //           "modal":"DIGITAL",
+      //            "total_amount": this.payTotalFare,
+      //     "ctype": this.ctype,
+      //     'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
+      //     "_token":this.XSRFTOKEN 
+      //         }
+      // var passData = {
+      //   postData: this.EncrDecr.set(JSON.stringify(URLparams))
+      // };
+      // this.pay.voucherRedemption(passData).subscribe(response => {
+      //   console.log(response);
+      // });
           
           this.updateAmountToPay('XXXXX',this.AmountRedeemed,this.RemaingAmount);
         }else{
