@@ -64,6 +64,11 @@ const routes: Routes = [
     path: 'flights',
     loadChildren: () => import('./flight/flight.module').then(m => m.FlightModule)
   },
+  {
+
+    path: 'hotels',
+    loadChildren: () => import('./hotel/hotel.module').then(m => m.HotelModule)
+  },
   
 
   {
