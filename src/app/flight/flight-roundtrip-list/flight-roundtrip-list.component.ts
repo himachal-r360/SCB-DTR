@@ -222,19 +222,19 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
     }
   }
-  
+
   toggle(event){
    $("#onwardlist_"+event).prop("checked", true);
-   
+
    if(this.isMobile){
     $('.mob-list-itemsor').removeClass('mob-list-itemsr-selected');
     $('#MobileOnward_'+event).addClass('mob-list-itemsr-selected');
     }
-   
+
   }
     toggleR(event){
    $("#return_roundlist_"+event).prop("checked", true);
-   
+
       if(this.isMobile){
     $('.mob-list-itemsrr').removeClass('mob-list-itemsr-selected');
     $('#MobileReturn_'+event).addClass('mob-list-itemsr-selected');
@@ -385,9 +385,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
          // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
-        
-         
-        
+
+
+
         this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
@@ -395,12 +395,12 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }, (error) => { console.log(error) });
   }
   GetMinAndMaxPriceForFilter() {
-  
+
         let oneway_minPrice=0;
         let oneway_maxPrice=0;
         let return_minPrice=0;
         let return_maxPrice=0;
-  
+
     if (this.flightList.length > 0) {
       oneway_minPrice = this.flightList[0].priceSummary[0].totalFare;
       oneway_maxPrice= this.flightList[0].priceSummary[0].totalFare;
@@ -413,9 +413,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           oneway_maxPrice = temp;
         }
       });
-    } 
-    
-    
+    }
+
+
      if (this.ReturnflightList.length > 0) {
       return_minPrice = this.ReturnflightList[0].priceSummary[0].totalFare;
       return_maxPrice = this.ReturnflightList[0].priceSummary[0].totalFare;
@@ -428,21 +428,21 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           return_maxPrice = temp;
         }
       });
-    } 
-    
+    }
+
     if(oneway_minPrice < return_minPrice){
      this.minPrice = oneway_minPrice;
     }else{
      this.minPrice = return_minPrice;
     }
-    
-    
+
+
     if(oneway_maxPrice < return_maxPrice){
      this.maxPrice = oneway_maxPrice;
     }else{
      this.maxPrice = return_maxPrice;
     }
-    
+
     this.Initslider();
   }
 
@@ -837,7 +837,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         })
 
       }
-      
+
 
       // Airlines Filter
       this.flightList = this.airlineFilterFlights(this.flightList);
@@ -1250,7 +1250,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }
     if (popularItems.name == "non_stop") {
       this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
-      
+
     }
     if(!this.isMobile)
     {
@@ -1572,7 +1572,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }else{
     this.onSelectOnwardSplrt=[];
     }
-    
+
      $('.onwardbuttons').removeClass('button-selected-style');  $('.onwardbuttons').html('Select');
 
 
@@ -1618,7 +1618,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
                 let selectedOnwardDiv = document.getElementById('selectedOnwardDiv_' + flightKey + "_"+ this.selectedFromKey);
         selectedOnwardDiv.classList.add('selected-flight-background');
         }
-        
+
       }
       var onwardSelectedFlight = {flightKey:flightKey,flights:flights,priceSummery:item};
     this.onwardSelectedFlight = onwardSelectedFlight;
@@ -1872,8 +1872,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         selected.classList.add('button-selected-style')
         selected.innerHTML = 'Selected'
 
-        
-        
+
+
                 if(this.isMobile){
         $('.mob-items-book-list-itemsr').removeClass('mob-list-itemsr-selected-dark');
          $('#mob-items-book-list-itemsr_'+flightKey+'_'+item.partnerName).addClass('mob-list-itemsr-selected-dark');
@@ -1881,7 +1881,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
               let selectedReturnDiv =  document.getElementById('selectedReturnDiv_'+flightKey + "_" + this.retrunFlightKey)
         selectedReturnDiv.classList.add('selected-flight-background-return');
         }
-        
+
       }
 
         this.isDisplayDetail = true;

@@ -360,9 +360,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   applySortingMobile() {
-  
+
     let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("noscroll"); 
+    body.classList.remove("noscroll");
     let sortingBtn = document.getElementById('sortMobileFilter');
     if(sortingBtn)
     {
@@ -558,7 +558,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           })
         }
       })
-      
+
 
       //Ascending Descending Order
       this.priceSortingFilteritems.filter((item: any) => {
@@ -635,8 +635,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
 
       });
-      
-      
+
+
     }
 
     // Airlines Filter
@@ -1344,7 +1344,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   {
       $('.mob-list-items').removeClass('mob-items-book-list-selected');
       $('#flight_listitem_'+i).addClass('mob-items-book-list-selected');
-  
+
         $(".mob-items-book-list").css('display','none')
         var SelectedElement = document.getElementById('CompareToFly_'+i);
         if(SelectedElement)
@@ -1364,7 +1364,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   openMobileFilterSection()
   {
       let body = document.getElementsByTagName('body')[0];
-  body.classList.add("noscroll"); 
+  body.classList.add("noscroll");
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1376,7 +1376,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   CloseSortingSection()
   {
       let body = document.getElementsByTagName('body')[0];
-  body.classList.remove("noscroll"); 
+  body.classList.remove("noscroll");
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1385,7 +1385,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   onApplyFilter(){
       let body = document.getElementsByTagName('body')[0];
-  body.classList.remove("noscroll"); 
+  body.classList.remove("noscroll");
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
