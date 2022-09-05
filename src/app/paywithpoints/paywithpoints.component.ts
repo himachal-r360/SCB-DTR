@@ -279,9 +279,10 @@ otperrormsg :any;
       "_token":this.customerInfo["XSRF-TOKEN"],
       "DOB":this.carddob,
       "savecard":1,
+      "services_id": this.serviceId,
       "user_id":this.sg["customerInfo"]["id"],
     }
-
+      this.otp_verify=true;
       this.otpGenerate(URLparams);
    
   }    
@@ -296,7 +297,7 @@ otperrormsg :any;
           this.voucherOtp = true;
           this.voucheraddform=false; 
           this.voucherslider = false;
-          this.otp_verify=true;
+    
         }else{
           this.addCardCancel(); 
           this.voucherOtp = false;
@@ -371,7 +372,11 @@ otperrormsg :any;
               if(resp.otp_status==true){
                 this.addCardCancel();
                 this.otperror=false; 
-                this.getCustomerCards();
+                this.cards = resp.carddetails;
+                this.selectedCardDetails = this.cards[0];
+                this.checkAvailablePointsforSavedCard();
+              //  var res=this.getCustomerCards();
+                //console.log(res);
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
                 this.otperror = true;
