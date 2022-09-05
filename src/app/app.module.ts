@@ -36,6 +36,8 @@ import { FilterModule } from './bus/filter/filter.module';
 import { TrainModule } from './train/train.module';
 import { TrainsTravellerModule } from './train/trains-traveller/travellers.module';
 import { IrctcregModule } from './train/trains/irctcreg/irctcreg.module';
+import { HotelModule } from './hotel/hotel.module';
+import { HotelSearchModule } from './hotel/hotel-search/hotel-search.module';
 
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
@@ -54,7 +56,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     BrowserAnimationsModule,
     AppRoutingModule,
     FlightModule,BusModule,ListModule,FilterModule,BusSearchModule,TrainSearchModule,
-    TrainModule,TrainsTravellerModule,IrctcregModule,
+    TrainModule,TrainsTravellerModule,IrctcregModule,HotelModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -64,7 +66,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     }),
     HeaderModule,FooterModule,CountdownModule,MatDialogModule,
     MaterialModule,DirectiveModule,PartnersModule,HomeModule,FlightSearchModule,BusSearchModule,TrainSearchModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule,HotelSearchModule,
     MaterialModule,
     DirectiveModule,
     CarouselModule,RegaliaGoldModule,
