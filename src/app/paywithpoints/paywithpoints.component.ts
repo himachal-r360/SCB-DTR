@@ -282,6 +282,7 @@ otperrormsg :any;
       "services_id": this.serviceId,
         "bin":this.cardbin,
       "clientToken":this.sg['domainName'].toUpperCase(),
+      "total_amount": this.payTotalFare,
       "user_id":this.sg["customerInfo"]["id"],
     }
       this.otp_verify=true;
@@ -334,7 +335,8 @@ otperrormsg :any;
              "clientToken":this.sg['domainName'].toUpperCase(),
              "total_amount": this.payTotalFare,
             "passwordValue":this.Formotpvalidate.controls['otp'].value,
-            "_token":this.customerInfo["XSRF-TOKEN"]
+            "_token":this.customerInfo["XSRF-TOKEN"],
+            'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
           }
           this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
           this.AmountRedeemed =((this.value)*Number(this.points_percentage));
@@ -404,7 +406,27 @@ otperrormsg :any;
           this.voucherDiv=false; 
           this.addcardDiv=false; 
           this.voucherCodedetails=false;
-          this.otperror =false; 
+          this.otperror =false;
+        let URLparams = {
+                "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+                "last4digit":this.cardaddForm1.controls['last4digit'].value,
+                "mobile": this.cardaddForm1.controls['applymobile'].value,
+                "DOB":this.cardaddForm1.controls['dob'].value,
+                "bin":this.cardaddForm1.controls['first4digit'].value,
+                "services_id":this.serviceId,
+                "partner_id":42,
+                "modal":"DIGITAL",
+                 "total_amount": this.payTotalFare,
+          "ctype": this.ctype,
+          'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
+          "_token":this.XSRFTOKEN 
+              }
+      var passData = {
+        postData: this.EncrDecr.set(JSON.stringify(URLparams))
+      };
+      this.pay.voucherRedemption(passData).subscribe(response => {
+        console.log(response);
+      });
           
           this.updateAmountToPay('XXXXX',this.AmountRedeemed,this.RemaingAmount);
         }else{
