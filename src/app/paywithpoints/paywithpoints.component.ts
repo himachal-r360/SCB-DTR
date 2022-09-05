@@ -27,6 +27,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   voucherApplied: boolean=false;
   addcardDiv: boolean=true;
   voucherDiv: boolean=true;
+  otp_verify : boolean=false;
   voucherCodedetails: boolean=true;
   cdnUrl: any;
   @Input() serviceId;
@@ -295,6 +296,7 @@ otperrormsg :any;
           this.voucherOtp = true;
           this.voucheraddform=false; 
           this.voucherslider = false;
+          this.otp_verify=true;
         }else{
           this.addCardCancel(); 
           this.voucherOtp = false;
@@ -313,29 +315,73 @@ otperrormsg :any;
     if (this.Formotpvalidate.status !='VALID') {
       return;
     }else{
-       let URLparams = {
-          "mobile": this.cardmobile,
-          "customer_id": this.sg["customerInfo"]["customerid"],
-          "programName":this.sg['domainName'],
-          "first4digit":this.selectedCardDetails.card.slice(0,4),
-          "last4digit":this.selectedCardDetails.card.slice(-4),
-          "points":this.value,
-          "ORDER_POINTS":this.value,
-          "voucherINRvalue":this.value * this.points_percentage,
-           "DOB":this.carddob,
-           "bin":this.cardbin,
-           "services_id": this.serviceId,
-           "clientToken":this.sg['domainName'].toUpperCase(),
-           "total_amount": this.payTotalFare,
-          "passwordValue":this.Formotpvalidate.controls['otp'].value,
-          "_token":this.customerInfo["XSRF-TOKEN"]
-        }
-        this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
-        this.AmountRedeemed =((this.value)*Number(this.points_percentage));
-        this.RedeemedPoints = this.value;
-      this.otpVerify(URLparams);
+       if(this.otp_verify==true){ 
+         let URLparams = {
+            "mobile": this.cardmobile,
+            "customer_id": this.sg["customerInfo"]["customerid"],
+            "programName":this.sg['domainName'],
+            "first4digit":this.selectedCardDetails.card.slice(0,4),
+            "last4digit":this.selectedCardDetails.card.slice(-4),
+            "points":this.value,
+            "ORDER_POINTS":this.value,
+            "voucherINRvalue":this.value * this.points_percentage,
+             "DOB":this.carddob,
+             "bin":this.cardbin,
+             "services_id": this.serviceId,
+             "clientToken":this.sg['domainName'].toUpperCase(),
+             "total_amount": this.payTotalFare,
+            "passwordValue":this.Formotpvalidate.controls['otp'].value,
+            "_token":this.customerInfo["XSRF-TOKEN"]
+          }
+          this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
+          this.AmountRedeemed =((this.value)*Number(this.points_percentage));
+          this.RedeemedPoints = this.value;
+          this.otpVerify(URLparams);
+       }else{
+              let URLparams = {
+                "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+                "last4digit":this.cardaddForm1.controls['last4digit'].value,
+                "mobile": this.cardaddForm1.controls['applymobile'].value,
+                "DOB":this.cardaddForm1.controls['dob'].value,
+                "type":"available_points",
+                "bin":this.cardaddForm1.controls['first4digit'].value,
+                "clientToken":this.sg['domainName'].toUpperCase(),
+                "services_id":this.serviceId,
+                "partner_id":42,
+                "modal":"DIGITAL",
+                "noopt": 1,
+                "savecard":1,
+                "customer_id": this.sg["customerInfo"]["customerid"],
+                "programName":this.sg['domainName'],
+                "_token":this.customerInfo["XSRF-TOKEN"],
+                "user_id":this.sg["customerInfo"]["id"],
+                "passwordValue":this.Formotpvalidate.controls['otp'].value,
+              }
+              this.otpVerifyAddCard(URLparams);
+       }   
     }
   }
+  otpVerifyAddCard(URLparams:any){
+    console.log('otpVerifyAddCard');
+         var passData = {
+          postData: this.EncrDecr.set(JSON.stringify(URLparams))
+        };
+         this.pay.otp_validation_addcard(passData).subscribe(resp =>{
+            if(typeof resp.opt_status != undefined && resp.otp_status){
+              if(resp.otp_status==true){
+                this.addCardCancel();
+                this.otperror=false; 
+                this.getCustomerCards();
+              }else{ 
+                this.Formotpvalidate.setValue({otp: ''});
+                this.otperror = true;
+                this.otperrormsg = "OTP not matching";
+              }
+            } 
+         }),(err:HttpErrorResponse)=>{
+           alert("Something went wrong, please try again");
+        };
+  }  
   otpVerify(URLparams:any){
          var passData = {
         postData: this.EncrDecr.set(JSON.stringify(URLparams))
@@ -500,15 +546,24 @@ otperrormsg :any;
       return;
     }else{
         let URLparams = {
+           "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+           "last4digit":this.cardaddForm1.controls['last4digit'].value,
            "mobile": this.cardaddForm1.controls['applymobile'].value,
+           "DOB":this.cardaddForm1.controls['dob'].value,
+           "type":"available_points",
+           "bin":this.cardaddForm1.controls['first4digit'].value,
+           "clientToken":this.sg['domainName'].toUpperCase(),
+           "services_id":this.serviceId,
+           "partner_id":42,
+           "modal":"DIGITAL",
+           "noopt": 1,
+           "savecard":1,
            "customer_id": this.sg["customerInfo"]["customerid"],
            "programName":this.sg['domainName'],
-           "last4digit":this.cardaddForm1.controls['last4digit'].value,
            "_token":this.customerInfo["XSRF-TOKEN"],
-           "DOB":this.cardaddForm1.controls['dob'].value,
-           "savecard":1,
            "user_id":this.sg["customerInfo"]["id"],
         }
+        this.otp_verify=false;
        this.otpGenerate(URLparams);
     }
   }
