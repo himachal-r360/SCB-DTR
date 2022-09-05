@@ -763,6 +763,8 @@ export class TravelSearchComponent implements OnInit {
      case 'minus': {
         var a =this.adult_label;
         var b = (a) - 1;
+        
+       if(a> 1){ 
         if (b > 1) {
         this.adult_label=b;
         $(".adult .plus").removeClass('disabled');
@@ -778,6 +780,7 @@ export class TravelSearchComponent implements OnInit {
         }
         this.adult_cnt=this.adult_label;
         this.updatetraveller();
+        }
       break;
       }
      }
