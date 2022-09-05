@@ -280,6 +280,9 @@ otperrormsg :any;
       "DOB":this.carddob,
       "savecard":1,
       "services_id": this.serviceId,
+       "DOB":this.carddob,
+        "bin":this.cardbin,
+      "clientToken":this.sg['domainName'].toUpperCase(),
       "user_id":this.sg["customerInfo"]["id"],
     }
 
