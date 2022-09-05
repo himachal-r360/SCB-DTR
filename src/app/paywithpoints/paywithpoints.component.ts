@@ -282,6 +282,7 @@ otperrormsg :any;
       "services_id": this.serviceId,
         "bin":this.cardbin,
       "clientToken":this.sg['domainName'].toUpperCase(),
+      "total_amount": this.payTotalFare,
       "user_id":this.sg["customerInfo"]["id"],
     }
 
