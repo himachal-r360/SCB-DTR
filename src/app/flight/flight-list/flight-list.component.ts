@@ -360,9 +360,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   applySortingMobile() {
-  
+
     let body = document.getElementsByTagName('body')[0];
-    body.classList.remove("noscroll"); 
+    body.classList.remove("noscroll");
     let sortingBtn = document.getElementById('sortMobileFilter');
     if(sortingBtn)
     {
@@ -558,7 +558,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           })
         }
       })
-      
+
 
       //Ascending Descending Order
       this.priceSortingFilteritems.filter((item: any) => {
@@ -569,10 +569,57 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
         else if (item.name == 'D_Short' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => a.flights[0].duration - b.flights[0].duration);
+        
+        this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDuration>totalOnwardDurationB? 1: -1;  
+       
+        });
+        
+        
         }
         else if (item.name == 'D_Long' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
+                this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDurationB>totalOnwardDuration? 1: -1;  
+       
+        });
         }
         else if (item.name == 'D_E' && item.active == true) {
           this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
@@ -588,8 +635,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
 
       });
-      
-      
+
+
     }
 
     // Airlines Filter
@@ -1297,7 +1344,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   {
       $('.mob-list-items').removeClass('mob-items-book-list-selected');
       $('#flight_listitem_'+i).addClass('mob-items-book-list-selected');
-  
+
         $(".mob-items-book-list").css('display','none')
         var SelectedElement = document.getElementById('CompareToFly_'+i);
         if(SelectedElement)
@@ -1317,7 +1364,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   openMobileFilterSection()
   {
       let body = document.getElementsByTagName('body')[0];
-  body.classList.add("noscroll"); 
+  body.classList.add("noscroll");
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1329,7 +1376,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   CloseSortingSection()
   {
       let body = document.getElementsByTagName('body')[0];
-  body.classList.remove("noscroll"); 
+  body.classList.remove("noscroll");
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {
@@ -1338,7 +1385,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   onApplyFilter(){
       let body = document.getElementsByTagName('body')[0];
-  body.classList.remove("noscroll"); 
+  body.classList.remove("noscroll");
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {

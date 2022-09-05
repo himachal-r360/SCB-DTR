@@ -297,7 +297,6 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     var flight_PopularItems =this.flight_PopularItems.map(object => ({ ...object }));
     var flight_Timingsitems =this.flight_Timingsitems.map(object => ({ ...object }));
     var stopsFilteritems =this.stopsFilteritems.map(object => ({ ...object }));
-    var priceSortingFilteritems =this.priceSortingFilteritems.map(object => ({ ...object }));
     var airlines =this.airlines.map(object => ({ ...object }));
     var partnerFilterArr =this.partnerFilterArr.map(object => ({ ...object }));
     var layOverFilterArr =this.layOverFilterArr.map(object => ({ ...object }));
@@ -305,7 +304,6 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         flight_PopularItems:  flight_PopularItems,
         flight_Timingsitems:flight_Timingsitems,
         stopsFilteritems:stopsFilteritems,
-        priceSortingFilteritems:priceSortingFilteritems,
         minStopOver:this.minStopOver,
         maxStopOver:this.maxStopOver,
         minPrice:this.minPrice,
@@ -366,7 +364,6 @@ if(this.FilterSectorArray[i] != null && this.FilterSectorArray[i]  != undefined)
   this.flight_PopularItems = this.FilterSectorArray[i].flight_PopularItems;
   this.flight_Timingsitems = this.FilterSectorArray[i].flight_Timingsitems;
   this.stopsFilteritems = this.FilterSectorArray[i].stopsFilteritems;
-  this.priceSortingFilteritems = this.FilterSectorArray[i].priceSortingFilteritems;
   this.minStopOver = this.FilterSectorArray[i].minStopOver;
   this.maxStopOver = this.FilterSectorArray[i].maxStopOver;
   this.minPrice = this.FilterSectorArray[i].minPrice;
@@ -649,10 +646,40 @@ bookingSummary() {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
         else if (item.name == 'D_Short' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => a.flights[0].duration - b.flights[0].duration);
+          var dshort = [];
+          this.flightList.forEach((e: any) => {
+            var flights = e.flights;
+            var totalOnwardDuration = 0;
+            for (let i = 0; i < flights.length; i++) {
+              totalOnwardDuration += flights[i].duration;
+              if (flights[i + 1] != null && flights[i + 1] != undefined) {
+              let obj2Date = new Date(flights[i + 1].departureDateTime);
+              let obj1Date = new Date(flights[i ].arrivalDateTime);
+              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+              }
+            }
+            e.totalOnwardDuration = totalOnwardDuration
+             dshort.push(e);
+          });
+         this.flightList = dshort.sort((a: any, b: any) => a.totalOnwardDuration - b.totalOnwardDuration);
         }
         else if (item.name == 'D_Long' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
+          var dlong = [];
+          this.flightList.forEach((e: any) => {
+            var flights = e.flights;
+            var totalOnwardDuration = 0;
+            for (let i = 0; i < flights.length; i++) {
+              totalOnwardDuration += flights[i].duration;
+              if (flights[i + 1] != null && flights[i + 1] != undefined) {
+              let obj2Date = new Date(flights[i + 1].departureDateTime);
+              let obj1Date = new Date(flights[i ].arrivalDateTime);
+              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+              }
+            }
+            e.totalOnwardDuration = totalOnwardDuration
+            dlong.push(e);
+          });
+          this.flightList = dlong.sort((a: any, b: any) => b.totalOnwardDuration - a.totalOnwardDuration);
         }
         else if (item.name == 'D_E' && item.active == true) {
           this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
