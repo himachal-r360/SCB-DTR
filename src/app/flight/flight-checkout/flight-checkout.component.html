@@ -4939,11 +4939,9 @@
                       </div>
                       <div>
                         <div>
-                          <p class="duration_flight">{{ totalOnwardDuration | durationTime }}</p>
+                          <p class="duration_flight">{{ totalOnwardDurationMulti[searchi] + dateOnwardHourTotalMulti[searchi]| durationTime }}</p>
                                             
-                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights'][0].stops==0">non stop</p>
-                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length ==1 && flightOnwardDetails[searchi]['flights']s[0].stops==1">{{flightOnwardDetails[searchi]['flights'][0].stops}} stop</p>
-                <p class="date_text" *ngIf="flightOnwardDetails[searchi]['flights'].length > 1">{{flightOnwardDetails[searchi]['flights'].length-1}} stop</p>
+                       <p class="date_text">{{ totalOnwardStops_data_multi[searchi] }}</p>
                         </div>
                       </div>
                       <div class="booking-inner-title-right">
@@ -5255,8 +5253,8 @@
                     </div>
                     <div>
                       <div>
-                        <p class="duration_flight">{{ totalOnwardDuration | durationTime }}</p>
-                        <p class="date_text">{{ totalOnwardStops_data }}</p>
+                        <p class="duration_flight"> {{ totalOnwardDurationMulti[searchi] + dateOnwardHourTotalMulti[searchi]| durationTime }}</p>
+                        <p class="date_text"> {{ totalOnwardStops_data_multi[searchi] }}</p>
                       </div>
                     </div>
                   </div>
