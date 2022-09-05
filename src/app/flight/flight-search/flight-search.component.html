@@ -1081,11 +1081,11 @@
                     <div class="add-city-search-box ">
                         <div class="add-city-search-left" *ngIf="multicityFormArr">
                             <a href="javascript:void(0);" class="button-style" (click)="addNewCitySearchInput()"
-                                [ngClass]="multicityFormArr.length > 4 ? 'd-none':''">+ Add another
+                                [ngClass]="multicityFormArr.length > (multiCityAddCount-1) ? 'd-none':''">+ Add another
                                 city</a>
                         </div>
                         <div class="add-city-search-right fs_102">
-                            <p>You can add upto 5 cities in multi-city trip</p>
+                            <p>You can add upto {{multiCityAddCount}} cities in multi-city trip</p>
                         </div>
                     </div>
                 </div>
@@ -1297,9 +1297,9 @@
                 </ng-container>
                 <div class="multicity-add-area mb-3" *ngIf="multicityFormArr">
                     <div class="add-trip-text text-center">
-                        <p>You can add upto 5 cities in multi-city trip</p>
+                        <p>You can add upto {{multiCityAddCount}} cities in multi-city trip</p>
                     </div>
-                    <div (click)="addNewCitySearchInput()" [ngClass]="multicityFormArr.length > 4 ? 'd-none':''" class="button-style w-100">
+                    <div (click)="addNewCitySearchInput()" [ngClass]="multicityFormArr.length > (multiCityAddCount-1) ? 'd-none':''" class="button-style w-100">
                       + Add another
                       city</div>
                 </div>
