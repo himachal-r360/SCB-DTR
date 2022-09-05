@@ -40,7 +40,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   resetMinPrice: number = 0;
   resetMaxPrice: number = 10000;
   minStopOver: number = 0;
-  maxStopOver: number = 24;
+  maxStopOver: number = 96;
   isMobile: boolean = true;
   math = Math;
   minDate = new Date();
@@ -66,7 +66,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   };
   optionsStopOver: Options = {
     floor: 0,
-    ceil: 24,
+    ceil: 96,
     translate: (value: number): string => {
       return '';
     }
@@ -173,6 +173,12 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   ngOnInit(): void {
 
     this.route.url.subscribe(url =>{
+    this.SelectedFlightsOnSector=[];
+     this.searchData=[];
+     this.selectedTripData=[];
+             this.isSelectedSectorFlight = false;
+             this.selectedTrip=0;
+             this.sector=0;
     this.loader = true;
     this.isAllSelected = false;
     this.isLast = false;
@@ -205,6 +211,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   getQueryParamData() {
     const urlParam = this.route.snapshot.queryParams;
     this.searchData = urlParam;
+
     var flightSearchArr = [];
     for (var i = 0; i < 5; i++) // for generating array by object.
     {
@@ -797,6 +804,10 @@ bookingSummary() {
 
   //Filters
   resetAllFilters() {
+       this.toggleStopsFilteritems = [
+    { name: 'All_Flights', active: true, value: 'All Flights' },
+    { name: 'no_stops', active: false, value: 'Non-Stop' },
+    ];
     this.resetPopularFilter();
     this.resetFlightTimingsFilter();
     this.resetPriceFilter();
@@ -837,7 +848,7 @@ bookingSummary() {
   }
   resetStopOverFilter() {
     this.minStopOver = 0;
-    this.maxStopOver = 24;
+    this.maxStopOver = 96;
     this.popularFilterFlightData();
   }
   resetLayOverFilter() {
@@ -1142,8 +1153,7 @@ bookingSummary() {
 
     popularItems.active = !popularItems.active;
     if (popularItems.name == "Morning_Departures") {
-
-      this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
+      this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = true; return item; } })
     }
     if (popularItems.name == "non_stop") {
       this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })

@@ -51,7 +51,7 @@ export class RestapiService {
           this.domainPath="business/";
 	break;
 	case ('regalia_gold'):
-        this.domainName='REGALIA GOLD';
+        this.domainName='REGALIA_GOLD';
           this.domainPath="regalia_gold/";
 	break;
 	default:
@@ -329,7 +329,6 @@ checksavedtravellers(param){
      }else{
      return this.http.post( this.endpoint+'validatePGDataFlight',param, config).pipe(map((response: any) => response));
      } 
-     //return this.http.post( this.endpoint+'validatePGData',param, config).pipe(map((response: any) => response));
   }
    isFlexiPayEligible (param):Observable<any> {
   if(LOCALJSON=='true'){

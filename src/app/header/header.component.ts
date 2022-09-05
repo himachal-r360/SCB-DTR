@@ -460,16 +460,19 @@ export class HeaderComponent implements OnInit {
         this.showSearchBox = true;
         this.topSearch=false;
         this.queryTextSearch = $event;
+        this.searchBarValue = $event;
 
         let searchParam = {
         searchDisplayForm: 'shopping',
         queryText: this.queryTextSearch
         };
          this.es.esSearch(searchParam).subscribe(res => {
-         if( res.hits.hits.length == 0) this.topSearch=true;
-        this.searchResults =res.hits.hits;
+         console.log('f');
+         if( res.hits.hits.length == 0){ 
+         this.topSearch=true;
+         }
+         this.searchResults =res.hits.hits;
          });
-        
 
     }
   enablePushClick(){
