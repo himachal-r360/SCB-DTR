@@ -31,7 +31,7 @@ declare var $: any;
 @Component({
   selector: 'app-flight-list',
   templateUrl: './flight-list.component.html',
-  styleUrls: ['./flight-list.component.css'],
+  styleUrls: ['./flight-list.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
