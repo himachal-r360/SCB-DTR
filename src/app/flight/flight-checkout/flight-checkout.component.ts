@@ -3328,7 +3328,7 @@ console.log(this.passengerForm);
         "customerId": this.REWARD_CUSTOMERID,
         "dateOfBirth": moment(this.passengerForm.controls['infant_dob' + i]['value']).format('DD/MM/YYYY'),
         "emailId": this.passengerForm.controls['passengerMobile']['value'],
-        "firstName":  this.passengerForm.controls['infantfirst_name' + i]['value'].trim(),
+        "firstName":  this.passengerForm.controls['infant_first_name' + i]['value'].trim(),
         "gender": '',
         "id": 0,
         "lastName":  this.passengerForm.controls['infant_last_name' + i]['value'].trim(),
