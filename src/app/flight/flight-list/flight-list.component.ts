@@ -599,6 +599,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     if (this.flightList.length > 0) {
       var start = this.minStopOver;
       var end = this.maxStopOver;
+      if(end >0){
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = e.flights;
@@ -616,6 +617,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
       });
       this.flightList = filteredStopOver;
+      }
     }
 
     //PriceFilter

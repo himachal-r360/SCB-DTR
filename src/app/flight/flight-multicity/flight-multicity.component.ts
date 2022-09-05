@@ -677,6 +677,7 @@ bookingSummary() {
     if (this.flightList.length > 0) {
       var start = this.minStopOver;
       var end = this.maxStopOver;
+        if(end >0){
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = e.flights;
@@ -694,6 +695,7 @@ bookingSummary() {
         }
       });
       this.flightList = filteredStopOver;
+      }
     }
 
     //PriceFilter
