@@ -234,8 +234,9 @@
                                                             <div class="col-md-12 my-3">
                                                                 <div class="row">
                                                                     <div class="col-md-6 col-12">
-                                                                        <mat-form-field class="w-100">
-                                                                            <input matInput placeholder="IRCTC Authorised Partner User ID (Case Sensitive)" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);">
+                                                                        <mat-form-field class="w-100" appearance="outline">
+                                                                            <mat-label>IRCTC Authorised Partner User ID (Case Sensitive)</mat-label>
+                                                                            <input matInput placeholder="" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);">
                                                                         </mat-form-field>
                                                                         <div class="error" *ngIf="userValidError">
                                                                             <small>{{IRCTCUserError}}</small>
@@ -1840,11 +1841,11 @@
                                             <div class="fare-list-box">
                                                 <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
-                                                    <p>
+                                                    <div>
                                                         <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png" alt="" *ngIf="!isCollapseDiscount">
 
                                                         <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png" alt="" *ngIf="isCollapseDiscount"> Discounts
-                                                    </p>
+                                                    </div>
                                                 </div>
                                                 <div class="fare-list-right">
                                                     <p class="text-green">- &#8377; {{coupon_amount}}</p>
@@ -1891,10 +1892,10 @@
                                             <div class="fare-list-box pt-30">
                                                 <div class="fare-list-left">
                                                     <h6 class="fw_7">Grand Total</h6>
+                                                    <p class="payment-text pt-1">*PG charges as applicable.</p>
                                                 </div>
                                                 <div class="fare-list-right">
                                                     <h6 class="fw_7">₹ {{(totalCollectibleAmount-0)+(pgCharges-0) | number : '1.2-2'}}</h6>
-                                                    <p class="payment-text pt-1"><sup>*</sup>PG charges as applicable.</p>
                                                 </div>
 
                                             </div>

@@ -631,6 +631,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       var start = this.minStopOver;
       var end = this.maxStopOver;
       var filteredStopOver: any[] = [];
+        if(end >0){
       this.flightList.forEach((e: any) => {
         var flights = [];
         e.onwardflights.forEach((d: any) => {
@@ -656,6 +657,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       }); 
       
       this.flightList = this.unique(filteredStopOver);
+      }
     }
 
 
