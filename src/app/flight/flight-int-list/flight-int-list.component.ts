@@ -601,10 +601,60 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
         else if (item.name == 'D_Short' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => a.onwardflights[0].duration - b.onwardflights[0].duration);
+        
+        
+                this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.onwardflights.length; i++) {
+                totalOnwardDuration += a.onwardflights[i].duration;
+                if (a.onwardflights[i + 1] != null && a.onwardflights[i + 1] != undefined) {
+                let obj2Date = new Date(a.onwardflights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.onwardflights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.onwardflights.length; i++) {
+                totalOnwardDurationB += b.onwardflights[i].duration;
+                if (b.onwardflights[i + 1] != null && b.onwardflights[i + 1] != undefined) {
+                let obj2Date = new Date(b.onwardflights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.onwardflights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDuration>totalOnwardDurationB? 1: -1;  
+       
+        });
+        
+
         }
         else if (item.name == 'D_Long' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => b.onwardflights[0].duration - a.onwardflights[0].duration);
+        
+           this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.onwardflights.length; i++) {
+                totalOnwardDuration += a.onwardflights[i].duration;
+                if (a.onwardflights[i + 1] != null && a.onwardflights[i + 1] != undefined) {
+                let obj2Date = new Date(a.onwardflights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.onwardflights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.onwardflights.length; i++) {
+                totalOnwardDurationB += b.onwardflights[i].duration;
+                if (b.onwardflights[i + 1] != null && b.onwardflights[i + 1] != undefined) {
+                let obj2Date = new Date(b.onwardflights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.onwardflights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDurationB>totalOnwardDuration? 1: -1;  
+       
+        });
+        
         }
         else if (item.name == 'D_E' && item.active == true) {
           this.flightList.sort((a: any, b: any) => new Date(a.onwardflights[0].departureDateTime).getTime() - new Date(b.onwardflights[0].departureDateTime).getTime());
@@ -631,6 +681,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       var start = this.minStopOver;
       var end = this.maxStopOver;
       var filteredStopOver: any[] = [];
+        if(end >0){
       this.flightList.forEach((e: any) => {
         var flights = [];
         e.onwardflights.forEach((d: any) => {
@@ -656,6 +707,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       }); 
       
       this.flightList = this.unique(filteredStopOver);
+      }
     }
 
 

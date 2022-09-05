@@ -116,6 +116,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   ITEMS_RENDERED_AT_ONCE = 2000;
   nextIndex = 0;
 
+  FilterSectorArray:any = [];
   loadData() {
     if (this.pageIndex >= this.flightList.length) {
       return false;
@@ -210,7 +211,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   getQueryParamData() {
     const urlParam = this.route.snapshot.queryParams;
     this.searchData = urlParam;
-    
+
     var flightSearchArr = [];
     for (var i = 0; i < 5; i++) // for generating array by object.
     {
@@ -293,7 +294,24 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   activeSelectedTrip(i : number)
   {
     this.loader = true;
-    this.resetAllFilters();
+    var flight_PopularItems =this.flight_PopularItems.map(object => ({ ...object }));
+    var flight_Timingsitems =this.flight_Timingsitems.map(object => ({ ...object }));
+    var stopsFilteritems =this.stopsFilteritems.map(object => ({ ...object }));
+    var airlines =this.airlines.map(object => ({ ...object }));
+    var partnerFilterArr =this.partnerFilterArr.map(object => ({ ...object }));
+    var layOverFilterArr =this.layOverFilterArr.map(object => ({ ...object }));
+      this.FilterSectorArray[this.sector] = {
+        flight_PopularItems:  flight_PopularItems,
+        flight_Timingsitems:flight_Timingsitems,
+        stopsFilteritems:stopsFilteritems,
+        minStopOver:this.minStopOver,
+        maxStopOver:this.maxStopOver,
+        minPrice:this.minPrice,
+        maxPrice:this.maxPrice,
+        airlines:airlines,
+        partnerFilterArr:partnerFilterArr,
+        layOverFilterArr:layOverFilterArr}
+  this.resetAllFilters();
     if(i == (this.searchData.length-1) && !this.isAllSelected)
     {
       this.isLast = true;
@@ -341,6 +359,19 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
        this.sliderRange(this, this.minPrice, this.maxPrice);
      }
 
+if(this.FilterSectorArray[i] != null && this.FilterSectorArray[i]  != undefined)
+{
+  this.flight_PopularItems = this.FilterSectorArray[i].flight_PopularItems;
+  this.flight_Timingsitems = this.FilterSectorArray[i].flight_Timingsitems;
+  this.stopsFilteritems = this.FilterSectorArray[i].stopsFilteritems;
+  this.minStopOver = this.FilterSectorArray[i].minStopOver;
+  this.maxStopOver = this.FilterSectorArray[i].maxStopOver;
+  this.minPrice = this.FilterSectorArray[i].minPrice;
+  this.maxPrice = this.FilterSectorArray[i].maxPrice;
+  this.airlines = this.FilterSectorArray[i].airlines;
+  this.partnerFilterArr = this.FilterSectorArray[i].partnerFilterArr;
+  this.layOverFilterArr = this.FilterSectorArray[i].layOverFilterArr;
+}
     this.popularFilterFlightData();
     this.loader = false;
 
@@ -615,10 +646,40 @@ bookingSummary() {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
         else if (item.name == 'D_Short' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => a.flights[0].duration - b.flights[0].duration);
+          var dshort = [];
+          this.flightList.forEach((e: any) => {
+            var flights = e.flights;
+            var totalOnwardDuration = 0;
+            for (let i = 0; i < flights.length; i++) {
+              totalOnwardDuration += flights[i].duration;
+              if (flights[i + 1] != null && flights[i + 1] != undefined) {
+              let obj2Date = new Date(flights[i + 1].departureDateTime);
+              let obj1Date = new Date(flights[i ].arrivalDateTime);
+              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+              }
+            }
+            e.totalOnwardDuration = totalOnwardDuration
+             dshort.push(e);
+          });
+         this.flightList = dshort.sort((a: any, b: any) => a.totalOnwardDuration - b.totalOnwardDuration);
         }
         else if (item.name == 'D_Long' && item.active == true) {
-          this.flightList.sort((a: any, b: any) => b.flights[0].duration - a.flights[0].duration);
+          var dlong = [];
+          this.flightList.forEach((e: any) => {
+            var flights = e.flights;
+            var totalOnwardDuration = 0;
+            for (let i = 0; i < flights.length; i++) {
+              totalOnwardDuration += flights[i].duration;
+              if (flights[i + 1] != null && flights[i + 1] != undefined) {
+              let obj2Date = new Date(flights[i + 1].departureDateTime);
+              let obj1Date = new Date(flights[i ].arrivalDateTime);
+              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+              }
+            }
+            e.totalOnwardDuration = totalOnwardDuration
+            dlong.push(e);
+          });
+          this.flightList = dlong.sort((a: any, b: any) => b.totalOnwardDuration - a.totalOnwardDuration);
         }
         else if (item.name == 'D_E' && item.active == true) {
           this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
@@ -643,6 +704,7 @@ bookingSummary() {
     if (this.flightList.length > 0) {
       var start = this.minStopOver;
       var end = this.maxStopOver;
+        if(end >0){
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = e.flights;
@@ -660,6 +722,7 @@ bookingSummary() {
         }
       });
       this.flightList = filteredStopOver;
+      }
     }
 
     //PriceFilter
@@ -685,8 +748,6 @@ bookingSummary() {
 
     // Layover Filter Flights
     this.flightList = this.layoverFilterFlights(this.flightList);
-
-
 
     if (this.container) {
       this.container.clear();
@@ -1118,6 +1179,7 @@ bookingSummary() {
 
   // Flight popular filter
   FlightPopularFilterFlightData(popularItems: any) {
+
     popularItems.active = !popularItems.active;
     if (popularItems.name == "Morning_Departures") {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = true; return item; } })
