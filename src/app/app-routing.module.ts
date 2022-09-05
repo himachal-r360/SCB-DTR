@@ -11,43 +11,43 @@ import { Error404PageComponent } from './shared/pages/error404-page/error404-pag
 const routes: Routes = [
   { path: '', loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule) },
   {
-    path:"compare-fly" , component:HomeComponent 
+    path:"compare-fly" , component:HomeComponent
   },
     {
-    path:"multicity" , component:HomeComponent 
+    path:"multicity" , component:HomeComponent
   },
     {
-    path:"compare-stay" , component:HomeComponent 
+    path:"compare-stay" , component:HomeComponent
   },
     {
-    path:"bus" , component:HomeComponent 
+    path:"bus" , component:HomeComponent
   },
     {
-    path:"train" , component:HomeComponent 
+    path:"train" , component:HomeComponent
   },
       {
-    path:"train/pnr" , component:HomeComponent 
+    path:"train/pnr" , component:HomeComponent
   },
-  
+
     {
-    path:"regalia_gold/compare-fly" , component:HomeComponent 
-  },
-    {
-    path:"regalia_gold/multicity" , component:HomeComponent 
+    path:"regalia_gold/compare-fly" , component:HomeComponent
   },
     {
-    path:"regalia_gold/compare-stay" , component:HomeComponent 
+    path:"regalia_gold/multicity" , component:HomeComponent
   },
     {
-    path:"regalia_gold/bus" , component:HomeComponent 
+    path:"regalia_gold/compare-stay" , component:HomeComponent
   },
     {
-    path:"regalia_gold/train" , component:HomeComponent 
+    path:"regalia_gold/bus" , component:HomeComponent
+  },
+    {
+    path:"regalia_gold/train" , component:HomeComponent
   },
       {
-    path:"regalia_gold/train/pnr" , component:HomeComponent 
+    path:"regalia_gold/train/pnr" , component:HomeComponent
   },
-  
+
     {
     path: 'partners',
     loadChildren: () => import('./partners/partners.module').then(m => m.PartnersModule)
@@ -59,6 +59,13 @@ const routes: Routes = [
   },
   {
 
+    path: 'hotels',
+    loadChildren: () => import('./hotel/hotel.module').then(m => m.HotelModule)
+  },
+
+
+  {
+
     path: 'foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   },
@@ -66,13 +73,13 @@ const routes: Routes = [
     path: 'regalia_gold',
     loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
 
-    
-  },
-  {
-    path: 'order-retry', component:OrdersRetryComponent 
 
   },
-  
+  {
+    path: 'order-retry', component:OrdersRetryComponent
+
+  },
+
   //{ path: '404', component: Error404PageComponent },
   // otherwise redirect to 404
 //  { path: '**', redirectTo: '/404' },
@@ -87,7 +94,7 @@ const routes: Routes = [
       anchorScrolling: 'enabled',
       onSameUrlNavigation: 'reload'
     })
-    
+
     ],
   exports: [RouterModule]
 })

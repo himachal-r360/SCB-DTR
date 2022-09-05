@@ -307,7 +307,6 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
 
-
         this.fromCityName = this.queryFlightData.fromCity;
         this.toCityName = this.queryFlightData.toCity;
         this.departureDate = new Date(this.queryFlightData.departure);
@@ -752,6 +751,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       if (this.flightList.length > 0) {
         var start = this.minStopOver;
         var end = this.maxStopOver;
+          if(end >0){
         var filteredStopOver: any[] = [];
         this.flightList.forEach((e: any) => {
           var flights = e.flights;
@@ -769,6 +769,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
         });
         this.flightList = filteredStopOver;
+        }
       }
       /*
       //StopOverFilter return
@@ -776,6 +777,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         var start = this.minStopOver;
         var end = this.maxStopOver;
         var filteredStopOver: any[] = [];
+          if(end >0){
         this.ReturnflightList.forEach((e: any) => {
           var flights = e.flights;
         var totalOnwardDuration = 0;
@@ -792,6 +794,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
         });
         this.ReturnflightList = filteredStopOver;
+        }
       }
 
       //PriceFilter
