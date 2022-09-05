@@ -368,15 +368,16 @@ otperrormsg :any;
           postData: this.EncrDecr.set(JSON.stringify(URLparams))
         };
          this.pay.otp_validation_addcard(passData).subscribe(resp =>{
+
             if(typeof resp.opt_status != undefined && resp.otp_status){
               if(resp.otp_status==true){
                 this.addCardCancel();
                 this.otperror=false; 
-                this.cards = resp.carddetails;
+                var carddetails=JSON.parse(resp.carddetails);
+                this.cards = carddetails;
+                console.log(this.cards);
                 this.selectedCardDetails = this.cards[0];
                 this.checkAvailablePointsforSavedCard();
-              //  var res=this.getCustomerCards();
-                //console.log(res);
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
                 this.otperror = true;
