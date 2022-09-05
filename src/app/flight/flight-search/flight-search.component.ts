@@ -61,6 +61,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   show = false;
   newDate = new Date();
   cityList: any;
+  multiCityAddCount:number=3;
   flightList: any;
   fromFlightList = false;
   toFlightList = false;
@@ -155,6 +156,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
        this.serviceSettings=this.appConfigService.getConfig();
         this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
+        this.multiCityAddCount= this.serviceSettings.multiCityMaxCount;
       window.onresize = (e) =>
       {
           //ngZone.run will help to run change detection
