@@ -382,10 +382,11 @@ otperrormsg :any;
               if(resp.otp_status==true){
                 this.addCardCancel();
                 this.otperror=false; 
-                var carddetails=JSON.parse(resp.carddetails);
-                this.cards = carddetails;
+                //var carddetails=JSON.parse(resp.carddetails);
+                this.cards = resp.carddetails;
                 console.log(this.cards);
                 this.selectedCardDetails = this.cards[0];
+                console.log(this.selectedCardDetails);
                 this.checkAvailablePointsforSavedCard();
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
