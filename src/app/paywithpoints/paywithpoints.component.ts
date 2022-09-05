@@ -98,7 +98,7 @@ otperrormsg :any;
           termsconditionvoucher:['', [Validators.required,Validators.pattern('true')]]
         });
      this.voucherForm1 = this.formBuilder.group({
-          first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
+          // first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
           dob:['', Validators.required],
@@ -512,10 +512,11 @@ otperrormsg :any;
     applyVoucher(){
     this.submitted1=true;
     if (this.voucherForm1.status !='VALID') {
+      // console.log(this.voucherForm1);
       return;
     }else{
-        var first9digit = this.voucherForm1.controls['first4digit'].value;
-        var first4digit = first9digit.substring(0, 4).trim();
+        // var first9digit = this.voucherForm1.controls['first4digit'].value;
+        // var first4digit = first9digit.substring(0, 4).trim();
         var last4digit = this.voucherForm1.controls['last4digit'].value;
         var applymobile = this.voucherForm1.controls['applymobile'].value;
         var dob = this.voucherForm1.controls['dob'].value;
@@ -523,11 +524,11 @@ otperrormsg :any;
         var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
         var applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         var request = {
-        "first4digit": first4digit,
+        // "first4digit": first4digit,
         "last4digit": last4digit,
         "mobile": applymobile,
         "DOB": dobStr,
-        "bin": first9digit,
+        // "bin": first9digit,
         "partner_id": 42,
         "services_id": this.serviceId,
         "total_amount": this.payTotalFare,
