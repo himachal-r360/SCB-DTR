@@ -285,7 +285,7 @@ otperrormsg :any;
       "total_amount": this.payTotalFare,
       "user_id":this.sg["customerInfo"]["id"],
     }
-
+      this.otp_verify=true;
       this.otpGenerate(URLparams);
    
   }    
@@ -300,7 +300,7 @@ otperrormsg :any;
           this.voucherOtp = true;
           this.voucheraddform=false; 
           this.voucherslider = false;
-          this.otp_verify=true;
+    
         }else{
           this.addCardCancel(); 
           this.voucherOtp = false;
@@ -376,7 +376,8 @@ otperrormsg :any;
               if(resp.otp_status==true){
                 this.addCardCancel();
                 this.otperror=false; 
-                this.getCustomerCards();
+                var res=this.getCustomerCards();
+                console.log(res);
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
                 this.otperror = true;
