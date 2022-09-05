@@ -376,8 +376,11 @@ otperrormsg :any;
               if(resp.otp_status==true){
                 this.addCardCancel();
                 this.otperror=false; 
-                var res=this.getCustomerCards();
-                console.log(res);
+                this.cards = resp.carddetails;
+                this.selectedCardDetails = this.cards[0];
+                this.checkAvailablePointsforSavedCard();
+              //  var res=this.getCustomerCards();
+                //console.log(res);
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
                 this.otperror = true;
