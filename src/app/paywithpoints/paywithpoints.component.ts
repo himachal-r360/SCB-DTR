@@ -70,6 +70,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  RemaingAmount:any;
  RedeemedPoints:any;
  vouchertransID:any;
+ min_value:number;
  otp:any;
 otperror :Boolean=false;
 otpCounter :Boolean=true;
@@ -148,7 +149,7 @@ otperrormsg :any;
           var condition_type=this.pointData['condition'].condition_type; 
           var redemption_type=this.pointData['condition'].redemption_type;
           this.redemption_value=this.pointData['condition'].redemption_value;
-          var min_value=this.pointData['condition'].min_value;
+          this.min_value=this.pointData['condition'].min_value;
           var max_value=this.pointData['condition'].max_value;
           var monthly_trn_limit=this.pointData['condition'].monthly_trn_limit;
           var monthly_trn_value=this.pointData['condition'].monthly_trn_value;
@@ -159,12 +160,16 @@ otperrormsg :any;
       if(max_value<max_value_redemption){
         max_value_redemption = Number (max_value);
       }
+      if(Number(this.min_value)*Number(this.points_percentage) < 100){
+        this.min_value = this.min_value/Number(this.points_percentage);
+      }
 
        let opts: Options = {
-                  floor: min_value,
-                  ceil: max_value_redemption,
+                  floor: Math.round(this.min_value),
+                  ceil: Math.round(max_value_redemption),
+                  // step: 1/Number(this.points_percentage),
             };
-            this.value = min_value;
+            this.value = this.min_value;
              this.options = opts;
              
     }

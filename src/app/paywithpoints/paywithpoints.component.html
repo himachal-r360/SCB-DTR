@@ -45,7 +45,7 @@
                   <div class="col-md-12">
                     <div class="my-3">
                       <!-- [(value)]="value" -->
-                        <ng5-slider [(ngModel)]="value"  [options]="options" (change)="onChangePoint()"></ng5-slider>
+                        <ng5-slider [(ngModel)]="value"   [options]="options" (change)="onChangePoint()"></ng5-slider>
                     </div>
                   </div>
               </div>
@@ -140,21 +140,21 @@
                         
                         <div class="row">
                         <div class="col-sm-4 col-12 ">
-                            <div class="row two-inputs m-0 ">
-                                <div class="col-sm-6  col-6 p-0">
-                                    <input class="cus-input" type="text" formControlName="first4digit" placeholder="123456789" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="9" autofocus="on">
-                                </div>
-                                <div class="col-sm-3 col-3 pl-0 py-2">
-                                    <span class="crad_x">XXX</span>
-                                </div>
-                                <div class="col-sm-3 col-3 p-0">
+                            <!-- <div class="row two-inputs m-0 "> -->
+                                <!-- <div class="col-sm-6  col-6 p-0"> -->
+                                    <!-- <input class="cus-input" type="text" formControlName="first4digit" placeholder="123456789" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="9" autofocus="on"> -->
+                                <!-- </div> -->
+                                <!-- <div class="col-sm-3 col-3 pl-0 py-2"> -->
+                                    <!-- <span class="crad_x">XXX</span> -->
+                                <!-- </div> -->
+                                <!-- <div class="col-sm-3 col-3 p-0"> -->
                                     <input class="cus-input" type="text" formControlName="last4digit" placeholder="1234" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="4">
-                                </div>
-                            </div>
-                            <div class="small-gray-text">First 9 digits and last 4 digits</div>
+                                <!-- </div> -->
+                            <!-- </div> -->
+                            <div class="small-gray-text">last 4 digits</div>
                               <div *ngIf="(submitted1 && voucherForm1.controls.first4digit.errors) || (submitted1 && voucherForm1.controls.last4digit.errors)" class="error">
-                            <small *ngIf="voucherForm1.hasError('required','first4digit') || voucherForm1.hasError('required','last4digit')">Please enter first 9 Digits and last 4 digits is required.</small>
-                            <small *ngIf="voucherForm1.hasError('pattern','first4digit') || voucherForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
+                            <small *ngIf="voucherForm1.hasError('required','first4digit') || voucherForm1.hasError('required','last4digit')">Please enter last 4 digits is required.</small>
+                             
                         </div>
                         <div *ngIf="submitted1 && voucherForm1.get('first4digit').dirty" class="error">
                             <small *ngIf="voucherForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
