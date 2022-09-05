@@ -533,8 +533,8 @@ export class TrainsTravellerComponent implements OnInit {
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID));
         jobGroup.addControl('whatsappFlag', new FormControl('1'));
         jobGroup.addControl('passengerAgree', new FormControl());
-
-         jobGroup.addControl('gstNumber', new FormControl());
+        jobGroup.addControl('travelInsurence', new FormControl(''));
+        jobGroup.addControl('gstNumber', new FormControl());
         jobGroup.addControl('gstBusinessName', new FormControl());
         jobGroup.addControl('gstAddress', new FormControl());
         jobGroup.addControl('gstCity', new FormControl());
@@ -1568,11 +1568,11 @@ gstReset(){
                     data: { messageData: message, }
                 });
                 passportdialog.afterClosed().subscribe(result => {
-                    this.createTrainItinerary1();
+                    this.createTrainItinerary2();
                 });
             }  
             else
-            this.createTrainItinerary1();
+            this.createTrainItinerary2();
             
     }
 
@@ -1667,7 +1667,7 @@ gstReset(){
 
                 dialogRef.afterClosed().subscribe(result => {
                     if (result == 1) {
-                        this.createTrainItinerary1();
+                        this.createTrainItinerary2();
                     }
                 });
             } else {
@@ -1714,7 +1714,7 @@ gstReset(){
 
 
 
-
+whatsAppCheck:boolean=false;
     createTrainItinerary1() {
         
         if(this.travelInsuranceEnabled=='true'){
@@ -1757,13 +1757,30 @@ gstReset(){
     contactDatails:any;
     createTrainItinerary2 (){
     
-            this.error = 0;
-            this.generateTrainItinerary();
-            this.spinnerService.show();
+    
+        if (this.passengerForm.controls['travelInsurence']['value'] == true) {
+        this.travelInsuranceOpted = true;
+        this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+        this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        } else {
+        this.travelInsuranceOpted = false;
+        this.travel_ins_charge = 0;
+        this.travel_ins_charge_tax = 0;
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
 
-            var irctcPassData = {
-                postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
-            };
+        }
+
+        this.error = 0;
+        this.generateTrainItinerary();
+        this.spinnerService.show();
+
+        var irctcPassData = {
+        postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
+        };
+
+             
+                
 
             this._irctc.fareEnquiryMultiplePassengers(irctcPassData).subscribe(response => {
                 let dData = JSON.parse(this.EncrDecr.get(response.result));
@@ -1778,11 +1795,13 @@ gstReset(){
                     
                     this.flexipaysummry = false;
                     var whatsappFlag;
-                    if (this.whatsappFeature == 1)
+                    if (this.whatsappFeature == 1){
                         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-                    else
+                        this.whatsAppCheck=true;
+                    }else{
                         whatsappFlag = 0;
-
+                         this.whatsAppCheck=false;
+                    }
                     this.contactDetails = {
                         "mobile": this.passengerForm.controls['passengerMobile']['value'],
                         "country_code": "91",
@@ -2150,7 +2169,6 @@ gstReset(){
         }
         this.travellerListArray = travellerList;
        
-        console.log(this.travellerListArray)
 
         //INFANT LIST
         var infantList: any = [];
@@ -3213,7 +3231,7 @@ recivetotalFare($event){
                         "emailId": this.passengerForm.controls['passengerEmail']['value'],
                         "firstName": this.passengerForm.controls['passengerName' + i]['value'].trim(),
                         "gender": gender,
-                        "id": i,
+                        "id": 0,
                         "lastName": '',
                         "mobileNumber": this.passengerForm.controls['passengerMobile']['value'],
                         "passportExpiryDate": "",
@@ -3261,7 +3279,7 @@ recivetotalFare($event){
                         "emailId": this.passengerForm.controls['passengerEmail']['value'],
                         "firstName": this.passengerForm.controls['childName' + i]['value'].trim(),
                         "gender": gender,
-                        "id": i,
+                        "id": 0,
                         "lastName": '',
                         "mobileNumber": this.passengerForm.controls['passengerMobile']['value'],
                         "passportExpiryDate": "",

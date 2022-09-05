@@ -123,6 +123,10 @@ export class ListComponent implements OnInit,AfterViewInit {
  serviceSettings:any;
  domainName:any;
  tracksearchObj:any;
+ seating_header:boolean = true;
+ seatTypeMliteData:boolean = false;
+
+
  constructor(public rest:RestapiService,private activatedRoute: ActivatedRoute, public busHelper: BusHelper, public busService: BusService, private router: Router, private sg: SimpleGlobal, private dialog: MatDialog, @Inject(DOCUMENT) private document: any, private EncrDecr: EncrDecrService, @Inject(APP_CONFIG) appConfig: any,private appConfigService:AppConfigService, private commonHelper: CommonHelper) {
  this.serviceSettings=this.appConfigService.getConfig();
  this.domainName = this.sg['domainName'];
@@ -327,14 +331,20 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   }
  }
  HideSeats(tripId, rowvalue, bus, mobile = false) {
-  //$(".amenities-list").hide(); 
   this.showSeatLayout = false;
   this.maxSeatMessage = "";
   this.rtcseatcall = false;
  }
+ showSeatsFilter(id,tab_id){
+   var tab_content = "#seat-"+id+'-'+tab_id;
+    $('.tab-pane-seat-'+id).removeClass("active show");
+   $(tab_content).addClass("active show");
+ }
 
  onSeats(tripId, rowvalue, bus, mobile = false) {
   $('#collapseExample_'+tripId).hide();
+ // $('.seat-layout').removeClass('active');
+ // this.showSeatLayout=false;
   this.loading = true;
   this.showAmenities = false;
   this.showCancellation = false;
@@ -431,6 +441,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
 
  onDetails(tripId, rowvalue, bus) {
+  $('.mlist-header').removeClass('fixed-top');
   let body = document.getElementsByTagName('body')[0];
   body.classList.add("noscroll"); //add the class  
   var mobile = true;
@@ -443,6 +454,12 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    this.showAmenities = false;
    this.showDropping = false;
   }
+ }
+ onCloseDetail(){
+   $('.mlist-header').addClass('fixed-top');
+  this.showDetails = false;
+    this.showAmenities = false;
+   this.showDropping = false;
  }
  active() {
   this.empty = !this.empty;
@@ -660,6 +677,13 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
  }
  public onValChange(val: string) {
   this.selecteddeck = val;
+ }
+
+ seatTypeShow(){
+  this.seatTypeMliteData = true;
+ }
+ seatTypeClose(){
+  this.seatTypeMliteData = false;
  }
 
  onSubmitSeats(tripid: string, busdetails, rowvalue, mobile) {

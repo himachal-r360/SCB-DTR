@@ -1,0 +1,343 @@
+@import '../../../assets/sharedscss/color';
+@import '../../../assets/sharedscss/fonts';
+.disableDiv {
+    pointer-events: none;
+}
+
+
+
+
+@media only screen and (max-width: 991px){
+    .select-dep-ret .area-root-departure {
+        border: none;
+        width: 100% !important;
+    }
+    
+    .select-dep-ret.mob-select-dep-ret div#datePickerOpen {
+        border-right: 1px solid #d3d3d3;
+        width: 50%;
+    }
+    .mob-select-dep-ret {
+        flex-direction: row !important;
+    }
+    .mob-select-dep-ret .area-root-reutrn{
+        display: inline-flex !important;
+    } 
+    
+.select_city {
+	 display: -ms-flexbox;
+	 display: flex;
+	 justify-content: space-between;
+	 align-items: center;
+	 -webkit-box-align: center;
+	 -ms-flex-align: center;
+	 position: relative;
+}
+ .select_city .input_box {
+	 width: 100%;
+	 height:65px;
+	 border-radius: 8px;
+	 border: solid 1px #ccc;
+}
+ .select_city .input_box label {
+	 padding: 10px 10px;
+	 display: flex;
+	 flex-direction: column;
+	 cursor: pointer;
+	 margin-bottom: 0px;
+}
+ .select_city .input_box label .inputField {
+	 border: 0;
+	 outline: 0;
+	 background: none;
+	 min-width: 140px;
+	 max-height: 36px;
+	 cursor: pointer;
+	 padding: 5px 0px;
+	 margin: 0px;
+	 font-size: 20px;
+	 position: relative;
+}
+ .select_city .input_box label .truncate {
+	 width: 100%;
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+	 white-space: nowrap;
+}
+ .select_city .input_box label span {
+	 font-size: 12px;
+}
+}
+.validate-msg {
+	 position: absolute;
+	 padding: 5px;
+	 height: auto;
+	 margin-top:10px;
+	 background-color: #ffe0e0;
+	 color: #f00;
+	 width: auto;
+	 border-radius: 5px;
+	 z-index: 2;
+	 text-align: center;
+}
+ @media screen and (max-width: 768px) and (min-width: 576px) {
+	 .validate-msg {
+		 bottom: -20px;
+		 left: 20px;
+		 height: auto;
+		 padding: 1px;
+		 width: 90%;
+	}
+}
+ @media screen and (max-width: 425px) {
+	 .validate-msg {
+		 padding: 5px;
+		 height: auto;
+	}
+}
+ .validate-msg::before {
+	 content: '';
+	 border-style: solid;
+	 border-width: 10px 15px 10px 0;
+	 border-color: transparent #ffe0e0 transparent transparent;
+	 display: inline-block;
+	 vertical-align: middle;
+	 margin-right: 5px;
+	 transform: rotate(90deg);
+	 -moz-transform: rotate(90deg);
+	 -webkit-transform: rotate(90deg);
+	 -ms-transform: rotate(90deg);
+	 position: absolute;
+	 top: -15px;
+	 left: 45%;
+}
+.w-35{
+width:35%;
+}
+
+.train-area-root{
+	width: 100%;
+	border: none;
+	padding: 0px;
+}
+
+.sponsor_logo{
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.7);
+	padding:22px 10px 10px 10px;
+}
+.sponsor_logo img{
+	width:65px;
+	height:30px;
+}
+.ml-200{
+margin-left:200px !important;
+}
+
+.train_section{
+	display: flex;
+
+	@media only screen and (max-width:600px) {
+		justify-content: center;
+		gap: 20px;
+	}
+
+	.nav-link{
+		background-color: #fff;
+		border: 1px solid #E6E6E6;
+		border-radius: 50px;
+		color: #00000050;
+		font-size: 15px;
+		font-weight: 600;
+		margin-right: 2em;
+		@media only screen and (max-width:600px) {
+			margin: 0;
+		}
+	}
+	.nav-link.active{
+		background-color: #E8F3FF;
+		border: 1px solid #1D86FF;
+		border-radius: 50px;
+		color: #000000 !important;
+		font-size: 15px;
+		font-weight: 600;
+	}
+	
+}
+
+.pnr_input{
+	display: block;
+    border: none;
+    font-size: 20px;
+    color: #000000;
+	font-weight: 700;
+}
+
+.mlight_pnr{
+	@media only screen and (max-width:600px) {
+		height: 65px;
+	}
+}
+
+
+.pnr-container {
+    border: solid 1px $color-lightGray;
+    background-color: $color-white;
+    padding: 20px;
+    margin-top: 30px;
+    float: left;
+    width: 100%;
+
+    .pnr-list {
+        border: solid 1px #e8e8e8;
+        background-color: $color-traveler-bg;
+        padding: 20px;
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .label-small-x1 {
+        font-size: 11px;
+        line-height: 1.64;
+        text-align: left;
+        color: $color-dark-gray-01;
+        padding-bottom: 14px;
+    }
+
+    .label-small-x2 {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.29;
+        text-align: left;
+        color: $color-dark-gray;
+    }
+
+    .right-arrow {
+        margin: 0px 10px 0px 10px;
+    }
+
+    .text-small-x3 {
+        font-size: 12px;
+        line-height: 1.5;
+        text-align: left;
+        color: $color-dark-gray;
+        margin-right: 55px;
+    }
+
+    .label-small-x4 {
+        font-size: 14px;
+        line-height: 1.29;
+        text-align: left;
+        color: $color-dark-gray;
+    }
+
+    .border-lr {
+        border-left: 1px solid #252525;
+        border-right: 1px solid #252525;
+        height: 48px;
+    }
+
+    .loc-img {
+        margin: 0 8px 0 0;
+    }
+
+    .traveller-list {
+        border: solid 1px #e8e8e8;
+
+        .thead-light th {
+            background-color: $color--white-blue;
+            border-bottom: solid 1px #e8e8e8;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: left;
+            color: $color-dark-gray;
+        }
+
+        tr td {
+            font-size: 12px;
+            line-height: 2.87;
+            text-align: left;
+            color: $color-dark-gray;
+        }
+    }
+}
+
+.pos-top {
+    margin-top: 0px !important;
+}
+
+.material-icons {
+    color: $color-vivid-blue;
+    position: relative;
+    top: 7px;
+    width: 16px;
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+.pt-15-pb-17 {
+    padding: 15px 0 17px 0;
+}
+
+.p1415 {
+    padding: 14px 15px;
+}
+
+@media (max-width: 470px) {
+    .w-20.p1415 {
+        width: 100% !important;
+        padding: 10px 15px;
+    }
+    .d-m-none{
+        display: none;
+    }
+    .pnr-container{
+        padding: 0;
+    }
+    .checkbox{
+        font-size: 10px;
+    }
+    .pnr-container .traveller-list tr td{
+        font-size: 10px; 
+    }
+    .pnr-list {
+        .border-lr{
+            border: 0;
+            height: auto;
+        }
+        .text-center{
+            text-align: left !important;
+        }
+    }
+    .m-w-50{
+        width: 50%;
+        padding: 0;
+    }
+    .m-p0{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .m-pt-25{
+        padding-top: 25px;
+    }
+    .m-pl-15{
+        padding-left: 15px;
+    }
+    .m-mr0{
+        margin-right: 0 !important;
+    }
+}
+
+
+
+.pnr-title{
+    
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #A6A6A6;
+}

@@ -160,20 +160,20 @@ export class HomeComponent implements OnInit {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     if(router.url){
         switch (router.url) {
-        case ('/compare-fly'):
+        case ('/'+this.sg['domainPath']+'compare-fly'):
         this.navItemActive = 'flight';
         break;
-        case ('/compare-stay'):
+        case ('/'+this.sg['domainPath']+'hotel'):
         this.navItemActive = 'hotel';
         break;
-        case ('/bus'):
+        case ('/'+this.sg['domainPath']+'bus'):
         this.navItemActive = 'bus';
         break;
-        case ('/train'):
+        case ('/'+this.sg['domainPath']+'train'):  case ('/'+this.sg['domainPath']+'train/pnr'):
         this.navItemActive = 'train';
         break;
         default:
-        this.navItemActive = 'flight';
+        this.navItemActive ='flight';
         break;
         }  
      }

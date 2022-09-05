@@ -20,20 +20,20 @@ export class ToggleDetailDirective{
             if(this.elRef.nativeElement.querySelector('.RadioClass').checked == true)
             {
               this.elRef.nativeElement
-              .querySelector('.dropdown')
+              .querySelector('.dropdown-flight')
               .classList.remove('flight-from-hide')
             }
             else{
 
 
               var isClass = this.elRef.nativeElement
-              .querySelector('.dropdown')
+              .querySelector('.dropdown-flight')
               .classList.contains('flight-from-hide')
-              $(".dropdown").addClass('flight-from-hide');
+              $(".dropdown-flight").addClass('flight-from-hide');
               if(isClass)
               {
                 this.elRef.nativeElement
-                .querySelector('.dropdown')
+                .querySelector('.dropdown-flight')
                 .classList.toggle('flight-from-hide')
 
                 this.elRef.nativeElement.querySelector('.RadioClass').checked = true;
@@ -44,9 +44,9 @@ export class ToggleDetailDirective{
             }
           }
          else{
-          $(".dropdown").addClass('flight-from-hide');
+          $(".dropdown-flight").addClass('flight-from-hide');
             this.elRef.nativeElement
-            .querySelector('.dropdown')
+            .querySelector('.dropdown-flight')
             .classList.remove('flight-from-hide')
          }
         }
@@ -54,7 +54,7 @@ export class ToggleDetailDirective{
           if(element.closest('.showless-close'))
           {
             this.elRef.nativeElement
-            .querySelector('.dropdown')
+            .querySelector('.dropdown-flight')
             .classList.add('flight-from-hide')
           }
         }

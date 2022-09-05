@@ -14,7 +14,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
 import { FlightRoundtripListComponent } from './flight-roundtrip-list/flight-roundtrip-list.component';
 import { FlightIntListComponent } from './flight-int-list/flight-int-list.component';
-import { FlightSearchModule } from '../flight-search/flight-search.module';
+import { FlightSearchModule } from './flight-search/flight-search.module';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { AgePipe } from 'src/app/pipes/age.pipe';
 import { FilterPipe } from 'src/app/shared/pipes/filterUnique.pipe';
@@ -46,6 +46,26 @@ const routes: Routes = [
     path:"flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
 
   },
+  {
+    path:"regalia_gold/flight-list" ,component:FlightListComponent,
+  },
+
+   {
+    path:"regalia_gold/flight-checkout" ,component:FlightCheckoutComponent,
+  },
+  {
+    path:"regalia_gold/flight-roundtrip" ,component:FlightRoundtripListComponent,
+  },
+  {
+
+    path:"regalia_gold/flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, }
+
+  },
+  {
+    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
+
+  },
+  
   {
     path:"flight-checkout/retry" ,component:FlightCheckoutComponent,
 

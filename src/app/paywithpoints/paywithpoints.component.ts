@@ -21,28 +21,24 @@ import { AppConfigService } from '../app-config.service';
 })
 export class PaywithpointsComponent implements OnInit,OnChanges  {
 
-  REWARD_CUSTOMERID: string;
-  REWARD_GUESTLOGIN: boolean=true;
   REWARD_EMAILID: string;
-  REWARD_CUSTOMERNAME: string;
   REWARD_MOBILE: string;
-  REWARD_FIRSTNAME: string;
-  REWARD_LASTNAME: string;
   XSRFTOKEN: string;
-  IsDcemiEligibleFlag: boolean=false;
   voucherApplied: boolean=false;
   addcardDiv: boolean=true;
   voucherDiv: boolean=true;
+  otp_verify : boolean=false;
   voucherCodedetails: boolean=true;
   cdnUrl: any;
   @Input() serviceId;
   @Input() Partnertoken;
   @Input() payTotalFare;
   @Input() passSessionKey;
-  @Output() amountToPay = new EventEmitter<string>();
+  @Input() ctype;
+  @Input() customerInfo;
+  @Output() amountToPay =new EventEmitter<any>();
   value: number = 0;
   savedCards: any = [];
-  customerInfo:any[];
   cards:any[];
   options: Options = {
     floor: 0,
@@ -51,7 +47,6 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   };
  serviceSettings:any;
  selectedCardDetails:any;
- ctype:any;
  response1:any;
  pointData:any;
  errorMsg0:any;
@@ -75,6 +70,11 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  RemaingAmount:any;
  RedeemedPoints:any;
  vouchertransID:any;
+ min_value:number;
+ otp:any;
+otperror :Boolean=false;
+otpCounter :Boolean=true;
+otperrormsg :any;
  redemption_value:any;
  voucherOtp:Boolean=false;
  otpaccepted:Boolean=false;
@@ -90,7 +90,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-    this.getCustomerCards();
+    
     this.Formotpvalidate = this.formBuilder.group({
           otp:['', [Validators.required,Validators.pattern("^[0-9]*$")]]
         });
@@ -98,7 +98,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           termsconditionvoucher:['', [Validators.required,Validators.pattern('true')]]
         });
      this.voucherForm1 = this.formBuilder.group({
-          first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
+          // first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
           dob:['', Validators.required],
@@ -114,137 +114,19 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   }
 
   ngOnInit() {
-     
-           setTimeout(() => {
-    //Check Laravel Seesion
-        if(this.sg['customerInfo']){
-              if(sessionStorage.getItem("channel")=="payzapp"){
-                  var customerInfo =this.sg['customerInfo'];
-                 // console.log(customerInfo);
-                  this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-                  setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
-                  this.REWARD_CUSTOMERID = '';
-                  this.REWARD_EMAILID = '';
-                  this.REWARD_MOBILE = '';
-                  this.REWARD_FIRSTNAME = '';
-                  this.REWARD_LASTNAME = '';
-                  this.REWARD_CUSTOMERNAME ='';
-              }else{
-                 if(customerInfo !==undefined && customerInfo["org_session"]==1){
-                    setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
-                    var customerInfo = this.sg['customerInfo'];
-                    this.REWARD_GUESTLOGIN = customerInfo['guestLogin'];
-                   // console.log(customerInfo);
-                    this.customerInfo=customerInfo;
-                  //  console.log(this.REWARD_GUESTLOGIN);
-
-                    if(customerInfo["guestLogin"]==true){
-                            this.REWARD_CUSTOMERID = customerInfo["id"];
-                            this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-                            this.REWARD_EMAILID = customerInfo["email"];
-                            this.REWARD_MOBILE = customerInfo["mobile"];
-                            this.IsDcemiEligibleFlag=true;
-                    }else{
-                            this.REWARD_CUSTOMERID = customerInfo["id"];
-                            this.REWARD_EMAILID = customerInfo["email"];
-                            this.REWARD_MOBILE = customerInfo["mobile"];
-                            this.REWARD_FIRSTNAME = customerInfo["firstname"];
-                            this.REWARD_LASTNAME = customerInfo["lastname"];
-                            this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
-                            this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-    
-                            const urlSearchParams = new HttpParams()
-                                .set('customerid', customerInfo["id"])
-                                .set('programName', this.sg['domainName']);
-                            let body: string = urlSearchParams.toString();
-            
-                            //Check Dc Emi Eligible
-                              if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].DEBIT_EMI==1){
-                              var checkEligibleParams = {
-                                  'client_token': 'HDFC243',
-                                  'mobile': customerInfo["mobile"],
-                              };
-                              var postCheckEligibleParam = {
-                                  postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
-                              };
-                              this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
-                                  if (results.result) {
-                                      let result = JSON.parse(this.EncrDecr.get(results.result));
-                                      this.IsDcemiEligibleFlag = result.eligible;
-                                  }
-                              });
-                            }
-                            var getaddresspostparam = {
-                              "customerId": this.REWARD_CUSTOMERID,
-                              "programName": this.sg['domainName']
-                            };
-                            //this.getCustomerAddress(getaddresspostparam);
-                            if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].DEBIT_EMI==1){
-                              //Check Dc Emi Eligible
-                              var checkEligibleParams = {'client_token': 'HDFC243',
-                              'mobile':customerInfo["mobile"],
-                              };
-                              var postCheckEligibleParam = {
-                              postData:this.EncrDecr.set(JSON.stringify(checkEligibleParams))
-                              };
-                  
-                              this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {
-                                if(results.result ){
-                                  let result=JSON.parse(this.EncrDecr.get(results.result ));
-                                  this.IsDcemiEligibleFlag=result.eligible;
-                                }
-                              });
-                            }
-                            var saveCardPostParam = {
-                              "customerid": customerInfo["id"],
-                              "programName": this.sg['domainName']
-                            };
-                            var saveCardParam = {
-                              postData: this.EncrDecr.set(JSON.stringify(saveCardPostParam))
-                            };
-                            this.rest.getSaveCards(saveCardParam).subscribe(data => {
-                              this.savedCards = data;
-                            });
-                      }
-                  }else {
-                      setTimeout(function() { this.validateUser = false;}.bind(this), 1000);
-                      this.REWARD_CUSTOMERID = '';
-                      this.REWARD_EMAILID = '';
-                      this.REWARD_MOBILE = '';
-                      this.REWARD_FIRSTNAME = '';
-                      this.REWARD_LASTNAME = '';
-                      this.REWARD_CUSTOMERNAME ='';
-                      this.XSRFTOKEN = 'NULL';
-                      if (environment.localInstance == 0) {
-                        this.document.location.href = environment.MAIN_SITE_URL+this.sg['domainPath'] + 'check-login';
-                      }
-                  }
-              } 
-          }else{
-            this.REWARD_CUSTOMERID = '0000';
-            this.REWARD_EMAILID = '';
-        this.REWARD_MOBILE = '';
-       this.REWARD_FIRSTNAME = '';
-                      this.REWARD_LASTNAME = '';
-                      this.REWARD_CUSTOMERNAME ='';
-        this.XSRFTOKEN = 'NULL';
-            if (environment.localInstance == 0)
-                this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
-          }
-  
-    }, 50);
-
   }
     ngOnChanges(changes: SimpleChanges): void {
     this.orderamount= Number(this.payTotalFare);
     // this.orderamount = this.orderamount - this.value;
     this.setSlider();
+       this.getCustomerCards();
+   console.log(this.customerInfo);
   }
     getCustomerCards(){
         var cards = [];
-        if(this.sg['customerInfo'] && this.sg['customerInfo']['customercards'].length>0){
+        if(this.customerInfo && this.customerInfo['customercards'].length>0){
           this.hasCards = true;
-          this.cards = this.sg['customerInfo']['customercards'];
+          this.cards = this.customerInfo['customercards'];
           this.selectedCardDetails = this.cards[0];
           this.checkAvailablePointsforSavedCard();
           
@@ -252,42 +134,50 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         }
 
   }
-    updateAmountToPay(value: string) {
-    this.amountToPay.emit(value);
+    updateAmountToPay(code: string,value: string,remain_value: string) {
+    var values={code: code, value:value,remain_value:remain_value}; 
+    console.log(values);
+    this.amountToPay.emit(values);
   }
   setSlider(){
     // update slider dynamically
     
     if(this.pointData !== undefined)
-{
+    {
              if(Object.keys(this.pointData['condition']).length!=0){
           var name=this.pointData['condition']['name'];
           var condition_type=this.pointData['condition'].condition_type; 
           var redemption_type=this.pointData['condition'].redemption_type;
           this.redemption_value=this.pointData['condition'].redemption_value;
-          var min_value=this.pointData['condition'].min_value;
+          this.min_value=this.pointData['condition'].min_value;
           var max_value=this.pointData['condition'].max_value;
           var monthly_trn_limit=this.pointData['condition'].monthly_trn_limit;
           var monthly_trn_value=this.pointData['condition'].monthly_trn_value;
           var total_count=this.pointData['condition'].total_count;
-          var total_transvalue=this.pointData['condition'].total_transvalue;
-
-         
+          var total_transvalue=this.pointData['condition'].total_transvalue;   
       }
-      var max_value_redemption = (Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100);
+      var max_value_redemption = Number((Number(this.orderamount)/Number(this.points_percentage))*(this.redemption_value/100));
       if(max_value<max_value_redemption){
-        max_value_redemption = max_value;
+        max_value_redemption = Number (max_value);
+      }
+      if(Number(this.min_value)*Number(this.points_percentage) < 100){
+        this.min_value = this.min_value/Number(this.points_percentage);
       }
 
        let opts: Options = {
-                  floor: min_value,
-                  ceil: max_value_redemption,
+                  floor: Math.round(this.min_value),
+                  ceil: Math.round(max_value_redemption),
+                  // step: 1/Number(this.points_percentage),
             };
-            this.value = min_value;
+            this.value = this.min_value;
              this.options = opts;
-           }
+             
+    }
   }
   checkAvailablePointsforSavedCard(){ 
+    console.log('checkAvailablePointsforSavedCard');
+    this.XSRFTOKEN = this.customerInfo['XSRF-TOKEN'];
+    // this.ctype = sessionStorage.getItem(this.passSessionKey+'-ctype');
     var request = {
       "takecard":this.selectedCardDetails.id,
       "type":"available_points",
@@ -296,14 +186,19 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "ctype":this.ctype,
       "modal":"DIGITAL",
       "noopt": 1,
-      // "customer_id":this.customerInfo["customerid"],
+      "customer_id":this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
-      "_token":this.XSRFTOKEN
+      "partnertoken":this.Partnertoken,
+      "serviceToken":this.serviceId,
+      "_token":this.XSRFTOKEN,
+      "guestLogin":this.customerInfo['guestLogin']
     };
+    
+    
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
     };
-    this.pay.getcustomercardpoints(passData).subscribe(response => {
+    this.pay.getcustomercardpoint(passData).subscribe(response => {
       this.response1=response;
       if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
       {
@@ -316,9 +211,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         var card_type=this.response1['card_type'];
         this.CcCharges = this.response1['CcCharges'];
         this.pointData = this.response1;
-        this.cardmobile = this.response1['mobile'];
+        this.cardmobile = this.customerInfo['ccustomer']['mobile'];
         this.cardbin = this.response1['bin'];
-        this.carddob = this.response1['dob'];
+        this.carddob = this.customerInfo['ccustomer']['DOB'];
         this.setSlider();
         // this.intitialconversionptoc();
       }else{
@@ -376,10 +271,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
   generateVoucherOtp(){
     this.submittedotpform=true;
     if (this.Formotp.status !='VALID') {
-      console.log('here1');
       return;
     }else{
-      console.log('here2');
+     
       this.submittedotpform=false;
       this.otpaccepted = false;
        let URLparams = {
@@ -387,38 +281,41 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "customer_id": this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
       "last4digit":this.selectedCardDetails.card.slice(-4),
-      "_token":this.sg["customerInfo"]["XSRF-TOKEN"],
+      "_token":this.customerInfo["XSRF-TOKEN"],
       "DOB":this.carddob,
       "savecard":1,
+      "services_id": this.serviceId,
+        "bin":this.cardbin,
+      "clientToken":this.sg['domainName'].toUpperCase(),
+      "total_amount": this.payTotalFare,
       "user_id":this.sg["customerInfo"]["id"],
     }
+      this.otp_verify=true;
       this.otpGenerate(URLparams);
    
   }    
   }
     otpGenerate(URLparams:any){
-     //need to change as per api
-    // let request = {
-    //   "takecard":this.selectedCardDetails.id,
-    //   "customer_id": this.REWARD_CUSTOMERID,
-    //   "programName":this.sg['domainName']
-    // }
+
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(URLparams))
     };
         this.pay.generateVoucherOtp(passData).subscribe(response => {
-        if(response.reward_message='successful'){
+        if(response.status==true){
           this.voucherOtp = true;
+          this.voucheraddform=false; 
           this.voucherslider = false;
-
+    
         }else{
+          this.addCardCancel(); 
           this.voucherOtp = false;
           this.voucherslider = true;
+          alert(response.message);
         }
     }), (err: HttpErrorResponse) => {
-      this.voucherOtp = false;
-      this.voucherslider = true;
-      this.errorMsg0="";
+        this.voucherOtp = false;
+        this.voucherslider = true;
+        this.errorMsg0="";
       
     };
   }
@@ -427,29 +324,88 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     if (this.Formotpvalidate.status !='VALID') {
       return;
     }else{
-       let URLparams = {
-          "mobile": this.cardmobile,
-          "customer_id": this.sg["customerInfo"]["customerid"],
-          "programName":this.sg['domainName'],
-          "first4digit":this.selectedCardDetails.card.slice(4),
-          "last4digit":this.selectedCardDetails.card.slice(-4),
-          "points":this.value,
-          "ORDER_POINTS":this.value,
-          "voucherINRvalue":this.value * this.points_percentage,
-           "DOB":this.carddob,
-           "bin":this.cardbin,
-          "passwordValue":this.Formotpvalidate.controls['otp'].value,
-          "_token":this.sg["customerInfo"]["XSRF-TOKEN"]
-        }
-      this.otpVerify(URLparams);
+       if(this.otp_verify==true){ 
+         let URLparams = {
+            "mobile": this.cardmobile,
+            "customer_id": this.sg["customerInfo"]["customerid"],
+            "programName":this.sg['domainName'],
+            "first4digit":this.selectedCardDetails.card.slice(0,4),
+            "last4digit":this.selectedCardDetails.card.slice(-4),
+            "points":this.value,
+            "ORDER_POINTS":this.value,
+            "voucherINRvalue":this.value * this.points_percentage,
+             "DOB":this.carddob,
+             "bin":this.cardbin,
+             "services_id": this.serviceId,
+             "clientToken":this.sg['domainName'].toUpperCase(),
+             "total_amount": this.payTotalFare,
+            "passwordValue":this.Formotpvalidate.controls['otp'].value,
+            "_token":this.customerInfo["XSRF-TOKEN"],
+            'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
+          }
+          this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
+          this.AmountRedeemed =((this.value)*Number(this.points_percentage));
+          this.RedeemedPoints = this.value;
+          this.otpVerify(URLparams);
+       }else{
+              let URLparams = {
+                "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+                "last4digit":this.cardaddForm1.controls['last4digit'].value,
+                "mobile": this.cardaddForm1.controls['applymobile'].value,
+                "DOB":this.cardaddForm1.controls['dob'].value,
+                "type":"available_points",
+                "bin":this.cardaddForm1.controls['first4digit'].value,
+                "clientToken":this.sg['domainName'].toUpperCase(),
+                "services_id":this.serviceId,
+                "partner_id":42,
+                "modal":"DIGITAL",
+                "noopt": 1,
+                "savecard":1,
+                "customer_id": this.sg["customerInfo"]["customerid"],
+                "programName":this.sg['domainName'],
+                "_token":this.customerInfo["XSRF-TOKEN"],
+                "user_id":this.sg["customerInfo"]["id"],
+                "passwordValue":this.Formotpvalidate.controls['otp'].value,
+              }
+              this.otpVerifyAddCard(URLparams);
+       }   
     }
   }
+  otpVerifyAddCard(URLparams:any){
+    console.log('otpVerifyAddCard');
+         var passData = {
+          postData: this.EncrDecr.set(JSON.stringify(URLparams))
+        };
+         this.pay.otp_validation_addcard(passData).subscribe(resp =>{
+
+            if(typeof resp.opt_status != undefined && resp.otp_status){
+              if(resp.otp_status==true){
+                this.addCardCancel();
+                this.otperror=false; 
+                var carddetails=JSON.parse(resp.carddetails);
+                this.cards = carddetails;
+                console.log(this.cards);
+                this.selectedCardDetails = this.cards[0];
+                this.checkAvailablePointsforSavedCard();
+              }else{ 
+                this.Formotpvalidate.setValue({otp: ''});
+                this.otperror = true;
+                this.otperrormsg = "OTP not matching";
+              }
+            } 
+         }),(err:HttpErrorResponse)=>{
+           alert("Something went wrong, please try again");
+        };
+  }  
   otpVerify(URLparams:any){
-     
          var passData = {
         postData: this.EncrDecr.set(JSON.stringify(URLparams))
       };
        this.pay.otp_validation(passData).subscribe(resp =>{
+       
+          console.log("otpVerify");
+        console.log(resp);
+       
   if(typeof resp.status != undefined && resp.status){
         //validate otp success
         if(resp.status !='false'){
@@ -458,12 +414,46 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherOtp=false; 
           this.voucherDiv=false; 
           this.addcardDiv=false; 
-          this.voucherCodedetails=false; 
-          this.updateAmountToPay(this.RemaingAmount);
+          this.voucherCodedetails=false;
+          this.otperror =false;
+      //   let URLparams = {
+      //           "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+      //           "last4digit":this.cardaddForm1.controls['last4digit'].value,
+      //           "mobile": this.cardaddForm1.controls['applymobile'].value,
+      //           "DOB":this.cardaddForm1.controls['dob'].value,
+      //           "bin":this.cardaddForm1.controls['first4digit'].value,
+      //           "services_id":this.serviceId,
+      //           "partner_id":42,
+      //           "modal":"DIGITAL",
+      //            "total_amount": this.payTotalFare,
+      //     "ctype": this.ctype,
+      //     'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
+      //     "_token":this.XSRFTOKEN 
+      //         }
+      // var passData = {
+      //   postData: this.EncrDecr.set(JSON.stringify(URLparams))
+      // };
+      // this.pay.voucherRedemption(passData).subscribe(response => {
+      //   console.log(response);
+      // });
+          
+          this.updateAmountToPay('XXXXX',this.AmountRedeemed,this.RemaingAmount);
+        }else{
+          this.submittedFormotpvalidate=false;
+          this.otpCounter = false;
+     this.voucherApplied=false;
+          this.hasCards=false; 
+          this.voucherOtp=true; 
+          this.voucherDiv=false; 
+          this.addcardDiv=true; 
+          this.voucherCodedetails=true; 
+          // this.otp.reset();
+          this.Formotpvalidate.setValue({otp: ''});
+          this.otperror = true;
+          this.otperrormsg = resp.error;
         }
       }else{
 
-     //validate otp fail
 
     } 
    
@@ -486,7 +476,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
       "customer_id": this.sg["customerInfo"]["customerid"],
       "programName":this.sg['domainName'],
       "last4digit":this.selectedCardDetails.card.slice(-4),
-      "_token":this.sg["customerInfo"]["XSRF-TOKEN"],
+      "_token":this.customerInfo["XSRF-TOKEN"],
       "DOB":this.carddob,
       "savecard":1,
       "user_id":this.sg["customerInfo"]["id"],
@@ -523,10 +513,11 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     applyVoucher(){
     this.submitted1=true;
     if (this.voucherForm1.status !='VALID') {
+      // console.log(this.voucherForm1);
       return;
     }else{
-        var first9digit = this.voucherForm1.controls['first4digit'].value;
-        var first4digit = first9digit.substring(0, 4).trim();
+        // var first9digit = this.voucherForm1.controls['first4digit'].value;
+        // var first4digit = first9digit.substring(0, 4).trim();
         var last4digit = this.voucherForm1.controls['last4digit'].value;
         var applymobile = this.voucherForm1.controls['applymobile'].value;
         var dob = this.voucherForm1.controls['dob'].value;
@@ -534,11 +525,11 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
         var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
         var applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         var request = {
-        "first4digit": first4digit,
+        // "first4digit": first4digit,
         "last4digit": last4digit,
         "mobile": applymobile,
         "DOB": dobStr,
-        "bin": first9digit,
+        // "bin": first9digit,
         "partner_id": 42,
         "services_id": this.serviceId,
         "total_amount": this.payTotalFare,
@@ -569,7 +560,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
           this.voucherOtp=false; 
           this.voucherDiv=false; 
           this.addcardDiv=false; 
-          this.updateAmountToPay(this.RemaingAmount);
+          this.updateAmountToPay(this.vouchertransID,this.AmountRedeemed,this.RemaingAmount);
         }else{
           // this.errorMsg3="Something went wrong";
           if(this.applyVoucherRes['message']!=undefined)
@@ -585,11 +576,99 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
 
     }
   }
-  addCard(){
+  GenerateOTPform(){
     this.submitted2=true;
     if (this.cardaddForm1.status !='VALID') {
       return;
     }else{
+        let URLparams = {
+           "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+           "last4digit":this.cardaddForm1.controls['last4digit'].value,
+           "mobile": this.cardaddForm1.controls['applymobile'].value,
+           "DOB":this.cardaddForm1.controls['dob'].value,
+           "type":"available_points",
+           "bin":this.cardaddForm1.controls['first4digit'].value,
+           "clientToken":this.sg['domainName'].toUpperCase(),
+           "services_id":this.serviceId,
+           "partner_id":42,
+           "modal":"DIGITAL",
+           "noopt": 1,
+           "savecard":1,
+           "customer_id": this.sg["customerInfo"]["customerid"],
+           "programName":this.sg['domainName'],
+           "_token":this.customerInfo["XSRF-TOKEN"],
+           "user_id":this.sg["customerInfo"]["id"],
+        }
+        this.otp_verify=false;
+       this.otpGenerate(URLparams);
+    }
+  }
+  addcardform(){
+    this.submitted2=true;
+    if (this.cardaddForm1.status !='VALID') {
+      return;
+    }else{
+      console.log(this.cardaddForm1);
+      var first9digit = this.cardaddForm1.controls['first4digit'].value;
+      var first4digit = first9digit.substring(0, 4).trim();
+      var last4digit = this.cardaddForm1.controls['last4digit'].value;
+      var mobile = this.cardaddForm1.controls['applymobile'].value;
+      var dob = this.cardaddForm1.controls['dob'].value;
+      var datePipe = new DatePipe('en-US'); 
+      var dobStr = datePipe.transform(dob,'dd/MM/yyyy');
+      // if(this.cardaddForm1.controls['savecard'].value==true){
+      //   var savecard=1;
+      // }else{
+      //   var savecard=0;
+      // }
+      var request = {
+        "first4digit":first4digit,
+        "last4digit":last4digit,
+        "mobile":mobile,
+        "DOB":dobStr,
+        "type":"available_points",
+        "bin":first9digit,
+        "clientToken":this.sg['domainName'].toUpperCase(),
+        "services_id":this.serviceId,
+        "partner_id":42,
+        "modal":"DIGITAL",
+        "noopt": 1,
+        "savecard":1,
+        "customer_id":this.sg["customerInfo"]["customerid"],
+        "programName":this.sg['domainName'],
+        "_token":this.XSRFTOKEN,
+      };
+      console.log(request);
+      var passData = {
+        postData: this.EncrDecr.set(JSON.stringify(request))
+      };
+      this.pay.availablePoints(passData).subscribe(response => {
+        this.response1 = response;
+        if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
+        {
+          // this.errorMsg="";
+          var customername=this.response1['customername'];
+          this.points_available=this.response1['points_available'];
+          this.points_percentage=this.response1['points_percentage'];
+          var client_type=this.response1['client_type'];
+          var card_type=this.response1['card_type'];
+          this.CcCharges = this.response1['CcCharges'];
+          // this.intitialconversionptoc();
+        }else{
+          // this.errorMsg="Something went wrong";
+          if(this.response1['message']!=undefined)
+          {
+            // this.errorMsg=this.response1['message'];
+          }
+        }
+      }), (err: HttpErrorResponse) => {
+        var message = 'Something went wrong';
+        // alert(message);
+        // this.errorMsg="";
+        // this.buttonContinue2=true; 
+        // this.showCloseBtn=true;
+        // this.collapseStatus2="collapse";
+      };
     }
 
   }
@@ -618,6 +697,9 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
     (keycode == 165)){
       event.preventDefault();
     }
+  }
+    convertToUpperCase($event) {
+    $event.target.value = $event.target.value.toUpperCase();
   }
 
   calldialog(event) {

@@ -128,18 +128,22 @@
                     </mat-expansion-panel-header>
       
                     <form [formGroup]="personalDetailsForm" name="personalDetailsForm" (ngSubmit)="submitPersonalDetails()"><br/><br/>
-                      <div class="passenger-reg-note col-md-8 col-12">
-                        <div class="float-left"> <i class="material-icons pass-icon">error_outline</i></div>
-                        <div class="primary-msg">
-                          <div class="">Please provide your exact name as per Aadhaar card to avail Aadhaar based benefits</div>
+                      <div class="col-md-8 col-12">
+                        <div class="passenger-reg-note ">
+                          <div class=""> <i class="material-icons pass-icon">error_outline</i></div>
+                          <div class="primary-msg">
+                            <div class="">Please provide your exact name as per Aadhaar card to avail Aadhaar based benefits</div>
+                          </div>
                         </div>
-                      </div><br/>
+                      </div>
+                      <br/>
                       <div class="row">
                         <div class="col-md-10">
                           <div class="row">
                               <div class="col-md-4">
-                                <mat-form-field >
-                                  <input matInput placeholder="First Name" (keypress)="flInput($event)" maxlength="30" autocomplete="off" formControlName="firstName" onDrag="return false" onDrop="return false">
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>First Name</mat-label>
+                                  <input matInput placeholder="" (keypress)="flInput($event)" maxlength="30" autocomplete="off" formControlName="firstName" onDrag="return false" onDrop="return false">
                                 </mat-form-field>
                                 <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['firstName']['errors']" class="error">
                                     <small *ngIf="personalDetailsForm.controls['firstName']['errors']['required']">Please enter first name.</small>
@@ -149,16 +153,18 @@
                                 </div> 
                               </div>
                               <div class="col-md-4">
-                                <mat-form-field >
-                                    <input matInput placeholder="Middle Name" (keypress)="flInput($event)" autocomplete="off" formControlName="middleName" onDrag="return false" onDrop="return false">
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Middle Name</mat-label>
+                                    <input matInput placeholder="" (keypress)="flInput($event)" autocomplete="off" formControlName="middleName" onDrag="return false" onDrop="return false">
                                   </mat-form-field>
                                   <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['middleName']['errors']" class="error">
                                       <small *ngIf="personalDetailsForm.controls['middleName']['errors']['pattern']">Please enter valid name.</small>
                                   </div> 
                               </div>
                               <div class="col-md-4">
-                                  <mat-form-field >
-                                      <input matInput placeholder="Last Name" (keypress)="flInput($event)" maxlength="30"  onDrag="return false" onDrop="return false" autocomplete="off" formControlName="lastName" >
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Last Name</mat-label>
+                                      <input matInput placeholder="" (keypress)="flInput($event)" maxlength="30"  onDrag="return false" onDrop="return false" autocomplete="off" formControlName="lastName" >
                                     </mat-form-field>
                                     <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['lastName']['errors']" class="error">
                                         <small *ngIf="personalDetailsForm.controls['lastName']['errors']['required']">Please enter last name.</small>
@@ -170,9 +176,10 @@
                           </div><br/>
                           <div class="row">
                               <div class="col-md-4">
-                                <mat-form-field >
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Date of Birth</mat-label>
                                   <!-- <input matInput placeholder="Date of Birth" id="dob" name="dp" ngbDatepicker #d="ngbDatepicker" [navigation]="navigation" (click)="d.toggle()" autocomplete="off" readonly [maxDate]="pickermaxDate"  formControlName="dob"> -->
-                                  <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob"> 
+                                  <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="" readonly="true" formControlName="dob"> 
                                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                   <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -181,8 +188,9 @@
                                 </div>
                               </div>
                               <div class="col-md-4 col-4">
-                                  <mat-form-field>
-                                      <mat-select placeholder="Gender" formControlName="gender">
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Gender</mat-label>
+                                      <mat-select placeholder="" formControlName="gender">
                                           <mat-option value="M"> Male </mat-option>
                                           <mat-option value="F"> Female </mat-option>
                                           <mat-option value="T"> Transgender </mat-option>
@@ -193,8 +201,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-8">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Marital Status" formControlName="maritalStatus">
+                                  <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Marital Status</mat-label>
+                                        <mat-select placeholder="" formControlName="maritalStatus">
                                             <mat-option value="U"> Un-Married </mat-option>
                                             <mat-option value="M"> Married </mat-option>
                                         </mat-select>
@@ -206,8 +215,9 @@
                           </div><br/>
                           <div class="row">
                               <div class="col-md-4">
-                                  <mat-form-field>
-                                      <mat-select placeholder="Occupation" formControlName="occupation">
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Occupation</mat-label>
+                                      <mat-select placeholder="" formControlName="occupation">
                                           <mat-option value="0"> Government </mat-option>
                                           <mat-option value="1"> Public </mat-option>
                                           <mat-option value="2"> Private </mat-option>
@@ -222,15 +232,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-6">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Nationality" [(ngModel)]="defaultNationality" formControlName="nationality">
+                                  <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Nationality</mat-label>
+                                        <mat-select placeholder="" [(ngModel)]="defaultNationality" formControlName="nationality">
                                             <mat-option [value]="94"> India </mat-option>
                                         </mat-select>
                                       </mat-form-field>
                                   </div>
                                   <div class="col-md-4 col-6">
-                                      <mat-form-field>
-                                          <mat-select placeholder="Country" [(ngModel)]="defaultCountry" (ngModelChange)="changecountry()" formControlName="country" >
+                                    <mat-form-field appearance="outline" class="w-100">
+                                      <mat-label>Country</mat-label>
+                                          <mat-select placeholder="" [(ngModel)]="defaultCountry" (ngModelChange)="changecountry()" formControlName="country" >
                                                   <mat-option [value]="94"> India </mat-option>
                                           </mat-select>
                                         </mat-form-field>
@@ -253,8 +265,9 @@
                           <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <mat-form-field >
-                                        <input matInput placeholder="E mail" (keypress)="AvoidSpace($event)" maxlength="70" onDrag="return false" onDrop="return false" autocomplete="off" formControlName="email"  >
+                                  <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>E-mail</mat-label>
+                                        <input matInput placeholder="" (keypress)="AvoidSpace($event)" maxlength="70" onDrag="return false" onDrop="return false" autocomplete="off" formControlName="email"  >
                                       </mat-form-field>
                                       <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.email.errors" class="error">
                                         <small *ngIf="personalDetailsForm.controls.email.errors.required">Please enter email address.</small>
@@ -272,8 +285,9 @@
                                       </div>
                                     </div> -->
                                     <div class="col-md-4 col-9">
-                                        <mat-form-field >
-                                            <input matInput placeholder="Mobile Number" (keypress)="numberInput($event)" onDrag="return false" onDrop="return false" autocomplete="off" maxlength="15" formControlName="mobileNo">
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Mobile Number</mat-label>
+                                            <input matInput placeholder="" (keypress)="numberInput($event)" onDrag="return false" onDrop="return false" autocomplete="off" maxlength="15" formControlName="mobileNo">
                                           </mat-form-field>
                                           <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.mobileNo.errors" class="error">
                                             <small *ngIf="personalDetailsForm.controls.mobileNo.errors.required">Please enter mobile number.</small>
@@ -296,8 +310,8 @@
                           </div>
                         </div><br/>
                         <div class="xs-center">
-                            <button class="btn-c btn-primary">Next</button>
-                            <a class="btn-b btn" (click)="tabOpen(1)">Back</a>
+                            <button class="btn btn-primary">Next</button>
+                            <a class="btn" (click)="tabOpen(1)">Back</a>
                           </div>
                         
                     </form>
@@ -312,8 +326,9 @@
                         <div class="col-md-9">
                         <div class="row">
                           <div class="col-md-6">
-                              <mat-form-field >
-                                  <input matInput placeholder="Flat / Door / Block No." formControlName="flat" (keypress)="specialcharInputAddress($event)"  maxlength="225" autocomplete="off" onDrag="return false" onDrop="return false">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Flat / Door / Block No.</mat-label>
+                                  <input matInput placeholder="" formControlName="flat" (keypress)="specialcharInputAddress($event)"  maxlength="225" autocomplete="off" onDrag="return false" onDrop="return false">
                                 </mat-form-field>
                                 <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['flat']['errors']" class="error">
                                     <small *ngIf="residentialAddrForm.controls['flat']['errors']['required']">Please enter flat name.</small>
@@ -325,8 +340,9 @@
   
                             </div>
                             <div class="col-md-6">
-                                <mat-form-field >
-                                    <input matInput placeholder="Street / Lane" maxlength="30" formControlName="street" type="text" autocomplete="nope" onDrag="return false" onDrop="return false">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Street / Lane</mat-label>
+                                    <input matInput placeholder="" maxlength="30" formControlName="street" type="text" autocomplete="nope" onDrag="return false" onDrop="return false">
                                   </mat-form-field> 
                                   <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['street']['errors']" class="error">
                                       <small *ngIf="residentialAddrForm.controls['street']['errors']['required']">Please enter street name.</small>
@@ -337,8 +353,9 @@
                         </div>
                         <div class="row">
                           <div class="col-md-6">
-                              <mat-form-field >
-                                  <input matInput placeholder="Area / Locality" maxlength="40" formControlName="locality" autocomplete="off" onDrag="return false" onDrop="return false">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Area / Locality</mat-label>
+                                  <input matInput placeholder="" maxlength="40" formControlName="locality" autocomplete="off" onDrag="return false" onDrop="return false">
                                 </mat-form-field>
                                 <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['locality']['errors']" class="error">
                                     <small *ngIf="residentialAddrForm.controls['locality']['errors']['required']">Please enter locality name.</small>
@@ -347,8 +364,9 @@
                                 </div> 
                             </div>
                             <div class="col-md-6">
-                                <mat-form-field >
-                                    <input matInput placeholder="Pin Code" (keyup)="getCityResidence($event)" (keypress)="AvoidSpace($event);numberInput($event);" maxlength="6" autocomplete="nope" formControlName="pincode">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Pin Code</mat-label>
+                                    <input matInput placeholder="" (keyup)="getCityResidence($event)" (keypress)="AvoidSpace($event);numberInput($event);" maxlength="6" autocomplete="nope" formControlName="pincode">
                                   </mat-form-field>
                                   <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['pincode']['errors']" class="error">
                                       <small *ngIf="residentialAddrForm.controls['pincode']['errors']['required']">Please enter pincode.</small>
@@ -362,8 +380,9 @@
                         </div>
                         <div class="row">
                           <div class="col-md-6">
-                              <mat-form-field>
-                                  <input matInput placeholder="State" maxlength="15" [(ngModel)]="state" value={{state}} readonly="stateCheck" formControlName="state" autocomplete="off">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>State</mat-label>
+                                  <input matInput placeholder="" maxlength="15" [(ngModel)]="state" value={{state}} readonly="stateCheck" formControlName="state" autocomplete="off">
                                 </mat-form-field>
                                 <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['state']['errors']" class="error">
                                     <small *ngIf="residentialAddrForm.controls['state']['errors']['required']">Please enter state.</small>
@@ -372,8 +391,9 @@
                                 </div> 
                             </div>
                             <div class="col-md-6">
-                                <mat-form-field>
-                                    <mat-select placeholder="City / Town" [(ngModel)]="citySelect" (ngModelChange)="findPinResidence()" formControlName="city">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>City / Town</mat-label>
+                                    <mat-select placeholder="" [(ngModel)]="citySelect" (ngModelChange)="findPinResidence()" formControlName="city">
                                           <mat-option *ngFor="let each of cityList" [value]="each"> {{each}} </mat-option>
                                     </mat-select>
                                   </mat-form-field>
@@ -385,8 +405,9 @@
                         </div>
                         <div class="row">
                           <div class="col-md-6">
-                              <mat-form-field>
-                                  <mat-select placeholder="Post Office" [(ngModel)]="POSelect" formControlName="postOffc">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Post Office</mat-label>
+                                  <mat-select placeholder="" [(ngModel)]="POSelect" formControlName="postOffc">
                                       <mat-option *ngFor="let each of postOfficeList" [value]="each"> {{each}} </mat-option>
                                   </mat-select>
                                 </mat-form-field>
@@ -395,8 +416,9 @@
                                 </div> 
                           </div>
                           <div class="col-md-6">
-                              <mat-form-field >
-                                  <input matInput placeholder="Phone Number" (keypress)="numberInput($event)" maxlength="15" autocomplete="off" formControlName="phoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Phone Number</mat-label>
+                                  <input matInput placeholder="" (keypress)="numberInput($event)" maxlength="15" autocomplete="off" formControlName="phoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
                                 </mat-form-field>
                                 <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['phoneNo']['errors']" class="error">
                                   <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['required']">Please enter mobile number.</small>
@@ -407,8 +429,10 @@
                             </div>
                         </div>
                         </div>
-                        <p> <label class="checkbox"><span class="copy_address">Copy Residence to office Address</span> 
+                        <p> 
+                          <label class="checkbox">
                           <input type="checkbox" (change)="copyResidence($event)" formControlName="copyResidence" [checked]="CheckCopyResidence">
+                          <span class="copy_address ps-2">Copy Residence to office Address</span> 
                           <span class="checkmark"></span>
                           </label>
                         </p>
@@ -421,9 +445,10 @@
                             </p> -->
         
                             <p> 
-                              <label class="checkbox"><span class="terms">I have read and agree with the <a href="{{domainRedirect}}" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
+                              <label class="checkbox">
                                   <!-- <input type="checkbox" formControlName="passengerAgree" name="passengerAgree"> --> 
                                   <input type="checkbox" formControlName="agree">
+                                  <span class="terms ps-2">I have read and agree with the <a href="{{domainRedirect}}" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
                                   <span class="checkmark"></span></label>
                             </p>
                             <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['agree']['errors']" class="error">
@@ -445,15 +470,15 @@
                             </div>
         
                             <div class="xs-center">
-                            <button class="btn-c btn-primary" (click)="registerIRCTCUser()">Register</button>
-                            <a class="btn-b btn" (click)="tabOpen(2)">Back</a>
+                            <button class="btn btn-primary" (click)="registerIRCTCUser()">Register</button>
+                            <a class="btn ms-3" (click)="tabOpen(2)">Back</a>
                             </div>
                         </ng-container>
   
                         <ng-template #nextBtn>
                           <div class="xs-center">
-                            <button class="btn-c btn-primary" (click)="openOfficeResidence()">Next</button>
-                            <a class="btn-b btn" (click)="tabOpen(2)">Back</a>
+                            <button class="btn btn-primary" (click)="openOfficeResidence()">Next</button>
+                            <a class="btn ms-3" (click)="tabOpen(2)">Back</a>
                           </div>
                         </ng-template>
      
@@ -470,8 +495,9 @@
                           <div class="col-md-9">
                           <div class="row">
                             <div class="col-md-6">
-                                <mat-form-field >
-                                    <input matInput placeholder="Flat / Door / Block No." formControlName="offcflat" (keypress)="specialcharInputAddress($event)"  maxlength="225" onDrag="return false" onDrop="return false">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Flat / Door / Block No.</mat-label>
+                                    <input matInput placeholder="" formControlName="offcflat" (keypress)="specialcharInputAddress($event)"  maxlength="225" onDrag="return false" onDrop="return false">
                                   </mat-form-field>
                                   <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcflat']['errors']" class="error">
                                       <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['required']">Please enter flat name.</small>
@@ -481,8 +507,9 @@
                                   </div> 
                               </div>
                               <div class="col-md-6">
-                                  <mat-form-field >
-                                      <input matInput placeholder="Street / Lane" maxlength="20" formControlName="offcstreet" autocomplete="nope" onDrag="return false" onDrop="return false">
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Street / Lane</mat-label>
+                                      <input matInput placeholder="" maxlength="20" formControlName="offcstreet" autocomplete="nope" onDrag="return false" onDrop="return false">
                                     </mat-form-field>
                                     <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcstreet']['errors']" class="error">
                                         <small *ngIf="residentialAddrForm.controls['offcstreet']['errors']['required']">Please enter street name.</small>
@@ -493,8 +520,9 @@
                           </div>
                           <div class="row">
                             <div class="col-md-6">
-                                <mat-form-field >
-                                    <input matInput placeholder="Area / Locality" maxlength="40" formControlName="offclocality" autocomplete="off" onDrag="return false" onDrop="return false">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Area / Locality</mat-label>
+                                    <input matInput placeholder="" maxlength="40" formControlName="offclocality" autocomplete="off" onDrag="return false" onDrop="return false">
                                   </mat-form-field>
                                   <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offclocality']['errors']" class="error">
                                       <small *ngIf="residentialAddrForm.controls['offclocality']['errors']['required']">Please enter locality name.</small>
@@ -503,8 +531,9 @@
                                   </div> 
                               </div>
                               <div class="col-md-6">
-                                  <mat-form-field >
-                                      <input matInput placeholder="Pin Code" (keyup)="getCityOffice($event);" (keypress)="AvoidSpace($event);numberInput($event); " maxlength="6" autocomplete="off" formControlName="offcpincode" autocomplete="nope" onDrag="return false" onDrop="return false">
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Pin Code</mat-label>
+                                      <input matInput placeholder="" (keyup)="getCityOffice($event);" (keypress)="AvoidSpace($event);numberInput($event); " maxlength="6" autocomplete="off" formControlName="offcpincode" autocomplete="nope" onDrag="return false" onDrop="return false">
                                     </mat-form-field>
                                     <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcpincode']['errors']" class="error">
                                         <small *ngIf="residentialAddrForm.controls['offcpincode']['errors']['required']">Please enter pincode.</small>
@@ -518,8 +547,9 @@
                           </div>
                           <div class="row">
                             <div class="col-md-6">
-                                <mat-form-field>
-                                    <input matInput placeholder="State" maxlength="15" [(ngModel)]="offcstate" value="{{offcstate}}" readonly="stateCheckOffc" formControlName="offcstate">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>State</mat-label>
+                                    <input matInput placeholder="" maxlength="15" [(ngModel)]="offcstate" value="{{offcstate}}" readonly="stateCheckOffc" formControlName="offcstate">
                                   </mat-form-field>
                                   <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcstate']['errors']" class="error">
                                       <small *ngIf="residentialAddrForm.controls['offcstate']['errors']['required']">Please enter state.</small>
@@ -528,13 +558,15 @@
                                   </div> 
                               </div>
                               <div class="col-md-6">
-                                  <mat-form-field *ngIf="FlagCountry">
-                                      <mat-select placeholder="City / Town" [(ngModel)]="offccitySelect"  (ngModelChange)="findPinOffice()" formControlName="offccity">
+                                  <mat-form-field appearance="outline" class="w-100" *ngIf="FlagCountry">
+                                    <mat-label>City / Town</mat-label>
+                                      <mat-select placeholder="" [(ngModel)]="offccitySelect"  (ngModelChange)="findPinOffice()" formControlName="offccity">
                                           <mat-option *ngFor="let each of cityListOffc" [value]="each"> {{each}} </mat-option>
                                       </mat-select>
                                   </mat-form-field>
-                                  <mat-form-field *ngIf="!FlagCountry">
-                                    <input matInput placeholder="City / Town" maxlength="15" formControlName="offccity">
+                                  <mat-form-field appearance="outline" class="w-100" *ngIf="!FlagCountry">
+                                    <mat-label>City / Town</mat-label>
+                                    <input matInput placeholder="" maxlength="15" formControlName="offccity">
                                   </mat-form-field>
                                     <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offccity']['errors']" class="error">
                                         <small *ngIf="residentialAddrForm.controls['offccity']['errors']['required']">Please select city.</small>
@@ -544,13 +576,15 @@
                           </div>
                           <div class="row">
                             <div class="col-md-6">
-                                <mat-form-field *ngIf="FlagCountry">
-                                    <mat-select placeholder="Post Office" [(ngModel)]="POSelectOffc" formControlName="offcpostOffc">
+                                <mat-form-field appearance="outline" class="w-100" *ngIf="FlagCountry">
+                                  <mat-label>Post Office</mat-label>
+                                    <mat-select placeholder="" [(ngModel)]="POSelectOffc" formControlName="offcpostOffc">
                                         <mat-option *ngFor="let each of offcpostOfficeList" [value]="each"> {{each}} </mat-option>
                                     </mat-select>
                                   </mat-form-field>
-                                  <mat-form-field *ngIf="!FlagCountry">
-                                      <input matInput placeholder="Post Office" maxlength="15" formControlName="offcpostOffc">
+                                  <mat-form-field appearance="outline" class="w-100" *ngIf="!FlagCountry">
+                                    <mat-label>Post Office</mat-label>
+                                      <input matInput placeholder="" maxlength="15" formControlName="offcpostOffc">
                                     </mat-form-field>
                                   <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcpostOffc']['errors']" class="error">
                                       <small *ngIf="residentialAddrForm.controls['offcpostOffc']['errors']['required']">Please select post office.</small>
@@ -558,8 +592,9 @@
                             </div>
           
                             <div class="col-md-6">
-                                <mat-form-field>
-                                    <mat-select placeholder="Country" [(ngModel)]="defaultCountryOffc" (ngModelChange)="countrySelect()" formControlName="offccountry" >
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Country</mat-label>
+                                    <mat-select placeholder="" [(ngModel)]="defaultCountryOffc" (ngModelChange)="countrySelect()" formControlName="offccountry" >
                                             <mat-option *ngFor="let each of countries" [value]="each.countryId"> {{each.country}} </mat-option>
                                     </mat-select>
                                   </mat-form-field>
@@ -567,8 +602,9 @@
                           </div>
                           <div class="row">
                             <div class="col-md-6">
-                                  <mat-form-field >
-                                      <input matInput placeholder="Phone Number" (keypress)="numberInput($event)" maxlength="15" formControlName="offcphoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Phone Number</mat-label>
+                                      <input matInput placeholder="" (keypress)="numberInput($event)" maxlength="15" formControlName="offcphoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
                                     </mat-form-field>
                                     <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcphoneNo']['errors']" class="error">
                                       <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['required']">Please enter mobile number.</small>
@@ -590,9 +626,10 @@
                             <!-- <label class="checkbox">I agree to the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> and <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> I have read and agree with the Terms and Conditions and also agree to receive promotional emails/SMS/offers/announcements from IRCTC & associated partners.
                             <input type="checkbox" formControlName="agree">
                             <span class="checkmark"></span></label> -->
-                            <label class="checkbox"><span class="terms">I have read and agree with the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
+                            <label class="checkbox">
                               <!-- <input type="checkbox" formControlName="passengerAgree" name="passengerAgree"> -->
                               <input type="checkbox" formControlName="offcagree">
+                              <span class="terms ps-2">I have read and agree with the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
                               <span class="checkmark"></span></label>
                           </p>
                           <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcagree']['errors']" class="error">
@@ -616,8 +653,8 @@
                           </div>
           
                           <div class="xs-center">
-                          <button class="btn-c btn-primary" (click)="registerIRCTCUser()">Register</button>
-                          <a class="btn-b btn" (click)="tabOpen(3)">Back</a>
+                          <button class="btn btn-primary" (click)="registerIRCTCUser()">Register</button>
+                          <a class="btn ms-3" (click)="tabOpen(3)">Back</a>
                           </div>
                       
                     </mat-expansion-panel>

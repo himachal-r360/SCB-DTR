@@ -1,7 +1,5 @@
-
 $mobile: '@media screen and (max-width: 600px)';
-
-.btn-card{
+.btn-card {
     color: #CF8D56;
     padding: 15px;
     font-family: 'opensans-bold';
@@ -10,64 +8,64 @@ $mobile: '@media screen and (max-width: 600px)';
         font-size: 14px;
     }
 }
+
 .validate-msg {
-     position: absolute;
-     padding: 5px;
-     height: auto;
-     margin-top:0px;
-     background-color: #ffe0e0;
-     color: #f00;
-     width: auto;
-     border-radius: 5px;
-     z-index: 2;
-     text-align: center;
+    position: absolute;
+    padding: 5px;
+    height: auto;
+    margin-top: 0px;
+    background-color: #ffe0e0;
+    color: #f00;
+    width: auto;
+    border-radius: 5px;
+    z-index: 2;
+    text-align: center;
 }
- .validate-msg::before {
-     content: '';
-     border-style: solid;
-     border-width: 10px 15px 10px 0;
-     border-color: transparent #ffe0e0 transparent transparent;
-     display: inline-block;
-     vertical-align: middle;
-     margin-right: 5px;
-     transform: rotate(90deg);
-     -moz-transform: rotate(90deg);
-     -webkit-transform: rotate(90deg);
-     -ms-transform: rotate(90deg);
-     position: absolute;
-     top: -15px;
-     left: 5px;
+
+.validate-msg::before {
+    content: '';
+    border-style: solid;
+    border-width: 10px 15px 10px 0;
+    border-color: transparent #ffe0e0 transparent transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    position: absolute;
+    top: -15px;
+    left: 5px;
 }
+
 .card-container-rel {
-     position:relative;
+    position: relative;
 }
 
-
-#regaliaGoldCarousel{
-
+#regaliaGoldCarousel {
     .carousel-indicators {
-        
         right: -10%;
         bottom: 40%;
         writing-mode: vertical-rl;
     }
-    .carousel-indicators [data-bs-target]{
+    .carousel-indicators [data-bs-target] {
         width: 10px;
         height: 10px;
         border-radius: 50%;
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
     }
-    .carousel-caption{
+    .carousel-caption {
         right: auto;
-        left: 5%;
+        left: 4%;
         bottom: 3.25rem;
         text-align: left;
         @media screen and (max-width: 600px) {
             left: 3%;
             bottom: 0;
         }
-        h5{
+        h5 {
             font-size: 60px;
             font-family: 'opensans-bold';
             width: 500px;
@@ -76,9 +74,27 @@ $mobile: '@media screen and (max-width: 600px)';
                 width: 440px;
             }
         }
+        @media screen and (min-width:1500px) and (max-width:1619px) {
+            left: 4%;
+        }
+        @media screen and (min-width:1620px) and (max-width:1680px) {
+            left: 5%;
+        }
+        @media screen and (min-width:1681px) and (max-width:1770px) {
+            left: 7%;
+        }
+        @media screen and (min-width:1771px) and (max-width:1799px) {
+            left: 9%;
+        }
+        @media screen and (min-width:1800px) and (max-width:1900px) {
+            left: 10%;
+        }
+        @media screen and (min-width:1901px) {
+            left: 6%;
+        }
     }
-    .carousel-item{
-        img{
+    .carousel-item {
+        img {
             height: 500px;
             @media screen and (max-width: 600px) {
                 height: 300px;
@@ -88,142 +104,149 @@ $mobile: '@media screen and (max-width: 600px)';
     }
 }
 
-
-.card_details{
-    background: radial-gradient(87.21% 1269.55% at 90.17% 61.9%, #2C0E00 50%, rgba(44, 14, 0, 0) 100%);
-    .goldCardDetails{
-        /* background: radial-gradient(332.14% 4402.53% at 41.84% -72.62%, #CF8D56 0%, #2C0E00 22.51%); */
-        background: radial-gradient(332.14% 4382.53% at 41.84% -102.62%, #CF8D56 -30%, #2C0E00 12.51%);
-        height: 160px;
-        .bg_place{
-            background-image: url('../../../assets/regalia_gold/images/banners/coin.svg');
-            background-position: right;
-            background-repeat: no-repeat;
-            background-size: contain;
-            padding: 25px 60px;
-            @media screen and (max-width: 600px) {
-                padding: 25px 20px;
-            }
-            .card_name{
-                font-family: 'opensans-medium';
-                color: #ffffff;
-                font-size: 18px;
-                margin-bottom: 20px;
+.card-bg-color {
+    background-color: #2C0E00;
+    .card_details {
+        background: radial-gradient(87.21% 1269.55% at 90.17% 61.9%, #2C0E00 50%, rgba(44, 14, 0, 0) 100%);
+        .goldCardDetails {
+            /* background: radial-gradient(332.14% 4402.53% at 41.84% -72.62%, #CF8D56 0%, #2C0E00 22.51%); */
+            background: radial-gradient(332.14% 4382.53% at 41.84% -102.62%, #CF8D56 -30%, #2C0E00 12.51%);
+            height: 160px;
+            .bg_place {
+                background-image: url('../../../assets/regalia_gold/images/banners/coin.svg');
+                background-position: right;
+                background-repeat: no-repeat;
+                background-size: contain;
+                // padding: 25px 60px;
+                padding: 25px 0px;
                 @media screen and (max-width: 600px) {
-                    font-size: 14px;
+                    padding: 25px 20px;
                 }
-                a{
-                    color: #CF8D56;
-                    font-size: 14px;
-                }
-            }
-        }
-        .number{
-            color: #ffffff;
-            font-size: 30px;
-            @media screen and (max-width: 600px) {
-                font-size: 20px;
-                font-weight: bold;
-            }
-            .full_points{
-                font-size: 12px;
-                font-style: italic;
-            }
-        }
-        .text{
-            color: #ffffff;
-            font-size: 14px;
-            font-style: italic;
-            margin-top: 8px;
-            @media screen and (max-width: 600px) {
-                font-size: 12px;
-                margin-top: 0px;
-            }
-        }
-    }
-    .card_benefit{
-        /* background: radial-gradient(332.14% 4402.53% at 41.84% -72.62%, #CF8D56 0%, #2C0E00 22.51%); */
-        background: radial-gradient(332.14% 4382.53% at 11.84% -72.62%, #CF8D56 -30%, #2C0E00 12.51%);
-        padding: 20px;
-        height: 160px;
-        .perk_text{
-            color: #ffffff;
-            margin-bottom: 10px;
-            font-family: 'opensans-bold';
-        }
-        .benefit_sec{
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 15px;
-            .benefit_text{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                .text{
+                .card_name {
+                    font-family: 'opensans-medium';
                     color: #ffffff;
-                    font-size: 13px;
-                    font-family: 'opensans-bold';
+                    font-size: 18px;
+                    margin-bottom: 20px;
+                    @media screen and (max-width: 600px) {
+                        font-size: 14px;
+                    }
+                    a {
+                        color: #CF8D56;
+                        font-size: 14px;
+                    }
                 }
-                .value{
-                    padding: 0px 10px;
-                    border-radius: 5px;
-                    color: #27241E;
-                    font-size: 12px;
-                    background: linear-gradient(102.53deg, #CC9412 9.09%, #FFE77E 56.91%, #CA8F12 100%);
+            }
+            .number {
+                color: #ffffff;
+                font-size: 30px;
+                @media screen and (max-width: 600px) {
+                    font-size: 20px;
+                    font-weight: bold;
                 }
-                .value_transfer{
-                    background: linear-gradient(180deg, #CC9412 0%, #F7D96C 52.6%, #D39E25 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
+                .full_points {
                     font-size: 12px;
-                    font-family: 'opensans-bold';
-                    /* word-break: break-word;
+                    font-style: italic;
+                }
+            }
+            .text {
+                color: #ffffff;
+                font-size: 14px;
+                font-style: italic;
+                margin-top: 8px;
+                @media screen and (max-width: 600px) {
+                    font-size: 12px;
+                    margin-top: 0px;
+                }
+            }
+        }
+        .card_benefit {
+            /* background: radial-gradient(332.14% 4402.53% at 41.84% -72.62%, #CF8D56 0%, #2C0E00 22.51%); */
+            background: radial-gradient(332.14% 4382.53% at 11.84% -72.62%, #CF8D56 -30%, #2C0E00 12.51%);
+            padding: 20px;
+            height: 160px;
+            .perk_text {
+                color: #ffffff;
+                margin-bottom: 10px;
+                font-family: 'opensans-bold';
+            }
+            .benefit_sec {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 15px;
+                .benefit_text {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .text {
+                        color: #ffffff;
+                        font-size: 13px;
+                        font-family: 'opensans-bold';
+                    }
+                    .value {
+                        padding: 0px 10px;
+                        border-radius: 5px;
+                        color: #27241E;
+                        font-size: 12px;
+                        background: linear-gradient(102.53deg, #CC9412 9.09%, #FFE77E 56.91%, #CA8F12 100%);
+                    }
+                    .value_transfer {
+                        background: linear-gradient(180deg, #CC9412 0%, #F7D96C 52.6%, #D39E25 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        font-size: 12px;
+                        font-family: 'opensans-bold';
+                        /* word-break: break-word;
                     width: 60px;
                     line-height: normal; */
+                    }
                 }
-            }
-            .progress{
-                box-shadow: 0px 0px 8px rgb(255 164 2);
-                border-radius: 10px;
+                .progress {
+                    box-shadow: 0px 0px 8px rgb(255 164 2);
+                    border-radius: 10px;
+                }
             }
         }
     }
 }
-.cardError{
-    color:#ff0000;
+
+.cardError {
+    color: #ff0000;
     font-size: 14px;
     margin: 5px 0px 0px;
 }
+
 .cardError div {
-      display: none;
-    }
+    display: none;
+}
 
 .cardError div:first-child {
     display: block;
 }
-.recent_search{
-    padding: 15px;
+
+.recent_search {
+    padding: 15px 25px;
     background-color: #2C0E00;
+    margin: 0px;
     @media screen and (max-width: 600px) {
         padding: 0px 5px 10px;
     }
-    .text_rec{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .text_rec {
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
         height: 60px;
         @media screen and (max-width: 600px) {
             height: 40px;
         }
-        .rec_text{
+        .rec_text {
             color: #ffffff;
             font-size: 15px;
             font-family: 'opensans-bold';
         }
     }
 }
-.recent_search_sec{
-    
+
+.recent_search_sec {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -231,11 +254,12 @@ $mobile: '@media screen and (max-width: 600px)';
     flex-wrap: nowrap;
     gap: 30px;
     overflow-x: auto;
-    .flex_item{
+    .flex_item {
         flex-shrink: 0;
     }
 }
-.content_item{
+
+.content_item {
     background: rgba(242, 248, 251, 0.1);
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
     border-radius: 8px;
@@ -244,19 +268,19 @@ $mobile: '@media screen and (max-width: 600px)';
     align-items: center;
     gap: 20px;
     padding: 5px 20px;
-    .city_name{
-        span{
+    .city_name {
+        span {
             color: #ffffff;
             font-size: 14px;
             font-family: 'opensans-bold';
         }
     }
-    .date{
+    .date {
         color: #ffffff90;
         font-size: 12px;
         font-family: 'opensans-regular';
     }
-    .hotel_place{
+    .hotel_place {
         width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -265,15 +289,16 @@ $mobile: '@media screen and (max-width: 600px)';
         font-size: 12px;
         font-family: 'opensans-regular';
     }
-    .clk-icn{
+    .clk-icn {
         opacity: 0.5;
     }
-    &:hover, &:hover .clk-icn{
+    &:hover,
+    &:hover .clk-icn {
         opacity: 1;
     }
 }
 
-.perk_flex{
+.perk_flex {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -282,7 +307,7 @@ $mobile: '@media screen and (max-width: 600px)';
         justify-content: left;
         overflow-x: auto;
     }
-    div.perk_item{
+    div.perk_item {
         width: 100%;
         @media screen and (max-width: 600px) {
             width: 85%;
@@ -291,7 +316,7 @@ $mobile: '@media screen and (max-width: 600px)';
     }
 }
 
-.unlock_card{
+.unlock_card {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -300,21 +325,21 @@ $mobile: '@media screen and (max-width: 600px)';
     /* background: linear-gradient(90.06deg, #124CC6 2.21%, #0343A3 99.96%); */
     border-radius: 10px;
     padding: 15px;
-    .text_verify{
-        p:first-child{
+    .text_verify {
+        p:first-child {
             font-size: 14px;
             color: #ffffff;
             text-align: left;
             font-family: 'opensans-regular';
         }
-        p:last-child{
+        p:last-child {
             font-size: 20px;
             color: #ffffff;
             text-align: left;
             font-family: 'opensans-bold';
         }
     }
-    .icon_place{
+    .icon_place {
         background: #FFFFFF;
         box-shadow: inset 0px -2px 4px rgba(0, 0, 0, 0.25);
         padding: 11px;
@@ -324,7 +349,7 @@ $mobile: '@media screen and (max-width: 600px)';
         height: 45px;
         cursor: pointer;
     }
-    .mark_question{
+    .mark_question {
         position: absolute;
         top: 10px;
         right: 3%;
@@ -336,9 +361,9 @@ $mobile: '@media screen and (max-width: 600px)';
     display: inline-block;
     opacity: 1;
     z-index: 1;
-  }
-  
-  .tooltip .tooltiptext {
+}
+
+.tooltip .tooltiptext {
     visibility: hidden;
     width: 400px;
     color: #fff;
@@ -352,39 +377,38 @@ $mobile: '@media screen and (max-width: 600px)';
     margin-left: -60px;
     background: #ffffff;
     box-shadow: 0px 0px 8.12308px rgba(0, 0, 0, 0.5);
-    .text_eg{
+    .text_eg {
         color: #00000060;
         font-size: 10px;
         font-weight: 600;
         text-align: left;
     }
-    .text_card{
+    .text_card {
         color: #000000;
         font-size: 14px;
         font-family: 'opensans-medium';
         text-align: left;
         text-decoration: underline;
-        
     }
-    .down_arrow{
+    .down_arrow {
         position: relative;
         top: 8px;
     }
-    .points_sec{
+    .points_sec {
         /* display: flex;
         align-items: center;
         justify-content: space-around;
         gap: 10px; */
         text-align: left;
-        div{
+        div {
             /* width: 25%;
             text-align: left; */
-            p.value{
+            p.value {
                 color: #000000;
                 font-family: 'opensans-bold';
                 font-size: 20px;
             }
-            p.name{
+            p.name {
                 color: #00000080;
                 font-family: 'opensans-reguar';
                 font-size: 14px;
@@ -393,9 +417,9 @@ $mobile: '@media screen and (max-width: 600px)';
             }
         }
     }
-  }
-  
-  .tooltip .tooltiptext::after {
+}
+
+.tooltip .tooltiptext::after {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -404,74 +428,73 @@ $mobile: '@media screen and (max-width: 600px)';
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent #ffffff transparent;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
+}
 
-  .verify_btn{
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.verify_btn {
     width: 140px;
-  }
-  
-  .unlockCardPopup{
-    @media screen and (max-width:600px) {
+}
+
+.unlockCardPopup {
+    @media screen and (max-width: 600px) {
         animation-name: slideInUp;
         animation-duration: 200ms;
         animation-timing-function: ease-in-out;
-    .modal-dialog{
-        margin: 0;
-        display:flex;
-        align-items: flex-end;
-        min-height: calc(100% - 0px);
-        .modal-content{
-            border-radius: 8px 8px 0px 0px;
-            .modal-body{
-                padding:0px;
-            }
-            /* .modal-header{
+        .modal-dialog {
+            margin: 0;
+            display: flex;
+            align-items: flex-end;
+            min-height: calc(100% - 0px);
+            .modal-content {
+                border-radius: 8px 8px 0px 0px;
+                .modal-body {
+                    padding: 0px;
+                }
+                /* .modal-header{
                 .modal-title{
                     font-family: 'opensans-medium';
                 }
             } */
-        }
-
+            }
         }
     }
-    .modal-content{
+    .modal-content {
         border-radius: 8px;
     }
-    .modal-title{
+    .modal-title {
         font-family: 'opensans-medium';
     }
-    .input_control{
+    .input_control {
         padding: 14px;
         font-size: 14px;
     }
-    .otp_text{
+    .otp_text {
         color: #888888;
         font-size: 14px;
         padding-top: 5px;
     }
-    .resend_otp_link{
+    .resend_otp_link {
         position: absolute;
         top: 16px;
         right: 4%;
         font-size: 14px;
         font-weight: 600;
     }
-    .cal_icn{
+    .cal_icn {
         position: absolute;
         top: 12px;
         right: 3%;
     }
-    .resend_text{
+    .resend_text {
         color: #888888;
         font-size: 14px;
         margin-top: 15px;
         font-weight: 600;
-        span{
+        span {
             color: #000000;
         }
     }
-  }
+}

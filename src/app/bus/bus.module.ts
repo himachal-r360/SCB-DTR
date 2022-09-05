@@ -22,14 +22,21 @@ import { BusfilterPipe } from 'src/app/shared/pipes/busfilter.pipe';
 import { BusCheckoutComponent } from './bus-checkout/bus-checkout.component';
 import { DecimalPipe } from '@angular/common';
 import { CheckoutBottomSheetComponent } from './bus-checkout/bottom-sheet/bottom-sheet.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 const routes: Routes = [
   {
     path:"bus/search" ,component:BuslistComponent,
   },
   {
     path:"bus/checkout" ,component:BusCheckoutComponent,
+  },
+  {
+    path:"regalia_gold/bus/search" ,component:BuslistComponent,
+  },
+  {
+    path:"regalia_gold/bus/checkout" ,component:BusCheckoutComponent,
   }
-
 
 
 ];
@@ -53,7 +60,7 @@ const routes: Routes = [
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
       onSameUrlNavigation: 'reload'
-    })
+    }),NgxSpinnerModule
   ],
   
   exports: [RouterModule],

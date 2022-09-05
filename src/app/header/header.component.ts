@@ -460,16 +460,19 @@ export class HeaderComponent implements OnInit {
         this.showSearchBox = true;
         this.topSearch=false;
         this.queryTextSearch = $event;
+        this.searchBarValue = $event;
 
         let searchParam = {
         searchDisplayForm: 'shopping',
         queryText: this.queryTextSearch
         };
          this.es.esSearch(searchParam).subscribe(res => {
-         if( res.hits.hits.length == 0) this.topSearch=true;
-        this.searchResults =res.hits.hits;
+         console.log('f');
+         if( res.hits.hits.length == 0){ 
+         this.topSearch=true;
+         }
+         this.searchResults =res.hits.hits;
          });
-        
 
     }
   enablePushClick(){
@@ -1261,7 +1264,7 @@ closeCookieConsent(value){
         this.redirectPopup=2;
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
      }else{
-     if(path !='foryou')
+     if(path !='foryou' && path !='compare-fly' && path !='bus' && path !='train'  && path !='train/pnr')
       this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
      else
      this.router.navigate([this.sg['domainPath']+path]);
