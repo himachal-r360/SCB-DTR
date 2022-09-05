@@ -881,12 +881,14 @@ a {
     background-color: $primary-color;
 }
 
-.custom-check-box .mat-form-field-wrapper {
+/* .custom-check-box .mat-form-field-wrapper {
     padding-bottom: 10px;
-}
+} */
 
+.contact-form .mat-form-field-wrapper, .destination_details_train .mat-form-field-wrapper, .traveler-details-info .mat-form-field-wrapper ,
 .contact-form .mat-form-field-wrapper,
 .destination_details_train .mat-form-field-wrapper {
+
     padding-bottom: 0px;
 }
 
@@ -966,6 +968,9 @@ a {
 
 .m_filter_paddng .mat-expansion-panel-spacing {
     margin-top: 0px;
+}
+.train_filter_section .mat-expansion-panel-spacing{
+    margin:0px 0px;
 }
 
 .checkAva_m {
@@ -4108,7 +4113,15 @@ table.table-bordered.table-content {
     line-height: 20px;
     color: #FFFFFF;
 }
-
+.continue-widget button {
+    background: $primary-color;
+    padding: 15px 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
 .fare-list-item {
     position: relative;
     display: block;
@@ -4330,6 +4343,9 @@ table.table-bordered.table-content {
     padding: 10px;
     border-radius: 5px;
     margin: 10px 15px 20px 0px;
+    @media only screen and (max-width:600px) {
+        width: 140px;
+    }
 }
 
 .rules-flight-thumbe img {
@@ -4365,13 +4381,18 @@ table.table-bordered.table-content {
 
 .imp-Information-list li {
     list-style: disc;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 26px;
+    color: #000000;
 }
 
 .imp-Information-list li p {
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 22px;
     color: #000000;
 }
 
@@ -6175,6 +6196,9 @@ button.accordion-button .xlsheats {
 
 .bookingprocess .modal-content {
     border: none;
+    @media screen and (max-width:600px){
+        border-radius: 15px 15px 0px 0px;
+    }
 }
 
 .ngx-slider .ngx-slider-pointer {
@@ -6494,7 +6518,7 @@ button.accordion-button .xlsheats {
     img {
         position: relative;
         top: 1px;
-        z-index: 10000;
+       /* z-index: 10000;*/
     }
     width: 50%;
     text-align: center;
@@ -6566,8 +6590,23 @@ button.accordion-button .xlsheats {
 .mob-list-items {
     background: #fff;
     border: 1px solid #E6E6E6;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 15px;
+    padding:10px;
+}
+
+.mob-list-itemsr {
+    background: #fff;
+    border: 1px solid #E6E6E6;
+    border-radius: 10px;
+}
+
+
+.mob-list-itemsr-selected {
+ background: #f3f8ff;
+}
+.mob-list-itemsr-selected-dark {
+ background: #dcecff;
 }
 
 .name-bottom-bottom {
@@ -6619,8 +6658,12 @@ button.accordion-button .xlsheats {
 .mob-items-book-list {
     position: relative;
     border-top: 1px solid rgb(0 0 0 / 10%);
-    background: #E8F3FF;
+    //background: #f3f8ff;
     // display:none;
+}
+
+.mob-items-book-list-selected {
+    background: #f3f8ff;
 }
 
 .mob-book-list-bottom {
@@ -6667,7 +6710,7 @@ button.accordion-button .xlsheats {
 }
 
 .mob-items-book-list-items {
-    border-bottom: 1px solid rgb(0 0 0 / 20%);
+   /* border-bottom: 1px solid rgb(0 0 0 / 20%);*/
 }
 
 .mob-book-list-top {
@@ -6725,7 +6768,7 @@ button.accordion-button .xlsheats {
 .mob-sf-area {
     position: fixed;
     top: 0;
-    z-index: 9999;
+    z-index: 10001;
     width: 100%;
     background: #404040;
     height: 100%;
@@ -6834,8 +6877,8 @@ button.accordion-button .xlsheats {
 }
 
 .mob-sf-accordion {
-    height: calc(100vh - 200px);
-    overflow: auto;
+   /* height: calc(100vh - 200px);
+    overflow: auto;*/
     .accordion-button {
         padding: 15px 10px;
         font-size: 16px;
@@ -6884,6 +6927,15 @@ button.accordion-button .xlsheats {
 .mob-sf-btns {
     padding: 0 10px;
     text-align: center;
+    
+    position: fixed;
+    height: 55px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+    
     a {
         background: #1D86FF;
         box-shadow: 0px 5.125px 11.5312px rgb(29 134 255 / 25%);
@@ -6895,6 +6947,11 @@ button.accordion-button .xlsheats {
     }
 }
 
+
+.mob-sf-filters{
+    height: 430px;
+    overflow: auto;
+    }
 .mob-reset {
     a {
         font-style: normal;
@@ -7321,6 +7378,10 @@ button.accordion-button .xlsheats {
 }
 
 .mob-fr-list-area .mob-list-items {
+    border-radius: 0;
+}
+
+.mob-fr-list-area .mob-list-itemsr {
     border-radius: 0;
 }
 
@@ -8084,6 +8145,7 @@ img {
     border: 1px solid rgb(0 0 0 / 10%);
     border-radius: 8px;
     overflow: hidden;
+    cursor:pointer;
 }
 
 .Sector-area .Sector-list {
@@ -8207,6 +8269,8 @@ img {
     align-items: center;
     justify-content: start;
     border: 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
     a {
         .rules-flight-items {
             opacity: 0.5;
@@ -8364,6 +8428,216 @@ img {
 
 
 /* end 23-08-2022*/
+
+/**Bus Layout**/
+.s-availableSeat {
+ background: #fff url(../src/assets/images/icons/bus/availableSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.s-availableLadiesSeat {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.s-availableLadiesSeat_x {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSeat_x.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.s-availableSeat_x {
+ background: #fff url(../src/assets/images/icons/bus/availableSeat_x.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.s-bookedLadiesSeat {
+ background: #fff url(../src/assets/images/icons/bus/bookedLadiesSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.s-bookedSeat {
+ background: #fff url(../src/assets/images/icons/bus/bookedSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.s-bookedSeat_x {
+ background: #fff url(../src/assets/images/icons/bus/bookedSeat_x.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.s-selectedSeat {
+ background: #fff url(../src/assets/images/icons/bus/selectedSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+ transform: rotate(-90deg);
+}
+
+.ms-availableSeat {
+ background: #fff url(../src/assets/images/icons/bus/availableSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+
+.ms-availableLadiesSeat {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+
+.ms-availableLadiesSeat_x {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSeat_x.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+
+.ms-availableSeat_x {
+ background: #fff url(../src/assets/images/icons/bus/availableSeat_x.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+
+.ms-bookedLadiesSeat {
+ background: #fff url(../src/assets/images/icons/bus/bookedLadiesSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+
+.ms-bookedSeat {
+ background: #fff url(../src/assets/images/icons/bus/bookedSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+
+.ms-bookedSeat_x {
+ background: #fff url(../src/assets/images/icons/bus/bookedSeat_x.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+
+.ms-selectedSeat {
+ background: #fff url(../src/assets/images/icons/bus/selectedSeat.svg) no-repeat center center;
+ width:40px;
+ height:40px;
+}
+/********Sleeper****/
+.s-availableSleeper {
+ background: #fff url(../src/assets/images/icons/bus/availableSleeper.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.s-availableLadiesSleeper {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSleeper.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.s-availableLadiesSleeper_x {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSleeper_x.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.s-availableSleeper_x {
+ background: #fff url(../src/assets/images/icons/bus/availableSleeper_x.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.s-bookedLadiesSleeper {
+ background: #fff url(../src/assets/images/icons/bus/bookedLadiesSleeper.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.s-bookedSleeper {
+ background: #fff url(../src/assets/images/icons/bus/bookedSleeper.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.s-bookedSleeper_x {
+ background: #fff url(../src/assets/images/icons/bus/bookedSleeper_x.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.s-selectedSleeper {
+ background: #fff url(../src/assets/images/icons/bus/selectedSleeper.svg) no-repeat right bottom;
+ width:60px;
+ height:60px;
+ transform: rotate(-90deg);
+}
+
+.ms-availableSleeper{
+ background: #fff url(../src/assets/images/icons/bus/availableSleeper.svg) no-repeat right bottom;
+ width:30px;
+ height:60px;
+}
+
+.ms-availableLadiesSleeper {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSleeper.svg) no-repeat right bottom;
+  width:30px;
+ height:60px;
+}
+
+.ms-availableLadiesSleeper_x {
+ background: #fff url(../src/assets/images/icons/bus/availableLadiesSleeper_x.svg) no-repeat right bottom;
+ width:30px;
+ height:60px;
+}
+
+.ms-availableSleeper_x {
+ background: #fff url(../src/assets/images/icons/bus/availableSleeper_x.svg) no-repeat right bottom;
+  width:30px;
+ height:60px;
+}
+
+.ms-bookedLadiesSleeper {
+ background: #fff url(../src/assets/images/icons/bus/bookedLadiesSleeper.svg) no-repeat right bottom;
+ width:30px;
+ height:60px;
+}
+
+.ms-bookedSleeper {
+ background: #fff url(../src/assets/images/icons/bus/bookedSleeper.svg) no-repeat right bottom;
+ width:30px;
+ height:60px;
+}
+
+.ms-bookedSleeper_x {
+ background: #fff url(../src/assets/images/icons/bus/bookedSleeper_x.svg) no-repeat right bottom;
+ width:30px;
+ height:60px;
+}
+
+.ms-selectedSleeper {
+ background: #fff url(../src/assets/images/icons/bus/selectedSleeper.svg) no-repeat right bottom;
+ width:30px;
+ height:60px;
+}
+
 .text-dotted
 {
   display: -webkit-box;
@@ -8371,3 +8645,9 @@ img {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+    .noscroll {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }

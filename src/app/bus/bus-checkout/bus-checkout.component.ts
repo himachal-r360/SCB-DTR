@@ -42,7 +42,7 @@ export const MY_DATE_FORMATS = {
     dateInput: 'YYYY-MM-DD',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
+    monthYearA11yLabel: 'MMMM YYYY' 
   },
 };
 
@@ -144,6 +144,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   domainName:any;
   isExpanded:boolean = false;
   isGstExpanded:boolean = false;
+  isCollapseBasefare: boolean = false;
+  isCollapseDiscount: boolean = false;
+  isCollapseVas: boolean = false;
+  isCollapse: boolean = false;
+SeatNumber: any ;
+  
  constructor(private _flightService: FlightService,@Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
   private sg: SimpleGlobal,  @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
   private _bottomSheet: MatBottomSheet, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, plocation: PlatformLocation,private titleService: Title,private appConfigService:AppConfigService,private modalService: NgbModal) {
@@ -295,7 +301,7 @@ recivetotalFare($event){
  }
 
  /**----------REMOVE COUPON----------**/
- removeCoupon(coupon_id, coupon_amount) { alert('hi')
+ removeCoupon(coupon_id, coupon_amount) { 
   this.coupon_id = '';
   this.coupon_name = '';
   this.coupon_code = '';
@@ -306,6 +312,20 @@ recivetotalFare($event){
   sessionStorage.setItem(this.searchBusKey + '-passData', this.EncrDecr.set(JSON.stringify(this.busData)));
   sessionStorage.setItem(this.searchBusKey + '-totalFare', String(this.totalFare));
  }
+
+ isCollapseShow(identifyCollpase) {
+
+  if (identifyCollpase == 'BaseFare') {
+    this.isCollapseBasefare = !this.isCollapseBasefare;
+  } else if (identifyCollpase == 'vas') {
+    this.isCollapseVas = !this.isCollapseVas;
+  } else if (identifyCollpase == 'discount') {
+    this.isCollapseDiscount = !this.isCollapseDiscount;
+  } else {
+    this.isCollapse = !this.isCollapse;
+  }
+
+}
  
   
 
@@ -313,7 +333,7 @@ recivetotalFare($event){
     this.titleService.setTitle('Home | RedBus');
    
     this.activatedRoute.url.subscribe(url => {
-    
+     this.buttonSubmitted=false;
      this.resetPopups();
       this.steps = 1;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -544,12 +564,18 @@ else{
     totalFare = totalFare + fare.fare;
     totalTax = totalTax + fare.markupFareAbsolute + fare.serviceTaxAbsolute;
    }
+  
+   
+   
+
    this.fareData = {
     totalBaseFare: totalBaseFare,
     totalFare: totalFare+totalbookingFee,
     totalTax: totalTax,
     data: fares,
-    totalbookingFee: totalbookingFee
+    totalbookingFee: totalbookingFee,
+    totalseats : fares.length,
+    singlePassengerbasefare : fares[0].baseFare,
    }
 
    this.totalFare = Number(totalFare) + Number(totalbookingFee);
@@ -1019,8 +1045,10 @@ gstReset(){
   }
  }
 
+ buttonSubmitted:boolean=false;
  createBusItinerary() { 
   this.submitted = true;
+  this.buttonSubmitted=true;
   var checkage = this.passengerForm.controls['passengerAge' + this.defaultPrimary]['value'];
   if (!(Number(checkage) >= 12)) {
    this.ageValidError = "Primary traveller's age should be above 11 years";
@@ -1060,6 +1088,7 @@ gstReset(){
   }
 
   if (this.passengerForm.invalid || this.passengerFormerror == 1) {
+    this.buttonSubmitted=false;
    return;
   } else {
    this.spinnerService.show();
@@ -1120,7 +1149,7 @@ gstReset(){
           "emailId": email,
           "firstName": this.passengerForm.controls['passengerFirstName' + i]['value'].trim(),
           "gender": gender,
-          "id": i,
+          "id": 0,
           "lastName": this.passengerForm.controls['passengerLastName' + i]['value'].trim(),
           "mobileNumber": mobile,
           "passportExpiryDate": "",
@@ -1239,7 +1268,7 @@ gstReset(){
    this.busSubscription = this.busService.blockbusSeats(JSON.stringify(itineraryParam)).subscribe(data => {
 
      let dData = JSON.parse(this.EncrDecr.get(data.result));
-
+ this.buttonSubmitted=false;
      this.blockResponse = < BusResponse > dData;
      var orderId = this.blockResponse.orderId;
      var keyStatus = this.blockResponse.errorCode;
@@ -1278,12 +1307,13 @@ gstReset(){
       sessionStorage.setItem(this.searchBusKey + '-totalFare', String(this.totalFare));
       sessionStorage.setItem(this.searchBusKey + '-passData', this.EncrDecr.set(JSON.stringify(this.busData)));
       sessionStorage.setItem(this.searchBusKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
-      this.continueStatus = true;
       this.spinnerService.hide();
+       this.buttonSubmitted=false;
       this.steps=2;
        this.completedSteps=2;
       }else{
             this.spinnerService.hide();
+             this.buttonSubmitted=false;
       this.buttonLoading = false;
       const dialogRef = this.dialog.open(ConfirmationDialog, {
        width: '600px',
@@ -1301,6 +1331,7 @@ gstReset(){
       
      } else {
       this.spinnerService.hide();
+       this.buttonSubmitted=false;
       this.buttonLoading = false;
       const dialogRef = this.dialog.open(ConfirmationDialog, {
        width: '600px',
@@ -1314,6 +1345,7 @@ gstReset(){
      }
     },
     (err: HttpErrorResponse) => {
+     this.buttonSubmitted=false;
      this.spinnerService.hide();
      this.buttonLoading = false;
      const dialogRef = this.dialog.open(ConfirmationDialog, {
@@ -1652,7 +1684,6 @@ export class ExpiryDialog {
   });
   this.dialogRef.close(true);
  }
-
 
 
 }
