@@ -152,13 +152,13 @@
                                 <!-- </div> -->
                             <!-- </div> -->
                             <div class="small-gray-text">last 4 digits</div>
-                              <div *ngIf="(submitted1 && voucherForm1.controls.first4digit.errors) || (submitted1 && voucherForm1.controls.last4digit.errors)" class="error">
-                            <small *ngIf="voucherForm1.hasError('required','first4digit') || voucherForm1.hasError('required','last4digit')">Please enter last 4 digits is required.</small>
+                              <div *ngIf=" (submitted1 && voucherForm1.controls.last4digit.errors)" class="error">
+                            <small *ngIf="voucherForm1.hasError('required','last4digit')">Please enter last 4 digits is required.</small>
                              
                         </div>
-                        <div *ngIf="submitted1 && voucherForm1.get('first4digit').dirty" class="error">
+                        <!-- <div *ngIf="submitted1 && voucherForm1.get('first4digit').dirty" class="error">
                             <small *ngIf="voucherForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
-                        </div>
+                        </div> -->
                         </div>
                       
                     <!-- </div> -->
