@@ -376,7 +376,7 @@ orderRetry:boolean=false;
      }
   ngOnInit(): void {
     this.route.url.subscribe(url => {
-    this.itineratyButton=false;
+   // this.itineratyButton=false;
       this.resetPopups();
       this.steps = 1;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -3093,7 +3093,7 @@ saveTravellerArray=[];
       this.passengerForm.controls['gstState'].updateValueAndValidity();
     }
 
-   this.itineratyButton=true;
+  // this.itineratyButton=true;
 
 console.log(this.passengerForm);
 
@@ -3108,7 +3108,7 @@ console.log(this.passengerForm);
         $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
         target.focus();
         }
-      this.itineratyButton=false;
+     // this.itineratyButton=false;
       /* $('.error_flight').addClass('d-block'); */
       // console.log(this.passengerAdultFormCount);
       return;
@@ -3639,7 +3639,7 @@ console.log(this.passengerForm);
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryRequest))
       };
       this.rest.createItinerary(requestParamsEncrpt,type).subscribe(response => {
-this.itineratyButton=false;
+     //this.itineratyButton=false;
         this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
   console.log(this.itinararyResponse);
         let itinararyResponse;
@@ -3742,7 +3742,7 @@ this.itineratyButton=false;
       
         
       }), (err: HttpErrorResponse) => {
-      this.itineratyButton=false;
+      //this.itineratyButton=false;
         clearInterval(myInterval1);
         setTimeout(() => {
           $('#infoprocess').modal('hide');
