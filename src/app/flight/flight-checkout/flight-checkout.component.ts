@@ -3827,7 +3827,7 @@ orderReferenceNumber:any;
         "flight_id": "",
         "show_price": "",
         "dst_tym": this.flightSessionData.onwardFlights[i]['flights'][j]['departureDateTime'],
-        "desti": this.flightSessionData.onwardFlights[i]['flights'][j]['departureAirport'],
+        "desti": this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalAirport'],
         "friend_dst": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['departureDateTime']).format('HH:mm'),
         "friend_arr": moment(this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalDateTime']).format('HH:mm'),
         "sour": this.flightSessionData.onwardFlights[i]['flights'][j]['departureAirport'],
