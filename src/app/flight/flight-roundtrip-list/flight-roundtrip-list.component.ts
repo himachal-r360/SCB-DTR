@@ -865,7 +865,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
         });
         this.flightList = filteredStopOver;
-        }
+                   }else{
+       var filteredStopsArr: any[] = [];
+        this.flightList.filter((d: any) => {
+         if (d.flights.length==1 &&  d.flights[0].stops == 0) {
+               filteredStopsArr.push(d);
+         }
+        });
+        this.flightList = filteredStopsArr;
+
+      }
       }
  
       //StopOverFilter return
@@ -890,7 +899,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
         });
         this.ReturnflightList = filteredStopOver;
-        }
+                   }else{
+       var filteredStopsArr: any[] = [];
+        this.ReturnflightList.filter((d: any) => {
+         if (d.flights.length==1 &&  d.flights[0].stops == 0) {
+               filteredStopsArr.push(d);
+         }
+        });
+        this.ReturnflightList = filteredStopsArr;
+
+      }
       }
 
       //PriceFilter

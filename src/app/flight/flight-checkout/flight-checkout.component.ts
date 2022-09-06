@@ -78,8 +78,8 @@ const youngerThanValidator = (maxAge: number): ValidatorFn => control =>
   (new Date()).getFullYear() - (new Date(control.value)).getFullYear() > maxAge ? { younger: true } : null;
 
 function passissuecheck(c: FormControl) {
-
-  let journery_date = $('#journery_date').val();
+console.log(c);
+ let journery_date = $('#journery_date').val();
 
   let mndate = moment(journery_date).subtract(30, 'years').calendar();
   let mindate = moment(mndate).format('YYYY-MM-DD');
@@ -100,8 +100,6 @@ function passportIssueWithDob(fcon: FormControl) {
 
   const passport_issue = fcon.value;
   const dob = fcon.get("adult_dob1").value;
-console.log("passpeor"+passport_issue);
-console.log("dob "+dob);
   let pass_date = moment(passport_issue).format('YYYY-MM-DD');
 
   let dob_date = moment(dob).format('YYYY-MM-DD');
@@ -372,6 +370,8 @@ orderRetry:boolean=false;
     });
 
   }
+  
+
  ngAfterContentChecked() {
     this.ref.detectChanges();
      }
@@ -924,21 +924,22 @@ orderRetry:boolean=false;
 
   clickPassenger($event, passenger, checkboxIndex) {
     if ($event.target.checked) {
-      if (passenger.age > 12)
+    console.log(moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years'));
+      if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 12)
         this.addAdult(passenger, checkboxIndex);
-      else if (passenger.age > 2 && passenger.age < 5)
+      else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 2 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 12)
         this.addChild(passenger, checkboxIndex);
-      else if (passenger.age > 1 && passenger.age < 3)
+      else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 0 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 3)
         this.addInfant(passenger, checkboxIndex);
     } else {
-      if (passenger.age > 12) {
+      if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 12) {
         this.currentId = $('#passengerBoxId_' + checkboxIndex).val();
         this.removeAdult(parseInt(this.currentId), checkboxIndex);
-      } else if (passenger.age > 2 && passenger.age < 5) {
+      } else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 2 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 12) {
         this.currentId = $('#passengerBoxId_' + checkboxIndex).val();
         this.removeChild(parseInt(this.currentId), checkboxIndex);
-      } else if (passenger.age > 1 && passenger.age < 3) {
-        this.currentId = $('#passengerChildBoxId_' + checkboxIndex).val();
+      } else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 0 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 3) {
+        this.currentId = $('#passengerBoxId_' + checkboxIndex).val();
         this.removeInfant(parseInt(this.currentId), checkboxIndex);
       }
 
@@ -1146,7 +1147,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         this.passengerForm.addControl('adult_passport_num' + i, new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern(this.patternAlphaNumeric)]));
 
         this.passengerForm.addControl('adult_passport_expiry_date' + i, new FormControl('', [Validators.required, passexpcheck]));
-        this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required, passissuecheck]));
+        this.passengerForm.addControl('adult_passport_issue_date' + i, new FormControl('', [Validators.required,passissuecheck]));
         this.passengerForm.addControl('adult_passport_issuing_country' + i, new FormControl('', [Validators.required]));
         this.passengerForm.addControl('adult_pax_nationality' + i, new FormControl('', [Validators.required]));
         // this.passengerForm.addControl('adult_pax_birthcountry' + i, new FormControl('', [Validators.required]));
@@ -1673,10 +1674,11 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         // let respData = JSON.parse(this.EncrDecr.get(response.result ));
         let resp = response['errorcode'];
         if (response['errorcode'] == 0) {
-
+          
           if (response['value'].length > 0) {
             response['value'] = response['value'].sort(function (a, b) {
-              var x = a['age']; var y = b['age'];
+              var x =moment().diff(moment(moment(a['age'], 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years'); 
+              var y =moment().diff(moment(moment(b['age'], 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years'); 
               return ((x > y) ? -1 : ((x < y) ? 1 : 0));
             });
           }
@@ -1684,20 +1686,30 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
 
           this.filterTravellerList = this.travellerlist.filter(function (tra) {
-            return tra.age > 1;
+           
+            if(tra.dateOfBirth){
+            return moment().diff(moment(moment(tra.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 0;
+            }
+           
           });
 
           this.adultTravellerList = this.filterTravellerList.filter(function (tra) {
-            return tra.age > 12;
+             if(tra.dateOfBirth){
+            return moment().diff(moment(moment(tra.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 12;
+            }
           });
 
           this.childTravellerList = this.filterTravellerList.filter(function (tra) {
-            return tra.age > 2 && tra.age < 5;
+           if(tra.dateOfBirth){
+            return moment().diff(moment(moment(tra.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 2 && moment().diff(moment(moment(tra.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') <12;
+            }
           });
 
 
           this.infantTravellerList = this.filterTravellerList.filter(function (tra) {
-            return tra.age < 2;
+             if(tra.dateOfBirth){
+            return moment().diff(moment(moment(tra.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') <= 2;
+            }
           });
 
 
