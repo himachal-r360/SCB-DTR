@@ -535,6 +535,7 @@ otperrormsg :any;
         "applyvouchercode": applyvouchercode,
         "ctype": this.ctype,
         "modal": "DIGITAL",
+        "clientToken":this.sg['domainName'].toUpperCase(),
         'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
         "_token":this.XSRFTOKEN 
       }
