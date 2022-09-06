@@ -349,9 +349,9 @@ otperrormsg :any;
             "programName":this.sg['domainName'],
             "first4digit":this.selectedCardDetails.card.slice(0,4),
             "last4digit":this.selectedCardDetails.card.slice(-4),
-            "points":this.value,
-            "ORDER_POINTS":this.value,
-            "voucherINRvalue":this.value * this.points_percentage,
+            "points":Math.round(this.value),
+            "ORDER_POINTS":Math.round(this.value),
+            "voucherINRvalue":Math.round((this.value) * Number(this.points_percentage)),
              "DOB":this.carddob,
              "bin":this.cardbin,
              "services_id": this.serviceId,
@@ -362,7 +362,7 @@ otperrormsg :any;
             'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
           }
           this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
-          this.AmountRedeemed =((this.value)*Number(this.points_percentage));
+          this.AmountRedeemed =Math.round((this.value)*Number(this.points_percentage));
           this.RedeemedPoints = this.value;
           this.otpVerify(URLparams);
        }else{
@@ -402,9 +402,7 @@ otperrormsg :any;
                 this.otperror=false; 
                 //var carddetails=JSON.parse(resp.carddetails);
                 this.cards = resp.carddetails;
-                console.log(this.cards);
                 this.selectedCardDetails = this.cards[0];
-                console.log(this.selectedCardDetails);
                 this.checkAvailablePointsforSavedCard();
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
@@ -494,10 +492,8 @@ otperrormsg :any;
   }
     isCardValid(control: FormControl) {
       const q = new Promise((resolve, reject) => {
-      // resolve(null);
       setTimeout(() => {
       let prgramName=this.sg['domainName'];
-      //let cardnumber=control.value.replace(/-/g, "");
       let cardnumber=control.value;
       if(prgramName=='SMARTBUY' || prgramName==''){
       var res = cardnumber.substring(0, 6);
@@ -522,7 +518,6 @@ otperrormsg :any;
     applyVoucher(){
     this.submitted1=true;
     if (this.voucherForm1.status !='VALID') {
-      // console.log(this.voucherForm1);
       return;
     }else{
         // var first9digit = this.voucherForm1.controls['first4digit'].value;

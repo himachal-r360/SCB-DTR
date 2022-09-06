@@ -36,7 +36,7 @@
     </div>
     <div class="row hdr_pdng">
       <div class="col-md-6 primary_hdr">Pay with Points and Money </div>
-      <div class="col-md-6 points "><span id="selectedPoints" class="minpoints" *ngIf="value>0">{{value |number}} pts <span *ngIf="value>0 && (orderamount - value*points_percentage)>0">+</span></span><span class="balamt" *ngIf="(orderamount - value*points_percentage)>0">  &#8377; {{orderamount - value*points_percentage |number}}</span>
+      <div class="col-md-6 points "><span id="selectedPoints" class="minpoints" *ngIf="value>0">{{value |number}} pts <span *ngIf="value>0 && (orderamount - value*points_percentage)>0">+</span></span><span class="balamt" *ngIf="(orderamount - value*points_percentage)>0">  &#8377; {{orderamount - value*points_percentage |number: '1.0-0'}}</span>
       </div>
     </div>
       
