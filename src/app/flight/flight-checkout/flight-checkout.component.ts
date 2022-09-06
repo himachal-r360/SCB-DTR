@@ -3796,20 +3796,28 @@ console.log(this.passengerForm);
           this.rest.getBaggageInfo(requestParamsEncrpt1).subscribe(response => { 
           var itinararyBaggageResponse = JSON.parse(this.EncrDecr.get(response.result));
           console.log(itinararyBaggageResponse);
-          if(itinararyBaggageResponse && itinararyBaggageResponse['errorCode']==200){
-           console.log(itinararyBaggageResponse['response']);
+                   let baggage_data:any=[]; let baggage_data1:any=[];
+          if(itinararyBaggageResponse && itinararyBaggageResponse['response']['errorCode']==200){
+       
+            
+                $.each( itinararyBaggageResponse['response']['response'], function( index, value ){
+                  $.each( value, function( index1, value1 ){
+                          baggage_data.push({cabin: value1.ADT.cabin, flightNo: '-', flightName: '', checkIn:  value1.ADT.check_in});
+                  });
+                });
+            
+           if(baggage_data.length>0){
+             baggage_data1.push(baggage_data);
+             this.baggageInfoOnward = baggage_data;
+             this.baggagePolicy(baggage_data1);
+            }
           }
           
           });
-          
-          
          
           }
-          /*
+         
            this.emt_cancellationPolicy('onward');
-          console.log(JSON.parse(itinararyResponse['itineraryResponseDetails']['baggageinfo']));
-          this.baggagePolicy(itinararyResponse['itineraryResponseDetails']['baggageinfo']);
-          */
           this.fareData = {
             totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "convenience_fee": 0,
