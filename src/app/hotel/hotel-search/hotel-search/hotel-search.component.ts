@@ -137,10 +137,13 @@ export class HotelSearchComponent implements OnInit ,OnDestroy {
 
  addDetails() {
   this.roomsDetails.push(this.personDetails());
+  this.showTotalCountOfAdult();
 }
 
 removeDetails(i:number) {
   this.roomsDetails.removeAt(i);
+  this.showTotalCountOfAdult();
+  this.showTotalCountsOfChild();
 }
 
 
