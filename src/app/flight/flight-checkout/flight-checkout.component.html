@@ -5968,11 +5968,15 @@
               [passTotalFare]="totalCollectibleAmount"
               [passActualFare]="totalCollectibleAmountFromPartnerResponse" 
               [passConvinenceFee]="convenience_fee"
-              [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
-              [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
+              [passServiceId]="serviceId" 
+              [passXSRFTOKEN]="XSRFTOKEN" 
+              [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
+              [passREWARD_MOBILE]="REWARD_MOBILE" 
+              [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
               (sendtotalfare)="recivetotalFare($event)" 
               (sendPointsPlusEvent)="receivePointsPlus($event)" 
-              [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken"
+              [passflexiFare]="sendflexiFare"  
+              [partnerToken]="partnerToken"
               [isMobile]="isMobile"
               >
             </app-payment>
@@ -6070,7 +6074,7 @@
                                     <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
-                                    <p>₹ {{ AdtBaseFare * AdtQuantity | number }}</p>
+                                    <p>₹ {{ AdtBaseFare  | number }}</p>
                                   </div>
                                 </div>
 
@@ -6079,7 +6083,7 @@
                                     <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
-                                    <p>₹ {{ ChildBaseFare * ChildQuantity | number }}</p>
+                                    <p>₹ {{ ChildBaseFare  | number }}</p>
                                   </div>
                                 </div>
 
@@ -6088,7 +6092,7 @@
                                     <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
-                                    <p>₹ {{ InfantBaseFare * InfantQuantity | number }}</p>
+                                    <p>₹ {{ InfantBaseFare  | number }}</p>
                                   </div>
                                 </div>
 
@@ -6279,7 +6283,7 @@
               </div>
             </div>
 
-            <div *ngIf="steps==5 && !isMobile">
+            <div *ngIf="steps==4 && !isMobile">
               <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey"
                 [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                 [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
@@ -6437,7 +6441,7 @@
         <div class="apply_fare row">
           <!--  <p *ngIf="steps<5" class="w-75"></p> -->
           <div class="col-6 text-left">
-            <p *ngIf="steps==5"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+            <p *ngIf="steps==4"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
                 data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
           </div>
           <div class="col-6 text-right">
@@ -6478,7 +6482,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==5 && isMobile">
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==4 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -6586,7 +6590,7 @@
                               <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
                             </div>
                             <div class="col-4 fare-list-right">
-                              <p>₹ {{ AdtBaseFare * AdtQuantity | number }}</p>
+                              <p>₹ {{ AdtBaseFare  | number }}</p>
                             </div>
                           </div>
 
@@ -6595,7 +6599,7 @@
                               <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
                             </div>
                             <div class="col-4 fare-list-right">
-                              <p>₹ {{ ChildBaseFare * ChildQuantity | number }}</p>
+                              <p>₹ {{ ChildBaseFare  | number }}</p>
                             </div>
                           </div>
 
@@ -6604,7 +6608,7 @@
                               <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
                             </div>
                             <div class="col-4 fare-list-right">
-                              <p>₹ {{ InfantBaseFare * InfantQuantity  | number }}</p>
+                              <p>₹ {{ InfantBaseFare   | number }}</p>
                             </div>
                           </div>
 
