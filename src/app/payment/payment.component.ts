@@ -34,396 +34,539 @@ declare var $: any;
   providers: [commaSeparatorPipe]
 })
 export class PaymentComponent implements OnInit {
-	template: string = '<div class="app-loading-new"><div class="logo"></div></div>';
-	getFlexiFare:any;
-	//fetching coupon details from traveller.component.ts
-	        
-	        autoApplyError:number=0;
-	        selectedPg:string='CYBER';
-		
-		@Output() sendtotalfare = new EventEmitter<any>();
+        template: string = '<div class="app-loading-new"><div class="logo"></div></div>';
+        getFlexiFare:any;
+        //fetching coupon details from traveller.component.ts
+        autoApplyError:number=0;
+        selectedPg:string='CYBER';
+        @Output() sendtotalfare = new EventEmitter<any>();
+        flexiOtpButtonActive:boolean=true;
+        cdnUrl: any;
+        siteKey:any;
+        couponOptions: any=[];
+        firstCoupon: any;
+        secondCoupon: any;
+        thirdCoupon: any;
+        firstCouponDesc: any;
+        secondCouponDesc: any;
+        thirdCouponDesc: any;
+        showoffer:boolean=false;
+        panelOpenState = false;
+        payForm: FormGroup;
+        upiForm: FormGroup;
+        payzappForm: FormGroup;
+        netbankingForm: FormGroup;
+        emiForm: FormGroup;
+        hdfcPgForm: FormGroup;
+        creditForm: FormGroup;
+        saveCardForm: FormGroup;
+        promoForm: FormGroup;
+        PayNoAmtForm:FormGroup
+        RedeemStatus:Boolean=false;
+        RedeemText:String;
+        RedeemPoints:any='';
+        PayNoAmtStatus:Boolean=true;
+        redeemtext:string = '';
+        RedeemAmount:any='';
+        showProceedPayment:Boolean=false;
+        showAllPayment:Boolean=true;
+        submittedPayNoAmtForm:Boolean=false;
+        assetPath:string;
+        showVisaBox:boolean=true;
+        showHdfcPg:boolean=false;
+        lastFourdigitsofcardNumber:any;
+        cardData;
+        @Input() passSessionKey;
+        @Input() isMobile;
+        //@Input() passSavedCardsData;
+        domainPath:string;
+        appConfig: any;
+        domainRedirect: string;
+        minamount= AppConfig.flexiMinMax.minimumAmount;
+        maxamount = AppConfig.flexiMinMax.maximumAmount;
+        enable_dcemi2 = AppConfig.enable_dcemi2;
+        @Input() set passSavedCardsData(p: any[]){
+        if(p.length>0){
+        this.cardData=p;
+        const jobGroup: FormGroup = new FormGroup({});
+        if(this.cardData.length>0){
+        for (var i=0;i<Number(this.cardData.length);i++) {
+        jobGroup.addControl('cardRow', new FormControl(i, Validators.required));
+        if(i==0)
+        jobGroup.addControl('save_cvvnumber'+i, new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
+        else
+        jobGroup.addControl('save_cvvnumber'+i, new FormControl('', [Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
+        }
+        }
+        jobGroup.addControl('termscondition', new FormControl('', [Validators.required,Validators.pattern('true')]));
+        this.saveCardForm = jobGroup;
 
-		flexiOtpButtonActive:boolean=true;
-	        
-		 cdnUrl: any;
-		 siteKey:any;
-		couponOptions: any=[];
-		firstCoupon: any;
-		secondCoupon: any;
-		thirdCoupon: any;
-		firstCouponDesc: any;
-		secondCouponDesc: any;
-		thirdCouponDesc: any;
-		showoffer:boolean=false;
-		panelOpenState = false;
-		payForm: FormGroup;
-		upiForm: FormGroup;
-		payzappForm: FormGroup;
-		netbankingForm: FormGroup;
-		emiForm: FormGroup;
-		hdfcPgForm: FormGroup;
-		creditForm: FormGroup;
-		saveCardForm: FormGroup;
-		promoForm: FormGroup;
-		PayNoAmtForm:FormGroup
-		RedeemStatus:Boolean=false;
-		RedeemText:String;
-		RedeemPoints:any='';
-		PayNoAmtStatus:Boolean=true;
-		redeemtext:string = '';
-		RedeemAmount:any='';
-		showProceedPayment:Boolean=false;
-		showAllPayment:Boolean=true;
-		submittedPayNoAmtForm:Boolean=false;
+        }  else {
+        this.cardData=[];
 
-		assetPath:string;
-		showVisaBox:boolean=true;
-		showHdfcPg:boolean=false;
-		lastFourdigitsofcardNumber:any;
-                cardData;
-		@Input() passSessionKey;
-		@Input() isMobile;
-                //@Input() passSavedCardsData;
- 		 domainPath:string;
- 		appConfig: any;
-		 domainRedirect: string;
-		 minamount= AppConfig.flexiMinMax.minimumAmount;
-		 maxamount = AppConfig.flexiMinMax.maximumAmount;
-		 enable_dcemi2 = AppConfig.enable_dcemi2;
-		@Input() set passSavedCardsData(p: any[]){
-                  if(p.length>0){
-		   this.cardData=p;
-		const jobGroup: FormGroup = new FormGroup({});
-		if(this.cardData.length>0){
-		for (var i=0;i<Number(this.cardData.length);i++) {
-		jobGroup.addControl('cardRow', new FormControl(i, Validators.required));
-		if(i==0)
-		jobGroup.addControl('save_cvvnumber'+i, new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
-		else
-		jobGroup.addControl('save_cvvnumber'+i, new FormControl('', [Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
-		}
-		}
-		jobGroup.addControl('termscondition', new FormControl('', [Validators.required,Validators.pattern('true')]));
-		this.saveCardForm = jobGroup;
-
-                  }  else {
-		   this.cardData=[];
-
-		const jobGroup: FormGroup = new FormGroup({});
-		jobGroup.addControl('cardRow', new FormControl(0, Validators.required));
-		if(i==0)
-		jobGroup.addControl('save_cvvnumber0', new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
-		else
-		jobGroup.addControl('save_cvvnumber0', new FormControl('', [Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
-		jobGroup.addControl('termscondition', new FormControl('',[Validators.required,Validators.pattern('true')]));
-		this.saveCardForm = jobGroup;
+        const jobGroup: FormGroup = new FormGroup({});
+        jobGroup.addControl('cardRow', new FormControl(0, Validators.required));
+        if(i==0)
+        jobGroup.addControl('save_cvvnumber0', new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
+        else
+        jobGroup.addControl('save_cvvnumber0', new FormControl('', [Validators.pattern("^[0-9]*$"),Validators.minLength(3)]));
+        jobGroup.addControl('termscondition', new FormControl('',[Validators.required,Validators.pattern('true')]));
+        this.saveCardForm = jobGroup;
 
 
-                 }
+        }
 
-		if(this.cardData.length > 0 )
-		this.defaultCardVal=this.cardData[0]['card_id'];
-		else
-		this.defaultCardVal='';
-		
-		};
+        if(this.cardData.length > 0 )
+        this.defaultCardVal=this.cardData[0]['card_id'];
+        else
+        this.defaultCardVal='';
 
-                XSRFTOKEN:string;
-		@Input() set passXSRFTOKEN(p: string){  
-                        this.XSRFTOKEN=p;
-			this.payForm = this.formBuilder.group({
-				orderReferenceNumber:[, Validators.required],
-				ctype:['', Validators.required],
-				_token:[this.XSRFTOKEN, Validators.required],
-				});
+        };
 
-                };
+        XSRFTOKEN:string;
+        @Input() set passXSRFTOKEN(p: string){  
+        this.XSRFTOKEN=p;
+        this.payForm = this.formBuilder.group({
+        orderReferenceNumber:[, Validators.required],
+        ctype:['', Validators.required],
+        _token:[this.XSRFTOKEN, Validators.required],
+        });
+        };
 
-		@Input() set passActualFare(p: string){  
-		this.payActualFare=p;
-		};
-	
-		convinenceFee:number=0;
-		@Input()  set passConvinenceFee(p: number){  
-				 this.convinenceFee=p;
-		};
-		
-		@Input() set passflexiFare(p:string){
-			this.getFlexiFare = p;
-			// console.log(this.getFlexiFare)
-		}
+        @Input() set passActualFare(p: string){  
+        this.payActualFare=p;
+        };
+
+        convinenceFee:number=0;
+        @Input()  set passConvinenceFee(p: number){  
+        this.convinenceFee=p;
+        };
+
+        @Input() set passflexiFare(p:string){
+        this.getFlexiFare = p;
+        // console.log(this.getFlexiFare)
+        }
+
+        serviceId:string;
+        @Input() set passServiceId(p: string){  
+        this.serviceId=p;
+        };
+
+        IsDcemiEligibleFlag = false;
+
+        @Input() set passIsDcemiEligibleFlag(p: boolean){  
+        this.IsDcemiEligibleFlag=p;
+        };
+
+        Isflexipayeligible:boolean = false;
+        flexiarray:any;
+
+        @Input() set passFlexipayEligibleFlag(p: boolean){
+        this.Isflexipayeligible = p;
+        }
+        isactualLogin:any;
+
+        @Input() set passactualLogin(p: boolean){
+        this.isactualLogin = p;
+        }
+        @Input() set passTotalFare(p: string){  
+        this.payTotalFare=p;
+        // console.log(this.payTotalFare);
+        setTimeout(()=>{
+        if((this.getFlexiFare < this.minamount) || (this.getFlexiFare) > this.maxamount) {
+        this.Isflexipayeligible = false;
+        this.sendflexiAmount.emit([{key: "0", value: "0"}]);
+        this.showflexipaydefaultsection = true;
+        this.showFlexiOTP=false;
+        this.showVerificationDetails = false;
+        this.selectedIndex = -1;
+        this.flexiemisubmitted = false;
+        this.flexipayOtpResponse = false;
+        this.showcalcsection = false;
+        }
+        });
+        this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
+        this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
+        this.flexipayArr=this.commonHelper.flexipayIntcalc(this.payTotalFare);
+        };
+
+        REWARD_MOBILE:string;
+        @Input() set passREWARD_MOBILE(p: string){  
+        this.REWARD_MOBILE=p;
+        };
 
 
-		
-		serviceId:string;
-		@Input() set passServiceId(p: string){  
-		this.serviceId=p;
-		};
-		
-		IsDcemiEligibleFlag = false;
-		
-		@Input() set passIsDcemiEligibleFlag(p: boolean){  
-		this.IsDcemiEligibleFlag=p;
-		};
+        ServiceToken:any;  
+        @Input() partnerToken;    
+        MAIN_SITE_URL:string;
+        monthArray:any[];
+        yearArray:any[];
+        emiArray:any[];
+        emiInterst:any[];
+        emiDebitArray:any[];
+        emiDebitInterst:any[];
+
+        submittedCreditForm = false;
+        submittedUpiForm= false;
+        submittedPayzappForm= false;
+        submittedNetBankingForm= false;
+        submittedHdfcPgForm= false;
+        submittedEmiForm= false;
+        submittedPayForm= false;
+        submittedSaveCardForm= false;
+        domainName:string;
+        pgSettingsHDFCPG:number=0;
+        pgSettingsCYBER:number=0;
+        pgSettingsNETBANKING:number=0;
+        pgSettingsEMI:number=0;
+        pgSettingsPAYZAPP:number=0;
+        pgSettingsTESTPG:number=0;
+        pgSettingsDEBITEMI:number=0;
+        pgSettingsUPI:number=0;
+        isLoggedIn:boolean=false;
+        selectedCardIndex:number=0;
+        defaultCardVal:string;
+        pgSettingFlexipayEMI:number=0;
+        flexipaySlected:any[];
+        intrstopay:any;
+
+        bookingRefNumber:string;
+        orderReferenceNumber:string;
+        ctype:string;
+        payTotalFare;
+        payActualFare;
+        passData;
+        passFareData;
+        pgSettingsCYBERToken:number=0;
+        showRewardsBox:boolean=false;
+        couponApplied:boolean=false;
+        couponShow:boolean=false;
+        coupons:any=[];
+        indexCoupon: any[];
+        coupon_id: any;
+        coupon_name: string;
+        coupon_code: string;
+        coupon_type: string;
+        couponError: string;
+        coupon_min_value: number;
+
+        showDebitEMI:boolean=true;
+        showDebitEMIOtp:boolean=false;
+        showDebitEMIOtpConfirmation:boolean=false;
+
+        DebitEMIFrom: FormGroup;
+        submittedDebitEMIFrom = false;
+        DCEMIapplicationId: string;
+        DCEMItenure: any;
+        DCEMISelectedAmount: any;
+        DCEMIConfirmResponse: any;
+        DCEMIError='';
+
+        DebitEMIOTPFrom: FormGroup;
+        submittedDebitEMIOTPFrom = false;
+
+        DebitEMIConfirmFrom: FormGroup;
+        submittedDebitEMIConfirmFrom = false;
+        customerInfo:any[];
+        guestLogin:boolean=false;
+        flexipayArr:any[];
+        flexipayArrDefault:any[];
+        flexiintrest:any;
+        showvalue:boolean = false;
+        flexiamnt:any;
+        flexipayForm:FormGroup;
+        flexipayOTPForm:FormGroup;
+        flexipayverifationform:FormGroup;
+        flexipayguestForm:FormGroup;
+        selectedperiod:number=15;
+        submittedflexiuserform:boolean=false;
+        flexivaliduserresp:any;
+        dcemivaliduserresp:any;
+        openflexiOtp:boolean = false;
+        flexipayOtpResponse:any;
+        dcemiOtpResponse:any;
+        showFlexiOTP:boolean = false;
+        showVerificationDetails:boolean = false;
+        showflexipaydefaultsection:boolean = true;
+        selectedIndex: number = -1;
+        showcalcsection: boolean= false;
+        flexiemisubmitted= false;
+        flexiOTPsubmitted = false;
+        flexipayfinalSubmit = false;
+        flexipayEligibleError:any;
+        validateOTPresp:any;
+        dcemi_validateOTPresp:any;
+        flexiOTPerror:any;
+        flexifinalamount:any;
 
 
-		Isflexipayeligible:boolean = false;
-		flexiarray:any;
+        fp_token:string=''; 
+        fb_bankReferenceNo:string='';
+        fb_merchantReferenceNo:string='';
+        fp_total_price:string='';
+        fp_interestRate:string='';
+        fp_tenure:string='';
 
-		@Input() set passFlexipayEligibleFlag(p: boolean){
-			this.Isflexipayeligible = p;
-		}
-		isactualLogin:any;
+        dcemi_token:string=''; 
+        dcemi_bankReferenceNo:string='';
+        dcemi_merchantReferenceNo:string='';
+        dcemi_interestRate:string='';
+        dcemi_tenure:string='';
 
-		@Input() set passactualLogin(p: boolean){
-			this.isactualLogin = p;
-		}
-		@Input() set passTotalFare(p: string){  
-			this.payTotalFare=p;
-			// console.log(this.payTotalFare);
-			setTimeout(()=>{
-				if((this.getFlexiFare < this.minamount) || (this.getFlexiFare) > this.maxamount) {
-				this.Isflexipayeligible = false;
-				this.sendflexiAmount.emit([{key: "0", value: "0"}]);
-				this.showflexipaydefaultsection = true;
-				this.showFlexiOTP=false;
-				this.showVerificationDetails = false;
-				this.selectedIndex = -1;
-				this.flexiemisubmitted = false;
-				this.flexipayOtpResponse = false;
-				this.showcalcsection = false;
-				}
-			});
-			this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
-			this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
-			this.flexipayArr=this.commonHelper.flexipayIntcalc(this.payTotalFare);
-			};
+        fpGuestsession:boolean = false;
+        guestcardinvaliderror:any;
+        flexiGuestformSubmitted = false;
+        guestflexierror:any;
+        count:number=0;
+        pass_coupon_status:any;
+        showNONSPCsuccessModal:any;
+        availablePGids:any=[];
+        passpgtype:any;
+        openNoneligiblecouponDialog:any;
+        flexiPayNewcalcArr:any;
+        showFlexiValue:any;
+        flexipayPGvalue:any;
+        dfBookingDetails:any;
+        payzrestriction:boolean=false;
+        @ViewChild('flexipanelsection') public panel:ElementRef;
 
 
 
-		
-		REWARD_MOBILE:string;
-		@Input() set passREWARD_MOBILE(p: string){  
-		this.REWARD_MOBILE=p;
-		};
-		
-		
-		Partnertoken:any;
-		ServiceToken:any;  
-		@Input() partnerToken;    
-		MAIN_SITE_URL:string;
-		monthArray:any[];
-		yearArray:any[];
-		emiArray:any[];
-		emiInterst:any[];
-		emiDebitArray:any[];
-		emiDebitInterst:any[];
-		
-		submittedCreditForm = false;
-		submittedUpiForm= false;
-		submittedPayzappForm= false;
-		submittedNetBankingForm= false;
-		submittedHdfcPgForm= false;
-		submittedEmiForm= false;
-		submittedPayForm= false;
-		submittedSaveCardForm= false;
-		domainName:string;
-		pgSettingsHDFCPG:number=0;
-		pgSettingsCYBER:number=0;
-		pgSettingsNETBANKING:number=0;
-		pgSettingsEMI:number=0;
-		pgSettingsPAYZAPP:number=0;
-		pgSettingsTESTPG:number=0;
-		pgSettingsDEBITEMI:number=0;
-		pgSettingsUPI:number=0;
-		isLoggedIn:boolean=false;
-		selectedCardIndex:number=0;
-		defaultCardVal:string;
-		pgSettingFlexipayEMI:number=0;
-		flexipaySlected:any[];
-		intrstopay:any;
-		
-		bookingRefNumber:string;
-		orderReferenceNumber:string;
-		ctype:string;
-		payTotalFare;
-		payActualFare;
-		passData;
-		passFareData;
-pgSettingsCYBERToken:number=0;
-		showRewardsBox:boolean=false;
-		couponApplied:boolean=false;
-		couponShow:boolean=false;
-		coupons:any=[];
-		indexCoupon: any[];
-		coupon_id: any;
-		coupon_name: string;
-                coupon_code: string;
-		coupon_type: string;
-		couponError: string;
-		coupon_min_value: number;
-		
-		showDebitEMI:boolean=true;
-		showDebitEMIOtp:boolean=false;
-		showDebitEMIOtpConfirmation:boolean=false;
-		
-		DebitEMIFrom: FormGroup;
-		submittedDebitEMIFrom = false;
-		DCEMIapplicationId: string;
-		DCEMItenure: any;
-		DCEMISelectedAmount: any;
-		DCEMIConfirmResponse: any;
-		DCEMIError='';
-		
-		DebitEMIOTPFrom: FormGroup;
-		submittedDebitEMIOTPFrom = false;
-		
-		DebitEMIConfirmFrom: FormGroup;
-		submittedDebitEMIConfirmFrom = false;
-		customerInfo:any[];
-		guestLogin:boolean=false;
-		flexipayArr:any[];
-		flexipayArrDefault:any[];
-		flexiintrest:any;
-		showvalue:boolean = false;
-		flexiamnt:any;
-		flexipayForm:FormGroup;
-		flexipayOTPForm:FormGroup;
-		flexipayverifationform:FormGroup;
-		flexipayguestForm:FormGroup;
-		selectedperiod:number=15;
-		submittedflexiuserform:boolean=false;
-		flexivaliduserresp:any;
-		dcemivaliduserresp:any;
-		openflexiOtp:boolean = false;
-		flexipayOtpResponse:any;
-		dcemiOtpResponse:any;
-		showFlexiOTP:boolean = false;
-		showVerificationDetails:boolean = false;
-		showflexipaydefaultsection:boolean = true;
-		selectedIndex: number = -1;
-		showcalcsection: boolean= false;
-		flexiemisubmitted= false;
-		flexiOTPsubmitted = false;
-		flexipayfinalSubmit = false;
-		flexipayEligibleError:any;
-		validateOTPresp:any;
-		dcemi_validateOTPresp:any;
-		flexiOTPerror:any;
-		flexifinalamount:any;
-		
-		
-		fp_token:string=''; 
-		fb_bankReferenceNo:string='';
-		fb_merchantReferenceNo:string='';
-    	fp_total_price:string='';
-	  	fp_interestRate:string='';
-		fp_tenure:string='';
-
-		dcemi_token:string=''; 
-		dcemi_bankReferenceNo:string='';
-		dcemi_merchantReferenceNo:string='';
-	  	dcemi_interestRate:string='';
-		dcemi_tenure:string='';
-
-		fpGuestsession:boolean = false;
-		guestcardinvaliderror:any;
-		flexiGuestformSubmitted = false;
-		guestflexierror:any;
-		count:number=0;
-		pass_coupon_status:any;
-		showNONSPCsuccessModal:any;
-		availablePGids:any=[];
-		passpgtype:any;
-		openNoneligiblecouponDialog:any;
-		flexiPayNewcalcArr:any;
-		showFlexiValue:any;
-		flexipayPGvalue:any;
-		dfBookingDetails:any;
-		   payzrestriction:boolean=false;
-	@ViewChild('flexipanelsection') public panel:ElementRef;
-	
-
-		
-		/***----------REMOVE COUPON ----------***/
-		@Input() remove_Coupon:any[];
-		remove_Coupon_id:any;
-		pointsPG: number = 0;
-		enableNONSPC:any;
-		serviceSettings:any;
-		enableNONSPCForCoupon:any;
-		ispgAllowed:boolean = false;
-		allowPGOnRemoveCoupon:boolean = false;
+        /***----------REMOVE COUPON ----------***/
+        @Input() remove_Coupon:any[];
+        remove_Coupon_id:any;
+        pointsPG: number = 0;
+        enableNONSPC:any;
+        serviceSettings:any;
+        enableNONSPCForCoupon:any;
+        ispgAllowed:boolean = false;
+        allowPGOnRemoveCoupon:boolean = false;
 		
 		
 	ngOnChanges(){
-		this.remove_Coupon_id = this.remove_Coupon;
-			if(this.remove_Coupon){
-				this.coupon_name = "";
-		this.coupon_code = "";
-			}
-		
+        this.remove_Coupon_id = this.remove_Coupon;
+        if(this.remove_Coupon){
+        this.coupon_name = "";
+        this.coupon_code = "";
+        }
 	}
-	@HostListener('window:popstate', ['$event'])
-	onPopState(event) {
-      this.communicate.raiseEvent4(true);
-	}
+
 	
 	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,public restApi:RestapiService,private http: HttpClient,private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute,private cookieService: CookieService,private sg: SimpleGlobal,public commonHelper: CommonHelper,private location: Location,private spinnerService: NgxSpinnerService,public dialog: MatDialog, public overlay: Overlay,private pay: PayService,private appConfigService:AppConfigService,private communicate: CommunicationService, private commaSeparatorPipe: commaSeparatorPipe) { 
-		this.assetPath=this.sg['assetPath']; 
-		this.serviceSettings=this.appConfigService.getConfig();
-		this.domainPath=this.sg['domainPath'];
-		this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-	
+                this.assetPath=this.sg['assetPath']; 
+                this.serviceSettings=this.appConfigService.getConfig();
+                this.domainPath=this.sg['domainPath'];
+                this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+                this.enableNONSPC = this.serviceSettings.enableNONSPC;
+                this.enableNONSPCForCoupon = this.serviceSettings.enableNONSPCForCoupon;
+                this.showNONSPCsuccessModal = this.serviceSettings.showNONSPCsuccessModal;
+                this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
+                this.siteKey=this.serviceSettings.SITEKEY;
+                this.ServiceToken =this.serviceId;
+                this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
 		
 		this.spinnerService.show();
 		      setTimeout(() => {
-    //Check Laravel Seesion
-        if(this.sg['customerInfo']){
-           this.customerInfo=this.sg['customerInfo'];
-           console.log( this.customerInfo);
-		  if(this.sg['customerInfo']["org_session"]==1){
-		var customerInfo = this.sg['customerInfo'];
+                        //Check Laravel Seesion
+                        if(this.sg['customerInfo']){
+                        this.customerInfo=this.sg['customerInfo'];
+                        if(this.sg['customerInfo']["org_session"]==1){
+                        var customerInfo = this.sg['customerInfo'];
 
-		this.rest.updateCardDetails(customerInfo);
-		this.guestLogin = this.customerInfo["guestLogin"];
-		if(customerInfo["guestLogin"]==true){
-		if(this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY==1){
-			this.Isflexipayeligible = true;
-			this.fpGuestsession = true;
-			this.showFlexiOTP=false;
-			this.showflexipaydefaultsection = false;
-			this.showVerificationDetails = false;
-			this.showcalcsection = false;
-			this.flexipayOtpResponse = false;
-			// this.REWARD_MOBILE = this.customerInfo['mobile'];
-			if(this.customerInfo['mobile'] == '0'){
-				this.REWARD_MOBILE = '';
-			}else this.REWARD_MOBILE = this.customerInfo['mobile'];
+                        this.rest.updateCardDetails(customerInfo);
+                        this.guestLogin = this.customerInfo["guestLogin"];
+                        if(customerInfo["guestLogin"]==true){
+                        if(this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY==1){
+                        this.Isflexipayeligible = true;
+                        this.fpGuestsession = true;
+                        this.showFlexiOTP=false;
+                        this.showflexipaydefaultsection = false;
+                        this.showVerificationDetails = false;
+                        this.showcalcsection = false;
+                        this.flexipayOtpResponse = false;
+                        // this.REWARD_MOBILE = this.customerInfo['mobile'];
+                        if(this.customerInfo['mobile'] == '0'){
+                        this.REWARD_MOBILE = '';
+                        }else this.REWARD_MOBILE = this.customerInfo['mobile'];
 
-			}
-		this.isLoggedIn = true;
-		}else{
-		this.isLoggedIn = true;
-		}
-		this.spinnerService.hide();
-		}else{
-		this.spinnerService.hide();
-		this.isLoggedIn = false;
-		}
-		}else {
-		this.isLoggedIn = false;
-		this.pgSettingsHDFCPG = 0;
-		this.spinnerService.hide();
-		 }
-     }, 50);
+                        }
+                        this.isLoggedIn = true;
+                        }else{
+                        this.isLoggedIn = true;
+                        }
+                         this.loadPayment();
+                        this.spinnerService.hide();
+                        }else{
+                         this.loadPayment();
+                        this.spinnerService.hide();
+                        this.isLoggedIn = false;
+                        }
+                        }else {
+                        this.isLoggedIn = false;
+                        this.pgSettingsHDFCPG = 0;
+                         this.loadPayment();
+                        this.spinnerService.hide();
+                        }
+             }, 50);
 
-		this.enableNONSPC = this.serviceSettings.enableNONSPC;
-		this.enableNONSPCForCoupon = this.serviceSettings.enableNONSPCForCoupon;
-		this.showNONSPCsuccessModal = this.serviceSettings.showNONSPCsuccessModal;
-		this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
+
 	}
-	
+	loadPayment(){
+        if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']][this.serviceId] == 1) {
+        this.showRewardsBox=true;
+        }else{
+        this.showRewardsBox=false;
+        }
+
+        this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
+        this.domainName=this.sg['domainName'];
+        this.pgSettingsHDFCPG=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].HDFCPG;
+        this.pgSettingsCYBERToken=this.serviceSettings.PAYSETTINGS.enableTokenization;
+        this.pgSettingsCYBER=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].CYBER;
+        this.pgSettingsNETBANKING=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].NETBANKING;
+        this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
+        this.pgSettingsTESTPG=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].TESTPG;
+        this.pgSettingsDEBITEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].DEBIT_EMI;
+        this.pgSettingsUPI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].UPI;
+        this.pgSettingFlexipayEMI = this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY;
+
+        const cookieExistPay: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+
+        if(cookieExistPay)
+        this.pgSettingsPAYZAPP=1;
+        else
+        this.pgSettingsPAYZAPP=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].PAYZAPP;
+
+
+        this.monthArray=Array.from(new Array(Number(12)),(val,index)=>index);
+        this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
+
+
+        if(AppConfig.EMI_FROM_API==0){
+        this.emiInterst=AppConfig.emiInterst;
+        }else{
+        this.restApi.getCCEMIDetails().subscribe(response => {
+        this.emiInterst = response;
+        });
+        }
+
+        this.flexiamnt = (this.payTotalFare);
+        this.flexipayArrDefault = this.commonHelper.flexipayIntcalc(this.payTotalFare);
+        if(AppConfig.EMI_FROM_API==0){
+        this.flexiintrest = AppConfig.flexipayInt;
+        }else{
+        this.restApi.getFlexipayDetails().subscribe(response => {
+        this.flexiintrest = response;
+        });
+        }
+        this.flexipayPGvalue = this.payTotalFare;
+        this.flexiPayNewcalcArr = this.commonHelper.flexipayIntcalc(this.flexipayPGvalue);
+        this.showFlexiValue = this.payTotalFare;
+
+
+        this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
+
+        if(AppConfig.EMI_FROM_API==0){
+        this.emiDebitInterst=AppConfig.emiDebitInterst;
+        }else{
+        this.restApi.getDCEMIDetails().subscribe(response => {
+        this.emiDebitInterst = response;
+        });
+        }
+        this.upiForm = this.formBuilder.group({
+        virtual_address:['',Validators.required],
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+
+        this.payzappForm = this.formBuilder.group({
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+
+        this.netbankingForm = this.formBuilder.group({
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+
+        this.emiForm = this.formBuilder.group({
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+        this.hdfcPgForm = this.formBuilder.group({
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+
+        let res = [];
+        for (let i = new Date().getFullYear(); i < (new Date().getFullYear()+10); i++) {
+        res.push(i);
+        }
+        this.yearArray=res;
+
+        this.creditForm = this.formBuilder.group({
+        cardnumber:['',  [Validators.required,CreditCardValidators.validateCCNumber,Validators.minLength(14)],this.isCardValid.bind(this)],
+        nameoncard:['', Validators.required],
+        expiryMonth:['', [ Validators.required,Validators.pattern("^[0-9]*$")]],
+        expiryYear:['', [ Validators.required,Validators.pattern("^[0-9]*$")]],
+        cvvnumber:['',  [ Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(3)]],
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+
+        this.DebitEMIFrom = this.formBuilder.group({
+        cardnumber:['',  [Validators.required]],
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+
+        this.DebitEMIOTPFrom = this.formBuilder.group({
+        otpnumber:['', [ Validators.required,Validators.pattern("^[0-9]*$")]]
+        });
+
+        this.DebitEMIConfirmFrom = this.formBuilder.group({
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        termscondition1:['',[Validators.required,Validators.pattern('true')]],
+        });
+
+        this.flexipayForm = this.formBuilder.group({
+        flexiOptions:['',[Validators.required]],
+        cardnumber:['',[Validators.required,Validators.minLength(14),Validators.maxLength(16),Validators.pattern('^[0-9]*$')]],
+        termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
+        this.flexipayOTPForm = this.formBuilder.group({
+        otpNumber:['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(6)]]
+        })
+        this.flexipayverifationform = this.formBuilder.group({
+        terms:['',[Validators.required,Validators.pattern('true')]]
+
+        })
+        this.flexipayguestForm = this.formBuilder.group({
+        mobileNumber:['',[Validators.required,Validators.minLength(10)]],
+
+        })
+
+        this.payForm = this.formBuilder.group({
+        orderReferenceNumber:[, Validators.required],
+        ctype:['', Validators.required],
+        _token:[this.XSRFTOKEN, Validators.required],
+        });
+        this.MAIN_SITE_URL=environment.MAIN_SITE_URL+this.sg['domainPath'];
+        this.domainRedirect=environment.MAIN_SITE_URL+this.domainPath;
+
+        // const promoForm: FormGroup = new FormGroup({});
+        // promoForm.addControl('promoCode', new FormControl('',Validators.required));
+        // promoForm.addControl('couponCaptcha', new FormControl({ disabled: true, value: '' }));
+        // this.promoForm = promoForm;
+
+        this.promoForm = new FormGroup({
+        promoCode: new FormControl('',Validators.required),
+        couponCaptcha: new FormControl({value: '', disabled: true},[Validators.required])
+        });
+
+        const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+        if(cookieExistsp){  
+        this.payzrestriction=true;
+        setTimeout(()=>{
+        $('#payzappCard').trigger('click');
+        $('html,body').animate({ scrollTop: 9999 }, 'slow');
+        });	
+        }
+
+     }
 	hidecheckoutPay(type){
 	
 	 if(type==1)
@@ -435,282 +578,115 @@ pgSettingsCYBERToken:number=0;
 	}
 	
 	pgSelect(pgType){
-		//console.log(pgType);
-		if(pgType=='DEBIT_EMI' && this.customerInfo["guestLogin"]==true){
-			this.showDebitEMI=false;
-			this.showDebitEMIOtp=false;
-			this.showDebitEMIOtpConfirmation=false;
-			
-			//document.getElementById("pay-dcemi-info").scrollIntoView();
-			$('#pay-dcemi-info').hide(); 
-			const dialogDcemi = this.dialog.open(dcemiDialog,{
-				data: {
-					customerInfo: this.customerInfo
-				},
-				scrollStrategy: this.overlay.scrollStrategies.noop()
-			});
-			
-			dialogDcemi.afterClosed().subscribe(result => {
-				if(result!=undefined){ 
-						var customerMobile = result;
-						var checkEligibleParams = {
-			                 'client_token': 'HDFC243',
-			                 'mobile': customerMobile,
-			            };
-                        var postCheckEligibleParam = {
-                            postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
-                        };
-                        this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {	
-                            if (results.result) {
-								this.REWARD_MOBILE=customerMobile;
-                                let result = JSON.parse(this.EncrDecr.get(results.result));
-								//console.log(result.eligible);
-								if(result.eligible){
-									let shadesEl=document.querySelector('#payDebitEmiOption'); 
-									shadesEl.classList.add('show');
-									$('#pay-dcemi-info').show();
-									//document.getElementById("pay-dcemi-info").scrollIntoView();
-									this.showDebitEMI=true;
-									this.selectedPg=pgType;
-									
-									
-								}else{
-									var message="You are not eligible for Debit Card EMI payment";
-									alert(message);
-								}
-                            }
-                        });
-				}else{
-					//this.showDebitEMI=true;
-				}
-			});
-		}
+                //console.log(pgType);
+                if(pgType=='DEBIT_EMI' && this.customerInfo["guestLogin"]==true){
+                this.showDebitEMI=false;
+                this.showDebitEMIOtp=false;
+                this.showDebitEMIOtpConfirmation=false;
 
-if(pgType=='FLEXI_PAY'){
-        let getFareData=sessionStorage.getItem(this.passSessionKey+'-passFareData');
-        if(getFareData){
-        let fareDataDecoded= JSON.parse(atob(getFareData));
-        let totalFare = fareDataDecoded.totalFare;
-        if(this.Isflexipayeligible && this.pgSettingFlexipayEMI && totalFare >= this.minamount &&  totalFare <= this.maxamount && pgType!='FLEXI_PAY'){
-        this.sendtotalfare.emit(fareDataDecoded.totalFare);  
-        }
-        }
+                //document.getElementById("pay-dcemi-info").scrollIntoView();
+                $('#pay-dcemi-info').hide(); 
+                const dialogDcemi = this.dialog.open(dcemiDialog,{
+                data: {
+                customerInfo: this.customerInfo
+                },
+                scrollStrategy: this.overlay.scrollStrategies.noop()
+                });
 
-	this.sendflexiAmount.emit([{key: "0", value: "0"}]);
-	this.showflexipaydefaultsection = true;
-	this.showFlexiOTP=false;
-	this.showVerificationDetails = false;
-	this.selectedIndex = -1;
-	this.flexiemisubmitted = false;
-	this.flexipayOtpResponse = false;
-	this.showcalcsection = false;
-	this.flexipayForm.reset();
-	this.flexipayOTPForm.reset();
-	this.flexipayverifationform.reset();
-	this.flexipayPGvalue = this.payTotalFare;
-	this.flexiPayNewcalcArr = this.commonHelper.flexipayIntcalc(this.flexipayPGvalue);
-	this.showFlexiValue = this.payTotalFare;
-}
-if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
-	this.sendflexiAmount.emit([{key: "0", value: "0"}]);
-	this.showflexipaydefaultsection = false;
-	this.showFlexiOTP=false;
-	this.showVerificationDetails = false;
-	this.selectedIndex = -1;
-	this.flexiemisubmitted = false;
-	this.flexipayOtpResponse = false;
-	this.showcalcsection = false;
-	this.fpGuestsession = true;
-	this.flexipayForm.reset();
-	this.flexipayOTPForm.reset();
-	this.flexipayverifationform.reset();
-}
-		
-		else{
-		this.selectedPg=pgType;
-		
-		}
+                dialogDcemi.afterClosed().subscribe(result => {
+                if(result!=undefined){ 
+                var customerMobile = result;
+                var checkEligibleParams = {
+                'client_token': 'HDFC243',
+                'mobile': customerMobile,
+                };
+                var postCheckEligibleParam = {
+                postData: this.EncrDecr.set(JSON.stringify(checkEligibleParams))
+                };
+                this.rest.IsDcemiEligible(postCheckEligibleParam).subscribe(results => {	
+                if (results.result) {
+                this.REWARD_MOBILE=customerMobile;
+                let result = JSON.parse(this.EncrDecr.get(results.result));
+                //console.log(result.eligible);
+                if(result.eligible){
+                let shadesEl=document.querySelector('#payDebitEmiOption'); 
+                shadesEl.classList.add('show');
+                $('#pay-dcemi-info').show();
+                //document.getElementById("pay-dcemi-info").scrollIntoView();
+                this.showDebitEMI=true;
+                this.selectedPg=pgType;
+
+
+                }else{
+                var message="You are not eligible for Debit Card EMI payment";
+                alert(message);
+                }
+                }
+                });
+                }else{
+                //this.showDebitEMI=true;
+                }
+                });
+                }
+
+                if(pgType=='FLEXI_PAY'){
+                let getFareData=sessionStorage.getItem(this.passSessionKey+'-passFareData');
+                if(getFareData){
+                let fareDataDecoded= JSON.parse(atob(getFareData));
+                let totalFare = fareDataDecoded.totalFare;
+                if(this.Isflexipayeligible && this.pgSettingFlexipayEMI && totalFare >= this.minamount &&  totalFare <= this.maxamount && pgType!='FLEXI_PAY'){
+                this.sendtotalfare.emit(fareDataDecoded.totalFare);  
+                }
+                }
+
+                this.sendflexiAmount.emit([{key: "0", value: "0"}]);
+                this.showflexipaydefaultsection = true;
+                this.showFlexiOTP=false;
+                this.showVerificationDetails = false;
+                this.selectedIndex = -1;
+                this.flexiemisubmitted = false;
+                this.flexipayOtpResponse = false;
+                this.showcalcsection = false;
+                this.flexipayForm.reset();
+                this.flexipayOTPForm.reset();
+                this.flexipayverifationform.reset();
+                this.flexipayPGvalue = this.payTotalFare;
+                this.flexiPayNewcalcArr = this.commonHelper.flexipayIntcalc(this.flexipayPGvalue);
+                this.showFlexiValue = this.payTotalFare;
+                }
+                if(pgType=='FLEXI_PAY' && this.customerInfo["guestLogin"]==true){
+                this.sendflexiAmount.emit([{key: "0", value: "0"}]);
+                this.showflexipaydefaultsection = false;
+                this.showFlexiOTP=false;
+                this.showVerificationDetails = false;
+                this.selectedIndex = -1;
+                this.flexiemisubmitted = false;
+                this.flexipayOtpResponse = false;
+                this.showcalcsection = false;
+                this.fpGuestsession = true;
+                this.flexipayForm.reset();
+                this.flexipayOTPForm.reset();
+                this.flexipayverifationform.reset();
+                }
+
+                else{
+                this.selectedPg=pgType;
+
+                }
 	}
 			
 	ngOnInit() {
-	this.siteKey=this.serviceSettings.SITEKEY;
-		this.Partnertoken = this.partnerToken;
-		this.ServiceToken = "BUS";
-		
-                this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
-
-
-		
-		if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']]['Flight'] == 1) {
-			this.showRewardsBox=true;
-		}else{
-			this.showRewardsBox=false;
-		}
-
-
-	         this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
-
-
-			this.domainName=this.sg['domainName'];
-
-		
-			this.pgSettingsHDFCPG=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].HDFCPG;
-			  this.pgSettingsCYBERToken=this.serviceSettings.PAYSETTINGS.enableTokenization;
-			this.pgSettingsCYBER=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].CYBER;
-			this.pgSettingsNETBANKING=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].NETBANKING;
-			this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
-			
-			this.pgSettingsTESTPG=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].TESTPG;
-			this.pgSettingsDEBITEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].DEBIT_EMI;
-			this.pgSettingsUPI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].UPI;
-			this.pgSettingFlexipayEMI = this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY;
-			
-			 const cookieExistPay: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
-			
-			if(cookieExistPay)
-			this.pgSettingsPAYZAPP=1;
-			else
-			this.pgSettingsPAYZAPP=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].PAYZAPP;
-			
-					
-			this.monthArray=Array.from(new Array(Number(12)),(val,index)=>index);
-			this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
-			
-			
-			 if(AppConfig.EMI_FROM_API==0){
-			 this.emiInterst=AppConfig.emiInterst;
-			 }else{
-                        this.restApi.getCCEMIDetails().subscribe(response => {
-                        this.emiInterst = response;
-                        });
-	              }
-			
-			this.flexiamnt = (this.payTotalFare);
-			this.flexipayArrDefault = this.commonHelper.flexipayIntcalc(this.payTotalFare);
-			 if(AppConfig.EMI_FROM_API==0){
-			  this.flexiintrest = AppConfig.flexipayInt;
-			  }else{
-			this.restApi.getFlexipayDetails().subscribe(response => {
-	                 this.flexiintrest = response;
-	                });
-	                }
-			this.flexipayPGvalue = this.payTotalFare;
-			this.flexiPayNewcalcArr = this.commonHelper.flexipayIntcalc(this.flexipayPGvalue);
-			this.showFlexiValue = this.payTotalFare;
-		
-			
-			this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
-			
-			 if(AppConfig.EMI_FROM_API==0){
-			this.emiDebitInterst=AppConfig.emiDebitInterst;
-			}else{
-			this.restApi.getDCEMIDetails().subscribe(response => {
-	                 this.emiDebitInterst = response;
-	               });
-	               }
-			this.upiForm = this.formBuilder.group({
-			virtual_address:['',Validators.required],
-						termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-
-			this.payzappForm = this.formBuilder.group({
-						termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-
-						this.netbankingForm = this.formBuilder.group({
-						termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-
-				this.emiForm = this.formBuilder.group({
-						termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-			this.hdfcPgForm = this.formBuilder.group({
-						termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-
-			let res = [];
-			for (let i = new Date().getFullYear(); i < (new Date().getFullYear()+10); i++) {
-			res.push(i);
-			}
-			this.yearArray=res;
-			
-			this.creditForm = this.formBuilder.group({
-			cardnumber:['',  [Validators.required,CreditCardValidators.validateCCNumber,Validators.minLength(14)],this.isCardValid.bind(this)],
-			nameoncard:['', Validators.required],
-			expiryMonth:['', [ Validators.required,Validators.pattern("^[0-9]*$")]],
-			expiryYear:['', [ Validators.required,Validators.pattern("^[0-9]*$")]],
-			cvvnumber:['',  [ Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(3)]],
-			termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-			
-			this.DebitEMIFrom = this.formBuilder.group({
-						cardnumber:['',  [Validators.required]],
-					termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-
-			this.DebitEMIOTPFrom = this.formBuilder.group({
-						otpnumber:['', [ Validators.required,Validators.pattern("^[0-9]*$")]]
-			});
-			
-			this.DebitEMIConfirmFrom = this.formBuilder.group({
-					termscondition:['',[Validators.required,Validators.pattern('true')]],
-					termscondition1:['',[Validators.required,Validators.pattern('true')]],
-			});
-
-			this.flexipayForm = this.formBuilder.group({
-				flexiOptions:['',[Validators.required]],
-				cardnumber:['',[Validators.required,Validators.minLength(14),Validators.maxLength(16),Validators.pattern('^[0-9]*$')]],
-				termscondition:['',[Validators.required,Validators.pattern('true')]],
-			});
-			this.flexipayOTPForm = this.formBuilder.group({
-				otpNumber:['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(6)]]
-			})
-			this.flexipayverifationform = this.formBuilder.group({
-				terms:['',[Validators.required,Validators.pattern('true')]]
-			
-			})
-			this.flexipayguestForm = this.formBuilder.group({
-				mobileNumber:['',[Validators.required,Validators.minLength(10)]],
-
-			})
-
-			this.payForm = this.formBuilder.group({
-			orderReferenceNumber:[, Validators.required],
-			ctype:['', Validators.required],
-			_token:[this.XSRFTOKEN, Validators.required],
-			});
-			this.MAIN_SITE_URL=environment.MAIN_SITE_URL+this.sg['domainPath'];
-			this.domainRedirect=environment.MAIN_SITE_URL+this.domainPath;
-
-			// const promoForm: FormGroup = new FormGroup({});
-			// promoForm.addControl('promoCode', new FormControl('',Validators.required));
-			// promoForm.addControl('couponCaptcha', new FormControl({ disabled: true, value: '' }));
-			// this.promoForm = promoForm;
-
-			this.promoForm = new FormGroup({
-				promoCode: new FormControl('',Validators.required),
-				couponCaptcha: new FormControl({value: '', disabled: true},[Validators.required])
-			});
-			
-			       const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
-                if(cookieExistsp){  
-                  this.payzrestriction=true;
-                setTimeout(()=>{
-                   $('#payzappCard').trigger('click');
-                    $('html,body').animate({ scrollTop: 9999 }, 'slow');
-                  });	
-        }
-
+	
 	}
 	@Output() sendflexiAmount = new EventEmitter<any>();
 
-	//validate guest mobile number
-emiOptionChange(key){
-$('.emiTenure').addClass('hidden');
-$('.emiTenure-'+key).removeClass('hidden');
-$('.emi_check_radio').removeClass('emi-active');
-$('.emi_check_radio-'+key).addClass('emi-active');
-}
+        //validate guest mobile number
+        emiOptionChange(key){
+        $('.emiTenure').addClass('hidden');
+        $('.emiTenure-'+key).removeClass('hidden');
+        $('.emi_check_radio').removeClass('emi-active');
+        $('.emi_check_radio-'+key).addClass('emi-active');
+        }
 	fpGuestmobile(){
 
 	this.flexiGuestformSubmitted = true;
@@ -1819,7 +1795,7 @@ checkNonSpcOfferforHDFCcards(){
 		splitCard = cardNumber.substring(0, 6);
 		var request = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare-this.convinenceFee),
@@ -1934,7 +1910,7 @@ var checkCyberValue = searchValue.indexOf(5);
 		splitCard = cardNumber.substring(0, 6);
 		var request1 = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare- this.convinenceFee),
@@ -2091,7 +2067,7 @@ checkNonSpcOfferforSaveCard(){
 		//var card_bin=this.cardData[cardRow]['bin'];
 		var request = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": this.payActualFare,
@@ -2194,7 +2170,7 @@ checkNonSpcOfferforSaveCard(){
 		//var card_bin=this.cardData[cardRow]['bin'];
 		var request1 = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": this.payActualFare,
