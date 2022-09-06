@@ -202,7 +202,8 @@ otperrormsg :any;
     this.spinnerService.show();
     this.pay.getcustomercardpoint(passData).subscribe(response => {
       this.response1=response;
-      if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
+       this.spinnerService.hide();
+      if(this.response1 && this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
       {
         this.errorMsg0=""
         this.hasError =false;
@@ -222,12 +223,12 @@ otperrormsg :any;
       }else{
         this.hasError =true;
         this.errorMsg0="Something went wrong";
-        if(this.response1['message']!=undefined)
+        if(this.response1 && this.response1['message']!=undefined)
         {
           this.errorMsg0=this.response1['message'];
         }
       }
-      this.spinnerService.hide();
+     
     }, (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
       this.errorMsg0=message;
