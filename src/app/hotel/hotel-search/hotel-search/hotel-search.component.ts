@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { reduce, Subscription } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 
 @Component({
@@ -13,6 +13,8 @@ export class HotelSearchComponent implements OnInit ,OnDestroy {
   sub:Subscription;
   hotelList:any;
   cityList:any;
+  totalAdultsCount:number = 1;
+  totalChildCount:number = 0;
 
   @ViewChild('hideShowCity')hideShowCity:ElementRef;
   @ViewChild('showHideGuest')showHideGuest:ElementRef;
@@ -57,60 +59,60 @@ export class HotelSearchComponent implements OnInit ,OnDestroy {
       
   }
 
-  increaseChild(i) {
-    debugger
-    let parseChild:any;
-    let totalChild:any = this.roomsDetails.controls[i].get('numberOfChildren').setValue(parseChild + 1);
-    if(parseChild < 5)  {
-    totalChild = parseChild.setValue()
-   
-  }
-  console.log(totalChild);
-  
-    
-  // if (parseInt(this.flightData.value.child) < 9) {
-  //   this.flightData
-  //     .get('child')
-  //     .setValue(parseInt(this.flightData.value.child) + 1);
-  //   this.totalPassenger =
-  //     parseInt(this.flightData.value.adults) +
-  //     parseInt(this.flightData.value.child) +
-  //     parseInt(this.flightData.value.infants);
-  //   if (this.totalPassenger == 9) {
-  //     this.disableParent = true;
-  //     this.disablechildren = true;
-  //     this.disableinfants = true;
-  //   }
-  // }
-       
-
- 
+  //Increase Child and adult value
+  increaseCount(i,item,title) {
+    let totalCount;
+    let adultBtn:any = document.getElementById('adultBtn_' + i);
+    let childBtn:any = document.getElementById('childBtn_' + i);
+    // this.checkTotalCountValue = totalCount > 4 ? alert("Can add only 5 guests in a room") : '';
+    if(title == "child"){
+      item.value.numberOfChildren = +item.value.numberOfChildren + 1;
+    }
+    else {
+      item.value.numberOfAdults = +item.value.numberOfAdults + 1;
+      
+    }
+    totalCount =  parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren) ;
+    totalCount > 4 ?  childBtn.disabled = true : childBtn.disabled = false;
+    totalCount > 4 ?  adultBtn.disabled = true :  adultBtn.disabled = false;
+    this.showTotalCountOfAdult()
+    this.showTotalCountsOfChild()
   }
 
-  decreaseChild(i) {
-    // if (parseInt(this.flightData.value.child) > 0) {
-    //   this.flightData
-    //     .get('child')
-    //     .setValue(parseInt(this.flightData.value.child) - 1);
-    //   this.totalPassenger =
-    //     parseInt(this.flightData.value.adults) +
-    //     parseInt(this.flightData.value.child) +
-    //     parseInt(this.flightData.value.infants);
-    //   if (this.totalPassenger < 9) {
-    //     this.disableParent = false;
-    //     this.disablechildren = false;
-    //     if (
-    //       parseInt(this.flightData.value.infants) ==
-    //       parseInt(this.flightData.value.adults)
-    //     ) {
-    //       this.disableinfants = true;
-    //     } else {
-    //       this.disableinfants = false;
-    //     }
-    //   }
-    // }
+  //Decrease child and adult value
+  decreaseCount(i , item ,title) {
+    let totalCount;
+    let adultBtn:any = document.getElementById('adultBtn_' + i);
+    let childBtn:any = document.getElementById('childBtn_' + i);
+    // this.checkTotalCountValue = totalCount > 4 ? alert("Can add only 5 guests in a room") : '';
+    if(title == "child"){
+      item.value.numberOfChildren = +item.value.numberOfChildren - 1;
+    }
+    else {
+      item.value.numberOfAdults = +item.value.numberOfAdults - 1;
+    }
+    totalCount =  parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren) ;
+    totalCount < 5 ?  childBtn.disabled = false : childBtn.disabled = true;
+    totalCount < 5 ?  adultBtn.disabled = false:  adultBtn.disabled = true;
+    this.showTotalCountOfAdult()
+    this.showTotalCountsOfChild()
   }
 
+  showTotalCountOfAdult(){
+    let totalOfAdults:any;
+    totalOfAdults =  this.hotelSearchForm.value.rooms
+    this.totalAdultsCount = totalOfAdults.filter((item) => item.numberOfAdults)
+      .map((item) => +item.numberOfAdults)
+      .reduce((sum, current) => sum + current);
+  }
+
+  showTotalCountsOfChild(){
+    let totalOfChild:any;
+    totalOfChild =  this.hotelSearchForm.value.rooms
+    this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren)
+      .map((item) => +item.numberOfChildren)
+      .reduce((sum, current) => sum + current);
+  }
 
   showGuest(val){
     if(val == 'show'){
@@ -127,9 +129,9 @@ export class HotelSearchComponent implements OnInit ,OnDestroy {
 
   personDetails(): FormGroup {
     return this._fb.group({
-      room: [],
-      numberOfAdults: [''],
-      numberOfChildren:['']
+      room: [1],
+      numberOfAdults: ['1'],
+      numberOfChildren:['0']
     })
  }
 
