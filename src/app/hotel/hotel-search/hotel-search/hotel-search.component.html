@@ -1,3 +1,225 @@
-<br>
+<div class="travel-select-data-area">
+    <form [formGroup]="hotelSearchForm">
+        <div class="hotel-search mt-20">
+            <div class="hotel-area">
+                <div class="hotel-area-item" (click)="showCity('show')">
+                    <span class="small-text">CITY, Hotel or Area</span>
+                    <h5 class="large-text">Gujarat</h5>
+                    <span class="small-text hotel-city">India</span>
+                </div>
+                <div class="hotel-search-list" #hideShowCity>
+                    <div class="mob-title">
+                        <h3>City, Hotel or Area</h3>
+                        <a href="javaScript:void(0)" class="mob-close" (click)="showCity('hide')">
+                            <img src="assets/images/icons/close.png" alt="">
+                        </a>
+                    </div>
+                    <div class="hotel-from-data-search">
+                        <span>from</span>
+                        <input type="text" class="w-100" id="" placeholder="Search City" formControlName="city">
+                    </div>
+                    <ul class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                        <li class="hotel-from-ul-li">
+                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a">
+                                <div class="hotel-from-name">
+                                    <img src="assets/images/hotel/icon/hotel.png" alt="">
+                                    <h6>Goa, Goa, India</h6>
+                                    <p>528 Hotels</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="hotel-from-ul-li">
+                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a">
+                                <div class="hotel-from-name">
+                                    <img src="assets/images/hotel/icon/hotel.png" alt="">
+                                    <h6>North Goa, Goa, India</h6>
+                                    <p>528 Hotels</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="hotel-from-ul-li">
+                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a">
+                                <div class="hotel-from-name">
+                                    <img src="assets/images/hotel/icon/hotel.png" alt="">
+                                    <h6>Bardez, Goa, India</h6>
+                                    <p>528 Hotels</p>
+                                </div>
+                            </a>
+                        </li>
 
-<h6 class="text-center" (click)="searchHotel()">Inprogress.</h6>
+                    </ul>
+                </div>
+            </div>
+            <div class="hotel-in-out">
+                <div class="hotel-in" (click)="picker.open()">
+                    <span class="small-text">CHECK-IN</span>
+                    <h5 class="large-text">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
+                    <span class="hotel-city small-text">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
+                    <div class="hotel-date">
+                        <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                            <input matInput [matDatepicker]="picker" formControlName="checkIn">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <img src="./assets/images/icons/date.png" class="single-datepicker" alt="">
+                    </div>
+                </div>
+                <div class="hotel-out" (click)="picker2.open()">
+                    <span class="small-text">CHECK-OUT</span>
+                    <!-- <h5 class="large-text">Aug 11</h5> -->
+                    <h5 class="large-text">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
+                    <span class="hotel-city small-text">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
+                    <div class="hotel-date">
+                        <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                            <input matInput [matDatepicker]="picker2" formControlName="checkOut">
+                            <mat-datepicker-toggle matSuffix [for]="picker2">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                        <img src="./assets/images/icons/date.png" class="single-datepicker" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="hotel-room">
+                <div class="hotel-room-item" (click)="showGuest('show')">
+                    <span class="small-text">ROOMS & GUESTS</span>
+                    <h5 class="large-text">2 <small class="fs_14 fw_4">Rooms</small>, 3 <small
+                            class="fs_14 fw_4">Adults</small>, 1 <small class="fs_14 fw_4">Child</small> </h5>
+                    <span class="small-text"></span>
+                </div>
+                <div class="hotel-room-select pt-20 pb-20" #showHideGuest>
+                    <div class="mob-title">
+                        <h3>City, Hotel or Area</h3>
+                        <a href="javaScript:void(0)" class="mob-close" (click)="showGuest('hide')">
+                            <img src="./assets/images/icons/close.png" alt="">
+                        </a>
+                    </div>
+                    <div class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                        <ng-container formArrayName="rooms">
+                            <ng-container *ngFor="let item of roomsDetails.controls; let i = index">
+                                <ng-container [formGroupName]="i">
+                                    <div class="hotel-from-data-ul-list">
+                                        <p class="fw_7 fs_14 d-flex" formControlName="room">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto" (click)="removeDetails(i)">Delete</a></p>
+                                        
+                                        <div class="Travellers-passengers-data mb-2">
+                                            <div class="Travellers-name">
+                                                <h6>Adults</h6>
+                                            </div>
+                                            <div class="Travellers-qty">
+                                                <div class="quantity buttons_added">
+                                                    <input type="button" value="-" class="qty-buttons minus">
+                                                    <input type="number" step="1" min="1" max="6" name="quantity"
+                                                        value="0" title="Qty"
+                                                        class="input-text qty text quantity_adult1_events" size="4"
+                                                        pattern="" inputmode="" formControlName=" numberOfAdults">
+                                                    <input type="button" value="+" class="qty-buttons plus">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="Travellers-passengers-data">
+                                            <div class="Travellers-name">
+                                                <h6>Children (0-11 years)</h6>
+                                            </div>
+                                            <div class="Travellers-qty">
+                                                <div class="quantity buttons_added">
+                                                    <input type="button" value="-" class="qty-buttons minus" (click)="decreaseChild(i)">
+                                                    <input type="number" step="1" min="1" max="5" name="quantity"
+                                                        value="0" title="Qty"
+                                                        class="input-text qty text quantity_adult1_events" size="4"
+                                                        pattern="" inputmode="" formControlName="numberOfChildren">
+                                                    <input type="button" value="+" class="qty-buttons plus" (click)="increaseChild(i)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </ng-container>
+                            </ng-container>
+                            <div class="Add-room">
+                                <a href="javaScript:void(0)" class="" (click)="addDetails()">Add Room</a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="hotel-search-btns">
+                <a href="javaScript:void(0)" data-bs-toggle="modal" data-bs-target="#itinerary" class="hotel-search-btn"
+                    (click)="searchHotel()">Search</a>
+            </div>
+        </div>
+    </form>
+    <div class="add-search-area">
+        <!-- Preferred-OTA-Partner -->
+        <div class="Preferred-OTA-Partner-area">
+            <ul class="Preferred-OTA-Partner-ul">
+                <li style="display: flex;flex-direction: column;">
+                    <span>Preferred </span>
+                    <span>OTA Partner:</span>
+                </li>
+                <li>
+                    <div class="OTA-Partner-list">
+                        <input type="checkbox" name="" id="">
+                        <img src="assets/images/flights/1.png" alt="" />
+                    </div>
+                </li>
+                <li>
+                    <div class="OTA-Partner-list">
+                        <input type="checkbox" name="" id="" checked>
+                        <img src="assets/images/flights/2.png" alt="" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Mobile Preferred-OTA-Partner -->
+    <div class="mob-Preferred-OTA-Partner-area">
+        <div class="mob-Preferred-area">
+            <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="./assets/images/icons/down.png" class="ms-1"
+                    alt=""></h5>
+        </div>
+
+        <div class="mob-OTA-box">
+            <div class="mob-ota-bg">
+                <div class="mob-title">
+                    <h3>Select Preferred OTA Partner</h3>
+                    <a href="javaScript:void(0)" class="mob-close mob-OTA-close">
+                        <img src="./assets/images/icons/close.png" alt="">
+                    </a>
+                </div>
+                <div class="mob-OTA-listed">
+                    <ul class="mob-Preferred-OTA-Partner-ul">
+                        <li>
+                            <div class="mob-OTA-Partner-list">
+                                <input type="checkbox" name="" id="">
+                                <img src="assets/images/flights/1.png" alt="" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="mob-OTA-Partner-list">
+                                <input type="checkbox" name="" id="" checked>
+                                <img src="assets/images/flights/2.png" alt="" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="mob-OTA-Partner-list">
+                                <input type="checkbox" name="" id="">
+                                <img src="assets/images/flights/4.png" alt="" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="mob-OTA-Partner-list">
+                                <input type="checkbox" name="" id="">
+                                <img src="assets/images/flights/3.png" alt="" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mob-sf-btns">
+                    <a href="javaScript:void(0)">Done</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
