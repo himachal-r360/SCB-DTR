@@ -376,7 +376,8 @@ export class PaymentComponent implements OnInit {
                         this.rest.updateCardDetails(customerInfo);
                         this.guestLogin = this.customerInfo["guestLogin"];
                         if(customerInfo["guestLogin"]==true){
-                        if(this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY==1){
+                        
+                        if(this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].FLEXI_PAY==1){
                         this.Isflexipayeligible = true;
                         this.fpGuestsession = true;
                         this.showFlexiOTP=false;
@@ -391,12 +392,19 @@ export class PaymentComponent implements OnInit {
 
                         }
                         this.isLoggedIn = true;
+                         this.showRewardsBox=false;
                         }else{
+                                if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']][this.serviceId] == 1) {
+                        this.showRewardsBox=true;
+                        }else{
+                        this.showRewardsBox=false;
+                        }
                         this.isLoggedIn = true;
                         }
                          this.loadPayment();
                         this.spinnerService.hide();
                         }else{
+                         this.showRewardsBox=false;
                          this.loadPayment();
                         this.spinnerService.hide();
                         this.isLoggedIn = false;
@@ -412,11 +420,7 @@ export class PaymentComponent implements OnInit {
 
 	}
 	loadPayment(){
-        if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']][this.serviceId] == 1) {
-        this.showRewardsBox=true;
-        }else{
-        this.showRewardsBox=false;
-        }
+
 
         this.pointsPG=this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].POINTS;
         this.domainName=this.sg['domainName'];
