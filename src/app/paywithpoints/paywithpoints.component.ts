@@ -11,9 +11,12 @@ import {environment} from '../../environments/environment';
 import { DOCUMENT } from '@angular/common';
 import { PayService } from 'src/app/shared/services/pay.service';
 import { DatePipe } from '@angular/common';
-import { BnNgIdleService } from 'bn-ng-idle';
 import { CountdownModule, CountdownComponent } from 'ngx-countdown';
 import { AppConfigService } from '../app-config.service';
+import { NgxSpinnerService } from "ngx-spinner";
+
+
+declare var $: any;
 @Component({
   selector: 'app-paywithpoints',
   templateUrl: './paywithpoints.component.html',
@@ -87,7 +90,7 @@ otperrormsg :any;
  Formotp: FormGroup;
  voucherForm1: FormGroup;
  cardaddForm1: FormGroup;
-  constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder) { 
+  constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder,private spinnerService: NgxSpinnerService) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     
@@ -113,15 +116,17 @@ otperrormsg :any;
     
   }
 
-  ngOnInit() {
-  }
-    ngOnChanges(changes: SimpleChanges): void {
-    this.orderamount= Number(this.payTotalFare);
-    // this.orderamount = this.orderamount - this.value;
-    this.setSlider();
-       this.getCustomerCards();
-   console.log(this.customerInfo);
-  }
+        ngOnInit() {
+        this.orderamount= Number(this.payTotalFare);
+        this.getCustomerCards();
+        }
+        
+        ngOnChanges(changes: SimpleChanges): void {
+        this.orderamount= Number(this.payTotalFare);
+        console.log(this.orderamount);
+        this.setSlider();
+        }
+        
     getCustomerCards(){
         var cards = [];
         if(this.customerInfo && this.customerInfo['customercards'].length>0){
@@ -129,11 +134,8 @@ otperrormsg :any;
           this.cards = this.customerInfo['customercards'];
           this.selectedCardDetails = this.cards[0];
           this.checkAvailablePointsforSavedCard();
-          
-          
         }
-
-  }
+    }
     updateAmountToPay(code: string,value: string,remain_value: string) {
     var values={code: code, value:value,remain_value:remain_value}; 
     console.log(values);
@@ -144,7 +146,7 @@ otperrormsg :any;
     
     if(this.pointData !== undefined)
     {
-             if(Object.keys(this.pointData['condition']).length!=0){
+        if(Object.keys(this.pointData['condition']).length!=0){
           var name=this.pointData['condition']['name'];
           var condition_type=this.pointData['condition'].condition_type; 
           var redemption_type=this.pointData['condition'].redemption_type;
@@ -175,7 +177,6 @@ otperrormsg :any;
     }
   }
   checkAvailablePointsforSavedCard(){ 
-    console.log('checkAvailablePointsforSavedCard');
     this.XSRFTOKEN = this.customerInfo['XSRF-TOKEN'];
     // this.ctype = sessionStorage.getItem(this.passSessionKey+'-ctype');
     var request = {
@@ -198,6 +199,7 @@ otperrormsg :any;
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
     };
+    this.spinnerService.show();
     this.pay.getcustomercardpoint(passData).subscribe(response => {
       this.response1=response;
       if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
@@ -223,11 +225,12 @@ otperrormsg :any;
           this.errorMsg0=this.response1['message'];
         }
       }
+      this.spinnerService.hide();
     }), (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
       alert(message);
       this.errorMsg0="";
-      
+      this.spinnerService.hide();
     };
   }
   voucherForm(){
@@ -254,7 +257,9 @@ otperrormsg :any;
     this.voucheraddform = false;
     this.voucherslider = true;
     this.voucherapplyform = false;
-    
+    this.otperror=false;
+    this.otperrormsg='';
+    $('#points_otp').val('');
   }
 
   selectedCard(id){
@@ -273,7 +278,7 @@ otperrormsg :any;
     if (this.Formotp.status !='VALID') {
       return;
     }else{
-     
+     this.spinnerService.show();
       this.submittedotpform=false;
       this.otpaccepted = false;
        let URLparams = {
@@ -301,11 +306,11 @@ otperrormsg :any;
       postData: this.EncrDecr.set(JSON.stringify(URLparams))
     };
         this.pay.generateVoucherOtp(passData).subscribe(response => {
+        this.spinnerService.hide();
         if(response.status==true){
           this.voucherOtp = true;
           this.voucheraddform=false; 
           this.voucherslider = false;
-    
         }else{
           this.addCardCancel(); 
           this.voucherOtp = false;
@@ -313,6 +318,7 @@ otperrormsg :any;
           alert(response.message);
         }
     }), (err: HttpErrorResponse) => {
+    this.spinnerService.hide();
         this.voucherOtp = false;
         this.voucherslider = true;
         this.errorMsg0="";
@@ -372,12 +378,12 @@ otperrormsg :any;
     }
   }
   otpVerifyAddCard(URLparams:any){
-    console.log('otpVerifyAddCard');
          var passData = {
           postData: this.EncrDecr.set(JSON.stringify(URLparams))
         };
+          this.spinnerService.show();
          this.pay.otp_validation_addcard(passData).subscribe(resp =>{
-
+           this.spinnerService.hide();
             if(typeof resp.opt_status != undefined && resp.otp_status){
               if(resp.otp_status==true){
                 this.addCardCancel();
@@ -395,17 +401,18 @@ otperrormsg :any;
               }
             } 
          }),(err:HttpErrorResponse)=>{
-           alert("Something went wrong, please try again");
+           this.spinnerService.hide();
+            this.otperror = true;
+           this.otperrormsg ="Something went wrong, please try again";
         };
   }  
   otpVerify(URLparams:any){
          var passData = {
         postData: this.EncrDecr.set(JSON.stringify(URLparams))
       };
+        this.spinnerService.show();
        this.pay.otp_validation(passData).subscribe(resp =>{
-       
-          console.log("otpVerify");
-        console.log(resp);
+         this.spinnerService.hide();
        
   if(typeof resp.status != undefined && resp.status){
         //validate otp success
@@ -417,32 +424,11 @@ otperrormsg :any;
           this.addcardDiv=false; 
           this.voucherCodedetails=false;
           this.otperror =false;
-      //   let URLparams = {
-      //           "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
-      //           "last4digit":this.cardaddForm1.controls['last4digit'].value,
-      //           "mobile": this.cardaddForm1.controls['applymobile'].value,
-      //           "DOB":this.cardaddForm1.controls['dob'].value,
-      //           "bin":this.cardaddForm1.controls['first4digit'].value,
-      //           "services_id":this.serviceId,
-      //           "partner_id":42,
-      //           "modal":"DIGITAL",
-      //            "total_amount": this.payTotalFare,
-      //     "ctype": this.ctype,
-      //     'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-      //     "_token":this.XSRFTOKEN 
-      //         }
-      // var passData = {
-      //   postData: this.EncrDecr.set(JSON.stringify(URLparams))
-      // };
-      // this.pay.voucherRedemption(passData).subscribe(response => {
-      //   console.log(response);
-      // });
-          
           this.updateAmountToPay('XXXXX',this.AmountRedeemed,this.RemaingAmount);
         }else{
           this.submittedFormotpvalidate=false;
           this.otpCounter = false;
-     this.voucherApplied=false;
+           this.voucherApplied=false;
           this.hasCards=false; 
           this.voucherOtp=true; 
           this.voucherDiv=false; 
@@ -454,13 +440,15 @@ otperrormsg :any;
           this.otperrormsg = resp.error;
         }
       }else{
-
+       this.otperror = true;
+       this.otperrormsg ="Something went wrong, please try again";
 
     } 
    
        }),(err:HttpErrorResponse)=>{
-         alert("Something went wrong, please try again");
-        //this.router.navigate([this.sg['domainPath'] + 'milestone']);
+         this.otperror = true;
+         this.otperrormsg ="Something went wrong, please try again";
+         this.spinnerService.hide();
          
     };
   }
@@ -766,7 +754,7 @@ export class ConfirmationDialog {
   vouchertab2:Boolean=false;
   vouchertab3:Boolean=false;
   popup:any;
-  constructor(public dialogRef: MatDialogRef < ConfirmationDialog > , @Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,private sg: SimpleGlobal,public rest:RestapiService,private EncrDecr: EncrDecrService,private pay: PayService,private bnIdle: BnNgIdleService) {
+  constructor(public dialogRef: MatDialogRef < ConfirmationDialog > , @Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,private sg: SimpleGlobal,public rest:RestapiService,private EncrDecr: EncrDecrService,private pay: PayService) {
         this.popup=data.popup;
         this.customerInfo = data.customerInfo;
         this.serviceId=data.serviceId;

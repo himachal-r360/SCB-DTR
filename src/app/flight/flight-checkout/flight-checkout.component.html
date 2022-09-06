@@ -5968,11 +5968,15 @@
               [passTotalFare]="totalCollectibleAmount"
               [passActualFare]="totalCollectibleAmountFromPartnerResponse" 
               [passConvinenceFee]="convenience_fee"
-              [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
-              [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
+              [passServiceId]="serviceId" 
+              [passXSRFTOKEN]="XSRFTOKEN" 
+              [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
+              [passREWARD_MOBILE]="REWARD_MOBILE" 
+              [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
               (sendtotalfare)="recivetotalFare($event)" 
               (sendPointsPlusEvent)="receivePointsPlus($event)" 
-              [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken"
+              [passflexiFare]="sendflexiFare"  
+              [partnerToken]="partnerToken"
               [isMobile]="isMobile"
               >
             </app-payment>
@@ -6279,7 +6283,7 @@
               </div>
             </div>
 
-            <div *ngIf="steps==5 && !isMobile">
+            <div *ngIf="steps==4 && !isMobile">
               <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey"
                 [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                 [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
@@ -6478,7 +6482,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==5 && isMobile">
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==4 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
