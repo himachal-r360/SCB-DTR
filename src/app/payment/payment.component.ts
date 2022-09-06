@@ -196,7 +196,6 @@ export class PaymentComponent implements OnInit {
         };
 
 
-        Partnertoken:any;
         ServiceToken:any;  
         @Input() partnerToken;    
         MAIN_SITE_URL:string;
@@ -363,7 +362,6 @@ export class PaymentComponent implements OnInit {
                 this.showNONSPCsuccessModal = this.serviceSettings.showNONSPCsuccessModal;
                 this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
                 this.siteKey=this.serviceSettings.SITEKEY;
-                this.Partnertoken = this.partnerToken;
                 this.ServiceToken =this.serviceId;
                 this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
 		
@@ -1797,7 +1795,7 @@ checkNonSpcOfferforHDFCcards(){
 		splitCard = cardNumber.substring(0, 6);
 		var request = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare-this.convinenceFee),
@@ -1912,7 +1910,7 @@ var checkCyberValue = searchValue.indexOf(5);
 		splitCard = cardNumber.substring(0, 6);
 		var request1 = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare- this.convinenceFee),
@@ -2069,7 +2067,7 @@ checkNonSpcOfferforSaveCard(){
 		//var card_bin=this.cardData[cardRow]['bin'];
 		var request = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": this.payActualFare,
@@ -2172,7 +2170,7 @@ checkNonSpcOfferforSaveCard(){
 		//var card_bin=this.cardData[cardRow]['bin'];
 		var request1 = {
 			"key":this.passSessionKey,
-			"partnerId":this.Partnertoken,
+			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": this.payActualFare,

@@ -123,7 +123,6 @@ otperrormsg :any;
         
         ngOnChanges(changes: SimpleChanges): void {
         this.orderamount= Number(this.payTotalFare);
-        console.log(this.orderamount);
         this.setSlider();
         }
         
