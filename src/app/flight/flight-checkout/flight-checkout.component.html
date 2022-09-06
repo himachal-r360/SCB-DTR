@@ -88,18 +88,7 @@
   </section>
 </div>
 <main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'">
-  <!-- <div class="route-details row">
-        <div class="col-2">
-            <span class="material-icons">arrow_back_ios</span>
-        </div>
-        <div class=" col-8 text-center">
-            <p class="city_name"><span>Mumbai</span> - <span>Hyderabad</span></p>
-            <p class="journey_details">Wed, 15jul | 4 Travellers | Economy</p>
-        </div>
-        <div class="col-2">
 
-        </div>
-    </div> -->
   <!-- <section class="details-steps-area mt-140 mb-40"> -->
   <section class="flight-details-area mt-10" *ngIf="totalCollectibleAmount>0">
     <!-- Mlite Sesssion Timer Code -->
@@ -349,29 +338,6 @@
               </div>
               <div class="flight-extra-details">
 
-                <!-- <div class="rules-flight">
-
-                <ng-container *ngFor="let searchDatad of searchData;let searchi = index">
-                          <a href="javascript:void(0);" (click)="changeFareRuleTabOnwardMult(searchi,$event)" data-bind="onwardFareDetails{{ searchi }}"  *ngIf="cancellationPolicyOnwardMulti[searchi] || baggageInfoOnwardMulti[searchi]" >
-                          <div class="rules-flight-items">
-                          <div class="rules-flight-thumbe">
-                          <img src="{{ cdnUrl }}/images/airlines/{{ flightOnwardDetails[searchi]['flights'][0].airline }}.gif"
-                          alt="{{ flightOnwardDetails[searchi]['flights'][0].airline }}" class=" mr-10">
-                          </div>
-                          <div class="rules-flight-content">
-                          <h6>
-                          {{ searchDatad.fromCity }}
-                          <img src="{{ cdnUrl }}/images/icons/flight-right.png" alt="">
-                          {{ searchDatad.toCity }}
-                          </h6>
-                          </div>
-                          </div>
-                          </a>
-
-             </ng-container>
-
-
-                </div>-->
                 <ng-container *ngFor="let searchDatad of searchData;let searchi = index">
                   <!--Onward-->
                   <div id="onwardFareDetails{{ searchi }}" class="flight-extra-content-onward "
@@ -3802,7 +3768,7 @@
 
 
 
-                <div class="othertraveller">
+                <div class="othertraveller" *ngIf="enablesavedTraveller==1">
                   <ul class="add-search-ul d-block">
                     <li class="custom-check-box">
                       <div class="custom-controls-stacked">
@@ -3879,7 +3845,7 @@
                 <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                 </p>
 
-                <div class="row text-lg-end" *ngIf="gstSelected">
+                <div class="row text-lg-end" *ngIf="enablesavedTraveller==1 && gstSelected ">
                   <ng-container *ngIf="getGSTShow">
                     <div class="add-traveller-btn">
                       <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn"
@@ -4037,7 +4003,7 @@
                     </mat-form-field>
                   </div>
 
-                  <div class="othertraveller" *ngIf="gstSelected">
+                  <div class="othertraveller" *ngIf="enablesavedTraveller==1 && gstSelected">
                     <ul class="add-search-ul d-block">
                       <li class="custom-check-box">
                         <div class="custom-controls-stacked">
@@ -5945,10 +5911,73 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          
+          <!--Cancellation Policy-->
+          
+
+            <div class="booking-inner-box fare-rules-box"
+              *ngIf="baggageInfoOnward || cancellationPolicyOnward && flightSessionData.travel_type !='M'">
+              <div class="fare-rules-title">
+                <h6>Fare Rules</h6>
+              </div>
+              <div class="flight-extra-details">
+                <!--Onward-->
+                <div id="onwardFareDetails" class="flight-extra-content-onward">
+                  <ul class="list-unstyled flight-extra-tabs">
+                    <li *ngIf="cancellationPolicyOnward">
+                      <a href="javascript:void(0);" class="flight-extra-content-oo"
+                        [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnward  }"
+                        (click)="changeFareRuleTabBottomOnward($event)" data-bind="CancellationDetails">Cancellation
+                        Charges</a>
+                    </li>
+                    <li *ngIf="baggageInfo">
+                      <a href="javascript:void(0);" class="flight-extra-content-ob"
+                        [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }" data-bind="BaggageDetails"
+                        (click)="changeFareRuleTabBottomOnward($event)">Baggage Policy</a>
+                    </li>
+
+                  </ul>
+
+                  <div class="extra-tabs-ara">
+                    <div id="CancellationDetails" class="flight-extra-content-o" *ngIf="cancellationPolicyOnward"
+                      [ngClass]="{'extra-active': cancellationPolicyOnward  }">
+                      <span [innerHtml]="cancellationPolicyOnward | safeHtml"></span>
+
+                    </div>
+                    <div id="BaggageDetails" class="flight-extra-content-o " *ngIf="baggageInfo"
+                      [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
+                      <span [innerHtml]="baggageInfo | safeHtml"></span>
+
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+              </div>
 
             </div>
-
-          </div>
+            <div class="booking-inner-box important-information-box">
+              <div class="imp-Information">
+                <h6>Important Information</h6>
+                <ul class="imp-Information-list">
+                  <li>
+                    <p>Flights are operating in strict compliance with the EXIT and ENTRY regulations applicable at
+                      origin and destination as defined by the competent authorities.</p>
+                  </li>
+                  <li>
+                    <p>Effective 22nd May,2021 it is mandatory for all passengers to carry a negative RT-PCR test report
+                      with QR code for boarding international flights to destinations where test reports are required as
+                      per the guidelines
+                      issued by the destination countries.</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <!--Cancellatio policy ends-->
         </div>
         <!--Step4 Ends-->
 

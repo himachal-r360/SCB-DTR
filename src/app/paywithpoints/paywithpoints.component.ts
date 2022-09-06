@@ -58,6 +58,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  CcCharges:any;
  intitialconversionptoc:any;
  hasCards:boolean=false;
+ hasError:boolean=false;
  // amount:number;
  orderamount:number;
  redemptionMsg:any;
@@ -201,9 +202,11 @@ otperrormsg :any;
     this.spinnerService.show();
     this.pay.getcustomercardpoint(passData).subscribe(response => {
       this.response1=response;
-      if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
+       this.spinnerService.hide();
+      if(this.response1 && this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
       {
         this.errorMsg0=""
+        this.hasError =false;
         var customername=this.response1['customername'];
         this.points_available=this.response1['points_available'];
 
@@ -218,19 +221,20 @@ otperrormsg :any;
         this.setSlider();
         // this.intitialconversionptoc();
       }else{
+        this.hasError =true;
         this.errorMsg0="Something went wrong";
-        if(this.response1['message']!=undefined)
+        if(this.response1 && this.response1['message']!=undefined)
         {
           this.errorMsg0=this.response1['message'];
         }
       }
-      this.spinnerService.hide();
-    }), (err: HttpErrorResponse) => {
+     
+    }, (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
-      alert(message);
-      this.errorMsg0="";
+      this.errorMsg0=message;
+      this.hasError =true;
       this.spinnerService.hide();
-    };
+    });
   }
   voucherForm(){
     this.voucherOtp = false;
@@ -258,7 +262,7 @@ otperrormsg :any;
     this.voucherapplyform = false;
     this.otperror=false;
     this.otperrormsg='';
-    $('#points_otp').val('');
+    this.Formotpvalidate.setValue({otp: ''});
   }
 
   selectedCard(id){
@@ -266,6 +270,13 @@ otperrormsg :any;
       if(id == this.cards[i].id){
         this.selectedCardDetails = this.cards[i];
           this.checkAvailablePointsforSavedCard();
+           this.voucherOtp = false;
+            this.voucheraddform = false;
+            this.voucherslider = true;
+            this.voucherapplyform = false;
+            this.otperror=false;
+            this.otperrormsg='';
+            this.Formotpvalidate.setValue({otp: ''});
           break;
       }
     }
@@ -316,13 +327,16 @@ otperrormsg :any;
           this.voucherslider = true;
           alert(response.message);
         }
-    }), (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
     this.spinnerService.hide();
         this.voucherOtp = false;
         this.voucherslider = true;
-        this.errorMsg0="";
+        var message = 'Something went wrong';
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
       
-    };
+    });
   }
    OTPVerification(){
     this.submittedFormotpvalidate=true;
@@ -336,9 +350,9 @@ otperrormsg :any;
             "programName":this.sg['domainName'],
             "first4digit":this.selectedCardDetails.card.slice(0,4),
             "last4digit":this.selectedCardDetails.card.slice(-4),
-            "points":this.value,
-            "ORDER_POINTS":this.value,
-            "voucherINRvalue":this.value * this.points_percentage,
+            "points":Math.round(this.value),
+            "ORDER_POINTS":Math.round(this.value),
+            "voucherINRvalue":Math.round((this.value) * Number(this.points_percentage)),
              "DOB":this.carddob,
              "bin":this.cardbin,
              "services_id": this.serviceId,
@@ -349,7 +363,7 @@ otperrormsg :any;
             'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
           }
           this.RemaingAmount = Number(this.orderamount)-((this.value)*Number(this.points_percentage));
-          this.AmountRedeemed =((this.value)*Number(this.points_percentage));
+          this.AmountRedeemed =Math.round((this.value)*Number(this.points_percentage));
           this.RedeemedPoints = this.value;
           this.otpVerify(URLparams);
        }else{
@@ -389,9 +403,7 @@ otperrormsg :any;
                 this.otperror=false; 
                 //var carddetails=JSON.parse(resp.carddetails);
                 this.cards = resp.carddetails;
-                console.log(this.cards);
                 this.selectedCardDetails = this.cards[0];
-                console.log(this.selectedCardDetails);
                 this.checkAvailablePointsforSavedCard();
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
@@ -399,11 +411,15 @@ otperrormsg :any;
                 this.otperrormsg = "OTP not matching";
               }
             } 
-         }),(err:HttpErrorResponse)=>{
+         },(err:HttpErrorResponse)=>{
            this.spinnerService.hide();
             this.otperror = true;
            this.otperrormsg ="Something went wrong, please try again";
-        };
+           var message = 'Something went wrong';
+          this.errorMsg0=message;
+          this.hasError =true;
+          this.spinnerService.hide();
+        });
   }  
   otpVerify(URLparams:any){
          var passData = {
@@ -444,12 +460,16 @@ otperrormsg :any;
 
     } 
    
-       }),(err:HttpErrorResponse)=>{
+       },(err:HttpErrorResponse)=>{
          this.otperror = true;
          this.otperrormsg ="Something went wrong, please try again";
          this.spinnerService.hide();
+         var message = 'Something went wrong';
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
          
-    };
+    });
   }
     handleEvent($event,ref){
    // console.log($event);
@@ -473,10 +493,8 @@ otperrormsg :any;
   }
     isCardValid(control: FormControl) {
       const q = new Promise((resolve, reject) => {
-      // resolve(null);
       setTimeout(() => {
       let prgramName=this.sg['domainName'];
-      //let cardnumber=control.value.replace(/-/g, "");
       let cardnumber=control.value;
       if(prgramName=='SMARTBUY' || prgramName==''){
       var res = cardnumber.substring(0, 6);
@@ -501,7 +519,6 @@ otperrormsg :any;
     applyVoucher(){
     this.submitted1=true;
     if (this.voucherForm1.status !='VALID') {
-      // console.log(this.voucherForm1);
       return;
     }else{
         // var first9digit = this.voucherForm1.controls['first4digit'].value;
@@ -524,6 +541,7 @@ otperrormsg :any;
         "applyvouchercode": applyvouchercode,
         "ctype": this.ctype,
         "modal": "DIGITAL",
+        "clientToken":this.sg['domainName'].toUpperCase(),
         'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
         "_token":this.XSRFTOKEN 
       }
@@ -557,10 +575,12 @@ otperrormsg :any;
           }
          
         }
-      }), (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         var message = 'Something went wrong';
-        alert(message);
-      };
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
+      });
 
     }
   }
@@ -626,7 +646,7 @@ otperrormsg :any;
         "programName":this.sg['domainName'],
         "_token":this.XSRFTOKEN,
       };
-      console.log(request);
+      
       var passData = {
         postData: this.EncrDecr.set(JSON.stringify(request))
       };
@@ -649,14 +669,17 @@ otperrormsg :any;
             // this.errorMsg=this.response1['message'];
           }
         }
-      }), (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         var message = 'Something went wrong';
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
         // alert(message);
         // this.errorMsg="";
         // this.buttonContinue2=true; 
         // this.showCloseBtn=true;
         // this.collapseStatus2="collapse";
-      };
+      });
     }
 
   }

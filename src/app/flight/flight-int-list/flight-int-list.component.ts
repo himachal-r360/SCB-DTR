@@ -707,6 +707,15 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       }); 
       
       this.flightList = this.unique(filteredStopOver);
+      }else{
+       var filteredStopsArr: any[] = [];
+        this.flightList.filter((d: any) => {
+         if (d.onwardflights.length==1 &&  d.onwardflights[0].stops == 0) {
+               filteredStopsArr.push(d);
+         }
+        });
+        this.flightList = filteredStopsArr;
+
       }
     }
 
