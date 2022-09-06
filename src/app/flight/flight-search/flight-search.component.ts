@@ -208,6 +208,17 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         switch (this.router.url) {
         case ('/'+this.sg['domainPath']+'multicity'):
          this.navItemActive = 'Multicity';
+        localStorage.setItem('isMulticitySearch','true');
+        var multicity = localStorage.getItem('multicityLastSearch');
+        if(multicity != null && multicity != ''  )
+        {
+        this.callMutlicityFunc = false;
+        }
+        if (this.callMutlicityFunc == true) {
+        this.addMuticitySerchVal()
+        }
+        this.callMutlicityFunc = false;
+         
         break;
        
         }  

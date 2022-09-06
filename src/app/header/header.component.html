@@ -628,7 +628,8 @@
                     <div class="search_input">
                         <input class="form-control mr-sm-2 sb_search rg_hdr_search" type="text" placeholder="Search for exciting deals & offers" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
 
-                        <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
+                        <!-- <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox"> -->
+                            <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
                             <ul *ngIf="serviceSettings.enableAlgolia">
                                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
                                     <a style="width:100%;" class="searchResults_a">
