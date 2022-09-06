@@ -1,8 +1,8 @@
-<div class="container payment_cnt" *ngIf="hasCards==true && voucherApplied==false">
+<div class="container payment_cnt" *ngIf="hasCards==true && voucherApplied==false && hasError==false">
   <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
       <div class="dropdown">
-  <button class="btn  dropdown-toggle border-box" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn  dropdown-toggle border-box card_drpdwn_btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     <div class="pl-1">
         <span class="cc-template"><img src="{{cdnUrl}}images/smartbuy/icons/payment/card.png" class="card_img"></span>
     </div>
@@ -11,7 +11,7 @@
       <div class="card-name card_type">Credit Card</div>
     </div>
   </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+  <ul class="dropdown-menu card_drpdwn_ul" aria-labelledby="dropdownMenuButton1">
     <li *ngFor="let card of cards;let i=index;">
       <a class=" border-box" href="javascript:;"  (click)="selectedCard(card.id)">
        <div class="pl-0 ">
@@ -30,14 +30,16 @@
      
       
     </div>
-    <div class="col-6 pt-2 point-section pay-right">
+    <div class="col-md-6 pt-2 point-section pay-right">
       <div class="master-text">Reward Points Balance - <span class="pointsavailble">{{points_available}}</span> pts</div>
           <div class="col-12 note">Note: <span class="ptcon">1 point = {{points_percentage}} Rs</span></div>
     </div>
-    
-      <div class="col-6">Pay with Points and Money</div>
-      <div class="col-6"><span id="selectedPoints" class="minpoints" *ngIf="value>0">{{value |number}} pts <span *ngIf="value>0 && (orderamount - value*points_percentage)>0">+</span></span><span class="balamt" *ngIf="(orderamount - value*points_percentage)>0">  &#8377; {{orderamount - value*points_percentage |number}}</span>
+    <div class="row hdr_pdng">
+      <div class="col-md-6 primary_hdr">Pay with Points and Money </div>
+      <div class="col-md-6 points "><span id="selectedPoints" class="minpoints" *ngIf="value>0">{{value |number}} pts <span *ngIf="value>0 && (orderamount - value*points_percentage)>0">+</span></span><span class="balamt" *ngIf="(orderamount - value*points_percentage)>0">  &#8377; {{orderamount - value*points_percentage |number}}</span>
       </div>
+    </div>
+      
        <div class="box-m " *ngIf="voucherslider">
           <div class="box-sub showslider">
             <div class="col-md-12 my-4 slider-container">
@@ -54,10 +56,10 @@
             <div class="col-md-12">
               <p>Please note that you can pay maximum {{redemption_value}}% of the transaction amount through Points i.e,<br>
               &#8377; <span>{{(orderamount* (redemption_value/100)) |number}}</span> ({{redemption_value |number}}% of &#8377;<span>{{orderamount |number}}</span>) only. Balance amount should be paid by Card or Account. </p>
-               <div class="form-check pt-10">
+               <div class="form-check pt-10 mt-2">
                 <input class="form-check-input" [(ngModel)]="otpaccepted" type="checkbox" formControlName="termsconditionvoucher" name="termsconditionvoucher" id="termsconditionvoucher">
                 <label class="form-check-label xs-check-font" for="termsconditionvoucher" >
-                    By Redeeming points you agree to our <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> Terms and Conditions
+                    By Redeeming points you agree to our <a href="{{domainRedirect}}terms_conditions" target="_blank" class="blue_link" >Terms and Conditions</a> 
                 </label>
                 <div *ngIf="submittedotpform && Formotp.controls.termsconditionvoucher.errors" class="error">
                                 <small *ngIf="Formotp.controls.termsconditionvoucher.errors.required || Formotp.controls.termsconditionvoucher.errors.pattern">Please accept Terms and Conditions</small>
@@ -65,7 +67,7 @@
             </div>
                
               
-              <div class="col-12 text-center">
+              <div class="col-12 text-center my-4">
                 <button type="submit" class="btn btn-primary w-50" id="header_submit3">Get OTP</button>
               </div>
             </div>
@@ -76,7 +78,7 @@
   </div>
   
 </div>
-<div class="container payment_cnt" *ngIf="voucherOtp">
+<div class="container payment_cnt" *ngIf="voucherOtp && hasError==false">
   <div class="col-12">
 <form [formGroup]="Formotpvalidate" (ngSubmit)="OTPVerification()">
         <div class="redeem-verification-section">
@@ -123,7 +125,7 @@
     </form>
   </div>
 </div>
-<div class="container payment_cnt" *ngIf='voucherDiv'>
+<div class="container payment_cnt" *ngIf='voucherDiv && hasError==false'>
   <div class="row">
     <div class="col-6"><img src="{{cdnUrl}}images/smartbuy/icons/payment/voucher.png" alt="Voucher"> Have a Voucher?</div>
     <div class="col-6 text-right" >
@@ -204,7 +206,7 @@
     </form>
   </div>
 </div>
-<div class="container payment_cnt" *ngIf="addcardDiv">
+<div class="container payment_cnt" *ngIf="addcardDiv && hasError==false">
   <div class="row">
     <div class="col-6"><img src="{{cdnUrl}}images/smartbuy/icons/payment/new_card.png" alt="Voucher"> Would you like use another card</div>
     <div class="col-6 text-right">
@@ -277,7 +279,7 @@
     </form>
   </div>
 </div>
-<div class="container payment_cnt" *ngIf="voucherApplied">
+<div class="container payment_cnt" *ngIf="voucherApplied && hasError==false">
   <div class="row">
     <div class="col-6">
       <div class="row">
@@ -312,3 +314,4 @@
   </div>
   
 </div>
+

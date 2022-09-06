@@ -58,6 +58,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  CcCharges:any;
  intitialconversionptoc:any;
  hasCards:boolean=false;
+ hasError:boolean=false;
  // amount:number;
  orderamount:number;
  redemptionMsg:any;
@@ -204,6 +205,7 @@ otperrormsg :any;
       if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
       {
         this.errorMsg0=""
+        this.hasError =false;
         var customername=this.response1['customername'];
         this.points_available=this.response1['points_available'];
 
@@ -218,6 +220,7 @@ otperrormsg :any;
         this.setSlider();
         // this.intitialconversionptoc();
       }else{
+        this.hasError =true;
         this.errorMsg0="Something went wrong";
         if(this.response1['message']!=undefined)
         {
@@ -225,12 +228,12 @@ otperrormsg :any;
         }
       }
       this.spinnerService.hide();
-    }), (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
-      alert(message);
-      this.errorMsg0="";
+      this.errorMsg0=message;
+      this.hasError =true;
       this.spinnerService.hide();
-    };
+    });
   }
   voucherForm(){
     this.voucherOtp = false;
@@ -258,7 +261,7 @@ otperrormsg :any;
     this.voucherapplyform = false;
     this.otperror=false;
     this.otperrormsg='';
-    $('#points_otp').val('');
+    this.Formotpvalidate.setValue({otp: ''});
   }
 
   selectedCard(id){
@@ -266,6 +269,13 @@ otperrormsg :any;
       if(id == this.cards[i].id){
         this.selectedCardDetails = this.cards[i];
           this.checkAvailablePointsforSavedCard();
+           this.voucherOtp = false;
+            this.voucheraddform = false;
+            this.voucherslider = true;
+            this.voucherapplyform = false;
+            this.otperror=false;
+            this.otperrormsg='';
+            this.Formotpvalidate.setValue({otp: ''});
           break;
       }
     }
@@ -316,13 +326,16 @@ otperrormsg :any;
           this.voucherslider = true;
           alert(response.message);
         }
-    }), (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
     this.spinnerService.hide();
         this.voucherOtp = false;
         this.voucherslider = true;
-        this.errorMsg0="";
+        var message = 'Something went wrong';
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
       
-    };
+    });
   }
    OTPVerification(){
     this.submittedFormotpvalidate=true;
@@ -399,11 +412,15 @@ otperrormsg :any;
                 this.otperrormsg = "OTP not matching";
               }
             } 
-         }),(err:HttpErrorResponse)=>{
+         },(err:HttpErrorResponse)=>{
            this.spinnerService.hide();
             this.otperror = true;
            this.otperrormsg ="Something went wrong, please try again";
-        };
+           var message = 'Something went wrong';
+          this.errorMsg0=message;
+          this.hasError =true;
+          this.spinnerService.hide();
+        });
   }  
   otpVerify(URLparams:any){
          var passData = {
@@ -444,12 +461,16 @@ otperrormsg :any;
 
     } 
    
-       }),(err:HttpErrorResponse)=>{
+       },(err:HttpErrorResponse)=>{
          this.otperror = true;
          this.otperrormsg ="Something went wrong, please try again";
          this.spinnerService.hide();
+         var message = 'Something went wrong';
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
          
-    };
+    });
   }
     handleEvent($event,ref){
    // console.log($event);
@@ -558,10 +579,12 @@ otperrormsg :any;
           }
          
         }
-      }), (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         var message = 'Something went wrong';
-        alert(message);
-      };
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
+      });
 
     }
   }
@@ -627,7 +650,7 @@ otperrormsg :any;
         "programName":this.sg['domainName'],
         "_token":this.XSRFTOKEN,
       };
-      console.log(request);
+      
       var passData = {
         postData: this.EncrDecr.set(JSON.stringify(request))
       };
@@ -650,14 +673,17 @@ otperrormsg :any;
             // this.errorMsg=this.response1['message'];
           }
         }
-      }), (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         var message = 'Something went wrong';
+      this.errorMsg0=message;
+      this.hasError =true;
+      this.spinnerService.hide();
         // alert(message);
         // this.errorMsg="";
         // this.buttonContinue2=true; 
         // this.showCloseBtn=true;
         // this.collapseStatus2="collapse";
-      };
+      });
     }
 
   }
