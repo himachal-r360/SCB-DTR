@@ -1,7 +1,7 @@
 <div class="  " *ngIf="showRewardsBox">
     <ng-container>
-        <app-paywithpoints  *ngIf="pointsPG" [serviceId]="serviceId" [customerInfo]="customerInfo" [Partnertoken]="Partnertoken" [ctype]="ctype"  [passSessionKey]="passSessionKey" [payTotalFare]="payTotalFare" 
-        (amountToPay)="updatenewAmounttopay($event)"></app-paywithpoints>  
+        <app-paywithpoints  *ngIf="pointsPG && this.sg" [serviceId]="serviceId" [customerInfo]="customerInfo" [Partnertoken]="partnerToken" [ctype]="ctype"  [passSessionKey]="passSessionKey" [payTotalFare]="payTotalFare" 
+        (amountToPay)="updatenewAmounttopay($event)" [sg]="this.sg"></app-paywithpoints>  
     </ng-container>
 
     <ng-container *ngIf="showProceedPayment">
@@ -1128,12 +1128,14 @@
                                                                                 <!-- <button type="button" class="dc_close close" (click)="close()" >&times;</button> -->
                                                                                 <form [formGroup]="flexipayguestForm" name="flexipayguestForm" class="ps-2 pt-1 p-sm-1" (ngSubmit)="fpGuestmobile()">
                                                                                     <!-- <p class="my-3">Enter mobile number linked with your HDFC Bank Debit Card</p> -->
-                                                                                    <mat-form-field class="d-none d-sm-block">
-                                                                                        <input matInput placeholder="Enter your Mobile Number linked to your HDFC Bank Debit Card" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber"
+                                                                                    <mat-form-field class="d-none d-sm-block" appearance="outline" >
+                                                                                        <mat-label>Enter your Mobile Number linked to your HDFC Bank Debit Card</mat-label>
+                                                                                        <input matInput placeholder="" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber"
                                                                                             maxlength="10" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off">
                                                                                     </mat-form-field>
-                                                                                    <mat-form-field class="d-block d-sm-none">
-                                                                                        <input matInput placeholder="Enter Mobile Number linked to account" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber" maxlength="10"
+                                                                                    <mat-form-field class="d-block d-sm-none" appearance="outline" >
+                                                                                        <mat-label>Enter Mobile Number linked to account</mat-label>
+                                                                                        <input matInput placeholder="" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber" maxlength="10"
                                                                                             onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off">
                                                                                     </mat-form-field>
                             
@@ -1161,7 +1163,7 @@
                                                                         <div>
                                                                             <form [formGroup]="flexipayForm" (ngSubmit)="validateFlexipayUser()">
                                                                                 <div *ngIf="showflexipaydefaultsection && !fpGuestsession">
-                                                                                    <p>Please Choose a Tenure</p>
+                                                                                    <p class="mt-10 text-center">Please Choose a Tenure</p>
                                                                                 </div>
                                                                                 <div class="row" *ngIf="showflexipaydefaultsection && !fpGuestsession">
                                                                                     <div *ngFor="let installment of flexiPayNewcalcArr;let i=index" class="col-6 col-sm-6">
@@ -1207,7 +1209,7 @@
                             
                                                                                     <div *ngIf="showflexipaydefaultsection && !fpGuestsession" class="mt-30">
                                                                                         <h6 class="payTitle pt-28">Enter your HDFC Bank Debit Card Number</h6>
-                                                                                        <div class="col-md-12 col-12 ps-0 contact-form">
+                                                                                        <div class="col-md-12 col-12 ps-0 contact-form my-2">
                                                                                             <mat-form-field appearance="outline" class="w-50">
                                                                                                 <mat-label>Card Number</mat-label>
                                                                                                 <input (keypress)="numberInput($event)" (ngModelChange)="checkInputchanges()" matInput placeholder="" name="cardnumber" id="" minlength="14" maxlength="16" autocomplete="off" formControlName="cardnumber" onDrag="return false" onDrop="return false" >

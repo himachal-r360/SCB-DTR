@@ -625,7 +625,7 @@
                             </a>
                         </div>
                         <div class="mob-listing-header-center">
-                            <h6>{{fromCityName}} - {{toCityName}} <span *ngIf="queryFlightData.flightdefault=='R'"> | {{toCityName}} - {{fromCityName}}</span></h6>
+                            <h6>{{searchData.flightfrom}} - {{searchData.flightto}} <span *ngIf="queryFlightData.flightdefault=='R'"> | {{searchData.flightto}} - {{searchData.flightfrom}}</span></h6>
                             <p>{{departureDate | date:'dd MMM' }} <span *ngIf="queryFlightData.flightdefault=='R'"> | {{returnDate | date:'EEE, dd MMM' }}</span> | {{totalPassenger}} Travellers |
                                 <span *ngIf="flightClassVal == 'B'">Business</span>
                                 <span *ngIf="flightClassVal == 'E'">Economy</span>
@@ -2803,12 +2803,43 @@
                     <div class="mob-ff-name">
                         <h6>{{fromCityName}} to {{toCityName}}</h6>
                     </div>
-                    <div class="fr-flight-fixed-bottom">
+                    <div class="fr-flight-fixed-bottom" *ngIf="onwardSelectedFlight.priceSummery.baseFare +returnSelectedFlight.priceSummery.baseFare > 0">
                         <div class="fr-fixed-price">
                             <h6>₹ {{(onwardSelectedFlight.priceSummery.totalFare + (returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) | number}}</h6>
                             <p>EMI @ {{calculateEMI(onwardSelectedFlight.priceSummery.totalFare +(returnSelectedFlight != null ? returnSelectedFlight.priceSummery.totalFare : 0)) | number}}/month</p>
                             <span>|</span>
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Details</a>
+                            <div class="fixedright-otherinfo">
+                                <!--<span class="mainprice">₹ 5,000</span>
+                                      <span class="price-off">10% off</span>-->
+                                <span class="mainprice" *ngIf="sumval !=sumvalold">₹ {{sumvalold|number}}</span>
+                                <span class="price-off" *ngIf="sumval !=sumvalold">Discounted</span>
+                                <div class="ff-Viewfaredetails ff-Viewfaredetails_mb">
+                                    <a href="javascript:;" class="rr-Viewfare">View Fare Details</a>
+                                    <div class="hover-popover">
+                                        <div class="hover-popover-title">
+                                            <h6>Price Breakdown</h6>
+                                        </div>
+                                        <div class="hover-popover-content">
+                                            <div class="hover-popover-content-list">
+                                                <span>Base Fare</span>
+                                                <span>₹{{ (onwardSelectedFlight.priceSummery.baseFare +returnSelectedFlight.priceSummery.baseFare) |number}}</span>
+                                            </div>
+                                            <div class="hover-popover-content-list">
+                                                <span>Charges</span>
+                                                <span>₹{{ ((onwardSelectedFlight.priceSummery.totalFare - onwardSelectedFlight.priceSummery.baseFare) +(returnSelectedFlight.priceSummery.totalFare -returnSelectedFlight.priceSummery.baseFare)) |number}}</span>
+                                            </div>
+                                            <hr class="m-0">
+                                            <div class="hover-popover-content-list popover-total">
+                                                <h6>Total</h6>
+                                                <h6>₹{{ sumval |number}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="hover-popover-footer">
+                                            <p>*Partner Convenience Fee is applicable</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="fr-fixed-btn">
                             <a href="javascript:void(0)" (click)="isReturnSelected  ? bookingSummary(onwardSelectedFlight,returnSelectedFlight) : 0 " class="button-style w-100 mt-2" [ngClass]="{'disable-partner':!isReturnSelected}">Continue</a>
