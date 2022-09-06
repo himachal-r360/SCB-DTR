@@ -2633,7 +2633,9 @@
                     <div class="name">
                         <div class="m_profile_name" *ngIf="customerLogin==false"><span>Hi</span>, Guest</div>
                         <div class="m_profile_name" *ngIf="customerLogin==true"><span>Hi</span>, {{ (customer_full_name.length>20)? (customer_full_name | slice:0:20)+'..':(customer_full_name) }}</div>
-                        <div class="m_profile_points" *ngIf="customeravailableStatus">{{customeravailablepoints}} Pts</div>
+                        <div  *ngIf="guestLogin==false && customerLogin==true">
+                           <div class="m_profile_points" *ngIf="customeravailableStatus">{{customeravailablepoints}} Pts</div>
+                       </div>
                     </div>
                 </div>
                 <div class="col-2">
@@ -2643,7 +2645,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="guestLogin==false && customerLogin==true">
                 <div class="col-6 text-left">
                     <p class="hdr_text">Regalia Gold</p>
                 </div>
