@@ -29,6 +29,14 @@ export class FilterComponent implements OnInit {
   @Output() arrivalFilterEvent = new EventEmitter();
   @Input() arrivalTimeFilter:any[];
 
+  @Output() removeDeparturefilters = new EventEmitter();
+
+  @Output() removeArrivalTimefilters = new EventEmitter();
+
+  @Output() removeClassesfilters = new EventEmitter();
+
+  @Output() removeamenitiesfilters = new EventEmitter();
+
   panelOpenState = false;
 
   filterDeparture = [];
@@ -63,7 +71,7 @@ export class FilterComponent implements OnInit {
 
   updateBoardingFilter(appt) {
     this.boardingfilterEvent.emit(appt);
-  }
+  } 
   updateDroppingFilter(appt) {
     this.droppingfilterEvent.emit(appt);
   }
@@ -97,4 +105,21 @@ export class FilterComponent implements OnInit {
     var emitter = {'type':type, 'input':input}
     this.searchboard.emit(emitter);
   }
+
+  clearDepartureSelection(){
+    this.removeDeparturefilters.emit();
+  }
+
+  clearArrivalTimeSelection(){
+    this.removeArrivalTimefilters.emit();
+  }
+
+  clearClassesSelection(){
+    this.removeClassesfilters.emit();
+  }
+
+  clearAmenitiesSelection(){
+    this.removeamenitiesfilters.emit();
+  }
+
 }

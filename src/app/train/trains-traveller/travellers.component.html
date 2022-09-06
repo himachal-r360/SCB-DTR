@@ -1702,7 +1702,8 @@
 
                 <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchTrainKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
                     [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)"
-                    [passflexiFare]="sendflexiFare">
+               (sendPointsPlusEvent)="receivePointsPlus($event)"       [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken"
+              [isMobile]="isMobile">
                 </app-payment>
             </div>
         </div>

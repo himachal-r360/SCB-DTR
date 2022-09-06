@@ -8,7 +8,7 @@ import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 import { CountdownModule } from 'ngx-countdown';
 import { HomeModule } from './home/home.module';
-import { FlightSearchModule } from './flight-search/flight-search.module';
+import { FlightSearchModule } from './flight/flight-search/flight-search.module';
 import { HttpClientModule,HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppConfigService } from './app-config.service';
@@ -38,7 +38,8 @@ import { TrainsTravellerModule } from './train/trains-traveller/travellers.modul
 import { IrctcregModule } from './train/trains/irctcreg/irctcreg.module';
 import { HotelModule } from './hotel/hotel.module';
 import { HotelSearchModule } from './hotel/hotel-search/hotel-search.module';
-
+//import { DatadogService } from './shared/services/datadog.service';
+import {  LOCALE_ID } from '@angular/core';
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -71,11 +72,12 @@ export function appInitializerFn(appConfig: AppConfigService) {
     DirectiveModule,
     CarouselModule,RegaliaGoldModule,
     ToastrModule.forRoot()
-    
+
 
   ],
   exports:[],
    providers: [
+   { provide: LOCALE_ID, useValue: 'en-nz' },
    StyleManagerService,
    AppConfigService,
     {

@@ -1041,7 +1041,7 @@
                                         Operated by  <b *ngIf="details.operatingAirline && airlinesNameJson[details.operatingAirline]">{{airlinesNameJson[details.operatingAirline].name}}</b>
                                         <b   *ngIf="details.operatingAirline && !airlinesNameJson[details.operatingAirline]">{{details.operatingAirline}}</b>
                                         </div>
-                                                                    <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                    <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1]) != undefined">
                                                                         <!-- <p>Change of planes・3h 0m Layover in Nagpur</p> -->
                                                                         <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport] != undefined ? this.airportsNameJson[details.arrivalAirport].airport_name : 'unknown'}}</p>
                                                                     </div>
@@ -1794,10 +1794,10 @@
                <li class="fare-list-item">
                  <div class="fare-list-box">
                    <div class="fare-list-left">
-                     <p>
+                     <div>
                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
                        Base Fare
-                     </p>
+                     </div>
                    </div>
                    <div class="fare-list-right">
                      <p>&#8377;{{mobileSelected.priceSummery.baseFare|number}}</p>
@@ -1807,10 +1807,10 @@
                <li class="fare-list-item">
                  <div class="fare-list-box">
                    <div class="fare-list-left">
-                     <p>
+                     <div>
                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
                        Taxes and Fees
-                     </p>
+                     </div>
                    </div>
                    <div class="fare-list-right">
                      <p>&#8377;{{(mobileSelected.priceSummery.totalFare-mobileSelected.priceSummery.baseFare)

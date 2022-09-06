@@ -399,7 +399,7 @@
                                                             </div>
                                                         </div>
                                                     </span>
-                                                        <a href="javascript:void(0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
+                                                        <a href="javascript:void(0)" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)" class="moreview" *ngIf="list.priceSummary.length > 1">+{{list.priceSummary.length - 1}} more </a>
                                                     </div>
                                                     <div class="flight-listing-viewfares">
                                                         <a href="javascript:void(0)" class="button-style viewfares" id="viewfares_{{list.flightKey}}" (click)="HideShowCompareToFly(list.flightKey,'fare-details',0)"> View Fares <i class="fa fa-angle-down ml-10"></i></a>
@@ -1003,8 +1003,9 @@
                                             <div class="name-bottom-top-center">
                                                 <p>{{ list.onwardflights | durationTotalTime }}</p>
                                                 <img src="/{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                                <p *ngIf="list.onwardflights.length > 0 && list.onwardflights[0].stops==0">non stop</p>
-                                                <p *ngIf="list.onwardflights.length > 0 && list.onwardflights[0].stops!=0">{{list.onwardflights[0].stops}} stop</p>
+                                                        <p *ngIf="list.onwardflights.length ==1 && list.onwardflights[0].stops==0">non stop</p>
+                                                        <p *ngIf="list.onwardflights.length ==1 && list.onwardflights[0].stops==1">{{list.onwardflights[0].stops}} stop</p>
+                                                        <p *ngIf="list.onwardflights.length > 1">{{list.onwardflights.length-1}} stop</p>
                                             </div>
                                             <div class="name-bottom-top-right">
                                                 <h6>{{list.onwardflights[list.onwardflights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -1051,8 +1052,10 @@
                                             <div class="name-bottom-top-center">
                                                 <p>{{ list.onwardflights | durationTotalTime }}</p>
                                                 <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                                <p *ngIf="list.returnflights.length > 0 && list.returnflights[0].stops==0">non stop</p>
-                                                <p *ngIf="list.returnflights.length > 0 && list.returnflights[0].stops!=0">{{list.returnflights[0].stops}} stop</p>
+                                                
+                                                       <p *ngIf="list.returnflights.length ==1 && list.returnflights[0].stops==0">non stop</p>
+                                                        <p *ngIf="list.returnflights.length ==1 && list.returnflights[0].stops==1">{{list.returnflights[0].stops}} stop</p>
+                                                        <p *ngIf="list.returnflights.length > 1">{{list.returnflights.length-1}} stop</p>
                                             </div>
                                             <div class="name-bottom-top-right">
                                                 <h6>{{list.returnflights[list.returnflights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
