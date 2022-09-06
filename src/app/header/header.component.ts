@@ -169,6 +169,7 @@ export class HeaderComponent implements OnInit {
   delta:any;
         payzrestriction:boolean=false;
         cardList:any=[];
+        notifyList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
 
@@ -299,7 +300,7 @@ export class HeaderComponent implements OnInit {
     this.domainPath=this.sg['domainPath'];
     this.assetPath=this.sg['assetPath'];
     this.domainName=this.sg['domainName'];
-    console.log(this.domainName=this.sg['domainName']);
+  //  console.log(this.domainName=this.sg['domainName']);
 
     this.enablePrivileges=this.serviceSettings.enablePrivileges;
     
@@ -338,7 +339,7 @@ export class HeaderComponent implements OnInit {
      this.rest.getNotificationPopup().subscribe(result => {
         // this.pushPopup=this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
         this.pushcount = result.count;
-
+        // console.log("hh==="+this.pushcount);
         this.pushid = result.pushid;
         var htmltoast='';
         for (var index in this.pushid) {
@@ -368,6 +369,23 @@ export class HeaderComponent implements OnInit {
    }
     Window["myComponent"] = this;
  
+      if(this.cookieService.get("push_enable")) { 
+         this.enablePushTitle = true;
+         this.rest.getNotification().subscribe(result => {
+       
+           console.log("hh==="+result);
+          // if(typeof result.status != undefined && result.status === true){
+          //   this.notifyList=result['values'];            
+          // }
+          
+          //this.pushcount = result.count;
+          
+          this.pushid = result.pushid;
+          this.cookieService.set('read_push',JSON.stringify(this.pushids), null, '/', null, null, null);
+            
+
+          });
+       }
   }
 
   
@@ -597,10 +615,11 @@ closeCookieConsent(value){
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcountavail = result.count;
-
+     
+      // console.log(result.values);
       //pushcountavail
       // $.each( result.result, function(k, v) {
-        result.result.forEach((v, k) =>  {
+        result.values.forEach((v, k) =>  {
                 this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
         });
       
