@@ -2289,6 +2289,8 @@ saveTravellerFunc(saveTravellerArray){
         this.ChildQuantity =this.maxChilds;   
         this.InfantQuantity = this.maxInfants;
 
+console.log(res.response);
+
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
         if (this.searchData.travel == 'DOM') {
@@ -2562,6 +2564,7 @@ saveTravellerFunc(saveTravellerArray){
         baggageInfoData:any=[];
         
         baggagePolicy(data){
+        
         let airlineCode;   let airlineCodeR;
         if(this.onwardAirlineMulti)
         airlineCode='Multi';
@@ -3783,11 +3786,30 @@ console.log(this.passengerForm);
           this.totalCollectibleAmountFromPartnerResponse = this.totalCollectibleAmount;
           this.totalCollectibleAmountFromPartnerResponseOrg= this.totalCollectibleAmount-Number(this.partnerConvFee);
           
+           if (this.partnerToken == 'Cleartrip') {
+          var tmp_itineraryRequest;
+          tmp_itineraryRequest=this.itineraryRequest;
+          tmp_itineraryRequest['itineraryId']=this.itineraryid;
+             var requestParamsEncrpt1 = {
+        postData: this.EncrDecr.set(JSON.stringify(tmp_itineraryRequest))
+      };
+          this.rest.getBaggageInfo(requestParamsEncrpt1).subscribe(response => { 
+          var itinararyBaggageResponse = JSON.parse(this.EncrDecr.get(response.result));
+          console.log(itinararyBaggageResponse);
+          if(itinararyBaggageResponse && itinararyBaggageResponse['errorCode']==200){
+           console.log(itinararyBaggageResponse['response']);
+          }
           
+          });
+          
+          
+         
+          }
+          /*
            this.emt_cancellationPolicy('onward');
-
-
-
+          console.log(JSON.parse(itinararyResponse['itineraryResponseDetails']['baggageinfo']));
+          this.baggagePolicy(itinararyResponse['itineraryResponseDetails']['baggageinfo']);
+          */
           this.fareData = {
             totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "convenience_fee": 0,
