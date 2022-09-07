@@ -712,7 +712,9 @@ otperrormsg :any;
            "_token":this.customerInfo["XSRF-TOKEN"],
            "user_id":this.sg["customerInfo"]["id"],
         };
-        var passData = JSON.stringify(request);
+        var passData = {
+          postData: this.EncrDecr.set(JSON.stringify(request))
+        };
         this.pay.availablePoints(passData).subscribe(response => {
            this.submitted2=false;
            this.cardaddForm1.reset();
