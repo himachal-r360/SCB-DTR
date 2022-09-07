@@ -75,6 +75,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  RedeemedPoints:any;
  vouchertransID:any;
  min_value:number;
+ guestLogin:Boolean=false;
  otp:any;
 otperror :Boolean=false;
 otpCounter :Boolean=true;
@@ -200,7 +201,7 @@ otperrormsg :any;
       "_token":this.XSRFTOKEN,
       "guestLogin":this.customerInfo['guestLogin']
     };
-    
+    this.guestLogin = this.customerInfo['guestLogin'];
     
     var passData = {
       postData: this.EncrDecr.set(JSON.stringify(request))
@@ -410,6 +411,7 @@ otperrormsg :any;
                 //var carddetails=JSON.parse(resp.carddetails);
                 this.cards = resp.carddetails;
                 this.selectedCardDetails = this.cards[0];
+                this.hasCards = true;
                 this.checkAvailablePointsforSavedCard();
               }else{ 
                 this.Formotpvalidate.setValue({otp: ''});
