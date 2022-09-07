@@ -16,7 +16,7 @@ export class HotelSearchComponent implements OnInit{
   cityList: any;
   totalAdultsCount: number = 1;
   totalChildCount: number = 0;
-
+  getSearchValue:any;
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
   
@@ -48,7 +48,7 @@ export class HotelSearchComponent implements OnInit{
   }
 
   ngOnInit(): void {
-
+    this.getSearchValueLocalStorage();
   }
 
   showCity(val) {
@@ -61,6 +61,31 @@ export class HotelSearchComponent implements OnInit{
 
   }
 
+  getSearchValueLocalStorage(){
+    this.getSearchValue = localStorage.getItem('hotelSearch')
+    let modifySearchValue = JSON.parse(this.getSearchValue)
+    console.log(this.getSearchValue , "getsearch value");
+    
+    if(modifySearchValue != undefined){
+      this.hotelSearchForm.get('checkIn').setValue(modifySearchValue.checkIn);
+      this.hotelSearchForm.get('checkOut').setValue(modifySearchValue.checkOut);
+      this.hotelSearchForm.get('city').setValue(modifySearchValue.city);
+      this.hotelSearchForm.get('country').setValue(modifySearchValue.country);
+      this.hotelSearchForm.get('scr').setValue(modifySearchValue.scr);
+      this.hotelSearchForm.get('sct').setValue(modifySearchValue.sct);
+      this.hotelSearchForm.get('hotelName').setValue(modifySearchValue.hotelName);
+      this.hotelSearchForm.get('latitude').setValue(modifySearchValue.latitude);
+      this.hotelSearchForm.get('longitude').setValue(modifySearchValue.longitude);
+      this.hotelSearchForm.get('area').setValue(modifySearchValue.area);
+      this.hotelSearchForm.get('hotelId').setValue(modifySearchValue.hotelId);
+      this.hotelSearchForm.get('channel').setValue(modifySearchValue.channel);
+      this.hotelSearchForm.get('programName').setValue(modifySearchValue.programName);
+      this.hotelSearchForm.get('limit').setValue(modifySearchValue.limit);
+      this.hotelSearchForm.get('numberOfRooms').setValue(modifySearchValue.numberOfRooms);
+      this.hotelSearchForm.get('noOfRooms').setValue(modifySearchValue.noOfRooms);
+      this.hotelSearchForm.get('rooms').setValue(modifySearchValue.rooms);
+    }
+  }
   //Increase Child and adult value
   increaseCount(i, item, title) {
     console.log(this.hotelSearchForm.value);
@@ -165,11 +190,6 @@ export class HotelSearchComponent implements OnInit{
               }
             }
           }
-          // for (var p1 in obj[p]) {
-          //   if (obj[p].hasOwnProperty(p1)) {
-          //     str.push(encodeURIComponent(p) + "[" + i + "]=" + encodeURIComponent(obj[p1]));
-          //   }
-          // }
         } else {
           str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
         }
@@ -184,15 +204,9 @@ export class HotelSearchComponent implements OnInit{
     this.hotelSearchForm.value.checkOut = moment(this.hotelSearchForm.value.checkOut).format('YYYY-MM-DD');
     this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
     this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
+    localStorage.setItem('hotelSearch' , JSON.stringify(this.hotelSearchForm.value));
     let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
     this.router.navigateByUrl(url);
-    
-    // this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
-    //   this.hotelList = res;
-    //   console.log(this.hotelSearchForm.value);
-    //   console.log(this.hotelList, "hotel search ")
-    // }, (error) => { console.log(error) });
-
   }
 
 

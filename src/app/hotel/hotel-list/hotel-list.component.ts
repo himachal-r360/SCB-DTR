@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
@@ -18,6 +19,8 @@ export class HotelListComponent implements OnInit {
   CheckoutDate:Date;
   City:string;
   Country: string;
+  searchData:any;
+  hotelSearchData:any;
 
   @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
@@ -67,7 +70,7 @@ export class HotelListComponent implements OnInit {
             //  this.gotoTop();
         }
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: ['2022-09-08'],
@@ -103,15 +106,77 @@ export class HotelListComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getSearchData();
     this.searchHotel();
   }
+
+  getSearchData(){
+    const urlParam = this.route.snapshot.queryParams;
+    this.searchData =  urlParam;
+    this.hotelSearchForm.get('checkIn').setValue(this.searchData.checkIn);
+    this.hotelSearchForm.get('checkOut').setValue(this.searchData.checkOut);
+    this.hotelSearchForm.get('city').setValue(this.searchData.city);
+    this.hotelSearchForm.get('country').setValue(this.searchData.country);
+    this.hotelSearchForm.get('scr').setValue(this.searchData.scr);
+    this.hotelSearchForm.get('sct').setValue(this.searchData.sct);
+    this.hotelSearchForm.get('hotelName').setValue(this.searchData.hotelName);
+    this.hotelSearchForm.get('latitude').setValue(this.searchData.latitude);
+    this.hotelSearchForm.get('longitude').setValue(this.searchData.longitude);
+    this.hotelSearchForm.get('area').setValue(this.searchData.area);
+    this.hotelSearchForm.get('hotelId').setValue(this.searchData.hotelId);
+    this.hotelSearchForm.get('channel').setValue(this.searchData.channel);
+    this.hotelSearchForm.get('programName').setValue(this.searchData.programName);
+    this.hotelSearchForm.get('limit').setValue(this.searchData.limit);
+    this.hotelSearchForm.get('numberOfRooms').setValue(this.searchData.numberOfRooms);
+    this.hotelSearchForm.get('noOfRooms').setValue(this.searchData.noOfRooms);
+    this.getQueryParamData();
+    console.log(this.hotelSearchForm.value,"this.hotelSearchForm.value");
+  }
+
+  getQueryParamData() {
+    debugger;
+    const urlParam = this.route.snapshot.queryParams;
+    this.hotelSearchData = urlParam;
+    console.log(this.searchData , "=> Before");
+    var hotelSearchArr = [];
+    for (var i = 0; i < 5; i++) // for generating array by object.
+    {
+      var objKeys = Object.keys(urlParam); // get all object Keys
+      var objSearch = {};
+      for (var j = 0; j < objKeys.length; j++) {
+
+        if (objKeys[j].indexOf("[" + i + "]") > -1) {
+          var objKey = objKeys[j].substring(0, objKeys[j].length - 3);
+          var objKeyVal = urlParam[objKeys[j]];
+          objSearch[objKey] = objKeyVal;
+        }
+      }
+
+      if (objSearch != null && objSearch != undefined && Object.keys(objSearch).length) {
+        hotelSearchArr.push(objSearch); // Add object in array.
+      }
+    }
+    this.hotelSearchData = hotelSearchArr;
+    this.hotelSearchForm.value.rooms = this.hotelSearchData;
+    console.log(this.searchData , "=> after");
+    console.log( this.hotelSearchForm.value.rooms , "=>  this.hotelSearchForm.value.room");
+    // this.searchData.forEach((z)=>{
+    //   z.isSelected = false;
+    //   z.selectedFlight = null
+    // });
+    // this.selectedTripData = this.searchData[0];
+    // this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
+
+  }
+
+
+
   searchHotel() {
     this.CheckInDate = this.hotelSearchForm.value.checkIn;
     this.CheckoutDate = this.hotelSearchForm.value.checkOut;
     this.City =  this.hotelSearchForm.value.city;
     this.Country = this.hotelSearchForm.value.countryName;
      this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
-
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
       console.log(this.hotelList)
