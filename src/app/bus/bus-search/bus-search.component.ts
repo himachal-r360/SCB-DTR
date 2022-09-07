@@ -200,7 +200,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
         values=values['_source'];
         this.searchBusForm['controls']['searchFrom'].setValue(values.name);
         this.searchBusForm['controls']['fromTravelCode'].setValue(values.id);
-                this.searchBusForm['controls']['fromState'].setValue(values.state);
+        this.searchBusForm['controls']['fromState'].setValue(values.state);
         this.fromCityName=values.name;
         this.fromStateName=values.state;
         this.travelFromOptions= this.defaultTravelOptions;
@@ -217,7 +217,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
         values=values['_source'];
         this.searchBusForm['controls']['searchTo'].setValue(values.name);
         this.searchBusForm['controls']['toTravelCode'].setValue(values.id);
-                       this.searchBusForm['controls']['fromState'].setValue(values.state);
+                       this.searchBusForm['controls']['toState'].setValue(values.state);
         this.toCityName=values.name;
         this.toStateName=values.state;
         this.travelToOptions= this.defaultTravelOptions;
@@ -292,6 +292,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
         fromTravelCode:this.searchBusForm.value.fromTravelCode,
         fromState : this.searchBusForm.value.fromState
         }
+        
 
         this.searchBusForm.get('searchFrom').setValue(this.searchBusForm.value.searchTo );
         this.searchBusForm.get('fromTravelCode').setValue(this.searchBusForm.value.toTravelCode );

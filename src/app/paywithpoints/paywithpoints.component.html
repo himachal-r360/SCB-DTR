@@ -1,7 +1,7 @@
 <div class="container payment_cnt" *ngIf="hasCards==true && voucherApplied==false && hasError==false">
   <div class="row">
     <div class="col-md-6">
-      <div class="dropdown">
+      <div class="dropdown" *ngIf="guestLogin == false">
   <button class="btn  dropdown-toggle border-box card_drpdwn_btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     <div class="pl-1">
         <span class="cc-template"><img src="{{cdnUrl}}images/smartbuy/icons/payment/card.png" class="card_img"></span>
@@ -176,15 +176,23 @@
                         
                   
                     </div>
-                    <div class="voucher-code-entry date-section col-sm-4 col-12">
-                            <!-- <input id="applydate1"  type="text" autocomplete="off" placeholder="dd/mm/yyyy" > -->
+                    <!-- <div class="voucher-code-entry date-section col-sm-4 col-12">
+                           
                             <input matInput [matDatepicker]="picker1" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob"> 
                             <mat-datepicker-toggle matSuffix [for]="picker1" class="date-icon"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                             <div *ngIf="submitted1 && voucherForm1.controls['dob']['errors']" class="error">
                                 <small *ngIf="voucherForm1.hasError('required','dob')">Please enter date of birth.</small>
                             </div>
-                    </div>
+                    </div> -->
+                     <div class="voucher-code-entry date-section col-sm-4 col-12">
+                            <input id="dob"  type="text" autocomplete="off" placeholder="dd/mm/yyyy"  [textMask]="mask" formControlName="dob">
+                            <div *ngIf="submitted1 && voucherForm1.controls['dob']['errors']" class="error">
+                                <small *ngIf="voucherForm1.hasError('required','dob')">Please enter date of birth.</small>
+                            </div>
+                            <div class="small-gray-text">Date of birth</div>
+                            
+                    </div> 
 
                     <div class="voucher-code-entry col-sm-4 col-12 mt-15">
                         <!-- <div class="small-gray-text">Voucher Code</div> -->
@@ -215,7 +223,7 @@
   </div>
   <div class="col-12" *ngIf="voucheraddform">
      
-      <form  [formGroup]="cardaddForm1" (ngSubmit)="GenerateOTPform()">
+      <form  [formGroup]="cardaddForm1" (ngSubmit)="AddCardcheckAvailablePoints()">
         <div class="my-3">
             <!-- <h6 class="w-80">{{data.popup}} Please Enter Your Credit Card Details</h6> -->
                 <!-- <div> -->
@@ -224,24 +232,29 @@
                         <div class="row">
                         <div class="col-sm-4 col-12 ">
                             <div class="row two-inputs m-0">
-                                <div class="col-sm-6  col-6 p-0">
+                                <!-- <div class="col-sm-6  col-6 p-0">
                                     <input class="cus-input" type="text" formControlName="first4digit" placeholder="123456789" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="9" autofocus="on">
                                 </div>
                                 <div class="col-sm-3 col-3 pl-0 py-2">
                                     <span class="crad_x">XXX</span>
-                                </div>
+                                </div> -->
                                 <div class="col-sm-3 col-3 p-0">
                                     <input class="cus-input" type="text" formControlName="last4digit" placeholder="1234" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="4">
                                 </div>
                             </div>
-                       <div *ngIf="(submitted2 && cardaddForm1.controls.first4digit.errors) || (submitted2 && cardaddForm1.controls.last4digit.errors)" class="error">
+                        <!-- <div *ngIf="(submitted2 && cardaddForm1.controls.first4digit.errors) || (submitted2 && cardaddForm1.controls.last4digit.errors)" class="error">
                             <small *ngIf="cardaddForm1.hasError('required','first4digit') || cardaddForm1.hasError('required','last4digit')">Please enter first 9 Digits and last 4 digits is required.</small>
                             <small *ngIf="cardaddForm1.hasError('pattern','first4digit') || cardaddForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
+                        </div> -->
+                        <div *ngIf="(submitted2 && cardaddForm1.controls.last4digit.errors)" class="error">
+                            <small *ngIf="cardaddForm1.hasError('required','last4digit')">Please enter last 4 digits.</small>
+                            <small *ngIf="cardaddForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
                         </div>
-                        <div *ngIf="submitted2 && cardaddForm1.get('first4digit').dirty" class="error">
+                        <div *ngIf="submitted2" class="error">
                             <small *ngIf="cardaddForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
                         </div>
-                            <div class="small-gray-text">First 9 digits and last 4 digits</div>
+                            <!-- <div class="small-gray-text">First 9 digits and last 4 digits</div> -->
+                            <div class="small-gray-text">Last 4 digits</div>
               
                         </div>
                       
@@ -257,15 +270,32 @@
                         
                   
                     </div>
-                    <div class="voucher-code-entry date-section col-sm-4 col-12">
+                    <!-- <div class="voucher-code-entry date-section col-sm-4 col-12">
+                        <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask" (keypress)="onlyNumberKey($event,18)">
+                        <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
+                        <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
+                            <div *ngIf="angForm.controls['dob'].errors.required">
+                              <small class="validate-msg">Date of birth is required</small>
+                            </div>
+                        </div>
+                    </div> -->
+                     <div class="voucher-code-entry date-section col-sm-4 col-12">
+                            <input id="dob"  type="text" autocomplete="off" placeholder="dd/mm/yyyy"  [textMask]="mask" formControlName="dob">
+                            <div *ngIf="submitted2 && cardaddForm1.controls['dob']['errors']" class="error">
+                                <small *ngIf="cardaddForm1.hasError('required','dob')">Please enter date of birth.</small>
+                            </div>
+                            <div class="small-gray-text">Date of birth</div>
+                            
+                    </div> 
+                    <!-- <div class="voucher-code-entry date-section col-sm-4 col-12">
                             <!-- <input id="applydate1"  type="text" autocomplete="off" placeholder="dd/mm/yyyy" > -->
-                            <input matInput [matDatepicker]="picker1" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob"> 
+                            <!-- <input matInput [matDatepicker]="picker1" [max]="checkDate" placeholder="Date of Birth" readonly="true" formControlName="dob"> 
                             <mat-datepicker-toggle matSuffix [for]="picker1" class="date-icon"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                             <div *ngIf="submitted2 && cardaddForm1.controls['dob']['errors']" class="error">
                                 <small *ngIf="cardaddForm1.hasError('required','dob')">Please enter date of birth.</small>
                             </div>
-                    </div>
+                    </div> -->
                   </div>
                   
                 </div>   
@@ -281,12 +311,12 @@
 </div>
 <div class="container payment_cnt" *ngIf="voucherApplied && hasError==false">
   <div class="row">
-    <div class="col-6">
-      <div class="row">
-        <div class="col-2">
+    <div class="col-md-6">
+      <div class="row point_msg">
+        <div class="col-md-2">
           <img class="voucherImg" src="{{cdnUrl}}images/smartbuy/icons/payment/voucher_success.png">
         </div>
-        <div class="col-10">
+        <div class="col-md-10">
           <p class="green-font"><strong>Congratulations! </strong></p>
           <p class="green-font">Points has been redeemed successfully!</p>
           <div class="brown-box">
@@ -295,16 +325,16 @@
         </div>
       </div>
     </div>
-    <div class="col-6 grey-box">
+    <div class="col-md-6 grey-box">
       <div class="row">
-      <div class="col-6">
+      <div class="col-md-6">
         <div *ngIf="voucherCodedetails">
           <p class="vouchertitle">Voucher Code</p>
           <p>1606202212334475</p>
         </div>
       
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
       <p class="vouchertitle">Redeemed Points</p>
       <p>{{RedeemedPoints}} Points</p>
     </div>
