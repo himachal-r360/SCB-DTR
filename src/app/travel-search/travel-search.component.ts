@@ -1113,7 +1113,7 @@ check_traveller_count(type) {
          this.hotelNameDisp='New Delhi,India';
         this.hotelId='New Delhi';
         this.countryId='IN';
-        this.roomCount=1;
+        this.roomCount=0;
                 this.searchHotelForm['controls']['hotelName'].setValue('New Delhi,India');
         this.searchHotelForm['controls']['hotelId'].setValue('New Delhi');
         this.searchHotelForm['controls']['countryId'].setValue('IN');
