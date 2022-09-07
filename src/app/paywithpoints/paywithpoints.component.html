@@ -1,7 +1,7 @@
 <div class="container payment_cnt" *ngIf="hasCards==true && voucherApplied==false && hasError==false">
   <div class="row">
     <div class="col-md-6">
-      <div class="dropdown">
+      <div class="dropdown" *ngIf="guestLogin == false">
   <button class="btn  dropdown-toggle border-box card_drpdwn_btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     <div class="pl-1">
         <span class="cc-template"><img src="{{cdnUrl}}images/smartbuy/icons/payment/card.png" class="card_img"></span>
@@ -281,12 +281,12 @@
 </div>
 <div class="container payment_cnt" *ngIf="voucherApplied && hasError==false">
   <div class="row">
-    <div class="col-6">
-      <div class="row">
-        <div class="col-2">
+    <div class="col-md-6">
+      <div class="row point_msg">
+        <div class="col-md-2">
           <img class="voucherImg" src="{{cdnUrl}}images/smartbuy/icons/payment/voucher_success.png">
         </div>
-        <div class="col-10">
+        <div class="col-md-10">
           <p class="green-font"><strong>Congratulations! </strong></p>
           <p class="green-font">Points has been redeemed successfully!</p>
           <div class="brown-box">
@@ -295,16 +295,16 @@
         </div>
       </div>
     </div>
-    <div class="col-6 grey-box">
+    <div class="col-md-6 grey-box">
       <div class="row">
-      <div class="col-6">
+      <div class="col-md-6">
         <div *ngIf="voucherCodedetails">
           <p class="vouchertitle">Voucher Code</p>
           <p>1606202212334475</p>
         </div>
       
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
       <p class="vouchertitle">Redeemed Points</p>
       <p>{{RedeemedPoints}} Points</p>
     </div>
