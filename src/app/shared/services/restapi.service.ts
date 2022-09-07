@@ -394,5 +394,12 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
   return this.http.post( this.endpoint+'farerules',param, config).pipe(map((response: any) => response));
   }
   } 
-
+   getBaggageInfo(param){
+        if(LOCALJSON=='true'){
+         return this.http.get('assets/data/getBaggageInfo.json');
+        }
+        else{
+        return this.http.post( this.endpoint+'getBaggageInfo',param, config).pipe(map((response: any) => response));
+        }
+  } 
 }

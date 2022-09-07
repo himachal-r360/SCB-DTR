@@ -327,9 +327,13 @@
     }
 }
 .common_box{
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 8px;
+    border: 1px solid #e6e6e6;
+    padding:15px;
+    border-radius: 5px;
+    // height:55px;
+    height:63px;
+    display:flex;
+    align-items:center;
 }
 .boarding_point{
     display: flex;
@@ -339,6 +343,14 @@
 
     .mat-form-field-wrapper{
         padding-bottom: 10px;
+    }
+
+    .mat-form-field-appearance-outline  {
+        ::ng-deep {
+            .mat-form-field-wrapper {
+                margin:0px 0px !important;
+            }
+        }
     }
     .mat-form-field-appearance-outline .mat-form-field-infix{
         padding: 5px 0px 10px 0;
@@ -574,3 +586,70 @@
     font-size: 12px;
     color: rgba(0, 0, 0, 0.5);
   }
+
+  .mat-form-field-type-mat-select:not(.mat-form-field-disabled){
+    .mat-form-field-flex {
+        height:55px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+    }
+  }
+  .confirm_title{
+    font-family: 'opensans-regular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    color:#000000;
+  }
+  ng::deep .mat-dialog-container{
+    overflow:hidden;
+  }
+  .modal_row {
+    .confirm_text{
+        font-family: 'opensans-regular';
+        font-style: normal;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 29px;
+        text-align: center;
+        color:#000000;
+        text-align:left;
+    }
+    .confirm_text_lg{
+        font-family: 'opensans-regular';
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        text-align: center;
+        color:#000000;
+        margin-top:2rem;
+        margin-bottom:1rem;
+    }
+  }
+  .brdr_btn{
+    border:1px solid #1d86ff;
+    border-radius:4px;
+    padding:10px 50px;
+    color:#1d86ff;
+    font-size:14px;
+    font-weight:600;
+    margin-right:8px;
+  }
+  .filled_btn{
+    border:1px solid #1d86ff;
+    border-radius:4px;
+    padding:10px 50px;
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    background:#1d86ff;
+  }
+  .alert_covid{
+    mat-dialog-container {
+        overflow: hidden;
+    }
+  } 

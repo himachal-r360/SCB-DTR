@@ -78,7 +78,6 @@ const youngerThanValidator = (maxAge: number): ValidatorFn => control =>
   (new Date()).getFullYear() - (new Date(control.value)).getFullYear() > maxAge ? { younger: true } : null;
 
 function passissuecheck(c: FormControl) {
-console.log(c);
  let journery_date = $('#journery_date').val();
 
   let mndate = moment(journery_date).subtract(30, 'years').calendar();
@@ -430,7 +429,6 @@ orderRetry:boolean=false;
                   this.searchData = (this.flightSessionData.queryFlightData);
                    this.searchDataOrg = this.searchData ;
                   console.log(this.searchDataOrg);
-                  console.log(this.flightSessionData.onwardFlights);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -836,7 +834,7 @@ orderRetry:boolean=false;
           child: 1
         };
         
-        console.log(this.flightInfo);
+      //  console.log(this.flightInfo);
 
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
@@ -2289,6 +2287,8 @@ saveTravellerFunc(saveTravellerArray){
         this.ChildQuantity =this.maxChilds;   
         this.InfantQuantity = this.maxInfants;
 
+console.log(res.response);
+
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
         if (this.searchData.travel == 'DOM') {
@@ -2562,6 +2562,7 @@ saveTravellerFunc(saveTravellerArray){
         baggageInfoData:any=[];
         
         baggagePolicy(data){
+        
         let airlineCode;   let airlineCodeR;
         if(this.onwardAirlineMulti)
         airlineCode='Multi';
@@ -3551,7 +3552,7 @@ console.log(this.passengerForm);
                 "t": "ZWFybg==",
                 "tcode": tcode_array,
                 "post_partner": this.selectedOnwardVendor.partnerName,
-                "post_default": 'O',
+                "post_default": 'M',
                 "travel": this.searchData.travel
                 };
          
@@ -3783,11 +3784,38 @@ console.log(this.passengerForm);
           this.totalCollectibleAmountFromPartnerResponse = this.totalCollectibleAmount;
           this.totalCollectibleAmountFromPartnerResponseOrg= this.totalCollectibleAmount-Number(this.partnerConvFee);
           
+           if (this.partnerToken == 'Cleartrip') {
+          var tmp_itineraryRequest;
+          tmp_itineraryRequest=this.itineraryRequest;
+          tmp_itineraryRequest['itineraryId']=this.itineraryid;
+             var requestParamsEncrpt1 = {
+        postData: this.EncrDecr.set(JSON.stringify(tmp_itineraryRequest))
+      };
+          this.rest.getBaggageInfo(requestParamsEncrpt1).subscribe(response => { 
+          var itinararyBaggageResponse = JSON.parse(this.EncrDecr.get(response.result));
+          console.log(itinararyBaggageResponse);
+                   let baggage_data:any=[]; let baggage_data1:any=[];
+          if(itinararyBaggageResponse && itinararyBaggageResponse['response']['errorCode']==200){
+       
+            
+                $.each( itinararyBaggageResponse['response']['response'], function( index, value ){
+                  $.each( value, function( index1, value1 ){
+                          baggage_data.push({cabin: value1.ADT.cabin, flightNo: '-', flightName: '', checkIn:  value1.ADT.check_in});
+                  });
+                });
+            
+           if(baggage_data.length>0){
+             baggage_data1.push(baggage_data);
+             this.baggageInfoOnward = baggage_data;
+             this.baggagePolicy(baggage_data1);
+            }
+          }
           
+          });
+         
+          }
+         
            this.emt_cancellationPolicy('onward');
-
-
-
           this.fareData = {
             totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "convenience_fee": 0,
