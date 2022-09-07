@@ -103,6 +103,7 @@ export class TrainsTravellerComponent implements OnInit {
     idForm: FormGroup;
     submitted = false;
     submittedUserInfoForm = false;
+    irctcRegister : boolean = false;
     passengerData: any = [];
    // patternName = /^[A-z]*$|^[A-z]+\s[A-z]*$/
     patternName = /^(?:(?!.*[ ]{2})(?!(?:.*[']){2})(?!(?:.*[-]){2})(?:[a-zA-Z0-9 \p{L}'-]{3,48}$))$/;
@@ -301,6 +302,7 @@ export class TrainsTravellerComponent implements OnInit {
          isCollapseBasefare: boolean = false;
   isCollapseDiscount: boolean = false;
   isCollapse: boolean = false;
+    trainDetails: boolean = true;
        
     constructor(private el: ElementRef,private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
         this.serviceSettings=this.appConfigService.getConfig();
@@ -2628,6 +2630,8 @@ recivetotalFare($event){
             this.openDialog();
         } else {
             this.router.navigate(['/train/registration']);
+           /* this.trainDetails = false;
+            this.irctcRegister = true ; */
         }
     }
     forgotUserId() {
