@@ -378,7 +378,7 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
 
   getOrderRetryDetails (param):Observable<any> { 
     if(LOCALJSON=='true'){
-      return this.http.get('assets/data/getOrderRetryDetails.json');
+      return this.http.get('assets/data/getOrderRetryDetails.json');//
     }else{
 	return this.http.post( this.endpoint+'orderRetry',param, config).pipe(map((response: any) => response));
     }

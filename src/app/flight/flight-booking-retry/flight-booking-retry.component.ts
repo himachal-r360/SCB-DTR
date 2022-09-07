@@ -192,9 +192,10 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 postData: this.EncrDecr.set(JSON.stringify(getOrder))
                 };
                 this.rest.getOrderDetail(getOrderParam).subscribe(results => { 
+                console.log(results);
                 if (results.result) {
                 let result = JSON.parse(this.EncrDecr.get(results.result));
-              
+               console.log(result);
               if (customerInfo["guestLogin"] == true) {
                 this.REWARD_CUSTOMERID = customerInfo["id"];
                 this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
@@ -205,7 +206,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 this.searchData = (this.flightSessionData.queryFlightData);
                 this.searchDataOrg = this.searchData ;
                
-                 console.log(result);
+                
                 console.log(this.flightSessionData);
                 
                 setTimeout(() => {
