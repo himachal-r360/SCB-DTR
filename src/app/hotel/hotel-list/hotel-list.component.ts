@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hotel-list',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hotel-list.component.sass']
 })
 export class HotelListComponent implements OnInit {
-
-  constructor() { }
+  searchData:any;
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit(): void {
   }
+
 
 }
