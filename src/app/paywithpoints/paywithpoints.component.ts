@@ -149,7 +149,7 @@ otperrormsg :any;
   }
   setSlider(){
     // update slider dynamically
-    
+    console.log(this.pointData);
     if(this.pointData !== undefined)
     {
         if(Object.keys(this.pointData['condition']).length!=0){
@@ -714,6 +714,7 @@ otperrormsg :any;
         };
         var passData = JSON.stringify(request);
         this.pay.availablePoints(passData).subscribe(response => {
+           this.submitted2=false;
            this.cardaddForm1.reset();
            this.addCardCancel();
            this.cards = response.cards;
