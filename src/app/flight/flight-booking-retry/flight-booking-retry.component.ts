@@ -183,6 +183,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
             if (customerInfo["org_session"] == 1) {
               // console.log(customerInfo)
               
+              console.log(this.fetchOrderId);
                 var getOrder = {
                 "order_ref_num": this.fetchOrderId,
                 }
