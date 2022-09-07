@@ -78,7 +78,6 @@ const youngerThanValidator = (maxAge: number): ValidatorFn => control =>
   (new Date()).getFullYear() - (new Date(control.value)).getFullYear() > maxAge ? { younger: true } : null;
 
 function passissuecheck(c: FormControl) {
-console.log(c);
  let journery_date = $('#journery_date').val();
 
   let mndate = moment(journery_date).subtract(30, 'years').calendar();
@@ -430,7 +429,6 @@ orderRetry:boolean=false;
                   this.searchData = (this.flightSessionData.queryFlightData);
                    this.searchDataOrg = this.searchData ;
                   console.log(this.searchDataOrg);
-                  console.log(this.flightSessionData.onwardFlights);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -836,7 +834,7 @@ orderRetry:boolean=false;
           child: 1
         };
         
-        console.log(this.flightInfo);
+      //  console.log(this.flightInfo);
 
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
@@ -3554,7 +3552,7 @@ console.log(this.passengerForm);
                 "t": "ZWFybg==",
                 "tcode": tcode_array,
                 "post_partner": this.selectedOnwardVendor.partnerName,
-                "post_default": 'O',
+                "post_default": 'M',
                 "travel": this.searchData.travel
                 };
          
