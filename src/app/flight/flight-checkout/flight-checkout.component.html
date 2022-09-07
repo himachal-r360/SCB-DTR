@@ -3802,6 +3802,8 @@
                     <div>
                       <div class="error_flight error_contact"
                         *ngIf="passengerForm.hasError('required','passengerEmail')">Please enter email address </div>
+                        <div class="error_flight error_contact"
+                        *ngIf="passengerForm.hasError('pattern','passengerEmail')">Please enter valid email address </div>
                     </div>
 
 
@@ -3818,7 +3820,7 @@
                       <div class="error_flight error_contact"
                         *ngIf="passengerForm.hasError('minlength','passengerMobile')">Please enter min 10 Digits. </div>
                       <div class="error_flight error_contact"
-                        *ngIf="passengerForm.hasError('pattern','passengerMobile')">Please enter a valid 10 digits
+                        *ngIf="passengerForm.hasError('pattern','passengerMobile') && !passengerForm.hasError('minlength','passengerMobile')">Please enter a valid 10 digits
                         mobile number.</div>
                     </div>
                   </div>
