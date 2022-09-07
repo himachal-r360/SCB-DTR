@@ -78,7 +78,6 @@ const youngerThanValidator = (maxAge: number): ValidatorFn => control =>
   (new Date()).getFullYear() - (new Date(control.value)).getFullYear() > maxAge ? { younger: true } : null;
 
 function passissuecheck(c: FormControl) {
-console.log(c);
  let journery_date = $('#journery_date').val();
 
   let mndate = moment(journery_date).subtract(30, 'years').calendar();
@@ -430,7 +429,6 @@ orderRetry:boolean=false;
                   this.searchData = (this.flightSessionData.queryFlightData);
                    this.searchDataOrg = this.searchData ;
                   console.log(this.searchDataOrg);
-                  console.log(this.flightSessionData.onwardFlights);
                   setTimeout(() => {
                     $("#infoprocess").modal('show');
                   }, 10);
@@ -836,7 +834,7 @@ orderRetry:boolean=false;
           child: 1
         };
         
-        console.log(this.flightInfo);
+      //  console.log(this.flightInfo);
 
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
@@ -929,7 +927,7 @@ orderRetry:boolean=false;
         this.addAdult(passenger, checkboxIndex);
       else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 2 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 12)
         this.addChild(passenger, checkboxIndex);
-      else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 0 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 3)
+      else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') >= 0 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 3)
         this.addInfant(passenger, checkboxIndex);
     } else {
       if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 12) {
@@ -938,7 +936,7 @@ orderRetry:boolean=false;
       } else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 2 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 12) {
         this.currentId = $('#passengerBoxId_' + checkboxIndex).val();
         this.removeChild(parseInt(this.currentId), checkboxIndex);
-      } else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 0 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 3) {
+      } else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') >= 0 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 3) {
         this.currentId = $('#passengerBoxId_' + checkboxIndex).val();
         this.removeInfant(parseInt(this.currentId), checkboxIndex);
       }
@@ -1688,7 +1686,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
           this.filterTravellerList = this.travellerlist.filter(function (tra) {
            
             if(tra.dateOfBirth){
-            return moment().diff(moment(moment(tra.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 0;
+            return moment().diff(moment(moment(tra.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') >= 0;
             }
            
           });
@@ -1878,8 +1876,7 @@ saveTravellerFunc(saveTravellerArray){
   var requestParamsEncrpt = {
    postData:this.EncrDecr.set(JSON.stringify(saveTravellerArray)) 
   };
-  this.rest.saveCustomertravellerInfo(requestParamsEncrpt).subscribe(response => {
-  })
+  this.rest.saveCustomertravellerInfo(requestParamsEncrpt).subscribe(response => {  })
 }
 
 
@@ -2290,6 +2287,8 @@ saveTravellerFunc(saveTravellerArray){
         this.ChildQuantity =this.maxChilds;   
         this.InfantQuantity = this.maxInfants;
 
+console.log(res.response);
+
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
         if (this.searchData.travel == 'DOM') {
@@ -2563,6 +2562,7 @@ saveTravellerFunc(saveTravellerArray){
         baggageInfoData:any=[];
         
         baggagePolicy(data){
+        
         let airlineCode;   let airlineCodeR;
         if(this.onwardAirlineMulti)
         airlineCode='Multi';
@@ -3186,7 +3186,7 @@ console.log(this.passengerForm);
       var paxInfoCnt = 1;
       this.paxInfo = [];
 
-      this.saveTravellerArray=[];
+     
       
         var saveTraveller;
         if(this.passengerForm.controls['saveTraveller' ]['value'] == true)
@@ -3228,6 +3228,28 @@ console.log(this.passengerForm);
         
         
         if(saveTraveller == 1){
+         this.saveTravellerArray=[];
+         var gender='Male';
+         
+         switch (this.passengerForm.controls['adult_title' + i]['value']) {
+        case 'Mr':
+        gender='Male';
+        break;
+        case 'Mrs':
+        gender='Female';
+        break;
+        case 'Ms':
+        gender='Female';
+        break;
+        case 'Miss':
+        gender='Female';
+        break;
+        case 'Mstr':
+        gender='Male';
+        break;
+      }
+         
+         
         this.saveTravellerArray.push({
         "age": moment().diff(moment(this.passengerForm.controls['adult_dob' + i]['value']).format('YYYY-MM-DD'), 'years'),
         "birthPreference": "",
@@ -3236,7 +3258,7 @@ console.log(this.passengerForm);
         "dateOfBirth": moment(this.passengerForm.controls['adult_dob' + i]['value']).format('DD/MM/YYYY'),
         "emailId": this.passengerForm.controls['passengerEmail']['value'],
         "firstName":  this.passengerForm.controls['adult_first_name' + i]['value'].trim(),
-        "gender": '',
+        "gender": gender,
         "id": 0,
         "lastName":  this.passengerForm.controls['adult_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
@@ -3249,6 +3271,7 @@ console.log(this.passengerForm);
         "status": 0,
         "title": this.passengerForm.controls['adult_title' + i]['value']
         });
+        this.saveTravellerFunc(this.saveTravellerArray);
         }
         
         
@@ -3290,6 +3313,28 @@ console.log(this.passengerForm);
         
         
                 if(saveTraveller == 1){
+                 this.saveTravellerArray=[];
+                 
+                var gender='Male';
+
+                switch (this.passengerForm.controls['child_title' + i]['value']) {
+                case 'Mr':
+                gender='Male';
+                break;
+                case 'Mrs':
+                gender='Female';
+                break;
+                case 'Ms':
+                gender='Female';
+                break;
+                case 'Miss':
+                gender='Female';
+                break;
+                case 'Mstr':
+                gender='Male';
+                break;
+                }
+                 
         this.saveTravellerArray.push({
         "age": moment().diff(moment(this.passengerForm.controls['child_dob' + i]['value']).format('YYYY-MM-DD'), 'years'),
         "birthPreference": "",
@@ -3298,7 +3343,7 @@ console.log(this.passengerForm);
         "dateOfBirth": moment(this.passengerForm.controls['child_dob' + i]['value']).format('DD/MM/YYYY'),
         "emailId": this.passengerForm.controls['passengerEmail']['value'],
         "firstName":  this.passengerForm.controls['child_first_name' + i]['value'].trim(),
-        "gender": '',
+        "gender": gender,
         "id": 0,
         "lastName":  this.passengerForm.controls['child_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
@@ -3311,6 +3356,7 @@ console.log(this.passengerForm);
         "status": 0,
         "title": this.passengerForm.controls['child_title' + i]['value']
         });
+        this.saveTravellerFunc(this.saveTravellerArray);
         }
         
         
@@ -3348,8 +3394,30 @@ console.log(this.passengerForm);
 
         this.paxInfo.push(infant_data);
         
-        
-                        if(saveTraveller == 1){
+
+        if(saveTraveller == 1){
+
+        var gender='Male';
+
+        switch (this.passengerForm.controls['infant_title' + i]['value']) {
+        case 'Mr':
+        gender='Male';
+        break;
+        case 'Mrs':
+        gender='Female';
+        break;
+        case 'Ms':
+        gender='Female';
+        break;
+        case 'Miss':
+        gender='Female';
+        break;
+        case 'Mstr':
+        gender='Male';
+        break;
+        }
+                        
+                         this.saveTravellerArray=[];
         this.saveTravellerArray.push({
         "age": moment().diff(moment(this.passengerForm.controls['infant_dob' + i]['value']).format('YYYY-MM-DD'), 'years'),
         "birthPreference": "",
@@ -3358,7 +3426,7 @@ console.log(this.passengerForm);
         "dateOfBirth": moment(this.passengerForm.controls['infant_dob' + i]['value']).format('DD/MM/YYYY'),
         "emailId": this.passengerForm.controls['passengerEmail']['value'],
         "firstName":  this.passengerForm.controls['infant_first_name' + i]['value'].trim(),
-        "gender": '',
+        "gender": gender,
         "id": 0,
         "lastName":  this.passengerForm.controls['infant_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
@@ -3371,6 +3439,7 @@ console.log(this.passengerForm);
         "status": 0,
         "title": this.passengerForm.controls['infant_title' + i]['value']
         });
+        this.saveTravellerFunc(this.saveTravellerArray);
         }
         
 
@@ -3378,8 +3447,8 @@ console.log(this.passengerForm);
       }
 
 
-   if( this.enablesavedTraveller==1 && this.saveTravellerArray.length >0)
-   this.saveTravellerFunc(this.saveTravellerArray);
+  // if( this.enablesavedTraveller==1 && this.saveTravellerArray.length >0)
+   //this.saveTravellerFunc(this.saveTravellerArray);
 
 
       let fareDetails = [];
@@ -3483,7 +3552,7 @@ console.log(this.passengerForm);
                 "t": "ZWFybg==",
                 "tcode": tcode_array,
                 "post_partner": this.selectedOnwardVendor.partnerName,
-                "post_default": 'O',
+                "post_default": 'M',
                 "travel": this.searchData.travel
                 };
          
@@ -3715,11 +3784,38 @@ console.log(this.passengerForm);
           this.totalCollectibleAmountFromPartnerResponse = this.totalCollectibleAmount;
           this.totalCollectibleAmountFromPartnerResponseOrg= this.totalCollectibleAmount-Number(this.partnerConvFee);
           
+           if (this.partnerToken == 'Cleartrip') {
+          var tmp_itineraryRequest;
+          tmp_itineraryRequest=this.itineraryRequest;
+          tmp_itineraryRequest['itineraryId']=this.itineraryid;
+             var requestParamsEncrpt1 = {
+        postData: this.EncrDecr.set(JSON.stringify(tmp_itineraryRequest))
+      };
+          this.rest.getBaggageInfo(requestParamsEncrpt1).subscribe(response => { 
+          var itinararyBaggageResponse = JSON.parse(this.EncrDecr.get(response.result));
+          console.log(itinararyBaggageResponse);
+                   let baggage_data:any=[]; let baggage_data1:any=[];
+          if(itinararyBaggageResponse && itinararyBaggageResponse['response']['errorCode']==200){
+       
+            
+                $.each( itinararyBaggageResponse['response']['response'], function( index, value ){
+                  $.each( value, function( index1, value1 ){
+                          baggage_data.push({cabin: value1.ADT.cabin, flightNo: '-', flightName: '', checkIn:  value1.ADT.check_in});
+                  });
+                });
+            
+           if(baggage_data.length>0){
+             baggage_data1.push(baggage_data);
+             this.baggageInfoOnward = baggage_data;
+             this.baggagePolicy(baggage_data1);
+            }
+          }
           
+          });
+         
+          }
+         
            this.emt_cancellationPolicy('onward');
-
-
-
           this.fareData = {
             totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "convenience_fee": 0,

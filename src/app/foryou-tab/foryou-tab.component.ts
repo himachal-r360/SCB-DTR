@@ -403,7 +403,7 @@ public modeselectTrending= 'All';
 
                 if (diff > 0) {
 
-                  var url = this.domainRedirect + 'lite/train';
+                  var url = this.domainRedirect + 'l ite/train';
                 } else {
 
                   var url = this.domainRedirect + 'lite/train-list?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
@@ -480,10 +480,31 @@ public modeselectTrending= 'All';
       } else {
         this.showDealList = false;
         this.showDealListLoader = false;
-        this.topBanner = [];
+        this.topBanner = [{
+          "image": this.cdnUrl + "images/banners/mobile/default_foryou_full.jpg",
+          "full_image": this.cdnUrl + "images/banners/desktop/default_foryou_full.jpg",
+          "brand": this.cdnUrl + "images/banners/hdfc.svg",
+          "title": "hdfc",
+          "redriect_url": "",
+          "bg_color_code": "#012748"
+        }];
+   
+        this.topBannerRecentSearch = [{
+          "image": this.cdnUrl + "images/banners/mobile/recents_nodata.png",
+          "full_image": this.cdnUrl + "images/banners/desktop/recents_nodata.png",
+          "title": "",
+          "redriect_url": ""
+        }];
+
+        this.topBannerSbRecommands = [{
+          "image": this.cdnUrl + "images/banners/mobile/sb_rec.png",
+          "full_image": this.cdnUrl + "images/banners/desktop/sb_rec.png",
+          "title": "",
+          "redriect_url": ""
+        }];
+
       }
 
-      
 
     }); 
       

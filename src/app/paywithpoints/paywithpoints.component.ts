@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
 import { CountdownModule, CountdownComponent } from 'ngx-countdown';
 import { AppConfigService } from '../app-config.service';
 import { NgxSpinnerService } from "ngx-spinner";
-
+import { createMask } from '@ngneat/input-mask';
 
 declare var $: any;
 @Component({
@@ -117,7 +117,13 @@ otperrormsg :any;
         });
     
   }
-
+        
+        public mask = {
+          guide: true,
+          showMask : true,
+          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
+        };
+        
         ngOnInit() {
         this.orderamount= Number(this.payTotalFare);
         this.getCustomerCards();
@@ -203,7 +209,8 @@ otperrormsg :any;
     this.spinnerService.show();
     this.pay.getcustomercardpoint(passData).subscribe(response => {
       this.response1=response;
-      if(this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
+       this.spinnerService.hide();
+      if(this.response1 && this.response1['status']!=undefined && (this.response1['status']==true || this.response1['status']=='true'))
       {
         this.errorMsg0=""
         this.hasError =false;
@@ -223,12 +230,12 @@ otperrormsg :any;
       }else{
         this.hasError =true;
         this.errorMsg0="Something went wrong";
-        if(this.response1['message']!=undefined)
+        if(this.response1 && this.response1['message']!=undefined)
         {
           this.errorMsg0=this.response1['message'];
         }
       }
-      this.spinnerService.hide();
+     
     }, (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
       this.errorMsg0=message;
