@@ -48,9 +48,7 @@ const routes: Routes = [
       {
     path:"regalia_gold/train/pnr" , component:HomeComponent
   },
-  {
-    path:"hotel-list" , component:HotelListComponent
-  },
+
 
     {
     path: 'partners',
