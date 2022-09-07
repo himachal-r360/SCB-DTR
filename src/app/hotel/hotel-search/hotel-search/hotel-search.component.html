@@ -57,7 +57,7 @@
                     <span class="hotel-city small-text">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                            <input matInput [matDatepicker]="picker" formControlName="checkIn">
+                            <input matInput [matDatepicker]="picker" formControlName="checkIn" >
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
@@ -72,7 +72,7 @@
                     <span class="hotel-city small-text">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                            <input matInput [matDatepicker]="picker2" formControlName="checkOut">
+                            <input matInput [matDatepicker]="picker2" formControlName="checkOut" >
                             <mat-datepicker-toggle matSuffix [for]="picker2">
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
@@ -84,8 +84,8 @@
             <div class="hotel-room">
                 <div class="hotel-room-item" (click)="showGuest('show')">
                     <span class="small-text">ROOMS & GUESTS</span>
-                    <h5 class="large-text">2 <small class="fs_14 fw_4">Rooms</small>, 3 <small
-                            class="fs_14 fw_4">Adults</small>, 1 <small class="fs_14 fw_4">Child</small> </h5>
+                    <h5 class="large-text">{{this.hotelSearchForm.value.rooms.length}} <small class="fs_14 fw_4">Rooms</small>, {{totalAdultsCount}} <small
+                            class="fs_14 fw_4">Adults</small>, {{totalChildCount}} <small class="fs_14 fw_4">Child</small>  </h5>
                     <span class="small-text"></span>
                 </div>
                 <div class="hotel-room-select pt-20 pb-20" #showHideGuest>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
                         <ng-container formArrayName="rooms">
-                            <ng-container *ngFor="let item of roomsDetails.controls; let i = index">
+                            <ng-container *ngFor="let item of roomsDetails.controls; let i = index ">
                                 <ng-container [formGroupName]="i">
                                     <div class="hotel-from-data-ul-list">
                                         <p class="fw_7 fs_14 d-flex" formControlName="room">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto" (click)="removeDetails(i)">Delete</a></p>
@@ -108,12 +108,12 @@
                                             </div>
                                             <div class="Travellers-qty">
                                                 <div class="quantity buttons_added">
-                                                    <input type="button" value="-" class="qty-buttons minus">
-                                                    <input type="number" step="1" min="1" max="6" name="quantity"
-                                                        value="0" title="Qty"
+                                                    <input type="button" value="-" class="qty-buttons minus" (click)="decreaseCount(i,item,'adult')" [disabled]="item.value.numberOfAdults <= 1 ? true:false">
+                                                    <input type="number" step="1" min="1" max="5" name="quantity"
+                                                        value="{{item.value.numberOfAdults}}" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4"
-                                                        pattern="" inputmode="" formControlName=" numberOfAdults">
-                                                    <input type="button" value="+" class="qty-buttons plus">
+                                                        pattern="" inputmode="" formControlName="numberOfAdults">
+                                                    <input type="button" value="+" class="qty-buttons plus"  (click)="increaseCount(i,item,'adult')"  id="adultBtn_{{i}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -123,12 +123,12 @@
                                             </div>
                                             <div class="Travellers-qty">
                                                 <div class="quantity buttons_added">
-                                                    <input type="button" value="-" class="qty-buttons minus" (click)="decreaseChild(i)">
+                                                    <input type="button" value="-" class="qty-buttons minus" (click)="decreaseCount(i,item,'child')" [disabled]="item.value.numberOfChildren < 1 ? true:false">
                                                     <input type="number" step="1" min="1" max="5" name="quantity"
                                                         value="0" title="Qty"
-                                                        class="input-text qty text quantity_adult1_events" size="4"
+                                                        class="input-text qty text quantity_adult1_events" size="4" value="{{item.value.numberOfChildren}}"
                                                         pattern="" inputmode="" formControlName="numberOfChildren">
-                                                    <input type="button" value="+" class="qty-buttons plus" (click)="increaseChild(i)">
+                                                    <input type="button" value="+" class="qty-buttons plus" (click)="increaseCount(i,item,'child')"  id="childBtn_{{i}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -137,14 +137,14 @@
                                 </ng-container>
                             </ng-container>
                             <div class="Add-room">
-                                <a href="javaScript:void(0)" class="" (click)="addDetails()">Add Room</a>
+                                <a href="javaScript:void(0)" class="" (click)="addDetails()" *ngIf="roomsDetails.length < 4">Add Room</a>
                             </div>
                         </ng-container>
                     </div>
                 </div>
             </div>
             <div class="hotel-search-btns">
-                <a href="javaScript:void(0)" data-bs-toggle="modal" data-bs-target="#itinerary" class="hotel-search-btn"
+                <a href="javaScript:void(0)"  data-bs-toggle="modal" data-bs-target="#itinerary" class="hotel-search-btn"
                     (click)="searchHotel()">Search</a>
             </div>
         </div>

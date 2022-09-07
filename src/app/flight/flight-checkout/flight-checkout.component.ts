@@ -616,25 +616,7 @@ orderRetry:boolean=false;
         }
       }, 50);
 
-
-
     });
-
-
-    this.route.queryParamMap
-    .subscribe((params) => {
-      let order = { ...params.keys, ...params };
-      if(order['params']['retry'] && order['params']['retry'] != undefined) {
-
-       setTimeout(() => {
-        document.getElementById('continueToItinery').click();
-
-        
-      }, 3000);
-       
-      }
-    }
-  );
 
   }
 
@@ -3707,9 +3689,10 @@ console.log(this.passengerForm);
         }
       };
 
-      if (this.searchData.arrival)
+      if (this.searchData.arrival && this.searchData.arrival  !='null'){
+        if(moment(this.searchData.arrival).format('YYYY-MM-DD') !='Invalid dat')
         this.itineraryRequest["returnCheckInDate"] = moment(this.searchData.arrival).format('YYYY-MM-DD');
-        
+       } 
         var type;
         
       if( this.flightSessionData['travel_type']=='M') { 
@@ -4149,7 +4132,8 @@ orderReferenceNumber:any;
       "retry_url": "",
       "sessionKey":this.randomFlightDetailKey,
       "docKey": this.flightSessionData.docKey,
-      "itineraryRequest": this.itineraryRequest
+      "itineraryRequest": this.itineraryRequest,
+      "flightSessionData":this.flightSessionData
     };
     this.orderReferenceNumber=order_ref_num;
     
