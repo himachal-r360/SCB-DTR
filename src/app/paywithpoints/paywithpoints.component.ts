@@ -558,8 +558,7 @@ otperrormsg :any;
       this.pay.voucherRedemption(passData).subscribe(response => {
         //this.applyVoucherRes = JSON.parse(this.EncrDecr.get(response));
         this.applyVoucherRes = response;
-        
-        if(this.applyVoucherRes.status!=undefined && (this.applyVoucherRes.status || this.applyVoucherRes.status=="true")){ 
+        if(this.applyVoucherRes.status!=undefined && (this.applyVoucherRes.status && this.applyVoucherRes.status=="true")){ 
           this.payTotalFare = this.applyVoucherRes.ordertotalamount
           this.VoucherPreRedeemBalance = this.applyVoucherRes.VoucherPreRedeemBalance;
           this.VoucherPostRedeemBalance = this.applyVoucherRes.VoucherPostRedeemBalance;
@@ -579,9 +578,16 @@ otperrormsg :any;
           if(this.applyVoucherRes['message']!=undefined)
           {
             // this.errorMsg3=this.applyVoucherRes['message'];
+          }else if(this.applyVoucherRes['error']!=undefined){
+            var message = this.applyVoucherRes['error'];
+      this.errorMsg0=message;
+      alert(this.errorMsg0);
+      // this.hasError =true;
+      this.spinnerService.hide();
           }
          
         }
+
       }, (err: HttpErrorResponse) => {
         var message = 'Something went wrong';
       this.errorMsg0=message;
