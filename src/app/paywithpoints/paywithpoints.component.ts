@@ -221,9 +221,11 @@ otperrormsg :any;
         var card_type=this.response1['card_type'];
         this.CcCharges = this.response1['CcCharges'];
         this.pointData = this.response1;
-        this.cardmobile = this.customerInfo['ccustomer']['mobile'];
+        //this.cardmobile = this.customerInfo['ccustomer']['mobile'];
+        this.cardmobile = this.response1['mobile'];
         this.cardbin = this.response1['bin'];
-        this.carddob = this.customerInfo['ccustomer']['DOB'];
+        //this.carddob = this.customerInfo['ccustomer']['DOB'];
+        this.carddob = this.response1['DOB'];
         this.setSlider();
         // this.intitialconversionptoc();
       }else{
@@ -536,6 +538,9 @@ otperrormsg :any;
         var datePipe = new DatePipe('en-US'); 
         var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
         var applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
+        if(this.XSRFTOKEN==undefined){
+          this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
+        }
         var request = {
         // "first4digit": first4digit,
         "last4digit": last4digit,
@@ -552,14 +557,14 @@ otperrormsg :any;
         'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
         "_token":this.XSRFTOKEN 
       }
+      console.log(request);
       var passData = {
         postData: this.EncrDecr.set(JSON.stringify(request))
       };
       this.pay.voucherRedemption(passData).subscribe(response => {
         //this.applyVoucherRes = JSON.parse(this.EncrDecr.get(response));
         this.applyVoucherRes = response;
-        
-        if(this.applyVoucherRes.status!=undefined && (this.applyVoucherRes.status || this.applyVoucherRes.status=="true")){ 
+        if(this.applyVoucherRes.status!=undefined && (this.applyVoucherRes.status && this.applyVoucherRes.status=="true")){ 
           this.payTotalFare = this.applyVoucherRes.ordertotalamount
           this.VoucherPreRedeemBalance = this.applyVoucherRes.VoucherPreRedeemBalance;
           this.VoucherPostRedeemBalance = this.applyVoucherRes.VoucherPostRedeemBalance;
@@ -579,9 +584,16 @@ otperrormsg :any;
           if(this.applyVoucherRes['message']!=undefined)
           {
             // this.errorMsg3=this.applyVoucherRes['message'];
+          }else if(this.applyVoucherRes['error']!=undefined){
+            var message = this.applyVoucherRes['error'];
+      this.errorMsg0=message;
+      alert(this.errorMsg0);
+      // this.hasError =true;
+      this.spinnerService.hide();
           }
          
         }
+
       }, (err: HttpErrorResponse) => {
         var message = 'Something went wrong';
       this.errorMsg0=message;
@@ -691,7 +703,6 @@ otperrormsg :any;
 
   }
     AddCardcheckAvailablePoints(){
-    console.log(this.cardaddForm1);
     this.submitted2=true;
     if (this.cardaddForm1.status !='VALID') {
       return;
@@ -712,7 +723,9 @@ otperrormsg :any;
            "_token":this.customerInfo["XSRF-TOKEN"],
            "user_id":this.sg["customerInfo"]["id"],
         };
-        var passData = JSON.stringify(request);
+        var passData = {
+          postData: this.EncrDecr.set(JSON.stringify(request))
+        };
         this.pay.availablePoints(passData).subscribe(response => {
            this.submitted2=false;
            this.cardaddForm1.reset();

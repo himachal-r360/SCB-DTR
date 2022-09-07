@@ -9,7 +9,7 @@ import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { InputMaskModule } from '@ngneat/input-mask';
 
 const routes: Routes = [
-  {path:'hotel-list',component:HotelListComponent}
+  {path:"hotel-list",component:HotelListComponent}
 ]
 
 @NgModule({

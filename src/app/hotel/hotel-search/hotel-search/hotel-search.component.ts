@@ -1,17 +1,17 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import { reduce, Subscription } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotel-search',
   templateUrl: './hotel-search.component.html',
   styleUrls: ['./hotel-search.component.sass']
 })
-export class HotelSearchComponent implements OnInit, OnDestroy {
+export class HotelSearchComponent implements OnInit{
   hotelSearchForm: any;
-  sub: Subscription;
   hotelList: any;
   cityList: any;
   totalAdultsCount: number = 1;
@@ -19,8 +19,9 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
 
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
+  
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router) {
     this.hotelSearchForm = this._fb.group({
       checkIn: ['2022-09-06'],
       checkOut: ['2022-09-07'],
@@ -149,28 +150,42 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     this.showTotalCountsOfChild();
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
 
   ConvertObjToQueryString(obj: any) {
-
     var str = [];
-    for (var p in obj)
+    for (var p in obj) {
       if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        if (typeof (obj[p]) == "object") {
+          let objRooms: any = obj[p];
+          for (var i = 0; i < objRooms.length; i++) {
+            let objRoomObj: any = objRooms[i];
+            for (var roomField in objRoomObj) {
+              if (objRoomObj.hasOwnProperty(roomField)) {
+                str.push(encodeURIComponent(roomField) + "[" + i + "]=" + encodeURIComponent(objRoomObj[roomField]));
+              }
+            }
+          }
+          // for (var p1 in obj[p]) {
+          //   if (obj[p].hasOwnProperty(p1)) {
+          //     str.push(encodeURIComponent(p) + "[" + i + "]=" + encodeURIComponent(obj[p1]));
+          //   }
+          // }
+        } else {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
       }
+    }
     return str.join("&");
   }
 
   searchHotel() {
     debugger;
-    // let date = moment(date).format('YYYY-MM-DD')
     this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');
     this.hotelSearchForm.value.checkOut = moment(this.hotelSearchForm.value.checkOut).format('YYYY-MM-DD');
     this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
     this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
-    this.hotelSearchForm.value;
+    let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
+    this.router.navigateByUrl(url);
     
     // this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
     //   this.hotelList = res;

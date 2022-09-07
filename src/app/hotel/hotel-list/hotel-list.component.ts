@@ -101,6 +101,7 @@ export class HotelListComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
     this.searchHotel();
   }
