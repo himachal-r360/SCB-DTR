@@ -6100,7 +6100,7 @@
 
                                 <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
+                                    <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare/AdtQuantity | number }})</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ AdtBaseFare  | number }}</p>
@@ -6109,7 +6109,7 @@
 
                                 <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
+                                    <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare/ChildQuantity | number }})</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ ChildBaseFare  | number }}</p>
@@ -6118,7 +6118,7 @@
 
                                 <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                                   <div class="col-8 fare-list-left">
-                                    <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
+                                    <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare/InfantQuantity | number }})</p>
                                   </div>
                                   <div class="col-4 fare-list-right">
                                     <p>₹ {{ InfantBaseFare  | number }}</p>
@@ -6616,7 +6616,7 @@
 
                           <div class="row collapse_row" *ngIf="AdtBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
+                              <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare/AdtQuantity | number }})</p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ AdtBaseFare  | number }}</p>
@@ -6625,7 +6625,7 @@
 
                           <div class="row collapse_row" *ngIf="ChildBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
+                              <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare/ChildQuantity | number }})</p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ ChildBaseFare  | number }}</p>
@@ -6634,7 +6634,7 @@
 
                           <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
                             <div class="col-8 fare-list-left">
-                              <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
+                              <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare/InfantQuantity | number }})</p>
                             </div>
                             <div class="col-4 fare-list-right">
                               <p>₹ {{ InfantBaseFare   | number }}</p>
