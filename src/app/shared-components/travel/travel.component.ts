@@ -1178,7 +1178,7 @@ lastFlightSearch=localStorage.getItem('flightLastSearchNew');
           
   }
   //Train
-   lastTrainSearch=localStorage.getItem('trainLastSearchNewNewNewNewNewNew');
+   lastTrainSearch=localStorage.getItem('trainLastSearchNew');
   const lastTrainSearchValue=JSON.parse(lastTrainSearch);
   if(lastTrainSearchValue){
 
@@ -1778,7 +1778,7 @@ this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-  localStorage.setItem('trainLastSearchNewNewNewNewNewNew', JSON.stringify(this.searchArray));
+  localStorage.setItem('trainLastSearchNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){

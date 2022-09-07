@@ -175,9 +175,14 @@
                                                     </p>
                                                     <p class="date_info col-12"><span class="date">{{rsearchval.showdate}}</span></p>
                                                 </div>
-                                                <p class="search_icon">
-                                                    <a href="{{rsearchval.Redirecturl}}" class=""><img src="{{cdnUrl}}images/smartbuy/icons/right_icon.svg" alt="icon" class="" width="25px" height="25px"></a>
+                                                <p class="search_icon" *ngIf="rsearchval.type !='hotel'">
+                                                    <a (click)="onGoToPage(rsearchval.Redirecturl)"  class=""><img src="{{cdnUrl}}images/smartbuy/icons/right_icon.svg" alt="icon" class="" width="25px" height="25px"></a>
                                                 </p>
+
+                                                <p class="search_icon" *ngIf="rsearchval.type =='hotel'">
+                                                    <a href="{{rsearchval.Redirecturl}}"  class=""><img src="{{cdnUrl}}images/smartbuy/icons/right_icon.svg" alt="icon" class="" width="25px" height="25px"></a>
+                                                </p>
+
                                             </div>
                                         </div>
                                     </div>
