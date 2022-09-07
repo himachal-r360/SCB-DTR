@@ -714,7 +714,10 @@ otperrormsg :any;
         };
         var passData = JSON.stringify(request);
         this.pay.availablePoints(passData).subscribe(response => {
+           this.cardaddForm1.reset();
+           this.addCardCancel();
            this.cards = response.cards;
+           this.hasCards = true;
            this.selectedCardDetails = this.cards[0];
            this.checkAvailablePointsforSavedCard();
         }), (err: HttpErrorResponse) => {
