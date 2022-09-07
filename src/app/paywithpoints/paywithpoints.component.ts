@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
 import { CountdownModule, CountdownComponent } from 'ngx-countdown';
 import { AppConfigService } from '../app-config.service';
 import { NgxSpinnerService } from "ngx-spinner";
-
+import { createMask } from '@ngneat/input-mask';
 
 declare var $: any;
 @Component({
@@ -116,7 +116,13 @@ otperrormsg :any;
         });
     
   }
-
+        
+        public mask = {
+          guide: true,
+          showMask : true,
+          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
+        };
+        
         ngOnInit() {
         this.orderamount= Number(this.payTotalFare);
         this.getCustomerCards();
