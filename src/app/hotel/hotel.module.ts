@@ -6,6 +6,7 @@ import { MaterialModule } from '../material.module';
 import { HotelListComponent } from './hotel-list/hotel-list.component';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent}
@@ -17,6 +18,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    InputMaskModule,
     HotelSearchModule,
     FormsModule,
     ReactiveFormsModule,
@@ -26,7 +28,7 @@ const routes: Routes = [
       anchorScrolling: 'enabled',
       onSameUrlNavigation: 'reload'
     })
-    
+
   ],
   exports: [RouterModule],
   providers:[ {
