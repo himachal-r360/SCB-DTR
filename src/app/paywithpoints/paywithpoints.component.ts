@@ -536,6 +536,9 @@ otperrormsg :any;
         var datePipe = new DatePipe('en-US'); 
         var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
         var applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
+        if(this.XSRFTOKEN==undefined){
+          this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
+        }
         var request = {
         // "first4digit": first4digit,
         "last4digit": last4digit,
@@ -552,6 +555,7 @@ otperrormsg :any;
         'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
         "_token":this.XSRFTOKEN 
       }
+      console.log(request);
       var passData = {
         postData: this.EncrDecr.set(JSON.stringify(request))
       };
@@ -697,7 +701,6 @@ otperrormsg :any;
 
   }
     AddCardcheckAvailablePoints(){
-    console.log(this.cardaddForm1);
     this.submitted2=true;
     if (this.cardaddForm1.status !='VALID') {
       return;
