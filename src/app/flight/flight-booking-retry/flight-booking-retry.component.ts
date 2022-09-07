@@ -154,18 +154,14 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
       this.flightClasses = this.serviceSettings.flightClasses;
-    
-
     });
 
   }
   
 
  ngAfterContentChecked() {
-    this.ref.detectChanges();
      }
   ngOnInit(): void {
-    this.route.url.subscribe(url => {
       this.fetchOrderId=atob(this.route.snapshot.queryParamMap.get('bookingId'));
       this.resetPopups();
       this.steps = 5;
@@ -183,26 +179,10 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
         //Check Laravel Seesion
         if (this.sg['customerInfo']) {
           this.customerInfo = this.sg['customerInfo'];
-          if (sessionStorage.getItem("channel") == "payzapp") {
-            var customerInfo = this.sg['customerInfo'];
-            this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-            this.REWARD_CUSTOMERID = '0000';
-            this.REWARD_EMAILID = '';
-            this.REWARD_MOBILE = '';
-            this.REWARD_CUSTOMERNAME = '';
-          } else {
-            var customerInfo = this.sg['customerInfo'];
+           var customerInfo = this.sg['customerInfo'];
             if (customerInfo["org_session"] == 1) {
               // console.log(customerInfo)
-              if (customerInfo["guestLogin"] == true) {
-
-                this.REWARD_CUSTOMERID = customerInfo["id"];
-                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-                this.IsDcemiEligibleFlag = true;
-                this.isFlexipayEligibleFlag = true;
-               
-              } else {
-                
+              
                 var getOrder = {
                 "order_ref_num": this.fetchOrderId,
                 }
@@ -213,20 +193,23 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 this.rest.getOrderDetail(getOrderParam).subscribe(results => { 
                 if (results.result) {
                 let result = JSON.parse(this.EncrDecr.get(results.result));
-                
-                console.log(result);
-               
+              
+              if (customerInfo["guestLogin"] == true) {
+                this.REWARD_CUSTOMERID = customerInfo["id"];
+                this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+                this.IsDcemiEligibleFlag = true;
+                this.isFlexipayEligibleFlag = true;
+              } else {
                 this.flightSessionData=result.flightSessionData;
                 this.searchData = (this.flightSessionData.queryFlightData);
                 this.searchDataOrg = this.searchData ;
-                this.syncCustomer(customerInfo);
                
-     
-                console.log(this.searchDataOrg);
+                 console.log(result);
+                console.log(this.flightSessionData);
+                
                 setTimeout(() => {
-                $("#infoprocess").modal('show');
+               // $("#infoprocess").modal('show');
                 }, 10);
-
                 if( this.flightSessionData['travel_type']=='M') {
                 //Multicity
                 this.maxAdults = Number(this.searchData[0].adults);
@@ -278,18 +261,31 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 this.flightReturnDetails = this.flightSessionData.returnFlights;
                 else
                 this.flightReturnDetails = [];
-
                 }
-
-
                 this.partnerToken = this.selectedOnwardVendor.partnerName;
                 } 
                
-               
-               
-                }
-                });
-
+                
+                this.totalCollectibleAmount = Number(result.flightDetails.fare.totalFare);
+                this.totalCollectibleAmountFromPartnerResponse = Number(result.flightDetails.fare.totalFare);
+                this.totalCollectibleAmountFromPartnerResponseOrg = Number(result.flightDetails.fare.totalFare);
+                
+                this.BaseFare =  Number(result.flightDetails.fare.totalbf);
+                this.Tax =  Number(result.flightDetails.fare.others);
+                this.TotalFare =  Number(result.flightDetails.fare.totalFare);
+                
+                this.convenience_fee =  Number(result.flightDetails.fare.partnerConvFee);
+                this.partnerConvFee =  Number(result.flightDetails.fare.partnerConvFee);
+                this.coupon_amount =  Number(result.flightDetails.fare.discount);
+                
+                this.AdtQuantity =  this.maxAdults;
+                this.AdtBaseFare =  Number(result.flightDetails.fare.pass_break.ADT);
+                this.ChildQuantity =   this.maxAdults;
+                this.ChildBaseFare =  Number(result.flightDetails.fare.pass_break.CHD);
+                this.InfantQuantity =   this.maxAdults;
+                this.InfantBaseFare =  Number(result.flightDetails.fare.pass_break.INF);
+                 
+                 this.syncCustomer(customerInfo);
                   
                 this.enableVAS = this.serviceSettings.enabledVAS[this.partnerToken];
                 this.REWARD_CUSTOMERID = customerInfo["id"];
@@ -361,6 +357,8 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                   })
                 }
               }
+              }
+              });
             
             } else {
               this.REWARD_CUSTOMERID = '0000';
@@ -371,7 +369,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
               if (environment.localInstance == 0)
                 this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
             }
-          }
+          
         } else {
           this.REWARD_CUSTOMERID = '0000';
           this.REWARD_EMAILID = '';
@@ -383,16 +381,13 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
         }
       }, 50);
 
-    });
 
   }
 
-
-
-        syncCustomer(customerInfo){
+ syncCustomer(customerInfo){
         this.searchData = (this.flightSessionData.queryFlightData);
         setTimeout(() => {
-        $("#infoprocess").modal('show');
+       // $("#infoprocess").modal('show');
         }, 10);
         if( this.flightSessionData['travel_type']=='M') {
         //Multicity
