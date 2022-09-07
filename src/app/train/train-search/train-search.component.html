@@ -399,11 +399,11 @@
     </div>
   </div>
   
-   <div class="container" *ngIf="showDetails">
-    <div class="pnr-container" *ngIf="PnrDetails.trainName">
+   <div class="" *ngIf="showDetails">
+    <div class="pnr-container pnr_srch_result" *ngIf="PnrDetails.trainName">
 
     
-    <div class="trans-details train-mrgtop10 bor-data pnr-list">
+    <!-- <div class="trans-details train-mrgtop10 bor-data pnr-list">
             <div class="row  ">
                 <div class="col-md-4">
                     <p><span>PNR Number : </span> <span class="data">{{PnrDetails.pnrNumber}}</span></p>
@@ -412,9 +412,9 @@
                     <p><span>Boarding point : </span> <span class="data">{{stationsdump[PnrDetails.boardingPoint]}}({{PnrDetails.boardingPoint}})</span></p>
                     <p><span>Class : </span> <span class="data">{{PnrDetails.journeyClass}}</span></p>
                     <p><span>Charting Status : </span> <span class="data">{{PnrDetails.chartStatus}}</span></p>
-                    <!-- <p><span>Booking Fare : </span> <span class="data">{{PnrDetails.bookingFare}}</span></p> -->
+                    //<p><span>Booking Fare : </span> <span class="data">{{PnrDetails.bookingFare}}</span></p>
                     <p><span>Quota : </span> <span class="data">{{PnrDetails.quota}}</span></p>
-                    <!-- <p><span>Remarks : </span> <span class="data"></span></p> -->
+                    //<p><span>Remarks : </span> <span class="data"></span></p>
                 </div>
                 <div class="col-md-4">
                         <p><span>Date : </span> <span class="data">{{PnrDetails.dateOfJourney | date: 'dd MMM yyyy'}}</span></p> 
@@ -422,15 +422,15 @@
                         <p><span>To Station : </span> <span class="data">{{stationsdump[PnrDetails.destinationStation]}}({{PnrDetails.destinationStation}}) </span></p>
                         <p><span>Reservation upto : </span> <span class="data">{{stationsdump[PnrDetails.reservationUpto]}}({{PnrDetails.reservationUpto}})</span></p>
                         <p><span>No of passengers : </span> <span class="data">{{PnrDetails.numberOfpassenger}}</span></p>
-                        <!-- <p><span>Upgraded Class : </span> <span class="data"> </span></p> -->
-                         <!-- <p><span>Ticket Fare : </span> <span class="data">{{PnrDetails.ticketFare}}</span></p> -->
+                        //<p><span>Upgraded Class : </span> <span class="data"> </span></p>
+                        //<p><span>Ticket Fare : </span> <span class="data">{{PnrDetails.ticketFare}}</span></p>
                     
                 </div>
                 
             </div>
-            </div>
+            </div> -->
     
-    <h6 class="pt-15-pb-17 col-md-12 float-left m-pl-15">Travellers</h6>
+    <!-- <h6 class="pt-15-pb-17 col-md-12 float-left m-pl-15">Travellers</h6>
     <div class='table-responsive'>
     <table  class="table traveller-list">
         <thead class="thead-light">
@@ -439,8 +439,8 @@
                 <th>Age</th>
                 <th >Booking Status</th>
                 <th>Current Status</th>
-                <!-- <th>Berth</th>
-                <th>CoachId/BerthNo</th> -->
+                //<th>Berth</th>
+                //<th>CoachId/BerthNo</th>
             </tr>
         </thead>
         <tbody >
@@ -451,32 +451,116 @@
                   <span *ngIf = "each.passengerBerthChoice">/{{each.passengerBerthChoice}}</span>
                   </td>
                 <td>{{each.currentStatus}}<span *ngIf="each.currentStatus!='CNF'">/{{each.currentBerthNo}}</span></td>
-                  <!-- <td >{{each.bookingBerthCode}}</td>
-                  <td >{{each.bookingCoachId}}/{{each.bookingBerthNo}}</td> -->
+                  //<td >{{each.bookingBerthCode}}</td>
+                  //<td >{{each.bookingCoachId}}/{{each.bookingBerthNo}}</td>
             </tr>
             
         </tbody>
 
     </table>
+    </div> -->
+
+    <div class="pnr_srch_details">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="check_pnr_title">LTT VSKP EXP<span>(18520)</span></h5>
+          <span class="check_pnr_title_text">Runs on: 
+            <a href="#">S</a>
+            <a href="#">M</a>
+            <a href="#">T</a>
+            <a href="#">W</a>
+            <a href="#">T</a>
+            <a href="#">F</a>
+            <a href="#">S</a>
+          </span>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-5 text-right">
+              <span class="check_pnr_place mx-1">Lokmantatilak (LTT)</span>
+              <span class="check_pnr_time">06:05 Sat</span>
+              <p class="check_pnr_place">Jul 11, 2022</p>
+            </div>
+            <div class="col-2 text-center">
+              <span class="check_pnr_duration">13 hrs 35 mins</span>
+              <div class="d-flex align-items-center justify-content-center">
+                <span class="dots"></span>
+                <hr>
+                <span class="dots"></span>
+              </div>
+
+            </div>
+            <div class="col-5 text-left">
+              <span class="check_pnr_time">20:30, Sun</span>
+              <span class="check_pnr_place mx-1">Secunderabad Jn (SC)</span>
+              <p class="check_pnr_place">Jul 11, 2022</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class='table-responsive'>
+            <table  class="table table-borderless pnr_check_tbl">
+                <thead>
+                    <tr>
+                      <th>Passenger Number</th>
+                        <th>Age</th>
+                        <th >Booking Status</th>
+                        <!-- <th>Current Status</th> -->
+                        <th>Berth</th>
+                        <!-- //<th>CoachId/BerthNo</th> -->
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr  *ngFor="let each of PnrDetails.passengerList">
+                      <td>{{each.passengerSerialNumber}}</td>
+                         <td>{{each.passengerAge}}</td>
+                          <td class="success_text">{{each.bookingStatus}}/<span *ngIf="each.bookingCoachId!=''" >{{each.bookingCoachId}}/</span>{{each.bookingBerthNo}}
+                          <span *ngIf = "each.passengerBerthChoice">/{{each.passengerBerthChoice}}</span>
+                          </td>
+                        <!-- <td>{{each.currentStatus}}<span *ngIf="each.currentStatus!='CNF'">/{{each.currentBerthNo}}</span></td> -->
+                          <td >{{each.bookingBerthCode}}</td>
+                          <!-- //<td >{{each.bookingCoachId}}/{{each.bookingBerthNo}}</td> -->
+                    </tr>
+                    
+                </tbody>
+        
+            </table>
+            </div> 
+        </div>
+        <div class="col-md-12">
+          <div class="pnr_dashed_hr"></div>
+        </div>
+        <div class="col-md-12">
+          <a href="#" class="blue_text">For any amendment in booking or partial cancellation, please contact OTA.</a>
+        </div>
+      </div>
+
+
     </div>
     
     
     <div class="pnr-notes">
     <div>
                   <p><span>Note:</span> <span class="data"> </span></p>
-                 <p><span>1. No refund shall be granted on the confirmed ticket after four hours before the scheduled departure of the train. </span></p>
-                 <p><span>2. No refund shall be granted on the RAC or Waitlisted ticket after thirty minutes before the scheduled departure of the train. </span></p>
-                 <p><span>3. In case, on a party e-ticket or a family e-ticket issued for travel of more than one passenger, some passengers have confirmed reservation and others are on RAC or waiting list, full refund of fare , less clerkage, shall be admissible for confirmed passengers also subject to the condition that the ticket shall be cancelled online or online TDR shall be filed for all the passengers upto thirty minutes before the scheduled departure of the train. </span></p>
-                 <p><span>4. Before Cancellation, please refer New Refund Rule 2015 w.e.f 12-Nov-2015. </span></p>
+                  <ol>
+                    <li><p><span>No refund shall be granted on the confirmed ticket after four hours before the scheduled departure of the train. </span></p></li>
+                    <li><p><span>No refund shall be granted on the RAC or Waitlisted ticket after thirty minutes before the scheduled departure of the train. </span></p></li>
+                    <li><p><span>In case, on a party e-ticket or a family e-ticket issued for travel of more than one passenger, some passengers have confirmed reservation and others are on RAC or waiting list, full refund of fare , less clerkage, shall be admissible for confirmed passengers also subject to the condition that the ticket shall be cancelled online or online TDR shall be filed for all the passengers upto thirty minutes before the scheduled departure of the train. </span></p></li>
+                    <li><p><span>Before Cancellation, please refer New Refund Rule 2015 w.e.f 12-Nov-2015. </span></p></li>
+                  </ol>
+                 
                  </div>
                  <div class="pop-two">
-                <div class="title-book-pop">
+                <div class="title-book-pop mb-2">
                     <h5>Acronyms</h5>  
                 </div>
                 <div>
                  
                  <div class="table-responsive">
-                                <table class="table table-bordered" width="99%">
+                                <table class="table table-bordered check_pnr_acronym_tbl" width="99%">
                                   <tbody><tr>
                                       <td>CAN</td>
                                       <td>CANCELLED</td>
