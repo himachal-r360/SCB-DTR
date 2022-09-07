@@ -309,7 +309,7 @@ public modeselectTrending= 'All';
         
         var allCookies_key = [];
         if (localStorage.getItem('flightLastSearchNew') !== null) allCookies_key.push('flightLastSearchNew');
-        if (localStorage.getItem('HotelRecentSearch') !== null) allCookies_key.push('HotelRecentSearch');
+        if (localStorage.getItem('HotelRecentSearchNew') !== null) allCookies_key.push('HotelRecentSearchNew');
         if (localStorage.getItem('busLastSearchNew') !== null) allCookies_key.push('busLastSearchNew');
         if (localStorage.getItem('trainLastSearchNew') !== null) allCookies_key.push('trainLastSearchNew');
 
