@@ -392,7 +392,7 @@ export class PaymentComponent implements OnInit {
 
                         }
                         this.isLoggedIn = true;
-                         this.showRewardsBox=false;
+                         this.showRewardsBox=true;
                         }else{
                                 if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']][this.serviceId] == 1) {
                         this.showRewardsBox=true;

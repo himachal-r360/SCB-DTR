@@ -9,6 +9,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.component';
+import { FlightBookingRetryComponent } from './flight-booking-retry/flight-booking-retry.component';
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
@@ -65,11 +66,11 @@ const routes: Routes = [
     path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
 
   },
-  
-  {
-    path:"flight-checkout/retry" ,component:FlightCheckoutComponent,
+    {
+    path:"flight-booking/retry" ,component:FlightBookingRetryComponent,
 
   }
+
 
 
 ];
@@ -78,7 +79,7 @@ const routes: Routes = [
   declarations: [
     FlightListComponent,
     DurationTimePipe,
-    FlightCheckoutComponent,
+    FlightCheckoutComponent,FlightBookingRetryComponent,
     MinuteSecondPipe,
     FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe,TotalDurationTimePipe,SafeHtmlPipe
 
