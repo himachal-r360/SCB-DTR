@@ -109,7 +109,6 @@ otperrormsg :any;
           applyvouchercode:['', [Validators.required,Validators.pattern("^[a-zA-Z0-9]*$")]]
         });
      this.cardaddForm1 = this.formBuilder.group({
-          first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
           dob:['', Validators.required]
@@ -122,7 +121,7 @@ otperrormsg :any;
           showMask : true,
           mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
         };
-        
+
         ngOnInit() {
         this.orderamount= Number(this.payTotalFare);
         this.getCustomerCards();
@@ -596,12 +595,12 @@ otperrormsg :any;
       return;
     }else{
         let URLparams = {
-           "first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
+           //"first4digit":this.cardaddForm1.controls['first4digit'].value.substring(0, 4).trim(),
            "last4digit":this.cardaddForm1.controls['last4digit'].value,
            "mobile": this.cardaddForm1.controls['applymobile'].value,
            "DOB":this.cardaddForm1.controls['dob'].value,
            "type":"available_points",
-           "bin":this.cardaddForm1.controls['first4digit'].value,
+           //"bin":this.cardaddForm1.controls['first4digit'].value,
            "clientToken":this.sg['domainName'].toUpperCase(),
            "services_id":this.serviceId,
            "partner_id":42,
@@ -688,6 +687,40 @@ otperrormsg :any;
       });
     }
 
+  }
+    AddCardcheckAvailablePoints(){
+    console.log(this.cardaddForm1);
+    this.submitted2=true;
+    if (this.cardaddForm1.status !='VALID') {
+      return;
+    }else{
+        let request = {
+           "last4digit":this.cardaddForm1.controls['last4digit'].value,
+           "mobile": this.cardaddForm1.controls['applymobile'].value,
+           "DOB":this.cardaddForm1.controls['dob'].value,
+           "type":"available_points",
+           "clientToken":this.sg['domainName'].toUpperCase(),
+           "services_id":this.serviceId,
+           "partner_id":42,
+           "modal":"DIGITAL",
+           "noopt": 1,
+           "savecard":1,
+           "customer_id": this.sg["customerInfo"]["customerid"],
+           "programName":this.sg['domainName'],
+           "_token":this.customerInfo["XSRF-TOKEN"],
+           "user_id":this.sg["customerInfo"]["id"],
+        };
+        var passData = JSON.stringify(request);
+        this.pay.availablePoints(passData).subscribe(response => {
+           this.cards = response.cards;
+           this.selectedCardDetails = this.cards[0];
+           this.checkAvailablePointsforSavedCard();
+        }), (err: HttpErrorResponse) => {
+            var message = 'Something went wrong';
+            alert(message);
+        };
+       
+    }
   }
   applyVoucherCancel(){
     this.voucheraddform = false;
@@ -848,6 +881,7 @@ export class ConfirmationDialog {
       this.tab3=true;
     }
   }
+
   checkAvailablePoints(){
     //this.switchTab(2); return false;
     this.submittedForm1 = true;

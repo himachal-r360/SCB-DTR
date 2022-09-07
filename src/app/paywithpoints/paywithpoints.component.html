@@ -223,7 +223,7 @@
   </div>
   <div class="col-12" *ngIf="voucheraddform">
      
-      <form  [formGroup]="cardaddForm1" (ngSubmit)="GenerateOTPform()">
+      <form  [formGroup]="cardaddForm1" (ngSubmit)="AddCardcheckAvailablePoints()">
         <div class="my-3">
             <!-- <h6 class="w-80">{{data.popup}} Please Enter Your Credit Card Details</h6> -->
                 <!-- <div> -->
@@ -250,7 +250,7 @@
                             <small *ngIf="cardaddForm1.hasError('required','last4digit')">Please enter last 4 digits.</small>
                             <small *ngIf="cardaddForm1.hasError('pattern','last4digit')">Please enter valid card number.</small>   
                         </div>
-                        <div *ngIf="submitted2 && cardaddForm1.get('first4digit').dirty" class="error">
+                        <div *ngIf="submitted2" class="error">
                             <small *ngIf="cardaddForm1.hasError('isCardValid','first4digit')">Invalid Card. The card details entered is not enabled for Rewards program. Please contact the Bank for more details.</small>
                         </div>
                             <!-- <div class="small-gray-text">First 9 digits and last 4 digits</div> -->
