@@ -273,7 +273,7 @@
                             </div>
                         </form>
 
-                        <div class="traveler-details mb-100">
+                        <div class="traveler-details mb-100" *ngIf="!isMobile" >
                             <div class="gap-2 d-md-block">
                                 <button class="btn btn-primary btn-w" (click)="submitBookingInfo()">Continue</button>
                                 <button class="btn btn-primary-outline btn-w ms-3">Back</button>
@@ -1708,7 +1708,7 @@
                 <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchTrainKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
                     [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)"
                (sendPointsPlusEvent)="receivePointsPlus($event)"       [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken"
-              [isMobile]="isMobile">
+              [isMobile]="isMobile"   [retryPay]="1">
                 </app-payment>
             </div>
         </div>
@@ -1914,7 +1914,7 @@
 
                         </div>
                     </div>
-                    <div *ngIf="steps==4 && !isMobile">
+                    <div *ngIf="steps==3 && !isMobile">
                         <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
                             passServiceToken="Bus" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
                         </app-coupons>
@@ -1990,7 +1990,7 @@
                 <div class="apply_fare row">
                     <!--  <p *ngIf="steps<5" class="w-75"></p> -->
                     <div class="col-6 text-left">
-                        <p *ngIf="steps==5"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+                        <p *ngIf="steps==3"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
                     </div>
                     <div class="col-6 text-right">
                         <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
@@ -2007,8 +2007,11 @@
                         </div>
                         <div class="col-7">
                             <div>
+                             <a href="javascript:void(0);" class="button-style w-100" (click)="submitBookingInfo()"      *ngIf="steps==1">Continue</a>
                                 <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()" *ngIf="steps==2">Continue</a>
                                 <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()" *ngIf="steps==3">Continue</a>
+                                 <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()"
+                  *ngIf="steps==4">Pay now</a>
                             </div>
                         </div>
                     </div>
@@ -2018,7 +2021,7 @@
     </div>
 
     <!-- Mlite Apply Coupon Popup -->
-    <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel" aria-hidden="true" *ngIf="steps==5 && isMobile">
+    <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel" aria-hidden="true" *ngIf="steps==3 && isMobile">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

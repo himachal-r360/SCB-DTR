@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject, ChangeDetectorRef, Output,EventEmitter,HostListener,OnDestroy,ViewChild } from '@angular/core';
+import { Component, OnInit,Inject, ChangeDetectorRef, Output,EventEmitter,HostListener,OnDestroy,ViewChild ,ViewContainerRef,TemplateRef } from '@angular/core';
 import { BusService } from 'src/app/shared/services/bus.service';
 import { ActivatedRoute, Router } from '@angular/router'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -154,6 +154,13 @@ export class BuslistComponent implements OnInit,OnDestroy {
         listing_header:boolean = true;
         seating_header:boolean = false;
         busFilterlengthZero :boolean = false;
+        
+        @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
+        @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+
+        pageIndex: number = 26;
+        ITEMS_RENDERED_AT_ONCE=25;
+        nextIndex=0;
 
  constructor(public rest:RestapiService,private busService: BusService, public dialog: MatDialog, private router: Router, private location: Location,  private activatedRoute: ActivatedRoute, private http: HttpClient, private changeDetector: ChangeDetectorRef, public commonHelper: CommonHelper, public busHelper: BusHelper, private sg: SimpleGlobal, private formBuilder: FormBuilder, private _bottomSheet: MatBottomSheet, private busfilter: BusfilterPipe, plocation: PlatformLocation, @Inject(APP_CONFIG) appConfig: any,private cookieService: CookieService,private titleService: Title,private appConfigService:AppConfigService,private _flightService: FlightService,public _styleManager: StyleManagerService, private EncrDecr: EncrDecrService) {
   this.serviceSettings=this.appConfigService.getConfig();
@@ -247,6 +254,51 @@ ngOnInit(): void {
         });
 
   }
+  
+  
+  
+          private loadData() {
+             if (this.pageIndex >= this.busResults.length) {
+             return false;
+              }else{
+             this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
+
+             if(this.nextIndex > this.busResults.length){
+             this.nextIndex=this.busResults.length;
+             }
+
+            for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+             const context = {
+                item: [this.busResults[n]]
+              };
+
+              this.container.createEmbeddedView(this.template, context);
+            }
+             this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+
+           }
+
+        }
+
+
+         private intialData() {
+            for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
+            
+            console.log(this.busResults[n]);
+            
+              if(this.busResults[n] != undefined)
+              {
+                const context = {
+                  item: [this.busResults[n]]
+                };
+
+                this.container.createEmbeddedView(this.template, context);
+              }
+
+            }
+        }
+  
+  
   fromState:any;
   toState:any;
   getQueryParamData(paramObj: any) {
@@ -355,6 +407,7 @@ ngOnInit(): void {
     }
     if (this.sbResponse.response && this.sbResponse.response.code == 200 && this.sbResponse.response.onwardtrips.length !== 0) {
      this.busResults = this.sbResponse.response.onwardtrips;
+     
      //console.log(this.busResults)
      this.availableClasses = this.allAvailableClasses = this.busHelper.getBusTypes(this.busResults);
      this.allboardingpoints = this.boardingpoints = this.busHelper.getBoardingpoints(this.busResults, 'boardingTimes');

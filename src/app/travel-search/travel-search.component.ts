@@ -1113,7 +1113,7 @@ check_traveller_count(type) {
          this.hotelNameDisp='New Delhi,India';
         this.hotelId='New Delhi';
         this.countryId='IN';
-        this.roomCount=1;
+        this.roomCount=0;
                 this.searchHotelForm['controls']['hotelName'].setValue('New Delhi,India');
         this.searchHotelForm['controls']['hotelId'].setValue('New Delhi');
         this.searchHotelForm['controls']['countryId'].setValue('IN');
@@ -1175,7 +1175,7 @@ check_traveller_count(type) {
                 
         }
         //Train
-         lastTrainSearch=localStorage.getItem('trainLastSearchNewNewNewNewNewNew');
+         lastTrainSearch=localStorage.getItem('trainLastSearchNew');
         const lastTrainSearchValue=JSON.parse(lastTrainSearch);
         if(lastTrainSearchValue){
 
@@ -1784,7 +1784,7 @@ check_traveller_count(type) {
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('trainLastSearchNewNewNewNewNewNew', JSON.stringify(this.searchArray));
+        localStorage.setItem('trainLastSearchNew', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){

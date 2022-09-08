@@ -309,21 +309,21 @@ public modeselectTrending= 'All';
         
         var allCookies_key = [];
         if (localStorage.getItem('flightLastSearchNew') !== null) allCookies_key.push('flightLastSearchNew');
-        if (localStorage.getItem('HotelRecentSearch') !== null) allCookies_key.push('HotelRecentSearch');
+        if (localStorage.getItem('HotelRecentSearchNew') !== null) allCookies_key.push('HotelRecentSearchNew');
         if (localStorage.getItem('busLastSearchNew') !== null) allCookies_key.push('busLastSearchNew');
-        if (localStorage.getItem('trainLastSearchNewNewNewNew') !== null) allCookies_key.push('trainLastSearchNewNewNewNew');
+        if (localStorage.getItem('trainLastSearchNew') !== null) allCookies_key.push('trainLastSearchNew');
 
-        if (localStorage.getItem('flightLastSearchNew') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearchNew') !== null || localStorage.getItem('trainLastSearchNewNewNewNew') !== null) {
+        if (localStorage.getItem('flightLastSearchNew') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearchNew') !== null || localStorage.getItem('trainLastSearchNew') !== null) {
 
           Object.values(allCookies_key).forEach(data => {
 
             let item = localStorage.getItem(data);
            
-
+            var url;
             if (data == 'flightLastSearchNew' || data == 'HotelRecentSearch') {
 
               if (data == 'flightLastSearchNew' && localStorage.getItem('flightLastSearchNew') !== null) {
-               let url;
+               
                var searchValue = JSON.parse(item);
                
                 var type = 'flight';
@@ -336,20 +336,20 @@ public modeselectTrending= 'All';
                 
                if(searchValue.fromContry=='IN' && searchValue.toContry=='IN' ){    
                 if(searchValue.arrival == "" || searchValue.arrival == undefined || searchValue.arrival == null ){
-                 url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
+                 url="/flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
                 }
                 else {
-                 url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
+                 url="/flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
                 }
                }else{
-                url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+                url="/flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
              }
 
               }
               else if (data == 'HotelRecentSearch' && localStorage.getItem('HotelRecentSearch') !== null) {
                 var get_valueall = atob(item);
                 var get_value = JSON.parse(get_valueall).slice(-1)[0];
-
+console.log("hotel "+ JSON.stringify( get_value));
                 var dateformat = get_value.checkin;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');
@@ -361,14 +361,14 @@ public modeselectTrending= 'All';
                 let diff = new Date().getTime() - strdate.getTime();
 
                 if (diff > 0) {
-                  var url = this.domainRedirect + 'compare-stay';
+                   url = '/compare-stay';
                 } else {
 
-                  var url = this.domainRedirect + 'Hotels_lists?cityname=' + get_value.cityname + '&city_id=' + get_value.city_id + '&country=' + get_value.country + '&hotel_name=' + get_value.hotel_name + '&lattitude=' + get_value.lattitude + '&longitude=' + get_value.longitude + '&hotel_id=' + get_value.hotel_id + '&area=' + get_value.area + '&label_name=' + get_value.label_name + '&checkin=' + get_value.checkin + '&checkout=' + get_value.checkout + '&num_rooms=' + get_value.num_rooms + '&numberOfAdults1=' + get_value.numberOfAdults1 + '&numberOfChildren1=' + get_value.numberOfChildren1 + '&t=ZWFybg%3D%3D&hotel_search_done=' + get_value.hotel_search_done + '&hotel_modify=' + get_value.hotel_modify + '';
+                   url = this.domainRedirect + 'Hotels_lists?cityname=' + get_value.cityname + '&city_id=' + get_value.city_id + '&country=' + get_value.country + '&hotel_name=' + get_value.hotel_name + '&lattitude=' + get_value.lattitude + '&longitude=' + get_value.longitude + '&hotel_id=' + get_value.hotel_id + '&area=' + get_value.area + '&label_name=' + get_value.label_name + '&checkin=' + get_value.checkin + '&checkout=' + get_value.checkout + '&num_rooms=' + get_value.num_rooms + '&numberOfAdults1=' + get_value.numberOfAdults1 + '&numberOfChildren1=' + get_value.numberOfChildren1 + '&t=ZWFybg%3D%3D&hotel_search_done=' + get_value.hotel_search_done + '&hotel_modify=' + get_value.hotel_modify + '';
                 }
 
               }
-
+              
             } else {
               
               var get_value = JSON.parse(item);
@@ -384,15 +384,15 @@ public modeselectTrending= 'All';
 
                 if (diff > 0) {
 
-                  var url = this.domainRedirect + 'lite/bus';
+                   url = '/bus'; 
                 } else {
 
-                  var url = this.domainRedirect + 'lite/bus/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
+                   url = '/bus/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
                 }
                 var searchFrom = get_value.searchFrom;
                 var searchTo = get_value.searchTo;
               }
-              else if (data == 'trainLastSearchNewNewNewNew' && localStorage.getItem('trainLastSearchNewNewNewNew') !== null) {
+              else if (data == 'trainLastSearchNew' && localStorage.getItem('trainLastSearchNew') !== null) {
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');
@@ -403,10 +403,10 @@ public modeselectTrending= 'All';
 
                 if (diff > 0) {
 
-                  var url = this.domainRedirect + 'l ite/train';
+                   url = '/train';
                 } else {
 
-                  var url = this.domainRedirect + 'lite/train-list?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
+                   url = '/train-list?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
 
                 }
                 var searchFrom = get_value.searchFrom;
@@ -415,6 +415,8 @@ public modeselectTrending= 'All';
               }
 
             }
+
+            
             if (date == undefined) { var dates = new Date(); var date = moment(dates).format('ddd, MMM Do'); }
           
         //  if(searchFrom!=undefined){
@@ -422,7 +424,7 @@ public modeselectTrending= 'All';
           if(type=='hotel') { var from =   searchFrom; var searfrom = from; } else { var from =   searchFrom.split('(');  var searfrom = from[0]; }
 
           if(type=='hotel') { var to =   searchTo; var searto = to; } else { var to =   searchTo.split('(');  var searto = to[0]; }
-
+          
             this.cookie_all.push({
               type: type,
               date: dateformat,
@@ -603,6 +605,12 @@ public modeselectTrending= 'All';
      this.document.location.href = environment.ANGULAR_SITE_URL + path;
     }
   }
+
+
+  onGoToPage(url){
+  this.router.navigateByUrl(url);
+  }
+
   initiateCards() {
     this.show_earnpoints = this.serviceSettings.show_earnpoints;
     let service_value = this.serviceSettings.savingCalculator;

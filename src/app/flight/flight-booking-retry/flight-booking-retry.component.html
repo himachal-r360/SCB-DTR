@@ -1,4 +1,4 @@
-<ng-container *ngIf="flightSessionData">
+<div *ngIf="flightSessionData">
 <div class="flight_mlite_process" *ngIf="REWARD_CUSTOMERID !='0000'">
   <section class="mob-flights-listing" *ngIf="searchData && isMobile">
     <div class="container">
@@ -134,6 +134,7 @@
               [passflexiFare]="sendflexiFare"  
               [partnerToken]="partnerToken"
               [isMobile]="isMobile"
+              [retryPay]="0"
               >
             </app-payment>
           </div>
@@ -883,4 +884,4 @@
     </div>
   </div>
 </div>
-</ng-container>
+</div>
