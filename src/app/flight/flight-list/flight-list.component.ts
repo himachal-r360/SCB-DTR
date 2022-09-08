@@ -1175,6 +1175,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
 
 
+  goSearch(){
+    this.router.navigate(['/compare-fly']);
+  }
 
   Initslider() {
     var $that = this;
