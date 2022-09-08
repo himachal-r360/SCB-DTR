@@ -472,8 +472,11 @@ otperrormsg :any;
         }
       }else{
        this.otperror = true;
-       this.otperrormsg ="Something went wrong, please try again";
-
+       //this.otperrormsg ="Something went wrong, please try again";
+       if(typeof resp.message != undefined && resp.message!="")
+          this.otperrormsg = resp.message;
+        else
+          this.otperrormsg = "Something went wrong, please try again";
     } 
    
        },(err:HttpErrorResponse)=>{
@@ -744,22 +747,21 @@ otperrormsg :any;
                this.cardaddForm1.reset();
                this.hasCards = true;
                this.addCardCancel();
+               var customername=response['customername'];
+               this.points_available=response['points_available'];
+               this.points_percentage=response['points_percentage'];
+               var client_type=response['client_type'];
+               var card_type=response['card_type'];
+               this.CcCharges = response['CcCharges'];
+               this.pointData = response;
+               this.cardmobile =response['mobile'];
+               this.cardbin =response['bin'];
+               this.carddob =response['DOB'];
+               this.setSlider();
                if(savecard==1){
                   this.cards = response.cards;
                   this.selectedCardDetails = this.cards[0];
-                  this.checkAvailablePointsforSavedCard();
-               }else{
-                  var customername=response['customername'];
-                  this.points_available=response['points_available'];
-                  this.points_percentage=response['points_percentage'];
-                  var client_type=response['client_type'];
-                  var card_type=response['card_type'];
-                  this.CcCharges = response['CcCharges'];
-                  this.pointData = response;
-                  this.cardmobile =response['mobile'];
-                  this.cardbin =response['bin'];
-                  this.carddob =response['DOB'];
-                  this.setSlider();
+                  //this.checkAvailablePointsforSavedCard();
                }
           }else{
                    alert(response.message)
