@@ -627,6 +627,20 @@ else{
   
     });
  }
+ 
+ 
+   fillPassenger($event, passenger, checkboxIndex) {
+    console.log($event);   console.log(passenger);  console.log(checkboxIndex);
+    if ($event.target.checked) {
+    
+   
+
+    } else {
+
+    }
+  }
+
+ 
 
 /*--------Save traveller & gst info----------*/
 travellerlist:any[];
@@ -1370,6 +1384,46 @@ gstReset(){
    this.rest.trackEvents( track_body).subscribe(result => {});
 
  }
+
+isPaynowClicked:boolean=false;
+continuePayment(){
+//console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
+switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+        case 'tab-savedCards':
+        $('.btn-pay-saved-card').trigger('click');
+        break;
+        case 'tab-testPg':
+        $('.btn-pay-test').trigger('click');
+        break;   
+        case 'tab-payzapp':
+        $('.btn-pay-payz').trigger('click');
+        break;  
+        case 'tab-netBanking':
+        $('.btn-pay-netbanking').trigger('click');
+        break;  
+        case 'tab-ccdcCards':
+        if($(".addCardTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-card').trigger('click');
+
+        if($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-rupay').trigger('click');
+
+        break;  
+
+        case 'tab-emi': 
+        if($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-emi-cc').trigger('click');
+         
+         
+        break;  
+          
+          
+         case 'tab-testPg': 
+        $('.btn-pay-test').trigger('click');
+        break;  
+      }
+
+}
 
   gotoTop() {
     window.scroll({

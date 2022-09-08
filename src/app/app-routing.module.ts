@@ -8,6 +8,7 @@ import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 import { OrdersRetryComponent } from './orders-retry/orders-retry.component';
 import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
+import { HotelListComponent } from './hotel/hotel-list/hotel-list.component';
 const routes: Routes = [
   { path: '', loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule) },
   {
@@ -47,6 +48,7 @@ const routes: Routes = [
       {
     path:"regalia_gold/train/pnr" , component:HomeComponent
   },
+
 
     {
     path: 'partners',

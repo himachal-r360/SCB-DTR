@@ -616,25 +616,7 @@ orderRetry:boolean=false;
         }
       }, 50);
 
-
-
     });
-
-
-    this.route.queryParamMap
-    .subscribe((params) => {
-      let order = { ...params.keys, ...params };
-      if(order['params']['retry'] && order['params']['retry'] != undefined) {
-
-       setTimeout(() => {
-        document.getElementById('continueToItinery').click();
-
-        
-      }, 3000);
-       
-      }
-    }
-  );
 
   }
 
@@ -922,7 +904,6 @@ orderRetry:boolean=false;
 
   clickPassenger($event, passenger, checkboxIndex) {
     if ($event.target.checked) {
-    console.log(moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years'));
       if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 12)
         this.addAdult(passenger, checkboxIndex);
       else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 2 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 12)
@@ -1196,6 +1177,29 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
     }
 
+  if ((this.adultsArray.length) == (this.maxAdults)) {
+  
+  
+        var array = [];
+            $(".pass_checkBox:checkbox[name=type]:checked").each(function() {
+                array.push($(this).val());
+            });
+  
+  console.log(array);
+  
+  
+  
+  
+        $(".pass_checkBox").each(function () {
+        if ($(this).find(".pass_checkBox").not(":checked")) {
+        console.log(this);
+        } });
+  }
+    
+
+    
+
+
 
   }
 
@@ -1378,6 +1382,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         $('#passengerBox_' + checkboxIndex).removeClass('hide');
       }
     } else {
+    
       if (checkboxIndex != -1) {
         $('#passengerBox_' + checkboxIndex).addClass('hide');
         $('#travelPassenger_' + checkboxIndex).prop('checked', false);
@@ -3707,9 +3712,10 @@ console.log(this.passengerForm);
         }
       };
 
-      if (this.searchData.arrival)
+      if (this.searchData.arrival && this.searchData.arrival  !='null'){
+        if(moment(this.searchData.arrival).format('YYYY-MM-DD') !='Invalid dat')
         this.itineraryRequest["returnCheckInDate"] = moment(this.searchData.arrival).format('YYYY-MM-DD');
-        
+       } 
         var type;
         
       if( this.flightSessionData['travel_type']=='M') { 
@@ -4149,7 +4155,8 @@ orderReferenceNumber:any;
       "retry_url": "",
       "sessionKey":this.randomFlightDetailKey,
       "docKey": this.flightSessionData.docKey,
-      "itineraryRequest": this.itineraryRequest
+      "itineraryRequest": this.itineraryRequest,
+      "flightSessionData":this.flightSessionData
     };
     this.orderReferenceNumber=order_ref_num;
     
