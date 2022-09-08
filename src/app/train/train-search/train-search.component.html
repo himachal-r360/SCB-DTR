@@ -460,7 +460,7 @@
     </table>
     </div> -->
 
-    <div class="pnr_srch_details">
+    <div class="pnr_srch_details d-none d-md-block">
       <div class="row">
         <div class="col-md-4">
           <h5 class="check_pnr_title">LTT VSKP EXP<span>(18520)</span></h5>
@@ -542,16 +542,110 @@
 
 
     </div>
+
+    <!-- mlite check pnr card -->
+    <div class="pnr_srch_details d-md-none">
+      <div class="row">
+        <div class="col-8">
+          <h5 class="check_pnr_title">LTT VSKP EXP<span>(18520)</span></h5>
+        </div>
+        <div class="col-4 px-0">
+          <span class="check_pnr_title_text">
+            <a href="#">S</a>
+            <a href="#">M</a>
+            <a href="#">T</a>
+            <a href="#">W</a>
+            <a href="#">T</a>
+            <a href="#">F</a>
+            <a href="#">S</a>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row" class="m_check_pnr_row">
+            <div class="col-4">
+              <span class="check_pnr_time">06:05 <span class="time_gray_text">Sat</span></span>
+            </div>
+            <div class="col-4 text-center">
+              <span class="check_pnr_duration">13 hrs 35 mins</span>
+              <div class="d-flex align-items-center justify-content-center">
+                <span class="dots"></span>
+                <hr>
+                <span class="dots"></span>
+              </div>
+            </div>
+            <div class="col-4 text-right">
+              <span class="check_pnr_time">20:30, Sun</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 text-left">
+              <span class="check_pnr_place">Lokmantatilak (LTT)</span>
+              <p class="check_pnr_place">Jul 11, 2022</p>
+            </div>
+            <div class="col-6 text-right">
+              <span class="check_pnr_place">Secunderabad Jn (SC)</span>
+              <p class="check_pnr_place">Jul 11, 2022</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class='table-responsive'>
+            <table  class="table table-borderless pnr_check_tbl">
+                <thead>
+                    <tr>
+                      <th>Name</th>
+                      <!-- <th>Passenger Number</th> -->
+                        <th>Age</th>
+                        <th >Booking Status</th>
+                        <!-- <th>Current Status</th> -->
+                        <th>Berth</th>
+                        <!-- //<th>CoachId/BerthNo</th> -->
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr  *ngFor="let each of PnrDetails.passengerList">
+                      <td>Aman Shrivastava</td>
+                      <!-- <td>{{each.passengerSerialNumber}}</td> -->
+                         <td>{{each.passengerAge}}</td>
+                          <td class="success_text">{{each.bookingStatus}}/<span *ngIf="each.bookingCoachId!=''" >{{each.bookingCoachId}}/</span>{{each.bookingBerthNo}}
+                          <span *ngIf = "each.passengerBerthChoice">/{{each.passengerBerthChoice}}</span>
+                          </td>
+                        <!-- <td>{{each.currentStatus}}<span *ngIf="each.currentStatus!='CNF'">/{{each.currentBerthNo}}</span></td> -->
+                          <td >{{each.bookingBerthCode}}</td>
+                          <!-- //<td >{{each.bookingCoachId}}/{{each.bookingBerthNo}}</td> -->
+                    </tr>
+                    
+                </tbody>
+        
+            </table>
+            </div> 
+        </div>
+        <div class="col-md-12">
+          <div class="pnr_dashed_hr"></div>
+        </div>
+        <div class="col-md-12">
+          <a href="#" class="blue_text">For any amendment in booking or partial cancellation, please contact OTA.</a>
+        </div>
+      </div>
+
+
+    </div>
+    <!-- end of mlite check pnr card -->
     
     
     <div class="pnr-notes">
     <div>
                   <p><span>Note:</span> <span class="data"> </span></p>
                   <ol>
-                    <li><p><span>No refund shall be granted on the confirmed ticket after four hours before the scheduled departure of the train. </span></p></li>
-                    <li><p><span>No refund shall be granted on the RAC or Waitlisted ticket after thirty minutes before the scheduled departure of the train. </span></p></li>
-                    <li><p><span>In case, on a party e-ticket or a family e-ticket issued for travel of more than one passenger, some passengers have confirmed reservation and others are on RAC or waiting list, full refund of fare , less clerkage, shall be admissible for confirmed passengers also subject to the condition that the ticket shall be cancelled online or online TDR shall be filed for all the passengers upto thirty minutes before the scheduled departure of the train. </span></p></li>
-                    <li><p><span>Before Cancellation, please refer New Refund Rule 2015 w.e.f 12-Nov-2015. </span></p></li>
+                    <li><span>No refund shall be granted on the confirmed ticket after four hours before the scheduled departure of the train. </span></li>
+                    <li><span>No refund shall be granted on the RAC or Waitlisted ticket after thirty minutes before the scheduled departure of the train. </span></li>
+                    <li><span>In case, on a party e-ticket or a family e-ticket issued for travel of more than one passenger, some passengers have confirmed reservation and others are on RAC or waiting list, full refund of fare , less clerkage, shall be admissible for confirmed passengers also subject to the condition that the ticket shall be cancelled online or online TDR shall be filed for all the passengers upto thirty minutes before the scheduled departure of the train. </span></li>
+                    <li><span>Before Cancellation, please refer New Refund Rule 2015 w.e.f 12-Nov-2015. </span></li>
                   </ol>
                  
                  </div>
