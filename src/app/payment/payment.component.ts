@@ -197,7 +197,8 @@ export class PaymentComponent implements OnInit {
 
 
         ServiceToken:any;  
-        @Input() partnerToken;    
+        @Input() partnerToken;   
+         @Input() retryPay; 
         MAIN_SITE_URL:string;
         monthArray:any[];
         yearArray:any[];
@@ -392,12 +393,15 @@ export class PaymentComponent implements OnInit {
 
                         }
                         this.isLoggedIn = true;
-                         this.showRewardsBox=false;
+                        if(this.retryPay==1)
+                         this.showRewardsBox=true;
                         }else{
-                                if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']][this.serviceId] == 1) {
+                         if(this.retryPay==1){
+                        if (this.serviceSettings.POINTCASH_SETTINGS[this.sg['domainName']][this.serviceId] == 1) {
                         this.showRewardsBox=true;
                         }else{
                         this.showRewardsBox=false;
+                        }
                         }
                         this.isLoggedIn = true;
                         }
