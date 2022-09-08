@@ -244,7 +244,7 @@ export class HotelListComponent implements OnInit {
       {
         if (this.hotelList.length > 0) {
           var data =  this.hotelList.filter((e: any) => {
-            return e.hotelInfo.name.includes(this.SearchText);
+            return e.hotelInfo.name.toLowerCase().includes(this.SearchText.toLowerCase());
           });
           this.hotelList = data;
         }
