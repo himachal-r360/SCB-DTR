@@ -4,6 +4,7 @@ import { reduce } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
 
 @Component({
   selector: 'app-hotel-search',
@@ -17,6 +18,7 @@ export class HotelSearchComponent implements OnInit{
   totalAdultsCount: number = 1;
   totalChildCount: number = 0;
   getSearchValue:any;
+  private queryText = '';
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
   
@@ -188,6 +190,15 @@ export class HotelSearchComponent implements OnInit{
     this.showTotalCountOfAdult();
     this.showTotalCountsOfChild();
   }
+
+  searchAutoComplete($event) {
+    
+   
+  }
+
+   onCitySearchClick(){
+
+   }
 
 
   ConvertObjToQueryString(obj: any) {
