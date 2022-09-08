@@ -112,7 +112,8 @@ otperrormsg :any;
      this.cardaddForm1 = this.formBuilder.group({
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
-          dob:['', Validators.required]
+          dob:['', Validators.required],
+          savecard:[true],
         });
     
   }
@@ -707,6 +708,11 @@ otperrormsg :any;
     if (this.cardaddForm1.status !='VALID') {
       return;
     }else{
+         if(this.cardaddForm1.controls['savecard'].value==true){
+           var savecard=1;
+         }else{
+           var savecard=0;
+         }
         let request = {
            "last4digit":this.cardaddForm1.controls['last4digit'].value,
            "mobile": this.cardaddForm1.controls['applymobile'].value,
@@ -717,23 +723,28 @@ otperrormsg :any;
            "partner_id":42,
            "modal":"DIGITAL",
            "noopt": 1,
-           "savecard":1,
+           "savecard":savecard,
            "customer_id": this.sg["customerInfo"]["customerid"],
            "programName":this.sg['domainName'],
            "_token":this.customerInfo["XSRF-TOKEN"],
            "user_id":this.sg["customerInfo"]["id"],
         };
+        console.log(request);
         var passData = {
           postData: this.EncrDecr.set(JSON.stringify(request))
         };
         this.pay.availablePoints(passData).subscribe(response => {
-           this.submitted2=false;
-           this.cardaddForm1.reset();
-           this.addCardCancel();
-           this.cards = response.cards;
-           this.hasCards = true;
-           this.selectedCardDetails = this.cards[0];
-           this.checkAvailablePointsforSavedCard();
+          if(typeof response.error_code != undefined && response.error_code=="100"){
+               this.submitted2=false;
+               this.cardaddForm1.reset();
+               this.addCardCancel();
+               this.cards = response.cards;
+               this.hasCards = true;
+               this.selectedCardDetails = this.cards[0];
+               this.checkAvailablePointsforSavedCard();
+          }else{
+                   alert(response.message)
+          } 
         }), (err: HttpErrorResponse) => {
             var message = 'Something went wrong';
             alert(message);
