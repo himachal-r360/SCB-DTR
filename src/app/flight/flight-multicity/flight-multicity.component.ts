@@ -13,7 +13,7 @@ declare var $: any;
 @Component({
   selector: 'app-flight-multicity',
   templateUrl: './flight-multicity.component.html',
-  styleUrls: ['./flight-multicity.component.sass']
+  styleUrls: ['./flight-multicity.component.scss']
 })
 export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestroy {
   cdnUrl: any;
