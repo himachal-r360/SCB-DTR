@@ -1255,7 +1255,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
       // this.passengerForm.removeControl('adult_dom_pax_nationality' val);
     }
 
-
+console.log('sss');
 
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
@@ -3267,10 +3267,10 @@ console.log(this.passengerForm);
         "id": 0,
         "lastName":  this.passengerForm.controls['adult_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
-        "passportExpiryDate": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_expiry_date' + i]['value'] : '',
-        "passportIssueCountry": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['adult_passport_issuing_country' + i]['value'] ).format('DD/MM/YYYY'): '',
+        "passportExpiryDate": this.searchData.travel == 'INT' ? moment(this.passengerForm.controls['adult_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
         "passportIssueDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['adult_passport_issue_date' + i]['value']).format('DD/MM/YYYY') : '',
         "passportNumber": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_num' + i]['value'] : '',
+        "passportIssueCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_passport_issuing_country' + i]['value'] : '',
         "paxBirthCountry": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
         "paxNationality": this.searchData.travel == 'INT' ?  this.passengerForm.controls['adult_pax_nationality' + i]['value'] : '',
         "status": 0,

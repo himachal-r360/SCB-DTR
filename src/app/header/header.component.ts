@@ -507,6 +507,12 @@ export class HeaderComponent implements OnInit {
 	 this.rest.trackEvents( track_body).subscribe(result => {});
    this.analyticsLogEvent('notification_click',id,toastUrls);
   }
+
+  onImgError(event) {
+    event.target.src = this.cdnUrl + 'notification/services/default.png';
+
+  }
+  
 closeCookieConsent(value){
   if(value==1){
     this.Cookies.GA=true;

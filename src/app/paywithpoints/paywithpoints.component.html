@@ -96,8 +96,7 @@
                        </div>
                         <div *ngIf="submittedFormotpvalidate && Formotpvalidate.controls.otp.errors" class="error">
                         <small *ngIf="Formotpvalidate.controls.otp.errors.required">Please enter OTP.</small>
-                        <small *ngIf="Formotpvalidate.controls.otp.errors.pattern">Please enter a valid OTP.</small>
-
+                        <small *ngIf="Formotpvalidate.controls.otp.errors.pattern || Formotpvalidate.controls.otp.errors.minlength || Formotpvalidate.controls.otp.errors.maxlength">Please enter a valid OTP.</small>
                         </div>
                         <div class="error" *ngIf="otperror">
                         <small *ngIf="otperror">{{otperrormsg}}</small>
@@ -150,7 +149,7 @@
                                     <!-- <span class="crad_x">XXX</span> -->
                                 <!-- </div> -->
                                 <!-- <div class="col-sm-3 col-3 p-0"> -->
-                                    <input class="cus-input" type="text" formControlName="last4digit" placeholder="1234" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="4">
+                                    <input auto-next class="cus-input" type="text" autofocus="true" formControlName="last4digit" placeholder="1234" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="4">
                                 <!-- </div> -->
                             <!-- </div> -->
                             <div *ngIf=" (submitted1 && voucherForm1.controls.last4digit.errors)" class="error">
@@ -167,7 +166,7 @@
                     <!-- </div> -->
                     <div class="voucher-code-entry col-sm-4 col-12">
                         <!-- <div class="small-gray-text"> <small style="color: #aaa;font-size: 10px;">Registered with HDFC bank</small></div> -->
-                        <input type="text" formControlName="applymobile" [(ngModel)]="customermobile" [value]="customermobile" autocomplete="nope" name="applymobile"  maxlength="10" (keypress)="numberInput($event);AvoidSpace($event)" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" placeholder="Mobile Number">
+                        <input type="text" auto-next formControlName="applymobile" autofocus="true" [(ngModel)]="customermobile" [value]="customermobile" autocomplete="nope" name="applymobile"  maxlength="10" (keypress)="numberInput($event);AvoidSpace($event)" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" placeholder="Mobile Number">
                               <div *ngIf="submitted1 && voucherForm1.controls['applymobile']['errors']" class="error">
                                 <small *ngIf="voucherForm1.hasError('required','applymobile')">Please enter the registered mobile number.</small>
                                 <small *ngIf="voucherForm1.hasError('pattern','applymobile')">Please enter a valid 10 digits mobile number.</small>
@@ -186,20 +185,21 @@
                             </div>
                     </div> -->
                      <div class="voucher-code-entry date-section col-sm-4 col-12">
-                            <input id="dob"  type="text" autocomplete="off" placeholder="dd/mm/yyyy"  [textMask]="mask" formControlName="dob">
+                            <input auto-next [inputMask]="dateInputMask" formControlName="dob" autofocus="true" [textMask]="mask"  placeholder="dd/mm/yyyy"   >
                             <div *ngIf="submitted1 && voucherForm1.controls['dob']['errors']" class="error">
                                 <small *ngIf="voucherForm1.hasError('required','dob')">Please enter date of birth.</small>
+                                <small *ngIf="voucherForm1.hasError('pattern','dob') || voucherForm1.hasError('younger','dob')">Please enter a valid date.</small>
                             </div>
-                            <div class="small-gray-text">Date of birth</div>
+                            <div class="small-gray-text">Date of birth </div>
                             
                     </div> 
 
                     <div class="voucher-code-entry col-sm-4 col-12 mt-15">
                         <!-- <div class="small-gray-text">Voucher Code</div> -->
-                        <input id="applyvouchercode" formControlName="applyvouchercode" type="text" autocomplete="nope" placeholder="Voucher Code"  maxlength="30" (keypress)="specialcharInput($event);AvoidSpace($event)" (keyup)="convertToUpperCase($event)">
+                        <input  id="applyvouchercode" autofocus="true" formControlName="applyvouchercode" type="text" autocomplete="nope" placeholder="Voucher Code"  maxlength="30" (keypress)="specialcharInput($event);AvoidSpace($event)" (keyup)="convertToUpperCase($event)">
                         <div *ngIf="submitted1 && voucherForm1.controls['applyvouchercode']['errors']" class="error">
                                 <small *ngIf="voucherForm1.hasError('required','applyvouchercode')">Please enter voucher code.</small>
-                                <small *ngIf="voucherForm1.hasError('pattern','applyvouchercode')">Please enter a valid voucher code.</small>
+                                <small *ngIf="voucherForm1.hasError('pattern','applyvouchercode') || voucherForm1.hasError('minlength','applyvouchercode')|| voucherForm1.hasError('maxlength','applyvouchercode')">Please enter a valid voucher code.</small>
                         </div>
                     </div>
                   </div>
@@ -238,7 +238,7 @@
                                 <div class="col-sm-3 col-3 pl-0 py-2">
                                     <span class="crad_x">XXX</span>
                                 </div> -->
-                                <div class="col-sm-3 col-3 p-0">
+                                <div class=" p-0">
                                     <input class="cus-input" type="text" formControlName="last4digit" placeholder="1234" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="4">
                                 </div>
                             </div>
@@ -280,9 +280,17 @@
                         </div>
                     </div> -->
                      <div class="voucher-code-entry date-section col-sm-4 col-12">
-                            <input id="dob"  type="text" autocomplete="off" placeholder="dd/mm/yyyy"  [textMask]="mask" formControlName="dob">
+                     <!--  <mat-form-field appearance="outline" class="w-100">
+                                          <mat-label>Date Of Birth</mat-label>
+                                          <input matInput [inputMask]="dateInputMask"
+                                            formControlName="dob"
+                                            placeholder="" name="dateOfBirth">
+                                          
+                                        </mat-form-field> -->
+                            <input id="dob"  [inputMask]="dateInputMask"  [textMask]="mask"  autocomplete="off" placeholder="dd/mm/yyyy"   formControlName="dob">
                             <div *ngIf="submitted2 && cardaddForm1.controls['dob']['errors']" class="error">
                                 <small *ngIf="cardaddForm1.hasError('required','dob')">Please enter date of birth.</small>
+                                 <small *ngIf="voucherForm1.hasError('pattern','dob') || voucherForm1.hasError('younger','dob')">Please enter a valid date.</small>
                             </div>
                             <div class="small-gray-text">Date of birth</div>
                             
