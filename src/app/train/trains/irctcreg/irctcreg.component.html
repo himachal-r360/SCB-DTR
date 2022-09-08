@@ -1,683 +1,680 @@
   <div class="main-site">
 
-  <div class="col-sm-12">
+    <div class="container" style="position: relative;">
+      <div class="col-sm-8 bg_sec">
 
-    <ul class="nav nav-pills mb-3 register-tab" id="register-tab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="pills-account-tab" data-bs-toggle="pill" data-bs-target="#pills-account" type="button" role="tab" aria-controls="pills-account" aria-selected="true" (opened)="tabOpen(1)">Account Details</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-personal-tab" data-bs-toggle="pill" data-bs-target="#pills-personal" type="button" role="tab" aria-controls="pills-personal" aria-selected="false" (opened)="tabOpen(2)" [disabled]="tab_2_disabled">Personal Details</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-residential-tab" data-bs-toggle="pill" data-bs-target="#pills-residential" type="button" role="tab" aria-controls="pills-residential" aria-selected="false" (opened)="tabOpen(3)" [disabled]="tab_3_disabled">Residential Address</button>
-      </li>
-
-      <ng-container *ngIf="!CheckCopyResidence">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-office-tab" data-bs-toggle="pill" data-bs-target="#pills-office" type="button" role="tab" aria-controls="pills-office" aria-selected="false" (opened)="tabOpen(4)" [disabled]="tab_4_disabled">Office Address</button>
-        </li>
-      </ng-container>
-      
-    </ul>
-    <div class="tab-content" id="pills-tabContent">
-      <div class="tab-pane fade show active" id="pills-account" role="tabpanel" aria-labelledby="pills-account-tab" >
-        <div>
-          <form [formGroup]="accountDetailsForm" name="accountDetailsForm" (ngSubmit)="submitAccountDetails()"><br/>
-            <div class="row">
-              <div class="col-md-8">
+        <ul class="nav nav-pills mb-3 register-tab" id="register-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-account-tab" data-bs-toggle="pill" data-bs-target="#pills-account" type="button" role="tab" aria-controls="pills-account" aria-selected="true" (opened)="tabOpen(1)">Account Details</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-personal-tab" data-bs-toggle="pill" data-bs-target="#pills-personal" type="button" role="tab" aria-controls="pills-personal" aria-selected="false" (opened)="tabOpen(2)" [disabled]="tab_2_disabled">Personal Details</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-residential-tab" data-bs-toggle="pill" data-bs-target="#pills-residential" type="button" role="tab" aria-controls="pills-residential" aria-selected="false" (opened)="tabOpen(3)" [disabled]="tab_3_disabled">Residential Address</button>
+          </li>
+    
+          <ng-container *ngIf="!CheckCopyResidence">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-office-tab" data-bs-toggle="pill" data-bs-target="#pills-office" type="button" role="tab" aria-controls="pills-office" aria-selected="false" (opened)="tabOpen(4)" [disabled]="tab_4_disabled">Office Address</button>
+            </li>
+          </ng-container>
+          
+        </ul>
+        <div class="tab-content p-3" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-account" role="tabpanel" aria-labelledby="pills-account-tab" >
+            <div>
+              <form [formGroup]="accountDetailsForm" name="accountDetailsForm" (ngSubmit)="submitAccountDetails()"><br/>
                 <div class="row">
-                  <div class="col-md-6 col-12">
-                      <mat-form-field appearance="outline" class="w-100 mb-20">
-                        <mat-label>User ID</mat-label>
-                          <input matInput placeholder="" [(ngModel)]="IRCTCUserId" maxlength="35" autocomplete="nope" (blur)="validateIRCTCUser()" (keypress)="AvoidSpace($event)" (keypress)="specialcharInput($event)" formControlName="userID" onDrag="return false" onDrop="return false">
-                          <mat-hint>Between 3 to 35 characters. Only letters and numbers.</mat-hint>
-                        </mat-form-field>
-                        
-                        <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['userID']['errors']" class="error">
-                            <small *ngIf="accountDetailsForm.controls['userID']['errors']['required']">Please enter user Id.</small>
-                            <small *ngIf="accountDetailsForm.controls['userID']['errors']['pattern']">Please enter valid user Id.</small>
-                            <small *ngIf="accountDetailsForm.controls['userID']['errors']['minlength']">Please enter atleast 3 character.</small>
-                        </div>
-                        <div class="error" *ngIf="userValidError">
-                            <small>{{IRCTCUserError}}</small>
-                        </div>
-                        <!-- <p class="id-slogan">Between 3 to 35 characters. Only letters and numbers.</p> -->
-                  </div>
-                  
-                </div>
-                <!-- <div class="row">
-                  <div class="col-md-6 col-12">
-                      <mat-form-field >
-                          <input type="password" matInput placeholder="Password" maxlength="15" formControlName="password" autocomplete="nope" onDrag="return false" onDrop="return false">
-                        </mat-form-field>
-                        <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['password']['errors']" class="error">
-                            <small *ngIf="accountDetailsForm.controls['password']['errors']['required']">Please enter password.</small>
-                            <small *ngIf="accountDetailsForm.controls['password']['errors']['pattern']">Please enter valid password.</small>
-                            <small *ngIf="accountDetailsForm.controls['password']['errors']['minlength']">Please enter atleast 6 characters.</small>
-                        </div>
-                        <p class="id-slogan">Between 8 - 15 characters.
-                            Must contain at least one number, one small, and one capital letter.</p>
-                  </div>
-                    <div class="col-md-6 col-12">
-                        <mat-form-field >
-                            <input type="password" matInput placeholder="Confirm Password" maxlength="15" (keyup)="validateConfirmPassword()" formControlName="cnfpassword" autocomplete="nope" onDrag="return false" onDrop="return false" >
-                          </mat-form-field>
-                          <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['cnfpassword']['errors']" class="error">
-                              <small *ngIf="accountDetailsForm.controls['cnfpassword']['errors']['required']">Please enter confirm password.</small>
-                          </div>
-                          <div class="error" *ngIf="cnfPassValidError">
-                              <small>{{cnfPassValidErrorMsg}}</small>
-                          </div>
-                    </div>
-                      
-                </div> -->
-
-                <div class="row">
-                    <div class="col-md-6 col-12">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Security Question</mat-label>
-                            <mat-select placeholder="" formControlName="securityQues">
-                                <mat-option value="0" > What is your pet name? </mat-option>
-                                <mat-option value="1" > What was the name of your first school? </mat-option>
-                                <mat-option value="2" > Who was your Childhood hero? </mat-option>
-                                <mat-option value="3" > What is your favorite past-time? </mat-option>
-                                <mat-option value="4" > What is your all time favorite sports team? </mat-option>
-                                <mat-option value="5" > What is your fathers middle name? </mat-option>
-                                <mat-option value="6" > What make was your first car or bike? </mat-option>
-                                <mat-option value="7" > Where did you first meet your spouse? </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['securityQues']['errors']" class="error">
-                              <small *ngIf="accountDetailsForm.controls['securityQues']['errors']['required']">Please choose a security question.</small>
-                          </div>
-                    </div>
+                  <div class="col-sm-7">
+                    <div class="row">
                       <div class="col-md-6 col-12">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Security Answer</mat-label>
-                              <input matInput placeholder="" maxlength="15" autocomplete="off" formControlName="securityAns" (keypress)="specialcharInput($event)" onDrag="return false" onDrop="return false">
+                          <mat-form-field appearance="outline" class="w-100 mb-20">
+                            <mat-label>User ID</mat-label>
+                              <input matInput placeholder="" [(ngModel)]="IRCTCUserId" maxlength="35" autocomplete="nope" (blur)="validateIRCTCUser()" (keypress)="AvoidSpace($event)" (keypress)="specialcharInput($event)" formControlName="userID" onDrag="return false" onDrop="return false">
+                              <mat-hint>Between 3 to 35 characters. Only letters and numbers.</mat-hint>
                             </mat-form-field>
-                            <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['securityAns']['errors']" class="error">
-                                <small *ngIf="accountDetailsForm.controls['securityAns']['errors']['required']">Please enter an answer.</small>
+                            
+                            <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['userID']['errors']" class="error">
+                                <small *ngIf="accountDetailsForm.controls['userID']['errors']['required']">Please enter user Id.</small>
+                                <small *ngIf="accountDetailsForm.controls['userID']['errors']['pattern']">Please enter valid user Id.</small>
+                                <small *ngIf="accountDetailsForm.controls['userID']['errors']['minlength']">Please enter atleast 3 character.</small>
                             </div>
+                            <div class="error" *ngIf="userValidError">
+                                <small>{{IRCTCUserError}}</small>
+                            </div>
+                            <!-- <p class="id-slogan">Between 3 to 35 characters. Only letters and numbers.</p> -->
                       </div>
-                        
-                  </div>
-                  <div class="row">
-                      <div class="col-md-4 col-12">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Preferred Language</mat-label>
-                              <mat-select placeholder="" formControlName="preferredLang">
-                                  <mat-option value="en"> English </mat-option>
-                                  <mat-option value="hi"> Hindi </mat-option>
-                              </mat-select>
+                      
+                    </div>
+                    <!-- <div class="row">
+                      <div class="col-md-6 col-12">
+                          <mat-form-field >
+                              <input type="password" matInput placeholder="Password" maxlength="15" formControlName="password" autocomplete="nope" onDrag="return false" onDrop="return false">
                             </mat-form-field>
-                            <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['preferredLang']['errors']" class="error">
-                                <small *ngIf="accountDetailsForm.controls['preferredLang']['errors']['required']">Please select preferred language.</small>
+                            <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['password']['errors']" class="error">
+                                <small *ngIf="accountDetailsForm.controls['password']['errors']['required']">Please enter password.</small>
+                                <small *ngIf="accountDetailsForm.controls['password']['errors']['pattern']">Please enter valid password.</small>
+                                <small *ngIf="accountDetailsForm.controls['password']['errors']['minlength']">Please enter atleast 6 characters.</small>
                             </div>
+                            <p class="id-slogan">Between 8 - 15 characters.
+                                Must contain at least one number, one small, and one capital letter.</p>
                       </div>
                         <div class="col-md-6 col-12">
-                            
+                            <mat-form-field >
+                                <input type="password" matInput placeholder="Confirm Password" maxlength="15" (keyup)="validateConfirmPassword()" formControlName="cnfpassword" autocomplete="nope" onDrag="return false" onDrop="return false" >
+                              </mat-form-field>
+                              <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['cnfpassword']['errors']" class="error">
+                                  <small *ngIf="accountDetailsForm.controls['cnfpassword']['errors']['required']">Please enter confirm password.</small>
+                              </div>
+                              <div class="error" *ngIf="cnfPassValidError">
+                                  <small>{{cnfPassValidErrorMsg}}</small>
+                              </div>
                         </div>
-                           
-                    </div>
-
-                    <div class="xs-center">
-                        <button class="btn btn-primary">Next</button>
-                        <a class=" btn" (click)="goback()">Back</a>
-                      </div>
-
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
-        <div>
-          <form [formGroup]="personalDetailsForm" name="personalDetailsForm" (ngSubmit)="submitPersonalDetails()"><br/><br/>
-            <div class="col-md-8 col-12">
-              <div class="passenger-reg-note ">
-                <div class=""> <i class="material-icons pass-icon">error_outline</i></div>
-                <div class="primary-msg">
-                  <div class="">Please provide your exact name as per Aadhaar card to avail Aadhaar based benefits</div>
-                </div>
-              </div>
-            </div>
-            <br/>
-            <div class="row">
-              <div class="col-md-10">
-                <div class="row">
-                    <div class="col-md-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>First Name</mat-label>
-                        <input matInput placeholder="" (keypress)="flInput($event)" maxlength="30" autocomplete="off" formControlName="firstName" onDrag="return false" onDrop="return false">
-                      </mat-form-field>
-                      <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['firstName']['errors']" class="error">
-                          <small *ngIf="personalDetailsForm.controls['firstName']['errors']['required']">Please enter first name.</small>
-                          <small *ngIf="personalDetailsForm.controls['firstName']['errors']['pattern']">Please enter valid name.</small>
-                          <small *ngIf="personalDetailsForm.controls['firstName']['errors']['minlength']">Please enter atleast 2 characters.</small>
-                          <small *ngIf="personalDetailsForm.controls['firstName']['errors']['maxlength']">Please enter maximum 30 characters.</small>
-                      </div> 
-                    </div>
-                    <div class="col-md-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Middle Name</mat-label>
-                          <input matInput placeholder="" (keypress)="flInput($event)" autocomplete="off" formControlName="middleName" onDrag="return false" onDrop="return false">
-                        </mat-form-field>
-                        <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['middleName']['errors']" class="error">
-                            <small *ngIf="personalDetailsForm.controls['middleName']['errors']['pattern']">Please enter valid name.</small>
-                        </div> 
-                    </div>
-                    <div class="col-md-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Last Name</mat-label>
-                            <input matInput placeholder="" (keypress)="flInput($event)" maxlength="30"  onDrag="return false" onDrop="return false" autocomplete="off" formControlName="lastName" >
-                          </mat-form-field>
-                          <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['lastName']['errors']" class="error">
-                              <small *ngIf="personalDetailsForm.controls['lastName']['errors']['required']">Please enter last name.</small>
-                              <small *ngIf="personalDetailsForm.controls['lastName']['errors']['pattern']">Please enter valid name.</small>
-                              <small *ngIf="personalDetailsForm.controls['lastName']['errors']['minlength']">Please enter atleast 1 character.</small>
-                              <small *ngIf="personalDetailsForm.controls['lastName']['errors']['maxlength']">Please enter maximum 30 characters.</small>
-                          </div> 
-                    </div>
-                </div><br/>
-                <div class="row">
-                    <div class="col-md-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Date of Birth</mat-label>
-                        <!-- <input matInput placeholder="Date of Birth" id="dob" name="dp" ngbDatepicker #d="ngbDatepicker" [navigation]="navigation" (click)="d.toggle()" autocomplete="off" readonly [maxDate]="pickermaxDate"  formControlName="dob"> -->
-                        <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="" readonly="true" formControlName="dob"> 
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                      <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['dob']['errors']" class="error">
-                          <small *ngIf="personalDetailsForm.controls['dob']['errors']['required']">Please enter dob.</small>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Gender</mat-label>
-                            <mat-select placeholder="" formControlName="gender">
-                                <mat-option value="M"> Male </mat-option>
-                                <mat-option value="F"> Female </mat-option>
-                                <mat-option value="T"> Transgender </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['gender']['errors']" class="error">
-                            <small *ngIf="personalDetailsForm.controls['gender']['errors']['required']">Please select gender.</small>
-                          </div>
-                      </div>
-                      <div class="col-md-4 col-8">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Marital Status</mat-label>
-                              <mat-select placeholder="" formControlName="maritalStatus">
-                                  <mat-option value="U"> Un-Married </mat-option>
-                                  <mat-option value="M"> Married </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                            <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['maritalStatus']['errors']" class="error">
-                              <small *ngIf="personalDetailsForm.controls['maritalStatus']['errors']['required']">Please select marital status.</small>
-                            </div>
-                      </div>
-                </div><br/>
-                <div class="row">
-                    <div class="col-md-4">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Occupation</mat-label>
-                            <mat-select placeholder="" formControlName="occupation">
-                                <mat-option value="0"> Government </mat-option>
-                                <mat-option value="1"> Public </mat-option>
-                                <mat-option value="2"> Private </mat-option>
-                                <mat-option value="3"> Professional </mat-option>
-                                <mat-option value="4"> Self Employed </mat-option>
-                                <mat-option value="5"> Student </mat-option>
-                                <mat-option value="6"> Others </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['occupation']['errors']" class="error">
-                            <small *ngIf="personalDetailsForm.controls['occupation']['errors']['required']">Please select occupation.</small>
-                          </div>
-                      </div>
-                      <div class="col-md-4 col-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Nationality</mat-label>
-                              <mat-select placeholder="" [(ngModel)]="defaultNationality" formControlName="nationality">
-                                  <mat-option [value]="94"> India </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-4 col-6">
+                          
+                    </div> -->
+    
+                    <div class="row">
+                        <div class="col-md-6 col-12">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Country</mat-label>
-                                <mat-select placeholder="" [(ngModel)]="defaultCountry" (ngModelChange)="changecountry()" formControlName="country" >
-                                        <mat-option [value]="94"> India </mat-option>
+                            <mat-label>Security Question</mat-label>
+                                <mat-select placeholder="" formControlName="securityQues">
+                                    <mat-option value="0" > What is your pet name? </mat-option>
+                                    <mat-option value="1" > What was the name of your first school? </mat-option>
+                                    <mat-option value="2" > Who was your Childhood hero? </mat-option>
+                                    <mat-option value="3" > What is your favorite past-time? </mat-option>
+                                    <mat-option value="4" > What is your all time favorite sports team? </mat-option>
+                                    <mat-option value="5" > What is your fathers middle name? </mat-option>
+                                    <mat-option value="6" > What make was your first car or bike? </mat-option>
+                                    <mat-option value="7" > Where did you first meet your spouse? </mat-option>
                                 </mat-select>
                               </mat-form-field>
+                              <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['securityQues']['errors']" class="error">
+                                  <small *ngIf="accountDetailsForm.controls['securityQues']['errors']['required']">Please choose a security question.</small>
+                              </div>
                         </div>
-                </div><br/>
-                
-              </div>
-            </div>
-
-            <!--<div class="passenger-reg-note col-md-8 col-12">
-                <div class="float-left"> <i class="material-icons pass-icon">error_outline</i></div>
-                <div class="primary-msg">
-                  <div class="">Please provide your exact name as per Aadhaar card to avail Aadhaar based benefits</div>
-                </div>
-              </div>
-              -->
-              <br/>
-
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="row">
-                      <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>E-mail</mat-label>
-                              <input matInput placeholder="" (keypress)="AvoidSpace($event)" maxlength="70" onDrag="return false" onDrop="return false" autocomplete="off" formControlName="email"  >
-                            </mat-form-field>
-                            <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.email.errors" class="error">
-                              <small *ngIf="personalDetailsForm.controls.email.errors.required">Please enter email address.</small>
-                              <small *ngIf="personalDetailsForm.controls.email.errors.pattern">Please enter valid email id. </small>
-                              <small *ngIf="personalDetailsForm.controls.email.errors.maxlength">Please enter maximum 70 characters.</small>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-2 col-3">
-                            <mat-form-field >
-                                <input matInput placeholder="ISD" readonly={{readonlyISD}} value="{{defaultISD}}" [(ngModel)]="defaultISD" maxlength="3" (keypress)="AvoidSpace($event);numberInput($event)" formControlName="isd">
-                            </mat-form-field>
-                            <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.isd.errors" class="error">
-                              <small *ngIf="personalDetailsForm.controls.isd.errors.required">Please enter ISD.</small>
-                              <small *ngIf="personalDetailsForm.controls.isd.errors.pattern">Please enter valid ISD.</small>
-                            </div>
-                          </div> -->
-                          <div class="col-md-4 col-9">
+                          <div class="col-md-6 col-12">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Mobile Number</mat-label>
-                                  <input matInput placeholder="" (keypress)="numberInput($event)" onDrag="return false" onDrop="return false" autocomplete="off" maxlength="15" formControlName="mobileNo">
+                              <mat-label>Security Answer</mat-label>
+                                  <input matInput placeholder="" maxlength="15" autocomplete="off" formControlName="securityAns" (keypress)="specialcharInput($event)" onDrag="return false" onDrop="return false">
                                 </mat-form-field>
-                                <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.mobileNo.errors" class="error">
-                                  <small *ngIf="personalDetailsForm.controls.mobileNo.errors.required">Please enter mobile number.</small>
-                                  <small *ngIf="personalDetailsForm.controls.mobileNo.errors.pattern">Please enter valid mobile number.</small>
-                                  <small *ngIf="personalDetailsForm.controls.mobileNo.errors.minlength">Please enter atleast 10 Digits.</small>
-                                  <small *ngIf="personalDetailsForm.controls.mobileNo.errors.maxlength">Please enter maximum 10 Digits.</small>
+                                <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['securityAns']['errors']" class="error">
+                                    <small *ngIf="accountDetailsForm.controls['securityAns']['errors']['required']">Please enter an answer.</small>
                                 </div>
                           </div>
-                  </div><br/>
-                </div>
-                
-              </div>
-              
-              <div  *ngIf = "foreigntext" class="passenger-reg-note col-md-12 col-12 m-0">
-                <div class="float-left">
-                  <i class="material-icons pass-icon">error_outline</i>
-                </div>
-                <div class="primary-msg">
-                  <div class="">Info!International/NRI users with ISD code other than 91 have to pay Registration fees after successful registration i.e. on first login. Please note that the Registration fee for International/NRI users is Rs. 100 + GST.</div>
-                </div>
-              </div><br/>
-              <div class="xs-center">
-                  <button class="btn btn-primary">Next</button>
-                  <a class="btn" (click)="tabOpen(1)">Back</a>
-                </div>
-              
-          </form>
-        </div>
-      </div>
-
-      
-      <div class="tab-pane fade" id="pills-residential" role="tabpanel" aria-labelledby="pills-residential-tab">
-        <form [formGroup]="residentialAddrForm" name="residentialAddrForm">
-
-        <div>
-          <div class="col-md-9">
-            <div class="row">
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Flat / Door / Block No.</mat-label>
-                      <input matInput placeholder="" formControlName="flat" (keypress)="specialcharInputAddress($event)"  maxlength="225" autocomplete="off" onDrag="return false" onDrop="return false">
-                    </mat-form-field>
-                    <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['flat']['errors']" class="error">
-                        <small *ngIf="residentialAddrForm.controls['flat']['errors']['required']">Please enter flat name.</small>
-                        <small *ngIf="residentialAddrForm.controls['flat']['errors']['minlength']">Please enter atleast 3 characters.</small>
-                        <small *ngIf="residentialAddrForm.controls['flat']['errors']['maxlength']">Please enter maximum 225 characters.</small>
-                        <small *ngIf="residentialAddrForm.controls['flat']['errors']['pattern']">Please enter valid Flat/House No./Floor/Building.No special characters are allowed except  :/,-. </small>
-                    </div> 
-
-
-                </div>
-                <div class="col-md-6">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Street / Lane</mat-label>
-                        <input matInput placeholder="" maxlength="30" formControlName="street" type="text" autocomplete="nope" onDrag="return false" onDrop="return false">
-                      </mat-form-field> 
-                      <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['street']['errors']" class="error">
-                          <small *ngIf="residentialAddrForm.controls['street']['errors']['required']">Please enter street name.</small>
-                          <small *ngIf="residentialAddrForm.controls['street']['errors']['minlength']">Please enter atleast 2 characters.</small>
-                          <small *ngIf="residentialAddrForm.controls['street']['errors']['maxlength']">Please enter maximum 30 characters.</small>
-                      </div> 
+                            
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4 col-12">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Preferred Language</mat-label>
+                                  <mat-select placeholder="" formControlName="preferredLang">
+                                      <mat-option value="en"> English </mat-option>
+                                      <mat-option value="hi"> Hindi </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                                <div *ngIf="submittedaccountDetailsForm && accountDetailsForm.controls['preferredLang']['errors']" class="error">
+                                    <small *ngIf="accountDetailsForm.controls['preferredLang']['errors']['required']">Please select preferred language.</small>
+                                </div>
+                          </div>
+                            <div class="col-md-6 col-12">
+                                
+                            </div>
+                               
+                        </div>
+    
+                        <div class="xs-center">
+                            <button class="btn btn-primary cm_btn">Next</button>
+                            <a class=" btn btn-primary-outline cm_btn" (click)="goback()">Back</a>
+                          </div>
+    
                   </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Area / Locality</mat-label>
-                      <input matInput placeholder="" maxlength="40" formControlName="locality" autocomplete="off" onDrag="return false" onDrop="return false">
-                    </mat-form-field>
-                    <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['locality']['errors']" class="error">
-                        <small *ngIf="residentialAddrForm.controls['locality']['errors']['required']">Please enter locality name.</small>
-                        <small *ngIf="residentialAddrForm.controls['locality']['errors']['minlength']">Please enter atleast 2 characters.</small>
-                        <small *ngIf="residentialAddrForm.controls['locality']['errors']['maxlength']">Please enter maximum 40 characters.</small>
-                    </div> 
                 </div>
-                <div class="col-md-6">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Pin Code</mat-label>
-                        <input matInput placeholder="" (keyup)="getCityResidence($event)" (keypress)="AvoidSpace($event);numberInput($event);" maxlength="6" autocomplete="nope" formControlName="pincode">
-                      </mat-form-field>
-                      <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['pincode']['errors']" class="error">
-                          <small *ngIf="residentialAddrForm.controls['pincode']['errors']['required']">Please enter pincode.</small>
-                          <small *ngIf="residentialAddrForm.controls['pincode']['errors']['minlength']">Please enter 6 digits.</small>
-                          <small *ngIf="residentialAddrForm.controls['pincode']['errors']['maxlength']">Please enter maximum 6 digits.</small>
-                      </div> 
-                      <div *ngIf="submittedResidentialAddrForm && pincodeError" class="error">
-                          <small>{{pincodeError}}</small>
-                      </div> 
+              </form>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
+            <div>
+              <form [formGroup]="personalDetailsForm" name="personalDetailsForm" (ngSubmit)="submitPersonalDetails()"><br/><br/>
+                <div class="col-md-8 col-12">
+                  <div class="passenger-reg-note ">
+                    <div class=""> <i class="material-icons pass-icon">error_outline</i></div>
+                    <div class="primary-msg">
+                      <div class="">Please provide your exact name as per Aadhaar card to avail Aadhaar based benefits</div>
+                    </div>
                   </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>State</mat-label>
-                      <input matInput placeholder="" maxlength="15" [(ngModel)]="state" value={{state}} readonly="stateCheck" formControlName="state" autocomplete="off">
-                    </mat-form-field>
-                    <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['state']['errors']" class="error">
-                        <small *ngIf="residentialAddrForm.controls['state']['errors']['required']">Please enter state.</small>
-                        <small *ngIf="residentialAddrForm.controls['state']['errors']['minlength']">Please enter atleast 2 characters.</small>
-                        <small *ngIf="residentialAddrForm.controls['state']['errors']['maxlength']">Please enter maximum 15 characters.</small>
-                    </div> 
                 </div>
-                <div class="col-md-6">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>City / Town</mat-label>
-                        <mat-select placeholder="" [(ngModel)]="citySelect" (ngModelChange)="findPinResidence()" formControlName="city">
-                              <mat-option *ngFor="let each of cityList" [value]="each"> {{each}} </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['city']['errors']" class="error">
-                          <small *ngIf="residentialAddrForm.controls['city']['errors']['required']">Please select city.</small>
-                      </div> 
+                <br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>First Name</mat-label>
+                            <input matInput placeholder="" (keypress)="flInput($event)" maxlength="30" autocomplete="off" formControlName="firstName" onDrag="return false" onDrop="return false">
+                          </mat-form-field>
+                          <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['firstName']['errors']" class="error">
+                              <small *ngIf="personalDetailsForm.controls['firstName']['errors']['required']">Please enter first name.</small>
+                              <small *ngIf="personalDetailsForm.controls['firstName']['errors']['pattern']">Please enter valid name.</small>
+                              <small *ngIf="personalDetailsForm.controls['firstName']['errors']['minlength']">Please enter atleast 2 characters.</small>
+                              <small *ngIf="personalDetailsForm.controls['firstName']['errors']['maxlength']">Please enter maximum 30 characters.</small>
+                          </div> 
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Middle Name</mat-label>
+                              <input matInput placeholder="" (keypress)="flInput($event)" autocomplete="off" formControlName="middleName" onDrag="return false" onDrop="return false">
+                            </mat-form-field>
+                            <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['middleName']['errors']" class="error">
+                                <small *ngIf="personalDetailsForm.controls['middleName']['errors']['pattern']">Please enter valid name.</small>
+                            </div> 
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Last Name</mat-label>
+                                <input matInput placeholder="" (keypress)="flInput($event)" maxlength="30"  onDrag="return false" onDrop="return false" autocomplete="off" formControlName="lastName" >
+                              </mat-form-field>
+                              <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['lastName']['errors']" class="error">
+                                  <small *ngIf="personalDetailsForm.controls['lastName']['errors']['required']">Please enter last name.</small>
+                                  <small *ngIf="personalDetailsForm.controls['lastName']['errors']['pattern']">Please enter valid name.</small>
+                                  <small *ngIf="personalDetailsForm.controls['lastName']['errors']['minlength']">Please enter atleast 1 character.</small>
+                                  <small *ngIf="personalDetailsForm.controls['lastName']['errors']['maxlength']">Please enter maximum 30 characters.</small>
+                              </div> 
+                        </div>
+                    </div><br/>
+                    <div class="row">
+                        <div class="col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Date of Birth</mat-label>
+                            <!-- <input matInput placeholder="Date of Birth" id="dob" name="dp" ngbDatepicker #d="ngbDatepicker" [navigation]="navigation" (click)="d.toggle()" autocomplete="off" readonly [maxDate]="pickermaxDate"  formControlName="dob"> -->
+                            <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="" readonly="true" formControlName="dob"> 
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                          <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['dob']['errors']" class="error">
+                              <small *ngIf="personalDetailsForm.controls['dob']['errors']['required']">Please enter dob.</small>
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Gender</mat-label>
+                                <mat-select placeholder="" formControlName="gender">
+                                    <mat-option value="M"> Male </mat-option>
+                                    <mat-option value="F"> Female </mat-option>
+                                    <mat-option value="T"> Transgender </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['gender']['errors']" class="error">
+                                <small *ngIf="personalDetailsForm.controls['gender']['errors']['required']">Please select gender.</small>
+                              </div>
+                          </div>
+                          <div class="col-md-4 col-8">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Marital Status</mat-label>
+                                  <mat-select placeholder="" formControlName="maritalStatus">
+                                      <mat-option value="U"> Un-Married </mat-option>
+                                      <mat-option value="M"> Married </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                                <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['maritalStatus']['errors']" class="error">
+                                  <small *ngIf="personalDetailsForm.controls['maritalStatus']['errors']['required']">Please select marital status.</small>
+                                </div>
+                          </div>
+                    </div><br/>
+                    <div class="row">
+                        <div class="col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Occupation</mat-label>
+                                <mat-select placeholder="" formControlName="occupation">
+                                    <mat-option value="0"> Government </mat-option>
+                                    <mat-option value="1"> Public </mat-option>
+                                    <mat-option value="2"> Private </mat-option>
+                                    <mat-option value="3"> Professional </mat-option>
+                                    <mat-option value="4"> Self Employed </mat-option>
+                                    <mat-option value="5"> Student </mat-option>
+                                    <mat-option value="6"> Others </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls['occupation']['errors']" class="error">
+                                <small *ngIf="personalDetailsForm.controls['occupation']['errors']['required']">Please select occupation.</small>
+                              </div>
+                          </div>
+                          <div class="col-md-4 col-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Nationality</mat-label>
+                                  <mat-select placeholder="" [(ngModel)]="defaultNationality" formControlName="nationality">
+                                      <mat-option [value]="94"> India </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-6">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Country</mat-label>
+                                    <mat-select placeholder="" [(ngModel)]="defaultCountry" (ngModelChange)="changecountry()" formControlName="country" >
+                                            <mat-option [value]="94"> India </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+                    </div><br/>
+                    
+                  </div>
+                </div>
+    
+                <!--<div class="passenger-reg-note col-md-8 col-12">
+                    <div class="float-left"> <i class="material-icons pass-icon">error_outline</i></div>
+                    <div class="primary-msg">
+                      <div class="">Please provide your exact name as per Aadhaar card to avail Aadhaar based benefits</div>
+                    </div>
+                  </div>
+                  -->
+                  <br/>
+    
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>E-mail</mat-label>
+                                  <input matInput placeholder="" (keypress)="AvoidSpace($event)" maxlength="70" onDrag="return false" onDrop="return false" autocomplete="off" formControlName="email"  >
+                                </mat-form-field>
+                                <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.email.errors" class="error">
+                                  <small *ngIf="personalDetailsForm.controls.email.errors.required">Please enter email address.</small>
+                                  <small *ngIf="personalDetailsForm.controls.email.errors.pattern">Please enter valid email id. </small>
+                                  <small *ngIf="personalDetailsForm.controls.email.errors.maxlength">Please enter maximum 70 characters.</small>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-2 col-3">
+                                <mat-form-field >
+                                    <input matInput placeholder="ISD" readonly={{readonlyISD}} value="{{defaultISD}}" [(ngModel)]="defaultISD" maxlength="3" (keypress)="AvoidSpace($event);numberInput($event)" formControlName="isd">
+                                </mat-form-field>
+                                <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.isd.errors" class="error">
+                                  <small *ngIf="personalDetailsForm.controls.isd.errors.required">Please enter ISD.</small>
+                                  <small *ngIf="personalDetailsForm.controls.isd.errors.pattern">Please enter valid ISD.</small>
+                                </div>
+                              </div> -->
+                              <div class="col-md-4 col-9">
+                                <mat-form-field appearance="outline" class="w-100">
+                                  <mat-label>Mobile Number</mat-label>
+                                      <input matInput placeholder="" (keypress)="numberInput($event)" onDrag="return false" onDrop="return false" autocomplete="off" maxlength="15" formControlName="mobileNo">
+                                    </mat-form-field>
+                                    <div *ngIf="submittedPersonalDetailsForm && personalDetailsForm.controls.mobileNo.errors" class="error">
+                                      <small *ngIf="personalDetailsForm.controls.mobileNo.errors.required">Please enter mobile number.</small>
+                                      <small *ngIf="personalDetailsForm.controls.mobileNo.errors.pattern">Please enter valid mobile number.</small>
+                                      <small *ngIf="personalDetailsForm.controls.mobileNo.errors.minlength">Please enter atleast 10 Digits.</small>
+                                      <small *ngIf="personalDetailsForm.controls.mobileNo.errors.maxlength">Please enter maximum 10 Digits.</small>
+                                    </div>
+                              </div>
+                      </div><br/>
+                    </div>
+                    
                   </div>
                   
+                  <div  *ngIf = "foreigntext" class="passenger-reg-note col-md-12 col-12 m-0">
+                    <div class="float-left">
+                      <i class="material-icons pass-icon">error_outline</i>
+                    </div>
+                    <div class="primary-msg">
+                      <div class="">Info!International/NRI users with ISD code other than 91 have to pay Registration fees after successful registration i.e. on first login. Please note that the Registration fee for International/NRI users is Rs. 100 + GST.</div>
+                    </div>
+                  </div><br/>
+                  <div class="xs-center">
+                      <button class="btn btn-primary cm_btn">Next</button>
+                      <a class="btn btn-primary-outline cm_btn" (click)="tabOpen(1)">Back</a>
+                    </div>
+                  
+              </form>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Post Office</mat-label>
-                      <mat-select placeholder="" [(ngModel)]="POSelect" formControlName="postOffc">
-                          <mat-option *ngFor="let each of postOfficeList" [value]="each"> {{each}} </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['postOffc']['errors']" class="error">
-                        <small *ngIf="residentialAddrForm.controls['postOffc']['errors']['required']">Please select post office.</small>
-                    </div> 
-              </div>
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Phone Number</mat-label>
-                      <input matInput placeholder="" (keypress)="numberInput($event)" maxlength="15" autocomplete="off" formControlName="phoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
-                    </mat-form-field>
-                    <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['phoneNo']['errors']" class="error">
-                      <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['required']">Please enter mobile number.</small>
-                      <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['pattern']">Please enter valid ten digits Phone number.</small>
-                      <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['minlength']">Please enter min 10 Digits.</small>
-                      <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['maxlength']">Please enter maximum 10 Digits.</small>
+          </div>
+    
+          
+          <div class="tab-pane fade" id="pills-residential" role="tabpanel" aria-labelledby="pills-residential-tab">
+            <form [formGroup]="residentialAddrForm" name="residentialAddrForm">
+    
+            <div>
+              <div class="col-md-9">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Flat / Door / Block No.</mat-label>
+                          <input matInput placeholder="" formControlName="flat" (keypress)="specialcharInputAddress($event)"  maxlength="225" autocomplete="off" onDrag="return false" onDrop="return false">
+                        </mat-form-field>
+                        <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['flat']['errors']" class="error">
+                            <small *ngIf="residentialAddrForm.controls['flat']['errors']['required']">Please enter flat name.</small>
+                            <small *ngIf="residentialAddrForm.controls['flat']['errors']['minlength']">Please enter atleast 3 characters.</small>
+                            <small *ngIf="residentialAddrForm.controls['flat']['errors']['maxlength']">Please enter maximum 225 characters.</small>
+                            <small *ngIf="residentialAddrForm.controls['flat']['errors']['pattern']">Please enter valid Flat/House No./Floor/Building.No special characters are allowed except  :/,-. </small>
+                        </div> 
+    
+    
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Street / Lane</mat-label>
+                            <input matInput placeholder="" maxlength="30" formControlName="street" type="text" autocomplete="nope" onDrag="return false" onDrop="return false">
+                          </mat-form-field> 
+                          <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['street']['errors']" class="error">
+                              <small *ngIf="residentialAddrForm.controls['street']['errors']['required']">Please enter street name.</small>
+                              <small *ngIf="residentialAddrForm.controls['street']['errors']['minlength']">Please enter atleast 2 characters.</small>
+                              <small *ngIf="residentialAddrForm.controls['street']['errors']['maxlength']">Please enter maximum 30 characters.</small>
+                          </div> 
+                      </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Area / Locality</mat-label>
+                          <input matInput placeholder="" maxlength="40" formControlName="locality" autocomplete="off" onDrag="return false" onDrop="return false">
+                        </mat-form-field>
+                        <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['locality']['errors']" class="error">
+                            <small *ngIf="residentialAddrForm.controls['locality']['errors']['required']">Please enter locality name.</small>
+                            <small *ngIf="residentialAddrForm.controls['locality']['errors']['minlength']">Please enter atleast 2 characters.</small>
+                            <small *ngIf="residentialAddrForm.controls['locality']['errors']['maxlength']">Please enter maximum 40 characters.</small>
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Pin Code</mat-label>
+                            <input matInput placeholder="" (keyup)="getCityResidence($event)" (keypress)="AvoidSpace($event);numberInput($event);" maxlength="6" autocomplete="nope" formControlName="pincode">
+                          </mat-form-field>
+                          <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['pincode']['errors']" class="error">
+                              <small *ngIf="residentialAddrForm.controls['pincode']['errors']['required']">Please enter pincode.</small>
+                              <small *ngIf="residentialAddrForm.controls['pincode']['errors']['minlength']">Please enter 6 digits.</small>
+                              <small *ngIf="residentialAddrForm.controls['pincode']['errors']['maxlength']">Please enter maximum 6 digits.</small>
+                          </div> 
+                          <div *ngIf="submittedResidentialAddrForm && pincodeError" class="error">
+                              <small>{{pincodeError}}</small>
+                          </div> 
+                      </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>State</mat-label>
+                          <input matInput placeholder="" maxlength="15" [(ngModel)]="state" value={{state}} readonly="stateCheck" formControlName="state" autocomplete="off">
+                        </mat-form-field>
+                        <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['state']['errors']" class="error">
+                            <small *ngIf="residentialAddrForm.controls['state']['errors']['required']">Please enter state.</small>
+                            <small *ngIf="residentialAddrForm.controls['state']['errors']['minlength']">Please enter atleast 2 characters.</small>
+                            <small *ngIf="residentialAddrForm.controls['state']['errors']['maxlength']">Please enter maximum 15 characters.</small>
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>City / Town</mat-label>
+                            <mat-select placeholder="" [(ngModel)]="citySelect" (ngModelChange)="findPinResidence()" formControlName="city">
+                                  <mat-option *ngFor="let each of cityList" [value]="each"> {{each}} </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['city']['errors']" class="error">
+                              <small *ngIf="residentialAddrForm.controls['city']['errors']['required']">Please select city.</small>
+                          </div> 
+                      </div>
+                      
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Post Office</mat-label>
+                          <mat-select placeholder="" [(ngModel)]="POSelect" formControlName="postOffc">
+                              <mat-option *ngFor="let each of postOfficeList" [value]="each"> {{each}} </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['postOffc']['errors']" class="error">
+                            <small *ngIf="residentialAddrForm.controls['postOffc']['errors']['required']">Please select post office.</small>
+                        </div> 
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Phone Number</mat-label>
+                          <input matInput placeholder="" (keypress)="numberInput($event)" maxlength="15" autocomplete="off" formControlName="phoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
+                        </mat-form-field>
+                        <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['phoneNo']['errors']" class="error">
+                          <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['required']">Please enter mobile number.</small>
+                          <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['pattern']">Please enter valid ten digits Phone number.</small>
+                          <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['minlength']">Please enter min 10 Digits.</small>
+                          <small *ngIf="residentialAddrForm.controls['phoneNo']['errors']['maxlength']">Please enter maximum 10 Digits.</small>
+                        </div>
                     </div>
                 </div>
-            </div>
-            </div>
-            <p> 
-              <label class="checkbox">
-              <input type="checkbox" (change)="copyResidence($event)" formControlName="copyResidence" [checked]="CheckCopyResidence">
-              <span class="copy_address ps-2">Copy Residence to office Address</span> 
-              <span class="checkmark"></span>
-              </label>
-            </p>
-
-            <ng-container *ngIf="CheckCopyResidence;else nextBtn"> 
-                <!-- <p class="sbi_promo"> <label class="checkbox"><span class="pro-one">Please inform me about IRCTC SBI Card through Phone/Email/SMS</span>  <span class="pro-two">(Optional) <br/>Book free Railway tickets using Reward Points and Enjoy Zero payment gateway charge with IRCTC SBI Card.</span>
-                  <input type="checkbox" (change)="newsandalert($event)" formControlName="informMe" autocomplete="off">
-                  <span class="checkmark"></span>
-                  </label>
-                </p> -->
-
+                </div>
                 <p> 
                   <label class="checkbox">
-                      <!-- <input type="checkbox" formControlName="passengerAgree" name="passengerAgree"> --> 
-                      <input type="checkbox" formControlName="agree">
-                      <span class="terms ps-2">I have read and agree with the <a href="{{domainRedirect}}" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
-                      <span class="checkmark"></span></label>
+                  <input type="checkbox" (change)="copyResidence($event)" formControlName="copyResidence" [checked]="CheckCopyResidence">
+                  <span class="copy_address ps-2">Copy Residence to office Address</span> 
+                  <span class="checkmark"></span>
+                  </label>
                 </p>
-                <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['agree']['errors']" class="error">
-                    <small *ngIf="residentialAddrForm.controls['agree']['errors']['required'] || residentialAddrForm.controls['agree']['errors']['pattern']">Please accept Terms and Conditions</small>
-                </div>
-
-                <div class="captcha my-4">
-                  <ngx-recaptcha2 #captchaElem
-                    [siteKey]="siteKey"
-                    [size]="size"
-                    [hl]="lang"
-                    [theme]="theme"
-                    [type]="type"
-                    formControlName="recaptcha">
-                  </ngx-recaptcha2>
-                  <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['recaptcha']['errors']" class="error my-1">
-                      <small *ngIf="residentialAddrForm.controls['recaptcha']['errors']['required']">Please enter captcha.</small>
-                  </div> 
-                </div>
-
-                <div class="xs-center">
-                <button class="btn btn-primary" (click)="registerIRCTCUser()">Register</button>
-                <a class="btn ms-3" (click)="tabOpen(2)">Back</a>
-                </div>
-            </ng-container>
-
-            <ng-template #nextBtn>
-              <div class="xs-center">
-                <button class="btn btn-primary" (click)="openOfficeResidence()">Next</button>
-                <a class="btn ms-3" (click)="tabOpen(2)">Back</a>
-              </div>
-            </ng-template>
-        </div>
-
-        <ng-container *ngIf="!CheckCopyResidence">
-          <div class="tab-pane fade" id="pills-office" role="tabpanel" aria-labelledby="pills-office-tab">
-          <div>
-              
     
-                  <!-- <form [formGroup]="residentialAddrForm" name="residentialAddrForm" (ngSubmit)="registerIRCTCUser()"> --><br/>
-                    <div class="col-md-9">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Flat / Door / Block No.</mat-label>
-                              <input matInput placeholder="" formControlName="offcflat" (keypress)="specialcharInputAddress($event)"  maxlength="225" onDrag="return false" onDrop="return false">
-                            </mat-form-field>
-                            <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcflat']['errors']" class="error">
-                                <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['required']">Please enter flat name.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['minlength']">Please enter atleast 3 characters.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['maxlength']">Please enter maximum 225 characters.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['pattern']">Please enter valid Flat/House No./Floor/Building.No special characters are allowed except :/,-.</small>
-                            </div> 
-                        </div>
-                        <div class="col-md-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Street / Lane</mat-label>
-                                <input matInput placeholder="" maxlength="20" formControlName="offcstreet" autocomplete="nope" onDrag="return false" onDrop="return false">
-                              </mat-form-field>
-                              <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcstreet']['errors']" class="error">
-                                  <small *ngIf="residentialAddrForm.controls['offcstreet']['errors']['required']">Please enter street name.</small>
-                                  <small *ngIf="residentialAddrForm.controls['offcstreet']['errors']['minlength']">Please enter atleast 2 characters.</small>
-                                  <small *ngIf="residentialAddrForm.controls['offcstreet']['errors']['maxlength']">Please enter maximum 20 characters.</small>
-                              </div> 
-                          </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Area / Locality</mat-label>
-                              <input matInput placeholder="" maxlength="40" formControlName="offclocality" autocomplete="off" onDrag="return false" onDrop="return false">
-                            </mat-form-field>
-                            <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offclocality']['errors']" class="error">
-                                <small *ngIf="residentialAddrForm.controls['offclocality']['errors']['required']">Please enter locality name.</small>
-                                <small *ngIf="residentialAddrForm.controls['offclocality']['errors']['minlength']">Please enter atleast 2 characters.</small>
-                                <small *ngIf="residentialAddrForm.controls['offclocality']['errors']['maxlength']">Please enter maximum 20 characters.</small>
-                            </div> 
-                        </div>
-                        <div class="col-md-6">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Pin Code</mat-label>
-                                <input matInput placeholder="" (keyup)="getCityOffice($event);" (keypress)="AvoidSpace($event);numberInput($event); " maxlength="6" autocomplete="off" formControlName="offcpincode" autocomplete="nope" onDrag="return false" onDrop="return false">
-                              </mat-form-field>
-                              <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcpincode']['errors']" class="error">
-                                  <small *ngIf="residentialAddrForm.controls['offcpincode']['errors']['required']">Please enter pincode.</small>
-                                  <small *ngIf="residentialAddrForm.controls['offcpincode']['errors']['minlength']">Please enter 6 digits.</small>
-                                  <small *ngIf="residentialAddrForm.controls['offcpincode']['errors']['maxlength']">Please enter maximum 6 digits.</small>
-                              </div> 
-                              <div *ngIf="submittedResidentialAddrForm && pincodeErrorOffc" class="error">
-                                  <small>{{pincodeErrorOffc}}</small>
-                              </div>
-                          </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>State</mat-label>
-                              <input matInput placeholder="" maxlength="15" [(ngModel)]="offcstate" value="{{offcstate}}" readonly="stateCheckOffc" formControlName="offcstate">
-                            </mat-form-field>
-                            <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcstate']['errors']" class="error">
-                                <small *ngIf="residentialAddrForm.controls['offcstate']['errors']['required']">Please enter state.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcstate']['errors']['minlength']">Please enter atleast 2 characters.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcstate']['errors']['maxlength']">Please enter maximum 15 characters.</small>
-                            </div> 
-                        </div>
-                        <div class="col-md-6">
-                            <mat-form-field appearance="outline" class="w-100" *ngIf="FlagCountry">
-                              <mat-label>City / Town</mat-label>
-                                <mat-select placeholder="" [(ngModel)]="offccitySelect"  (ngModelChange)="findPinOffice()" formControlName="offccity">
-                                    <mat-option *ngFor="let each of cityListOffc" [value]="each"> {{each}} </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="w-100" *ngIf="!FlagCountry">
-                              <mat-label>City / Town</mat-label>
-                              <input matInput placeholder="" maxlength="15" formControlName="offccity">
-                            </mat-form-field>
-                              <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offccity']['errors']" class="error">
-                                  <small *ngIf="residentialAddrForm.controls['offccity']['errors']['required']">Please select city.</small>
-                              </div> 
-                          </div>
-                          
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                          <mat-form-field appearance="outline" class="w-100" *ngIf="FlagCountry">
-                            <mat-label>Post Office</mat-label>
-                              <mat-select placeholder="" [(ngModel)]="POSelectOffc" formControlName="offcpostOffc">
-                                  <mat-option *ngFor="let each of offcpostOfficeList" [value]="each"> {{each}} </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="w-100" *ngIf="!FlagCountry">
-                              <mat-label>Post Office</mat-label>
-                                <input matInput placeholder="" maxlength="15" formControlName="offcpostOffc">
-                              </mat-form-field>
-                            <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcpostOffc']['errors']" class="error">
-                                <small *ngIf="residentialAddrForm.controls['offcpostOffc']['errors']['required']">Please select post office.</small>
-                            </div> 
-                      </div>
-    
-                      <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Country</mat-label>
-                              <mat-select placeholder="" [(ngModel)]="defaultCountryOffc" (ngModelChange)="countrySelect()" formControlName="offccountry" >
-                                      <mat-option *ngFor="let each of countries" [value]="each.countryId"> {{each.country}} </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                          <mat-label>Phone Number</mat-label>
-                                <input matInput placeholder="" (keypress)="numberInput($event)" maxlength="15" formControlName="offcphoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
-                              </mat-form-field>
-                              <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcphoneNo']['errors']" class="error">
-                                <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['required']">Please enter mobile number.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['pattern']">Please enter valid ten digits Phone number.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['minlength']">Please enter min 10 Digits.</small>
-                                <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['maxlength']">Please enter maximum 10 Digits.</small>
-                              </div>
-                      </div>
-                    </div>
-                    </div>
-    
+                <ng-container *ngIf="CheckCopyResidence;else nextBtn"> 
                     <!-- <p class="sbi_promo"> <label class="checkbox"><span class="pro-one">Please inform me about IRCTC SBI Card through Phone/Email/SMS</span>  <span class="pro-two">(Optional) <br/>Book free Railway tickets using Reward Points and Enjoy Zero payment gateway charge with IRCTC SBI Card.</span>
-                      <input type="checkbox" (change)="newsandalert($event)" formControlName="offcinformMe">
+                      <input type="checkbox" (change)="newsandalert($event)" formControlName="informMe" autocomplete="off">
                       <span class="checkmark"></span>
                       </label>
                     </p> -->
     
                     <p> 
-                      <!-- <label class="checkbox">I agree to the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> and <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> I have read and agree with the Terms and Conditions and also agree to receive promotional emails/SMS/offers/announcements from IRCTC & associated partners.
-                      <input type="checkbox" formControlName="agree">
-                      <span class="checkmark"></span></label> -->
                       <label class="checkbox">
-                        <!-- <input type="checkbox" formControlName="passengerAgree" name="passengerAgree"> -->
-                        <input type="checkbox" formControlName="offcagree">
-                        <span class="terms ps-2">I have read and agree with the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
-                        <span class="checkmark"></span></label>
+                          <!-- <input type="checkbox" formControlName="passengerAgree" name="passengerAgree"> --> 
+                          <input type="checkbox" formControlName="agree">
+                          <span class="terms ps-2">I have read and agree with the <a href="{{domainRedirect}}" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
+                          <span class="checkmark"></span></label>
                     </p>
-                    <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcagree']['errors']" class="error">
-                        <small *ngIf="residentialAddrForm.controls['offcagree']['errors']['required'] || residentialAddrForm.controls['offcagree']['errors']['pattern']">Please accept Terms and Conditions</small>
+                    <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['agree']['errors']" class="error">
+                        <small *ngIf="residentialAddrForm.controls['agree']['errors']['required'] || residentialAddrForm.controls['agree']['errors']['pattern']">Please accept Terms and Conditions</small>
                     </div>
     
                     <div class="captcha my-4">
-                    <!-- <h6>captcha</h6>
-                    <img src="https://via.placeholder.com/200x80" alt="captcha"> -->
-                    <ngx-recaptcha2 #captchaElem
-                            [siteKey]="siteKey"
-                            [size]="size"
-                            [hl]="lang"
-                            [theme]="theme"
-                            [type]="type"
-                            formControlName="offcrecaptcha">
-                          </ngx-recaptcha2>
-                          <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcrecaptcha']['errors']" class="error my-1">
-                              <small *ngIf="residentialAddrForm.controls['offcrecaptcha']['errors']['required']">Please enter captcha.</small>
-                          </div> 
+                      <ngx-recaptcha2 #captchaElem
+                        [siteKey]="siteKey"
+                        [size]="size"
+                        [hl]="lang"
+                        [theme]="theme"
+                        [type]="type"
+                        formControlName="recaptcha">
+                      </ngx-recaptcha2>
+                      <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['recaptcha']['errors']" class="error my-1">
+                          <small *ngIf="residentialAddrForm.controls['recaptcha']['errors']['required']">Please enter captcha.</small>
+                      </div> 
                     </div>
     
                     <div class="xs-center">
-                    <button class="btn btn-primary" (click)="registerIRCTCUser()">Register</button>
-                    <a class="btn ms-3" (click)="tabOpen(3)">Back</a>
+                    <button class="btn btn-primary cm_btn" (click)="registerIRCTCUser()">Register</button>
+                    <a class="btn ms-3 btn-primary-outline cm_btn" (click)="tabOpen(2)">Back</a>
                     </div>
-                
+                </ng-container>
+    
+                <ng-template #nextBtn>
+                  <div class="xs-center">
+                    <button class="btn btn-primary cm_btn" (click)="openOfficeResidence()">Next</button>
+                    <a class="btn ms-3 btn-primary-outline cm_btn" (click)="tabOpen(2)">Back</a>
+                  </div>
+                </ng-template>
             </div>
+    
+            <ng-container *ngIf="!CheckCopyResidence">
+              <div class="tab-pane fade" id="pills-office" role="tabpanel" aria-labelledby="pills-office-tab">
+              <div>
+                  
+        
+                      <!-- <form [formGroup]="residentialAddrForm" name="residentialAddrForm" (ngSubmit)="registerIRCTCUser()"> --><br/>
+                        <div class="col-md-9">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Flat / Door / Block No.</mat-label>
+                                  <input matInput placeholder="" formControlName="offcflat" (keypress)="specialcharInputAddress($event)"  maxlength="225" onDrag="return false" onDrop="return false">
+                                </mat-form-field>
+                                <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcflat']['errors']" class="error">
+                                    <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['required']">Please enter flat name.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['minlength']">Please enter atleast 3 characters.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['maxlength']">Please enter maximum 225 characters.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcflat']['errors']['pattern']">Please enter valid Flat/House No./Floor/Building.No special characters are allowed except :/,-.</small>
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Street / Lane</mat-label>
+                                    <input matInput placeholder="" maxlength="20" formControlName="offcstreet" autocomplete="nope" onDrag="return false" onDrop="return false">
+                                  </mat-form-field>
+                                  <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcstreet']['errors']" class="error">
+                                      <small *ngIf="residentialAddrForm.controls['offcstreet']['errors']['required']">Please enter street name.</small>
+                                      <small *ngIf="residentialAddrForm.controls['offcstreet']['errors']['minlength']">Please enter atleast 2 characters.</small>
+                                      <small *ngIf="residentialAddrForm.controls['offcstreet']['errors']['maxlength']">Please enter maximum 20 characters.</small>
+                                  </div> 
+                              </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Area / Locality</mat-label>
+                                  <input matInput placeholder="" maxlength="40" formControlName="offclocality" autocomplete="off" onDrag="return false" onDrop="return false">
+                                </mat-form-field>
+                                <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offclocality']['errors']" class="error">
+                                    <small *ngIf="residentialAddrForm.controls['offclocality']['errors']['required']">Please enter locality name.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offclocality']['errors']['minlength']">Please enter atleast 2 characters.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offclocality']['errors']['maxlength']">Please enter maximum 20 characters.</small>
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Pin Code</mat-label>
+                                    <input matInput placeholder="" (keyup)="getCityOffice($event);" (keypress)="AvoidSpace($event);numberInput($event); " maxlength="6" autocomplete="off" formControlName="offcpincode" autocomplete="nope" onDrag="return false" onDrop="return false">
+                                  </mat-form-field>
+                                  <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcpincode']['errors']" class="error">
+                                      <small *ngIf="residentialAddrForm.controls['offcpincode']['errors']['required']">Please enter pincode.</small>
+                                      <small *ngIf="residentialAddrForm.controls['offcpincode']['errors']['minlength']">Please enter 6 digits.</small>
+                                      <small *ngIf="residentialAddrForm.controls['offcpincode']['errors']['maxlength']">Please enter maximum 6 digits.</small>
+                                  </div> 
+                                  <div *ngIf="submittedResidentialAddrForm && pincodeErrorOffc" class="error">
+                                      <small>{{pincodeErrorOffc}}</small>
+                                  </div>
+                              </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>State</mat-label>
+                                  <input matInput placeholder="" maxlength="15" [(ngModel)]="offcstate" value="{{offcstate}}" readonly="stateCheckOffc" formControlName="offcstate">
+                                </mat-form-field>
+                                <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcstate']['errors']" class="error">
+                                    <small *ngIf="residentialAddrForm.controls['offcstate']['errors']['required']">Please enter state.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcstate']['errors']['minlength']">Please enter atleast 2 characters.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcstate']['errors']['maxlength']">Please enter maximum 15 characters.</small>
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field appearance="outline" class="w-100" *ngIf="FlagCountry">
+                                  <mat-label>City / Town</mat-label>
+                                    <mat-select placeholder="" [(ngModel)]="offccitySelect"  (ngModelChange)="findPinOffice()" formControlName="offccity">
+                                        <mat-option *ngFor="let each of cityListOffc" [value]="each"> {{each}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="w-100" *ngIf="!FlagCountry">
+                                  <mat-label>City / Town</mat-label>
+                                  <input matInput placeholder="" maxlength="15" formControlName="offccity">
+                                </mat-form-field>
+                                  <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offccity']['errors']" class="error">
+                                      <small *ngIf="residentialAddrForm.controls['offccity']['errors']['required']">Please select city.</small>
+                                  </div> 
+                              </div>
+                              
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                              <mat-form-field appearance="outline" class="w-100" *ngIf="FlagCountry">
+                                <mat-label>Post Office</mat-label>
+                                  <mat-select placeholder="" [(ngModel)]="POSelectOffc" formControlName="offcpostOffc">
+                                      <mat-option *ngFor="let each of offcpostOfficeList" [value]="each"> {{each}} </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="w-100" *ngIf="!FlagCountry">
+                                  <mat-label>Post Office</mat-label>
+                                    <input matInput placeholder="" maxlength="15" formControlName="offcpostOffc">
+                                  </mat-form-field>
+                                <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcpostOffc']['errors']" class="error">
+                                    <small *ngIf="residentialAddrForm.controls['offcpostOffc']['errors']['required']">Please select post office.</small>
+                                </div> 
+                          </div>
+        
+                          <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Country</mat-label>
+                                  <mat-select placeholder="" [(ngModel)]="defaultCountryOffc" (ngModelChange)="countrySelect()" formControlName="offccountry" >
+                                          <mat-option *ngFor="let each of countries" [value]="each.countryId"> {{each.country}} </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Phone Number</mat-label>
+                                    <input matInput placeholder="" (keypress)="numberInput($event)" maxlength="15" formControlName="offcphoneNo" autocomplete="nope" onDrag="return false" onDrop="return false">
+                                  </mat-form-field>
+                                  <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcphoneNo']['errors']" class="error">
+                                    <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['required']">Please enter mobile number.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['pattern']">Please enter valid ten digits Phone number.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['minlength']">Please enter min 10 Digits.</small>
+                                    <small *ngIf="residentialAddrForm.controls['offcphoneNo']['errors']['maxlength']">Please enter maximum 10 Digits.</small>
+                                  </div>
+                          </div>
+                        </div>
+                        </div>
+        
+                        <!-- <p class="sbi_promo"> <label class="checkbox"><span class="pro-one">Please inform me about IRCTC SBI Card through Phone/Email/SMS</span>  <span class="pro-two">(Optional) <br/>Book free Railway tickets using Reward Points and Enjoy Zero payment gateway charge with IRCTC SBI Card.</span>
+                          <input type="checkbox" (change)="newsandalert($event)" formControlName="offcinformMe">
+                          <span class="checkmark"></span>
+                          </label>
+                        </p> -->
+        
+                        <p> 
+                          <!-- <label class="checkbox">I agree to the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> and <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> I have read and agree with the Terms and Conditions and also agree to receive promotional emails/SMS/offers/announcements from IRCTC & associated partners.
+                          <input type="checkbox" formControlName="agree">
+                          <span class="checkmark"></span></label> -->
+                          <label class="checkbox">
+                            <!-- <input type="checkbox" formControlName="passengerAgree" name="passengerAgree"> -->
+                            <input type="checkbox" formControlName="offcagree">
+                            <span class="terms ps-2">I have read and agree with the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> and also agree to receive promotional emails/SMS/offers/announcements from IRCTC Authorised Partner & associated partners.</span>
+                            <span class="checkmark"></span></label>
+                        </p>
+                        <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcagree']['errors']" class="error">
+                            <small *ngIf="residentialAddrForm.controls['offcagree']['errors']['required'] || residentialAddrForm.controls['offcagree']['errors']['pattern']">Please accept Terms and Conditions</small>
+                        </div>
+        
+                        <div class="captcha my-4">
+                        <!-- <h6>captcha</h6>
+                        <img src="https://via.placeholder.com/200x80" alt="captcha"> -->
+                        <ngx-recaptcha2 #captchaElem
+                                [siteKey]="siteKey"
+                                [size]="size"
+                                [hl]="lang"
+                                [theme]="theme"
+                                [type]="type"
+                                formControlName="offcrecaptcha">
+                              </ngx-recaptcha2>
+                              <div *ngIf="submittedResidentialAddrForm && residentialAddrForm.controls['offcrecaptcha']['errors']" class="error my-1">
+                                  <small *ngIf="residentialAddrForm.controls['offcrecaptcha']['errors']['required']">Please enter captcha.</small>
+                              </div> 
+                        </div>
+        
+                        <div class="xs-center">
+                        <button class="btn btn-primary cm_btn" (click)="registerIRCTCUser()">Register</button>
+                        <a class="btn ms-3 btn-primary-outline cm_btn" (click)="tabOpen(3)">Back</a>
+                        </div>
+                    
+                </div>
+              </div>
+            </ng-container>
+    
+          </form>
           </div>
-        </ng-container>
-
-      </form>
+    
+    
+        </div>
+    
       </div>
-     
-
-
-
     </div>
-
-  </div>
-
-
-
-
+  
 
     <div class="container">
   
