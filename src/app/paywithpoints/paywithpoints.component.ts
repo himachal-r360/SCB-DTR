@@ -472,8 +472,11 @@ otperrormsg :any;
         }
       }else{
        this.otperror = true;
-       this.otperrormsg ="Something went wrong, please try again";
-
+       //this.otperrormsg ="Something went wrong, please try again";
+       if(typeof resp.message != undefined && resp.message!="")
+          this.otperrormsg = resp.message;
+        else
+          this.otperrormsg = "Something went wrong, please try again";
     } 
    
        },(err:HttpErrorResponse)=>{
