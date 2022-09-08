@@ -268,15 +268,15 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 }
                 this.partnerToken = this.selectedOnwardVendor.partnerName;
                 } 
-               
-                
-                this.totalCollectibleAmount = Number(result.flightDetails.fare.totalFare);
-                this.totalCollectibleAmountFromPartnerResponse = Number(result.flightDetails.fare.totalFare);
-                this.totalCollectibleAmountFromPartnerResponseOrg = Number(result.flightDetails.fare.totalFare);
-                
-                this.BaseFare =  Number(result.flightDetails.fare.totalbf);
+                  this.BaseFare =  Number(result.flightDetails.fare.totalbf);
                 this.Tax =  Number(result.flightDetails.fare.others);
                 this.TotalFare =  Number(result.flightDetails.fare.totalFare);
+                
+                this.totalCollectibleAmount = Number(result.flightDetails.fare.totalFare)- Number(result.flightDetails.fare.discount)- Number(result.flightDetails.fare.voucher_amount);
+                this.totalCollectibleAmountFromPartnerResponse = Number(result.flightDetails.fare.totalFare);
+                this.totalCollectibleAmountFromPartnerResponseOrg = Number(result.flightDetails.fare.totalFare);
+                this.voucher_amount= Number(result.flightDetails.fare.voucher_amount);
+             
                 
                 this.convenience_fee =  Number(result.flightDetails.fare.partnerConvFee);
                 this.partnerConvFee =  Number(result.flightDetails.fare.partnerConvFee);
