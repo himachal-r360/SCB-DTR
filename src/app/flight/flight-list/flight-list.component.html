@@ -1326,7 +1326,7 @@
                                     <div class="mob-sf-sort-by">
                                         <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
                                             <p>
-                                                <img [src]="item.image" alt="" />
+                                                <img [src]="item.active == true ?item.activeImage :  item.image" alt="" />
                                                 <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
                                             </p>
                                         </div>
@@ -1588,7 +1588,7 @@
 
                                         </div>
                                     </div>
-                             
+
                                 </div>
                                        <div class="mob-sf-btns">
                                         <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
