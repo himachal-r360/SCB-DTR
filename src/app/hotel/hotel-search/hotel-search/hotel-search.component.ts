@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup} from '@angular/forms';
-import { reduce, Subscription } from 'rxjs';
+import { reduce } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
 
 @Component({
   selector: 'app-hotel-search',
@@ -16,15 +17,16 @@ export class HotelSearchComponent implements OnInit{
   cityList: any;
   totalAdultsCount: number = 1;
   totalChildCount: number = 0;
-
+  getSearchValue:any;
+  private queryText = '';
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
   
 
   constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router) {
     this.hotelSearchForm = this._fb.group({
-      checkIn: ['2022-09-06'],
-      checkOut: ['2022-09-07'],
+      checkIn: [],
+      checkOut: [],
       noOfRooms: ['1'],
       city: ['New Delhi'],
       country: ['IN'],
@@ -35,10 +37,12 @@ export class HotelSearchComponent implements OnInit{
       longitude: [''],
       area: [''],
       hotelId: [''],
-      // rooms:[[{"room":1,"numberOfAdults":"2","numberOfChildren":"0"}]],
-      rooms: this._fb.array([
-        { room: 1, numberOfAdults: '1', numberOfChildren: '0' }
-      ]),
+      rooms: this._fb.array(
+        [
+          { room: 1, numberOfAdults: '1', numberOfChildren: '0' }
+        ]
+
+      ),
       channel: ['Web'],
       programName: ['SMARTBUY'],
       pageNumber: [0],
@@ -48,7 +52,7 @@ export class HotelSearchComponent implements OnInit{
   }
 
   ngOnInit(): void {
-
+    this.getSearchValueLocalStorage();
   }
 
   showCity(val) {
@@ -58,14 +62,43 @@ export class HotelSearchComponent implements OnInit{
     else {
       this.hideShowCity.nativeElement.style.display = "none";
     }
-
   }
 
+  getSearchValueLocalStorage() {
+    this.getSearchValue = localStorage.getItem('hotelSearch')
+    let modifySearchValue = JSON.parse(this.getSearchValue);
+    let roomArr = modifySearchValue.rooms;
+    if (modifySearchValue != undefined) {
+      this.hotelSearchForm = this._fb.group({
+        checkIn: [modifySearchValue.checkIn],
+        checkOut: [modifySearchValue.checkOut],
+        noOfRooms: [modifySearchValue.noOfRooms],
+        city: [modifySearchValue.city],
+        country: [modifySearchValue.country],
+        scr: [modifySearchValue.scr],
+        sct: [modifySearchValue.sct],
+        hotelName: [modifySearchValue.hotelName],
+        latitude: [modifySearchValue.latitude],
+        longitude: [modifySearchValue.longitude],
+        area: [modifySearchValue.area],
+        hotelId: [modifySearchValue.hotelId],
+        rooms: this._fb.array([]),
+        channel: [modifySearchValue.channel],
+        programName: [modifySearchValue.programName],
+        limit: [modifySearchValue.limit],
+        numberOfRooms: [modifySearchValue.numberOfRooms]
+      });
+      roomArr.forEach((x) => {
+        this.hotelSearchForm.value.rooms = ""
+        this.roomsDetails.push(this.modifyDetails(x));
+      });
+      this.showTotalCountOfAdult();
+      this.showTotalCountsOfChild();
+    }
+  }
   //Increase Child and adult value
   increaseCount(i, item, title) {
-    console.log(this.hotelSearchForm.value);
     let totalCount;
-    // let checkTotalCountValue;
     let adultBtn: any = document.getElementById('adultBtn_' + i);
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
@@ -73,7 +106,6 @@ export class HotelSearchComponent implements OnInit{
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults + 1;
-      
     }
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
     totalCount > 4 ? childBtn.disabled = true : childBtn.disabled = false;
@@ -133,11 +165,20 @@ export class HotelSearchComponent implements OnInit{
 
   personDetails(): FormGroup {
     return this._fb.group({
-      room: [1],
-      numberOfAdults: ['1'],
-      numberOfChildren: ['0']
+        room: [1],
+        numberOfAdults: ['1'],
+        numberOfChildren: ['0']
+      })
+  }
+
+  modifyDetails(x):FormGroup {
+    return this._fb.group({
+      room: [x.room],
+      numberOfAdults: [x.numberOfAdults],
+      numberOfChildren: [x.numberOfChildren]
     })
   }
+
 
   addDetails() {
     this.roomsDetails.push(this.personDetails());
@@ -149,6 +190,15 @@ export class HotelSearchComponent implements OnInit{
     this.showTotalCountOfAdult();
     this.showTotalCountsOfChild();
   }
+
+  searchAutoComplete($event) {
+    
+   
+  }
+
+   onCitySearchClick(){
+
+   }
 
 
   ConvertObjToQueryString(obj: any) {
@@ -165,11 +215,6 @@ export class HotelSearchComponent implements OnInit{
               }
             }
           }
-          // for (var p1 in obj[p]) {
-          //   if (obj[p].hasOwnProperty(p1)) {
-          //     str.push(encodeURIComponent(p) + "[" + i + "]=" + encodeURIComponent(obj[p1]));
-          //   }
-          // }
         } else {
           str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
         }
@@ -179,20 +224,13 @@ export class HotelSearchComponent implements OnInit{
   }
 
   searchHotel() {
-    debugger;
     this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');
     this.hotelSearchForm.value.checkOut = moment(this.hotelSearchForm.value.checkOut).format('YYYY-MM-DD');
     this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
     this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
+    localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
     let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
     this.router.navigateByUrl(url);
-    
-    // this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
-    //   this.hotelList = res;
-    //   console.log(this.hotelSearchForm.value);
-    //   console.log(this.hotelList, "hotel search ")
-    // }, (error) => { console.log(error) });
-
   }
 
 

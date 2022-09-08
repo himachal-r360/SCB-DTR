@@ -4,7 +4,7 @@
             <div class="hotel-area">
                 <div class="hotel-area-item" (click)="showCity('show')">
                     <span class="small-text">CITY, Hotel or Area</span>
-                    <h5 class="large-text">Gujarat</h5>
+                    <h5 class="large-text">{{hotelSearchForm.value.city}}</h5>
                     <span class="small-text hotel-city">India</span>
                 </div>
                 <div class="hotel-search-list" #hideShowCity>
@@ -16,7 +16,7 @@
                     </div>
                     <div class="hotel-from-data-search">
                         <span>from</span>
-                        <input type="text" class="w-100" id="" placeholder="Search City" formControlName="city">
+                        <input type="text" class="w-100" id="" placeholder="Search City" formControlName="city"  (keyup)="searchAutoComplete($event)">
                     </div>
                     <ul class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
                         <li class="hotel-from-ul-li">
@@ -28,25 +28,6 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="hotel-from-ul-li">
-                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a">
-                                <div class="hotel-from-name">
-                                    <img src="assets/images/hotel/icon/hotel.png" alt="">
-                                    <h6>North Goa, Goa, India</h6>
-                                    <p>528 Hotels</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="hotel-from-ul-li">
-                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a">
-                                <div class="hotel-from-name">
-                                    <img src="assets/images/hotel/icon/hotel.png" alt="">
-                                    <h6>Bardez, Goa, India</h6>
-                                    <p>528 Hotels</p>
-                                </div>
-                            </a>
-                        </li>
-
                     </ul>
                 </div>
             </div>

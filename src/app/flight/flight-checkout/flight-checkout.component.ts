@@ -1255,7 +1255,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
       // this.passengerForm.removeControl('adult_dom_pax_nationality' val);
     }
 
-
+console.log('sss');
 
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
