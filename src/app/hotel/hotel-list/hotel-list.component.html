@@ -329,88 +329,28 @@
                       <div class="">
                           <div class="Filterslayout d-flex justify-content-between align-items-center">
                               <h6 class="fs_16">Filters</h6>
-                              <a href="" class="fs_13 text-color">Reset all</a>
+                              <a href="javascript:;" (click)="ResetAllFilter()" class="fs_13 text-color">Reset all</a>
                           </div>
                           <hr>
                           <div class="default-sidebar flight-sidebar">
                               <div class="sidebar-widget Star-widget">
                                   <div class="widget-title">
                                       <h6 class="">Star </h6>
-                                      <a href="">Reset</a>
+                                      <a href="javascript:;" style="cursor:pointer" (click)="ResetStarFilter()">Reset</a>
                                   </div>
                                   <div class="widget-content">
                                       <ul class="category-list clearfix mt-2">
-                                          <li class="custom-check-box">
+                                          <li class="custom-check-box" *ngFor="let item of starFiltersList">
                                               <div class="custom-controls-stacked">
                                                   <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" />
+                                                      <input type="checkbox" [checked]="item.active" (change)="StarFilter(item)" class="material-control-input" />
                                                       <span class="material-control-indicator"></span>
                                                       <span class="description">
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </li>
-                                          <li class="custom-check-box">
-                                              <div class="custom-controls-stacked">
-                                                  <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" checked="checked" />
-                                                      <span class="material-control-indicator"></span>
-                                                      <span class="description">
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star"></i>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </li>
-                                          <li class="custom-check-box">
-                                              <div class="custom-controls-stacked">
-                                                  <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" />
-                                                      <span class="material-control-indicator"></span>
-                                                      <span class="description">
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star"></i>
-                                                          <i class="fas fa-star"></i>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </li>
-                                          <li class="custom-check-box">
-                                              <div class="custom-controls-stacked">
-                                                  <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" />
-                                                      <span class="material-control-indicator"></span>
-                                                      <span class="description">
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star"></i>
-                                                          <i class="fas fa-star"></i>
-                                                          <i class="fas fa-star"></i>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </li>
-                                          <li class="custom-check-box">
-                                              <div class="custom-controls-stacked">
-                                                  <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" />
-                                                      <span class="material-control-indicator"></span>
-                                                      <span class="description">
-                                                          <i class="fas fa-star active"></i>
-                                                          <i class="fas fa-star"></i>
-                                                          <i class="fas fa-star"></i>
-                                                          <i class="fas fa-star"></i>
-                                                          <i class="fas fa-star"></i>
+                                                          <i class="fas fa-star" [ngClass]="{'active' : item.value >= 1}"></i>
+                                                          <i class="fas fa-star" [ngClass]="{'active' : item.value >= 2}"></i>
+                                                          <i class="fas fa-star" [ngClass]="{'active' : item.value >= 3}"></i>
+                                                          <i class="fas fa-star" [ngClass]="{'active' : item.value >= 4}"></i>
+                                                          <i class="fas fa-star" [ngClass]="{'active' : item.value >= 5}"></i>
                                                       </span>
                                                   </label>
                                               </div>
@@ -488,63 +428,47 @@
                               <div class="sidebar-widget Price-widget">
                                   <div class="widget-title">
                                       <h6 class="">Price</h6>
-                                      <a href="">Reset</a>
+                                      <a href="javascript:;" (click)="ResetPriceFilter()">Reset</a>
                                   </div>
                                   <div class="widget-content mt-10 mb-30 price-widget-content">
                                       <div style="margin:0 0 20px 0">
-                                          <input type="number" min="0" max="9900" oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
-                                          <span class="ms-3 me-3">-</span>
-                                          <input type="number" min="0" max="10000" oninput="validity.valid||(value='10000');" id="max_price" class="price-range-field" />
+                                        <input type="number" min="0" [(ngModel)]="minPrice" [min]="resetMinPrice" id="min_price" class="price-range-field" />
+                                        <span class="ms-3 me-3">-</span>
+                                        <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
                                       </div>
-                                      <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+                                      <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
                                   </div>
                               </div>
                               <hr>
                               <div class="sidebar-widget Amenities-widget">
                                   <div class="widget-title">
                                       <h6 class="">Amenities</h6>
-                                      <a href="">Reset</a>
+                                      <a href="javascript:;" (click)="ResetAmenityFilter()">Reset</a>
                                   </div>
                                   <div class="widget-content">
                                       <ul class="category-list clearfix mt-2">
-                                          <li class="custom-check-box">
+                                          <li class="custom-check-box" *ngFor="let item of amenityList | slice:0:5">
                                               <div class="custom-controls-stacked">
                                                   <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" />
+                                                      <input type="checkbox" [checked]="item.active" class="material-control-input" (change)="amenityFilter(item)" />
                                                       <span class="material-control-indicator"></span>
-                                                      <span class="description">Parking</span>
+                                                      <span class="description">{{item.name}}</span>
                                                   </label>
                                               </div>
                                           </li>
-                                          <li class="custom-check-box">
+                                          <ng-container *ngIf="showMoreAmenity">
+                                            <li class="custom-check-box" *ngFor="let item of amenityList | slice:5">
                                               <div class="custom-controls-stacked">
                                                   <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" checked="checked" />
+                                                      <input type="checkbox" [checked]="item.active" class="material-control-input" (change)="amenityFilter(item)"/>
                                                       <span class="material-control-indicator"></span>
-                                                      <span class="description">Wi-Fi</span>
+                                                      <span class="description">{{item.name}}</span>
                                                   </label>
                                               </div>
                                           </li>
-                                          <li class="custom-check-box">
-                                              <div class="custom-controls-stacked">
-                                                  <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" />
-                                                      <span class="material-control-indicator"></span>
-                                                      <span class="description">Seating Area</span>
-                                                  </label>
-                                              </div>
-                                          </li>
-                                          <li class="custom-check-box">
-                                              <div class="custom-controls-stacked">
-                                                  <label class="custom-control material-checkbox">
-                                                      <input type="checkbox" class="material-control-input" />
-                                                      <span class="material-control-indicator"></span>
-                                                      <span class="description">Restaurant</span>
-                                                  </label>
-                                              </div>
-                                          </li>
+                                          </ng-container>
                                       </ul>
-                                      <a href="#" class="widget-content-more ml-20">+2 more</a>
+                                      <a href="javascript:;" *ngIf="!showMoreAmenity && amenityList.length>5" (click)="showMoreAmenity = true" class="widget-content-more ml-20">+11 more</a>
                                   </div>
                               </div>
                               <hr>
@@ -719,7 +643,7 @@
                               <div class="hotel-search-form">
                                   <form action="">
                                       <div class="hotel-listingsearch">
-                                          <input type="text" name="search" placeholder="Search by Hotel name">
+                                          <input type="text" name="search"[(ngModel)]="SearchText" (input)="onSearchInput()" placeholder="Search by Hotel name">
                                       </div>
                                   </form>
                               </div>
@@ -735,7 +659,7 @@
                       <div class="hotel-list-box">
                         <ng-container #itemsContainer></ng-container>
                       </div>
-                        <!-- <div class="text-center" *ngIf="hotelList.length < 1">No hotel found</div> -->
+                        <div class="text-center" *ngIf="hotelList && hotelList.length < 1">No hotel found</div>
 
 
                         <ng-template #item let-item="item">
