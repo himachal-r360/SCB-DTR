@@ -749,16 +749,16 @@ otperrormsg :any;
                   this.selectedCardDetails = this.cards[0];
                   this.checkAvailablePointsforSavedCard();
                }else{
-                  var customername=this.response['customername'];
-                  this.points_available=this.response['points_available'];
-                  this.points_percentage=this.response['points_percentage'];
-                  var client_type=this.response['client_type'];
-                  var card_type=this.response['card_type'];
-                  this.CcCharges = this.response['CcCharges'];
-                  this.pointData = this.response;
-                  this.cardmobile = this.response['mobile'];
-                  this.cardbin = this.response['bin'];
-                  this.carddob = this.response['DOB'];
+                  var customername=response['customername'];
+                  this.points_available=response['points_available'];
+                  this.points_percentage=response['points_percentage'];
+                  var client_type=response['client_type'];
+                  var card_type=response['card_type'];
+                  this.CcCharges = response['CcCharges'];
+                  this.pointData = response;
+                  this.cardmobile =response['mobile'];
+                  this.cardbin =response['bin'];
+                  this.carddob =response['DOB'];
                   this.setSlider();
                }
           }else{
