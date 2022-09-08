@@ -1,7 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
+import { Subscription } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
 declare var $: any;
@@ -10,7 +11,7 @@ declare var $: any;
   templateUrl: './hotel-list.component.html',
   styleUrls: ['./hotel-list.component.sass']
 })
-export class HotelListComponent implements OnInit {
+export class HotelListComponent implements OnInit,OnDestroy {
   hotelSearchForm: any;
   hotelList:any;
   docKey:string;
@@ -21,6 +22,7 @@ export class HotelListComponent implements OnInit {
   Country: string;
   searchData:any;
   hotelSearchData:any;
+  sub:Subscription;
 
   @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
@@ -73,8 +75,8 @@ export class HotelListComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
-      checkIn: ['2022-09-08'],
-      checkOut: ['2022-09-09'],
+      checkIn: [],
+      checkOut: [],
       noOfRooms: ['1'],
       city: ['New Delhi'],
       country: ['IN'],
@@ -85,7 +87,6 @@ export class HotelListComponent implements OnInit {
       longitude: [''],
       area: [''],
       hotelId: [''],
-      // rooms:[[{"room":1,"numberOfAdults":"2","numberOfChildren":"0"}]],
       rooms: this._fb.array([
         { room: 1, numberOfAdults: '1', numberOfChildren: '0' }
       ]),
@@ -94,7 +95,7 @@ export class HotelListComponent implements OnInit {
       pageNumber: [0],
       limit: [0],
       numberOfRooms: [1],
-      countryName : 'India'
+      countryName : ['India']
     });
 
     $(window).scroll(function(this) {
@@ -130,14 +131,12 @@ export class HotelListComponent implements OnInit {
     this.hotelSearchForm.get('numberOfRooms').setValue(this.searchData.numberOfRooms);
     this.hotelSearchForm.get('noOfRooms').setValue(this.searchData.noOfRooms);
     this.getQueryParamData();
-    console.log(this.hotelSearchForm.value,"this.hotelSearchForm.value");
   }
 
   getQueryParamData() {
     debugger;
     const urlParam = this.route.snapshot.queryParams;
     this.hotelSearchData = urlParam;
-    console.log(this.searchData , "=> Before");
     var hotelSearchArr = [];
     for (var i = 0; i < 5; i++) // for generating array by object.
     {
@@ -158,8 +157,6 @@ export class HotelListComponent implements OnInit {
     }
     this.hotelSearchData = hotelSearchArr;
     this.hotelSearchForm.value.rooms = this.hotelSearchData;
-    console.log(this.searchData , "=> after");
-    console.log( this.hotelSearchForm.value.rooms , "=>  this.hotelSearchForm.value.room");
     // this.searchData.forEach((z)=>{
     //   z.isSelected = false;
     //   z.selectedFlight = null
@@ -176,10 +173,9 @@ export class HotelListComponent implements OnInit {
     this.CheckoutDate = this.hotelSearchForm.value.checkOut;
     this.City =  this.hotelSearchForm.value.city;
     this.Country = this.hotelSearchForm.value.countryName;
-     this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
+    this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
-      console.log(this.hotelList)
       if(this.container)
       {
         this.container.clear();
@@ -188,4 +184,9 @@ export class HotelListComponent implements OnInit {
     }, (error) => { console.log(error) });
 
   }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
 }
