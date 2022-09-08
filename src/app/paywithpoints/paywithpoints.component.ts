@@ -737,11 +737,25 @@ otperrormsg :any;
           if(typeof response.error_code != undefined && response.error_code=="100"){
                this.submitted2=false;
                this.cardaddForm1.reset();
-               this.addCardCancel();
-               this.cards = response.cards;
                this.hasCards = true;
-               this.selectedCardDetails = this.cards[0];
-               this.checkAvailablePointsforSavedCard();
+               this.addCardCancel();
+               if(savecard==1){
+                  this.cards = response.cards;
+                  this.selectedCardDetails = this.cards[0];
+                  this.checkAvailablePointsforSavedCard();
+               }else{
+                  var customername=this.response['customername'];
+                  this.points_available=this.response['points_available'];
+                  this.points_percentage=this.response['points_percentage'];
+                  var client_type=this.response['client_type'];
+                  var card_type=this.response['card_type'];
+                  this.CcCharges = this.response['CcCharges'];
+                  this.pointData = this.response;
+                  this.cardmobile = this.response['mobile'];
+                  this.cardbin = this.response['bin'];
+                  this.carddob = this.response['DOB'];
+                  this.setSlider();
+               }
           }else{
                    alert(response.message)
           } 
