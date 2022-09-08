@@ -233,12 +233,16 @@ otperrormsg :any;
         {
           this.errorMsg0=this.response1['message'];
         }
+         alert(this.errorMsg0);
+      // this.hasError =true;
+      this.spinnerService.hide();
       }
      
     }, (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
       this.errorMsg0=message;
-      this.hasError =true;
+      alert(this.errorMsg0);
+      // this.hasError =true;
       this.spinnerService.hide();
     });
   }
@@ -339,7 +343,8 @@ otperrormsg :any;
         this.voucherslider = true;
         var message = 'Something went wrong';
       this.errorMsg0=message;
-      this.hasError =true;
+     alert(this.errorMsg0);
+      // this.hasError =true;
       this.spinnerService.hide();
       
     });
@@ -555,7 +560,6 @@ otperrormsg :any;
         'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
         "_token":this.XSRFTOKEN 
       }
-      console.log(request);
       var passData = {
         postData: this.EncrDecr.set(JSON.stringify(request))
       };
