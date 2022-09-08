@@ -15,6 +15,9 @@
       </div>
   </div>
 </section>
+
+
+
 <section class="flight-area mt-10" *ngIf="!isMobile">
     <div class="container">
         <div class="row">
@@ -346,7 +349,19 @@
                         <div class="flight-listing-area">
                             <ng-container #itemsContainer></ng-container>
                         </div>
-                        <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
+                        
+                        <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                            <div class="no_flights_sec" >
+                                <div>
+                                    <p class="title">Yikes! No flight found</p>
+                                    <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                    <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                                    <div>
+                                        <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <ng-template #item let-item="item">
                             <div *ngFor="let list of item; let i = index">
                                 <div class="flight-listing" *ngIf="list && list.flights.length > 0" id="flight_list_{{list.flightKey}}">
@@ -884,7 +899,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
+                <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                    <div class="no_flights_sec" >
+                        <div>
+                            <p class="title">Yikes! No flight found</p>
+                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                            <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                            <div>
+                                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <ng-template #item let-item="item">
                     <div *ngFor="let list of item; let i = index">
                         <div class="mob-list-area" *ngIf="list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
@@ -1326,7 +1352,7 @@
                                     <div class="mob-sf-sort-by">
                                         <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
                                             <p>
-                                                <img [src]="item.image" alt="" />
+                                                <img [src]="item.active == true ?item.activeImage :  item.image" alt="" />
                                                 <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
                                             </p>
                                         </div>
@@ -1588,7 +1614,7 @@
 
                                         </div>
                                     </div>
-                             
+
                                 </div>
                                        <div class="mob-sf-btns">
                                         <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>

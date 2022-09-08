@@ -904,7 +904,6 @@ orderRetry:boolean=false;
 
   clickPassenger($event, passenger, checkboxIndex) {
     if ($event.target.checked) {
-    console.log(moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years'));
       if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 12)
         this.addAdult(passenger, checkboxIndex);
       else if (moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') > 2 && moment().diff(moment(moment(passenger.dateOfBirth, 'DD/MM/YYYY')).format('YYYY-MM-DD'), 'years') < 12)
@@ -1178,6 +1177,29 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
     }
 
+  if ((this.adultsArray.length) == (this.maxAdults)) {
+  
+  
+        var array = [];
+            $(".pass_checkBox:checkbox[name=type]:checked").each(function() {
+                array.push($(this).val());
+            });
+  
+  console.log(array);
+  
+  
+  
+  
+        $(".pass_checkBox").each(function () {
+        if ($(this).find(".pass_checkBox").not(":checked")) {
+        console.log(this);
+        } });
+  }
+    
+
+    
+
+
 
   }
 
@@ -1360,6 +1382,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         $('#passengerBox_' + checkboxIndex).removeClass('hide');
       }
     } else {
+    
       if (checkboxIndex != -1) {
         $('#passengerBox_' + checkboxIndex).addClass('hide');
         $('#travelPassenger_' + checkboxIndex).prop('checked', false);

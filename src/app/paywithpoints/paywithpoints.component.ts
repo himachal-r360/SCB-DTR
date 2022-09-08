@@ -92,6 +92,7 @@ otperrormsg :any;
  Formotp: FormGroup;
  voucherForm1: FormGroup;
  cardaddForm1: FormGroup;
+ applyvouchercode:any;
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder,private spinnerService: NgxSpinnerService) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -112,7 +113,8 @@ otperrormsg :any;
      this.cardaddForm1 = this.formBuilder.group({
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
-          dob:['', Validators.required]
+          dob:['', Validators.required],
+          savecard:[true],
         });
     
   }
@@ -235,12 +237,16 @@ otperrormsg :any;
         {
           this.errorMsg0=this.response1['message'];
         }
+         alert(this.errorMsg0);
+      // this.hasError =true;
+      this.spinnerService.hide();
       }
      
     }, (err: HttpErrorResponse) => {
       var message = 'Something went wrong';
       this.errorMsg0=message;
-      this.hasError =true;
+      alert(this.errorMsg0);
+      // this.hasError =true;
       this.spinnerService.hide();
     });
   }
@@ -341,7 +347,8 @@ otperrormsg :any;
         this.voucherslider = true;
         var message = 'Something went wrong';
       this.errorMsg0=message;
-      this.hasError =true;
+     alert(this.errorMsg0);
+      // this.hasError =true;
       this.spinnerService.hide();
       
     });
@@ -360,7 +367,8 @@ otperrormsg :any;
             "last4digit":this.selectedCardDetails.card.slice(-4),
             "points":Math.round(this.value),
             "ORDER_POINTS":Math.round(this.value),
-            "voucherINRvalue":Math.round((this.value) * Number(this.points_percentage)),
+            // "voucherINRvalue":Math.round((this.value) * Number(this.points_percentage)),
+             "voucherINRvalue":Math.floor((this.value) * Number(this.points_percentage)),
              "DOB":this.carddob,
              "bin":this.cardbin,
              "services_id": this.serviceId,
@@ -465,8 +473,11 @@ otperrormsg :any;
         }
       }else{
        this.otperror = true;
-       this.otperrormsg ="Something went wrong, please try again";
-
+       //this.otperrormsg ="Something went wrong, please try again";
+       if(typeof resp.message != undefined && resp.message!="")
+          this.otperrormsg = resp.message;
+        else
+          this.otperrormsg = "Something went wrong, please try again";
     } 
    
        },(err:HttpErrorResponse)=>{
@@ -537,7 +548,7 @@ otperrormsg :any;
         var dob = this.voucherForm1.controls['dob'].value;
         var datePipe = new DatePipe('en-US'); 
         var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
-        var applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
+        this.applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         if(this.XSRFTOKEN==undefined){
           this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
         }
@@ -550,14 +561,13 @@ otperrormsg :any;
         "partner_id": 42,
         "services_id": this.serviceId,
         "total_amount": this.payTotalFare,
-        "applyvouchercode": applyvouchercode,
+        "applyvouchercode": this.applyvouchercode,
         "ctype": this.ctype,
         "modal": "DIGITAL",
         "clientToken":this.sg['domainName'].toUpperCase(),
         'orderReferenceNumber': sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
         "_token":this.XSRFTOKEN 
       }
-      console.log(request);
       var passData = {
         postData: this.EncrDecr.set(JSON.stringify(request))
       };
@@ -707,6 +717,11 @@ otperrormsg :any;
     if (this.cardaddForm1.status !='VALID') {
       return;
     }else{
+         if(this.cardaddForm1.controls['savecard'].value==true){
+           var savecard=1;
+         }else{
+           var savecard=0;
+         }
         let request = {
            "last4digit":this.cardaddForm1.controls['last4digit'].value,
            "mobile": this.cardaddForm1.controls['applymobile'].value,
@@ -717,23 +732,41 @@ otperrormsg :any;
            "partner_id":42,
            "modal":"DIGITAL",
            "noopt": 1,
-           "savecard":1,
+           "savecard":savecard,
            "customer_id": this.sg["customerInfo"]["customerid"],
            "programName":this.sg['domainName'],
            "_token":this.customerInfo["XSRF-TOKEN"],
            "user_id":this.sg["customerInfo"]["id"],
         };
+        console.log(request);
         var passData = {
           postData: this.EncrDecr.set(JSON.stringify(request))
         };
         this.pay.availablePoints(passData).subscribe(response => {
-           this.submitted2=false;
-           this.cardaddForm1.reset();
-           this.addCardCancel();
-           this.cards = response.cards;
-           this.hasCards = true;
-           this.selectedCardDetails = this.cards[0];
-           this.checkAvailablePointsforSavedCard();
+          if(typeof response.error_code != undefined && response.error_code=="100"){
+               this.submitted2=false;
+               this.cardaddForm1.reset();
+               this.hasCards = true;
+               this.addCardCancel();
+               var customername=response['customername'];
+               this.points_available=response['points_available'];
+               this.points_percentage=response['points_percentage'];
+               var client_type=response['client_type'];
+               var card_type=response['card_type'];
+               this.CcCharges = response['CcCharges'];
+               this.pointData = response;
+               this.cardmobile =response['mobile'];
+               this.cardbin =response['bin'];
+               this.carddob =response['DOB'];
+               this.setSlider();
+               if(savecard==1){
+                  this.cards = response.cards;
+                  this.selectedCardDetails = this.cards[0];
+                  //this.checkAvailablePointsforSavedCard();
+               }
+          }else{
+                   alert(response.message)
+          } 
         }), (err: HttpErrorResponse) => {
             var message = 'Something went wrong';
             alert(message);

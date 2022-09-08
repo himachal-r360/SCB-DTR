@@ -32,7 +32,7 @@ declare var $: any;
 @Component({
   selector: 'app-flight-int-list',
   templateUrl: './flight-int-list.component.html',
-  styleUrls: ['./flight-int-list.component.css'],
+  styleUrls: ['./flight-int-list.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
@@ -155,7 +155,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
   priceSortingFilteritems = [
     { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.png', sortValue:'Price'},
     { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-l.png',sortValue:'Price' },
-    { name: 'D_E', active: false, value: 'Earliest' , image:'/assets/images/icons/Departure.png',sortValue:'Depart'},
+    { name: 'D_E', active: false, value: 'Earliest' , image:'./assets/images/icons/Departure.png',sortValue:'Depart'},
     { name: 'D_L', active: false, value: 'Latest' ,image:'/assets/images/icons/Departure.png',sortValue:'Depart'},
     { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.png',sortValue:'Duration'},
     { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.png',sortValue:'Duration'},
@@ -1508,6 +1508,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.minPrice = 0;
       this.maxPrice = 10000;
     }
+  }
+
+  goSearch(){
+    this.router.navigate(['/compare-fly']);
   }
 
   getLayoverHour(obj1: any, obj2: any) {
