@@ -1186,6 +1186,10 @@ bookingSummary() {
     this.show_layover_more = 1;
   }
 
+  goSearch(){
+    this.router.navigate(['/compare-fly']);
+  }
+
   // Flight popular filter
   FlightPopularFilterFlightData(popularItems: any) {
 

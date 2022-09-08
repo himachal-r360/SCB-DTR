@@ -18,7 +18,7 @@ declare var bootstrap:any;
 @Component({
   selector: 'app-flight-roundtrip-list',
   templateUrl: './flight-roundtrip-list.component.html',
-  styleUrls: ['./flight-roundtrip-list.component.css'],
+  styleUrls: ['./flight-roundtrip-list.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
@@ -298,6 +298,10 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
    this.show_layover_more=1;
   }
 
+
+  goSearch(){
+    this.router.navigate(['/compare-fly']);
+  }
 
 
     getQueryParamData(paramObj: any) {
