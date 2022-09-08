@@ -627,6 +627,20 @@ else{
   
     });
  }
+ 
+ 
+   fillPassenger($event, passenger, checkboxIndex) {
+    console.log($event);   console.log(passenger);  console.log(checkboxIndex);
+    if ($event.target.checked) {
+    
+   
+
+    } else {
+
+    }
+  }
+
+ 
 
 /*--------Save traveller & gst info----------*/
 travellerlist:any[];
