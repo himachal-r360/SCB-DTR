@@ -328,6 +328,10 @@ margin-left:200px !important;
             border-radius:50%;
             width:8px;
             height:8px;
+            @media screen and (max-width:600px){
+                width:6px;
+                height:6px;
+            }
         }
         hr{
             border:1px solid #e6e6e6;
@@ -342,7 +346,7 @@ margin-left:200px !important;
             line-height: 16px;
             color: #888888;
             @media screen and (max-width:600px){
-                font-size: 12px;
+                font-size: 11px;
                 line-height: normal;
             }
         }
@@ -395,23 +399,30 @@ margin-left:200px !important;
                     padding:12px;  
                 }
             }
-            .success_text{
-                color:#009817 !important;
-                font-weight:600;
 
-            }
             .check_pnr_acronym_tbl{
                 tbody{
                     td{
-                        font-size:14px;
+                        font-size:14px !important;
                     }
                 }
             }
+        }
+        .success_text{
+            color:#009817 !important;
+            font-weight:600;
+
         }
         .pnr_dashed_hr{
             // border:1px dashed #00000030;
             border-top: 1px dashed #00000030;
             margin-bottom:15px;
+        }
+        .brdr_btm_row{
+            border-bottom:1px solid #d9d9d9; 
+        }
+        .brdr_top{
+            border-top:1px solid #d9d9d9;
         }
         .blue_text{
             font-family: 'opensans-regular';
@@ -420,6 +431,10 @@ margin-left:200px !important;
             font-size: 15px;
             line-height: 20px;
             color: #1D86FF;
+            @media screen and (max-width:600px){
+                font-size: 12px;
+                line-height: normal;
+            }
         }
 
     }
@@ -566,5 +581,29 @@ margin-left:200px !important;
         }
     }
 }
+}
+
+.panel-title {
+	&::after {
+		content: "\f107";
+		color: #000;
+		top: -2px;
+		right: 15px;
+		position: absolute;
+		font-family: "FontAwesome";
+	}
+}
+.panel-title[aria-expanded="true"] {
+	&::after {
+		content: "\f106";
+	}
+}
+.collapse_rows{
+    margin-top:0.5rem;
+    font-size:14px;
+    .row{
+        margin-top:8px;
+        margin-bottom:8px;
+    }
 }
 // end of mlite train new design

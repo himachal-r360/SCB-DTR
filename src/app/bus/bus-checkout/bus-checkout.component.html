@@ -75,14 +75,36 @@
             <div class="booking-inner-box from-to-box">
 
               <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-2 text-center">
                   <div><img src="{{ cdnUrl }}images/smartbuy/partner/48/svg/redbus.svg" alt=""></div>
 
                 </div>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-9">
-                      <div class="bus_details">
+                      <div class="row">
+                        <div class="col-md-5"><p class="city">{{ seacthResult.searchFrom }}</p></div>
+                        <div class="col-md-2">
+                          <div><img src="{{ cdnUrl }}images/icons/light_right_arw.svg" alt=""></div>
+                        </div>
+                        <div class="col-md-5"><p class="city">{{ seacthResult.searchTo }}</p></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-5">
+                          <p class="time">{{ boardingpointTime }} | {{ boardingpointName }} <br />
+                            <span
+                              *ngIf="printdoj; else nextday">{{ actualboarding | date:'EEE, dd MMM yyyy' }}</span>
+                            <ng-template #nextday>
+                              ({{ actualboarding | date:'EEE, dd MMM yyyy' }})
+                            </ng-template>
+                          </p>
+                        </div>
+                        <div class="col-md-5 offset-md-2">
+                          <p class="time">{{ droppingPointTime }} | {{ droppingpointName }} <br />
+                            {{ actualdropping | date:'EEE, dd MMM yyyy' }}</p>
+                        </div>
+                      </div>
+                      <!-- <div class="bus_details">
                         <div>
                           <p class="city">{{ seacthResult.searchFrom }}</p>
                           <p class="time">{{ boardingpointTime }} | {{ boardingpointName }} <br />
@@ -104,7 +126,7 @@
                         </div>
                         <div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                     <div class="col-sm-3">
                       <div>
@@ -664,7 +686,7 @@
                     </div>
                   </li>
                 </ul>
-                <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
+                <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error error_msg">
                   <small
                     *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls.passengerAgree.errors.pattern">Please
                     accept Terms and Conditions</small>
