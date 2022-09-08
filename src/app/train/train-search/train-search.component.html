@@ -579,6 +579,7 @@
               <span class="check_pnr_time">20:30, Sun</span>
             </div>
           </div>
+          <div class="pb-2 brdr_btm_row">
           <div class="row">
             <div class="col-6 text-left">
               <span class="check_pnr_place">Lokmantatilak (LTT)</span>
@@ -589,47 +590,42 @@
               <p class="check_pnr_place">Jul 11, 2022</p>
             </div>
           </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row collapse_rows" *ngFor="let each of PnrDetails.passengerList">
+        <div class="col-12 panel-title" data-bs-toggle="collapse" data-bs-target="#mem_1" aria-expanded="false" aria-controls="mem_1">
+          <div class="row">
+            <div class="col-4">Name</div>
+            <div class="col-8 text-right">Amit Kumar</div>
+          </div>
+          <div class="collapse brdr_btm_row" id="mem_1">
+
+            <div class="row">
+              <div class="col-4">Gender</div>
+              <div class="col-8 text-right">Male</div>
+            </div>
+            <div class="row">
+              <div class="col-5">Seat Status</div>
+              <div class="col-7 success_text text-right">CNF/S3/42</div>
+            </div>
+            <div class="row">
+              <div class="col-4">Berth</div>
+              <div class="col-8 text-right">CNF/S3/42</div>
+            </div>
+
+          </div>
+
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-12">
-          <div class='table-responsive'>
-            <table  class="table table-borderless pnr_check_tbl">
-                <thead>
-                    <tr>
-                      <th>Name</th>
-                      <!-- <th>Passenger Number</th> -->
-                        <th>Age</th>
-                        <th >Booking Status</th>
-                        <!-- <th>Current Status</th> -->
-                        <th>Berth</th>
-                        <!-- //<th>CoachId/BerthNo</th> -->
-                    </tr>
-                </thead>
-                <tbody >
-                    <tr  *ngFor="let each of PnrDetails.passengerList">
-                      <td>Aman Shrivastava</td>
-                      <!-- <td>{{each.passengerSerialNumber}}</td> -->
-                         <td>{{each.passengerAge}}</td>
-                          <td class="success_text">{{each.bookingStatus}}/<span *ngIf="each.bookingCoachId!=''" >{{each.bookingCoachId}}/</span>{{each.bookingBerthNo}}
-                          <span *ngIf = "each.passengerBerthChoice">/{{each.passengerBerthChoice}}</span>
-                          </td>
-                        <!-- <td>{{each.currentStatus}}<span *ngIf="each.currentStatus!='CNF'">/{{each.currentBerthNo}}</span></td> -->
-                          <td >{{each.bookingBerthCode}}</td>
-                          <!-- //<td >{{each.bookingCoachId}}/{{each.bookingBerthNo}}</td> -->
-                    </tr>
-                    
-                </tbody>
-        
-            </table>
-            </div> 
-        </div>
-        <div class="col-md-12">
-          <div class="pnr_dashed_hr"></div>
-        </div>
-        <div class="col-md-12">
-          <a href="#" class="blue_text">For any amendment in booking or partial cancellation, please contact OTA.</a>
+        <div class="col-md-12 mt-2">
+          <div class="brdr_top mb-2">
+            <a href="#" class="blue_text">For any amendment in booking or partial cancellation, please contact OTA.</a>
+          </div>
         </div>
       </div>
 
