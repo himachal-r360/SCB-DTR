@@ -162,6 +162,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
  ngAfterContentChecked() {
      }
   ngOnInit(): void {
+      this.randomFlightDetailKey=this.route.snapshot.queryParamMap.get('bookingId');
       this.fetchOrderId=atob(this.route.snapshot.queryParamMap.get('bookingId'));
       this.resetPopups();
       this.steps = 5;
@@ -183,6 +184,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
             if (customerInfo["org_session"] == 1) {
               // console.log(customerInfo)
               
+              console.log(this.fetchOrderId);
                 var getOrder = {
                 "order_ref_num": this.fetchOrderId,
                 }
@@ -191,9 +193,10 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 postData: this.EncrDecr.set(JSON.stringify(getOrder))
                 };
                 this.rest.getOrderDetail(getOrderParam).subscribe(results => { 
+                console.log(results);
                 if (results.result) {
                 let result = JSON.parse(this.EncrDecr.get(results.result));
-              
+               console.log(result);
               if (customerInfo["guestLogin"] == true) {
                 this.REWARD_CUSTOMERID = customerInfo["id"];
                 this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
@@ -203,8 +206,9 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 this.flightSessionData=result.flightSessionData;
                 this.searchData = (this.flightSessionData.queryFlightData);
                 this.searchDataOrg = this.searchData ;
-               
-                 console.log(result);
+                
+                
+                
                 console.log(this.flightSessionData);
                 
                 setTimeout(() => {
@@ -284,6 +288,17 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 this.ChildBaseFare =  Number(result.flightDetails.fare.pass_break.CHD);
                 this.InfantQuantity =   this.maxAdults;
                 this.InfantBaseFare =  Number(result.flightDetails.fare.pass_break.INF);
+                 
+                 
+                sessionStorage.setItem(this.randomFlightDetailKey + '-clientTransactionId', result.itineraryid);
+                sessionStorage.setItem(this.randomFlightDetailKey + '-orderReferenceNumber', this.fetchOrderId);
+                sessionStorage.setItem(this.randomFlightDetailKey + '-ctype', 'flights');
+                sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
+                sessionStorage.setItem(this.randomFlightDetailKey + '-passData', this.EncrDecr.set(JSON.stringify(result)));
+                sessionStorage.setItem(this.randomFlightDetailKey + '-passFareData', btoa(JSON.stringify(result.flightDetails.fare)));
+
+                 
+                 
                  
                  this.syncCustomer(customerInfo);
                   

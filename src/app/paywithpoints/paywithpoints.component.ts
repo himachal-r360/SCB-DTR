@@ -221,9 +221,11 @@ otperrormsg :any;
         var card_type=this.response1['card_type'];
         this.CcCharges = this.response1['CcCharges'];
         this.pointData = this.response1;
-        this.cardmobile = this.customerInfo['ccustomer']['mobile'];
+        //this.cardmobile = this.customerInfo['ccustomer']['mobile'];
+        this.cardmobile = this.response1['mobile'];
         this.cardbin = this.response1['bin'];
-        this.carddob = this.customerInfo['ccustomer']['DOB'];
+        //this.carddob = this.customerInfo['ccustomer']['DOB'];
+        this.carddob = this.response1['DOB'];
         this.setSlider();
         // this.intitialconversionptoc();
       }else{

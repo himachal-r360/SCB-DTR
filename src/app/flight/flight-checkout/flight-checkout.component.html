@@ -916,7 +916,7 @@
                   <div class="traveller-addbox-details traveller-adults-details">
                     <div class="traveller-adults-ul">
                       <ul class="add-search-ul" *ngIf="adultTravellerList">
-                        <li class="custom-check-box" *ngFor="let passenger of adultTravellerList | slice:0:3; ">
+                        <li class="custom-check-box adult-choose-box"  *ngFor="let passenger of adultTravellerList | slice:0:3; " id="adult-choose-box_{{ passenger.id }}">
                           <div class="custom-controls-stacked">
                             <label class="custom-control material-checkbox">
                               <input type="checkbox" class="material-control-input pass_checkBox"
@@ -926,7 +926,14 @@
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                 {{ passenger.lastName }} </span>
-                              <span class="description fw_5 "> {{ passenger.gender }}</span>
+                                                       <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </span>
                             </label>
                           </div>
 
@@ -1169,7 +1176,14 @@
                                 <span class="description fs_14 text-black fw_7 mr-10"><span
                                     *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                   {{ passenger.lastName }} </span>
-                                <span class="description fw_5"> {{ passenger.gender }}</span>
+                                                        <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </span>
                               </label>
                             </div>
 
@@ -1913,7 +1927,14 @@
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                 {{ passenger.lastName }} </span>
-                              <span class="description fw_5"> {{ passenger.gender }}</span>
+                                                       <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </span>
                             </label>
                           </div>
 
@@ -2146,7 +2167,14 @@
                                 <span class="description fs_14 text-black fw_7 mr-10"><span
                                     *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                   {{ passenger.lastName }} </span>
-                                <span class="description fw_5"> {{ passenger.gender }}</span>
+                                                         <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </span>
                               </label>
                             </div>
 
@@ -2873,7 +2901,14 @@
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                 {{ passenger.lastName }} </span>
-                              <span class="description fw_5"> {{ passenger.gender }}</span>
+                                                      <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </span>
                             </label>
                           </div>
 
@@ -3093,7 +3128,14 @@
                                 <span class="description fs_14 text-black fw_7 mr-10"><span
                                     *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                   {{ passenger.lastName }} </span>
-                                <span class="description fw_5"> {{ passenger.gender }}</span>
+                                                       <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </span>
                               </label>
                             </div>
 
@@ -3802,6 +3844,8 @@
                     <div>
                       <div class="error_flight error_contact"
                         *ngIf="passengerForm.hasError('required','passengerEmail')">Please enter email address </div>
+                        <div class="error_flight error_contact"
+                        *ngIf="passengerForm.hasError('pattern','passengerEmail')">Please enter valid email address </div>
                     </div>
 
 
@@ -3818,7 +3862,7 @@
                       <div class="error_flight error_contact"
                         *ngIf="passengerForm.hasError('minlength','passengerMobile')">Please enter min 10 Digits. </div>
                       <div class="error_flight error_contact"
-                        *ngIf="passengerForm.hasError('pattern','passengerMobile')">Please enter a valid 10 digits
+                        *ngIf="passengerForm.hasError('pattern','passengerMobile') && !passengerForm.hasError('minlength','passengerMobile')">Please enter a valid 10 digits
                         mobile number.</div>
                     </div>
                   </div>

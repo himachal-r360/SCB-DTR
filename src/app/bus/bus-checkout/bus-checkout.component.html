@@ -694,7 +694,7 @@
               [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
               [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
               (sendtotalfare)="recivetotalFare($event)"  (sendPointsPlusEvent)="receivePointsPlus($event)"  [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken"
-              [isMobile]="isMobile">
+              [isMobile]="isMobile"     [retryPay]="1">
             </app-payment>
           </div>
         </div>
@@ -871,10 +871,10 @@
                 <div class="continue-widget mb-20">
                   <button class="btn-primary button-style w-100" (click)="createBusItinerary()"
                     *ngIf="steps==1" [disabled]="buttonSubmitted">Continue</button>
-
+            
                 </div>
               </div>
-              <div *ngIf="steps==2 && !isMobile">
+              <div *ngIf="steps==1 && !isMobile">
                 <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey"
                   [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                   [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
@@ -920,7 +920,7 @@
         <div class="apply_fare row">
           <!--  <p *ngIf="steps<5" class="w-75"></p> -->
           <div class="col-6 text-left">
-            <p *ngIf="steps==2"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+            <p *ngIf="steps==1"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
                 data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
           </div>
           <div class="col-6 text-right">
@@ -942,7 +942,8 @@
               <div>
                 <button class="btn-primary btn_pay" [disabled]="buttonSubmitted" (click)="createBusItinerary()"
                   *ngIf="steps==1">Continue</button>
-
+    <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()"
+                  *ngIf="steps==2">Pay now</a>
               </div>
             </div>
           </div>
@@ -953,7 +954,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-    aria-hidden="true" *ngIf="steps==2 && isMobile">
+    aria-hidden="true" *ngIf="steps==1 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
