@@ -93,12 +93,23 @@ otperrormsg :any;
  voucherForm1: FormGroup;
  cardaddForm1: FormGroup;
  applyvouchercode:any;
+dateInputMask = createMask<Date>({
+    alias: 'datetime',
+    inputFormat: 'dd/mm/yyyy',
+    parser: (value: string) => {
+      const values = value.split('/');
+      const year = +values[2];
+      const month = +values[1] - 1;
+      const date = +values[0];
+      return new Date(year, month, date);
+    }
+  });
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder,private spinnerService: NgxSpinnerService) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-    
+       
     this.Formotpvalidate = this.formBuilder.group({
-          otp:['', [Validators.required,Validators.pattern("^[0-9]*$")]]
+          otp:['', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(6),Validators.maxLength(6)]]
         });
     this.Formotp = this.formBuilder.group({
           termsconditionvoucher:['', [Validators.required,Validators.pattern('true')]]
@@ -107,13 +118,17 @@ otperrormsg :any;
           // first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
-          dob:['', Validators.required],
+          dob:['', [Validators.required, Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
+         // dob:new FormControl('',[Validators.required,, Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]),
           applyvouchercode:['', [Validators.required,Validators.pattern("^[a-zA-Z0-9]*$")]]
         });
      this.cardaddForm1 = this.formBuilder.group({
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
-          dob:['', Validators.required],
+
+          // dob:['', Validators.required,Validators.pattern("^[0-9]*$")]
+          dob:['', [Validators.required, Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
+
           savecard:[true],
         });
     
@@ -367,7 +382,8 @@ otperrormsg :any;
             "last4digit":this.selectedCardDetails.card.slice(-4),
             "points":Math.round(this.value),
             "ORDER_POINTS":Math.round(this.value),
-            "voucherINRvalue":Math.round((this.value) * Number(this.points_percentage)),
+            // "voucherINRvalue":Math.round((this.value) * Number(this.points_percentage)),
+             "voucherINRvalue":Math.floor((this.value) * Number(this.points_percentage)),
              "DOB":this.carddob,
              "bin":this.cardbin,
              "services_id": this.serviceId,
@@ -545,17 +561,19 @@ otperrormsg :any;
         var last4digit = this.voucherForm1.controls['last4digit'].value;
         var applymobile = this.voucherForm1.controls['applymobile'].value;
         var dob = this.voucherForm1.controls['dob'].value;
-        var datePipe = new DatePipe('en-US'); 
-        var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        // var datePipe = new DatePipe('en-US'); 
+        // var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        var dobStr = dob;
         this.applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         if(this.XSRFTOKEN==undefined){
           this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
         }
+
         var request = {
         // "first4digit": first4digit,
         "last4digit": last4digit,
         "mobile": applymobile,
-        "DOB": dobStr,
+        "DOB": dob,
         // "bin": first9digit,
         "partner_id": 42,
         "services_id": this.serviceId,
@@ -650,8 +668,9 @@ otperrormsg :any;
       var last4digit = this.cardaddForm1.controls['last4digit'].value;
       var mobile = this.cardaddForm1.controls['applymobile'].value;
       var dob = this.cardaddForm1.controls['dob'].value;
-      var datePipe = new DatePipe('en-US'); 
-      var dobStr = datePipe.transform(dob,'dd/MM/yyyy');
+      // var datePipe = new DatePipe('en-US'); 
+      // var dobStr = datePipe.transform(dob,'dd/MM/yyyy');
+      var dobStr = dob;
       // if(this.cardaddForm1.controls['savecard'].value==true){
       //   var savecard=1;
       // }else{
@@ -947,8 +966,9 @@ export class ConfirmationDialog {
         var last4digit = this.Form1.controls['last4digit'].value;
         var mobile = this.Form1.controls['mobile'].value;
         var dob = this.Form1.controls['dob'].value;
-        var datePipe = new DatePipe('en-US'); 
-        var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        // var datePipe = new DatePipe('en-US'); 
+        // var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        var dobStr = dob
         if(this.Form1.controls['savecard'].value==true){
           var savecard=1;
         }else{

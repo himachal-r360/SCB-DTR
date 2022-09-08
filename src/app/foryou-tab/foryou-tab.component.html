@@ -234,7 +234,7 @@
                         <h3 class="">Recent Searches</h3>
                         <div class="recent_ser_m">
                             <div class="item" *ngFor="let rec of recentsearchDataAll">
-                                <a href="{{rec.Redirecturl}}">
+                                <a href="javascript:;" (click)="onGoToPage(rec.Redirecturl)" >
                                     <p class="cate">{{rec.type}}</p>
                                     <p class="mb-2" *ngIf="rec.type=='flight' || rec.type=='bus' || rec.type=='train' "><span class="name">{{rec.searchFrom}}</span><span class="px-2"><img src="{{cdnUrl}}images/smartbuy/icons/right_icn.svg"></span><span class="name">{{rec.searchTo}}</span></p>
                                     <p class="mb-2" *ngIf="rec.type=='hotel' "><span class="name">{{rec.searchFrom}}</span></p>
