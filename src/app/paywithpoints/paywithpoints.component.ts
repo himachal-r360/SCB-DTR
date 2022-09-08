@@ -92,6 +92,7 @@ otperrormsg :any;
  Formotp: FormGroup;
  voucherForm1: FormGroup;
  cardaddForm1: FormGroup;
+ applyvouchercode:any;
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder,private spinnerService: NgxSpinnerService) { 
    this.serviceSettings=this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -542,7 +543,7 @@ otperrormsg :any;
         var dob = this.voucherForm1.controls['dob'].value;
         var datePipe = new DatePipe('en-US'); 
         var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
-        var applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
+        this.applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         if(this.XSRFTOKEN==undefined){
           this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
         }
@@ -555,7 +556,7 @@ otperrormsg :any;
         "partner_id": 42,
         "services_id": this.serviceId,
         "total_amount": this.payTotalFare,
-        "applyvouchercode": applyvouchercode,
+        "applyvouchercode": this.applyvouchercode,
         "ctype": this.ctype,
         "modal": "DIGITAL",
         "clientToken":this.sg['domainName'].toUpperCase(),
