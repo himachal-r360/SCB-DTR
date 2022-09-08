@@ -32,7 +32,7 @@ declare var $: any;
 @Component({
   selector: 'app-flight-int-list',
   templateUrl: './flight-int-list.component.html',
-  styleUrls: ['./flight-int-list.component.css'],
+  styleUrls: ['./flight-int-list.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
@@ -1508,6 +1508,10 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.minPrice = 0;
       this.maxPrice = 10000;
     }
+  }
+
+  goSearch(){
+    this.router.navigate(['/compare-fly']);
   }
 
   getLayoverHour(obj1: any, obj2: any) {

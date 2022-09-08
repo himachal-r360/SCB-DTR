@@ -316,7 +316,18 @@
                         <div class="flight-listing-area">
                             <ng-container #itemsContainer></ng-container>
                         </div>
-                        <div class="text-center" *ngIf="!loader &&  flightList.length < 1">No flights found</div>
+                        <div class="text-center" *ngIf="!loader &&  flightList.length < 1">
+                            <div class="no_flights_sec" >
+                                <div>
+                                    <p class="title">Yikes! No flight found</p>
+                                    <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                    <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                                    <div>
+                                        <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <ng-template #item let-item="item">
                             <div *ngFor="let list of item; let i = index">
                                 <div class="flight-listing" *ngIf="list && list.onwardflights.length > 0" id="flight_list_{{list.flightKey}}">
@@ -973,7 +984,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center" *ngIf="!loader &&  flightList.length < 1">No flights found</div>
+                <div class="text-center" *ngIf="!loader &&  flightList.length < 1">
+                    <div class="no_flights_sec" >
+                        <div>
+                            <p class="title">Yikes! No flight found</p>
+                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                            <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                            <div>
+                                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <ng-template #item let-item="item">
                     <div *ngFor="let list of item; let i = index">
                         <div class="mob-list-area" *ngIf="list && list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
