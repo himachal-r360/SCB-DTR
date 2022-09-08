@@ -171,6 +171,7 @@ export class HeaderComponent implements OnInit {
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
+        unreadId:any=[];
 
 
  @ViewChild("content") modalContent: TemplateRef<any>;
@@ -336,6 +337,7 @@ export class HeaderComponent implements OnInit {
    if (this.cookieService.get("push_enable")) { 
        this.enablePushTitle = true;
        this.getNotification();
+       console.log(this.pushcount);
    }
     Window["myComponent"] = this;
  
@@ -567,12 +569,12 @@ closeCookieConsent(value){
     this.rest.getNotification().subscribe(result => {
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-      this.pushcountavail = result.values.length;
+      this.pushcount = result.result.length;
+       //console.log(result);
 
-      //pushcountavail
-      // $.each( result.result, function(k, v) {
-        result.values.forEach((v, k) =>  {
-                this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
+       result.result.forEach((v, k) =>  {
+          this.unreadId.push(v['id']);
+               this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
         });
       
     });
