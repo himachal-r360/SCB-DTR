@@ -541,17 +541,19 @@ otperrormsg :any;
         var last4digit = this.voucherForm1.controls['last4digit'].value;
         var applymobile = this.voucherForm1.controls['applymobile'].value;
         var dob = this.voucherForm1.controls['dob'].value;
-        var datePipe = new DatePipe('en-US'); 
-        var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        // var datePipe = new DatePipe('en-US'); 
+        // var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        var dobStr = dob;
         this.applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         if(this.XSRFTOKEN==undefined){
           this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
         }
+
         var request = {
         // "first4digit": first4digit,
         "last4digit": last4digit,
         "mobile": applymobile,
-        "DOB": dobStr,
+        "DOB": dob,
         // "bin": first9digit,
         "partner_id": 42,
         "services_id": this.serviceId,
@@ -646,8 +648,9 @@ otperrormsg :any;
       var last4digit = this.cardaddForm1.controls['last4digit'].value;
       var mobile = this.cardaddForm1.controls['applymobile'].value;
       var dob = this.cardaddForm1.controls['dob'].value;
-      var datePipe = new DatePipe('en-US'); 
-      var dobStr = datePipe.transform(dob,'dd/MM/yyyy');
+      // var datePipe = new DatePipe('en-US'); 
+      // var dobStr = datePipe.transform(dob,'dd/MM/yyyy');
+      var dobStr = dob;
       // if(this.cardaddForm1.controls['savecard'].value==true){
       //   var savecard=1;
       // }else{
@@ -920,8 +923,9 @@ export class ConfirmationDialog {
         var last4digit = this.Form1.controls['last4digit'].value;
         var mobile = this.Form1.controls['mobile'].value;
         var dob = this.Form1.controls['dob'].value;
-        var datePipe = new DatePipe('en-US'); 
-        var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        // var datePipe = new DatePipe('en-US'); 
+        // var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        var dobStr = dob
         if(this.Form1.controls['savecard'].value==true){
           var savecard=1;
         }else{
