@@ -292,12 +292,12 @@
                                                 </div>
                                                 <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
                                             </div>
-                                          
+
                                             <ng-template #item let-item="item">
                                                    <ng-container  *ngFor="let list of item; let i = index">
                                                 <div class="round-flight-listing round-click" *ngIf="list">
-                                               
-                                             
+
+
                                              <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
                                                             <div class="round-content-left">
                                                                 <div class="round-content-radio">
@@ -427,9 +427,9 @@
                                             </ng-template>
                                              </div>
                                             <div id="endOfPage" (click)="loadData()"></div>
-                                           
+
                                         </div>
-                                    
+
                                     <div class="col-md-6">
                                         <div class="round-flight-listing round-from-box" [hidden]="loader">
                                             <div class="round-from">
@@ -462,17 +462,17 @@
                                             </div>
                                         </div>
                                         <div class="flight-listing-area">
-                                            
+
                                            <div class="accordion accordion-flush" id="accordionFlushReturn" >
                                                 <ng-container #itemsReturnContainer></ng-container>
                                             </div>
-                                            
+
                                             <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">No flights found</div>
                                             <ng-template #returnItem let-item="item">
                                                    <ng-container  *ngFor="let list of item; let i = index">
                                                 <div class=" round-flight-listing round-click" *ngIf="list">
-                                               
-                                             
+
+
                                              <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
                                                             <div class="round-content-left">
                                                                <div class="round-content-radio">
@@ -594,14 +594,14 @@
                                                       </a>
                                                                 </div>
                                                             </div>
-                                                           
+
                                                         </ng-container>
                                                 </div>
                                                 </div>
                                                    </ng-container >
                                             </ng-template>
                                         </div>
-                                       
+
                                         <div id="endOfReturnPage" (click)="loadReturnData()"></div>
                                     </div>
                                 </div>
@@ -644,8 +644,8 @@
                     <div class="mob-listing-fiters">
                         <h6>{{flightList.length + ReturnflightList.length}} Flights Found</h6>
                         <a href="javascript:void(0)" class="showfilters" (click)="openMobileFilterSection()">
-                            <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                            <span>Sort/Filters</span>
+                            <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                            <span class="mx-2">Sort/Filters</span>
                         </a>
                     </div>
                 </div>
@@ -1946,7 +1946,7 @@
                         <div class="mob-sf-sort-by">
                             <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
                                 <p>
-                                    <img [src]="item.image" alt="" />
+                                    <img [src]="item.active == true ?item.activeImage :  item.image" alt="" />
                                     <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
                                 </p>
                             </div>
@@ -2243,8 +2243,8 @@
                                 <div class="round-ff-right">
                                     <div class="round-content-stops">
                                         <h6>{{returnSelectedFlight.flights | durationTotalTime}}</h6>
-                                        
-                                        
+
+
                                         <p *ngIf="returnSelectedFlight.flights.length ==1 && returnSelectedFlight.flights[0].stops==0">non stop</p>
                                         <p *ngIf="returnSelectedFlight.flights.length ==1 && returnSelectedFlight.flights[0].stops==1">{{returnSelectedFlight.flights[0].stops}} stop</p>
                                         <p  *ngIf="returnSelectedFlight.flights.length > 1">{{returnSelectedFlight.flights.length-1}} stop</p>

@@ -374,9 +374,33 @@
                         </label>
                       </p>
                     </div>-->
-
+                    
+                    <div class="traveller-adults-ul">
+                    <ul class="add-search-ul" *ngIf="travellerlist">
+                        <li class="custom-check-box adult-choose-box"  *ngFor="let passenger of travellerlist | slice:0:3; " id="adult-choose-box_{{ passenger.id }}">
+                          <div class="custom-controls-stacked">
+                            <label class="custom-control material-checkbox">
+                              <input type="checkbox" class="material-control-input pass_checkBox"
+                                id="travelPassenger_{{ passenger.id }}" type="checkbox" name="travellerlist"
+                                (change)="fillPassenger($event,passenger,i)">
+                              <span class="material-control-indicator"></span>
+                              <span class="description fs_14 text-black fw_7 mr-10"><span
+                                  *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
+                                {{ passenger.lastName }} </span>
+                                                       <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                <ng-template ngSwitchDefault></ng-template>
+                                </span>
+                            </label>
+                          </div>
+                     </ul>
+                </div>
+                
                   </div>
-
                 </div>
 
                 <!-- <div class="travel-userNames" *ngIf="saveTravllerShow">

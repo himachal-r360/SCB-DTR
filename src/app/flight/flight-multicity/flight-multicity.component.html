@@ -845,8 +845,8 @@
               <div class="mob-listing-fiters">
                   <h6>{{flightList.length}} Flights Found</h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()">
-                      <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                      <span>Sort/Filters</span>
+                      <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                      <span class="mx-2">Sort/Filters</span>
                   </a>
               </div>
           </div>
@@ -1323,7 +1323,7 @@
                               <div class="mob-sf-sort-by">
                                   <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
                                       <p >
-                                          <img [src]="item.image" alt="" />
+                                          <img [src]="item.active == true ?item.activeImage :  item.image" alt="" />
                                           <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
                                       </p>
                                   </div>
