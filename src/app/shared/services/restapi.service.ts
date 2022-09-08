@@ -140,7 +140,11 @@ export class RestapiService {
  }
 
  getNotificationPopup (): Observable<any> {
-   return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/getnotificationPopup.json');
+   }else{
+    return this.http.post( this.endpoint+'getnotificationPopup','', config).pipe(map((response: any) => response));
+   }
  }
  getNotification (): Observable<any> {
   if(LOCALJSON=='true'){

@@ -169,7 +169,6 @@ export class HeaderComponent implements OnInit {
   delta:any;
         payzrestriction:boolean=false;
         cardList:any=[];
-        notifyList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
 
@@ -335,57 +334,11 @@ export class HeaderComponent implements OnInit {
     */
    }
    if (this.cookieService.get("push_enable")) { 
-     this.enablePushTitle = true;
-     this.rest.getNotificationPopup().subscribe(result => {
-        // this.pushPopup=this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-        this.pushcount = result.count;
-        // console.log("hh==="+this.pushcount);
-        this.pushid = result.pushid;
-        var htmltoast='';
-        for (var index in this.pushid) {
-          this.read= this.cookieService.get("read_push");
-          if(this.read){
-            this.pushids = JSON.parse(this.read);
-            if(!this.pushids.includes(this.pushid[index]['id'])){
-              this.pushids.push(this.pushid[index]['id']);
-
-              htmltoast = this.toast(this.pushid[index],index);
-              break;
-            }
-
-          }else{
-            
-            htmltoast = this.toast(this.pushid[index],index);
-            this.pushids.push(this.pushid[index]['private _flightService:FlightServiceid']);
-            break;
-          }
-        }
-        this.pushPopup = this.htmlSanitizer.bypassSecurityTrustHtml(htmltoast);
-
-        this.cookieService.set('read_push',JSON.stringify(this.pushids), null, '/', null, null, null);
-        
-
-      });
+       this.enablePushTitle = true;
+       this.getNotification();
    }
     Window["myComponent"] = this;
  
-      if(this.cookieService.get("push_enable")) { 
-         this.enablePushTitle = true;
-         this.rest.getNotification().subscribe(result => {
-       
-           console.log("hh==="+result);
-          // if(typeof result.status != undefined && result.status === true){
-          //   this.notifyList=result['values'];            
-          // }
-          
-          //this.pushcount = result.count;
-          
-          this.pushid = result.pushid;
-          this.cookieService.set('read_push',JSON.stringify(this.pushids), null, '/', null, null, null);
-            
-
-          });
-       }
   }
 
   
@@ -614,9 +567,8 @@ closeCookieConsent(value){
     this.rest.getNotification().subscribe(result => {
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-      this.pushcountavail = result.count;
-     
-      // console.log(result.values);
+      this.pushcountavail = result.values.length;
+
       //pushcountavail
       // $.each( result.result, function(k, v) {
         result.values.forEach((v, k) =>  {
