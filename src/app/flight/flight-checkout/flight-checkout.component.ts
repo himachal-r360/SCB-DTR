@@ -3817,7 +3817,10 @@ console.log(this.passengerForm);
          
           }
          
+           if(this.partnerToken !='Easemytrip')
            this.emt_cancellationPolicy('onward');
+           
+           
           this.fareData = {
             totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "convenience_fee": 0,
