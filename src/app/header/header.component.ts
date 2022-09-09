@@ -171,6 +171,7 @@ export class HeaderComponent implements OnInit {
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
+        unreadId:any=[];
 
 
  @ViewChild("content") modalContent: TemplateRef<any>;
@@ -299,7 +300,7 @@ export class HeaderComponent implements OnInit {
     this.domainPath=this.sg['domainPath'];
     this.assetPath=this.sg['assetPath'];
     this.domainName=this.sg['domainName'];
-    console.log(this.domainName=this.sg['domainName']);
+  //  console.log(this.domainName=this.sg['domainName']);
 
     this.enablePrivileges=this.serviceSettings.enablePrivileges;
     
@@ -334,37 +335,9 @@ export class HeaderComponent implements OnInit {
     */
    }
    if (this.cookieService.get("push_enable")) { 
-     this.enablePushTitle = true;
-     this.rest.getNotificationPopup().subscribe(result => {
-        // this.pushPopup=this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-        this.pushcount = result.count;
-
-        this.pushid = result.pushid;
-        var htmltoast='';
-        for (var index in this.pushid) {
-          this.read= this.cookieService.get("read_push");
-          if(this.read){
-            this.pushids = JSON.parse(this.read);
-            if(!this.pushids.includes(this.pushid[index]['id'])){
-              this.pushids.push(this.pushid[index]['id']);
-
-              htmltoast = this.toast(this.pushid[index],index);
-              break;
-            }
-
-          }else{
-            
-            htmltoast = this.toast(this.pushid[index],index);
-            this.pushids.push(this.pushid[index]['private _flightService:FlightServiceid']);
-            break;
-          }
-        }
-        this.pushPopup = this.htmlSanitizer.bypassSecurityTrustHtml(htmltoast);
-
-        this.cookieService.set('read_push',JSON.stringify(this.pushids), null, '/', null, null, null);
-        
-
-      });
+       this.enablePushTitle = true;
+       this.getNotification();
+       console.log(this.pushcount);
    }
     Window["myComponent"] = this;
  
@@ -602,12 +575,12 @@ closeCookieConsent(value){
     this.rest.getNotification().subscribe(result => {
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-      this.pushcountavail = result.count;
+      this.pushcount = result.result.length;
+       //console.log(result);
 
-      //pushcountavail
-      // $.each( result.result, function(k, v) {
-        result.result.forEach((v, k) =>  {
-                this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
+       result.result.forEach((v, k) =>  {
+          this.unreadId.push(v['id']);
+               this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
         });
       
     });

@@ -1113,6 +1113,12 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         }
 
       }
+      
+      
+      if(checkboxIndex == -1)
+      this.passengerForm.addControl('adult_id' + i, new FormControl(0));
+      else
+      this.passengerForm.addControl('adult_id' + i, new FormControl(checkboxIndex));
 
       this.passengerForm.addControl('adult_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
       this.passengerForm.addControl('adult_first_name' + i, new FormControl(adult_first_name, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
@@ -1177,26 +1183,6 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
     }
 
-  if ((this.adultsArray.length) == (this.maxAdults)) {
-  
-  
-        var array = [];
-            $(".pass_checkBox:checkbox[name=type]:checked").each(function() {
-                array.push($(this).val());
-            });
-  
-  console.log(array);
-  
-  
-  
-  
-        $(".pass_checkBox").each(function () {
-        if ($(this).find(".pass_checkBox").not(":checked")) {
-        console.log(this);
-        } });
-  }
-    
-
     
 
 
@@ -1239,6 +1225,8 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
       }
     }
     this.passengerAdultFormCount--;
+    
+    this.passengerForm.removeControl('adult_id' + val);
     this.passengerForm.removeControl('adult_title' + val);
     this.passengerForm.removeControl('adult_dob' + val);
     this.passengerForm.removeControl('adult_first_name' + val);
@@ -1331,6 +1319,12 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
 
       }
+      
+            
+      if(checkboxIndex == -1)
+      this.passengerForm.addControl('child_id' + i, new FormControl(0));
+      else
+      this.passengerForm.addControl('child_id' + i, new FormControl(checkboxIndex));
 
       this.passengerForm.addControl('child_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
       this.passengerForm.addControl('child_first_name' + i, new FormControl(child_first_name, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
@@ -1425,6 +1419,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         }
       }
     }
+     this.passengerForm.removeControl('child_id' + val);
     this.passengerForm.removeControl('child_title' + val);
     this.passengerForm.removeControl('child_dob' + val);
     this.passengerForm.removeControl('child_first_name' + val);
@@ -1515,6 +1510,12 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
 
       }
+      
+            
+      if(checkboxIndex == -1)
+      this.passengerForm.addControl('infant_id' + i, new FormControl(0));
+      else
+      this.passengerForm.addControl('infant_id' + i, new FormControl(checkboxIndex));
 
       this.passengerForm.addControl('infant_title' + i, new FormControl(title, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
       this.passengerForm.addControl('infant_first_name' + i, new FormControl(infant_first_name, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
@@ -1607,6 +1608,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         }
       }
     }
+     this.passengerForm.removeControl('infant_id' + val);
     this.passengerForm.removeControl('infant_title' + val);
     this.passengerForm.removeControl('infant_dob' + val);
     this.passengerForm.removeControl('infant_first_name' + val);
@@ -3263,7 +3265,7 @@ console.log(this.passengerForm);
         "emailId": this.passengerForm.controls['passengerEmail']['value'],
         "firstName":  this.passengerForm.controls['adult_first_name' + i]['value'].trim(),
         "gender": gender,
-        "id": 0,
+        "id":this.passengerForm.controls['adult_id' + i]['value'],
         "lastName":  this.passengerForm.controls['adult_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
         "passportExpiryDate": this.searchData.travel == 'INT' ? moment(this.passengerForm.controls['adult_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
@@ -3277,7 +3279,6 @@ console.log(this.passengerForm);
         });
         this.saveTravellerFunc(this.saveTravellerArray);
         }
-        
         
 
         paxInfoCnt++;
@@ -3348,7 +3349,7 @@ console.log(this.passengerForm);
         "emailId": this.passengerForm.controls['passengerEmail']['value'],
         "firstName":  this.passengerForm.controls['child_first_name' + i]['value'].trim(),
         "gender": gender,
-        "id": 0,
+        "id":this.passengerForm.controls['child_id' + i]['value'],
         "lastName":  this.passengerForm.controls['child_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
         "passportExpiryDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['child_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
@@ -3362,7 +3363,6 @@ console.log(this.passengerForm);
         });
         this.saveTravellerFunc(this.saveTravellerArray);
         }
-        
         
 
         paxInfoCnt++;
@@ -3431,7 +3431,7 @@ console.log(this.passengerForm);
         "emailId": this.passengerForm.controls['passengerEmail']['value'],
         "firstName":  this.passengerForm.controls['infant_first_name' + i]['value'].trim(),
         "gender": gender,
-        "id": 0,
+        "id": this.passengerForm.controls['infant_id' + i]['value'],
         "lastName":  this.passengerForm.controls['infant_last_name' + i]['value'].trim(),
         "mobileNumber":  this.passengerForm.controls['passengerMobile']['value'],
         "passportExpiryDate": this.searchData.travel == 'INT' ?  moment(this.passengerForm.controls['infant_passport_expiry_date' + i]['value']).format('DD/MM/YYYY') : '',
@@ -3445,14 +3445,11 @@ console.log(this.passengerForm);
         });
         this.saveTravellerFunc(this.saveTravellerArray);
         }
-        
 
         paxInfoCnt++;
       }
 
 
-  // if( this.enablesavedTraveller==1 && this.saveTravellerArray.length >0)
-   //this.saveTravellerFunc(this.saveTravellerArray);
 
 
       let fareDetails = [];
@@ -4159,7 +4156,7 @@ orderReferenceNumber:any;
     };
     this.orderReferenceNumber=order_ref_num;
     
-    console.log(checkoutData);
+    console.log(checkoutData);return;
 
     var saveCheckoutData = {
       orderReferenceNumber: order_ref_num,

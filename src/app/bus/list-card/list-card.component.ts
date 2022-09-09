@@ -61,6 +61,7 @@ export class ListComponent implements OnInit,AfterViewInit {
   @Input('tag') tag; 
  showrow: boolean = false;
  @Input('rowvalue') rowvalue: number;
+  totalFareBus: boolean = false;
  @Input() set isrtc(p: boolean) {
   this.busId=this.bus.id;
   if (this.bus.rtc == false) {
@@ -554,6 +555,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  selectseat(seat: any, tripId: any, maxseats: number, mobile) {
   this.maxSeatMessage = "";
   this.seatstatus = !this.seatstatus;
+  this.totalFareBus = true;
   if (this.tripIdcheck == 0 || this.tripIdcheck != tripId) {
    this.selectedseats = [];
    this.tripIdcheck = tripId;
