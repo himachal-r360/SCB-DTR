@@ -15,11 +15,14 @@ import { CountdownModule, CountdownComponent } from 'ngx-countdown';
 import { AppConfigService } from '../app-config.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { createMask } from '@ngneat/input-mask';
+import * as moment from 'moment';
 
 const youngerThanValidator = (maxAge: number): ValidatorFn => control =>
+  
   0 <= (new Date()).getFullYear() - (new Date(control.value)).getFullYear() && (new Date()).getFullYear() - (new Date(control.value)).getFullYear()<=maxAge
   ? null
     : { younger: { maxAge } } ;
+  
 declare var $: any;
 @Component({
   selector: 'app-paywithpoints',
@@ -80,6 +83,7 @@ export class PaywithpointsComponent implements OnInit,OnChanges  {
  vouchertransID:any;
  min_value:number;
  guestLogin:Boolean=false;
+ isMobile:Boolean=true;
  otp:any;
 otperror :Boolean=false;
 otpCounter :Boolean=true;
@@ -132,16 +136,19 @@ dateInputMask = createMask<Date>({
           // first4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")],this.isCardValid.bind(this)],
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
-          dob:['', [Validators.required,youngerThanValidator(100), Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
+          // dob:['', [Validators.required,youngerThanValidator(100), Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
+          // dob:['', [Validators.required,youngerThanValidator(100)]],
          // dob:new FormControl('',[Validators.required,, Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]),
           applyvouchercode:['', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(12),Validators.maxLength(12)]]
         });
+     this.voucherForm1.addControl('dob' , new FormControl('',
+        [Validators.required,this.dateValidator, youngerThanValidator(100)]));
      this.cardaddForm1 = this.formBuilder.group({
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
 
           // dob:['', Validators.required,Validators.pattern("^[0-9]*$")]
-          dob:['', [Validators.required,youngerThanValidator(100), Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
+          dob:['', [Validators.required,this.dateValidator,youngerThanValidator(100), Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
 
           savecard:[true],
         });
@@ -155,6 +162,7 @@ dateInputMask = createMask<Date>({
         };
 
         ngOnInit() {
+          this.isMobile = window.innerWidth < 991 ? true : false;
         this.orderamount= Number(this.payTotalFare);
         this.getCustomerCards();
         }
@@ -178,7 +186,18 @@ dateInputMask = createMask<Date>({
     console.log(values);
     this.amountToPay.emit(values);
   }
+dateValidator(control: FormControl): { [s: string]: boolean } {
 
+  if (control.value) {
+    const date = moment(control.value).format("DD/MM/YYYY");
+
+    const today = moment().format("DD/MM/YYYY");
+    if (moment(date).isAfter(today) ) {
+      return { 'invalidDate': true }
+    }
+  }
+  return null;
+}
   setSlider(){
     // update slider dynamically
     console.log(this.pointData);
@@ -284,20 +303,32 @@ dateInputMask = createMask<Date>({
     this.voucherOtp = false;
     this.voucheraddform = false;
     this.voucherslider = false;
-    this.voucherapplyform = true;
+    
+    if(this.isMobile){
+      $('#apply-voucher').modal('show');
+    }else{
+      this.voucherapplyform = true;
+    }
   }
   addCardform(){
     this.voucherOtp = false;
-    this.voucheraddform = true;
+    
     this.voucherslider = false;
     this.voucherapplyform = false;
+     if(this.isMobile){
+      $('#add-cards').modal('show');
+    }else{
+      this.voucheraddform = true;
+    }
   }
   addCardCancel(){
     this.voucherOtp = false;
     this.voucheraddform = false;
     this.voucherslider = true;
     this.voucherapplyform = false;
-    
+     if(this.isMobile){
+      $('#add-cards').modal('hide');
+    }
   }
   closeotp(){
     this.voucherOtp = false;
@@ -589,6 +620,7 @@ dateInputMask = createMask<Date>({
     if (this.voucherForm1.status !='VALID') {
       return;
     }else{
+
         // var first9digit = this.voucherForm1.controls['first4digit'].value;
         // var first4digit = first9digit.substring(0, 4).trim();
         var last4digit = this.voucherForm1.controls['last4digit'].value;
@@ -638,6 +670,9 @@ dateInputMask = createMask<Date>({
           this.voucherOtp=false; 
           this.voucherDiv=false; 
           this.addcardDiv=false; 
+          if(this.isMobile){
+            $('#apply-voucher').modal('hide');
+          }
           this.updateAmountToPay(this.vouchertransID,this.AmountRedeemed,this.RemaingAmount);
         }else{
           // this.errorMsg3="Something went wrong";
@@ -810,6 +845,9 @@ dateInputMask = createMask<Date>({
                this.cardmobile =response['mobile'];
                this.cardbin =response['bin'];
                this.carddob =response['DOB'];
+               if(this.isMobile){
+                  $('#add-cards').modal('hide');
+                }
                this.setSlider();
                if(savecard==1){
                   this.cards = response.cards;
@@ -831,6 +869,9 @@ dateInputMask = createMask<Date>({
     this.voucherOtp = false;
     this.voucherslider = true;
     this.voucherapplyform = false;
+    if(this.isMobile){
+      $('#apply-voucher').modal('hide');
+    }
   }
     AvoidSpace($event) {
     var keycode = $event.which;
