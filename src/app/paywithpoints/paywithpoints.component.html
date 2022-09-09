@@ -90,9 +90,9 @@
                             <span class="pull-right">
                             </span>
                         </div>
-                       <div class="otp_input">
+                       <div class="otp_input" >
                          <input type="text" autocomplete="nope" placeholder="Enter OTP" maxlength="6" formControlName="otp" id="points_otp" (keypress)="numberInput($event)" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" >
-                          <a href="javascript:" (click)="resendOTP(cd1)"> Resend OTP</a>
+                          <a *ngIf="resendOTPdiv" href="javascript:" (click)="resendOTP(cd1)"> Resend OTP</a>
                        </div>
                         <div *ngIf="submittedFormotpvalidate && Formotpvalidate.controls.otp.errors" class="error">
                         <small *ngIf="Formotpvalidate.controls.otp.errors.required">Please enter OTP.</small>
@@ -104,7 +104,7 @@
                        
                         <div class="time-left pt-2" *ngIf="otpCounter">
                             <p><span class="voucherotpcountdown">
-                                <countdown #cd1 [config]="{ leftTime: 180, format: 'mm:ss'}" (finished)="onFinishedTimer()" (event)="handleEvent($event,cd1)"></countdown>
+                                <countdown #cd1 [config]="{ leftTime: otptimer, format: 'mm:ss'}" (finished)="onFinishedTimer()" (event)="handleEvent($event,cd1)"></countdown>
                             </span> Mintues Left</p>
                         </div>
                     
