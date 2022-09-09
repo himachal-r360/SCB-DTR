@@ -17,15 +17,34 @@ import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { StyleManagerService } from 'src/app/shared/services/style-manager.service';
 import { FlightService } from '../common/flight.service';
-import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { FormGroup,  FormBuilder,  Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { createMask } from '@ngneat/input-mask';
+
+function validateAdultAge(dob: FormControl) {
+  let journery_date = new Date();
+ let check_date = moment(new Date(journery_date)).subtract(12, 'years').calendar();
+  let input_date = moment(dob.value).format('YYYY-MM-DD');
+  let to_date = moment(check_date).format('YYYY-MM-DD');
+  if (moment(input_date).isAfter(to_date)) {
+    return {
+      validateAdultAge: {
+        valid: false
+      }
+    };
+  }
+}
+
+
 declare var $: any;
+
 @Component({
   selector: 'app-foryou-tab',
   templateUrl: './foryou-tab.component.html',
   styleUrls: ['./foryou-tab.component.scss']
 })
+
+
 export class ForyouTabComponent implements OnInit, OnDestroy {
 public modeselectDealCat = 'All';
 public modeselectDealSubCat= 'All';
@@ -94,8 +113,26 @@ public modeselectTrending= 'All';
   IsPointsCardDetailsModel:boolean=false;
   IsCardError:boolean=true;
   CardErrorMsg:any;
+   t: Inputmask.Options;
 
-  constructor(private spinnerService: NgxSpinnerService,public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService,private fb: FormBuilder) {
+
+  dateInputMask = createMask<Date>({
+    alias: 'datetime',
+    // outputFormat: 'ddmmyyyy',
+    inputFormat: 'dd/MM/yyyy',
+    parser: (value: string) => {
+      debugger;
+      console.log(value);
+      const values = value.split('/');
+      const year = +values[2];
+      const month = +values[1] - 1;
+      const date = +values[0];
+      return new Date(year, month, date);
+    },
+  });
+
+  constructor(private spinnerService: NgxSpinnerService,public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService,private fb: FormBuilder) 
+  {
      this._flightService.showHeader(true);
    
     this.serviceSettings = this.appConfigService.getConfig();
@@ -116,28 +153,19 @@ public modeselectTrending= 'All';
     
     // this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
      //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
-    
   }
-   public mask = {
-     guide: true,
-     showMask : true,
-     mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
-   };
+
    ngOnDestroy() {
    // this._styleManager.removeStyle('owl-default');
    // this._styleManager.removeScript('owl');
   }
-  onlyNumberKey(event,maxlenth) {
-      if($(event.target).prop('value').length>=maxlenth){
-        return false;
-       } 
-      return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
-  }
+
+
    createForm() {
     this.angForm = this.fb.group({
        mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
        last_4_digit: ['', [Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
-       dob: ['', Validators.required ],
+       dob: ['',[Validators.required,validateAdultAge]],
        save_card: [''],
     });
   }
@@ -1009,6 +1037,7 @@ console.log("hotel "+ JSON.stringify( get_value));
     }
 
 }
+
 
 
 @Component({
