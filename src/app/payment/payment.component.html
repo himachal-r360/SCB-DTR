@@ -698,30 +698,53 @@
                                                                                     <h6 class="payTitle">Get 5% Cashback on your Debit Card EMI payments!</h6>
 
 
-                                                                                    <div *ngFor="let emi of emiDebitArray; let firstRow = first; let evenRow = even;">
+                                                                                    <!-- <div *ngFor="let emi of emiDebitArray; let firstRow = first; let evenRow = even;">
                                                                                         <label for="payDebitemi-subOne{{emi.key}}" class="radio">
-                                                                    <input type="radio" name="payDebitemi-sub" id="payDebitemi-subOne{{emi.key}}" class="hidden dc_emi_option" value="{{emi.key}}"  [checked]="firstRow" />
-                                                                    <span class="label"></span>
-                                                                    <div class="sub-info">
-                                                                    <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
-                                                                        Value</span></p>
-                                                                    <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare )| commaSeparator }} paid as interest in complete EMI tenure) </p>
-                                                                    </div>
-                                                                </label>
-                                                                                    </div>
+                                                                                            <input type="radio" name="payDebitemi-sub" id="payDebitemi-subOne{{emi.key}}" class="hidden dc_emi_option" value="{{emi.key}}"  [checked]="firstRow" />
+                                                                                            <span class="label"></span>
+                                                                                            <div class="sub-info">
+                                                                                            <p class="emi-duration"> ₹{{emi.value | number:'1.2-2' }} monthly for {{emi.key}} months <span class="payemi-best" *ngIf="firstRow" >Best
+                                                                                                Value</span></p>
+                                                                                            <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (₹{{(emi.value*emi.key-payTotalFare )| commaSeparator }} paid as interest in complete EMI tenure) </p>
+                                                                                            </div>
+                                                                                        </label>
+                                                                                    </div> -->
+
+                                                                                        <div *ngFor="let emi of emiDebitArray; let firstRow = first; let evenRow = even;" class="emi_check_radio emi_check_radio-{{emi.key}}" [ngClass]="{'emi-active':  firstRow }">
+                                                                                            <label for="payDebitemi-subOne{{emi.key}}" class="radio">
+                                                                                                <input type="radio" name="payDebitemi-sub" id="payDebitemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow"  (click)="emiOptionChange(emi.key)" />
+                                                                                                <span class="label"></span>
+                                                                                                <div class="sub-info">
+                                                                                                <p class="emi-duration" > ₹{{emi.value | number:'1.2-2' }} <span class="middle_text">x {{emi.key}} months | @ {{emiDebitInterst[emi.key]}}% interest | Total:</span> <b> ₹{{(emi.value*emi.key)| number:'1.2-2' }}</b> </p>
+                                                                                                <div class="emiTenure emiTenure-{{emi.key}}" [ngClass]="{'hidden':  !firstRow }">
+                                                                                                    <div>
+                                                                                                        <p class="title">EMI/Month</p>
+                                                                                                        <p class="value">₹{{emi.value | number:'1.2-2' }}</p>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <p class="title">Interest Charged by Bank	</p>
+                                                                                                        <p class="value">₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }}</p>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <p class="title">Total Cost</p>
+                                                                                                        <p class="value">₹{{(emi.value*emi.key)| number:'1.2-2' }}</p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                </div>
+                                                                                            </label>
+                                                                                        </div>
                                                                                     <hr />
                                                                                     <div>
                                                                                         <h6 class="payTitle">Enter Card Number</h6>
                                                                                         <div class="col-12 contact-form">
-                                                                                            <mat-form-field class="matField_full_width" appearance="fill">
+                                                                                            <mat-form-field class="w-100" appearance="outline">
                                                                                                 <mat-label>Card Number</mat-label>
                                                                                                 <input matInput placeholder="" [cleave]="{creditCard: true,delimiter:'-'}" formControlName="cardnumber" name="cardnumber" id="cardnumber" maxlength="19" autocomplete="off">
                                                                                                 <!-- <img src="https://via.placeholder.com/50x50" class="newcard-info-img"> -->
                                                                                             </mat-form-field>
                                                                                             <div *ngIf="submittedDebitEMIFrom && DebitEMIFrom.controls.cardnumber.errors" class="error">
                                                                                                 <small *ngIf="DebitEMIFrom.controls.cardnumber.errors.required">Card number is required</small>
-                                                                                                <span *ngIf="DebitEMIFrom.get('cardnumber').dirty || submittedDebitEMIFrom">
-                                                                            </span>
+                                                                                                <span *ngIf="DebitEMIFrom.get('cardnumber').dirty || submittedDebitEMIFrom"></span>
                                                                                             </div>
 
                                                                                             <div class="error" *ngIf="submittedDebitEMIFrom && DCEMIError !=''">{{DCEMIError}}</div>
@@ -1246,7 +1269,7 @@
                                                                         </div>
                                                                       </div> -->
                                                                                                 </div>
-                                                                                                <div class="w-flexipay-discount mb-10" *ngIf="intrstopay">
+                                                                                                <div class="w-flexipay-discount mb-10">
                                                                                                     <div class="row m-0" *ngIf="selectedperiod==15">
                                                                                                         <div class="col-2 col-sm-2 pr-0">
                                                                                                             <img class="flexi_discount_icon" src="{{cdnUrl}}images/flexi_discount.svg" alt="dicount_icon">
