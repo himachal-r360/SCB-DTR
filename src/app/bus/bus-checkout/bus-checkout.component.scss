@@ -400,8 +400,83 @@ mat-error {
         padding:8px 20px;
         width:100%;
     }
+
 }
 
 // end of mlite checkout page extra css
 
+.trip_select {
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    margin-top:0.5rem;
+    margin-bottom:1rem;
+}
+.buttonTrip {
+    float: left;
+    margin: 0 8px 0 0;
+    width: 16%;
+    height: 34px;
+    position: relative;
+    @media screen and (max-width:600px){
+        width:100px;
+    }
+}
 
+.buttonTrip label,
+.buttonTrip input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.buttonTrip input[type="radio"] {
+    opacity: 0.011;
+    z-index: 100;
+}
+
+.buttonTrip input[type="radio"]:checked+label {
+    // background: #2C0E00;
+    // border-radius: 5px;
+    // border: 0px solid #CF8D56;
+    // font-family: 'opensans-medium';
+    // color: #ffffff;
+
+    font-family: 'opensans-regular';
+            font-weight:600;
+            font-size:14px;
+            border-radius: 100px;
+            padding:5px 25px;
+            margin-right:10px;
+            color:#000;
+            background: rgba(29, 134, 255, 0.1);
+            border: 1px solid #1D86FF;
+            cursor:pointer;
+            @media screen and (max-width:600px){
+                padding:5px 20px;
+            }
+}
+
+.buttonTrip label {
+    cursor: pointer;
+    font-family: 'opensans-regular';
+            font-weight:600;
+            color:#00000050;
+            font-size:14px;
+            border-radius: 100px;
+            padding:5px 25px;
+            margin-right:10px;
+            background: #FFFFFF;
+            border: 1px solid #E6E6E6;
+            @media screen and (max-width:600px){
+                padding:5px 20px;
+            }
+}
+
+.buttonTrip>label.btn-default:before,
+.buttonTrip>label.btn-default:after {
+    display: none;
+}
