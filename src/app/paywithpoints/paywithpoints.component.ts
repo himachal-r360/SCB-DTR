@@ -97,6 +97,11 @@ otperrormsg :any;
  voucherForm1: FormGroup;
  cardaddForm1: FormGroup;
  applyvouchercode:any;
+ otpCount:number=1;
+ otptimer:number;
+ resendOTPdiv:Boolean=true;
+ domainRedirect:string;
+ domainPath:string;
 dateInputMask = createMask<Date>({
     alias: 'datetime',
     inputFormat: 'dd/mm/yyyy',
@@ -108,11 +113,15 @@ dateInputMask = createMask<Date>({
       return new Date(year, month, date);
     }
   });
+ @ViewChild('cd1') counter: CountdownComponent;
 
 
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder,private spinnerService: NgxSpinnerService) { 
    this.serviceSettings=this.appConfigService.getConfig();
+   this.domainPath=this.sg['domainPath'];
+   this.domainRedirect=environment.MAIN_SITE_URL+this.domainPath;
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.otptimer = AppConfig.voucherotptimmer;
     this.Formotpvalidate = this.formBuilder.group({
           otp:['', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(6),Validators.maxLength(6)]]
         });
@@ -319,6 +328,8 @@ dateInputMask = createMask<Date>({
   }
  
   generateVoucherOtp(){
+    this.otpCount = 1;
+    this.resendOTPdiv=true;
     this.submittedotpform=true;
     if (this.Formotp.status !='VALID') {
       return;
@@ -360,7 +371,12 @@ dateInputMask = createMask<Date>({
           this.addCardCancel(); 
           this.voucherOtp = false;
           this.voucherslider = true;
-          alert(response.message);
+             this.otperrormsg="Something went wrong!";
+          if(response.error != undefined){
+             this.otperrormsg=response.error;
+          }
+         
+
         }
     }, (err: HttpErrorResponse) => {
     this.spinnerService.hide();
@@ -513,13 +529,24 @@ dateInputMask = createMask<Date>({
     });
   }
     handleEvent($event,ref){
-   // console.log($event);
+   // console.log($event.action);
+   if($event.action == 'done'){
+    alert("Session expired! Please regenerate a new OTP or proceed with other payment options");
+    this.closeotp();
+   }
+   
   }
   onFinishedTimer(): void {
     //console.log("---TIMER FINISHED---");
+    
+
   }
   resendOTP(ref){
-    ref.restart();
+    this.counter.restart();
+    this.otpCount +=1;
+    if(this.otpCount ==3){
+      this.resendOTPdiv=false;
+    }
     let URLparams = {
       "mobile": this.cardmobile,
       "customer_id": this.sg["customerInfo"]["customerid"],

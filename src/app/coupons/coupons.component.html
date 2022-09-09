@@ -15,7 +15,7 @@
           <div class="row">
              <div class="promo-msg">
                 <span *ngIf="(submittedpromoCode && promoForm.controls.promoCode.errors)" class="promo-error">
-                <span *ngIf="promoForm.controls.promoCode.errors.required" class="promo-error">Please enter Promo Code.</span>
+                <span *ngIf="promoForm.controls.promoCode.errors.required" class="promo-error error_msg">Please enter Promo Code.</span>
                 </span>
                 <span class="promo-error pl-2 pl-md-0" *ngIf="couponError!='' || autoApplyError==1"> {{couponError}}</span>
                 <p class="text-green"> <img src="{{cdnUrl}}images/icons/couponsuccess.svg" *ngIf="!couponError && coupon_amount >0">

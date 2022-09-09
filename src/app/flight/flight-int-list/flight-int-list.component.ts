@@ -873,6 +873,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
     var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
     var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+    
+    
 
     this.flight_PopularItems.filter((item) => {
       if (item.name == "Morning_Departures" && item.active == true) {
@@ -889,12 +891,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }
     //Flight Timing Filter
     if (isfilterFlightTiming == true || isfilterMorningDepartures == true) {
-      var filteredTimingArr: any[] = [];
+      var filteredTimingArr: any[] = []; 
       if (flightList.length > 0) {
         flightList.filter((d: any) => {
-          let singleFlightTiming = [];
+          let singleFlightTiming = []; let singleFlightTimingR = [];
           singleFlightTiming = d.onwardflights.filter(function (e: any, indx: number) {
+             
             if (indx == 0) {
+   
               if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
                 return e;
               }
@@ -910,26 +914,31 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             }
           });
           
-                    singleFlightTiming = d.returnflights.filter(function (e: any, indx: number) {
-            if (indx == 0) {
-              if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
-                return e;
-              }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "6_12") { return item; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
-                return e;
-              }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "12_18") { return item; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
-                return e;
-              }
-              else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "18_0") { return item; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
-                return e;
-              }
-            }
-          });
+        singleFlightTimingR = d.returnflights.filter(function (e: any, indx: number) {
+        if (indx == 0) {
+        if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
+        return e;
+        }
+        else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "6_12") { return item; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
+        return e;
+        }
+        else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "12_18") { return item; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
+        return e;
+        }
+        else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "18_0") { return item; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
+        return e;
+        }
+        }
+        });
           
-          if (singleFlightTiming.length > 0) {
-            filteredTimingArr.push(d);
-          }
+        if (singleFlightTiming.length > 0) {
+        filteredTimingArr.push(d);
+        }
+          
+        if (singleFlightTimingR.length > 0) {
+        filteredTimingArr.push(d);
+        }
+          
         });
       }
       updatedflightList = filteredTimingArr;
