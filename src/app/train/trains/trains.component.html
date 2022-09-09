@@ -293,7 +293,7 @@
 
                         <div class="flight-listing-area" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length > 0">
                                 <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >0" >  
-                                 <trains-card *ngFor="let train of trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy ; let traintrow = index;let isFirstRow=first;" [train]="train" [stationsdump]="stationsdump" [tag]="tag"  [quota] = "quota" [rowvalue] = "traintrow" repeatBooking="0"  [repeatBookingData]=""  [fastestTrain]="fastestTrain" [passParam]="passParam"></trains-card> 
+                                 <trains-card *ngFor="let train of trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy ; let traintrow = index;let isFirstRow=first;" [train]="train" [stationsdump]="stationsdump" [tag]="tag"  [quota] = "selectedQuota" [rowvalue] = "traintrow" repeatBooking="0"  [repeatBookingData]=""  [fastestTrain]="fastestTrain" [passParam]="passParam"></trains-card> 
                                 </span>
                               
 

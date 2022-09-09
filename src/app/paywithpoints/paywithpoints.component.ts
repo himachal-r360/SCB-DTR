@@ -97,6 +97,7 @@ otperrormsg :any;
  voucherForm1: FormGroup;
  cardaddForm1: FormGroup;
  applyvouchercode:any;
+ otpCount:number=1;
 dateInputMask = createMask<Date>({
     alias: 'datetime',
     inputFormat: 'dd/mm/yyyy',
@@ -108,6 +109,7 @@ dateInputMask = createMask<Date>({
       return new Date(year, month, date);
     }
   });
+ @ViewChild('cd1') counter: CountdownComponent;
 
 
   constructor(private dialog: MatDialog, public rest: RestapiService, public pay: PayService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any,private appConfigService:AppConfigService,private formBuilder: FormBuilder,private spinnerService: NgxSpinnerService) { 
@@ -319,6 +321,7 @@ dateInputMask = createMask<Date>({
   }
  
   generateVoucherOtp(){
+    this.otpCount = 1;
     this.submittedotpform=true;
     if (this.Formotp.status !='VALID') {
       return;
@@ -513,13 +516,24 @@ dateInputMask = createMask<Date>({
     });
   }
     handleEvent($event,ref){
-   // console.log($event);
+   // console.log($event.action);
+   if($event.action == 'done'){
+    alert("Session expired! Please regenerate a new OTP or proceed with other payment options");
+    this.closeotp();
+   }
+   
   }
   onFinishedTimer(): void {
     //console.log("---TIMER FINISHED---");
+    
+
   }
   resendOTP(ref){
-    ref.restart();
+    this.counter.restart();
+    this.otpCount +=1;
+    // if(this.otpCount>3){
+    //   alert('otp entered more than 3');
+    // }
     let URLparams = {
       "mobile": this.cardmobile,
       "customer_id": this.sg["customerInfo"]["customerid"],
