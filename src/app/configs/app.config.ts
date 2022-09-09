@@ -141,7 +141,8 @@ DREAMFOLKS_COUNT : {
    'COUNTRIES' : 130
 },
 
-EMI_FROM_API:0
+EMI_FROM_API:0,
+'voucherotptimmer':180
 
 };
 

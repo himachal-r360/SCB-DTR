@@ -764,6 +764,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   //Timing Filter Flights
   timingFilterFlights(flightList: any) {
+
     this.flightList = flightList;
     let updatedflightList: any = [];
     let isfilterMorningDepartures: any = false;
@@ -803,6 +804,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         //  console.log(d.flights,"d.flights");
           singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
             if (indx == 0) {
+                       
               if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
                 return e;
               }
