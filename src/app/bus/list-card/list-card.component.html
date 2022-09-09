@@ -452,8 +452,8 @@
                             <mat-option *ngIf="droppingtimes.length==0" (click)="Boardingdroping('dropping','NA',bus.id)" [value]="params.queryParamMap.get('searchTo')">{{bus.arrivalTime | date:'HH:mm'}} : {{params.queryParamMap.get('searchTo')}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <div class="base-fare cntnt_center_div">
-                        <div >
+                    <div class="base-fare">
+                        <div *ngIf="totalFareBus">
                             <div class="row mb-10" *ngFor="let seats of seatdetails">
                                 <div class="gray-medium col-7" *ngIf="seats">
                                     <p class="price_seat"> {{seats.totalseats}} seats @ {{seats.fare | number:'1.2-2'}} </p>
