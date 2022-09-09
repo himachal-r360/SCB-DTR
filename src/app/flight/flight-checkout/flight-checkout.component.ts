@@ -4156,7 +4156,7 @@ orderReferenceNumber:any;
     };
     this.orderReferenceNumber=order_ref_num;
     
-    console.log(checkoutData);
+    console.log(checkoutData);return;
 
     var saveCheckoutData = {
       orderReferenceNumber: order_ref_num,

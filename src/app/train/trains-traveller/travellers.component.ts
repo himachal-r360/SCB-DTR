@@ -28,6 +28,8 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { type } from 'os';
 import alertify from 'alertifyjs';
 import { FlightService } from 'src/app/common/flight.service';
+declare var $ :any;
+/* import * as moment from 'moment'; */
 
 @Component({
     selector: 'app-travellerstrain',
@@ -118,7 +120,6 @@ export class TrainsTravellerComponent implements OnInit {
     
     travellersArrayM = []; 
     childrenArrayM = [];
-    
     travellersFilledArray = [];    infanttravellersFilledArray = [];
     
     seniorCitizenStatus: boolean = false;
@@ -2839,6 +2840,21 @@ recivetotalFare($event){
         else
         this.addChild(-1,-1);
        }
+
+       /* manualMobileAdultTraveller(type) {
+        if(type==1){
+            this.addTraveller(-1,-1);
+            $('#addTraveller_mlite').modal('show'); 
+        }
+      }
+
+      manualMobileInfantTraveller(type) {
+        if(type==1){
+            this.addChild(-1, -1);
+            $('#infantTraveller_mlite').modal('show');
+        }
+        
+      } */
     
     
     addTraveller(passenger,checkboxIndex) {
@@ -2954,6 +2970,8 @@ recivetotalFare($event){
         }
 
     }
+
+    
     
     
     
@@ -3150,6 +3168,8 @@ recivetotalFare($event){
         this.children.splice(val, 1);
 
     }
+
+    
 
     arrayRemove(arr, value) {
         return arr.filter(item => item !== item); 
