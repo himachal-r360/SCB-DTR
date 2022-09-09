@@ -5971,7 +5971,55 @@
           </div>
           
           <!--Cancellation Policy-->
-          
+           <div class="booking-inner-box fare-rules-box"
+              *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0 && flightSessionData.travel_type =='M'">
+              <div class="fare-rules-title">
+                <h6>Fare Rules</h6>
+              </div>
+              <div class="flight-extra-details">
+
+                <ng-container *ngFor="let searchDatad of searchData;let searchi = index">
+                  <!--Onward-->
+                  <div id="onwardFareDetails{{ searchi }}" class="flight-extra-content-onward "
+                    [ngClass]="{'hide': searchi !=0  }">
+                    <ul class="list-unstyled flight-extra-tabs">
+                      <li *ngIf="cancellationPolicyOnward">
+                        <a href="javascript:void(0);" class="flight-extra-content-oo{{ searchi }}"
+                          [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnward  }"
+                          (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'CancellationDetails')"
+                          data-bind="CancellationDetails{{ searchi }}">Fare Rules</a>
+                      </li>
+                      <li *ngIf="baggageInfoOnwardMulti[searchi]">
+                        <a href="javascript:void(0);" class="flight-extra-content-ob{{ searchi }}"
+                          [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }"
+                          data-bind="BaggageDetails{{ searchi }}"
+                          (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'BaggageDetails')">Baggage
+                          Policy</a>
+                      </li>
+
+                    </ul>
+
+                    <div class="extra-tabs-ara">
+
+                      <div id="CancellationDetails" class="flight-extra-content-o" *ngIf="cancellationPolicyOnward"
+                        [ngClass]="{'extra-active': cancellationPolicyOnward  }">
+                        <span [innerHtml]="cancellationPolicyOnward | safeHtml"></span>
+
+                      </div>
+
+                      <div id="BaggageDetails" class="flight-extra-content-o " *ngIf="baggageInfo"
+                        [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
+                        <span [innerHtml]="baggageInfo | safeHtml"></span>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </ng-container>
+
+              </div>
+            </div>
+            <!--Multicity form ends-->
 
             <div class="booking-inner-box fare-rules-box"
               *ngIf="baggageInfoOnward || cancellationPolicyOnward && flightSessionData.travel_type !='M'">
