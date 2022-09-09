@@ -132,13 +132,37 @@
                                 </div>
                           </div>
                         </div>
+                        
+                        <ng-container *ngIf="totalrtc.length>0">
+                        <div *ngFor="let rtc of totalrtc; index as ind" class="d-none d-sm-block cust-pb-20 w-100 float-left">
+                        <div  class="list-card w-100 float-left">
+                        <div class="row align-items-center" *ngIf="(rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0">
+                        <div class="col-md-4">
+                        <div class="label-name">{{rtc[0].travels}} </div>
+                        <div class="label-gray"> {{rtc.length}} Buses</div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
+                        <div class="label-gray">Onwards</div> 
+                        </div>
+                        <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
+                        <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
+
+                        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
+                        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
+                        </div>
+                        </div>
+                        </div> 
+                        <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >   
+
+                        <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
+                        [parentSubject]="parentSubject" [bus]="bus" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
+                        </span>
+                        </div>
+                        </ng-container>
 
                         <div class="flight-listing-area" *ngIf="!loading && busResults.length > 0">
-                                <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
-                                <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index; let i = index;"
-                                [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" 
-                                (seatSelected)="seatSelected($event)" ></list-component> 
-                                </span>
+                   
                                 <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
                                 <list-component *ngFor="let bus of busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
                                 [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
@@ -237,12 +261,38 @@
                         </div>
                     </div>
                   <!-- end of no bus found new design mlite -->
+                  
+                  
+                  <div *ngFor="let rtc of totalrtc; index as ind" class="d-block d-sm-none cust-pb-10 w-100 float-left">
+        <div  class="list-card-m w-100 float-left hide-w border-4">
+        <div class="row align-items-center w-85 float-left" *ngIf="(rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0">
+        <div class="col-12 pt-10">
+        <div class="label-name">{{rtc[0].travels}} </div>
+        <div class="label-gray float-left"> {{rtc.length}} Buses</div>
+        <div class="label-gray float-left">&nbsp; {{rtc[0].totalavail}} seats available </div>
+        </div>
+        <div class="col-12 pt-20 pb-20">
+        <!-- <div class="label-name-large float-left">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div> -->
+        <div class="label-name-large float-left">&nbsp; Onwards</div>
+        </div>
+        <div class="next-button float-left" (click)="rtccall(rtc[0].lowercase)">
+        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
+        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
+        </div>
+        </div>
 
-               <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
-                                <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                                [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" 
-                                (seatSelected)="seatSelected($event)" ></list-component> 
-                                </span>
+
+        </div>
+        <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
+        <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
+        [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" 
+        (seatSelected)="seatSelected($event)" ></list-component> 
+
+
+        </span>
+        </div>
+
+ 
                                 <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
                                 <list-component *ngFor="let bus of busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
                                 [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
