@@ -4177,9 +4177,9 @@ orderReferenceNumber:any;
       "retry_url": "",
       "sessionKey":this.randomFlightDetailKey,
       "docKey": this.flightSessionData.docKey,
-      "itineraryRequest": this.itineraryRequest,
       "flightSessionData":this.flightSessionData
     };
+    // "itineraryRequest": this.itineraryRequest,
     this.orderReferenceNumber=order_ref_num;
     
     console.log(checkoutData);
