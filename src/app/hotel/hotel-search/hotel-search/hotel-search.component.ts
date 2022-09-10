@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef,  EventEmitter,  Input,  OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import { debounceTime, fromEvent, map, reduce, switchMap } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
+import { ActivatedRoute,  Router } from '@angular/router';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
 
 @Component({
@@ -19,13 +19,17 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   totalChildCount: number = 0;
   getSearchValue:any;
   queryText:any;
-  cityName;
+  latestDate = new Date();
+  cityName = 'New Delhi';
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
   @ViewChild('citySearchRef') citySearchRef: ElementRef;
+  @ViewChild('checkIn') checkIn: ElementRef;
+  @ViewChild('checkOut') checkOut: ElementRef;
+ 
   
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute) {
     this.hotelSearchForm = this._fb.group({
       checkIn: [],
       checkOut: [],
@@ -56,6 +60,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   ngOnInit(): void {
     this.getSearchValueLocalStorage();
+    
+    
   }
 
   showCity(val) {
@@ -197,11 +203,23 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   }
   
   onSelectCity(param){
-    console.log(param._source , "selected data");
     this.hotelSearchForm.value.city = param._source.city;
     this.cityName = this.hotelSearchForm.value.city;
     this.hotelSearchForm.value.countryName = param._source.countryName; 
+    this.hideShowCity.nativeElement.style.display = "none";
+    this.checkIn.nativeElement.click()
   }
+
+  checkInDate(event){
+    event = event.target.value;
+    this.checkOut.nativeElement.click();
+  }
+
+  checkOutDate(event){
+    event = event.target.value;
+    this.showHideGuest.nativeElement.style.display = "block";
+  }
+
 
   ngAfterViewInit(): void {
     fromEvent(this.citySearchRef.nativeElement, 'input').pipe(
