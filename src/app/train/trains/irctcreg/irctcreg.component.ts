@@ -28,6 +28,10 @@ import { AppConfigService } from '../../../app-config.service';
   styleUrls: ['./irctcreg.component.scss']
 })
 export class IrctcregComponent implements OnInit {
+  AccountActive:boolean=true; 
+  PersonalActive:boolean=false; 
+  ResidentialActive:boolean=false;   
+  OfficeActive:boolean=false;   
   siteKey:any;
   accountDetailsForm: FormGroup;
   personalDetailsForm: FormGroup;
@@ -67,6 +71,9 @@ export class IrctcregComponent implements OnInit {
   maxDate:any;
   dialog1:boolean;
   dialog2:boolean;
+
+
+
   //defaultISD:string;
    serviceSettings:any;
   
@@ -264,6 +271,10 @@ export class IrctcregComponent implements OnInit {
       this.tab_1=false;
       this.tab_2=true;
       this.tab_3=false;
+      this.AccountActive=false;
+      this.PersonalActive=true;
+      this.ResidentialActive=false;
+      this.OfficeActive=false;
     }
   }
   checkmaxDate(dd, mm, yyyy){
@@ -282,6 +293,10 @@ export class IrctcregComponent implements OnInit {
         this.tab_1=false;
         this.tab_2=false;
         this.tab_3=true;
+        this.AccountActive=false;
+        this.PersonalActive=false;
+        this.ResidentialActive=true;
+        this.OfficeActive=false;
     }
   }
   registerIRCTCUser(){
@@ -734,6 +749,7 @@ export class IrctcregComponent implements OnInit {
         this.Form3 = false;
         return;
       }else{ 
+
         // this.errorInvalid = 0;
           this.tab_3_disabled=false;
           this.tab_4_disabled=false;
@@ -742,6 +758,10 @@ export class IrctcregComponent implements OnInit {
           this.tab_2=false;
           this.tab_3=false;
           this.tab_4=true;
+          this.AccountActive=false;
+          this.PersonalActive=false;
+          this.ResidentialActive=true;
+          this.OfficeActive=true;
       }
   }
   FlagCountry:boolean=true;

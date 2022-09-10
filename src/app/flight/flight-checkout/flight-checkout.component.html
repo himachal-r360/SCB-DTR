@@ -971,6 +971,7 @@
                                       <div>
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>First Name</mat-label>
+                                            <input    type="hidden" formControlName="adult_id{{ saveAdultTravellerId[passenger.id] }}" >
                                             <input matInput placeholder="First Name" name="adult_first_name"
                                               data-test="adult_first_name{{ saveAdultTravellerId[passenger.id] }}"
                                               formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
@@ -1222,6 +1223,7 @@
                                         <div>
                                             <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
+                                                 <input    type="hidden" formControlName="adult_id{{ saveAdultTravellerId[passenger.id] }}" >
                                                 <input matInput placeholder="First Name" name="adult_first_name"
                                                   formControlName="adult_first_name{{ saveAdultTravellerId[passenger.id] }}">
                                               </mat-form-field>
@@ -1458,6 +1460,7 @@
                                   <div>
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>First Name</mat-label>
+                                         <input    type="hidden" formControlName="adult_id{{ traveller }}" >
                                         <input matInput placeholder="First Name" name="adult_first_name"
                                           formControlName="adult_first_name{{ traveller }}">
                                         
@@ -1689,6 +1692,7 @@
                                             <div class="col-12">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
+                                                 <input    type="hidden" formControlName="adult_id{{ traveller }}" >
                                                 <input matInput placeholder="First Name" name="adult_first_name"
                                                   formControlName="adult_first_name{{ traveller }}">
                                                 <mat-error class="error_flight"
@@ -1968,6 +1972,7 @@
                                       <div>
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>First Name</mat-label>
+                                              <input    type="hidden" formControlName="child_id{{ saveChildTravellerId[passenger.id] }}" >
                                             <input matInput placeholder="First Name" name="child_first_name"
                                               formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
                                           </mat-form-field>
@@ -2212,6 +2217,7 @@
                                         <div>
                                             <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
+                                                   <input    type="hidden" formControlName="child_id{{ saveChildTravellerId[passenger.id] }}" >
                                                 <input matInput placeholder="First Name" name="child_first_name"
                                                   formControlName="child_first_name{{ saveChildTravellerId[passenger.id] }}">
                                                 
@@ -2444,6 +2450,7 @@
                                   <div>
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>First Name</mat-label>
+                                           <input    type="hidden" formControlName="child_id{{ traveller }}" >
                                         <input matInput placeholder="First Name" name="child_first_name"
                                           formControlName="child_first_name{{ traveller }}">
                                        
@@ -2668,6 +2675,7 @@
                                             <div class="col-12">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
+                                                  <input    type="hidden" formControlName="child_id{{ traveller }}" >
                                                 <input matInput placeholder="First Name" name="child_first_name"
                                                   formControlName="child_first_name{{ traveller }}">
                                                 <mat-error class="error_flight"
@@ -2940,6 +2948,7 @@
                                     <div class="col-xl-4 col-lg-4 col-md-6">
                                       <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>First Name</mat-label>
+                                         <input    type="hidden" formControlName="infant_id{{ saveInfantTravellerId[passenger.id] }}" >
                                         <input matInput placeholder="First Name" name="infant_first_name"
                                           formControlName="infant_first_name{{ saveInfantTravellerId[passenger.id] }}">
                                         
@@ -3171,6 +3180,7 @@
                                       <div class="col-xl-4 col-lg-4 col-md-6">
                                         <mat-form-field appearance="outline" class="w-100">
                                           <mat-label>First Name</mat-label>
+                                           <input    type="hidden" formControlName="infant_id{{ saveInfantTravellerId[passenger.id] }}" >
                                           <input matInput placeholder="First Name" name="infant_first_name"
                                             formControlName="infant_first_name{{ saveInfantTravellerId[passenger.id] }}">
                                         </mat-form-field>
@@ -3388,6 +3398,7 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                   <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>First Name</mat-label>
+                                     <input    type="hidden" formControlName="infant_id{{ traveller}}" >
                                     <input matInput placeholder="First Name" name="infant_first_name"
                                       formControlName="infant_first_name{{ traveller }}">
                                     
@@ -3596,6 +3607,7 @@
                                             <div class="col-12">
                                               <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>First Name</mat-label>
+                                                  <input    type="hidden" formControlName="infant_id{{ traveller}}" >
                                                 <input matInput placeholder="First Name" name="infant_first_name"
                                                   formControlName="infant_first_name{{ traveller }}">
                                                 <mat-error class="error_flight"
@@ -5959,7 +5971,55 @@
           </div>
           
           <!--Cancellation Policy-->
-          
+           <div class="booking-inner-box fare-rules-box"
+              *ngIf="baggageInfoOnwardMulti.length >0 || cancellationPolicyOnwardMulti.length >0 && flightSessionData.travel_type =='M'">
+              <div class="fare-rules-title">
+                <h6>Fare Rules</h6>
+              </div>
+              <div class="flight-extra-details">
+
+                <ng-container *ngFor="let searchDatad of searchData;let searchi = index">
+                  <!--Onward-->
+                  <div id="onwardFareDetails{{ searchi }}" class="flight-extra-content-onward "
+                    [ngClass]="{'hide': searchi !=0  }">
+                    <ul class="list-unstyled flight-extra-tabs">
+                      <li *ngIf="cancellationPolicyOnward">
+                        <a href="javascript:void(0);" class="flight-extra-content-oo{{ searchi }}"
+                          [ngClass]="{'flight-extra-tabs-active': cancellationPolicyOnward  }"
+                          (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'CancellationDetails')"
+                          data-bind="CancellationDetails{{ searchi }}">Fare Rules</a>
+                      </li>
+                      <li *ngIf="baggageInfoOnwardMulti[searchi]">
+                        <a href="javascript:void(0);" class="flight-extra-content-ob{{ searchi }}"
+                          [ngClass]="{'flight-extra-tabs-active': !cancellationPolicyOnward  }"
+                          data-bind="BaggageDetails{{ searchi }}"
+                          (click)="changeFareRuleTabBottomOnwardMulti(searchi,$event,'BaggageDetails')">Baggage
+                          Policy</a>
+                      </li>
+
+                    </ul>
+
+                    <div class="extra-tabs-ara">
+
+                      <div id="CancellationDetails" class="flight-extra-content-o" *ngIf="cancellationPolicyOnward"
+                        [ngClass]="{'extra-active': cancellationPolicyOnward  }">
+                        <span [innerHtml]="cancellationPolicyOnward | safeHtml"></span>
+
+                      </div>
+
+                      <div id="BaggageDetails" class="flight-extra-content-o " *ngIf="baggageInfo"
+                        [ngClass]="{'extra-active': !cancellationPolicyOnward ,'hide': cancellationPolicyOnward   }">
+                        <span [innerHtml]="baggageInfo | safeHtml"></span>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </ng-container>
+
+              </div>
+            </div>
+            <!--Multicity form ends-->
 
             <div class="booking-inner-box fare-rules-box"
               *ngIf="baggageInfoOnward || cancellationPolicyOnward && flightSessionData.travel_type !='M'">

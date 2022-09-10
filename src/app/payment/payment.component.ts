@@ -776,7 +776,7 @@ export class PaymentComponent implements OnInit {
 openInfo(type){
   $('.infocardtype').html(type);
   if(type=='VISA / MASTER / DINERS'){
-   $('.infocardimg').attr("src",this.cdnUrl+"images/VISA_MASTERCARD_DINERS.svg");
+   $('.infocardimg').attr("src",this.cdnUrl+"images/VISA_MASTERCARD_DINERS_RUPAY.svg");
    $('.infocardtext').html('Avoids re-entering your card every time you transact with us');
   }else{
   $('.infocardimg').attr("src",this.cdnUrl+'images/'+type+".svg");
