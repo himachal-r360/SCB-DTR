@@ -455,9 +455,9 @@
                         <li class="custom-check-box adult-choose-box"  *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index " id="adult-choose-box_{{ passenger.id }}">
                           <div class="custom-controls-stacked">
                             <label class="custom-control material-checkbox">
-                              <input type="checkbox" class="material-control-input pass_checkBox"
-                                id="travelPassenger_{{ passenger.id }}" type="checkbox" name="travellerlist"
-                                (change)="fillupTravellerDetailOnCheck($event,passenger,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
+                              <input type="radio" class="material-control-input pass_checkBox"
+                                id="travelPassenger_{{ passenger.id }}"  name="travellerlist"
+                                (change)="fillupTravellerDetailOnCheck($event,passenger,i)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}

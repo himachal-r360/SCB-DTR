@@ -773,6 +773,24 @@ getCustomertravellerInfo(){
     }
 }
 fillupTravellerDetailOnCheck($event,data,travellerIndex){
+
+   if($event.target.checked){  
+   console.log(data);  
+    console.log(travellerIndex);  
+      //    this.passengerForm.controls['passengerid' + travellerIndex+1].setValue(this.checkedList[checkedListLength-1].firstName);   
+      this.passengerForm.controls['passengerFirstName' + travellerIndex].setValue(data.firstName);
+       /*   this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(data.lastName);
+        this.passengerForm.controls['passengerAge' + travellerIndex].setValue(data.age);
+        this.passengerForm.controls['passengerGender' + travellerIndex].setValue(data.gender);*/
+
+   }else{
+   
+   // this.passengerForm.controls['passengerid' + travellerIndex+1].setValue(0);   
+   
+   }
+
+
+/*
   console.log("data " + JSON.stringify(data));
   console.log("index " + travellerIndex);
       if($event.target.checked){                
@@ -798,7 +816,7 @@ fillupTravellerDetailOnCheck($event,data,travellerIndex){
                     }else if((this.checkedList[checkedListLength-1].gender == 'F') || (this.checkedList[checkedListLength-1].gender == 'Female')){
                       gender = 'Female';
                     }
-
+              //   
                     this.passengerForm.controls['passengerFirstName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].firstName);
                     this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].lastName);
                     this.passengerForm.controls['passengerAge' + travellerIndex].setValue(this.checkedList[checkedListLength-1].age);
@@ -861,6 +879,7 @@ fillupTravellerDetailOnCheck($event,data,travellerIndex){
       
        const track_body: string = trackUrlParams.toString();
        this.rest.trackEvents( track_body).subscribe(result => {});
+       */
 }
 saveTravellerFunc(saveTravellerArray){
   var requestParamsEncrpt = {
