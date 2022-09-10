@@ -601,7 +601,8 @@ closeCookieConsent(value){
 		console.log(unreadId.length);
           if(this.cookieService.get('push_status') != undefined)
           {	
-		
+		if(this.cookieService.get('read_notify'))this.notificationball = false;   
+
               if((readId.length === unreadId.length) ) {
 		
 		//if(filtered){
@@ -611,10 +612,10 @@ closeCookieConsent(value){
 		this.notificationball = false;                           
               } else {    
                               
-                  this.cookieService.set('read_notify','0', null, '/', null, null, null);
+                 /* this.cookieService.set('read_notify','0', null, '/', null, null, null);
                   $('#notify-boll').addClass('img-number');     
                   $('#notify-boll').addClass('number'); 
-		this.notificationball = true;   
+		this.notificationball = true;  */ 
               }
 
           } else {
@@ -624,7 +625,7 @@ closeCookieConsent(value){
               // readId = [];
               // unreadId = [];
           }
-		alert(this.cookieService.get('read_notify'));
+		
 
             //console.log(unreadId+"   ---    "+readId);  
       
