@@ -152,10 +152,8 @@ SeatNumber: any ;
 
 saveAdultTravellerId = []; 
 saveInfantTravellerId = [];
-  adultsArrayTrain = [];
-  infantArrayTrain: any[];
-  passengerAdultFormCount: number = 1;
-  passengerInfantFormCount: number = 1;
+  passengerArray = [];
+  passengerFormCount: number = 1;
   
  constructor(private _flightService: FlightService,@Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
   private sg: SimpleGlobal,  @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
@@ -175,10 +173,8 @@ saveInfantTravellerId = [];
   this.whatsappFeature=this.serviceSettings.whatsappFeature;
   this.enableGST = this.serviceSettings.enableSavedGST;
   this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
-  this.adultsArrayTrain = [];
-  this.infantArrayTrain = [];
-  this.passengerAdultFormCount = 1;
-  this.passengerInfantFormCount = 1;
+  this.passengerArray = [];
+  this.passengerFormCount = 1;
   plocation.onPopState(() => {
     history.go(1);
 });
@@ -643,9 +639,9 @@ else{
    fillPassenger($event, passenger, checkboxIndex) {
 
     if (checkboxIndex == -1)
-        this.adultsArrayTrain.push(this.passengerAdultFormCount = 1);
+        this.passengerArray.push(this.passengerFormCount = 1);
 
-      var i = Number(this.passengerAdultFormCount);
+      var i = Number(this.passengerFormCount);
 
     if (checkboxIndex != -1)
         this.saveAdultTravellerId[checkboxIndex] = i;
