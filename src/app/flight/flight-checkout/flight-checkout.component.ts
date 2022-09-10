@@ -3817,7 +3817,10 @@ console.log(this.passengerForm);
          
           }
          
+           if(this.partnerToken !='Easemytrip')
            this.emt_cancellationPolicy('onward');
+           
+           
           this.fareData = {
             totalFare: Number(this.totalCollectibleAmountFromPartnerResponseOrg) + Number(this.partnerConvFee),
             "convenience_fee": 0,
@@ -4156,7 +4159,6 @@ orderReferenceNumber:any;
     };
     this.orderReferenceNumber=order_ref_num;
     
-    console.log(checkoutData);
 
     var saveCheckoutData = {
       orderReferenceNumber: order_ref_num,
