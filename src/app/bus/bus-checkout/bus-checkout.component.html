@@ -92,8 +92,11 @@
         <!--Steps 1-->
         <div class="col-md-8" *ngIf="steps==1">
           <div class="booking-process-content">
-            <div class="booking-title-box">
+            <div class="booking-title-box d-md-none">
               <h4>Traveller Details</h4>
+            </div>
+            <div class="booking-title-box d-none d-md-block">
+              <h4>Booking Details</h4>
             </div>
 
             <div class="booking-inner-box from-to-box d-none d-md-block">
@@ -322,6 +325,7 @@
 
                     <div class="traveler-details-info mt-15">
                       <div class="row">
+
                                                 <!-- radio buttons male/female-->
                                                 <div class="col-12">
                                                   <div class="trip_select">
@@ -627,7 +631,7 @@
                 </ng-template>
 
                 <div class="row" *ngIf="gstSelected">
-                  <div class="col-xl-6 col-lg-6 col-md-6">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>GST Number</mat-label>
                       <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber"
@@ -643,10 +647,10 @@
                     </mat-form-field>
 
                   </div>
-                </div>
+                <!-- </div>
 
-                <div class="row" *ngIf="gstSelected">
-                  <div class="col-lg-4 col-md-4 col-6">
+                <div class="row" *ngIf="gstSelected"> -->
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Business Name</mat-label>
                       <input matInput placeholder="Business Name" formControlName="gstBusinessName"
@@ -661,7 +665,7 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Business Address</mat-label>
                       <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress"
@@ -673,7 +677,7 @@
                         Please enter valid address.No special characters allowed except / - ,</mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-4 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Pincode</mat-label>
                       <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode"
@@ -689,7 +693,7 @@
                   </div>
                 </div>
                 <div class="row" *ngIf="gstSelected">
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>City / Town</mat-label>
                       <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"
@@ -702,7 +706,7 @@
                     </mat-form-field>
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>State</mat-label>
                       <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"

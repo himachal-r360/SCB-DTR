@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="float-left col-md-3 text-right hide-m">
+        <div class="float-left col-md-3 text-right hide-m show_seats_btndiv">
             <span *ngIf="bus.availableSeats > 0; else soldout">
                 
                 <div><button class="btn-primary w-80 showBtn" *ngIf="!showSeatLayout" (click)="onSeats(bus.id,rowvalue,bus,mobile=false);">Show Seats</button></div>
@@ -277,7 +277,7 @@
                               <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane-seat-{{bus.id}} tab-pane fade active show" id="seat-{{bus.id}}-0">
                                         <!-- <div class="errorMessage">{{maxSeatMessage}}</div> -->
-                                        <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
+                                        <!-- <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p> -->
                                         <span *ngIf="totalUpperDeck">
                                             <div class="label-small">Lower</div>
                                         </span>
@@ -467,6 +467,14 @@
                                     <p class="seat-numbers">{{seats.selseats}} </p>
                                 </div>
                             </div>
+                            <div class="row" *ngIf="maxSeatMessageStatus">
+                                <div class="col-2 text-center">
+                                    <img src="{{cdnUrl}}images/icons/orange_warning.svg">
+                                </div>
+                                <div class="col-10 ps-0">
+                                    <p class="maxseat_select_msg">{{maxSeatMessage}}</p>
+                                </div>
+                            </div>
                             <hr>
                             <div class="row">
                                 <div class="col-6">
@@ -554,7 +562,7 @@
     <div class="row row_0_margin">
         <hr class="my-2">
     </div>
-    <div class="row mt-2">
+    <div class="row">
         <div class="d-flex align-items-center">
         <div>
             <img src="{{cdnUrl}}images/icons/live track.svg" >
@@ -652,13 +660,13 @@
                                                         <div class="check_status_txt"> Selected By You</div>
                                                     </div>
                                                     <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats.svg" class="check_status_img"></div>
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats_m.svg" class="check_status_img" width="75px"></div>
                                                         <div class="check_status_txt"> Available only for 
                                                             female passenger</div>
                                                     </div>
                                 
                                                     <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img"></div>
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img" width="66px"></div>
                                                         <div class="check_status_txt">Available for male 
                                                             passenger
                                                         </div>
