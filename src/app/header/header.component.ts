@@ -459,7 +459,7 @@ export class HeaderComponent implements OnInit {
       this.enablePushBox=true;
       this.enablePushTitle = true;
       this.notifyOpacity = true;
-      $('.myaccount-drop').removeClass('show');
+      //$('.myaccount-drop').removeClass('show');
   }
   enableMoreClick() {
     
@@ -581,11 +581,9 @@ closeCookieConsent(value){
         const readId = [];
         var blue_dott=""; var classs="";
         result.result.forEach((v, k) =>  {    
-       
               if((unreadId.indexOf(unreadId) === -1)){
                 unreadId.push(v['id']);         
               } 
-            // console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
              var idcondition = document.getElementById("offers-tab-content_" + v['id']);
 		if(idcondition){
               var condition = document.getElementsByClassName("clicked_" + v['id']).length>0;
@@ -597,8 +595,8 @@ closeCookieConsent(value){
 
         });
 				
-		// console.log(readId.length);
-		// console.log(unreadId.length);
+		 console.log(readId.length);
+		 console.log(unreadId.length);
           if(this.cookieService.get('push_status') != undefined)
           {	
 		

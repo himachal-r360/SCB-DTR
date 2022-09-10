@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { Subscription } from 'rxjs';
@@ -146,12 +146,17 @@ export class HotelListComponent implements OnInit,OnDestroy {
         $('#endOfPage').trigger('click');
       }
     });
+
+
+  
   }
 
 
   ngOnInit(): void {
+    this.sub = this.route.url.subscribe(url =>{
     this.getSearchData();
     this.searchHotel();
+    });
   }
 
   getSearchData(){
@@ -172,12 +177,12 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.hotelSearchForm.get('programName').setValue(this.searchData.programName);
     this.hotelSearchForm.get('limit').setValue(this.searchData.limit);
     this.hotelSearchForm.get('numberOfRooms').setValue(this.searchData.numberOfRooms);
+    this.hotelSearchForm.get('countryName').setValue(this.searchData.countryName);
     this.hotelSearchForm.get('noOfRooms').setValue(this.searchData.noOfRooms);
     this.getQueryParamData();
   }
 
   getQueryParamData() {
-    debugger;
     const urlParam = this.route.snapshot.queryParams;
     this.hotelSearchData = urlParam;
     var hotelSearchArr = [];
