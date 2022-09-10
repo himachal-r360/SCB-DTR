@@ -470,6 +470,7 @@ ngOnInit(): void {
  showAmenities = false;
  showDropping = false;
  showCancellation = false;
+ selected: any = "Rating";
  selectedOption: any = "Rating";
  selectedOptionNew: any = "rating";
  orderBy(option) {
