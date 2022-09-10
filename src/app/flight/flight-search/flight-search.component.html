@@ -1013,9 +1013,7 @@
 
                                 </div>
                             </div>
-                            <div class="home-error d-flex">
-
-                            </div>
+              
                         </div>
 
                         <div class="col-lg-6">
@@ -1034,6 +1032,12 @@
                                                 <span class="select-roottitle"
                                                     *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
                                                     }}</span>
+                                                    
+                                                                   <mat-error *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')"><small
+                                                    class="validate-msg"> Please
+                                select departure date.</small></mat-error>
+                                                    
+              
 
                                                 </div>
 
@@ -1052,9 +1056,11 @@
 
 
                                             </div>
+                                            
                                         </div>
 
                                     </div>
+                                    
                                 </div>
 
                                 <!--Web Date Picker-->
@@ -1070,10 +1076,10 @@
                                     </div>
 
                                 </div>
-
-
+           
 
                         </div>
+                
                     </ng-container>
                     </ng-container>
 
@@ -1241,7 +1247,7 @@
                         <p class="multi-city-list-fullname">{{item.value.departure | date:'EEEE' }}</p>
                         <i class="far fa-calendar-alt single-datepicker me-3 fs_22" style="position: absolute;right: 0;top: 30px;"></i>
                         <span class="select-roottitle d-block w-100"
-                        *ngIf="item.value.departure=='' ||item.value.departure==undefined"></span>
+                        *ngIf="item.value.departure=='' ||item.value.departure==undefined">Departure</span>
                         <mat-error *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')"><small
                           class="validate-msg"> Please select departure date.</small></mat-error>
                         <a href="javascript:void(0)" class="mult-mobile-close" *ngIf="i > 1" (click)="removeMutlicityInput(i)">
