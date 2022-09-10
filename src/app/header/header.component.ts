@@ -171,7 +171,7 @@ export class HeaderComponent implements OnInit {
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
-        push_status:any=[];
+
 
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
@@ -581,35 +581,17 @@ closeCookieConsent(value){
         const readId = [];
         var blue_dott=""; var classs="";
         result.result.forEach((v, k) =>  {    
-        
-          var str="";
-          if(this.cookieService.get('push_status') != 'undefined')
-          {
-             this.push_status = this.cookieService.get('push_status');
-          }else{
-            
-              str=this.cookieService.get('push_status').substring(1, -1);
-              this.push_status=str.split(',');
-          }
-          
-          if(this.push_status.includes(v['id'])==true)
-          {
-            $(".notify-pos-abs").removeClass('read-notify');
-            $(".notify-pos-abs").addClass("clicked_'v['id'].'").css('color','#747474');
-          }else{
-            $(".notify-pos-abs").addClass('read-notify');
-          }        
 
-          if((unreadId.indexOf(unreadId) === -1)){
+            if((unreadId.indexOf(unreadId) === -1)){
             unreadId.push(v['id']);         
           } 
-           console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
+        // console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
          
-          // var condition = $.element("#offers-tab-content_" + v['id'] + " h4").hasClass("clicked_" + v['id']);
-          // if((condition == true) && (readId.indexOf(readId) === -1)) {
-          //   readId.push(v['id']);
-          // }
-          //     this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
+          var condition = document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']);
+          if((condition == true) && (readId.indexOf(readId) === -1)) {
+            readId.push(v['id']);
+          }
+              this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
         });
 
             //console.log(unreadId+"   ---    "+readId);  
