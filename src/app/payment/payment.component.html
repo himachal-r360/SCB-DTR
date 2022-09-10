@@ -697,7 +697,7 @@
                                                                             <form [formGroup]="Debit2EMIFrom" *ngIf="showDebitEMI">
                                                                                 <div class="inner-content">
                                                                                     <h6 class="payTitle">Get 5% Cashback on your Debit Card EMI payments!</h6>
-                                                                                    <div *ngFor="let emi of emiDebitArray; let firstRow = first; let evenRow = even;">
+                                                                                    <!-- <div *ngFor="let emi of emiDebitArray; let firstRow = first; let evenRow = even;">
                                                                                         <label for="payDebitemi-subOne{{emi.key}}" class="radio">
                                                                                             <input type="radio" name="payDebitemi-sub" id="payDebitemi-subOne{{emi.key}}" class="hidden dc_emi_option" value="{{emi.key}}"  [checked]="firstRow" />
                                                                                             <span class="label"></span>
@@ -707,6 +707,29 @@
                                                                                               <p class="emi-tenure"> {{emiDebitInterst[emi.key]}}% interest (Rs. {{(emi.value*emi.key-payTotalFare | commaSeparator)| number}} paid as interest in complete EMI tenure) </p>
                                                                                             </div>
                                                                                          </label>
+                                                                                    </div> -->
+                                                                                    <div *ngFor="let emi of emiDebitArray; let firstRow = first; let evenRow = even;" class="emi_check_radio emi_check_radio-{{emi.key}}" [ngClass]="{'emi-active':  firstRow }">
+                                                                                        <label for="payDebitemi-subOne{{emi.key}}" class="radio">
+                                                                                            <input type="radio" name="payDebitemi-sub" id="payDebitemi-subOne{{emi.key}}" class="hidden emi_option" value="{{emi.key}}"  [checked]="firstRow"  (click)="emiOptionChange(emi.key)" />
+                                                                                            <span class="label"></span>
+                                                                                            <div class="sub-info">
+                                                                                            <p class="emi-duration" > ₹{{emi.value | number:'1.2-2' }} <span class="middle_text">x {{emi.key}} months | @ {{emiDebitInterst[emi.key]}}% interest | Total:</span> <b> ₹{{(emi.value*emi.key)| number:'1.2-2' }}</b> </p>
+                                                                                            <div class="emiTenure emiTenure-{{emi.key}}" [ngClass]="{'hidden':  !firstRow }">
+                                                                                                <div>
+                                                                                                    <p class="title">EMI/Month</p>
+                                                                                                    <p class="value">₹{{emi.value | number:'1.2-2' }}</p>
+                                                                                                </div>
+                                                                                                <div>
+                                                                                                    <p class="title">Interest Charged by Bank	</p>
+                                                                                                    <p class="value">₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }}</p>
+                                                                                                </div>
+                                                                                                <div>
+                                                                                                    <p class="title">Total Cost</p>
+                                                                                                    <p class="value">₹{{(emi.value*emi.key)| number:'1.2-2' }}</p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            </div>
+                                                                                        </label>
                                                                                     </div>
                                                                                     <hr />
                                                                                     <div>

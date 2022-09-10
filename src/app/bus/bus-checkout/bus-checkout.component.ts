@@ -149,6 +149,11 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
 SeatNumber: any ;
+
+saveAdultTravellerId = []; 
+saveInfantTravellerId = [];
+  passengerArray = [];
+  passengerFormCount: number = 1;
   
  constructor(private _flightService: FlightService,@Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
   private sg: SimpleGlobal,  @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
@@ -168,6 +173,8 @@ SeatNumber: any ;
   this.whatsappFeature=this.serviceSettings.whatsappFeature;
   this.enableGST = this.serviceSettings.enableSavedGST;
   this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
+  this.passengerArray = [];
+  this.passengerFormCount = 1;
   plocation.onPopState(() => {
     history.go(1);
 });
@@ -630,6 +637,15 @@ else{
  
  
    fillPassenger($event, passenger, checkboxIndex) {
+
+    if (checkboxIndex == -1)
+        this.passengerArray.push(this.passengerFormCount = 1);
+
+      var i = Number(this.passengerFormCount);
+
+    if (checkboxIndex != -1)
+        this.saveAdultTravellerId[checkboxIndex] = i;
+
     console.log($event);   console.log(passenger);  console.log(checkboxIndex);
     if ($event.target.checked) {
     
@@ -756,10 +772,11 @@ getCustomertravellerInfo(){
       //this.saveTravllerShow=false;
     }
 }
-fillupTravellerDetailOnCheck($event,data,travellerIndex,){
-  
+fillupTravellerDetailOnCheck($event,data,travellerIndex){
+  console.log("data " + JSON.stringify(data));
+  console.log("index " + travellerIndex);
       if($event.target.checked){                
-            this.isChecked[travellerIndex]=true;
+            this.isChecked[travellerIndex]=true; 
             if(!(this.selectedCheckbox.includes(travellerIndex))){
                   this.selectedCheckbox.push(travellerIndex);
             }
@@ -772,8 +789,8 @@ fillupTravellerDetailOnCheck($event,data,travellerIndex,){
                                   });
             var checkedListLength=this.checkedList.length;
             var isFilledData = false;
-            for(var i=0;i<this.passengerCount;i++){
-                if(this.passengerForm.controls['passengerFirstName' + i].value=="" && this.passengerForm.controls['passengerLastName' + i].value==""){
+           
+                if(this.passengerForm.controls['passengerFirstName' + travellerIndex].value=="" && this.passengerForm.controls['passengerLastName' + travellerIndex].value==""){
                 isFilledData = true;
                     var gender;
                     if((this.checkedList[checkedListLength-1].gender == 'M') || (this.checkedList[checkedListLength-1].gender == 'Male')) {
@@ -782,13 +799,13 @@ fillupTravellerDetailOnCheck($event,data,travellerIndex,){
                       gender = 'Female';
                     }
 
-                    this.passengerForm.controls['passengerFirstName' + i].setValue(this.checkedList[checkedListLength-1].firstName);
-                    this.passengerForm.controls['passengerLastName' + i].setValue(this.checkedList[checkedListLength-1].lastName);
-                    this.passengerForm.controls['passengerAge' + i].setValue(this.checkedList[checkedListLength-1].age);
-                    this.passengerForm.controls['passengerGender' + i].setValue(gender);
-                    break;
+                    this.passengerForm.controls['passengerFirstName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].firstName);
+                    this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].lastName);
+                    this.passengerForm.controls['passengerAge' + travellerIndex].setValue(this.checkedList[checkedListLength-1].age);
+                    this.passengerForm.controls['passengerGender' + travellerIndex].setValue(gender);
+                  
                 }
-            }
+            
             if(isFilledData == false){
             $event.target.checked = false;
               this.isChecked[travellerIndex]=false;

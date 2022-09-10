@@ -156,23 +156,22 @@ export class HeaderComponent implements OnInit {
         cookieMessage;cookieAgree;cookieMessageType;cookieConsent:boolean=false;cookieExpiredDate: any = new Date();
         disclimerConsent:boolean=false;
         is_main:number=0;
-          voiceActiveSectionDisabled: boolean = true;
-	voiceActiveSectionError: boolean = false;
-	voiceActiveSectionSuccess: boolean = false;
-	voiceActiveSectionListening: boolean = false;
-	voiceText: any;
-  parsed_date:any;
-  relative_to:any;
-  push_ids:any;
-  cdnnotifyUrl:any;
-    isMobile:boolean= false;
-  delta:any;
+        voiceActiveSectionDisabled: boolean = true;
+        voiceActiveSectionError: boolean = false;
+        voiceActiveSectionSuccess: boolean = false;
+        voiceActiveSectionListening: boolean = false;
+        voiceText: any;
+        parsed_date:any;
+        relative_to:any;
+        push_ids:any;
+        cdnnotifyUrl:any;
+        isMobile:boolean= false;
+        delta:any;
         payzrestriction:boolean=false;
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
-        unreadId:any=[];
-
+	notificationball:boolean=true;
 
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
@@ -334,11 +333,11 @@ export class HeaderComponent implements OnInit {
     //FCM Analytics
     */
    }
-   if (this.cookieService.get("push_enable")) { 
-       this.enablePushTitle = true;
-       this.getNotification();
-       console.log(this.pushcount);
-   }
+    if (this.cookieService.get("push_enable")!='undefined') { 
+        this.enablePushTitle = true;
+        this.getNotification();
+       
+    }
     Window["myComponent"] = this;
  
   }
@@ -576,19 +575,67 @@ closeCookieConsent(value){
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcount = result.result.length;
-       //console.log(result);
+        console.log(result);
+        
+        const unreadId = [];
+        const readId = [];
+        var blue_dott=""; var classs="";
+        result.result.forEach((v, k) =>  {    
+       
+              if((unreadId.indexOf(unreadId) === -1)){
+                unreadId.push(v['id']);         
+              } 
+            // console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
+             var idcondition = document.getElementById("offers-tab-content_" + v['id']);
+		if(idcondition){
+              var condition = document.getElementsByClassName("clicked_" + v['id']).length>0;
+              if(condition && (readId.indexOf(readId) === -1)) {
+                readId.push(v['id']);
+              }
+		}
+                  this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
 
-       result.result.forEach((v, k) =>  {
-          this.unreadId.push(v['id']);
-               this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
         });
+				
+		// console.log(readId.length);
+		// console.log(unreadId.length);
+          if(this.cookieService.get('push_status') != undefined)
+          {	
+		
+		if(this.cookieService.get('read_notify') == '1')this.notificationball = false;   
+
+              if((readId.length === unreadId.length) ) {
+		
+		//if(filtered){
+                  this.cookieService.set('read_notify','1', null, '/', null, null, null);
+                  $('#notify-boll').removeClass('img-number');        
+                  $('#notify-boll').removeClass('number'); 
+		this.notificationball = false;                           
+              } else {    
+                              
+                 /* this.cookieService.set('read_notify','0', null, '/', null, null, null);
+                  $('#notify-boll').addClass('img-number');     
+                  $('#notify-boll').addClass('number'); */
+		//this.notificationball = true;   
+              }
+
+          } else {
+              this.cookieService.set('read_notify','0', null, '/', null, null, null);
+                $('#notify-boll').addClass('img-number');    
+                $('#notify-boll').addClass('number'); 
+              // readId = [];
+              // unreadId = [];
+          }
+		
+
+            //console.log(unreadId+"   ---    "+readId);  
       
     });
   }
 
     analyticsLogEvent(event,id,url){
     var customerid ='';
-    if(this.customerInfo.hasOwnProperty('id')){
+    if(this.customerInfo != undefined && this.customerInfo.hasOwnProperty('id')){
       customerid=this.customerInfo['id']
     }
     
