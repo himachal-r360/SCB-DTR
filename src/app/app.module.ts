@@ -40,6 +40,7 @@ import { HotelModule } from './hotel/hotel.module';
 import { HotelSearchModule } from './hotel/hotel-search/hotel-search.module';
 //import { DatadogService } from './shared/services/datadog.service';
 import {  LOCALE_ID } from '@angular/core';
+import "@angular/common/locales/global/en-IN";
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -77,7 +78,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   ],
   exports:[],
    providers: [
-   { provide: LOCALE_ID, useValue: 'en-nz' },
+   { provide: LOCALE_ID, useValue: 'en-IN' },
    StyleManagerService,
    AppConfigService,
     {
