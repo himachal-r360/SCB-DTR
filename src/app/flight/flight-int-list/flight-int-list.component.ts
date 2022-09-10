@@ -1032,6 +1032,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           return item;
         }
       })
+      
+
      
       var filteredAirlines: any[] = [];
       if (airlineArr.length > 0) {
@@ -1040,6 +1042,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           
           
           e.onwardflights.filter((d: any) => {
+               
             if (airlineArr.map(function (x: any) { return x.airlineName; }).indexOf(d.airlineName) > -1) {
               flights.push(d);
             }
@@ -1061,7 +1064,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
        // }
       }
 
-
+console.log(filteredAirlines);
       
 
 
