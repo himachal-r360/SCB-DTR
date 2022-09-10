@@ -773,8 +773,8 @@ getCustomertravellerInfo(){
     }
 }
 fillupTravellerDetailOnCheck($event,data,travellerIndex){
-  console.log("data" + data);
-  console.log("index" + travellerIndex);
+  console.log("data " + JSON.stringify(data));
+  console.log("index " + travellerIndex);
       if($event.target.checked){                
             this.isChecked[travellerIndex]=true;
             if(!(this.selectedCheckbox.includes(travellerIndex))){
