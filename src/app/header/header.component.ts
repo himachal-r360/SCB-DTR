@@ -598,18 +598,18 @@ closeCookieConsent(value){
           {
               if(((unreadId.indexOf(readId) !== -1)) && (readId.length === unreadId.length)) {
 
-                  this.cookieService.set('read_notify',1, null, '/', null, null, null);
+                  this.cookieService.set('read_notify','1', null, '/', null, null, null);
                   $('#notify-boll').removeClass('img-number');        
                   $('#notify-boll').removeClass('number');                            
               } else {    
                               
-                  this.cookieService.set('read_notify',0, null, '/', null, null, null);
+                  this.cookieService.set('read_notify','0', null, '/', null, null, null);
                   $('#notify-boll').addClass('img-number');     
                   $('#notify-boll').addClass('number'); 
               }
 
           } else {
-              this.cookieService.set('read_notify',0, null, '/', null, null, null);
+              this.cookieService.set('read_notify','0', null, '/', null, null, null);
                 $('#notify-boll').addClass('img-number');    
                 $('#notify-boll').addClass('number'); 
               // readId = [];
