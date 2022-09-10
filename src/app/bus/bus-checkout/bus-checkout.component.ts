@@ -149,6 +149,13 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
 SeatNumber: any ;
+
+saveAdultTravellerId = []; 
+saveInfantTravellerId = [];
+  adultsArrayTrain = [];
+  infantArrayTrain: any[];
+  passengerAdultFormCount: number = 1;
+  passengerInfantFormCount: number = 1;
   
  constructor(private _flightService: FlightService,@Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
   private sg: SimpleGlobal,  @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
@@ -168,6 +175,10 @@ SeatNumber: any ;
   this.whatsappFeature=this.serviceSettings.whatsappFeature;
   this.enableGST = this.serviceSettings.enableSavedGST;
   this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
+  this.adultsArrayTrain = [];
+  this.infantArrayTrain = [];
+  this.passengerAdultFormCount = 1;
+  this.passengerInfantFormCount = 1;
   plocation.onPopState(() => {
     history.go(1);
 });
@@ -630,6 +641,15 @@ else{
  
  
    fillPassenger($event, passenger, checkboxIndex) {
+
+    if (checkboxIndex == -1)
+        this.adultsArrayTrain.push(this.passengerAdultFormCount = 1);
+
+      var i = Number(this.passengerAdultFormCount);
+
+    if (checkboxIndex != -1)
+        this.saveAdultTravellerId[checkboxIndex] = i;
+
     console.log($event);   console.log(passenger);  console.log(checkboxIndex);
     if ($event.target.checked) {
     
