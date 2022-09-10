@@ -772,10 +772,11 @@ getCustomertravellerInfo(){
       //this.saveTravllerShow=false;
     }
 }
-fillupTravellerDetailOnCheck($event,data,travellerIndex,){
-  
+fillupTravellerDetailOnCheck($event,data,travellerIndex){
+  console.log("data " + JSON.stringify(data));
+  console.log("index " + travellerIndex);
       if($event.target.checked){                
-            this.isChecked[travellerIndex]=true;
+            this.isChecked[travellerIndex]=true; 
             if(!(this.selectedCheckbox.includes(travellerIndex))){
                   this.selectedCheckbox.push(travellerIndex);
             }
@@ -788,8 +789,8 @@ fillupTravellerDetailOnCheck($event,data,travellerIndex,){
                                   });
             var checkedListLength=this.checkedList.length;
             var isFilledData = false;
-            for(var i=0;i<this.passengerCount;i++){
-                if(this.passengerForm.controls['passengerFirstName' + i].value=="" && this.passengerForm.controls['passengerLastName' + i].value==""){
+           
+                if(this.passengerForm.controls['passengerFirstName' + travellerIndex].value=="" && this.passengerForm.controls['passengerLastName' + travellerIndex].value==""){
                 isFilledData = true;
                     var gender;
                     if((this.checkedList[checkedListLength-1].gender == 'M') || (this.checkedList[checkedListLength-1].gender == 'Male')) {
@@ -798,13 +799,13 @@ fillupTravellerDetailOnCheck($event,data,travellerIndex,){
                       gender = 'Female';
                     }
 
-                    this.passengerForm.controls['passengerFirstName' + i].setValue(this.checkedList[checkedListLength-1].firstName);
-                    this.passengerForm.controls['passengerLastName' + i].setValue(this.checkedList[checkedListLength-1].lastName);
-                    this.passengerForm.controls['passengerAge' + i].setValue(this.checkedList[checkedListLength-1].age);
-                    this.passengerForm.controls['passengerGender' + i].setValue(gender);
-                    break;
+                    this.passengerForm.controls['passengerFirstName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].firstName);
+                    this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].lastName);
+                    this.passengerForm.controls['passengerAge' + travellerIndex].setValue(this.checkedList[checkedListLength-1].age);
+                    this.passengerForm.controls['passengerGender' + travellerIndex].setValue(gender);
+                  
                 }
-            }
+            
             if(isFilledData == false){
             $event.target.checked = false;
               this.isChecked[travellerIndex]=false;

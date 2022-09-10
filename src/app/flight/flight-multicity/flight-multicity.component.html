@@ -1665,7 +1665,7 @@
                       <div class="flight-fixed-left">
                           <div class="flight-fixed-list" [ngClass]="{'after-none':i==(searchData.length-1)}" *ngFor="let item of searchData;let i=index">
                               <div class="flight-fixed-list-image" *ngIf="item.isSelected">
-                                  <i class="free-flow air-logo intAirLogo size-28 x{{list.selectedFlight[0].airline}}"></i>
+                                  <i class="free-flow air-logo intAirLogo size-28 x{{item.selectedFlight.flights[0].airline}}"></i>
                               </div>
                               <div class="flight-fixed-list-content" >
                                   <h6 [ngClass]="{'text-secondory':!item.isSelected}">{{item.flightfrom}} - {{item.flightto}}</h6>
