@@ -37,13 +37,13 @@
                 </div>
             </div>
             <div class="hotel-in-out">
-                <div class="hotel-in" (click)="picker.open()">
+                <div class="hotel-in" (click)="picker.open()" #checkIn>
                     <span class="small-text">CHECK-IN</span>
                     <h5 class="large-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                            <input matInput [matDatepicker]="picker" formControlName="checkIn" >
+                            <input matInput [min]="latestDate" [matDatepicker]="picker" formControlName="checkIn"  (dateChange)="checkInDate($event)" >
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
@@ -51,14 +51,14 @@
                         <img src="./assets/images/icons/date.png" class="single-datepicker" alt="">
                     </div>
                 </div>
-                <div class="hotel-out" (click)="picker2.open()">
+                <div class="hotel-out" (click)="picker2.open()" #checkOut>
                     <span class="small-text">CHECK-OUT</span>
                     <!-- <h5 class="large-text">Aug 11</h5> -->
                     <h5 class="large-text" *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text"  *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                            <input matInput [matDatepicker]="picker2" formControlName="checkOut" >
+                            <input matInput [matDatepicker]="picker2" [min]="hotelSearchForm.value.checkIn" formControlName="checkOut" (dateChange)="checkOutDate($event)" >
                             <mat-datepicker-toggle matSuffix [for]="picker2">
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="hotel-room-select pt-20 pb-20" #showHideGuest>
                     <div class="mob-title">
-                        <h3>City, Hotel or Area</h3>
+                        <h3>ROOMS & GUESTS</h3>
                         <a href="javaScript:void(0)" class="mob-close" (click)="showGuest('hide')">
                             <img src="./assets/images/icons/close.png" alt="">
                         </a>
