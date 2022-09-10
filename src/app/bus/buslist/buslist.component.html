@@ -98,7 +98,7 @@
                             </div>
        
                            </div>
-                        <div class="tabletitle-area" [hidden]="loading">
+                        <div class="tabletitle-area" [hidden]="loading" *ngIf="!busFilterlengthZero || loading && busResults.length > 0">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="tabletitle-content">
@@ -180,7 +180,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-5 text-center">
-                                    <button class="empty_list_btn">Go back to search page</button>
+                                    <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
                                 </div>
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 mt-3 text-center">
-                            <button class="empty_list_btn">Go back to search page</button>
+                            <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
                         </div>
                     </div>
                   <!-- end of no bus found new design mlite -->
