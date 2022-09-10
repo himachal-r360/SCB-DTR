@@ -585,9 +585,9 @@ closeCookieConsent(value){
               if((unreadId.indexOf(unreadId) === -1)){
                 unreadId.push(v['id']);         
               } 
-            // console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
+            //console.log($("#offers-tab-content_"+v['id']+" h4").classList.contains("clicked_" + v['id']));
              
-              var condition = document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']);
+              var condition = $("#offers-tab-content_"+v['id']+" h4").classList.contains("clicked_" + v['id']);
               if((condition == true) && (readId.indexOf(readId) === -1)) {
                 readId.push(v['id']);
               }
