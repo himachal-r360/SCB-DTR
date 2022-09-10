@@ -412,6 +412,11 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   
   
   swap() {
+        // this.searchTrainForm['controls']['searchFrom'].setValue(values.station_name);
+        // this.searchTrainForm['controls']['fromTravelCode'].setValue(values.station_code);
+        // this.fromCityName=values.station_name;
+        // this.fromStateName=values.station_code+', '+values.station_name;
+        // this.travelFromOptions= this.defaultTravelOptions;
       
         var FromData = {
         searchFrom: this.searchTrainForm.value.searchFrom,
@@ -421,17 +426,18 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
         this.searchTrainForm.get('searchFrom').setValue(this.searchTrainForm.value.searchTo );
         this.searchTrainForm.get('fromTravelCode').setValue(this.searchTrainForm.value.toTravelCode );
+        
        // this.searchTrainForm.get('fromState').setValue(this.searchTrainForm.value.toState );
        
         this.fromCityName = this.searchTrainForm.value.searchTo;
-       // this.fromStateName = this.searchTrainForm.value.toState;
+       this.fromStateName = this.searchTrainForm.value.toTravelCode+', '+this.searchTrainForm.value.searchTo;
 
         this.searchTrainForm.get('searchTo').setValue(FromData.searchFrom );
         this.searchTrainForm.get('toTravelCode').setValue(FromData.fromTravelCode );
       //  this.searchTrainForm.get('toState').setValue(FromData.fromState );
      
         this.toCityName =  FromData.searchFrom;
-       // this.toStateName = FromData.fromState;
+       this.toStateName = FromData.fromTravelCode+', '+FromData.searchFrom;
 
   }
 
