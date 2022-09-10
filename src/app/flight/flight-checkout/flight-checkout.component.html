@@ -6541,7 +6541,7 @@
             </div>
             <div class="bookingprocess-content p-20 border-0 m-0">
               <p>The fare of the itinerary you have chosen has changed</p>
-              <div><b>Old Price</b> : ₹{{ old_fare }}</div>
+              <div><b>Old Price</b> : ₹{{ old_fare |number}}</div>
               <hr>
               <div>
                 <div class="row">
@@ -6549,7 +6549,7 @@
                     <b>New Price</b>
                   </div>
                   <div class="col-6 text-end">
-                    <b class="new_fare_flight">₹{{ new_fare }}</b>
+                    <b class="new_fare_flight">₹{{ new_fare |number }}</b>
                   </div>
                 </div>
               </div>
@@ -6834,7 +6834,18 @@
                 </div>
 
               </li>
-
+                      <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <p>
+                            Voucher Amount
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>&#8377; {{ voucher_amount |number }}</p>
+                        </div>
+                      </div>
+                    </li>
 
               <li class="fare-list-item">
                 <div class="fare-list-box pt-30">

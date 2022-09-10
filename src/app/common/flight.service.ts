@@ -50,10 +50,11 @@ export class FlightService {
           return this.http.get('assets/data/flight-int-return.json');
         }
       } else {
-        if (para.flightdefault == 'O') {
-          return this.http.get('assets/data/flight-onward.json');
+        if (para.flightdefault == 'R') {
+         return this.http.get('assets/data/flight-return.json');
         } else {
-          return this.http.get('assets/data/flight-return.json');
+        return this.http.get('assets/data/flight-onward.json');
+         
         }
       }
     } else {
