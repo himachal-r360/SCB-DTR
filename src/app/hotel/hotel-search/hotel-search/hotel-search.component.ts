@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup} from '@angular/forms';
-import { reduce } from 'rxjs';
+import { debounceTime, fromEvent, map, reduce, switchMap } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
@@ -11,16 +11,18 @@ import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.serv
   templateUrl: './hotel-search.component.html',
   styleUrls: ['./hotel-search.component.sass']
 })
-export class HotelSearchComponent implements OnInit{
+export class HotelSearchComponent implements OnInit ,AfterViewInit{
   hotelSearchForm: any;
   hotelList: any;
   cityList: any;
   totalAdultsCount: number = 1;
   totalChildCount: number = 0;
   getSearchValue:any;
-  private queryText = '';
+  queryText:any;
+  cityName;
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
+  @ViewChild('citySearchRef') citySearchRef: ElementRef;
   
 
   constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router) {
@@ -37,6 +39,7 @@ export class HotelSearchComponent implements OnInit{
       longitude: [''],
       area: [''],
       hotelId: [''],
+      countryName:['India'],
       rooms: this._fb.array(
         [
           { room: 1, numberOfAdults: '1', numberOfChildren: '0' }
@@ -67,14 +70,16 @@ export class HotelSearchComponent implements OnInit{
   getSearchValueLocalStorage() {
     this.getSearchValue = localStorage.getItem('hotelSearch')
     let modifySearchValue = JSON.parse(this.getSearchValue);
+    this.cityName = modifySearchValue.city
     let roomArr = modifySearchValue.rooms;
     if (modifySearchValue != undefined) {
       this.hotelSearchForm = this._fb.group({
         checkIn: [modifySearchValue.checkIn],
         checkOut: [modifySearchValue.checkOut],
         noOfRooms: [modifySearchValue.noOfRooms],
-        city: [modifySearchValue.city],
+        city: [this.cityName],
         country: [modifySearchValue.country],
+        countryName:[modifySearchValue.countryName],
         scr: [modifySearchValue.scr],
         sct: [modifySearchValue.sct],
         hotelName: [modifySearchValue.hotelName],
@@ -190,15 +195,22 @@ export class HotelSearchComponent implements OnInit{
     this.showTotalCountOfAdult();
     this.showTotalCountsOfChild();
   }
-
-  searchAutoComplete($event) {
-    
-   
+  
+  onSelectCity(param){
+    console.log(param._source , "selected data");
+    this.hotelSearchForm.value.city = param._source.city;
+    this.cityName = this.hotelSearchForm.value.city;
+    this.hotelSearchForm.value.countryName = param._source.countryName; 
   }
 
-   onCitySearchClick(){
-
-   }
+  ngAfterViewInit(): void {
+    fromEvent(this.citySearchRef.nativeElement, 'input').pipe(
+      debounceTime(300),
+      map((e: any) => e.target.value),
+      switchMap(value => this._hotelService.getHotelCityList(value)))
+      .subscribe((res: any) => { this.queryText = res.hits.hits; })
+  }
+    
 
 
   ConvertObjToQueryString(obj: any) {

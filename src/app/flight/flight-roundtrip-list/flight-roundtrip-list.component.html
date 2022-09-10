@@ -318,7 +318,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="round-content-image">
-                                                                    <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                                                   <i class="free-flow air-logo domAirLogo size-28 x{{list.flights[0].airline}}"></i>
                                                                 </div>
                                                                 <div class="round-content-time" *ngIf="flightList">
                                                                     <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -505,7 +505,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="round-content-image">
-                                                                <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                                               <i class="free-flow air-logo domAirLogo size-28 x{{list.flights[0].airline}}"></i>
                                                             </div>
                                                             <div class="round-content-time">
                                                                 <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -727,7 +727,7 @@
                                             <div class="mob-list-items-name collapsed"  type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
                                                 <div class="mob-list-items-name-top">
                                                     <div class="mob-list-items-image">
-                                                        <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                                    <i class="free-flow air-logo domAirLogo size-28 x{{list.flights[0].airline}}"></i>
                                                         <div class="mob-list-flight-name">
                                                             <h6>{{list.flights[0].airlineName}}</h6>
                                                         </div>
@@ -842,7 +842,9 @@
                                                                                 <div class="extra-tabs-details-bottom ">
                                                                                     <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                                         <div class="tabs-depart-one">
-                                                                                            <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                            <p class="depart-one-image">
+                                                                                            <i class="me-2 free-flow air-logo domAirLogo size-28 x{{list.flights[0].airline}}"></i>
+                                                                                          {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                                             <div class="tabs-depart-left  float-none">
                                                                                                 <div class="tabs-depart-times">
                                                                                                     <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -1161,7 +1163,7 @@
                                             <div class="mob-list-items-name  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
                                                 <div class="mob-list-items-name-top">
                                                     <div class="mob-list-items-image">
-                                                        <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}">
+                                                      <i class="free-flow air-logo domAirLogo size-28 x{{list.flights[0].airline}}"></i>
                                                         <div class="mob-list-flight-name">
                                                             <h6>{{list.flights[0].airlineName}}</h6>
                                                         </div>
@@ -1275,7 +1277,9 @@
                                                                                 <div class="extra-tabs-details-bottom ">
                                                                                     <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                                         <div class="tabs-depart-one">
-                                                                                            <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                            <p class="depart-one-image">
+                                                                                            <i class="me-2 free-flow air-logo domAirLogo size-28 x{{list.flights[0].airline}}"></i>
+                                                                                            {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                                             <div class="tabs-depart-left  float-none">
                                                                                                 <div class="tabs-depart-times">
                                                                                                     <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -2245,7 +2249,8 @@
                             <div class="round-ff-content">
                                 <div class="round-ff-left" [hidden]="!isOnwardSelected">
                                     <div class="round-ff-image">
-                                        <img src="{{cdnUrl}}/images/airlines/{{onwardSelectedFlight.flights[0].airline}}.gif" class="flight-image" alt="{{onwardSelectedFlight.flights[0].airline}}">
+                                    <i class="free-flow air-logo domAirLogo size-28 x{{onwardSelectedFlight.flights[0].airline}}"></i>
+                   
                                         <p> {{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}}</p>
                                     </div>
                                     <div class="round-ff-time">
@@ -2274,7 +2279,7 @@
                             <div class="round-ff-content">
                                 <div class="round-ff-left">
                                     <div class="round-ff-image">
-                                        <img class="flight-image" src="{{cdnUrl}}/images/airlines/{{returnSelectedFlight.flights[0].airline}}.gif" alt="{{returnSelectedFlight.flights[0].airline}}">
+                                     <i class="free-flow air-logo domAirLogo size-28 x{{returnSelectedFlight.flights[0].airline}}"></i>
                                         <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
                                     </div>
                                     <div class="round-ff-time">
@@ -2387,7 +2392,7 @@
                                         <div class="extra-tabs-details-bottom">
                                             <div class="tabs-depart-box">
                                                 <div class="tabs-depart-one" *ngFor="let flights of onwardSelectedFlight.flights;let i = index">
-                                                    <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image me-2" alt="{{flights.airline}}">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                    <p class="depart-one-image"><i class="me-2 free-flow air-logo domAirLogo size-28 x{{flights.airline}}"></i> {{flights.airline}} {{flights.flightNumber}}</p>
                                                     <div class="tabs-depart-left  float-none">
                                                         <div class="tabs-depart-times">
                                                             <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
@@ -2430,7 +2435,9 @@
                                         <div class="extra-tabs-details-bottom">
                                             <div class="tabs-depart-box">
                                                 <div class="tabs-depart-three" *ngFor="let flights of returnSelectedFlight.flights;let i = index">
-                                                    <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{flights.airline}}.gif" class="flight-image me-2" alt="">{{flights.airline}} {{flights.flightNumber}}</p>
+                                                    <p class="depart-one-image">
+                                                    <i class=" me-2 free-flow air-logo domAirLogo size-28 x{{flights.airline}}"></i>
+                                                    {{flights.airline}} {{flights.flightNumber}}</p>
                                                     <div class="tabs-depart-left  float-none">
                                                         <div class="tabs-depart-times">
                                                             <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
