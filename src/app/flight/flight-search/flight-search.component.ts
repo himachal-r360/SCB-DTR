@@ -671,6 +671,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   sameCityValidation = false;
   flightSearch() {
+    debugger;
     this.submitted = true;
     if (this.flightData.value.departure != "" && this.flightData.value.departure != undefined) {
       this.dateValidation = false;
