@@ -779,9 +779,9 @@ fillupTravellerDetailOnCheck($event,data,travellerIndex){
     console.log(travellerIndex);  
       //    this.passengerForm.controls['passengerid' + travellerIndex+1].setValue(this.checkedList[checkedListLength-1].firstName);   
       this.passengerForm.controls['passengerFirstName' + travellerIndex].setValue(data.firstName);
-       /*   this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(data.lastName);
+          this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(data.lastName);
         this.passengerForm.controls['passengerAge' + travellerIndex].setValue(data.age);
-        this.passengerForm.controls['passengerGender' + travellerIndex].setValue(data.gender);*/
+        this.passengerForm.controls['passengerGender' + travellerIndex].setValue(data.gender);
 
    }else{
    
