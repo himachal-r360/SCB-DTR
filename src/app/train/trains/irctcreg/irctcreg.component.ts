@@ -184,21 +184,37 @@ export class IrctcregComponent implements OnInit {
       this.tab_2=false;
       this.tab_3=false;
       this.tab_4=false;
+      this.AccountActive=true;
+      this.PersonalActive=false;
+      this.ResidentialActive=false;
+      this.OfficeActive=false;
     }else if(x==2){
       this.tab_1=false;
       this.tab_2=true;
       this.tab_3=false;
       this.tab_4=false;
+      this.AccountActive=false;
+      this.PersonalActive=true;
+      this.ResidentialActive=false;
+      this.OfficeActive=false;
     }else if(x==3){
       this.tab_1=false;
       this.tab_2=false;
       this.tab_3=true;
       this.tab_4=false;
+      this.AccountActive=false;
+      this.PersonalActive=false;
+      this.ResidentialActive=true;
+      this.OfficeActive=false;
     }else if(x==4){
       this.tab_1=false;
       this.tab_2=false;
       this.tab_3=false;
       this.tab_4=true;
+      this.AccountActive=false;
+      this.PersonalActive=false;
+      this.ResidentialActive=false;
+      this.OfficeActive=true;
     }  
   }
   errorInvalid:number=1;
