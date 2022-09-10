@@ -187,6 +187,7 @@ export class PaymentComponent implements OnInit {
         });
         this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
         this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
+        console.log(this.emiDebitArray);
         this.flexipayArr=this.commonHelper.flexipayIntcalc(this.payTotalFare);
         };
 
@@ -262,9 +263,12 @@ export class PaymentComponent implements OnInit {
         DCEMISelectedAmount: any;
         DCEMIConfirmResponse: any;
         DCEMIError='';
+        Debit2EMIFrom: FormGroup;
 
         DebitEMIOTPFrom: FormGroup;
+        Debit2EMIOTPFrom: FormGroup;
         submittedDebitEMIOTPFrom = false;
+
 
         DebitEMIConfirmFrom: FormGroup;
         submittedDebitEMIConfirmFrom = false;
@@ -520,9 +524,17 @@ export class PaymentComponent implements OnInit {
         cardnumber:['',  [Validators.required]],
         termscondition:['',[Validators.required,Validators.pattern('true')]],
         });
+        this.Debit2EMIFrom = this.formBuilder.group({
+                    panNo:['',  [Validators.required]],
+                termscondition:['',[Validators.required,Validators.pattern('true')]],
+        });
 
         this.DebitEMIOTPFrom = this.formBuilder.group({
         otpnumber:['', [ Validators.required,Validators.pattern("^[0-9]*$")]]
+        });
+        this.Debit2EMIOTPFrom = this.formBuilder.group({
+                    otpnumber:['', [ Validators.required,Validators.pattern("^[0-9]*$")]],
+                    termscondition:['',[Validators.required,Validators.pattern('true')]],
         });
 
         this.DebitEMIConfirmFrom = this.formBuilder.group({
@@ -1535,54 +1547,58 @@ validateDebitEmi(){
 }
 
 validateDebitEmi_new(){
-	this.submittedDebitEMIFrom = true;
-	if (this.DebitEMIFrom.status !='VALID') {
-	return;
-	}
-	this.DCEMItenure=$("input[name='payDebitemi-sub']:checked").val();
-	this.DCEMISelectedAmount = this.emiDebitArray.filter(
-	emi => emi.key === this.DCEMItenure);
-	
-	var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));	
-	var finalFare=this.payTotalFare;
-	this.spinnerService.show();
-	let cardnumber=this.DebitEMIFrom.controls['cardnumber'].value.replace(/-/g, "");
-	var checkExistingCustomerParams = {
-		'client_token': 'HDFC243',
-		'card_number':cardnumber,
-		'loanAmount':(Number(finalFare)+Number(this.convinenceFee)),
-		'mobile':this.REWARD_MOBILE,
-	 	orderReferenceNumber: sessionStorage.getItem(
+    this.submittedDebitEMIFrom = true;
+
+    if (this.Debit2EMIFrom.status !='VALID') {
+    return;
+    }
+    this.DCEMItenure=$("input[name='payDebitemi-sub']:checked").val();
+    this.DCEMISelectedAmount = this.emiDebitArray.filter(
+    emi => emi.key === this.DCEMItenure);
+    
+    var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));    
+    var finalFare=this.payTotalFare;
+    this.spinnerService.show();
+    let panNo=this.Debit2EMIFrom.controls['panNo'].value.replace(/-/g, "");
+    
+    var checkExistingCustomerParams = {
+        'client_token': 'HDFC243',
+        'panNo':panNo,
+        'loanAmount':(Number(finalFare)),
+        'mobile':this.REWARD_MOBILE,
+        orderReferenceNumber: sessionStorage.getItem(
         this.passSessionKey + "-orderReferenceNumber"
         ),
-	};
-	var postCheckExistingCustomerParams = {
-	postData:this.EncrDecr.set(JSON.stringify(checkExistingCustomerParams))
-	};
+    };
+    console.log(checkExistingCustomerParams);
+    var postCheckExistingCustomerParams = {
+    postData:this.EncrDecr.set(JSON.stringify(checkExistingCustomerParams))
+    };
 
-	this.rest.checkExistingCustomer(postCheckExistingCustomerParams).subscribe(results => {
-	if(results.result ){
-	this.spinnerService.hide();
-	let result=JSON.parse(this.EncrDecr.get(results.result ));
-	this.dcemivaliduserresp = result;
-	if(result.status==true){
-		this.showDebitEMIOtp=true;
-		this.showDebitEMI=false;
-		this.showDebitEMIOtpConfirmation=false;
-	 	this.DCEMIError='';
-	}else{
-		this.DCEMIError=result.message;
-		this.showDebitEMIOtp=false;
-		this.showDebitEMI=true;
-		this.showDebitEMIOtpConfirmation=false;
-	}
-	}else{
-		this.DCEMIError='There is a technical issue, please try again later.';
-		this.showDebitEMIOtp=false;
-		this.showDebitEMI=true;
-		this.showDebitEMIOtpConfirmation=false;
-	}
-	});
+    this.rest.checkExistingCustomer(postCheckExistingCustomerParams).subscribe(results => {
+    if(results.result ){
+    this.spinnerService.hide();
+    let result=JSON.parse(this.EncrDecr.get(results.result ));
+    console.log(result);
+    this.dcemivaliduserresp = result;
+    if(result.status==true){
+        this.showDebitEMIOtp=true;
+        this.showDebitEMI=false;
+        this.showDebitEMIOtpConfirmation=false;
+        this.DCEMIError='';
+    }else{
+        this.DCEMIError=result.errorMessage;
+        this.showDebitEMIOtp=false;
+        this.showDebitEMI=true;
+        this.showDebitEMIOtpConfirmation=false;
+    }
+    }else{
+        this.DCEMIError='There is a technical issue, please try again later.';
+        this.showDebitEMIOtp=false;
+        this.showDebitEMI=true;
+        this.showDebitEMIOtpConfirmation=false;
+    }
+    });
 }
 
 validateDebitEmiOTP(){
@@ -1647,65 +1663,69 @@ this.rest.validateOTPDCEMI(postvalidateParams).subscribe(results => {
 
 }
 validateDebitEmiOTP_new(){
-	this.submittedDebitEMIOTPFrom = true;
-	if (this.DebitEMIOTPFrom.status !='VALID') {
-		return;
-	}
-	this.spinnerService.show();
-	let otpnumber=this.DebitEMIOTPFrom.controls['otpnumber'].value;
-	var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));
-	var finalFare=this.payTotalFare;
-	var dcemi_interest=AppConfig.emiDebitInterst;
-	var validateParams = {
-		'client_token': 'HDFC243',
-		'otpnumber':otpnumber,
-		'invoicePrice':(Number(finalFare)+Number(this.convinenceFee)),
-		'service_id':this.serviceId,
-		'tenure':this.DCEMItenure,
-		'orderReferenceNumber':sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-		'programName':this.sg['domainName'],
-		"token":this.dcemivaliduserresp.token,
-		"bankReferenceNo":this.dcemivaliduserresp.bankReferenceNo,
-		"merchantReferenceNo":this.dcemivaliduserresp.merchantReferenceNo,
-	};
-	this.dcemi_token=this.dcemivaliduserresp.token; 
-	this.dcemi_bankReferenceNo=this.dcemivaliduserresp.bankReferenceNo;
-	this.dcemi_merchantReferenceNo=this.dcemivaliduserresp.merchantReferenceNo;
-	this.dcemi_interestRate=dcemi_interest[this.DCEMItenure];
-	this.dcemi_tenure=this.DCEMItenure;
-    //console.log(validateParams);
-	var postvalidateParams = {
-	postData:this.EncrDecr.set(JSON.stringify(validateParams))
-	};
-	//console.log(postvalidateParams);
-	this.rest.validateOTPDCEMI(postvalidateParams).subscribe(results => {
 
-	  if(results.result ){
-	   this.spinnerService.hide();
-	     let result=JSON.parse(this.EncrDecr.get(results.result ));
-	     this.dcemi_validateOTPresp = result;
-	     if(result.status==true){
-		    
-		     this.showDebitEMIOtp=false;
-		     this.showDebitEMI=false;
-		     this.showDebitEMIOtpConfirmation=true;
-		     this.DCEMIError='';
-		     this.dcemiOtpResponse = result.validateOTPData;
-	     }else{
-		     this.DCEMIConfirmResponse='';
-		     this.DCEMIError=result.message;
-		     this.showDebitEMIOtp=true;
-		     this.showDebitEMI=false;
-		     this.showDebitEMIOtpConfirmation=false;
-	     }
-	  }else{
-	       	this.DCEMIConfirmResponse='';
-	    	this.DCEMIError='There is a technical issue, please try again later.';
-	     	this.showDebitEMIOtp=true;
-	     	this.showDebitEMI=false;
-	     	this.showDebitEMIOtpConfirmation=false;
-	  }
-	});
+    this.submittedDebitEMIOTPFrom = true;
+    if (this.Debit2EMIOTPFrom.status !='VALID') {
+        return;
+    }
+    this.spinnerService.show();
+    let otpnumber=this.Debit2EMIOTPFrom.controls['otpnumber'].value;
+    var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));
+    var finalFare=this.payTotalFare;
+    var dcemi_interest=AppConfig.emiDebitInterst;
+    var validateParams = {
+        'client_token': 'HDFC243',
+        'otpnumber':otpnumber,
+        'invoicePrice':(Number(finalFare)),
+        'service_id':this.serviceId,
+        'tenure':this.DCEMItenure,
+        'orderReferenceNumber':sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
+        'programName':this.sg['domainName'],
+        "token":this.dcemivaliduserresp.token,
+        "bankReferenceNo":this.dcemivaliduserresp.bankReferenceNo,
+        "merchantReferenceNo":this.dcemivaliduserresp.merchantReferenceNo,
+    };
+    console.log(validateParams);
+    this.dcemi_token=this.dcemivaliduserresp.token; 
+    this.dcemi_bankReferenceNo=this.dcemivaliduserresp.bankReferenceNo;
+    this.dcemi_merchantReferenceNo=this.dcemivaliduserresp.merchantReferenceNo;
+    this.dcemi_interestRate=dcemi_interest[this.DCEMItenure];
+    this.dcemi_tenure=this.DCEMItenure;
+    //console.log(validateParams);
+    var postvalidateParams = {
+    postData:this.EncrDecr.set(JSON.stringify(validateParams))
+    };
+    //console.log(postvalidateParams);
+    this.rest.validateOTPDCEMI(postvalidateParams).subscribe(results => {
+      if(results.result ){
+       this.spinnerService.hide();
+         let result=JSON.parse(this.EncrDecr.get(results.result ));
+         console.log(result);
+         this.dcemi_validateOTPresp = result;
+         if(result.status==true){
+            
+             this.showDebitEMIOtp=true;
+             this.showDebitEMI=false;
+             //this.showDebitEMIOtpConfirmation=true;
+             this.DCEMIError='';
+             //this.dcemiOtpResponse = result.validateOTPData;
+             //this.DebitEMIConfirmFrom.status="VALID";
+             this.payNow(11);
+         }else{
+             this.DCEMIConfirmResponse='';
+             this.DCEMIError=result.message;
+             this.showDebitEMIOtp=true;
+             this.showDebitEMI=false;
+             this.showDebitEMIOtpConfirmation=false;
+         }
+      }else{
+            this.DCEMIConfirmResponse='';
+            this.DCEMIError='There is a technical issue, please try again later.';
+            this.showDebitEMIOtp=true;
+            this.showDebitEMI=false;
+            this.showDebitEMIOtpConfirmation=false;
+      }
+    });
 
 }
 goback() {
