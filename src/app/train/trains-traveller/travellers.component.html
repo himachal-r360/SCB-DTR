@@ -1227,7 +1227,7 @@
                 <div class="booking-inner-box additional_preference_sec">
                     <p class="mt-3">
                         <label class="checkbox pl-0">
-                  <input type="checkbox" (click)="autoUpgrade($event)" formControlName="AdditionalPreference">
+                  <input type="checkbox" (click)="autoUpgrade($event)" formControlName="AdditionalPreference" class="gst_cls">
                   <span class="ps-2 check_title">Additional Preferences (Optional)</span>
                   <span class="checkmark"></span>
                 </label>
@@ -1236,54 +1236,54 @@
                     <div class="gst-optional-data" *ngIf="addshow">
                         <div class="">
                             <div>
-                                <p> <label class="checkbox">
-                         <input type="checkbox" formControlName="passengerAutoUpgradation" value="0">
-                         <span class="ps-2 check_title">Consider for Auto Upgradation</span>
+                                <p> <label class="checkbox pl-0">
+                         <input type="checkbox" formControlName="passengerAutoUpgradation" value="0" class="gst_cls">
+                         <span class="ps-2 check_title">Consider for Auto Upgradation</span> 
                          <span class="checkmark"></span>
                          </label>
                                 </p>
                             </div>
                             <div *ngIf="vikalpInSpecialTrainsAccomFlag" class="">
-                                <p> <label class="checkbox">
+                                <p> <label class="checkbox pl-0">
                          <input type="checkbox" formControlName="vikalpInSpecialTrainsAccomFlag">
                          <span class="ps-2 check_title">Opted for VIKALP</span>
                          <span class="checkmark"></span>
                          </label>
                                 </p>
                             </div>
-                            <div class="add-title-reserve">Reservation choice</div>
+                            <div class="add-title-reserve pl-0">Reference choice</div>
                             <div class="res-area">
 
 
-                                <div class="form-check res_radio">
+                                <div class="form-check res_radio  pl-0">
                                     <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="99" class="" id="res-none" checked (change)="passengerReservationChoiceFun($event)">
-                                    <label class="form-check-label ps-2" for="res-none">
+                                    <label class="form-check-label ps-2 " for="res-none">
                           None
                         </label>
                                 </div>
 
-                                <div class="form-check res_radio">
+                                <div class="form-check res_radio pl-0">
                                     <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="1" class="" id="res-all" (change)="passengerReservationChoiceFun($event)">
                                     <label class="form-check-label ps-2" for="res-all">
                           Book only if all berths are alloted in same coach
                         </label>
                                 </div>
 
-                                <div class="form-check res_radio">
+                                <div class="form-check res_radio pl-0">
                                     <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="2" class="" id="res-one" (change)="passengerReservationChoiceFun($event)">
                                     <label class="form-check-label ps-2" for="res-one">
                           Book only if atleast 1 lower berth is allotted
                         </label>
                                 </div>
 
-                                <div class="form-check res_radio">
+                                <div class="form-check res_radio pl-0">
                                     <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="3" class="" id="res-two" (change)="passengerReservationChoiceFun($event)">
                                     <label class="form-check-label ps-2" for="res-two">
                           Book only if atleast 1 lower berth is allotted
                         </label>
                                 </div>
 
-                                <div class="form-check res_radio">
+                                <div class="form-check res_radio pl-0">
                                     <input class="form-check-input" type="radio" formControlName="passengerReservationCh" name="passengerReservationCh" value="4" class="" id="res-three" (change)="passengerReservationChoiceFun($event)">
                                     <label class="form-check-label ps-2" for="res-three">
                           Book only if tickets are confirmed
@@ -1329,9 +1329,9 @@
                 </div>
 
                 <div class="booking-inner-box gst-number-box">
-                    <h6> <span class="form-switch m-0 mr-10">
-                <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
-              </span>GST number for business travel (Optional)</h6>
+                    <h6> <span class="form-switch m-0 mr-10 pl-0">
+                <input class="form-check-input1 gst_cls" type="checkbox" role="switch" (click)="gstToggle()" id="gst_num" />
+              </span><label class="form-check-label" for="gst_num">GST number for business travel (Optional)</label></h6>
                     <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                     </p>
 
@@ -1392,7 +1392,7 @@
                     </ng-template>
 
                     <div class="row" *ngIf="gstSelected">
-                        <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>GST Number</mat-label>
                                 <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber" minlength="15" maxlength="15" autocomplete="off" (keypress)="AvoidSpace($event)" (keypress)="specialcharInputAddress($event)" (keyup)="convertToUpperCase($event);">
@@ -1404,10 +1404,7 @@
                             </mat-form-field>
 
                         </div>
-                    </div>
-
-                    <div class="row" *ngIf="gstSelected">
-                        <div class="col-lg-4 col-md-4 col-6">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Business Name</mat-label>
                                 <input matInput placeholder="Business Name" formControlName="gstBusinessName" name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off" (keypress)="specialcharInputAddress($event)">
@@ -1418,7 +1415,12 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-6">
+
+                    </div>
+
+                    <div class="row" *ngIf="gstSelected">
+                        
+                        <div class="col-lg-5 col-md-5 col-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Business Address</mat-label>
                                 <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress" id="gstAddress" maxlength="100" (keypress)="specialcharInputAddress($event)" autocomplete="off">
@@ -1427,7 +1429,7 @@
                                 <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstAddress')">Please enter valid address.No special characters allowed except / - ,</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-6">
+                        <div class="col-lg-5 col-md-5 col-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Pincode</mat-label>
                                 <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)" (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
@@ -1439,7 +1441,7 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="gstSelected">
-                        <div class="col-lg-4 col-md-4 col-6">
+                        <div class="col-lg-5 col-md-5 col-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>City / Town</mat-label>
                                 <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity" autocomplete="nope">
@@ -1449,7 +1451,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-lg-4 col-md-4 col-6">
+                        <div class="col-lg-5 col-md-5 col-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>State</mat-label>
                                 <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value={{state}}>
