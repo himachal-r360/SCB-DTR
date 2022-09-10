@@ -1,0 +1,283 @@
+<section class="bradcome-area mt-110 mb-10">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="bradcome-list">
+                  <ul class="list-inline">
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/bus">Home</a></li>
+                      <li class="list-inline-item"><span>/</span></li>
+                      <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
+                      <li class="list-inline-item"><span>/</span></li>
+                      <li class="list-inline-item"><span>Bus Search</span></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+<section class="flight-area mt-10" *ngIf="!isMobile">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="travel-box mb-20">
+                    <app-bus-search modifySearch="true" isViewPartner="false"></app-bus-search>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="layout-box">
+                    <div class="layout-left">
+                        <div class="filter-loaders animation-loader" *ngIf="loader">
+                            <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                                <div class="filter-loader-content ">
+                                    <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px', width:'25%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                    <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px', width:'50%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                    <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '25px', width:'100%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div [hidden]="loader">
+                            <div class="Filterslayout d-flex justify-content-between align-items-center">
+                                <h6 class="fs_16">Filters</h6>
+                                <a href="javascript:void(0)" class="fs_13 text-color" (click)="resetAllFilters()">Reset all</a>
+                            </div>
+                            <hr>
+                            <div class="default-sidebar flight-sidebar" [hidden]="loader">
+                                
+                                
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="layout-right">
+                        <div class="flightsfound" [hidden]="loader">
+                            <div class="flight-tosearch">
+                                <h6>
+                                    <img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{fromCityName}} to {{toCityName}}
+                                    <!-- <small>Thu, 12 Mar</small> -->
+                                    <small>{{departureDate | date:"EEE ,dd MMM"}}</small>
+                                </h6>
+
+                                <div class="flight-search-filters-right">
+                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterFlightData($event)">
+                                        <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flight-search-filters">
+                                <div class="flight-search-filters-left">
+                                    <p *ngIf="flightList">{{flightList.length}} flights found</p>
+                                </div>
+                            </div>
+                          
+                        </div>
+                        <div class="tabletitle-area" [hidden]="loader">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="tabletitle-content">
+                                        <p>Airlines</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="tabletitle-content tabletitle-departure">
+                                        <p>Departure</p>
+                                        <p>Arrival</p>
+                                        <p>Duration</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="tabletitle-content">
+                                        <p>Partner</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="tabletitle-content">
+                                        <p class="ml-10">Fare</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Listing -->
+                        <div class="flight-listing-area" *ngIf="loader">
+                            <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
+                                <div class="filter-loader-content w-100">
+                                    <span style="width:15%;"><ngx-skeleton-loader  [theme]="{ width: '100px', height: '100px' }"></ngx-skeleton-loader></span>
+                                    <span class="float-right" style="width:85%;">
+                                <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '30px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flight-listing-area">
+                            <ng-container #itemsContainer></ng-container>
+                        </div>
+                        
+                        <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                            <div class="no_flights_sec" >
+                                <div>
+                                    <p class="title">Yikes! No flight found</p>
+                                    <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                    <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                                    <div>
+                                        <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #item let-item="item">
+                            <div *ngFor="let list of item; let i = index">
+                            Web
+                            </div>    
+                        </ng-template>
+                        <div id="endOfPage" (click)="loadData()"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Mobile Screen starts-->
+
+<section class="mob-flights-listing" *ngIf="isMobile">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 p-0 fixed-top">
+                <div class="mob-listing-header">
+                    <div class="mob-listing-header-left">
+                        <a href="javascript:;" routerLink="/compare-fly">
+                            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                        </a>
+                    </div>
+                    <div class="mob-listing-header-center">
+                        <h6>{{fromCityName}} - {{toCityName}}</h6>
+                        <p>{{departureDate | date:'EEE, dd MMM' }} | {{totalPassenger}} Travellers | <span *ngIf="flightClassVal == 'B'">Business</span>
+                            <span *ngIf="flightClassVal == 'E'">Economy</span>
+                            <span *ngIf="flightClassVal == 'F'">First</span>
+                            <span *ngIf="flightClassVal == 'P'">Premium</span>
+                        </p>
+                    </div>
+                    <div class="mob-listing-header-right">
+                        <a href="javascript:;" routerLink="/compare-fly">
+                            <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 flight_found_sec" *ngIf="!loader">
+                <div class="mob-listing-fiters">
+                    <h6>{{flightList.length}} Flights Found</h6>
+                    <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
+                        <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                        <span class="mx-2">Sort/Filters</span>
+                    </a>
+                </div>
+            </div>
+
+
+
+    
+            <div class="col-md-12">
+                <ng-container #itemsContainer></ng-container>
+                <div *ngIf="loader">
+                    <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                        <div class="filter-loader-content w-100">
+                            <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
+                            <span class="w-75 float-right">
+                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                               </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                    <div class="no_flights_sec" >
+                        <div>
+                            <p class="title">Yikes! No flight found</p>
+                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                            <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                            <div>
+                                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #item let-item="item">
+                    <div *ngFor="let list of item; let i = index">
+                        Mobile
+                    </div>
+                </ng-template>
+                <div id="endOfPage" (click)="loadData()"></div>
+            </div>
+
+
+
+            <!-- ------------------------------
+            >>> mobile Sort Filters
+        ---------------------------------->
+            <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
+
+                <div class="mob-sf-box">
+                    <div class="mob-title">
+                        <h3>Sort & Filters</h3>
+                        <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
+                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                        </a>
+                    </div>
+                    <div class="mob-sf-tabs">
+                        <ul class="nav nav-tabs">
+                            <li>
+                                <a class="active" href="#Sort" role="tab" aria-controls="Sort" data-bs-toggle="tab">Sort by</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#Filters" role="tab" aria-controls="Filters" data-bs-toggle="tab">Filters</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content clearfix">
+                            <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
+                                <div class="mob-sf-sort">
+                                    <div class="mob-sf-sort-by">
+                                        <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
+                                         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mob-sf-btns">
+                                    <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
+                     
+                                       <div class="mob-sf-btns">
+                                        <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Mobile Screen ends-->
+
+
+
+<a href="javascript:void(0)" (click)="gotoTop()" class="scrollToTop">
+    <i class="far fa-dot-circle"></i>
+    <span>Top</span>
+</a>
+
+

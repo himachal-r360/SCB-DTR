@@ -2293,7 +2293,6 @@ saveTravellerFunc(saveTravellerArray){
         this.ChildQuantity =this.maxChilds;   
         this.InfantQuantity = this.maxInfants;
 
-console.log(res.response);
 
         this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
@@ -3130,7 +3129,6 @@ saveTravellerArray=[];
 
   // this.itineratyButton=true;
 
-console.log(this.passengerForm);
 
     if (this.passengerForm.invalid) {
      this.passengerForm.markAllAsTouched();
@@ -3734,14 +3732,12 @@ console.log(this.passengerForm);
       }, 700);
       this.new_fare = 0;
 
-         console.log(this.itineraryRequest);
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryRequest))
       };
       this.rest.createItinerary(requestParamsEncrpt,type).subscribe(response => {
      //this.itineratyButton=false;
         this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
-  console.log(this.itinararyResponse);
         let itinararyResponse;
        if( this.flightSessionData['travel_type']=='M') {
        
@@ -3795,7 +3791,6 @@ console.log(this.passengerForm);
       };
           this.rest.getBaggageInfo(requestParamsEncrpt1).subscribe(response => { 
           var itinararyBaggageResponse = JSON.parse(this.EncrDecr.get(response.result));
-          console.log(itinararyBaggageResponse);
                    let baggage_data:any=[]; let baggage_data1:any=[];
           if(itinararyBaggageResponse && itinararyBaggageResponse['response']['errorCode']==200){
        
@@ -3910,8 +3905,17 @@ orderReferenceNumber:any;
         
         if( this.flightSessionData.onwardFlights[i]){
         let fligthsOnwardTemp=[];
+        let stops='';
+        
+        if(this.flightSessionData.onwardFlights[i]['flights'].length ==1 && this.flightSessionData.onwardFlights[i]['flights'][0].stops==0)
+        stops='Non-Stop';
+        if(this.flightSessionData.onwardFlights[i]['flights'].length ==1 && this.flightSessionData.onwardFlights[i]['flights'][0].stops==1)
+        stops=(this.flightSessionData.onwardFlights[i]['flights'].length -1 )+' Stop';
+        if(this.flightSessionData.onwardFlights[i]['flights'].length > 1)
+        stops=(this.flightSessionData.onwardFlights[i]['flights'].length -1 )+' Stop';
+        
+        
          for (let j = 0; j < (this.flightSessionData.onwardFlights[i]['flights'].length); j++) {
-         
          
         var operated_by='';
 
@@ -3955,7 +3959,7 @@ orderReferenceNumber:any;
         "frcnt": "",
         "flystart": "",
         "airportname_desti": this.airportsNameJson[this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalAirport']]['airport_name'],
-        "flight_type": this.flightSessionData.onwardFlights[i]['flights'][j]['stops'] == 0 ? "Non-Stop" : this.flightSessionData.onwardFlights[i]['flights'][j]['stops'] + " Stop",
+        "flight_type": stops,
         "departureTerminal": this.flightSessionData.onwardFlights[i]['flights'][j]['departureTerminal'] ? this.flightSessionData.onwardFlights[i]['flights'][j]['departureTerminal'] : '',
         "arrivalTerminal": this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalTerminal'] ? this.flightSessionData.onwardFlights[i]['flights'][j]['arrivalTerminal'] : '',
         "stopsDetails": this.flightSessionData.onwardFlights[i]['flights'][j]['stopsDetails']
@@ -4010,7 +4014,15 @@ orderReferenceNumber:any;
      
      }
       
-    
+        let stops='';
+
+        if(this.flightSessionData.onwardFlights.length ==1 && this.flightSessionData.onwardFlights[0]['stops']==0)
+        stops='Non-Stop';
+        if(this.flightSessionData.onwardFlights.length ==1 && this.flightSessionData.onwardFlights[0]['stops']==1)
+        stops=(this.flightSessionData.onwardFlights.length -1 )+' Stop';
+        if(this.flightSessionData.onwardFlights.length > 1)
+        stops=(this.flightSessionData.onwardFlights.length -1 )+' Stop';
+
     
       fligthsOnward.push({
         "arr_tym": this.flightSessionData.onwardFlights[i]['arrivalDateTime'],
@@ -4043,7 +4055,7 @@ orderReferenceNumber:any;
         "frcnt": "",
         "flystart": "",
         "airportname_desti": this.airportsNameJson[this.flightSessionData.onwardFlights[i]['arrivalAirport']]['airport_name'],
-        "flight_type": this.flightSessionData.onwardFlights[i]['stops'] == 0 ? "Non-Stop" : this.flightSessionData.onwardFlights[i]['stops'] + " Stop",
+        "flight_type": stops,
         "departureTerminal": this.flightSessionData.onwardFlights[i]['departureTerminal'] ? this.flightSessionData.onwardFlights[i]['departureTerminal'] : '',
         "arrivalTerminal": this.flightSessionData.onwardFlights[i]['arrivalTerminal'] ? this.flightSessionData.onwardFlights[i]['arrivalTerminal'] : '',
         "stopsDetails":this.flightSessionData.onwardFlights[i]['stopsDetails']
@@ -4063,6 +4075,17 @@ orderReferenceNumber:any;
       operated_by= this.flightSessionData.returnFlights[i].operatingAirline
      
      }
+     
+           
+        let stops='';
+
+        if(this.flightSessionData.returnFlights.length ==1 && this.flightSessionData.returnFlights[0]['stops']==0)
+        stops='Non-Stop';
+        if(this.flightSessionData.returnFlights.length ==1 && this.flightSessionData.returnFlights[0]['stops']==1)
+        stops=(this.flightSessionData.returnFlights.length -1 )+' Stop';
+        if(this.flightSessionData.returnFlights.length > 1)
+        stops=(this.flightSessionData.returnFlights.length -1 )+' Stop';
+
 
       fligthsReturn.push({
         "arr_tym": this.flightSessionData.returnFlights[i]['arrivalDateTime'],
@@ -4095,7 +4118,7 @@ orderReferenceNumber:any;
         "frcnt": "",
         "flystart": "",
         "airportname_desti": this.airportsNameJson[this.flightSessionData.returnFlights[i]['arrivalAirport']]['airport_name'],
-        "flight_type": this.flightSessionData.returnFlights[i]['stops'] == 0 ? "Non-Stop" : this.flightSessionData.returnFlights[i]['stops'] + " Stop",
+        "flight_type": stops,
         "departureTerminal": this.flightSessionData.returnFlights[i]['departureTerminal'] ? this.flightSessionData.returnFlights[i]['departureTerminal'] : '',
         "arrivalTerminal": this.flightSessionData.returnFlights[i]['arrivalTerminal'] ? this.flightSessionData.returnFlights[i]['arrivalTerminal'] : '',
         "stopsDetails": this.flightSessionData.returnFlights[i]['stopsDetails']
@@ -4159,6 +4182,7 @@ orderReferenceNumber:any;
     };
     this.orderReferenceNumber=order_ref_num;
     
+    console.log(checkoutData);
 
     var saveCheckoutData = {
       orderReferenceNumber: order_ref_num,
@@ -4334,7 +4358,6 @@ orderReferenceNumber:any;
   receivePointsPlus($event) {
     this.voucher_code=$event.code;
     this.voucher_amount=$event.value;
-   console.log($event);
   }
 
 

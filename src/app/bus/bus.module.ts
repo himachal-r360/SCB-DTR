@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuslistComponent,BottomSortbySheet,ChromeExtBusDialog} from './buslist/buslist.component';
+import { BusNewlistComponent} from './bus-list/bus-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes,RouteReuseStrategy } from '@angular/router';
 import { MaterialModule } from '../material.module';
@@ -36,14 +37,16 @@ const routes: Routes = [
   },
   {
     path:"regalia_gold/bus/checkout" ,component:BusCheckoutComponent,
+  },
+  {
+    path:"buses/search" ,component:BusNewlistComponent,
   }
-
 
 ];
 
 @NgModule({
   declarations: [
-    BuslistComponent,BottomSortbySheet,BottomSheetComponent,CheckoutBottomSheetComponent,ChromeExtBusDialog,BusfilterPipe,BusCheckoutComponent
+    BuslistComponent,BusNewlistComponent,BottomSortbySheet,BottomSheetComponent,CheckoutBottomSheetComponent,ChromeExtBusDialog,BusfilterPipe,BusCheckoutComponent
 
   ],
   imports: [
