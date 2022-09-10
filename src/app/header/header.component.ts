@@ -582,17 +582,39 @@ closeCookieConsent(value){
         var blue_dott=""; var classs="";
         result.result.forEach((v, k) =>  {    
 
-            if((unreadId.indexOf(unreadId) === -1)){
-            unreadId.push(v['id']);         
-          } 
-        // console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
-         
-          var condition = document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']);
-          if((condition == true) && (readId.indexOf(readId) === -1)) {
-            readId.push(v['id']);
-          }
-              this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
+              if((unreadId.indexOf(unreadId) === -1)){
+                unreadId.push(v['id']);         
+              } 
+            // console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
+             
+              var condition = document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']);
+              if((condition == true) && (readId.indexOf(readId) === -1)) {
+                readId.push(v['id']);
+              }
+                  this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
+
         });
+          if(this.cookieService.get('push_status') != undefined)
+          {
+              if(((unreadId.indexOf(readId) !== -1)) && (readId.length === unreadId.length)) {
+
+                  this.cookieService.set('read_notify',1, null, '/', null, null, null);
+                  $('#notify-boll').removeClass('img-number');        
+                  $('#notify-boll').removeClass('number');                            
+              } else {    
+                              
+                  this.cookieService.set('read_notify',0, null, '/', null, null, null);
+                  $('#notify-boll').addClass('img-number');     
+                  $('#notify-boll').addClass('number'); 
+              }
+
+          } else {
+              this.cookieService.set('read_notify',0, null, '/', null, null, null);
+                $('#notify-boll').addClass('img-number');    
+                $('#notify-boll').addClass('number'); 
+              // readId = [];
+              // unreadId = [];
+          }
 
             //console.log(unreadId+"   ---    "+readId);  
       
