@@ -322,20 +322,24 @@
 
                     <div class="traveler-details-info mt-15">
                       <div class="row">
-                                                <!-- radio buttons male/female-->
-                                                <div class="col-12">
-                                                  <div class="trip_select">
-                                                      <div class="buttonTrip">
-                                                          <input type="radio" id="male" formControlName="passengerGender{{ i }}" name="flightTripType" checked (ngModelChange)="selectTripType($event)" value="Male" />
-                                                          <label class="btn btn-default" for="male">Male</label>
-                                                      </div>
-                                                      <div class="buttonTrip">
-                                                          <input type="radio" id="female" formControlName="passengerGender{{ i }}" name="flightTripType" (ngModelChange)="selectTripType($event)" value="Female" />
-                                                          <label class="btn btn-default" for="female">Female</label>
-                                                      </div>
-                                                  </div>
-                                                </div>
-                                            <!-- end of radio buttons male/female -->
+                          <!-- radio buttons male/female-->
+                          <div class="col-12">
+                            <div class="trip_select">
+                                <div class="buttonTrip" *ngIf="!seacthResult.seatdetails[i].ladiesSeat">
+                                    <input type="radio" id="male" formControlName="passengerGender{{ i }}" name="genderRadio" checked  value="Male" />
+                                    <label class="btn btn-default" for="male">Male</label>
+                                </div>
+                                <div class="buttonTrip">
+                                    <input type="radio" id="female" formControlName="passengerGender{{ i }}"  name="genderRadio"  value="Female" />
+                                    <label class="btn btn-default" for="female">Female</label>
+                                </div>
+                            </div>
+                            <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
+                              <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
+                                required</mat-error>
+                            </span>
+                          </div>
+                      <!-- end of radio buttons male/female -->
                     
                       </div>
                       <div class="row">
@@ -467,7 +471,88 @@
                           </div>
                      </ul>
                 </div>
+                <div class="traveler-details-info" >
+                  <div class="row">
+                      <!-- radio buttons male/female-->
+                      <div class="col-12">
+                        <div class="trip_select">
+                            <div class="buttonTrip" *ngIf="!seacthResult.seatdetails[i].ladiesSeat">
+                                <input type="radio" id="male" formControlName="passengerGender{{ i }}" name="genderRadio" checked  value="Male" />
+                                <label class="btn btn-default" for="male">Male</label>
+                            </div>
+                            <div class="buttonTrip">
+                                <input type="radio" id="female" formControlName="passengerGender{{ i }}"  name="genderRadio"  value="Female" />
+                                <label class="btn btn-default" for="female">Female</label>
+                            </div>
+                        </div>
+                        <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
+                          <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
+                            required</mat-error>
+                        </span>
+                      </div>
+                  <!-- end of radio buttons male/female -->
                 
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-lg-4 col-md-6">
+                      <div>
+                        <mat-form-field class="w-100" appearance="outline">
+                          <mat-label>First Name</mat-label>
+                          <input matInput placeholder="" formControlName="passengerFirstName{{ i }}"
+                            name="passengerFirstName{{ i }}" id="passengerFirstName{{ i }}" (keypress)="flInput($event)"
+                            autocomplete="off">
+                          </mat-form-field>
+
+                          <span *ngIf="submitted && passengerForm.controls['passengerFirstName'+i]['errors']">  
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['required']">First
+                              Name is required</mat-error>
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['pattern']">Please
+                              enter valid name</mat-error>
+                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['minlength']">Please
+                              enter atleast 2 character</mat-error> 
+                             </span> 
+                      </div>
+
+                    </div>
+                    <div class="col-12 col-lg-4 col-md-6">
+                      <div>
+                        <mat-form-field class="w-100" appearance="outline">
+                          <mat-label>Last Name</mat-label>
+                          <input matInput placeholder="" formControlName="passengerLastName{{ i }}"
+                            name="passengerLastName{{ i }}" id="passengerLastName{{ i }}" (keypress)="flInput($event)"
+                            autocomplete="off">
+                        </mat-form-field>
+                        <span *ngIf="submitted && passengerForm.controls['passengerLastName'+i]['errors']" class="error">
+                          <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerLastName'+i]['errors']['required']">Last Name
+                            is required</mat-error>
+                          <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerLastName'+i]['errors']['pattern']">Please
+                            enter valid name</mat-error>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-12 col-lg-4 col-md-6">
+                      <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Age</mat-label>
+                        <input matInput placeholder="" formControlName="passengerAge{{ i }}" type="tel"
+                          name="passengerAge{{ i }}" id="passengerAge{{ i }}" maxlength="3" autocomplete="off"
+                          (keypress)="numberInput($event)" (keyup)="ageCheck($event,i)">
+                      </mat-form-field>
+                      <span *ngIf="submitted && passengerForm.controls['passengerAge'+i]['errors']" class="error">
+                        <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['required'] && !i==defaultPrimary" >Age is
+                          required</mat-error>
+                        <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['pattern']" >Age should be
+                          numeric</mat-error>
+                        <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']" >Age should be less
+                          than 125</mat-error>
+                          
+                          <mat-error *ngIf="submitted && i==defaultPrimary && !passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">{{ ageValidError }}</mat-error>
+                      </span>
+
+                    </div>
+                    
+                  </div>
+
+                </div>
                   </div>
                 </div>
 

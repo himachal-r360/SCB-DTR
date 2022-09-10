@@ -4,8 +4,8 @@
             <div class="hotel-area">
                 <div class="hotel-area-item" (click)="showCity('show')">
                     <span class="small-text">CITY, Hotel or Area</span>
-                    <h5 class="large-text">{{hotelSearchForm.value.city}}</h5>
-                    <span class="small-text hotel-city">India</span>
+                    <h5 class="large-text">{{cityName}}</h5>
+                    <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
                 </div>
                 <div class="hotel-search-list" #hideShowCity>
                     <div class="mob-title">
@@ -16,26 +16,31 @@
                     </div>
                     <div class="hotel-from-data-search">
                         <span>from</span>
-                        <input type="text" class="w-100" id="" placeholder="Search City" formControlName="city"  (keyup)="searchAutoComplete($event)">
+                        <!-- <input type="text" class="w-100" id="" placeholder="Search City" formControlName="city"  (keyup)="searchAutoComplete($event)"> -->
+                        <input type="text" class="w-100" #citySearchRef placeholder="Search City" formControlName="city" >
+                        <input type="hidden" class="w-100" formControlName="countryName" >
                     </div>
                     <ul class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
-                        <li class="hotel-from-ul-li">
-                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a">
+                    <ng-container *ngFor="let item of queryText">
+                        <li class="hotel-from-ul-li"  >
+                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a" (click)="onSelectCity(item)">
                                 <div class="hotel-from-name">
                                     <img src="assets/images/hotel/icon/hotel.png" alt="">
-                                    <h6>Goa, Goa, India</h6>
+                                    <h6>{{item._source.full_content}}</h6>
                                     <p>528 Hotels</p>
                                 </div>
                             </a>
                         </li>
+                    </ng-container>
+                    
                     </ul>
                 </div>
             </div>
             <div class="hotel-in-out">
                 <div class="hotel-in" (click)="picker.open()">
                     <span class="small-text">CHECK-IN</span>
-                    <h5 class="large-text">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
-                    <span class="hotel-city small-text">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
+                    <h5 class="large-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
+                    <span class="hotel-city small-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                             <input matInput [matDatepicker]="picker" formControlName="checkIn" >
@@ -49,8 +54,8 @@
                 <div class="hotel-out" (click)="picker2.open()">
                     <span class="small-text">CHECK-OUT</span>
                     <!-- <h5 class="large-text">Aug 11</h5> -->
-                    <h5 class="large-text">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
-                    <span class="hotel-city small-text">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
+                    <h5 class="large-text" *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
+                    <span class="hotel-city small-text"  *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                             <input matInput [matDatepicker]="picker2" formControlName="checkOut" >

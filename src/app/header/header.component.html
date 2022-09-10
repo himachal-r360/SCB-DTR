@@ -135,7 +135,7 @@
                             <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                                 <div>
                                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
-                                    <span [ngClass]="(pushcount)>0  ? 'cart_count_pla' : ''"><span></span></span>
+                                    <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                                 </div>
                                 <!--  Notification Box Starts -->
                                 <div class="position-relative ">
@@ -168,7 +168,7 @@
                                                     <p>Currently, there are no notifications for you!</p>
                                                     <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
                                                 </div>
-                                                <div class="modal-header push-modal-new-head" *ngIf="pushcountavail">
+                                                <div class="modal-header push-modal-new-head">
                                                     <h6 class="modal-title " *ngIf="enablePushTitle==false ">Push Notification Box </h6>
                                                     <p class="modal-title push-modal-head" *ngIf="enablePushTitle==true ">Notifications </p>
                                                     <p *ngIf="enablePushTitle==true " class="push-not-font">Push on notifications enabled. Device now setup to receive push notifications</p>
@@ -511,7 +511,7 @@
                                             </div>
                                             <div>
                                                 <h5>Instant Voucher</h5>
-                                                <p>{{serviceSettings.offer_construct.instant_voucher.reward}}X Reward Points <br/> {{serviceSettings.offer_construct.mmt.reward}}% Cashback</p>
+                                                <p>{{serviceSettings.offer_construct.instant_voucher.reward}}X Reward Points <br/> {{serviceSettings.offer_construct.instant_voucher.cashback}}% Cashback</p>
                                             </div>
                                         </div>
                                     </div>
@@ -717,7 +717,7 @@
                         <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                             <div>
                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
-                                <span [ngClass]="(pushcount)>0  ? 'cart_count_pla' : ''"><span></span></span>
+                                <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                             </div>
                             <!--Notification Box Starts-->
                             <div class="position-relative ">
@@ -750,7 +750,7 @@
                                                 <p>Currently, there are no notifications for you!</p>
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
                                             </div>
-                                            <div class="modal-header push-modal-new-head" *ngIf="pushcountavail">
+                                            <div class="modal-header push-modal-new-head">
                                                 <h6 class="modal-title " *ngIf="enablePushTitle==false ">Push Notification Box </h6>
                                                 <p class="modal-title push-modal-head" *ngIf="enablePushTitle==true ">Notifications </p>
                                                 <p *ngIf="enablePushTitle==true " class="push-not-font">Push on notifications enabled. Device now setup to receive push notifications</p>
@@ -3253,7 +3253,7 @@
                 <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
             </div>
 
-            <div class="modal-header" *ngIf="pushcountavail">
+            <div class="modal-header">
                 <h5 class="modal-title" id="pushNotifiModalLabel">Notifications</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

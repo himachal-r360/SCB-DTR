@@ -171,7 +171,7 @@ export class HeaderComponent implements OnInit {
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
-
+	notificationball:boolean=true;
 
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
@@ -575,37 +575,47 @@ closeCookieConsent(value){
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcount = result.result.length;
-       // console.log(result);
+        console.log(result);
         
         const unreadId = [];
         const readId = [];
         var blue_dott=""; var classs="";
         result.result.forEach((v, k) =>  {    
-
+       
               if((unreadId.indexOf(unreadId) === -1)){
                 unreadId.push(v['id']);         
               } 
-            //console.log($("#offers-tab-content_"+v['id']+" h4").classList.contains("clicked_" + v['id']));
-             
-              var condition = $("#offers-tab-content_"+v['id']+" h4").classList.contains("clicked_" + v['id']);
-              if((condition == true) && (readId.indexOf(readId) === -1)) {
+            // console.log(document.getElementById("offers-tab-content_" + v['id']).classList.contains("clicked_" + v['id']));
+             var idcondition = document.getElementById("offers-tab-content_" + v['id']);
+		if(idcondition){
+              var condition = document.getElementsByClassName("clicked_" + v['id']).length>0;
+              if(condition && (readId.indexOf(readId) === -1)) {
                 readId.push(v['id']);
               }
+		}
                   this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
 
         });
+				
+		// console.log(readId.length);
+		// console.log(unreadId.length);
           if(this.cookieService.get('push_status') != undefined)
-          {
-              if(((unreadId.indexOf(readId) !== -1)) && (readId.length === unreadId.length)) {
+          {	
+		if(this.cookieService.get('read_notify'))this.notificationball = false;   
 
+              if((readId.length === unreadId.length) ) {
+		
+		//if(filtered){
                   this.cookieService.set('read_notify','1', null, '/', null, null, null);
                   $('#notify-boll').removeClass('img-number');        
-                  $('#notify-boll').removeClass('number');                            
+                  $('#notify-boll').removeClass('number'); 
+		this.notificationball = false;                           
               } else {    
                               
-                  this.cookieService.set('read_notify','0', null, '/', null, null, null);
+                 /* this.cookieService.set('read_notify','0', null, '/', null, null, null);
                   $('#notify-boll').addClass('img-number');     
                   $('#notify-boll').addClass('number'); 
+		this.notificationball = true;  */ 
               }
 
           } else {
@@ -615,6 +625,7 @@ closeCookieConsent(value){
               // readId = [];
               // unreadId = [];
           }
+		
 
             //console.log(unreadId+"   ---    "+readId);  
       
@@ -623,7 +634,7 @@ closeCookieConsent(value){
 
     analyticsLogEvent(event,id,url){
     var customerid ='';
-    if(this.customerInfo.hasOwnProperty('id')){
+    if(this.customerInfo != undefined && this.customerInfo.hasOwnProperty('id')){
       customerid=this.customerInfo['id']
     }
     
