@@ -145,8 +145,7 @@
                   <div class="Flight-One">
                     <div class="Booking-Flight-name">
                       <div class="Booking-Flight-name-left">
-                        <img src="{{ cdnUrl }}/images/airlines/{{ flights.airline }}.gif" class="flight-image"
-                          alt="{{ flights.airline }}" class="flight-image mr-10">
+                       <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
                         <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
                         <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                       </div>
@@ -404,8 +403,7 @@
                 <div class="Flight-One">
                   <div class="Booking-Flight-name">
                     <div class="Booking-Flight-name-left">
-                      <img src="{{ cdnUrl }}/images/airlines/{{ flights.airline }}.gif" class="flight-image"
-                        alt="{{ flights.airline }}" class="flight-image mr-10">
+                         <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
                       <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
                       <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                     </div>
@@ -605,8 +603,7 @@
                 <div class="Flight-One">
                   <div class="Booking-Flight-name">
                     <div class="Booking-Flight-name-left">
-                      <img src="{{ cdnUrl }}/images/airlines/{{ flights.airline }}.gif" class="flight-image"
-                        alt="{{ flights.airline }}" class="flight-image mr-10">
+                         <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
                       <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
                       <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                     </div>
@@ -792,42 +789,6 @@
                 <h6>Fare Rules</h6>
               </div>
               <div class="flight-extra-details">
-
-                <!-- <div class="rules-flight">
-                    <a href="javascript:void(0);" (click)="changeFareRuleTabOnward($event)" data-bind="onwardFareDetails"  *ngIf="cancellationPolicyOnward || baggageInfoOnward" >
-                  <div class="rules-flight-items">
-                      <div class="rules-flight-thumbe">
-                        <img src="{{ cdnUrl }}/images/airlines/{{ flightOnwardDetails[0].airline }}.gif"
-                          alt="{{ flightOnwardDetails[0].airline }}" class=" mr-10">
-                      </div>
-                      <div class="rules-flight-content">
-                        <h6>
-                          {{ searchData.fromCity }}
-                          <img src="{{ cdnUrl }}/images/icons/flight-right.png" alt="">
-                          {{ searchData.toCity }}
-                        </h6>
-                      </div>
-                    </div>
-                </a>
-
-
-                <a href="javascript:void(0);" (click)="changeFareRuleTabReturn($event)" data-bind="returnFareDetails"  *ngIf="cancellationPolicyReturn || baggageInfoReturn">
-                  <div class="rules-flight-items" *ngIf="flightReturnDetails[0]">
-                      <div class="rules-flight-thumbe">
-                        <img src="{{ cdnUrl }}/images/airlines/{{ flightReturnDetails[0].airline }}.gif"
-                          alt="{{ flightReturnDetails[0].airline }}" class=" mr-10">
-                      </div>
-                      <div class="rules-flight-content">
-                        <h6>
-                          {{ searchData.toCity }}
-                          <img src="{{ cdnUrl }}/images/icons/flight-right.png" alt="">
-                          {{ searchData.fromCity }}
-                        </h6>
-                      </div>
-                    </div>
-                </a>
-
-                </div>-->
                 <!--Onward-->
                 <div id="onwardFareDetails" class="flight-extra-content-onward">
                   <ul class="list-unstyled flight-extra-tabs">
@@ -4911,12 +4872,9 @@
                       <div class="booking-inner-title-left flight_review_count" *ngIf="searchDatad">
                         <div class="head_info">
                           <div class="float-start">
-                            <img *ngIf="onward_airline_unique" src="{{ cdnUrl }}/images/airlines/Multi.gif"
-                              class="flight-image mx-2" alt="Multi">
-                            <img *ngIf="!onward_airline_unique"
-                              src="{{ cdnUrl }}/images/airlines/{{ flightOnwardDetails[searchi]['flights'][0]['airline'] }}.gif"
-                              class="flight-image mx-2"
-                              alt="{{ flightOnwardDetails[searchi]['flights'][0]['airline'] }}">
+                           <i *ngIf="onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
+                           <i *ngIf="!onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x{{ flightOnwardDetails[searchi]['flights'][0]['airline'] }}"></i>
+                          
                           </div>
                           <h6>
                             <span class="city_text">{{ searchDatad.fromCity }}</span>
@@ -4979,8 +4937,7 @@
                         <div class="Flight-One">
                           <div class="Booking-Flight-name">
                             <div class="Booking-Flight-name-left">
-                              <img src="{{ cdnUrl }}/images/airlines/{{ flights.airline }}.gif" alt="{{ flights.airline }}"
-                                class="flight-image mr-10">
+                                  <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline }}"></i>
                               <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
                               <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                             </div>
@@ -5089,12 +5046,8 @@
                     <div class="booking-inner-title-left" *ngIf="searchData">
                       <div class="head_info">
                         <div class="float-start">
-                          <img *ngIf="onward_airline_unique" src="{{ cdnUrl }}/images/airlines/Multi.gif"
-                            class="flight-image mx-2" alt="Multi">
-                          <img *ngIf="!onward_airline_unique"
-                            src="{{ cdnUrl }}/images/airlines/{{ flightOnwardDetails[0]['airline'] }}.gif"
-                            class="flight-image mx-2"
-                            alt="{{ flightOnwardDetails[0]['airline'] }}">
+                              <i *ngIf="onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
+                              <i  *ngIf="!onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x{{flightOnwardDetails[0]['airline'] }}"></i>
                         </div>
                         <h6>
                           <span class="city_text">{{ searchData.fromCity }}</span>
@@ -5158,12 +5111,9 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="onward_airline_unique" src="{{ cdnUrl }}/images/airlines/Multi.gif"
-                          class="flight-image  mx-2" alt="Multi">
-                        <img *ngIf="!onward_airline_unique"
-                          src="{{ cdnUrl }}/images/airlines/{{ flightOnwardDetails[0]['airline'] }}.gif"
-                          class="flight-image  mx-2"
-                          alt="{{ flightOnwardDetails[0]['airline'] }}">
+                      <i *ngIf="onward_airline_unique"  class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
+                      <i *ngIf="!onward_airline_unique"  class="mx-2 free-flow air-logo intAirLogo size-28  x{{flightOnwardDetails[0]['airline']}}"></i>
+            
                       </div>
                       <h6>
                         <span class="city_text">{{ searchData.fromCity }}</span>
@@ -5223,12 +5173,9 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="onward_airline_unique" src="{{ cdnUrl }}/images/airlines/Multi.gif"
-                          class="flight-image  mx-2" alt="Multi">
-                        <img *ngIf="!onward_airline_unique"
-                          src="{{ cdnUrl }}/images/airlines/{{ flightOnwardDetails[searchi]['flights'][0]['airline'] }}.gif"
-                          class="flight-image  mx-2"
-                          alt="{{ flightOnwardDetails[searchi]['flights'][0]['airline'] }}">
+                      <i *ngIf="onward_airline_unique"  class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
+                      <i *ngIf="!onward_airline_unique"  class="mx-2 free-flow air-logo intAirLogo size-28  x{{flightOnwardDetails[0]['airline']}}"></i>
+            
                       </div>
                       <h6 class="w-100">
                         <span class="city_text">{{ searchDatad.fromCity }}</span>
@@ -5285,8 +5232,7 @@
                     <div class="Flight-One">
                       <div class="Booking-Flight-name">
                         <div class="Booking-Flight-name-left">
-                          <img src="{{ cdnUrl }}/images/airlines/{{ flights.airline }}.gif" alt="{{ flights.airline }}"
-                            class="flight-image mr-10">
+                          <i class=" mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
                           <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
                           <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                         </div>
@@ -5393,8 +5339,7 @@
                     <div class="Flight-One">
                       <div class="Booking-Flight-name">
                         <div class="Booking-Flight-name-left">
-                          <img src="{{ cdnUrl }}/images/airlines/{{ flights.airline }}.gif" alt="{{ flights.airline }}"
-                            class="flight-image mr-10">
+                             <i class=" mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
                           <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
                           <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                         </div>
@@ -5499,11 +5444,9 @@
                   <div class="booking-inner-title-left" *ngIf="searchData">
                     <div class="head_info">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{ cdnUrl }}/images/airlines/Multi.gif"
-                          class="flight-image mx-2" alt="">
-                        <img *ngIf="!return_airline_unique"
-                          src="{{ cdnUrl }}/images/airlines/{{ flightReturnDetails[0]['airline'] }}.gif"
-                          class="flight-image mx-2" alt="">
+                       <i *ngIf="return_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
+                        <i *ngIf="!return_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x{{flightReturnDetails[0]['airline']}}"></i>
+                     
                       </div>
                       <h6>
                         <span class="city_text">{{ searchData.toCity }}</span>
@@ -5562,11 +5505,9 @@
 
                     <div class="head_info mb-20">
                       <div class="float-start">
-                        <img *ngIf="return_airline_unique" src="{{ cdnUrl }}/images/airlines/Multi.gif"
-                          class="flight-image mx-2" alt="">
-                        <img *ngIf="!return_airline_unique"
-                          src="{{ cdnUrl }}/images/airlines/{{ flightReturnDetails[0]['airline'] }}.gif"
-                          class="flight-image mx-2" alt="">
+                             <i *ngIf="return_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
+                        <i *ngIf="!return_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x{{flightReturnDetails[0]['airline']}}"></i>
+                     
                       </div>
                       <h6>
                         <span class="city_text">{{ searchData.fromCity }}</span>
@@ -5629,8 +5570,7 @@
                   <div class="Flight-One">
                     <div class="Booking-Flight-name">
                       <div class="Booking-Flight-name-left">
-                        <img src="{{ cdnUrl }}/images/airlines/{{ flights.airline }}.gif" alt="{{ flights.airline }}"
-                          class="flight-image mr-10">
+                                <i  class="mr-10 free-flow air-logo intAirLogo size-28  x{{ flights.airline }}"></i>
                         <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
                         <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                       </div>

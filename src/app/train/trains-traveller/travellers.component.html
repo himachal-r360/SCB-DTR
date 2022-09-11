@@ -1380,18 +1380,11 @@
                     <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                     </p>
 
-                    <div class="row text-lg-end" *ngIf="gstSelected">
-                        <ng-container *ngIf="getGSTShow">
-                            <div class="add-traveller-btn">
-                                <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn" (click)="openmodal(content)">Choose from Saved GSTs</a>
-                            </div>
-
-                        </ng-container>
-                    </div>
+                    
 
                     <ng-template #content let-modal>
                         <div class="modal-header modal-inside-header">
-                            <h5 class="modal-title">Choose from Saved GSTs</h5>
+                            <h5 class="modal-title">Saved GST Details</h5>
 
                         </div>
                         <div class="modal-body">
@@ -1506,25 +1499,32 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-
-                        <div class="othertraveller" *ngIf="gstSelected">
+                    </div>
+                    <div class="row">
+                         <div class="othertraveller1 col-7" *ngIf="gstSelected">
                             <ul class="add-search-ul d-block">
                                 <li class="custom-check-box">
                                     <div class="custom-controls-stacked">
                                         <label class="custom-control material-checkbox">
-                        <input type="checkbox" class="material-control-input" formControlName="saveGST"
-                          name="saveGST" id="saveGST" [checked]="checked">
-                        <span class="material-control-indicator"></span>
-                        <span class="description fs_12 text-black">Add these details to
-                          GST list. </span>
-                        <span class="description fs_12">You won't have to fill gst info on your next visit</span>
-                      </label>
+                                            <input type="checkbox" class="material-control-input" formControlName="saveGST"
+                                              name="saveGST" id="saveGST" [checked]="checked">
+                                            <span class="material-control-indicator"></span>
+                                            <span class="description fs_12 text-black">Save
+                                              Gst Details </span>
+                                            <!-- <span class="description fs_12">You won't have to fill gst info on your next visit</span> -->
+                                          </label>
                                     </div>
                                 </li>
                             </ul>
                         </div>
+                        <div class="text-lg-end1 col-5" *ngIf="gstSelected">
+                            <ng-container *ngIf="getGSTShow">
+                                <div class="add-traveller-btn">
+                                    <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn" (click)="openmodal(content)">Select from Saved GST</a>
+                                </div>
 
-
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
 
