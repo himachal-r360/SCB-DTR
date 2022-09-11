@@ -23,7 +23,7 @@
     </section>
     <!-- mlite fixed header  -->
     <div class="row">
-    <div class="col-md-12 p-0 fixed-top"  >
+    <div class="col-md-12 p-0 fixed-top"  *ngIf="isMobile">
         <div class="mlite_fixed_hdr">
             <!-- <div class="mob-listing-header-left">
                 <a href="javascript:;" routerLink="/compare-fly" >
@@ -831,8 +831,8 @@
                                                     <div class="inner_input col-md-4 col-6 gender_sec">
                                                         <mat-form-field class="matField_full_width" appearance="outline">
                                                             <mat-label>Gender</mat-label>
-                                                            <select matNativeControl [(ngModel)]="genderSelectArr[traveller]" (ngModelChange)="seniorCitizenArr(genderSelectArr[traveller],traveller)" formControlName="passengerGender{{traveller}}">
-                                    <option value="M">Male</option>
+                                                            <select matNativeControl [(ngModel)]="genderSelectArr[traveller]" (ngModelChange)="seniorCitizenArr(genderSelectArr[traveller],traveller)" formControlName="passengerGender{{traveller}}" class="custom_select">
+                                    <option value="M" class="custom_option">Male</option>
                                     <option value="F">Female</option>
                                     <option value="T">Transgender</option>
                                     </select>
