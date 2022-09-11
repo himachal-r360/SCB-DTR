@@ -644,7 +644,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     if (checkboxIndex != -1)
       this.saveAdultTravellerId[checkboxIndex] = i;
 
-    console.log($event); console.log(passenger); console.log(checkboxIndex);
+
     if ($event.target.checked) {
 
 
@@ -786,6 +786,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     const sum1 = travellerformid - 1;
 
     if ($event.target.checked) {
+      console.log("checked inside if "+travellerformid+travellerIndex);
 
       this.passengerForm.controls['passengerid' + travellerformid].setValue(data.id);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue(data.firstName);
@@ -794,17 +795,35 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
 
       for (let i = 0; i < this.travellerlistLength; i++) {
+        
         let allTraverlID = this.travellerlist[i].id;
         if (data.id == travellerid && travellerIndex == i) {
-         
+      
           this.isChecked[i] = true;
-
+          console.log("for if "+travellerformid+i);
 
         } else {
-          
+          console.log("for else  "+travellerformid+i);
+
+          console.log("i "+i+' sum '+sum+' travellerIndex '+ travellerIndex);
+
+          if(travellerformid!=i){
+
             this.isChecked[i] = false;
+            this.disableCheckbox[sum]=true;
 
+          } else{
 
+            this.isChecked[i+i] = false;
+            this.disableCheckbox[i+i]=false;
+          }
+
+        
+           
+
+           
+            
+      
 
         }
 
@@ -812,31 +831,31 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
 
     } else {
-
-
-      
+      console.log();
       this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
       this.passengerForm.controls['passengerLastName' + travellerformid].setValue('');
       this.passengerForm.controls['passengerAge' + travellerformid].setValue('');
       this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
       // this.disableCheckbox[travellerIndex]=true;
-     
+      console.log("uncheck "+travellerformid+travellerformid);
 
 
       for (let i = 0; i < this.travellerlistLength; i++) {
+        console.log("uncheck for "+travellerformid+i);
         let allTraverlID = this.travellerlist[i].id;
         if (data.id == travellerid && travellerIndex == i) {
-        
+          console.log("uncheck if"+travellerformid+i);
           this.isChecked[i] = true;
-          
+          this.disableCheckbox[i]=true;
         } else {
-        
+          console.log("uncheck else"+travellerformid+i);
           this.isChecked[i] = false;
-          this.isChecked[travellerformid] = false;
+        
           this.isChecked[travellerIndex] = false;
           this.isChecked[sum1] = false;
-        
+
+          this.disableCheckbox[i]=false;
 
         }
 
