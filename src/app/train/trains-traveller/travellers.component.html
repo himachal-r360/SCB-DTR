@@ -802,13 +802,13 @@
 
                                 <div class="my-2 p-3">
 
-                                    <div class="add_new_traveler mb-10" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0">
+                                    <div class="add_new_traveler mb-10" *ngIf="travellersArrayM.length>0 ">
                                         <p class="title pb-10">Traveller Adult details</p>
 
 
                                         <div class="row">
                                             <!-- radio buttons male/female-->
-                                            <div class="col-12">
+                                          <!--   <div class="col-12">
                                               <div class="trip_select">
                                                   <div class="buttonTrip">
                                                       <input type="radio" id="male" name="" value="M" />
@@ -823,7 +823,7 @@
                                                     <label class="btn btn-default" for="transgender">Transgender</label>
                                                 </div>
                                               </div>
-                                            </div>
+                                            </div> -->
                                         <!-- end of radio buttons male/female -->
                                         </div>
 
@@ -1015,15 +1015,15 @@
 
                         <div class="traveller-addbox-details traveller-infants-details">
                             <div class="p-3">
-                                <div class="add_new_traveler mb-10" *ngIf="travellersArrayM.length>0 || childrenArrayM.length>0">
+                                <div class="add_new_traveler mb-10" *ngIf="childrenArrayM.length>0">
                                     <p class="title pb-10">Traveller Infant details</p>
 
-                                    <div *ngIf="travellersArrayM.length>0">
+                                    <div *ngIf="childrenArrayM.length>0">
                                         <div *ngIf="childrenArrayM && childrenArrayM.length > 0">
 
                                             <div class="row">
                                                 <!-- radio buttons male/female-->
-                                                <div class="col-12">
+                                              <!--   <div class="col-12">
                                                   <div class="trip_select">
                                                       <div class="buttonTrip">
                                                           <input type="radio" id="male" name="" value="M" formControlName="childGender{{traveller}}"/>
@@ -1038,7 +1038,7 @@
                                                         <label class="btn btn-default" for="transgender">Transgender</label>
                                                     </div>
                                                   </div>
-                                                </div>
+                                                </div> -->
                                             <!-- end of radio buttons male/female -->
                                             </div>
 
@@ -1383,35 +1383,66 @@
 
                     
 
-                    <ng-template #content let-modal>
+                    <ng-template #content let-modal>  
                         <div class="modal-header modal-inside-header">
                             <h5 class="modal-title">Saved GST Details</h5>
 
                         </div>
                         <div class="modal-body">
-                            <div class="col-lg-12 col-md-6 col-12">
-
+                            <div class="">
                                 <div>
                                     <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                        <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
+                                       <!--  <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
                                         <label class="form-check-label" for="gst{{GSTIndex}}">
-                        {{data.gstName}}
-                      </label>
+                                            {{data.gstName}}
+                                        </label> -->
+                                        <div class="">
+                                            <div class="">
+                                               <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]"> 
+                                                <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gst{{GSTIndex}}">
+                                                    <div>{{data.gstNumber}}</div>
+                                                    <div>{{data.gstName}}</div>
+                                                    <div>{{data.address}}</div>
+                                                    <div>{{data.city}}</div>
+                                                    <div>{{data.state}}</div>
+                                                    <div>{{data.pinCode}}</div>
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+
+
                                     </div>
                                 </div>
+                                
                                 <ng-container *ngIf="isGstExpanded">
                                     <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
                                         <div *ngIf="i > 5">
+                                           <div class="row"> 
                                             <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                                <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                                <!-- <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
                                                 <label class="form-check-label" for="gstL{{GSTIndex}}">
-                            {{gstexpandedItem.gstName}}
-                          </label>
+                                                    {{gstexpandedItem.gstName}}
+                                                </label> -->
+
+                                                
+                                                    <div class="form-check" style="    float: left;
+    margin-right: 15px;">
+                                                        <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                                        <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gstL{{GSTIndex}}">
+                                                            <div>{{gstexpandedItem.gstNumber}}</div>
+                                                            <div>{{gstexpandedItem.gstName}}</div>
+                                                            <div>{{gstexpandedItem.address}}</div>
+                                                            <div>{{gstexpandedItem.city}}</div>
+                                                            <div>{{gstexpandedItem.state}}</div>
+                                                            <div>{{gstexpandedItem.pinCode}}</div>
+                                                        </label>
+                                                    </div>
+
+                                                    
+                                                </div>
+                                                
                                             </div>
-                                            <!--  <label class="checkbox">{{gstexpandedItem.gstName}}
-                                <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
-                                <span class="checkmark"></span>
-                                </label> -->
                                         </div>
                                     </ng-container>
                                 </ng-container>
@@ -2326,7 +2357,7 @@
 
                         <div class="row">
                             <!-- radio buttons male/female-->
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                               <div class="trip_select">
                                   <div class="buttonTrip">
                                       <input type="radio" id="male" name="" value="M" />
@@ -2341,7 +2372,7 @@
                                     <label class="btn btn-default" for="transgender">Transgender</label>
                                 </div>
                               </div>
-                            </div>
+                            </div> -->
                         <!-- end of radio buttons male/female -->
                         </div>
 
@@ -2545,7 +2576,7 @@
 
                                 <div class="row">
                                     <!-- radio buttons male/female-->
-                                    <div class="col-12">
+                                   <!--  <div class="col-12">
                                       <div class="trip_select">
                                           <div class="buttonTrip">
                                               <input type="radio" id="male" name="" value="M" formControlName="childGender{{traveller}}"/>
@@ -2560,7 +2591,7 @@
                                             <label class="btn btn-default" for="transgender">Transgender</label>
                                         </div>
                                       </div>
-                                    </div>
+                                    </div> -->
                                 <!-- end of radio buttons male/female -->
                                 </div>
 
