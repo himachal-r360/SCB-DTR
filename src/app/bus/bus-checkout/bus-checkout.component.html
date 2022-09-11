@@ -360,11 +360,11 @@
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
                       <ng-container *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index ">
 
-                        <li class="custom-check-box adult-choose-box {{passenger.id}}_{{i}}"  id="adult-choose-box_{{ passenger.id }}">
+                        <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}">
                           <div class="custom-controls-stacked " >
                             <label class="custom-control material-checkbox">
-                              <input type="checkbox" class="material-control-input pass_checkBox {{travellerIndex}}  pass_checkBox_{{i}}"
-                                id="travelPassenger_{{ passenger.id }}"  name="travellerlist"
+                              <input type="checkbox" class="material-control-input pass_checkBox  pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
+                                 name="travellerlist"
                                 (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
                               <span class="description fs_14 text-black fw_7 mr-10"><span
@@ -383,13 +383,13 @@
                           </li>
 
                       </ng-container>
-                        
-                          <ng-container *ngIf="expandid==i && isExpanded">
+                        <!--expandid==i && isExpanded-->
+                          <div  [ngClass]="{'hidden': expandid!=i && !isExpanded || !isExpanded }" >
                             <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
-                              <li class="custom-check-box adult-choose-box {{expandedItem.id}}_{{i}}" *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
+                              <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
                                 <label class="custom-control material-checkbox">
-                                  <input type="checkbox" class="material-control-input pass_checkBox"
-                                    id="travelPassenger_{{ expandedItem.id }}"  name="travellerlist"
+                                  <input type="checkbox" class="material-control-input pass_checkBox pass_checkBox_{{ expandedItem.id}}{{i}} pass_checkBox_{{i}}"
+                                    name="travellerlist"
                                     (change)="fillupTravellerDetailOnCheck($event,expandedItem,i,expandedItem.id,expandedItemi)" [disabled]="disableCheckbox[expandedItemi]" [checked]="isChecked[expandedItemi]">
                                   <span class="material-control-indicator"></span>
                                   <span class="description fs_14 text-black fw_7 mr-10"><span
@@ -406,7 +406,7 @@
                                 </label>
                               </li>
                             </ng-container>
-                          </ng-container>
+                          </div>
                         
                           <div class="modal-footer d-block p-0">
                             <div *ngIf="travellerlist.length > 3">

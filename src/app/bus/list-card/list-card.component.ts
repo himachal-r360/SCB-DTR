@@ -653,10 +653,13 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
   
 	 const track_body: string = trackUrlParams.toString();
 	 this.rest.trackEvents( track_body).subscribe(result => {});*/
+
+  this.showError = false;
  }
 
  Boardingdroping(type, id, tripid: string) {
   var oldsearchparam = this.searchParam;
+
   if (oldsearchparam.tripId == tripid) {
    if ((type == 'boarding' && oldsearchparam.bpId != id) || (type == 'dropping' && oldsearchparam.dpId != id)) {
     this.rtcseatcall = false;
@@ -670,7 +673,10 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
    this.selecteddropping = id;
    this.searchParam.dpId = id;
    this.bookButtonDisable = false;
+
+  
   }
+  this.showError = false;
  }
  onSeatInfo() {
   this.seatinfo = true;
