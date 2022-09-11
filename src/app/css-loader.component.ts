@@ -39,7 +39,6 @@ export class CssLoaderComponent {
 	this.cssPath = '';
 	break;
 	}  
-      console.log(this.cssPath);
       this.cd.markForCheck();
   }
 
