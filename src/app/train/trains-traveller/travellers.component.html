@@ -1133,7 +1133,7 @@
                     <div class="row g-3">
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Address 1 *</mat-label>
+                                <mat-label>Address 1 </mat-label>
                                 <input matInput placeholder="Enter Address1" formControlName="destAddressOne" autocomplete="nope">
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressOne.errors) || (passengerForm.controls.destAddressOne.touched)" class="error">
@@ -1152,7 +1152,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Address 3 (Optional) </mat-label>
+                                <mat-label>Address 3 (Optional)</mat-label>
                                 <input matInput placeholder="Enter Address3" formControlName="destAddressThree" autocomplete="nope">
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressThree.errors) || (passengerForm.controls.destAddressThree.touched)" class="error">
@@ -1161,7 +1161,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>PIN *</mat-label>
+                                <mat-label>PIN</mat-label>
                                 <input matInput placeholder="Enter Pin" formControlName="destAddressPin" maxlength="6" (keypress)="numberInput($event)" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" (keyup)="getDestCity($event)">
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressPin.errors) || (passengerForm.controls.destAddressPin.touched)" class="error">
@@ -1174,7 +1174,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>State * </mat-label>
+                                <mat-label>State</mat-label>
                                 <input matInput placeholder="" formControlName="destAddressState" autocomplete="nope" [(ngModel)]="destState" readonly value={{destState}}>
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressState.errors) || (passengerForm.controls.destAddressState.touched)" class="error">
@@ -1183,7 +1183,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Select city * </mat-label>
+                                <mat-label>Select city</mat-label>
                                 <mat-select placeholder="" formControlName="destAddressCity" autocomplete="nope" [(ngModel)]="destAddressCity">
                                     <mat-option *ngFor="let city of destCityList" [value]="city" (onSelectionChange)="getcitypostoffice(city)"> {{city}} </mat-option>
                                 </mat-select>
@@ -1194,7 +1194,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Post Office * </mat-label>
+                                <mat-label>Post Office</mat-label>
                                 <mat-select placeholder="" formControlName="destAddressPost" autocomplete="nope">
                                     <mat-option *ngFor="let post of postofficeList" [value]="post"> {{post}} </mat-option>
                                 </mat-select>
@@ -1379,18 +1379,11 @@
                     <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                     </p>
 
-                    <div class="row text-lg-end" *ngIf="gstSelected">
-                        <ng-container *ngIf="getGSTShow">
-                            <div class="add-traveller-btn">
-                                <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn" (click)="openmodal(content)">Choose from Saved GSTs</a>
-                            </div>
-
-                        </ng-container>
-                    </div>
+                    
 
                     <ng-template #content let-modal>
                         <div class="modal-header modal-inside-header">
-                            <h5 class="modal-title">Choose from Saved GSTs</h5>
+                            <h5 class="modal-title">Saved GST Details</h5>
 
                         </div>
                         <div class="modal-body">
@@ -1505,25 +1498,32 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-
-                        <div class="othertraveller" *ngIf="gstSelected">
+                    </div>
+                    <div class="row">
+                         <div class="othertraveller1 col-7" *ngIf="gstSelected">
                             <ul class="add-search-ul d-block">
                                 <li class="custom-check-box">
                                     <div class="custom-controls-stacked">
                                         <label class="custom-control material-checkbox">
-                        <input type="checkbox" class="material-control-input" formControlName="saveGST"
-                          name="saveGST" id="saveGST" [checked]="checked">
-                        <span class="material-control-indicator"></span>
-                        <span class="description fs_12 text-black">Add these details to
-                          GST list. </span>
-                        <span class="description fs_12">You won't have to fill gst info on your next visit</span>
-                      </label>
+                                            <input type="checkbox" class="material-control-input" formControlName="saveGST"
+                                              name="saveGST" id="saveGST" [checked]="checked">
+                                            <span class="material-control-indicator"></span>
+                                            <span class="description fs_12 text-black">Save
+                                              Gst Details </span>
+                                            <!-- <span class="description fs_12">You won't have to fill gst info on your next visit</span> -->
+                                          </label>
                                     </div>
                                 </li>
                             </ul>
                         </div>
+                        <div class="text-lg-end1 col-5" *ngIf="gstSelected">
+                            <ng-container *ngIf="getGSTShow">
+                                <div class="add-traveller-btn">
+                                    <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn" (click)="openmodal(content)">Select from Saved GST</a>
+                                </div>
 
-
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
 

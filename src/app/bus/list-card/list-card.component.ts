@@ -457,6 +457,10 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   }
  }
  onCloseDetail(){
+           let body = document.getElementsByTagName('body')[0];
+        body.classList.remove("noscroll"); //remove the class
+        
+        
    $('.mlist-header').addClass('fixed-top');
   this.showDetails = false;
     this.showAmenities = false;

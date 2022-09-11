@@ -13,6 +13,7 @@ import { AppConfigService } from '../../app-config.service';
 import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { formatNumber } from '@angular/common';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -39,6 +40,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
    queryBusData:any;
    searchData: any;
   busList: any = [];
+  busResponse:any;
   newDate = Date();
   loader = false;
   isMobile:boolean=false;
@@ -115,6 +117,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
           $('#endOfPage').trigger('click');
         }
       });
+       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
 @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -122,14 +125,12 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
 }
 
 ngOnInit(): void {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-       this.route.url.subscribe(url =>{
-       this.resetPopups();
+        this.isMobile = window.innerWidth < 991 ?  true : false;
+        this.resetPopups();
         this.gotoTop();
-    this.loader = true;
-    this.getQueryParamData(null);
-            this.busSearch();
- });
+        this.loader = true;
+        this.getQueryParamData(null);
+        this.busSearch();
 
   }
 
@@ -181,21 +182,32 @@ ngOnInit(): void {
   resetAllFilters() {
     
   }
-  /* Reset function end*/
 
 
 
  
   busSearch() {
     this.loader = true;
-    let searchObj = (this.searchData);
+   this._busService.getBuses((this.searchData)).subscribe(data => {
+   this.busResponse =  data;
+   
+     if (this.busResponse && this.busResponse.forwardTrips && this.busResponse.forwardTrips.length > 0) {
+     this.busList = this.busResponse.forwardTrips;
+     }
+     console.log(this.busList);
+   
+   
+   },
+   (err: HttpErrorResponse) => {
+   });
+    
+    
 
 
   }
 
 
   ngOnDestroy(): void {
-//    this.sub?.unsubscribe();
         this._styleManager.removeScript('custom');
   }
 
@@ -211,7 +223,7 @@ ngOnInit(): void {
 
 
   goSearch(){
-    this.router.navigate(['/compare-fly']);
+    this.router.navigate(['/bus']);
   }
 
   Initslider() {

@@ -14,6 +14,9 @@ import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { formatNumber } from '@angular/common';
+import {Subject} from 'rxjs';
+
+
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -214,7 +217,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
    serviceSettings:any;
   enableFlightServices:any;
-
+ public destroyed = new Subject<any>();
+ 
   constructor(public rest:RestapiService,private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.serviceSettings=this.appConfigService.getConfig();
@@ -226,6 +230,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
           $('#endOfPage').trigger('click');
         }
       });
+      
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      
   }
 
 @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -234,17 +241,17 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
-       this.route.url.subscribe(url =>{
-       this.resetPopups();
+      //  this.route.url.subscribe(url =>{
+        this.resetPopups();
         this.gotoTop();
-    this.loader = true;
-    this.getQueryParamData(null);
-    this.headerHideShow(null);
-    this.getAirpotsNameList();
-    this.getAirlinesIconList();
-    this.getCoupons();
-    this.flightSearch();
- });
+        this.loader = true;
+        this.getQueryParamData(null);
+        this.headerHideShow(null);
+        this.getAirpotsNameList();
+        this.getAirlinesIconList();
+        this.getCoupons();
+        this.flightSearch();
+      //  });
 
   }
 

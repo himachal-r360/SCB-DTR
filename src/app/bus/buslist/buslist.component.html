@@ -80,7 +80,7 @@
 
                                 <div class="flight-search-filters-right bus_sort_btn">
                                 <mat-form-field>
-                                <mat-select [(value)]="selected" placeholder="" [ngClass]="{showSortbuy: showSortbuy}">
+                                <mat-select [(value)]="selectedOption" placeholder="" [ngClass]="{showSortbuy: showSortbuy}">
                                 <mat-option value="Rating"  (click)="orderBy('rating')">Rating</mat-option>
                                 <mat-option value="Price (Low to High)" (click)="orderBy('price-low-high')">Price (Low to High)</mat-option>
                                 <mat-option value="Price (High to Low)" (click)="orderBy('price-high-low')">Price (High to Low)</mat-option>
@@ -340,9 +340,9 @@
                               <div class="container filter-container">
 
                                     <!-- <div class="col-md-12 m_sort_flex_div" id="filter-nav"> -->
-                                        <div class="row m_sort_flex_div">
-                                            <div class="col-6">
-                                      <label class="checkbox-cust selected" >
+                                        <div class="m_sort_flex_div">
+                                            <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'price-low-high'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
@@ -353,8 +353,8 @@
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'price-high-low'}" >
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
@@ -365,8 +365,8 @@
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'rating'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/grade.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Rating</p>
@@ -377,8 +377,8 @@
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'seats-availability'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/seat_human.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Seats Availability</p>
@@ -389,8 +389,8 @@
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-early'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Early</p>
@@ -401,8 +401,8 @@
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-late'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Late</p>
@@ -417,7 +417,7 @@
                                 </div>
                           </div>
                           <div class="mob-sf-btns">
-                              <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
+                              <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
                           </div>
                       </div>
                       <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
