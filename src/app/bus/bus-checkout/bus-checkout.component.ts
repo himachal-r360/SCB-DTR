@@ -799,52 +799,11 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
          
           this.isChecked[i] = true;
 
-          $('.' + data.id + '_' + travellerformid).show();
-          $('.' + data.id + '_' + sum1).show();
-          $('.' + data.id + '_' + sum).hide();
-        
-          $('.' + travellerid + '_' + sum1).hide();
-         // $('.' + allTraverlID + '_' + i).hide();
-
-          console.log(travellerid + '_' + sum1);
 
         } else {
           
             this.isChecked[i] = false;
 
-            $('.' + allTraverlID + '_' + i ).show();
-
-//console.log(allTraverlID + '_' + i);
-
-$('.' + allTraverlID + '_' + sum1).show();
-
-            if(data.id == travellerid && travellerformid == i ){
-             
-      
-            $('.' + data.id + '_' + sum1).show();
-            $('.' + data.id + '_' + sum).hide();
-     
-
-            $('.' + allTraverlID + '_' + sum).show();
-
-            console.log('if '+allTraverlID+'_'+travellerformid);
-
-            }else{
-
-              
-              console.log('else '+allTraverlID+'_'+travellerformid);
-
-              $('.' + data.id + '_' + i).hide();
-              $('.' + data.id + '_' + sum1).hide();
-              $('.' + data.id + '_' + sum).hide();
-
-              
-
-            $('.' + allTraverlID + '_' + sum).show();
-            $('.' + allTraverlID + '_' + sum1).show();
-            $('.' + allTraverlID + '_' + i).show();
-
-            }
 
 
         }
@@ -870,9 +829,6 @@ $('.' + allTraverlID + '_' + sum1).show();
         if (data.id == travellerid && travellerIndex == i) {
         
           this.isChecked[i] = true;
-          $('.' + data.id + '_' + travellerformid).show();
-          $('.' + data.id + '_' + sum).show();
-          $('.' + data.id + '_' + sum1).show();
           
         } else {
         
@@ -880,11 +836,7 @@ $('.' + allTraverlID + '_' + sum1).show();
           this.isChecked[travellerformid] = false;
           this.isChecked[travellerIndex] = false;
           this.isChecked[sum1] = false;
-
-
-          $('.' + allTraverlID + '_' + i ).show();
         
-          
 
         }
 
