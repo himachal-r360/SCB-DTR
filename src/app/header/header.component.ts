@@ -575,7 +575,7 @@ closeCookieConsent(value){
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcount = result.result.length;
-        console.log(result);
+        
         
         const unreadId = [];
         const readId = [];

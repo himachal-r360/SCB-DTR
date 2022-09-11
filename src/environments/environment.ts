@@ -16,7 +16,7 @@ export const environment = {
   cdnnotifyUrl: 'https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/notification/',
   cdnDealUrl: 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/',
   API_URL: {
-    'SMARTBUY': 'http://new.reward360.us/api/',
+    'SMARTBUY': 'http://offers.smartbuylocal.reward360.us/api/',
     //'SMARTBUY': 'http://new.reward360.us/api/',
     'DINERS': 'http://new.reward360.us/diners/api/',
     'INFINIA': 'http://new.reward360.us/infinia/api/',

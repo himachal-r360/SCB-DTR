@@ -1240,13 +1240,13 @@
                                             <input class="form-control control_input p-0 hidden" matInput
                                             [(ngModel)]="hotelCheckin"   autocomplete="off"  readonly formControlName="hotelCheckin"  id="hotelCheckin" placeholder="DD/MM/YYYY"  [value]="hotelCheckin">
                                             
-                                            <input *ngIf="hotelCheckinMlite" class="form-control control_input p-0" matInput
+                                            <input *ngIf="hotelCheckinMlite" class="form-control for-control-border control_input p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckinMlite">
                                              
-                                              <input *ngIf="!hotelCheckinMlite" class="form-control control_input p-0" matInput
+                                              <input *ngIf="!hotelCheckinMlite" class="form-control for-control-border control_input p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
-                                            
-                                            <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"  ></span>
+                                             
+                                            <span><img src="{{cdnUrl}}images/sb_img/icn-calendar_m.svg" alt="Date Picker" class="date_icon"  ></span>
                                             
                  
 
@@ -1310,13 +1310,13 @@
                                           <input  class="form-control control_input p-0 hidden" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite"
                                                 [(ngModel)]="hotelCheckout"   autocomplete="off"  readonly formControlName="hotelCheckout"  id="hotelCheckout" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultTMlite" >
                                             
-                                            <input *ngIf="hotelCheckoutMlite" class="form-control control_input p-0" matInput
+                                            <input *ngIf="hotelCheckoutMlite" class="form-control for-control-border control_input p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="hotelCheckoutMlite">
                                              
-                                              <input *ngIf="!hotelCheckoutMlite" class="form-control control_input p-0" matInput
+                                              <input *ngIf="!hotelCheckoutMlite" class="form-control for-control-border control_input p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
                                             
-                                            <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"  ></span>
+                                            <span><img src="{{cdnUrl}}images/sb_img/icn-calendar_m.svg" alt="Date Picker" class="date_icon"  ></span>
                                             
                  
 
@@ -1598,11 +1598,13 @@
                                             <input class="form-control control_input p-0 hidden" matInput
                                             [(ngModel)]="departure"   autocomplete="off"  readonly formControlName="departure"  id="departure" placeholder="DD/MM/YYYY"  [value]="departure">
 
-                                            <input class="form-control control_input p-0" matInput        *ngIf="departureMlite"       autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="departureMlite">
+                                            <input class="form-control control_input for-control-border p-0" matInput        *ngIf="departureMlite"       autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="departureMlite">
 
-                                               <input class="form-control control_input p-0" matInput       *ngIf="!departureMlite"          autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
+                                               <input class="form-control control_input for-control-border p-0" matInput       *ngIf="!departureMlite"          autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  >
                                             
-                                            <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"  id="mliteFlightFromPicker"></span>
+                                            <span>
+                                                <img src="{{cdnUrl}}images/sb_img/icn-calendar_m.svg" alt="Date Picker" class="date_icon"  id="mliteFlightFromPicker">
+                                            </span>
                                             
                  
 
@@ -1673,15 +1675,15 @@
 
                                             <input  class="form-control control_input p-0 hidden" matInput       [(ngModel)]="arrival"   autocomplete="off"  readonly formControlName="arrival"  id="arrival" placeholder="DD/MM/YYYY"  [value]="arrival">
                                             <ng-container *ngIf="arrivalMlite">
-                                                <input class="form-control control_input p-0" matInput
+                                                <input class="form-control control_input for-control-border p-0" matInput
                                                 autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="arrivalMlite" [disabled]="!showFlightReturn">
                                             </ng-container>  
                                             <ng-container *ngIf="!arrivalMlite">
-                                                <input class="form-control control_input p-0" matInput
+                                                <input class="form-control control_input for-control-border p-0" matInput
                                                 autocomplete="off"  readonly  placeholder="DD/MM/YYYY" [disabled]="!showFlightReturn">
                                             </ng-container>  
                              
-                                                <span  ><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"  ></span>
+                                                <span  ><img src="{{cdnUrl}}images/sb_img/icn-calendar_m.svg" alt="Date Picker" class="date_icon"  ></span>
                                               
 
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['arrival']['errors']"class="error_msg">
@@ -1960,16 +1962,18 @@
                                                 
                                                 
                                                  <ng-container *ngIf="busDepartureMlite">
-                                            <input class="form-control control_input p-0" matInput
+                                            <input class="form-control control_input for-control-border
+                                            p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="busDepartureMlite" >
                                             </ng-container>  
                                                  <ng-container *ngIf="!busDepartureMlite">
-                                            <input class="form-control control_input p-0" matInput
+                                            <input class="form-control control_input for-control-border
+                                            p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY" >
                                             </ng-container>  
                                                 
                                                 
-                                                <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon" id="mliteBusPicker" ></span>
+                                                <span><img src="{{cdnUrl}}images/sb_img/icn-calendar_m.svg" alt="Date Picker" class="date_icon" id="mliteBusPicker" ></span>
                                        
 
                                             <div *ngIf="submittedBus && searchBusForm['controls']['busDeparture']['errors']"class="error_msg">
@@ -2148,16 +2152,18 @@
                                             
                                             
                                                <ng-container *ngIf="trainDepartureMlite">
-                                            <input class="form-control control_input p-0" matInput
+                                            <input class="form-control control_input for-control-border
+                                            p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY"  [value]="trainDepartureMlite" >
                                             </ng-container>  
                                                  <ng-container *ngIf="!trainDepartureMlite">
-                                            <input class="form-control control_input p-0" matInput
+                                            <input class="form-control for-control-border
+                                            control_input p-0" matInput
                                              autocomplete="off"  readonly  placeholder="DD/MM/YYYY" >
                                             </ng-container>  
                                             
                                             
-                                            <span><img src="{{cdnUrl}}images/smartbuy/icons/calendar.svg" alt="Date Picker" class="date_icon"  id="mliteTrainPicker" ></span>
+                                            <span><img src="{{cdnUrl}}images/sb_img/icn-calendar_m.svg" alt="Date Picker" class="date_icon"  id="mliteTrainPicker" ></span>
 
                                         <div *ngIf="submittedTrain && searchTrainForm['controls']['trainDeparture']['errors']"class="error_msg">
                                             <small *ngIf="searchTrainForm['controls']['trainDeparture']['errors']['required']" class="validate-msg">Departure date required</small>

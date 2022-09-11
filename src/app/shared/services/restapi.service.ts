@@ -147,7 +147,7 @@ export class RestapiService {
    }
  }
  getNotification (): Observable<any> {
-  if(LOCALJSON=='true'){
+  if(LOCALJSON=='false'){
      return this.http.get('assets/data/notifications.json');
    }else{
 	return this.http.post( this.endpoint+'getnotification','', config).pipe(map((response: any) => response));
