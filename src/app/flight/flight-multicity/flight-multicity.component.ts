@@ -164,7 +164,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         $('#endOfPage').trigger('click');
       }
     });*/
-
+  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -172,7 +172,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   }
   ngOnInit(): void {
 
-    this.route.url.subscribe(url =>{
+   // this.route.url.subscribe(url =>{
     this.SelectedFlightsOnSector=[];
      this.searchData=[];
      this.selectedTripData=[];
@@ -195,7 +195,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.getQueryParamData();
     this.flightSearch();
     this.getAirpotsNameList();
-    });
+   // });
   }
   ngAfterViewInit(): void {
     setTimeout(() => {

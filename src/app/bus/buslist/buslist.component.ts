@@ -170,6 +170,9 @@ export class BuslistComponent implements OnInit,OnDestroy {
      this.router.navigate(['/**']);
    }
   
+          let body = document.getElementsByTagName('body')[0];
+        body.classList.remove("noscroll"); //remove the class
+  
         this.domainName = this.sg['domainName'];
         this.appConfig = appConfig;
         this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
@@ -195,10 +198,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
         }
   
         this.params = this.activatedRoute.snapshot;
-        // override the route reuse strategy
-        this.router.routeReuseStrategy.shouldReuseRoute = function() {
-        return false;
-        };
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.assetPath = this.sg['domainPath'];
         this._styleManager.setScript('custom', `assets/js/custom.js`);
 
@@ -216,7 +216,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
 ngOnInit(): void {
   this.titleService.setTitle('Home | RedBus');
         this.isMobile = window.innerWidth < 991 ?  true : false;
-        this.activatedRoute.url.subscribe(url =>{
+      //  this.activatedRoute.url.subscribe(url =>{
         this.moveTop();
         this.loading = true;
         this.getQueryParamData(null);
@@ -251,7 +251,7 @@ ngOnInit(): void {
 
         const track_body: string = trackUrlParams.toString();
         this.rest.trackEvents( track_body).subscribe(result => {});
-        });
+       // });
 
   }
   
