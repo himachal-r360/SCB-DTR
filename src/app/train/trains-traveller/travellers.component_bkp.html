@@ -1384,56 +1384,74 @@
                     
 
                     <ng-template #content let-modal>  
-                        <div class="modal-header modal-inside-header justify-content-center border-0">
-                            <h5 class="modal-title gstTitle">Saved GST Details</h5>
+                        <div class="modal-header modal-inside-header">
+                            <h5 class="modal-title">Saved GST Details</h5>
 
                         </div>
                         <div class="modal-body">
                             <div class="">
-                                <div class="savedGst_sec">
-                                    <div *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                        <div class="form-check" >
-                                            <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]" style="display: none;"> 
-                                             <label class="travel-card-details"  for="gst{{GSTIndex}}">
-                                                 <div class="gstHeading">{{data.gstNumber}}</div>
-                                                 <div class="gstName">{{data.gstName}}</div>
-                                                 <div class="gstAddress">{{data.address}}</div>
-                                                 <div class="d-flex gap-3">
-                                                     <div class="gstAddress">{{data.city}}</div>
-                                                     <div class="gstAddress">{{data.state}}</div>
-                                                     <div class="gstAddress">{{data.pinCode}}</div>
-                                                 </div>
-                                             </label>
-                                         </div>
-                                    </div>
-                                
-                                <ng-container *ngIf="isGstExpanded">
-                                    <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index" >
-                                        <ng-container *ngIf="i > 5">
-                                         <div *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                            <div class="form-check" >
-                                                <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]" style="display: none;">
-                                                <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gstL{{GSTIndex}}">
-                                                    <div  class="gstHeading">{{gstexpandedItem.gstNumber}}</div>
-                                                    <div class="gstName">{{gstexpandedItem.gstName}}</div>
-                                                    <div class="gstAddress">{{gstexpandedItem.address}}</div>
-                                                    <div class="d-flex gap-3">
-                                                        <div class="gstAddress">{{gstexpandedItem.city}}</div>
-                                                        <div class="gstAddress">{{gstexpandedItem.state}}</div>
-                                                        <div class="gstAddress">{{gstexpandedItem.pinCode}}</div>
-                                                    </div>
+                                <div>
+                                    <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                       <!--  <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
+                                        <label class="form-check-label" for="gst{{GSTIndex}}">
+                                            {{data.gstName}}
+                                        </label> -->
+                                        <div class="">
+                                            <div class="">
+                                               <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]"> 
+                                                <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gst{{GSTIndex}}">
+                                                    <div>{{data.gstNumber}}</div>
+                                                    <div>{{data.gstName}}</div>
+                                                    <div>{{data.address}}</div>
+                                                    <div>{{data.city}}</div>
+                                                    <div>{{data.state}}</div>
+                                                    <div>{{data.pinCode}}</div>
                                                 </label>
                                             </div>
-                                          </div>
-                                        </ng-container>
+                                            
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                
+                                <ng-container *ngIf="isGstExpanded">
+                                    <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
+                                        <div *ngIf="i > 5">
+                                           <div class="row"> 
+                                            <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                                <!-- <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                                <label class="form-check-label" for="gstL{{GSTIndex}}">
+                                                    {{gstexpandedItem.gstName}}
+                                                </label> -->
+
+                                                
+                                                    <div class="form-check" style="    float: left;
+    margin-right: 15px;">
+                                                        <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                                        <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gstL{{GSTIndex}}">
+                                                            <div>{{gstexpandedItem.gstNumber}}</div>
+                                                            <div>{{gstexpandedItem.gstName}}</div>
+                                                            <div>{{gstexpandedItem.address}}</div>
+                                                            <div>{{gstexpandedItem.city}}</div>
+                                                            <div>{{gstexpandedItem.state}}</div>
+                                                            <div>{{gstexpandedItem.pinCode}}</div>
+                                                        </label>
+                                                    </div>
+
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
                                     </ng-container>
                                 </ng-container>
-                            </div>
-
-                                <p *ngIf="GSTList.length > 5" class="text-center my-2">
-                                        <a (click)="gstExpandItems()">
-                                            {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
-                                        </a>
+                                <p *ngIf="GSTList.length > 5">
+                                    <label class="checkbox pl-0">
+                      <a (click)="gstExpandItems()">
+                        {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
+                      </a>
+                    </label>
                                 </p>
                             </div>
                         </div>
