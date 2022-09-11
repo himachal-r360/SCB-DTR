@@ -251,7 +251,7 @@
 
                 <div class="button-wrap">
 
-                  <div class="row mb-20">
+                  <div class="row mb-20 hidden">
                     <ng-container *ngIf="getTravllerShow">
                       <div class="message-trav">
                         <button type="button" class="travel-title btn btn-primary-outline"
@@ -281,7 +281,7 @@
                       <div class="col-sm-6 col-6 text-right">
                         <div>
                           <span class="">
-                            <input class="hidden radio-label" type="radio" id="first-traveller{{ i+1 }}"
+                            <input class="hidden radio-label" type="check" id="first-traveller{{ i+1 }}"
                               [checked]="defaultPrimary==i" (click)="setPrimary(i)" />
 
                             <label class="button-label-{{ domainName }}" for="first-traveller{{ i+1 }}"
@@ -349,6 +349,7 @@
                         <div class="col-12 col-lg-4 col-md-6">
                           <div>
                             <mat-form-field class="w-100" appearance="outline">
+                              <input    type="hidden" formControlName="passengerid{{ i }}" >
                               <mat-label>First Name</mat-label>
                               <input matInput placeholder="" formControlName="passengerFirstName{{ i }}"
                                 name="passengerFirstName{{ i }}" id="passengerFirstName{{ i }}" (keypress)="flInput($event)"
@@ -452,16 +453,18 @@
                     
                     <div class="traveller-adults-ul mt-3">
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
-                        <li class="custom-check-box adult-choose-box"  *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index " id="adult-choose-box_{{ passenger.id }}">
-                          <div class="custom-controls-stacked">
+                      <ng-container *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index ">
+
+                        <li class="custom-check-box adult-choose-box {{passenger.id}}_{{i}}"  id="adult-choose-box_{{ passenger.id }}">
+                          <div class="custom-controls-stacked " >
                             <label class="custom-control material-checkbox">
-                              <input type="radio" class="material-control-input pass_checkBox"
+                              <input type="checkbox" class="material-control-input pass_checkBox {{travellerIndex}}"
                                 id="travelPassenger_{{ passenger.id }}"  name="travellerlist"
-                                (change)="fillupTravellerDetailOnCheck($event,passenger,i)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
+                                (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
-                                {{ passenger.lastName }} </span>
+                                {{ passenger.lastName }}  </span>
                                                        <span class="description fw_5"  [ngSwitch]="passenger.title"> 
                                 <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
                                 <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
@@ -473,8 +476,52 @@
                             </label>
                           </div>
                           </li>
+
+                      </ng-container>
+                        
+                          <ng-container *ngIf="expandid==i && isExpanded">
+                            <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
+                              <li class="custom-check-box adult-choose-box {{expandedItem.id}}_{{i}}" *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
+                                <label class="custom-control material-checkbox">
+                                  <input type="checkbox" class="material-control-input pass_checkBox"
+                                    id="travelPassenger_{{ expandedItem.id }}"  name="travellerlist"
+                                    (change)="fillupTravellerDetailOnCheck($event,expandedItem,i,expandedItem.id,expandedItemi)" [disabled]="disableCheckbox[expandedItemi]" [checked]="isChecked[expandedItemi]">
+                                  <span class="material-control-indicator"></span>
+                                  <span class="description fs_14 text-black fw_7 mr-10"><span
+                                      *ngIf="expandedItem.title">{{ expandedItem.title }}.</span> {{ expandedItem.firstName }}
+                                    {{ expandedItem.lastName }} </span>
+                                                           <span class="description fw_5"  [ngSwitch]="expandedItem.title"> 
+                                    <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                    <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                    <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                    <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                    <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                    <ng-template ngSwitchDefault></ng-template>
+                                    </span>
+                                </label>
+                              </li>
+                            </ng-container>
+                          </ng-container>
+                        
+                          <div class="modal-footer d-block p-0">
+                            <div *ngIf="travellerlist.length > 3">
+                              <p class="view_more_btn">
+                                <a (click)="expandItems(i)" *ngIf="!isExpanded" >
+                                 View More &#x25BC;
+                                </a>
+                                
+                                <a (click)="expandItemsstretch(i)" *ngIf="isExpanded">
+                                View Less &#x25B2;
+                                </a>
+
+                              </p>
+                            </div>
+                          </div>
+
                      </ul>
                 </div>
+
+              
                 
                   </div>
                 </div>
