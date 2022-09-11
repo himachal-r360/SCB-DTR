@@ -477,6 +477,7 @@ ngOnInit(): void {
   this.selectedOptionNew = option;
   if (option == 'rating') {
    this.selectedOption = 'Rating';
+   console.log(option);
   } else if (option == 'price-low-high') {
    this.selectedOption = 'Price (Low to High)';
   } else if (option == 'price-high-low') {
