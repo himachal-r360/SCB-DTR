@@ -92,8 +92,11 @@
         <!--Steps 1-->
         <div class="col-md-8" *ngIf="steps==1">
           <div class="booking-process-content">
-            <div class="booking-title-box">
+            <div class="booking-title-box d-md-none">
               <h4>Traveller Details</h4>
+            </div>
+            <div class="booking-title-box d-none d-md-block">
+              <h4>Booking Details</h4>
             </div>
 
             <div class="booking-inner-box from-to-box d-none d-md-block">
@@ -251,7 +254,7 @@
 
                 <div class="button-wrap">
 
-                  <div class="row mb-20">
+                  <div class="row mb-20 hidden">
                     <ng-container *ngIf="getTravllerShow">
                       <div class="message-trav">
                         <button type="button" class="travel-title btn btn-primary-outline"
@@ -281,7 +284,7 @@
                       <div class="col-sm-6 col-6 text-right">
                         <div>
                           <span class="">
-                            <input class="hidden radio-label" type="radio" id="first-traveller{{ i+1 }}"
+                            <input class="hidden radio-label" type="check" id="first-traveller{{ i+1 }}"
                               [checked]="defaultPrimary==i" (click)="setPrimary(i)" />
 
                             <label class="button-label-{{ domainName }}" for="first-traveller{{ i+1 }}"
@@ -322,33 +325,28 @@
 
                     <div class="traveler-details-info mt-15">
                       <div class="row">
-                          <!-- radio buttons male/female-->
-                          <div class="col-12">
-                            <div class="trip_select">
 
-                                <div class="buttonTrip" *ngIf="!seacthResult.seatdetails[i].ladiesSeat">
-                                    <input type="radio" id="male" formControlName="passengerGender{{ i }}"  value="Male" />
-                                    <label class="btn btn-default" for="male">Male</label>
-                                </div>
-                                <div class="buttonTrip">
-                                    <input type="radio" id="female" formControlName="passengerGender{{ i }}" value="Female" />
-                                    <label class="btn btn-default" for="female">Female</label>
-                                </div>
-
-
-                            </div>
-                            <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                              <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                                required</mat-error>
-                            </span>
-                          </div>
-                      <!-- end of radio buttons male/female -->
+                                                <!-- radio buttons male/female-->
+                                                <div class="col-12">
+                                                  <div class="trip_select">
+                                                      <div class="buttonTrip">
+                                                          <input type="radio" id="male" formControlName="passengerGender{{ i }}" name="flightTripType" checked (ngModelChange)="selectTripType($event)" value="Male" />
+                                                          <label class="btn btn-default" for="male">Male</label>
+                                                      </div>
+                                                      <div class="buttonTrip">
+                                                          <input type="radio" id="female" formControlName="passengerGender{{ i }}" name="flightTripType" (ngModelChange)="selectTripType($event)" value="Female" />
+                                                          <label class="btn btn-default" for="female">Female</label>
+                                                      </div>
+                                                  </div>
+                                                </div>
+                                            <!-- end of radio buttons male/female -->
                     
                       </div>
                       <div class="row">
                         <div class="col-12 col-lg-4 col-md-6">
                           <div>
                             <mat-form-field class="w-100" appearance="outline">
+                              <input    type="hidden" formControlName="passengerid{{ i }}" >
                               <mat-label>First Name</mat-label>
                               <input matInput placeholder="" formControlName="passengerFirstName{{ i }}"
                                 name="passengerFirstName{{ i }}" id="passengerFirstName{{ i }}" (keypress)="flInput($event)"
@@ -452,16 +450,18 @@
                     
                     <div class="traveller-adults-ul mt-3">
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
-                        <li class="custom-check-box adult-choose-box"  *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index " id="adult-choose-box_{{ passenger.id }}">
-                          <div class="custom-controls-stacked">
+                      <ng-container *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index ">
+
+                        <li class="custom-check-box adult-choose-box {{passenger.id}}_{{i}}"  id="adult-choose-box_{{ passenger.id }}">
+                          <div class="custom-controls-stacked " >
                             <label class="custom-control material-checkbox">
-                              <input type="radio" class="material-control-input pass_checkBox"
+                              <input type="checkbox" class="material-control-input pass_checkBox {{travellerIndex}}"
                                 id="travelPassenger_{{ passenger.id }}"  name="travellerlist"
-                                (change)="fillupTravellerDetailOnCheck($event,passenger,i)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
+                                (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
-                                {{ passenger.lastName }} </span>
+                                {{ passenger.lastName }}  </span>
                                                        <span class="description fw_5"  [ngSwitch]="passenger.title"> 
                                 <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
                                 <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
@@ -473,8 +473,52 @@
                             </label>
                           </div>
                           </li>
+
+                      </ng-container>
+                        
+                          <ng-container *ngIf="expandid==i && isExpanded">
+                            <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
+                              <li class="custom-check-box adult-choose-box {{expandedItem.id}}_{{i}}" *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
+                                <label class="custom-control material-checkbox">
+                                  <input type="checkbox" class="material-control-input pass_checkBox"
+                                    id="travelPassenger_{{ expandedItem.id }}"  name="travellerlist"
+                                    (change)="fillupTravellerDetailOnCheck($event,expandedItem,i,expandedItem.id,expandedItemi)" [disabled]="disableCheckbox[expandedItemi]" [checked]="isChecked[expandedItemi]">
+                                  <span class="material-control-indicator"></span>
+                                  <span class="description fs_14 text-black fw_7 mr-10"><span
+                                      *ngIf="expandedItem.title">{{ expandedItem.title }}.</span> {{ expandedItem.firstName }}
+                                    {{ expandedItem.lastName }} </span>
+                                                           <span class="description fw_5"  [ngSwitch]="expandedItem.title"> 
+                                    <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
+                                    <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
+                                    <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
+                                    <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
+                                    <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
+                                    <ng-template ngSwitchDefault></ng-template>
+                                    </span>
+                                </label>
+                              </li>
+                            </ng-container>
+                          </ng-container>
+                        
+                          <div class="modal-footer d-block p-0">
+                            <div *ngIf="travellerlist.length > 3">
+                              <p class="view_more_btn">
+                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded || !isExpanded" >
+                                 View More  &#x25BC;
+                                </a>
+                                
+                                <a (click)="expandItemsstretch(i)" *ngIf="expandid==i && isExpanded">
+                                View Less &#x25B2;
+                                </a>
+
+                              </p>
+                            </div>
+                          </div>
+
                      </ul>
                 </div>
+
+              
                 
                   </div>
                 </div>
@@ -635,7 +679,7 @@
                 </ng-template>
 
                 <div class="row" *ngIf="gstSelected">
-                  <div class="col-xl-6 col-lg-6 col-md-6">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>GST Number</mat-label>
                       <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber"
@@ -651,10 +695,10 @@
                     </mat-form-field>
 
                   </div>
-                </div>
+                <!-- </div>
 
-                <div class="row" *ngIf="gstSelected">
-                  <div class="col-lg-4 col-md-4 col-6">
+                <div class="row" *ngIf="gstSelected"> -->
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Business Name</mat-label>
                       <input matInput placeholder="Business Name" formControlName="gstBusinessName"
@@ -669,7 +713,7 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Business Address</mat-label>
                       <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress"
@@ -681,7 +725,7 @@
                         Please enter valid address.No special characters allowed except / - ,</mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-4 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Pincode</mat-label>
                       <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode"
@@ -697,7 +741,7 @@
                   </div>
                 </div>
                 <div class="row" *ngIf="gstSelected">
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>City / Town</mat-label>
                       <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"
@@ -710,7 +754,7 @@
                     </mat-form-field>
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-6">
+                  <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>State</mat-label>
                       <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
