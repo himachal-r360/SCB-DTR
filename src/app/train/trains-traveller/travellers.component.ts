@@ -2355,7 +2355,7 @@ whatsAppCheck:boolean=false;
 
     openmodal(content) {
         this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
-        this.modalService.open(content, { centered: true });
+        this.modalService.open(content, { centered: true,size: 'lg' });
       }
 
 

@@ -177,7 +177,7 @@ emiLogic(amount: number)
     {
 
     var emiArray = [];let  configEmi;
-     if (Number(amount) >= 3000) {
+     if (Number(amount) >= 5000) {
       if(AppConfig.EMI_FROM_API==0){
         configEmi=AppConfig.emiInterst;
        	for (let key in configEmi) {
