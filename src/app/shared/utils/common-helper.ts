@@ -247,7 +247,7 @@ emiDebitLogic(amount: number)
     {
 
     var emiArray = [];let  configEmi;
-     if (Number(amount) >= 5000) {
+     if (Number(amount) >= 3000) {
       if(AppConfig.EMI_FROM_API==0){
         configEmi=AppConfig.emiDebitInterst;
         for (let key in configEmi) {
