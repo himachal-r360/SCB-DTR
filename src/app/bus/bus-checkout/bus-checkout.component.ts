@@ -778,7 +778,6 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     const sum1 = travellerformid - 1;
 
     if ($event.target.checked) {
-      console.log("checked inside if "+travellerformid+travellerIndex);
       
       this.passengerSelectedArray[travellerformid]=1;
       
@@ -788,38 +787,13 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       this.passengerForm.controls['passengerLastName' + travellerformid].setValue(data.lastName);
       this.passengerForm.controls['passengerAge' + travellerformid].setValue(data.age);
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
-
-     /* for (let i = 0; i < this.travellerlistLength; i++) {
-        
-        let allTraverlID = this.travellerlist[i].id;
-        if (data.id == travellerid && travellerIndex == i) {
       
-          this.isChecked[i] = true;
-          console.log("for if "+travellerformid+i);
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+      $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
 
-        } else {
-          console.log("for else  "+travellerformid+i);
-
-          console.log("i "+i+' sum '+sum+' travellerIndex '+ travellerIndex);
-
-          if(travellerformid!=i){
-
-            this.isChecked[i] = false;
-            this.disableCheckbox[sum]=true;
-
-          } else{
-
-            this.isChecked[i+i] = false;
-            this.disableCheckbox[i+i]=false;
-          }
-
-            
+      //$(".adult-choose-box"+travellerid+travellerformid).removeClass("travllerDisabled");
       
-
-        }
-
-      }*/
-
+      console.log(".adult-choose-box"+travellerid+travellerformid);
 
     } else {
      this.passengerSelectedArray[travellerformid]=0;
@@ -830,128 +804,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       this.passengerForm.controls['passengerAge' + travellerformid].setValue('');
       this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
       // this.disableCheckbox[travellerIndex]=true;
-      console.log("uncheck "+travellerformid+travellerformid);
-
-
-    /*  for (let i = 0; i < this.travellerlistLength; i++) {
-        console.log("uncheck for "+travellerformid+i);
-        let allTraverlID = this.travellerlist[i].id;
-        if (data.id == travellerid && travellerIndex == i) {
-          console.log("uncheck if"+travellerformid+i);
-          this.isChecked[i] = true;
-          this.disableCheckbox[i]=true;
-        } else {
-          console.log("uncheck else"+travellerformid+i);
-          this.isChecked[i] = false;
-        
-          this.isChecked[travellerIndex] = false;
-          this.isChecked[sum1] = false;
-
-          this.disableCheckbox[i]=false;
-
-        }
-
-      }
-*/
+      $(".pass_checkBox_"+travellerformid).prop("disabled", false);
+      $(".adult-choose-box"+travellerid).removeClass("travllerDisabled");
 
 
     }
 
-      var checkboxVal = $("input.pass_checkBox_"+ travellerformid +"[type='checkbox']:not(:checked)").val();
-        console.log(this.passengerSelectedArray);
-          console.log(checkboxVal);
-
-
-    /*
-      console.log("data " + JSON.stringify(data));
-      console.log("index " + travellerIndex);
-          if($event.target.checked){                
-                this.isChecked[travellerIndex]=true; 
-                if(!(this.selectedCheckbox.includes(travellerIndex))){
-                      this.selectedCheckbox.push(travellerIndex);
-                }
-                this.checkedList.push({ 
-                                        "sno":        data.id,
-                                        "firstName":  data.firstName,
-                                        "lastName":   data.lastName,
-                                        "age":        data.age,
-                                        "gender":     data.gender
-                                      });
-                var checkedListLength=this.checkedList.length;
-                var isFilledData = false;
-               
-                    if(this.passengerForm.controls['passengerFirstName' + travellerIndex].value=="" && this.passengerForm.controls['passengerLastName' + travellerIndex].value==""){
-                    isFilledData = true;
-                        var gender;
-                        if((this.checkedList[checkedListLength-1].gender == 'M') || (this.checkedList[checkedListLength-1].gender == 'Male')) {
-                          gender = 'Male'
-                        }else if((this.checkedList[checkedListLength-1].gender == 'F') || (this.checkedList[checkedListLength-1].gender == 'Female')){
-                          gender = 'Female';
-                        }
-                  //   
-                        this.passengerForm.controls['passengerFirstName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].firstName);
-                        this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].lastName);
-                        this.passengerForm.controls['passengerAge' + travellerIndex].setValue(this.checkedList[checkedListLength-1].age);
-                        this.passengerForm.controls['passengerGender' + travellerIndex].setValue(gender);
-                      
-                    }
-                
-                if(isFilledData == false){
-                $event.target.checked = false;
-                  this.isChecked[travellerIndex]=false;
-                  this.disableCheckbox[travellerIndex]=true;
-                this.selectedCheckbox = this.arrayRemove(this.selectedCheckbox, travellerIndex);
-                this.selectedCheckbox.splice(travellerIndex,1);
-                this.checkedList = this.arrayRemove(this.checkedList, {  
-                                                                    "sno":        data.id, 
-                                                                    "firstName":  data.firstName,
-                                                                    "lastName":   data.lastName,
-                                                                    "age":        data.age,
-                                                                    "gender":     data.gender
-                                                                  });
-                }
-          }else{      
-                this.isChecked[travellerIndex]=false;
-                this.selectedCheckbox = this.arrayRemove(this.selectedCheckbox, travellerIndex);
-                this.checkedList = this.arrayRemove(this.checkedList, {  
-                                                                    "sno":        data.id, 
-                                                                    "firstName":  data.firstName,
-                                                                    "lastName":   data.lastName,
-                                                                    "age":        data.age,
-                                                                    "gender":     data.gender
-                                                                  });
-                for(var i=0;i<this.passengerCount;i++){
-                  if((this.passengerForm.controls['passengerFirstName' + i].value==data.firstName) && (this.passengerForm.controls['passengerLastName' + i].value==data.lastName)){
-                      this.passengerForm.controls['passengerFirstName' + i].setValue('');
-                      this.passengerForm.controls['passengerLastName' + i].setValue('');
-                      this.passengerForm.controls['passengerAge' + i].setValue('');
-                      this.passengerForm.controls['passengerGender' + i].setValue('');
-                      break;
-                  }
-                }
-          }
-          if((this.selectedCheckbox.length == this.passengerCount)){
-            for(let i=0;i<this.travellerlistLength;i++){
-              if(this.selectedCheckbox.includes(i)){ 
-                this.disableCheckbox[i]=false;
-              }else{              
-                this.disableCheckbox[i]=true;
-              }
-            }
-          }else{
-            for(let i=0;i<this.travellerlistLength;i++){ 
-                this.disableCheckbox[i]=false;
-            }
-          }
-          let trackUrlParams = new HttpParams()
-          .set('current_url', window.location.href)
-          .set('category', 'RedBus')
-          .set('event', 'Checkout traveller info')
-          .set('metadata','{"traveller_info":"'+this.EncrDecr.set(JSON.stringify(this.checkedList))+'","customerid":"'+this.EncrDecr.set(JSON.stringify(this.REWARD_CUSTOMERID))+'"}');
-          
-           const track_body: string = trackUrlParams.toString();
-           this.rest.trackEvents( track_body).subscribe(result => {});
-           */
   }
   saveTravellerFunc(saveTravellerArray) {
     var requestParamsEncrpt = {
