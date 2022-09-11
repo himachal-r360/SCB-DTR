@@ -506,11 +506,11 @@
                           <div class="modal-footer d-block p-0">
                             <div *ngIf="travellerlist.length > 3">
                               <p class="view_more_btn">
-                                <a (click)="expandItems(i)" *ngIf="!isExpanded" >
-                                 View More &#x25BC;
+                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded || !isExpanded" >
+                                 View More  &#x25BC;
                                 </a>
                                 
-                                <a (click)="expandItemsstretch(i)" *ngIf="isExpanded">
+                                <a (click)="expandItemsstretch(i)" *ngIf="expandid==i && isExpanded">
                                 View Less &#x25B2;
                                 </a>
 

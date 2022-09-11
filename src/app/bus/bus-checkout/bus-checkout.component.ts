@@ -668,6 +668,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   checkedGST: any = [];
   disableGSTCheckbox: any = [];
   expandid: any;
+  isExpandedStretch : boolean = false;
   @ViewChild("contentTraveller") modalTraveller: TemplateRef<any>;
 
   chooseFromSavedTravellers() {
@@ -684,13 +685,14 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
     this.expandid = formId;
     this.isExpanded = true;
-
+    this.isExpandedStretch=false;
   }
 
   expandItemsstretch(formId) {
 
     this.expandid = formId;
     this.isExpanded = false;
+    this.isExpandedStretch=true;
 
   }
 
