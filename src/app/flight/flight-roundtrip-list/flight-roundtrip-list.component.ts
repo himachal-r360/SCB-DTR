@@ -180,6 +180,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       $('#endOfReturnPage').trigger('click');
       }
       });
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
    }
 
    @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -187,7 +188,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
   ngOnInit(): void {
 
-       this.route.url.subscribe(url =>{
+     //  this.route.url.subscribe(url =>{
         this.resetPopups();
         this.gotoTop();
     this.loader = true;
@@ -196,7 +197,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.getAirpotsList();
         this.getCoupons();
     this.flightSearch();
-     });
+   //  });
   }
         resetPopups(){
         $('#flightChange').modal('hide');

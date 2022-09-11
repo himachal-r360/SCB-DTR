@@ -224,7 +224,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         $('#endOfPage').trigger('click');
         }
         });
-
+ this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         
   }
   
@@ -232,7 +232,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
 
         ngOnInit(): void {
         this.isMobile = window.innerWidth < 991 ?  true : false;
-        this.route.url.subscribe(url =>{
+       // this.route.url.subscribe(url =>{
         this.resetPopups();
         this.gotoTop();
         this.loader = true;
@@ -242,7 +242,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.getAirlinesList();
         this.getCoupons();
         this.flightSearch();
-        });
+      //  });
         }
 
         getQueryParamData(paramObj: any) {
