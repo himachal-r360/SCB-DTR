@@ -3223,6 +3223,11 @@ recivetotalFare($event){
         }
     }
     fillupGSTDetailOnCheck($event,data,GSTIndex){ 
+        console.log("dd");
+        console.log(this.GSTListLength);
+        for(let i=0;i<this.GSTListLength;i++){
+                this.isCheckedGST[i]=false;
+        }
         if($event.target.checked){
             this.selectedGST.push(GSTIndex);
             this.checkedGST.push({ 
