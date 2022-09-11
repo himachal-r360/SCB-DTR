@@ -1134,7 +1134,7 @@
                     <div class="row g-3">
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Address 1 *</mat-label>
+                                <mat-label>Address 1 </mat-label>
                                 <input matInput placeholder="Enter Address1" formControlName="destAddressOne" autocomplete="nope">
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressOne.errors) || (passengerForm.controls.destAddressOne.touched)" class="error">
@@ -1153,7 +1153,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Address 3 (Optional) </mat-label>
+                                <mat-label>Address 3 (Optional)</mat-label>
                                 <input matInput placeholder="Enter Address3" formControlName="destAddressThree" autocomplete="nope">
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressThree.errors) || (passengerForm.controls.destAddressThree.touched)" class="error">
@@ -1162,7 +1162,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>PIN *</mat-label>
+                                <mat-label>PIN</mat-label>
                                 <input matInput placeholder="Enter Pin" formControlName="destAddressPin" maxlength="6" (keypress)="numberInput($event)" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" (keyup)="getDestCity($event)">
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressPin.errors) || (passengerForm.controls.destAddressPin.touched)" class="error">
@@ -1175,7 +1175,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>State * </mat-label>
+                                <mat-label>State</mat-label>
                                 <input matInput placeholder="" formControlName="destAddressState" autocomplete="nope" [(ngModel)]="destState" readonly value={{destState}}>
                             </mat-form-field>
                             <div *ngIf="(submitted && passengerForm.controls.destAddressState.errors) || (passengerForm.controls.destAddressState.touched)" class="error">
@@ -1184,7 +1184,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Select city * </mat-label>
+                                <mat-label>Select city</mat-label>
                                 <mat-select placeholder="" formControlName="destAddressCity" autocomplete="nope" [(ngModel)]="destAddressCity">
                                     <mat-option *ngFor="let city of destCityList" [value]="city" (onSelectionChange)="getcitypostoffice(city)"> {{city}} </mat-option>
                                 </mat-select>
@@ -1195,7 +1195,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-12">
                             <mat-form-field class="matField_full_width w-100" appearance="outline">
-                                <mat-label>Post Office * </mat-label>
+                                <mat-label>Post Office</mat-label>
                                 <mat-select placeholder="" formControlName="destAddressPost" autocomplete="nope">
                                     <mat-option *ngFor="let post of postofficeList" [value]="post"> {{post}} </mat-option>
                                 </mat-select>
