@@ -1118,11 +1118,13 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       this.passengerForm.controls['gstPincode'].updateValueAndValidity();
       this.passengerForm.controls['gstState'].updateValueAndValidity();
     }
+    console.log(this.passengerFormerror);
 
     if (this.passengerForm.invalid || this.passengerFormerror == 1) {
       this.buttonSubmitted = false;
       return;
     } else {
+ 
       this.spinnerService.show();
       this.buttonLoading = true;
       this.passengerData = [];

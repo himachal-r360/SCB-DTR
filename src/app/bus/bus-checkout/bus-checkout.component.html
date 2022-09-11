@@ -54,15 +54,15 @@
   <div class="col-md-12 p-0 fixed-top"  >
   <div class="mob-listing-header">
     <div class="mob-listing-header-left">
-        <a href="javascript:;">
+        <a href="javascript:;" (click)="moveTab(1)">
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
     </div>
     <div class="mob-listing-header-center">
         <div class="">
-                <p>11 Aug   </p>
-                <h6> Go Tour Travels and Holidays </h6>
-                <p class="">A/C Sleeper (2+1)</p>
+                <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
+                <h6>{{ onward.travels }} </h6>
+                <p class="">{{ onward.busType }}</p>
         </div>
     </div>
     <div> </div>
@@ -302,10 +302,8 @@
                               numeric</mat-error>
                             <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']" >Age should be less
                               than 125</mat-error>
-                              
-                              <mat-error *ngIf="submitted && i==defaultPrimary && !passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">{{ ageValidError }}</mat-error>
                           </span>
-
+                               <mat-error class="error_bus" *ngIf="submitted && i==defaultPrimary && passengerFormerror" >{{ageValidError}}</mat-error>
                         </div>
 
                       </div>
