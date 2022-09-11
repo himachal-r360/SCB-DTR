@@ -156,7 +156,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   passengerArray = [];
   passengerFormCount: number = 1;
 
-  constructor(public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
+  constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
     private _bottomSheet: MatBottomSheet, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, plocation: PlatformLocation, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
 
@@ -787,7 +787,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
       
       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
-      $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
+     // $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
        $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
       
 
@@ -1118,10 +1118,17 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       this.passengerForm.controls['gstPincode'].updateValueAndValidity();
       this.passengerForm.controls['gstState'].updateValueAndValidity();
     }
-    console.log(this.passengerFormerror);
 
     if (this.passengerForm.invalid || this.passengerFormerror == 1) {
       this.buttonSubmitted = false;
+              let target;
+
+        target = this.el.nativeElement.querySelector('.ng-invalid')
+
+        if (target) {
+        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
+        target.focus();
+        }
       return;
     } else {
  

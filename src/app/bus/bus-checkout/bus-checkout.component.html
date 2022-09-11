@@ -54,7 +54,10 @@
   <div class="col-md-12 p-0 fixed-top"  >
   <div class="mob-listing-header">
     <div class="mob-listing-header-left">
-        <a href="javascript:;" (click)="moveTab(1)">
+        <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==1" >
+            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+        </a>
+                <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" >
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
     </div>
