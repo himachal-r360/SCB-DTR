@@ -434,7 +434,7 @@ console.log("hotel "+ JSON.stringify( get_value));
                    url = '/train';
                 } else {
 
-                   url = '/train-list?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
+                   url = '/train/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
 
                 }
                 var searchFrom = get_value.searchFrom;

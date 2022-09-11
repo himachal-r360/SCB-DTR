@@ -1,4 +1,21 @@
-<section class="flight-area mt-150" *ngIf="!isMobile">
+<section class="bradcome-area mt-110 mb-10">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="bradcome-list">
+                  <ul class="list-inline">
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Home</a></li>
+                      <li class="list-inline-item"><span>/</span></li>
+                      <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
+                      <li class="list-inline-item"><span>/</span></li>
+                      <li class="list-inline-item"><span>Flight Search</span></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="flight-area mt-10" *ngIf="!isMobile">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -54,7 +71,7 @@
                                                     <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                    <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} </span>
                                                     <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
                                                 </label>
                                                 </div>
@@ -155,7 +172,7 @@
                                                     <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                    <span class="description">{{airlineItem.airlineName}} </span>
                                                 </label>
                                                     <p>&#8377;{{airlineItem.price}}</p>
                                                 </div>
@@ -166,7 +183,7 @@
                                                         <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                    <span class="description">{{airlineItem.airlineName}} </span>
                                                 </label>
                                                         <p>&#8377;{{airlineItem.price}}</p>
                                                     </div>
@@ -336,7 +353,7 @@
                                             <div class="col-md-2">
                                                 <div class="flight-radio">
                                                     <div class="flight-radio-image" *ngIf="list.onwardflights.length > 0">
-                                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.onwardflights[0].airline}}"></i>
+                                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.onwardflights | airlines}}"></i>
                                                     </div>
                                                     <div class="flight-radio-time" *ngIf="list.onwardflights.length > 0">
                                                         <h6>{{list.onwardflights[0].airlineName}}</h6>
@@ -429,7 +446,7 @@
                                                 <div class="col-md-2">
                                                     <div class="flight-radio">
                                                         <div class="flight-radio-image" *ngIf="list.returnflights.length > 0">
-                                                            <i class="free-flow air-logo intAirLogo size-28  x{{list.returnflights[0].airline}}"></i>
+                                                            <i class="free-flow air-logo intAirLogo size-28  x{{list.returnflights | airlines}}"></i>
                                                         </div>
                                                         <div class="flight-radio-time" *ngIf="list.returnflights.length > 0">
                                                             <h6>{{list.returnflights[0].airlineName}}</h6>
@@ -603,8 +620,8 @@
                                                                             <div class="tabs-depart-box" *ngFor="let details of list.onwardflights;let i=index;">
                                                                                 <div class="tabs-depart-one">
                                                                                     <p class="depart-one-image">
-                                                                                     <i class="me-2 free-flow air-logo intAirLogo size-28  x{{list.onwardflights[0].airline}}"></i>
-                                                                                   {{list.onwardflights[0].airline}} {{list.onwardflights[0].flightNumber}}</p>
+                                                                                     <i class="me-2 free-flow air-logo intAirLogo size-28  x{{details.airline}}"></i>
+                                                                                   {{details.airline}} {{details.flightNumber}}</p>
                                                                                     <div class="tabs-depart-left float-none">
                                                                                         <div class="tabs-depart-times">
                                                                                             <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -662,8 +679,8 @@
                                                                         <div class="tabs-depart-box" *ngFor="let details of list.returnflights;let i=index;">
                                                                             <div class="tabs-depart-one">
                                                                                 <p class="depart-one-image">
-                                                                                <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{list.returnflights[0].airline}}"></i>
-                                                                                 {{list.returnflights[0].airline}} {{list.returnflights[0].flightNumber}}</p>
+                                                                                <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{details.airline}}"></i>
+                                                                                 {{details.airline}} {{details.flightNumber}}</p>
                                                                                 <div class="tabs-depart-left float-none">
                                                                                     <div class="tabs-depart-times">
                                                                                         <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -945,7 +962,7 @@
                     </div>
                     <div class="mob-listing-header-right">
                         <a href="javascript:;" routerLink="/compare-fly">
-                            <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
+                            <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
                         </a>
                     </div>
                 </div>
@@ -1007,7 +1024,7 @@
                                 <div class="mob-list-items-name">
                                     <div class="mob-list-items-name-top">
                                         <div class="mob-list-items-image">
-                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.onwardflights[0].airline}}"></i>
+                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.onwardflights | airlines}}"></i>
                                             <div class="mob-list-flight-name" *ngIf="list.onwardflights.length > 0">
                                                 <h6>{{list.onwardflights[0].airlineName}}</h6>
                                                 <p>{{list.onwardflights[0].airline}} {{list.onwardflights[0].flightNumber}}</p>
@@ -1059,7 +1076,7 @@
                                 <div class="mob-list-items-name" *ngIf="list.returnflights[0]">
                                     <div class="mob-list-items-name-top">
                                         <div class="mob-list-items-image">
-                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.returnflights[0].airline}}"></i>
+                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.returnflights | airlines}}"></i>
                                             <div class="mob-list-flight-name" *ngIf="list.returnflights.length > 0">
                                                 <h6>{{list.returnflights[0].airlineName}}</h6>
                                                 <p>{{list.returnflights[0].airline}} {{list.returnflights[0].flightNumber}}</p>
@@ -1205,7 +1222,10 @@
                                                                 <div class="extra-tabs-details-bottom ">
                                                                     <div class="tabs-depart-box" *ngFor="let details of list.onwardflights;let i=index;">
                                                                         <div class="tabs-depart-one">
-                                                                            <p class="depart-one-image" *ngIf="flightIcons"><img src="{{this.flightIcons[list.onwardflights[0].airline].logo}}" class="flight-image me-2" alt="">{{list.onwardflights[i].airline}} {{list.onwardflights[i].flightNumber}}</p>
+                                                                            <p class="depart-one-image" >
+                                                                            
+                                                                             <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{list.onwardflights[i].airline}}"></i>
+                                                                            {{list.onwardflights[i].airline}} {{list.onwardflights[i].flightNumber}}</p>
                                                                             <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                             <div class="tabs-depart-left float-none">
                                                                                 <div class="tabs-depart-times">
@@ -1255,7 +1275,9 @@
                                                                 <div class="extra-tabs-details-bottom ">
                                                                     <div class="tabs-depart-box" *ngFor="let details of list.returnflights;let i=index;">
                                                                         <div class="tabs-depart-one">
-                                                                            <p class="depart-one-image" *ngIf="flightIcons"><img src="{{this.flightIcons[list.returnflights[0].airline].logo}}" class="flight-image me-2" alt="">{{list.returnflights[i].airline}} {{list.returnflights[i].flightNumber}}</p>
+                                                                            <p class="depart-one-image" >
+                                                                             <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{list.returnflights[i].airline}}"></i>
+                                                                            {{list.returnflights[i].airline}} {{list.returnflights[i].flightNumber}}</p>
                                                                             <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                             <div class="tabs-depart-left float-none">
                                                                                 <div class="tabs-depart-times">
@@ -1607,7 +1629,7 @@
                                                                     <label class="custom-control material-checkbox">
                                                                   <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)">
                                                                   <span class="material-control-indicator"></span>
-                                                                  <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                                  <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}}</span>
                                                                   <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
                                                               </label>
                                                                 </div>
@@ -1742,7 +1764,7 @@
                                                                       <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
                                                                       (change)="flightAirlineFilterFlightData(airlineItem)">
                                                                       <span class="material-control-indicator"></span>
-                                                                      <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                                      <span class="description">{{airlineItem.airlineName}}</span>
                                                                   </label>
                                                                         <p>₹{{airlineItem.price}}</p>
                                                                     </div>
@@ -1755,7 +1777,7 @@
                                                                       <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
                                                                       (change)="flightAirlineFilterFlightData(airlineItem)">
                                                                       <span class="material-control-indicator"></span>
-                                                                      <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                                      <span class="description">{{airlineItem.airlineName}}</span>
                                                                   </label>
                                                                             <p>₹{{airlineItem.price}}</p>
                                                                         </div>

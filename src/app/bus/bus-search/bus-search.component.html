@@ -6,7 +6,7 @@
                                             <div class="select-root-area m_height_from_to">
                                                 <div class="select-root-left h_lft_div" appDropdown>
                                                     <span class="select-roottitle">FROM</span>
-                                                    <h5 class="fw_6 ">{{fromCityName}}, <span class="gray_txt_highlight">{{fromStateName}}</span></h5>
+                                                    <h5 class="fw_6 ">{{fromCityName}} <span class="gray_txt_highlight">{{fromStateName}}</span></h5>
                                         <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('fromTravelCode', 'required')">
                                         <small   class="validate-msg">Please select to city</small>
                                         </div>
@@ -105,7 +105,7 @@
                                                 </div>
                                                 <div class="select-root-right h_rgt_div" appDropdown #toCityDiv id="toCityDiv">
                                                     <span class="select-roottitle">TO</span>
-                                                    <h5 class="fw_6 ">{{toCityName}}, <span class="gray_txt_highlight">{{toStateName}}</span></h5>
+                                                    <h5 class="fw_6 ">{{toCityName}} <span class="gray_txt_highlight">{{toStateName}}</span></h5>
                                                                                                      <div class="error_msg w-50"  *ngIf="!isMobile && submitted && Error('toTravelCode', 'required')" >
                                 <small class="validate-msg">Please select to city</small>
                                 </div>
@@ -225,7 +225,7 @@
                                             <!--Web Date Picker-->
                                             <!--Mobile Date Picker-->
                                                 <div class="select-root-area" *ngIf="isMobile">
-                                                    <div class="select-dep-ret " [ngClass]="isMobile == true" >
+                                                    <div class="select-dep-ret " >
                                                         <div class="area-root-departure " (click)="openMliteDatePicker('departure')"  id="datePickerOpen">
                                                             <div class="select-root-departure departure-date">
                                                                 <span class="select-roottitle">DEPARTURE</span>
@@ -262,24 +262,6 @@
                                                                 <mat-calendar  [minDate]="minDateMlite" (selectedChange)="onSelectMliteDate($event,'departure')" [selected]="departureDate"></mat-calendar>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <div class="select_city d-block mb-15 flex-fill">
-                                                                <div class="row">
-                                                                <div class="col-6 ">
-                                                                <div class="input_box  date_input_box">
-                                                                        <label>
-                                                                        <span>Departure</span>
-                                                                        <div class="form-group flex_basis dep_m_cal" *ngIf="departureDate">
-                                                                        <b>{{departureDate | date:'dd MMM' }} , </b><span> {{departureDate | date:'EEEE' }}</span>
-                                                                        </div>
-                                                                        </label>
-                                                                </div>
-                                                                </div>
-                                                                <div class="col-6 ">
-                                                                <div class="">
-                                                                </div>
-                                                                </div>
-                                                                </div>
-                                                                </div>
                                                                 <button type="button" class="w-100 btn btn-primary"  data-bs-dismiss="modal"> Done</button>
                                                                 </div>
                                                                 </div>

@@ -54,15 +54,18 @@
   <div class="col-md-12 p-0 fixed-top"  >
   <div class="mob-listing-header">
     <div class="mob-listing-header-left">
-        <a href="javascript:;">
+        <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==1" >
+            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+        </a>
+                <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" >
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
     </div>
     <div class="mob-listing-header-center">
         <div class="">
-                <p>11 Aug   </p>
-                <h6> Go Tour Travels and Holidays </h6>
-                <p class="">A/C Sleeper (2+1)</p>
+                <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
+                <h6>{{ onward.travels }} </h6>
+                <p class="">{{ onward.busType }}</p>
         </div>
     </div>
     <div> </div>
@@ -183,88 +186,11 @@
 
           </div>
 
-          <form [formGroup]="passengerForm" name="passengerForm">
+          <form [formGroup]="passengerForm" name="passengerForm" *ngIf="passengerForm && seacthResult.seatdetails.length">
             <div class="">
               <div class="booking-inner-box mb-20">
-                <!-- <ng-container *ngIf="getTravllerShow">
-                  <div class="message-trav"> 
-                    <button type="button" class="travel-title btn btn-primary-outline" (click)="chooseFromSavedTravellers()">
-                      Choose from Saved Travellers
-                      </button>
-                  </div>
-                </ng-container> -->
-
                 <!-- redbus saved traveller & GST pop up  -->
-                <ng-template #contentTraveller let-modal>
-                  <div class=" text-center">
-                    <div class="saved_travellers_bus">
-                      <div class="modal-header" style="background: #dcebf8 !important;">
-                        <h4 class="modal-title">
-                          <p>Choose from Saved Travellers</p>
-                        </h4>
-                        <!-- <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button> -->
-                      </div>
-                      <div class="modal-body p-0">
-
-                        <div class="travel-userNames">
-
-                          <p>
-                            <label class="checkbox"
-                              *ngFor="let data of travellerlist | slice:0:5;let travellerIndex = index">
-                              <input type="checkbox" name="travellerlist"
-                                (change)="fillupTravellerDetailOnCheck($event,data,travellerIndex)"
-                                [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
-                              <span class="ps-2">{{ data.firstName }} {{ data.lastName }}</span>
-                              <span class="checkmark"></span>
-                            </label>
-                          </p>
-                          <ng-container *ngIf="isExpanded">
-                            <ng-container *ngFor="let expandedItem of travellerlist; let i = index">
-                              <p *ngIf="i > 5">
-                                <label class="checkbox">
-                                  <input type="checkbox" name="travellerlist"
-                                    (change)="fillupTravellerDetailOnCheck($event,expandedItem,i)"
-                                    [disabled]="disableCheckbox[i]" [checked]="isChecked[i]">
-                                  <span class="ps-2">{{ expandedItem.firstName }} {{ expandedItem.lastName }}</span>
-                                  <span class="checkmark"></span>
-                                </label>
-                              </p>
-                            </ng-container>
-                          </ng-container>
-
-                        </div>
-                      </div>
-                      <div class="modal-footer d-block p-0">
-                        <div *ngIf="travellerlist.length > 5">
-                          <p class="view_more_btn">
-                            <a (click)="expandItems()">
-                              {{ !isExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;' }}
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                      <div class="modal-footer mt-0 pt-0">
-                        <button type="button" class="btn btn-danger" (click)="travellerReset()">Reset</button>
-                        <button type="button" class="btn btn-primary" aria-label="Close" data-dismiss="modal"
-                          id="cloaseSavepop" (click)="modal.dismiss('Cross click')">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-
                 <div class="button-wrap">
-
-                  <div class="row mb-20 hidden">
-                    <ng-container *ngIf="getTravllerShow">
-                      <div class="message-trav">
-                        <button type="button" class="travel-title btn btn-primary-outline"
-                          (click)="chooseFromSavedTravellers(i)">
-                          Choose from Saved Travellers
-                        </button>
-                      </div>
-                    </ng-container>
-                  </div>
-
 
                   <div class="traveller-details"
                     *ngFor="let item of seacthResult.seatdetails; let i = index;let firstRow = first;">
@@ -298,47 +224,32 @@
 
 
                     </div>
-                    <!-- <div class=clearfix></div>
-                    <p class="travel-count"><b>Traveller {{ i+1 }}</b>
-                      // for desktop
-                      <span class="seat-showDesktop xs-none">
-                        <p>Seat<p>
-                            <img src="{{ cdnUrl }}images/icons/Seat-1.svg" class="xs-none"> <span
-                              class="ml-3 seat-num">{{ seacthResult.seatdetails[i].name }}</span> <small
-                              *ngIf="seacthResult.seatdetails[i].ladiesSeat"><br>This seat is reserved for
-                              ladies</small>
-                      </span>
-                      // for mobile 
-                      <span class="seat-showMobile lg-none">
-                        <p>Seat : {{ seacthResult.seatdetails[i].name }} <p> <small
-                              *ngIf="seacthResult.seatdetails[i].ladiesSeat">This seat is reserved for ladies</small>
-                      </span>
-                    </p> -->
 
-                    <!-- <div class="travel-userNames" *ngIf="saveTravllerShow">
-                      <p> <label class="checkbox">Save Traveller
-                         <input type="checkbox"  checked="true" formControlName="saveTraveller{{ i }}">
-                         <span class="checkmark"></span>
-                       </label>
-                      </p>
-                    </div>  -->
 
                     <div class="traveler-details-info mt-15">
                       <div class="row">
-
                                                 <!-- radio buttons male/female-->
                                                 <div class="col-12">
                                                   <div class="trip_select">
                                                       <div class="buttonTrip">
-                                                          <input type="radio" id="male" formControlName="passengerGender{{ i }}" name="flightTripType" checked (ngModelChange)="selectTripType($event)" value="Male" />
+                                                          <input type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
                                                           <label class="btn btn-default" for="male">Male</label>
                                                       </div>
                                                       <div class="buttonTrip">
-                                                          <input type="radio" id="female" formControlName="passengerGender{{ i }}" name="flightTripType" (ngModelChange)="selectTripType($event)" value="Female" />
+                                                          <input type="radio" id="female{{ i }}" formControlName="passengerGender{{ i }}"  value="Female" />
                                                           <label class="btn btn-default" for="female">Female</label>
                                                       </div>
+
+
                                                   </div>
+                                                  <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
+
+                                                    <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is required</mat-error>
+                                                
+                                                    </span>
                                                 </div>
+
+           
                                             <!-- end of radio buttons male/female -->
                     
                       </div>
@@ -360,7 +271,7 @@
                                   enter valid name</mat-error>
                                 <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['minlength']">Please
                                   enter atleast 2 character</mat-error> 
-                                 </span> 
+                              </span> 
                           </div>
 
                         </div>
@@ -394,69 +305,24 @@
                               numeric</mat-error>
                             <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']" >Age should be less
                               than 125</mat-error>
-                              
-                              <mat-error *ngIf="submitted && i==defaultPrimary && !passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">{{ ageValidError }}</mat-error>
                           </span>
-
+                               <mat-error class="error_bus" *ngIf="submitted && i==defaultPrimary && passengerFormerror" >{{ageValidError}}</mat-error>
                         </div>
-                        <!-- For Web Only -->
-                        <!-- <div class="col-6 col-lg-4 col-md-6 d-none d-sm-block">
-                          <mat-form-field class="w-100" appearance="outline">
-                            <mat-label>Gender</mat-label>
-                            <mat-select placeholder="" formControlName="passengerGender{{ i }}">
-                              <mat-option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat"> Male
-                              </mat-option>
-                              <mat-option value="Female"> Female </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                              required</mat-error>
-                          </span>
-                        </div> -->
-                        <!-- For Mobile Only -->
-                        <!-- <div class="col-6 col-lg-3 col-md-6 offset-lg-1 d-block d-sm-none">
-                          <mat-form-field class="w-100" appearance="outline">
-                            <mat-label>Gender</mat-label>
-                            <select matNativeControl formControlName="passengerGender{{ i }}">
-                              <option value="Gender" disabled>Gender</option>
-                              <option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat">Male</option>
-                              <option value="Female">Female</option>
-                            </select>
-                          </mat-form-field>
-                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                              required</mat-error>
-                          </span>
-                        </div> -->
+
                       </div>
 
                     </div>
 
-
-                    <!--<div class="travel-userNames" *ngIf="saveTravllerShow">
-                      <p> 
-                        <label class="checkbox">Save Traveller
-                        <input type="checkbox"  checked value="true" formControlName="saveTraveller{{ i }}">
-                        <span class="checkmark"></span>
-                        </label>
-                      </p>
-                    </div>-->
-                    <!-- <div class="row mt-3 mb-3">
-                      <div class="col-md-12">
-                        <a href="#" class="blue_link">+ Add Traveller</a>
-                      </div>
-                    </div> -->
                     
                     <div class="traveller-adults-ul mt-3">
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
                       <ng-container *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index ">
 
-                        <li class="custom-check-box adult-choose-box {{passenger.id}}_{{i}}"  id="adult-choose-box_{{ passenger.id }}">
+                        <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}">
                           <div class="custom-controls-stacked " >
                             <label class="custom-control material-checkbox">
-                              <input type="checkbox" class="material-control-input pass_checkBox {{travellerIndex}}"
-                                id="travelPassenger_{{ passenger.id }}"  name="travellerlist"
+                              <input type="checkbox" class="material-control-input pass_checkBox  pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
+                                 name="travellerlist"
                                 (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
                               <span class="description fs_14 text-black fw_7 mr-10"><span
@@ -475,13 +341,13 @@
                           </li>
 
                       </ng-container>
-                        
-                          <ng-container *ngIf="expandid==i && isExpanded">
+                        <!--expandid==i && isExpanded-->
+                          <div  [ngClass]="{'hidden': expandid!=i && !isExpanded || !isExpanded }" >
                             <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
-                              <li class="custom-check-box adult-choose-box {{expandedItem.id}}_{{i}}" *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
+                              <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
                                 <label class="custom-control material-checkbox">
-                                  <input type="checkbox" class="material-control-input pass_checkBox"
-                                    id="travelPassenger_{{ expandedItem.id }}"  name="travellerlist"
+                                  <input type="checkbox" class="material-control-input pass_checkBox pass_checkBox_{{ expandedItem.id}}{{i}} pass_checkBox_{{i}}"
+                                    name="travellerlist"
                                     (change)="fillupTravellerDetailOnCheck($event,expandedItem,i,expandedItem.id,expandedItemi)" [disabled]="disableCheckbox[expandedItemi]" [checked]="isChecked[expandedItemi]">
                                   <span class="material-control-indicator"></span>
                                   <span class="description fs_14 text-black fw_7 mr-10"><span
@@ -498,12 +364,12 @@
                                 </label>
                               </li>
                             </ng-container>
-                          </ng-container>
+                          </div>
                         
                           <div class="modal-footer d-block p-0">
                             <div *ngIf="travellerlist.length > 3">
                               <p class="view_more_btn">
-                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded || !isExpanded" >
+                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded" >
                                  View More  &#x25BC;
                                 </a>
                                 
@@ -612,7 +478,7 @@
 
               <div class="booking-inner-box gst-number-box">
                 <h6> <span class="form-switch m-0 mr-10">
-                    <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
+                  <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
                   </span>GST number for business travel (Optional)</h6>
                 <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                 </p>
@@ -759,7 +625,7 @@
                       <mat-label>State</mat-label>
                       <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
                         (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
-                        readonly="stateCheck" value={{ state }}>
+                        readonly="stateCheck" value="{{ state }}">
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
                         Please enter state name.
                       </mat-error>
@@ -1337,7 +1203,7 @@
           <div class="bookingprocess-content">
             <div class="bookingprocess-flight">
               <h6>{{ seacthResult.searchFrom }} </h6>
-              <h6>{{ seacthResult.searchTo }}</h6>
+              <h6> &nbsp; {{ seacthResult.searchTo }}</h6>
             </div>
             <div class="bookingprocess-processbar">
               <div class="progress">

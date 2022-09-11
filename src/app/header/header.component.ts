@@ -448,6 +448,7 @@ export class HeaderComponent implements OnInit {
 
     }
   enablePushClick(){
+	
     if (!this.cookieService.get("push_enable")) { 
       this.cookieService.set('push_enable','1', null, '/', null, null, null);
     }
@@ -459,7 +460,8 @@ export class HeaderComponent implements OnInit {
       this.enablePushBox=true;
       this.enablePushTitle = true;
       this.notifyOpacity = true;
-      //$('.myaccount-drop').removeClass('show');
+      $('.myaccount-drop').removeClass('show');
+	$("#pushNotiEnable").modal('show');
   }
   enableMoreClick() {
     
@@ -575,7 +577,7 @@ closeCookieConsent(value){
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcount = result.result.length;
-        
+
         
         const unreadId = [];
         const readId = [];
@@ -595,8 +597,6 @@ closeCookieConsent(value){
 
         });
 				
-		 console.log(readId.length);
-		 console.log(unreadId.length);
           if(this.cookieService.get('push_status') != undefined)
           {	
 		

@@ -150,13 +150,13 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
   SeatNumber: any;
-
+      passengerSelectedArray:any={};
   saveAdultTravellerId = [];
   saveInfantTravellerId = [];
   passengerArray = [];
   passengerFormCount: number = 1;
 
-  constructor(private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
+  constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
     private _bottomSheet: MatBottomSheet, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, plocation: PlatformLocation, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
 
@@ -346,6 +346,8 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       } else {
         this._flightService.showHeader(true);
       }
+      
+
 
       setTimeout(() => {
         //Check Laravel Seesion
@@ -603,7 +605,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
           jobGroup.addControl('passengerAge' + i, new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.max(125)]));
           jobGroup.addControl('passengerGender' + i, new FormControl('', Validators.required));
           jobGroup.addControl('saveTraveller', new FormControl(''));
+          
+          this.passengerSelectedArray[i]=0;
+          
         }
+
+      
 
         jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]));
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID, [Validators.required, Validators.pattern(this.emailPattern)]));
@@ -634,25 +641,6 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   }
 
 
-  fillPassenger($event, passenger, checkboxIndex) {
-
-    if (checkboxIndex == -1)
-      this.passengerArray.push(this.passengerFormCount = 1);
-
-    var i = Number(this.passengerFormCount);
-
-    if (checkboxIndex != -1)
-      this.saveAdultTravellerId[checkboxIndex] = i;
-
-    console.log($event); console.log(passenger); console.log(checkboxIndex);
-    if ($event.target.checked) {
-
-
-
-    } else {
-
-    }
-  }
 
 
 
@@ -682,14 +670,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   }
   @ViewChild("contentGST") modalGST: TemplateRef<any>;
   expandItems(formId) {
-
     this.expandid = formId;
     this.isExpanded = true;
     this.isExpandedStretch=false;
   }
 
   expandItemsstretch(formId) {
-
     this.expandid = formId;
     this.isExpanded = false;
     this.isExpandedStretch=true;
@@ -779,6 +765,10 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       //this.saveTravllerShow=false;
     }
   }
+  
+  
+  
+  
   fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex) {
 
     const sum = travellerformid + 1;
@@ -786,75 +776,27 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     const sum1 = travellerformid - 1;
 
     if ($event.target.checked) {
+      
+      this.passengerSelectedArray[travellerformid]=1;
+      
 
       this.passengerForm.controls['passengerid' + travellerformid].setValue(data.id);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue(data.firstName);
       this.passengerForm.controls['passengerLastName' + travellerformid].setValue(data.lastName);
       this.passengerForm.controls['passengerAge' + travellerformid].setValue(data.age);
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
-
-      for (let i = 0; i < this.travellerlistLength; i++) {
-        let allTraverlID = this.travellerlist[i].id;
-        if (data.id == travellerid && travellerIndex == i) {
-         
-          this.isChecked[i] = true;
-
-          $('.' + data.id + '_' + travellerformid).show();
-          $('.' + data.id + '_' + sum1).show();
-          $('.' + data.id + '_' + sum).hide();
-        
-          $('.' + travellerid + '_' + sum1).hide();
-         // $('.' + allTraverlID + '_' + i).hide();
-
-          console.log(travellerid + '_' + sum1);
-
-        } else {
-          
-            this.isChecked[i] = false;
-
-            $('.' + allTraverlID + '_' + i ).show();
-
-//console.log(allTraverlID + '_' + i);
-
-$('.' + allTraverlID + '_' + sum1).show();
-
-            if(data.id == travellerid && travellerformid == i ){
-             
       
-            $('.' + data.id + '_' + sum1).show();
-            $('.' + data.id + '_' + sum).hide();
-     
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+     // $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
+       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+      
 
-            $('.' + allTraverlID + '_' + sum).show();
-
-            console.log('if '+allTraverlID+'_'+travellerformid);
-
-            }else{
-
-              
-              console.log('else '+allTraverlID+'_'+travellerformid);
-
-              $('.' + data.id + '_' + i).hide();
-              $('.' + data.id + '_' + sum1).hide();
-              $('.' + data.id + '_' + sum).hide();
-
-              
-
-            $('.' + allTraverlID + '_' + sum).show();
-            $('.' + allTraverlID + '_' + sum1).show();
-            $('.' + allTraverlID + '_' + i).show();
-
-            }
-
-
-        }
-
-      }
-
+      //$(".adult-choose-box"+travellerid+travellerformid).removeClass("travllerDisabled");
+      
+      console.log(".adult-choose-box"+travellerid+travellerformid);
 
     } else {
-
-
+     this.passengerSelectedArray[travellerformid]=0;
       
       this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
@@ -862,131 +804,12 @@ $('.' + allTraverlID + '_' + sum1).show();
       this.passengerForm.controls['passengerAge' + travellerformid].setValue('');
       this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
       // this.disableCheckbox[travellerIndex]=true;
-     
-
-
-      for (let i = 0; i < this.travellerlistLength; i++) {
-        let allTraverlID = this.travellerlist[i].id;
-        if (data.id == travellerid && travellerIndex == i) {
-        
-          this.isChecked[i] = true;
-          $('.' + data.id + '_' + travellerformid).show();
-          $('.' + data.id + '_' + sum).show();
-          $('.' + data.id + '_' + sum1).show();
-          
-        } else {
-        
-          this.isChecked[i] = false;
-          this.isChecked[travellerformid] = false;
-          this.isChecked[travellerIndex] = false;
-          this.isChecked[sum1] = false;
-
-
-          $('.' + allTraverlID + '_' + i ).show();
-        
-          
-
-        }
-
-      }
-
+      $(".pass_checkBox_"+travellerformid).prop("disabled", false);
+      $(".adult-choose-box"+travellerid).removeClass("travllerDisabled");
 
 
     }
 
-
-
-
-    /*
-      console.log("data " + JSON.stringify(data));
-      console.log("index " + travellerIndex);
-          if($event.target.checked){                
-                this.isChecked[travellerIndex]=true; 
-                if(!(this.selectedCheckbox.includes(travellerIndex))){
-                      this.selectedCheckbox.push(travellerIndex);
-                }
-                this.checkedList.push({ 
-                                        "sno":        data.id,
-                                        "firstName":  data.firstName,
-                                        "lastName":   data.lastName,
-                                        "age":        data.age,
-                                        "gender":     data.gender
-                                      });
-                var checkedListLength=this.checkedList.length;
-                var isFilledData = false;
-               
-                    if(this.passengerForm.controls['passengerFirstName' + travellerIndex].value=="" && this.passengerForm.controls['passengerLastName' + travellerIndex].value==""){
-                    isFilledData = true;
-                        var gender;
-                        if((this.checkedList[checkedListLength-1].gender == 'M') || (this.checkedList[checkedListLength-1].gender == 'Male')) {
-                          gender = 'Male'
-                        }else if((this.checkedList[checkedListLength-1].gender == 'F') || (this.checkedList[checkedListLength-1].gender == 'Female')){
-                          gender = 'Female';
-                        }
-                  //   
-                        this.passengerForm.controls['passengerFirstName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].firstName);
-                        this.passengerForm.controls['passengerLastName' + travellerIndex].setValue(this.checkedList[checkedListLength-1].lastName);
-                        this.passengerForm.controls['passengerAge' + travellerIndex].setValue(this.checkedList[checkedListLength-1].age);
-                        this.passengerForm.controls['passengerGender' + travellerIndex].setValue(gender);
-                      
-                    }
-                
-                if(isFilledData == false){
-                $event.target.checked = false;
-                  this.isChecked[travellerIndex]=false;
-                  this.disableCheckbox[travellerIndex]=true;
-                this.selectedCheckbox = this.arrayRemove(this.selectedCheckbox, travellerIndex);
-                this.selectedCheckbox.splice(travellerIndex,1);
-                this.checkedList = this.arrayRemove(this.checkedList, {  
-                                                                    "sno":        data.id, 
-                                                                    "firstName":  data.firstName,
-                                                                    "lastName":   data.lastName,
-                                                                    "age":        data.age,
-                                                                    "gender":     data.gender
-                                                                  });
-                }
-          }else{      
-                this.isChecked[travellerIndex]=false;
-                this.selectedCheckbox = this.arrayRemove(this.selectedCheckbox, travellerIndex);
-                this.checkedList = this.arrayRemove(this.checkedList, {  
-                                                                    "sno":        data.id, 
-                                                                    "firstName":  data.firstName,
-                                                                    "lastName":   data.lastName,
-                                                                    "age":        data.age,
-                                                                    "gender":     data.gender
-                                                                  });
-                for(var i=0;i<this.passengerCount;i++){
-                  if((this.passengerForm.controls['passengerFirstName' + i].value==data.firstName) && (this.passengerForm.controls['passengerLastName' + i].value==data.lastName)){
-                      this.passengerForm.controls['passengerFirstName' + i].setValue('');
-                      this.passengerForm.controls['passengerLastName' + i].setValue('');
-                      this.passengerForm.controls['passengerAge' + i].setValue('');
-                      this.passengerForm.controls['passengerGender' + i].setValue('');
-                      break;
-                  }
-                }
-          }
-          if((this.selectedCheckbox.length == this.passengerCount)){
-            for(let i=0;i<this.travellerlistLength;i++){
-              if(this.selectedCheckbox.includes(i)){ 
-                this.disableCheckbox[i]=false;
-              }else{              
-                this.disableCheckbox[i]=true;
-              }
-            }
-          }else{
-            for(let i=0;i<this.travellerlistLength;i++){ 
-                this.disableCheckbox[i]=false;
-            }
-          }
-          let trackUrlParams = new HttpParams()
-          .set('current_url', window.location.href)
-          .set('category', 'RedBus')
-          .set('event', 'Checkout traveller info')
-          .set('metadata','{"traveller_info":"'+this.EncrDecr.set(JSON.stringify(this.checkedList))+'","customerid":"'+this.EncrDecr.set(JSON.stringify(this.REWARD_CUSTOMERID))+'"}');
-          
-           const track_body: string = trackUrlParams.toString();
-           this.rest.trackEvents( track_body).subscribe(result => {});
-           */
   }
   saveTravellerFunc(saveTravellerArray) {
     var requestParamsEncrpt = {
@@ -1135,6 +958,59 @@ $('.' + allTraverlID + '_' + sum1).show();
     }
   }
   /*---------------------end------------------------*/
+  
+        state:any;
+response: any = [];
+   pincodeError:any;
+    urlparam:any;
+    cityList:any;
+    getCityResidence($event) {
+     this.cityList=[];
+        let pincodevalue = this.passengerForm.controls['gstPincode']['value'];
+       
+      if(pincodevalue.length==6){
+        if(this.passengerForm.controls['gstPincode']['status']){
+            let pincode = this.passengerForm.controls['gstPincode']['value'];
+            this.urlparam = {
+              "pinCode": pincode
+            };
+            var param1Str = JSON.stringify(this.urlparam);
+            this._irctc.findCity(param1Str).subscribe(data => {
+                this.response=data;
+                if(this.passengerForm.controls['gstCity']['value'] != undefined){
+                 // this.findPinResidence();
+                }
+if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.partnerResponse.error)){   
+                  this.cityList=this.response.partnerResponse.cityList;
+                  this.pincodeError="";
+                }else if(Array.isArray(this.response.partnerResponse.cityList)==false && !(this.response.partnerResponse.error)){ 
+                  this.cityList.push(this.response.partnerResponse.cityList);
+                  this.pincodeError="";
+                }else if(this.response.partnerResponse.error){ 
+                  this.pincodeError=this.response.partnerResponse.error; 
+                  this.cityList=[];
+                }else{  
+                  this.cityList=[];
+                  this.pincodeError="";
+                }
+                this.state=this.response.partnerResponse.state;
+            },
+            (err: HttpErrorResponse) => {
+                var message='Something went wrong !';
+             alertify.error(message, '').delay(3);
+            });
+        }
+      }else{
+        this.passengerForm['controls']['gstCity'].setValue('');
+        this.cityList=[];
+        this.pincodeError="";
+        //this.stateCheck=true;
+        this.state="";
+        //this.postOfficeList=[];
+      }
+    }
+  
+  
   stateSelect: any;
   gstToggle() {
     this.gstshow = !this.gstshow;
@@ -1145,21 +1021,16 @@ $('.' + allTraverlID + '_' + sum1).show();
     this.passengerForm.get('gstCity').clearValidators();
     this.passengerForm.get('gstPincode').clearValidators();
     this.passengerForm.get('gstState').clearValidators();
-    this.passengerForm.get('saveGST').clearValidators();
-
     this.passengerForm.controls['gstNumber'].updateValueAndValidity();
     this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
     this.passengerForm.controls['gstAddress'].updateValueAndValidity();
     this.passengerForm.controls['gstCity'].updateValueAndValidity();
     this.passengerForm.controls['gstPincode'].updateValueAndValidity();
     this.passengerForm.controls['gstState'].updateValueAndValidity();
+    this.passengerForm.get('saveGST').clearValidators();
     this.passengerForm.controls['saveGST'].updateValueAndValidity();
 
-    // if(this.gstSelected){
-    //   if(this.enableGST==1){
-    //     this.getCustomerGstDetails();
-    //   }
-    // }else{
+
     this.passengerForm['controls']['gstNumber'].setValue('');
     this.passengerForm['controls']['gstBusinessName'].setValue('');
     this.passengerForm['controls']['gstAddress'].setValue('');
@@ -1167,10 +1038,14 @@ $('.' + allTraverlID + '_' + sum1).show();
     this.passengerForm['controls']['gstPincode'].setValue('');
     this.passengerForm['controls']['gstState'].setValue('');
     this.passengerForm['controls']['saveGST'].setValue('');
-    // }
-
-
   }
+  
+  
+    openmodal(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
+    gstmodalcheckedvalue: any = false;
 
   passengerFormerror: number = 0;
   ageValidError: any;
@@ -1246,8 +1121,17 @@ $('.' + allTraverlID + '_' + sum1).show();
 
     if (this.passengerForm.invalid || this.passengerFormerror == 1) {
       this.buttonSubmitted = false;
+              let target;
+
+        target = this.el.nativeElement.querySelector('.ng-invalid')
+
+        if (target) {
+        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
+        target.focus();
+        }
       return;
     } else {
+ 
       this.spinnerService.show();
       this.buttonLoading = true;
       this.passengerData = [];

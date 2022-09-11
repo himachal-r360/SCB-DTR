@@ -1958,6 +1958,9 @@ whatsAppCheck:boolean=false;
     
     
     }
+    backClicked() {
+    this.location.back();
+  }
     setPassengerConcession(gender, age) {
         var temp;
         switch (gender) {
@@ -2355,7 +2358,7 @@ whatsAppCheck:boolean=false;
 
     openmodal(content) {
         this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
-        this.modalService.open(content, { centered: true });
+        this.modalService.open(content, { centered: true,size: 'lg' });
       }
 
 
@@ -3060,7 +3063,7 @@ recivetotalFare($event){
     
     
         if ((this.childrenArray.length + 1) <= (this.maxInfants)) {
-        
+            
             if(checkboxIndex ==-1)
             this.childrenArrayM.push(this.childCount);
         
@@ -3220,6 +3223,9 @@ recivetotalFare($event){
         }
     }
     fillupGSTDetailOnCheck($event,data,GSTIndex){ 
+        for(let i=0;i<this.GSTListLength;i++){
+                this.isCheckedGST[i]=false;
+        }
         if($event.target.checked){
             this.selectedGST.push(GSTIndex);
             this.checkedGST.push({ 

@@ -208,7 +208,7 @@
                            <ul class="bus_details_filter nav nav-tabs" role="tablist">
                                 <li><button class="bus_details_filter_btn active"  data-bs-target="#seat-{{bus.id}}-0" aria-controls="seat" (click)="showSeatsFilter(bus.id,0)" role="tab" data-bs-toggle="tab" aria-expanded="true">All ({{bus.availableSeats | number }})</button></li>
                                 <ng-container *ngIf="pricesplit.length > 1">
-                                <li *ngFor="let price of pricesplit"><button class="bus_details_filter_btn" (click)="showSeatsFilter(bus.id,price.actfare)" data-bs-target="#seat-{{bus.id}}-{{price.actfare}}" aria-controls="seat-{{bus.id}}-{{price.actfare}}" role="tab" data-bs-toggle="tab" >₹{{price.actfare | number }} ({{price.seattotal}}) </button></li>
+                                <li *ngFor="let price of pricesplit;let index=index;"><button class="bus_details_filter_btn" (click)="showSeatsFilter(bus.id,price.actfare)"  attr.data-bs-target="#seat-{{bus.id}}-{{index}}" aria-controls="seat-{{bus.id}}-{{price.actfare}}" role="tab" data-bs-toggle="tab" >₹{{price.actfare | number }} ({{price.seattotal}}) </button></li>
                                 </ng-container>
                             </ul>
                         </div>
@@ -345,7 +345,7 @@
     
                                 <ng-container *ngIf="pricesplit.length > 1">
                                 
-                                         <div role="tabpanel" *ngFor="let price of pricesplit" class="tab-pane-seat-{{bus.id}}  tab-pane fade " id="seat-{{bus.id}}-{{price.actfare}}">
+                                         <div role="tabpanel" *ngFor="let price of pricesplit;let index=index;" class="tab-pane-seat-{{bus.id}}  tab-pane fade " id="seat-{{bus.id}}-{{index}}">
                                                 <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
                                         <span  *ngIf="totalUpperDeck">
                                                         <div class="label-small">Lower</div>
@@ -684,7 +684,7 @@
                                             <div class="margin-auto content">
                                                 <div class="bus_driver">
                                                     <div>
-                                                        <div class="label text-left">Front</div>
+                                                        <div class="label text-left">Lower Berth</div>
                                                     </div>
                                                     <div>
                                                         <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
@@ -730,7 +730,7 @@
                                             <div class="margin-auto content">
                                                 <div class="bus_driver">
                                                     <div>
-                                                        <div class="label text-left">Front</div>
+                                                        <div class="label text-left">Upper Berth</div>
                                                     </div>
                                                     <div>
                                                         <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
@@ -769,7 +769,17 @@
                             </div>
                             
                             <!-- <a class="info-m" hrref="#" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></a> -->
-
+                            <!-- Mlite Error Msg -->
+                            <div class="footer_error" *ngIf="mlite_passengerError">
+                                <div class="error_bg">
+                                    <div>
+                                        <i class="material-icons">warning</i>
+                                    </div>
+                                    <div>
+                                        <p>You can only add upto 6 travelers at a time.</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="fixed-f bg-white">
                                 <div class="row">
                                     <div class="col-6" (click)="openAmentiesmlite()">
@@ -840,7 +850,7 @@
         <div class="layout">
         <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
         <div class="margin-auto content">
-        <div class="label  text-right float-left w-50">Front</div>
+        <div class="label  text-right float-left w-50">Lower Berth</div>
         <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
         <div class="">
         <table class="cabin fuselage" >
@@ -876,7 +886,7 @@
         <div class="layout">
         <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
         <div class="margin-auto content">
-        <div class="label  text-right float-left w-50">Front</div>
+        <div class="label  text-right float-left w-50">Lower Berth</div>
         <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
         <div class="">
       
@@ -1289,5 +1299,4 @@
                                 </div>
                                 
                                 <!-- end of amenties modal pop up  -->
-
 
