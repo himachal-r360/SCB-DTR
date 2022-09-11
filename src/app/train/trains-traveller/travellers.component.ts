@@ -3063,7 +3063,7 @@ recivetotalFare($event){
     
     
         if ((this.childrenArray.length + 1) <= (this.maxInfants)) {
-        
+            
             if(checkboxIndex ==-1)
             this.childrenArrayM.push(this.childCount);
         
