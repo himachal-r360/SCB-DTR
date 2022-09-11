@@ -154,7 +154,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
         listing_header:boolean = true;
         seating_header:boolean = false;
         busFilterlengthZero :boolean = false;
-        
+        option:string='';
         @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
         @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
@@ -491,6 +491,8 @@ ngOnInit(): void {
   } else {
    this.selectedOption = 'Rating';
   }
+this.option = option;
+	console.log(this.option);
   this.sortBy = option;
   this.showSortbuy = false;
   this.Sortby = "Sorted By";
