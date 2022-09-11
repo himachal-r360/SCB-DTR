@@ -684,7 +684,7 @@
                                             <div class="margin-auto content">
                                                 <div class="bus_driver">
                                                     <div>
-                                                        <div class="label text-left">Front</div>
+                                                        <div class="label text-left">Lower Berth</div>
                                                     </div>
                                                     <div>
                                                         <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
@@ -730,7 +730,7 @@
                                             <div class="margin-auto content">
                                                 <div class="bus_driver">
                                                     <div>
-                                                        <div class="label text-left">Front</div>
+                                                        <div class="label text-left">Upper Berth</div>
                                                     </div>
                                                     <div>
                                                         <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
@@ -769,7 +769,17 @@
                             </div>
                             
                             <!-- <a class="info-m" hrref="#" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></a> -->
-
+                            <!-- Mlite Error Msg -->
+                            <div class="footer_error" *ngIf="mlite_passengerError">
+                                <div class="error_bg">
+                                    <div>
+                                        <i class="material-icons">warning</i>
+                                    </div>
+                                    <div>
+                                        <p>You can only add upto 6 travelers at a time.</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="fixed-f bg-white">
                                 <div class="row">
                                     <div class="col-6" (click)="openAmentiesmlite()">
@@ -840,7 +850,7 @@
         <div class="layout">
         <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
         <div class="margin-auto content">
-        <div class="label  text-right float-left w-50">Front</div>
+        <div class="label  text-right float-left w-50">Lower Berth</div>
         <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
         <div class="">
         <table class="cabin fuselage" >
@@ -876,7 +886,7 @@
         <div class="layout">
         <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
         <div class="margin-auto content">
-        <div class="label  text-right float-left w-50">Front</div>
+        <div class="label  text-right float-left w-50">Lower Berth</div>
         <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
         <div class="">
       
@@ -1289,5 +1299,4 @@
                                 </div>
                                 
                                 <!-- end of amenties modal pop up  -->
-
 
