@@ -1386,15 +1386,14 @@
                     <ng-template #content let-modal>  
                         <div class="modal-header modal-inside-header justify-content-center border-0">
                             <h5 class="modal-title gstTitle">Saved GST Details</h5>
-
                         </div>
                         <div class="modal-body">
                             <div class="">
                                 <div class="savedGst_sec">
                                     <div *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                        <div class="form-check" >
-                                            <input class="form-check-input" [ngClass]="{'active': gstmodalcheckedvalue[GSTIndex]}" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]" style="display: none;"> 
-                                             <label class="travel-card-details"  for="gst{{GSTIndex}}">
+                                        <div class="form-check pl-0" >
+                                            <input class="form-check-input"  type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]" style="display: none;"> 
+                                             <label class="travel-card-details"  for="gst{{GSTIndex}}" [ngClass]="{'active': isCheckedGST[GSTIndex]}">
                                                  <div class="gstHeading">{{data.gstNumber}}</div>
                                                  <div class="gstName">{{data.gstName}}</div>
                                                  <div class="gstAddress">{{data.address}}</div>
@@ -1406,14 +1405,12 @@
                                              </label>
                                          </div>
                                     </div>
-                                
                                 <ng-container *ngIf="isGstExpanded">
-                                    <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index" >
-                                        <ng-container *ngIf="i > 5">
-                                         <div *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                            <div class="form-check" >
-                                                <input class="form-check-input" [ngClass]="{'active': gstmodalcheckedvalue[GSTIndex]}" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]" style="display: none;">
-                                                <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gstL{{GSTIndex}}">
+                                    <ng-container *ngFor="let gstexpandedItem of GSTList; let j = index" >
+                                        <ng-container *ngIf="j>=5">
+                                            <div class="form-check pl-0" >
+                                                <input class="form-check-input" type="radio" name="GSTList" id="gstL{{j}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,j)" [checked]="gstmodalcheckedvalue[j]" style="display: none;">
+                                                <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gstL{{j}}" [ngClass]="{'active': isCheckedGST[j]}">
                                                     <div  class="gstHeading">{{gstexpandedItem.gstNumber}}</div>
                                                     <div class="gstName">{{gstexpandedItem.gstName}}</div>
                                                     <div class="gstAddress">{{gstexpandedItem.address}}</div>
@@ -1424,7 +1421,7 @@
                                                     </div>
                                                 </label>
                                             </div>
-                                          </div>
+                                       
                                         </ng-container>
                                     </ng-container>
                                 </ng-container>
