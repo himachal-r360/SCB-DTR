@@ -326,20 +326,25 @@
                     <div class="traveler-details-info mt-15">
                       <div class="row">
 
-                                                <!-- radio buttons male/female-->
-                                                <div class="col-12">
-                                                  <div class="trip_select">
-                                                      <div class="buttonTrip">
-                                                          <input type="radio" id="male" formControlName="passengerGender{{ i }}" name="flightTripType" checked (ngModelChange)="selectTripType($event)" value="Male" />
-                                                          <label class="btn btn-default" for="male">Male</label>
-                                                      </div>
-                                                      <div class="buttonTrip">
-                                                          <input type="radio" id="female" formControlName="passengerGender{{ i }}" name="flightTripType" (ngModelChange)="selectTripType($event)" value="Female" />
-                                                          <label class="btn btn-default" for="female">Female</label>
-                                                      </div>
-                                                  </div>
-                                                </div>
-                                            <!-- end of radio buttons male/female -->
+                          <!-- radio buttons male/female-->
+                          <div class="col-12">
+                            <div class="trip_select">
+                                <div class="buttonTrip">
+                                    <input type="radio" id="male" formControlName="passengerGender{{ i }}" name="flightTripType" checked (ngModelChange)="selectTripType($event)" value="Male" />
+                                    <label class="btn btn-default" for="male">Male</label>
+                                </div>
+                                <div class="buttonTrip">
+                                    <input type="radio" id="female" formControlName="passengerGender{{ i }}" name="flightTripType" (ngModelChange)="selectTripType($event)" value="Female" />
+                                    <label class="btn btn-default" for="female">Female</label>
+                                </div>
+                            </div>
+                            <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
+                              <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
+                                required</mat-error>
+                            </span>
+
+                          </div>
+                      <!-- end of radio buttons male/female -->
                     
                       </div>
                       <div class="row">
@@ -360,7 +365,7 @@
                                   enter valid name</mat-error>
                                 <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerFirstName'+i]['errors']['minlength']">Please
                                   enter atleast 2 character</mat-error> 
-                                 </span> 
+                              </span> 
                           </div>
 
                         </div>
@@ -1337,7 +1342,7 @@
           <div class="bookingprocess-content">
             <div class="bookingprocess-flight">
               <h6>{{ seacthResult.searchFrom }} </h6>
-              <h6>{{ seacthResult.searchTo }}</h6>
+              <h6> &nbsp;{{ seacthResult.searchTo }}</h6>
             </div>
             <div class="bookingprocess-processbar">
               <div class="progress">

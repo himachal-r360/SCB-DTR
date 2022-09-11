@@ -673,8 +673,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     }
     
 
-    // Airlines Filter
-   // this.flightList = this.unique(this.airlineFilterFlights(this.flightList));
 
     //StopOverFilter
     if (this.flightList.length > 0) {
@@ -1023,7 +1021,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   // Airline Filter Flights
   airlineFilterFlights(flightList: any) {
- 
+
     if (flightList.length > 0) {
       let airlineArr: any = [];
       airlineArr = [];
@@ -1033,16 +1031,15 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
       })
       
+ 
 
      
       var filteredAirlines: any[] = [];
       if (airlineArr.length > 0) {
         flightList.forEach((e: any) => {
           var flights = [];
-          
-          
+  
           e.onwardflights.filter((d: any) => {
-               
             if (airlineArr.map(function (x: any) { return x.airlineName; }).indexOf(d.airlineName) > -1) {
               flights.push(d);
             }
@@ -1054,6 +1051,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
               flights.push(d);
             }
           }) 
+         
           
           if (flights.length > 0) {
             filteredAirlines.push(e);
@@ -1064,7 +1062,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
        // }
       }
 
-console.log(filteredAirlines);
+
       
 
 

@@ -470,13 +470,14 @@ ngOnInit(): void {
  showAmenities = false;
  showDropping = false;
  showCancellation = false;
- selected: any = "Rating";
+ /* selected: any = "Rating"; */
  selectedOption: any = "Rating";
  selectedOptionNew: any = "rating";
  orderBy(option) {
   this.selectedOptionNew = option;
   if (option == 'rating') {
    this.selectedOption = 'Rating';
+   console.log(option);
   } else if (option == 'price-low-high') {
    this.selectedOption = 'Price (Low to High)';
   } else if (option == 'price-high-low') {
@@ -491,7 +492,7 @@ ngOnInit(): void {
    this.selectedOption = 'Rating';
   }
 this.option = option;
-	console.log(this.option);
+	/* console.log(this.option); */
   this.sortBy = option;
   this.showSortbuy = false;
   this.Sortby = "Sorted By";
