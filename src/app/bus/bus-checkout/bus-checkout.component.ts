@@ -150,7 +150,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
   SeatNumber: any;
-
+      passengerSelectedArray:any={};
   saveAdultTravellerId = [];
   saveInfantTravellerId = [];
   passengerArray = [];
@@ -346,6 +346,8 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       } else {
         this._flightService.showHeader(true);
       }
+      
+
 
       setTimeout(() => {
         //Check Laravel Seesion
@@ -603,7 +605,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
           jobGroup.addControl('passengerAge' + i, new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.max(125)]));
           jobGroup.addControl('passengerGender' + i, new FormControl('', Validators.required));
           jobGroup.addControl('saveTraveller', new FormControl(''));
+          
+          this.passengerSelectedArray[i]=0;
+          
         }
+
+      
 
         jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]));
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID, [Validators.required, Validators.pattern(this.emailPattern)]));
@@ -634,25 +641,6 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   }
 
 
-  fillPassenger($event, passenger, checkboxIndex) {
-
-    if (checkboxIndex == -1)
-      this.passengerArray.push(this.passengerFormCount = 1);
-
-    var i = Number(this.passengerFormCount);
-
-    if (checkboxIndex != -1)
-      this.saveAdultTravellerId[checkboxIndex] = i;
-
-
-    if ($event.target.checked) {
-
-
-
-    } else {
-
-    }
-  }
 
 
 
@@ -779,6 +767,10 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       //this.saveTravllerShow=false;
     }
   }
+  
+  
+  
+  
   fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex) {
 
     const sum = travellerformid + 1;
@@ -787,6 +779,9 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
     if ($event.target.checked) {
       console.log("checked inside if "+travellerformid+travellerIndex);
+      
+      this.passengerSelectedArray[travellerformid]=1;
+      
 
       this.passengerForm.controls['passengerid' + travellerformid].setValue(data.id);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue(data.firstName);
@@ -794,7 +789,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       this.passengerForm.controls['passengerAge' + travellerformid].setValue(data.age);
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
 
-      for (let i = 0; i < this.travellerlistLength; i++) {
+     /* for (let i = 0; i < this.travellerlistLength; i++) {
         
         let allTraverlID = this.travellerlist[i].id;
         if (data.id == travellerid && travellerIndex == i) {
@@ -818,20 +813,17 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
             this.disableCheckbox[i+i]=false;
           }
 
-        
-           
-
-           
             
       
 
         }
 
-      }
+      }*/
 
 
     } else {
-      console.log();
+     this.passengerSelectedArray[travellerformid]=0;
+      
       this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
       this.passengerForm.controls['passengerLastName' + travellerformid].setValue('');
@@ -841,7 +833,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       console.log("uncheck "+travellerformid+travellerformid);
 
 
-      for (let i = 0; i < this.travellerlistLength; i++) {
+    /*  for (let i = 0; i < this.travellerlistLength; i++) {
         console.log("uncheck for "+travellerformid+i);
         let allTraverlID = this.travellerlist[i].id;
         if (data.id == travellerid && travellerIndex == i) {
@@ -860,12 +852,14 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
         }
 
       }
-
+*/
 
 
     }
 
-
+      var checkboxVal = $("input.pass_checkBox_"+ travellerformid +"[type='checkbox']:not(:checked)").val();
+        console.log(this.passengerSelectedArray);
+          console.log(checkboxVal);
 
 
     /*
