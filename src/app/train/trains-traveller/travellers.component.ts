@@ -1958,6 +1958,9 @@ whatsAppCheck:boolean=false;
     
     
     }
+    backClicked() {
+    this.location.back();
+  }
     setPassengerConcession(gender, age) {
         var temp;
         switch (gender) {
