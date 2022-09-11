@@ -195,7 +195,7 @@
                                 <!-- Recent Search small Banner Place holder  -->
                                 <div class="col-12 p-0" *ngIf="recentsearchData.length==1">
                                     <div class="mt-lg-2 mt-xl-3" *ngFor="let BannerRecentSearch of topBannerRecentSearch">
-                                        <a href="{{BannerRecentSearch.redriect_url}}" class=""> <img src="{{BannerRecentSearch.image}}" alt="rec_small_banner" class="img-fluid"> </a>
+                                        <a href="{{BannerRecentSearch.redriect_url}}" class=""> <img src="{{BannerRecentSearch.image}}" alt="rec_small_banner" class="img-fluid re_small_img"> </a>
                                     </div>
                                 </div>
 
@@ -432,10 +432,14 @@
                     <div>
                         <p class="main_text">Flights</p>
                     </div>
-                    <p class="sub_text mb-1"><span>Powered by </span> </p>
-                    <p class="icns">
-                        <span *ngFor="let flights of poweredByPartners.flights"><img *ngIf="flights.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{flights.img}}" alt="{{flights.name}}"></span>
-                    </p>
+                    <div class="power_by_f">
+                        <p class="sub_text"><span>Powered by </span> </p>
+                        <p class="icns">
+                        <span class="icns_pwr">
+                            <span *ngFor="let flights of poweredByPartners.flights"><img *ngIf="flights.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{flights.img}}" alt="{{flights.name}}"></span>
+                        </span>
+                        </p>
+                    </div>
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.flight.cashback}}% cashback and {{serviceSettings.offer_construct.flight.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 2}"> <app-travel-search searchDisplayForm="flight"  webView="1"   showType="1"  popular="0" tab="0"  ></app-travel-search></span>
                 </div>
@@ -443,17 +447,20 @@
                     <div>
                         <p class="main_text">Stays</p>
                     </div>
-                    <p class="sub_text mb-1"><span>Powered by</span> </p>
-                    <p class="icns">
-                        <span *ngFor="let hotels of poweredByPartners.hotels"><img *ngIf="hotels.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{hotels.img}}" alt="{{hotels.name}}"></span>
-                    </p>
-                    <p class="icns">
-
-
-                        <!-- <span *ngIf="serviceSettings.partners_status.Makemytrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/mmt.svg" alt="MMT"></span>
+                    <div class="power_by_f">
+                        <p class="sub_text"><span>Powered by </span> </p>
+                        <p class="icns">
+                            <span class="icns_pwr">
+                                <span *ngFor="let hotels of poweredByPartners.hotels"><img *ngIf="hotels.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{hotels.img}}" alt="{{hotels.name}}"></span>
+                            </span>
+                        </p>
+                    </div>
+                    
+                    <!-- <p class="icns">
+                        <span *ngIf="serviceSettings.partners_status.Makemytrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/mmt.svg" alt="MMT"></span>
                         <span *ngIf="serviceSettings.partners_status.Cleartrip==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/cleartrip.svg" alt="cleartrip"></span>
-                        <span *ngIf="serviceSettings.partners_status.Yatra==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span> -->
-                    </p>
+                        <span *ngIf="serviceSettings.partners_status.Yatra==1"><img src="{{cdnUrl}}images/smartbuy/partner/travel/yatra.svg" alt="Yatra"></span>
+                    </p> -->
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.hotel.cashback}}% cashback and {{serviceSettings.offer_construct.hotel.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 1}"><app-travel-search searchDisplayForm="hotel"  webView="1" showType="1"  popular="0" tab="0"  ></app-travel-search></span>
                 </div>
@@ -461,10 +468,15 @@
                     <div>
                         <p class="main_text">Bus</p>
                     </div>
-                    <p class="sub_text mb-1"><span>Powered by</span> </p>
-                    <p class="icns">
-                        <span *ngFor="let bus of poweredByPartners.bus"><img *ngIf="bus.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{bus.img}}" alt="{{bus.name}}"></span>
-                    </p>
+                    <div class="power_by_f">
+                        <p class="sub_text mb-1"><span>Powered by</span> </p>
+                        <p class="icns">
+                            <span class="icns_pwr">
+                                <span *ngFor="let bus of poweredByPartners.bus"><img *ngIf="bus.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{bus.img}}" alt="{{bus.name}}"></span>
+                            </span>
+                        </p>
+                    </div>
+                    
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.bus.cashback}}% cashback and {{serviceSettings.offer_construct.bus.reward}}X reward points</p>
 
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 3}"> <app-travel-search searchDisplayForm="bus" webView="1"  showType="1"  popular="0" tab="0"  ></app-travel-search></span>
@@ -473,10 +485,15 @@
                     <div>
                         <p class="main_text">Train</p>
                     </div>
-                    <p class="sub_text mb-1"><span>Powered by</span> </p>
-                    <p class="icns">
-                        <span *ngFor="let train of poweredByPartners.train"><img *ngIf="train.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{train.img}}" alt="{{train.name}}"></span>
-                    </p>
+                    <div class="power_by_f">
+                        <p class="sub_text mb-1"><span>Powered by</span> </p>
+                        <p class="icns">
+                            <span class="icns_pwr">
+                                <span *ngFor="let train of poweredByPartners.train"><img *ngIf="train.flag" src="{{cdnUrl}}images/smartbuy/partner/travel/{{train.img}}" alt="{{train.name}}"></span>
+                            </span>
+                        </p>
+                    </div>
+                    
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.train.cashback}}% cashback and {{serviceSettings.offer_construct.train.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 4}"><app-travel-search searchDisplayForm="train" webView="1"  showType="1"  popular="0" tab="0"  ></app-travel-search></span>
                 </div>
@@ -727,7 +744,7 @@
     <p class="points_note">Who said good things take time?</p>
     <div>
         <div class="partners_container_emi">
-            <a href="javascript:;" (click)="clickUrl('compare-fly')" target="_blank" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+            <a href="javascript:;" (click)="clickUrl('compare-fly')"  *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_flight.png" alt="Flights" class="">
                     <div class="emi_text">
@@ -736,7 +753,7 @@
                     </div>
                 </div>
             </a>
-            <a href="javascript:;" (click)="clickUrl('compare-stay')" target="_blank" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+            <a href="javascript:;" (click)="clickUrl('compare-stay')"  *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                 <div class="emi_content_cate">
                     <img src="{{cdnUrl}}images/smartbuy/emi_stays.png" alt="Holiday packages" class="">
                     <div class="emi_text">

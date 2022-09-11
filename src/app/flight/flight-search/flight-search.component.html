@@ -356,7 +356,7 @@
 
                                         <span class="select-roottitle d-block w-100" style="font-size:15px ;"
                                             *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">
-                                            Select Return</span>
+                                            </span>
                                         <span class="select-roottitle"
                                             *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
                                             | date:'EEEE' }}</span>
@@ -1013,9 +1013,7 @@
 
                                 </div>
                             </div>
-                            <div class="home-error d-flex">
-
-                            </div>
+              
                         </div>
 
                         <div class="col-lg-6">
@@ -1034,6 +1032,13 @@
                                                 <span class="select-roottitle"
                                                     *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
                                                     }}</span>
+                                                    
+                                                                  <div class="mt-30" *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')">
+                        <small class="validate-msg">Please select departure date.</small>
+                        </div> 
+                                        
+                                                    
+              
 
                                                 </div>
 
@@ -1052,9 +1057,11 @@
 
 
                                             </div>
+                                            
                                         </div>
 
                                     </div>
+                                    
                                 </div>
 
                                 <!--Web Date Picker-->
@@ -1070,10 +1077,10 @@
                                     </div>
 
                                 </div>
-
-
+           
 
                         </div>
+                
                     </ng-container>
                     </ng-container>
 
@@ -1102,8 +1109,11 @@
                         <p class="multi-city-list-form-text">From</p>
                         <h5 class="multi-city-list-name multi-from">{{item.value.flightfrom}}</h5>
                         <p class="multi-city-list-fullname text-dotted">{{item.value.fromCity}}</p>
-                        <mat-error *ngIf="submitted && item.get('flightfrom').errors  && item.get('flightfrom').hasError('required')"><small
-                          class="validate-msg"> Please select from city.</small></mat-error>
+                   
+
+                        <div class="mt-30" *ngIf="submitted && item.get('flightfrom').errors && item.get('flightfrom').hasError('required')">
+                        <small class="validate-msg">Please select from city.</small>
+                        </div> 
 
                         <div class="flight-from-hide ff-form-data dropdown " id="showFlightFrom_{{i}}">
                             <div class="flight-from-data">
@@ -1169,10 +1179,18 @@
                         <p class="multi-city-list-form-text">To</p>
                         <h5 class="multi-city-list-name multi-from">{{item.value.flightto}}</h5>
                         <p class="multi-city-list-fullname text-dotted">{{item.value.toCity}}</p>
-                        <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('required')"><small
-                          class="validate-msg"> Please select to city.</small></mat-error>
-                          <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('MustMatch')"><small
-                              class="validate-msg"> From and To cannot be same.</small></mat-error>
+                        
+                        
+                        <div class="mt-30" *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('required')">
+                        <small class="validate-msg">Please select to city.</small>
+                        </div> 
+                        
+                            <div class="mt-30" *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('MustMatch')">
+                        <small class="validate-msg">From and To cannot be same.</small>
+                        </div> 
+                        
+                   
+                       
 
                         <div class="flight-from-hide ff-form-data dropdown from-flight-open_{{i}}">
                             <div class="flight-from-data">
@@ -1241,9 +1259,12 @@
                         <p class="multi-city-list-fullname">{{item.value.departure | date:'EEEE' }}</p>
                         <i class="far fa-calendar-alt single-datepicker me-3 fs_22" style="position: absolute;right: 0;top: 30px;"></i>
                         <span class="select-roottitle d-block w-100"
-                        *ngIf="item.value.departure=='' ||item.value.departure==undefined"></span>
-                        <mat-error *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')"><small
-                          class="validate-msg"> Please select departure date.</small></mat-error>
+                        *ngIf="item.value.departure=='' ||item.value.departure==undefined">Departure</span>
+           
+                            <div class="mt-30" *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')">
+                                                <small class="validate-msg">Please select departure date.</small>
+                                            </div>  
+                          
                         <a href="javascript:void(0)" class="mult-mobile-close" *ngIf="i > 1" (click)="removeMutlicityInput(i)">
                           <img src="{{cdnUrl}}/images/icons/close_01.png" alt="">
                       </a>

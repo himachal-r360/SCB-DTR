@@ -154,7 +154,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
         listing_header:boolean = true;
         seating_header:boolean = false;
         busFilterlengthZero :boolean = false;
-        
+        option:string='';
         @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
         @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
@@ -169,6 +169,9 @@ export class BuslistComponent implements OnInit,OnDestroy {
     if(this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['BUS']!=1){
      this.router.navigate(['/**']);
    }
+  
+          let body = document.getElementsByTagName('body')[0];
+        body.classList.remove("noscroll"); //remove the class
   
         this.domainName = this.sg['domainName'];
         this.appConfig = appConfig;
@@ -195,10 +198,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
         }
   
         this.params = this.activatedRoute.snapshot;
-        // override the route reuse strategy
-        this.router.routeReuseStrategy.shouldReuseRoute = function() {
-        return false;
-        };
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.assetPath = this.sg['domainPath'];
         this._styleManager.setScript('custom', `assets/js/custom.js`);
 
@@ -216,7 +216,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
 ngOnInit(): void {
   this.titleService.setTitle('Home | RedBus');
         this.isMobile = window.innerWidth < 991 ?  true : false;
-        this.activatedRoute.url.subscribe(url =>{
+      //  this.activatedRoute.url.subscribe(url =>{
         this.moveTop();
         this.loading = true;
         this.getQueryParamData(null);
@@ -251,7 +251,7 @@ ngOnInit(): void {
 
         const track_body: string = trackUrlParams.toString();
         this.rest.trackEvents( track_body).subscribe(result => {});
-        });
+       // });
 
   }
   
@@ -470,12 +470,14 @@ ngOnInit(): void {
  showAmenities = false;
  showDropping = false;
  showCancellation = false;
+ /* selected: any = "Rating"; */
  selectedOption: any = "Rating";
  selectedOptionNew: any = "rating";
  orderBy(option) {
   this.selectedOptionNew = option;
   if (option == 'rating') {
    this.selectedOption = 'Rating';
+   console.log(option);
   } else if (option == 'price-low-high') {
    this.selectedOption = 'Price (Low to High)';
   } else if (option == 'price-high-low') {
@@ -489,6 +491,8 @@ ngOnInit(): void {
   } else {
    this.selectedOption = 'Rating';
   }
+this.option = option;
+	/* console.log(this.option); */
   this.sortBy = option;
   this.showSortbuy = false;
   this.Sortby = "Sorted By";

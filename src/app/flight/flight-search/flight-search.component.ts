@@ -184,7 +184,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       multicityFormArr: this._fb.array([this.multiCityArrAddItems()])
     });
 
-    return;
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
   }
  ngAfterContentChecked() {
@@ -201,9 +201,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   
-    this.route.url.subscribe(url => {
-    
-    
+   // this.route.url.subscribe(url => {
         if(this.router.url){
         switch (this.router.url) {
         case ('/'+this.sg['domainPath']+'multicity'):
@@ -232,7 +230,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.continueSearchVal = JSON.parse(continueSearchValLs);
       }
       this.setSearchFilterData()
-    });
+   // });
 
 
   }
@@ -684,6 +682,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   sameCityValidation = false;
   flightSearch() {
+   // debugger;
     this.submitted = true;
     if (this.flightData.value.departure != "" && this.flightData.value.departure != undefined) {
       this.dateValidation = false;

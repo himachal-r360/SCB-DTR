@@ -328,7 +328,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
 orderRetry:boolean=false;
 
   constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
-    this.route.url.subscribe(url => {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
       this.whatsappFeature = this.serviceSettings.whatsappFeature;
@@ -339,6 +338,9 @@ orderRetry:boolean=false;
       this.getAirpotsList();
       this.getAirLineList();
       this.getCountryList();
+      
+    
+      
       this.resetPopups();
       const jobGroup: FormGroup = new FormGroup({});
       this.passengerForm = jobGroup;
@@ -365,8 +367,7 @@ orderRetry:boolean=false;
       this.passengerAdultFormCount = 1;
       this.passengerChildFormCount = 1;
       this.passengerInfantFormCount = 1;
-
-    });
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
   }
   
@@ -375,7 +376,7 @@ orderRetry:boolean=false;
     this.ref.detectChanges();
      }
   ngOnInit(): void {
-    this.route.url.subscribe(url => {
+    //this.route.url.subscribe(url => {
    // this.itineratyButton=false;
       this.resetPopups();
       this.steps = 1;
@@ -616,7 +617,7 @@ orderRetry:boolean=false;
         }
       }, 50);
 
-    });
+    //});
 
   }
 
@@ -4177,9 +4178,9 @@ orderReferenceNumber:any;
       "retry_url": "",
       "sessionKey":this.randomFlightDetailKey,
       "docKey": this.flightSessionData.docKey,
-      "itineraryRequest": this.itineraryRequest,
       "flightSessionData":this.flightSessionData
     };
+    // "itineraryRequest": this.itineraryRequest,
     this.orderReferenceNumber=order_ref_num;
     
     console.log(checkoutData);

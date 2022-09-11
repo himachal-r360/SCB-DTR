@@ -457,6 +457,10 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   }
  }
  onCloseDetail(){
+           let body = document.getElementsByTagName('body')[0];
+        body.classList.remove("noscroll"); //remove the class
+        
+        
    $('.mlist-header').addClass('fixed-top');
   this.showDetails = false;
     this.showAmenities = false;
@@ -638,14 +642,14 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
    this.BoardingPoint = false;
   }
 
-  let trackUrlParams = new HttpParams()
+  /*let trackUrlParams = new HttpParams()
 	.set('current_url', window.location.href)
 	.set('category', 'RedBus')
 	.set('event', 'Block Seat')
 	.set('metadata','{"seat_name":"'+JSON.stringify(this.selectedseats)+'","total_seats":"'+this.selectedseats.length+'","total_fare":"'+totalfare+'"}');
   
 	 const track_body: string = trackUrlParams.toString();
-	 this.rest.trackEvents( track_body).subscribe(result => {});
+	 this.rest.trackEvents( track_body).subscribe(result => {});*/
  }
 
  Boardingdroping(type, id, tripid: string) {

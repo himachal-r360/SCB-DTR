@@ -80,8 +80,8 @@
 
                                 <div class="flight-search-filters-right bus_sort_btn">
                                 <mat-form-field>
-                                <mat-select [(value)]="selected" placeholder="Price Low to High" [ngClass]="{showSortbuy: showSortbuy}">
-                                <mat-option value="Price (Low to High)" selected (click)="orderBy('rating')">Rating</mat-option>
+                                <mat-select [(value)]="selectedOption" placeholder="" [ngClass]="{showSortbuy: showSortbuy}">
+                                <mat-option value="Rating"  (click)="orderBy('rating')">Rating</mat-option>
                                 <mat-option value="Price (Low to High)" (click)="orderBy('price-low-high')">Price (Low to High)</mat-option>
                                 <mat-option value="Price (High to Low)" (click)="orderBy('price-high-low')">Price (High to Low)</mat-option>
                                 <mat-option value="Leave Early" (click)="orderBy('leave-early')">Leave Early</mat-option>
@@ -98,7 +98,7 @@
                             </div>
        
                            </div>
-                        <div class="tabletitle-area" [hidden]="loading">
+                        <div class="tabletitle-area" [hidden]="loading" *ngIf="!busFilterlengthZero || loading && busResults.length > 0">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="tabletitle-content">
@@ -180,7 +180,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-5 text-center">
-                                    <button class="empty_list_btn">Go back to search page</button>
+                                    <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
                                 </div>
                             </div>
                         </div>
@@ -207,9 +207,9 @@
                   <div class="mob-listing-header-center">
                       <h6>{{busfrom}} - {{busto}}</h6>
                       <div class="d-flex align-items-center">
-                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
+                            <div class="date_sm_round" (click)="previousDay()" *ngIf="datePreviousStatus" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
                             <p>{{departure | date:'EEE, dd MMM' }}   </p>
-                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
+                            <div class="date_sm_round" (click)="nextDay()" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
                       </div>
                       
                   </div>
@@ -223,7 +223,7 @@
           </div>
           <div class="col-md-12 mt-70" *ngIf="!loading">
               <div class="mob-listing-fiters">
-                  <h6> <p class="bus_found" *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus founds</p></h6>
+                  <h6> <p class="bus_found" *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} buses found</p></h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
                       <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
                       <span class="px-2">Sort/Filters</span>
@@ -257,7 +257,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 mt-3 text-center">
-                            <button class="empty_list_btn">Go back to search page</button>
+                            <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
                         </div>
                     </div>
                   <!-- end of no bus found new design mlite -->
@@ -340,75 +340,75 @@
                               <div class="container filter-container">
 
                                     <!-- <div class="col-md-12 m_sort_flex_div" id="filter-nav"> -->
-                                        <div class="row m_sort_flex_div">
-                                            <div class="col-6">
-                                      <label class="checkbox-cust selected">
+                                        <div class="m_sort_flex_div">
+                                            <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'price-low-high'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
                                             <p class="m_sort_text50">Low to High</p>
                                         </div>
-                                        <input checked="checked" type="radio" (click)="orderBy('price-low-high')" value="Price (Low to High)" >
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('price-low-high')" value="Price (Low to High)" >
                                         <span class="checkmark-cust"></span>
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'price-high-low'}" >
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
                                             <p class="m_sort_text50">High to Low</p>
                                         </div>
-                                        <input checked="checked" type="radio" (click)="orderBy('price-high-low')" value="Price (High to Low)">
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('price-high-low')" value="Price (High to Low)">
                                         <span class="checkmark-cust"></span>
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'rating'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/grade.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Rating</p>
                                             <p class="m_sort_text50">Highest</p>
                                         </div>
-                                        <input checked="checked" type="radio" (click)="orderBy('rating')" value="Price (Low to High)" >
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('rating')" value="Price (Low to High)" >
                                         <span class="checkmark-cust"></span>
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'seats-availability'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/seat_human.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Seats Availability</p>
                                             <p class="m_sort_text50">Available</p>
                                         </div>
-                                        <input checked="checked" type="radio" (click)="orderBy('seats-availability')" value="Seats Availability" >
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('seats-availability')" value="Seats Availability" >
                                         <span class="checkmark-cust"></span>
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-early'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Early</p>
                                             <p class="m_sort_text50">Earliest</p>
                                         </div>
-                                        <input checked="checked" type="radio" (click)="orderBy('leave-early')" value="Leave Early">
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('leave-early')" value="Leave Early">
                                         <span class="checkmark-cust"></span>
                                       </label>
                                     </div>
 
-                                    <div class="col-6">
-                                      <label class="checkbox-cust" >
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-late'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Late</p>
                                             <p class="m_sort_text50">Latest</p>
                                         </div>
-                                        <input checked="checked" type="radio" (click)="orderBy('leave-late')" value="Leave Late">
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('leave-late')" value="Leave Late">
                                         <span class="checkmark-cust"></span>
                                       </label>
                                     </div>
@@ -417,7 +417,7 @@
                                 </div>
                           </div>
                           <div class="mob-sf-btns">
-                              <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
+                              <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
                           </div>
                       </div>
                       <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
