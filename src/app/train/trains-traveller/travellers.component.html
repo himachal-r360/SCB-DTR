@@ -1393,7 +1393,7 @@
                                 <div class="savedGst_sec">
                                     <div *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
                                         <div class="form-check" >
-                                            <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]" style="display: none;"> 
+                                            <input class="form-check-input" [ngClass]="{'active': gstmodalcheckedvalue[GSTIndex]}" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]" style="display: none;"> 
                                              <label class="travel-card-details"  for="gst{{GSTIndex}}">
                                                  <div class="gstHeading">{{data.gstNumber}}</div>
                                                  <div class="gstName">{{data.gstName}}</div>
@@ -1412,7 +1412,7 @@
                                         <ng-container *ngIf="i > 5">
                                          <div *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
                                             <div class="form-check" >
-                                                <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]" style="display: none;">
+                                                <input class="form-check-input" [ngClass]="{'active': gstmodalcheckedvalue[GSTIndex]}" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]" style="display: none;">
                                                 <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gstL{{GSTIndex}}">
                                                     <div  class="gstHeading">{{gstexpandedItem.gstNumber}}</div>
                                                     <div class="gstName">{{gstexpandedItem.gstName}}</div>
