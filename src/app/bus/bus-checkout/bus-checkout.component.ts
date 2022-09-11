@@ -790,6 +790,8 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       
       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
       $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
+       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+      
 
       //$(".adult-choose-box"+travellerid+travellerformid).removeClass("travllerDisabled");
       
