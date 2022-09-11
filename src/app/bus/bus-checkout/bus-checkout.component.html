@@ -307,54 +307,11 @@
                           </span>
 
                         </div>
-                        <!-- For Web Only -->
-                        <!-- <div class="col-6 col-lg-4 col-md-6 d-none d-sm-block">
-                          <mat-form-field class="w-100" appearance="outline">
-                            <mat-label>Gender</mat-label>
-                            <mat-select placeholder="" formControlName="passengerGender{{ i }}">
-                              <mat-option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat"> Male
-                              </mat-option>
-                              <mat-option value="Female"> Female </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                              required</mat-error>
-                          </span>
-                        </div> -->
-                        <!-- For Mobile Only -->
-                        <!-- <div class="col-6 col-lg-3 col-md-6 offset-lg-1 d-block d-sm-none">
-                          <mat-form-field class="w-100" appearance="outline">
-                            <mat-label>Gender</mat-label>
-                            <select matNativeControl formControlName="passengerGender{{ i }}">
-                              <option value="Gender" disabled>Gender</option>
-                              <option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat">Male</option>
-                              <option value="Female">Female</option>
-                            </select>
-                          </mat-form-field>
-                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                              required</mat-error>
-                          </span>
-                        </div> -->
+
                       </div>
 
                     </div>
 
-
-                    <!--<div class="travel-userNames" *ngIf="saveTravllerShow">
-                      <p> 
-                        <label class="checkbox">Save Traveller
-                        <input type="checkbox"  checked value="true" formControlName="saveTraveller{{ i }}">
-                        <span class="checkmark"></span>
-                        </label>
-                      </p>
-                    </div>-->
-                    <!-- <div class="row mt-3 mb-3">
-                      <div class="col-md-12">
-                        <a href="#" class="blue_link">+ Add Traveller</a>
-                      </div>
-                    </div> -->
                     
                     <div class="traveller-adults-ul mt-3">
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
@@ -411,7 +368,7 @@
                           <div class="modal-footer d-block p-0">
                             <div *ngIf="travellerlist.length > 3">
                               <p class="view_more_btn">
-                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded || !isExpanded" >
+                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded" >
                                  View More  &#x25BC;
                                 </a>
                                 
@@ -520,7 +477,7 @@
 
               <div class="booking-inner-box gst-number-box">
                 <h6> <span class="form-switch m-0 mr-10">
-                    <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
+                  <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
                   </span>GST number for business travel (Optional)</h6>
                 <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                 </p>
@@ -667,7 +624,7 @@
                       <mat-label>State</mat-label>
                       <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
                         (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
-                        readonly="stateCheck" value={{ state }}>
+                        readonly="stateCheck" value="{{ state }}">
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
                         Please enter state name.
                       </mat-error>

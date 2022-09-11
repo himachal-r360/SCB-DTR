@@ -156,7 +156,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   passengerArray = [];
   passengerFormCount: number = 1;
 
-  constructor(private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
+  constructor(public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
     private _bottomSheet: MatBottomSheet, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, plocation: PlatformLocation, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
 
@@ -670,14 +670,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   }
   @ViewChild("contentGST") modalGST: TemplateRef<any>;
   expandItems(formId) {
-
     this.expandid = formId;
     this.isExpanded = true;
     this.isExpandedStretch=false;
   }
 
   expandItemsstretch(formId) {
-
     this.expandid = formId;
     this.isExpanded = false;
     this.isExpandedStretch=true;
@@ -960,6 +958,59 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     }
   }
   /*---------------------end------------------------*/
+  
+        state:any;
+response: any = [];
+   pincodeError:any;
+    urlparam:any;
+    cityList:any;
+    getCityResidence($event) {
+     this.cityList=[];
+        let pincodevalue = this.passengerForm.controls['gstPincode']['value'];
+       
+      if(pincodevalue.length==6){
+        if(this.passengerForm.controls['gstPincode']['status']){
+            let pincode = this.passengerForm.controls['gstPincode']['value'];
+            this.urlparam = {
+              "pinCode": pincode
+            };
+            var param1Str = JSON.stringify(this.urlparam);
+            this._irctc.findCity(param1Str).subscribe(data => {
+                this.response=data;
+                if(this.passengerForm.controls['gstCity']['value'] != undefined){
+                 // this.findPinResidence();
+                }
+if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.partnerResponse.error)){   
+                  this.cityList=this.response.partnerResponse.cityList;
+                  this.pincodeError="";
+                }else if(Array.isArray(this.response.partnerResponse.cityList)==false && !(this.response.partnerResponse.error)){ 
+                  this.cityList.push(this.response.partnerResponse.cityList);
+                  this.pincodeError="";
+                }else if(this.response.partnerResponse.error){ 
+                  this.pincodeError=this.response.partnerResponse.error; 
+                  this.cityList=[];
+                }else{  
+                  this.cityList=[];
+                  this.pincodeError="";
+                }
+                this.state=this.response.partnerResponse.state;
+            },
+            (err: HttpErrorResponse) => {
+                var message='Something went wrong !';
+             alertify.error(message, '').delay(3);
+            });
+        }
+      }else{
+        this.passengerForm['controls']['gstCity'].setValue('');
+        this.cityList=[];
+        this.pincodeError="";
+        //this.stateCheck=true;
+        this.state="";
+        //this.postOfficeList=[];
+      }
+    }
+  
+  
   stateSelect: any;
   gstToggle() {
     this.gstshow = !this.gstshow;
@@ -970,21 +1021,16 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     this.passengerForm.get('gstCity').clearValidators();
     this.passengerForm.get('gstPincode').clearValidators();
     this.passengerForm.get('gstState').clearValidators();
-    this.passengerForm.get('saveGST').clearValidators();
-
     this.passengerForm.controls['gstNumber'].updateValueAndValidity();
     this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
     this.passengerForm.controls['gstAddress'].updateValueAndValidity();
     this.passengerForm.controls['gstCity'].updateValueAndValidity();
     this.passengerForm.controls['gstPincode'].updateValueAndValidity();
     this.passengerForm.controls['gstState'].updateValueAndValidity();
+    this.passengerForm.get('saveGST').clearValidators();
     this.passengerForm.controls['saveGST'].updateValueAndValidity();
 
-    // if(this.gstSelected){
-    //   if(this.enableGST==1){
-    //     this.getCustomerGstDetails();
-    //   }
-    // }else{
+
     this.passengerForm['controls']['gstNumber'].setValue('');
     this.passengerForm['controls']['gstBusinessName'].setValue('');
     this.passengerForm['controls']['gstAddress'].setValue('');
@@ -992,10 +1038,14 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     this.passengerForm['controls']['gstPincode'].setValue('');
     this.passengerForm['controls']['gstState'].setValue('');
     this.passengerForm['controls']['saveGST'].setValue('');
-    // }
-
-
   }
+  
+  
+    openmodal(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
+    gstmodalcheckedvalue: any = false;
 
   passengerFormerror: number = 0;
   ageValidError: any;
