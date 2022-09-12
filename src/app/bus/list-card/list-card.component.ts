@@ -61,7 +61,9 @@ export class ListComponent implements OnInit,AfterViewInit {
   @Input('tag') tag; 
  showrow: boolean = false;
  @Input('rowvalue') rowvalue: number;
+ @Input('departure') departure;
   totalFareBus: boolean = false;
+  mlite_passengerError: boolean = false;
  @Input() set isrtc(p: boolean) {
   this.busId=this.bus.id;
   if (this.bus.rtc == false) {
@@ -575,24 +577,26 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.maxSeatMessage = 'You can book up to ' + maxseats + ' passengers on a single ticket1';
     this.maxSeatMessageStatus = true;
     if (mobile == true) {
-     let body = document.getElementsByTagName('body')[0];
+      this.mlite_passengerError = true ;
+     /* let body = document.getElementsByTagName('body')[0];
      body.classList.remove("noscroll"); //remove the class
      var messageMaxSeat = 'You can book up to ' + maxseats + ' passengers on a single ticket2';
      const dialogRef = this.dialog.open(ConfirmationDialog, {
       id: 'messageforMliteDialog',
-      //panelClass: 'messageforMlitePanel',
-      // backdropClass: 'messageforMliteBackdrop',
+      panelClass: 'messageforMlitePanel',
+       backdropClass: 'messageforMliteBackdrop',
       data: {
        messageData: messageMaxSeat,
        redirectUrl: 0
       }
-     });
+     }); */
     }
     return true;
    } else {
     this.maxSeatMessageStatus = false;
    }
    this.maxSeatMessage = "";
+  
    this.selectedseats.push(seat); //REmove If Seat Selected Else Push inside array
   }
   var seatdetailss = this.busHelper.seatdetails(this.selectedseats);
@@ -641,7 +645,7 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
   } else {
    this.BoardingPoint = false;
   }
-
+  this.mlite_passengerError = false;
   /*let trackUrlParams = new HttpParams()
 	.set('current_url', window.location.href)
 	.set('category', 'RedBus')
@@ -650,10 +654,13 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
   
 	 const track_body: string = trackUrlParams.toString();
 	 this.rest.trackEvents( track_body).subscribe(result => {});*/
+
+  this.showError = false;
  }
 
  Boardingdroping(type, id, tripid: string) {
   var oldsearchparam = this.searchParam;
+
   if (oldsearchparam.tripId == tripid) {
    if ((type == 'boarding' && oldsearchparam.bpId != id) || (type == 'dropping' && oldsearchparam.dpId != id)) {
     this.rtcseatcall = false;
@@ -667,7 +674,10 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
    this.selecteddropping = id;
    this.searchParam.dpId = id;
    this.bookButtonDisable = false;
+
+  
   }
+  this.showError = false;
  }
  onSeatInfo() {
   this.seatinfo = true;
@@ -707,7 +717,9 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
      fromTravelCode: xss(this.params.queryParamMap.get('fromTravelCode')),
      toTravelCode: xss(this.params.queryParamMap.get('toTravelCode')),
      searchFrom: xss(this.params.queryParamMap.get('searchFrom')),
-     searchTo: xss(this.params.queryParamMap.get('searchTo')),
+     searchTo: xss(this.params.queryParamMap.get('searchTo')),  
+     fromState: xss(this.params.queryParamMap.get('fromState')),
+     toState: xss(this.params.queryParamMap.get('toState')),
      departure: xss(this.params.queryParamMap.get('departure')),
      busdetails: busdetails,
      seatResponse:this.seatResponse

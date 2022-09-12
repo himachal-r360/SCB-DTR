@@ -58,6 +58,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
         selectedboarding: string = '';
         selecteddropping: string = '';
         busResults: any = [];
+        busResultsOrg: any = [];
         domainPath: string;
         assetPath: string;
         domainRedirect: string;
@@ -258,18 +259,18 @@ ngOnInit(): void {
   
   
           private loadData() {
-             if (this.pageIndex >= this.busResults.length) {
+             if (this.pageIndex >= this.busResultsOrg.length) {
              return false;
               }else{
              this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
 
-             if(this.nextIndex > this.busResults.length){
-             this.nextIndex=this.busResults.length;
+             if(this.nextIndex > this.busResultsOrg.length){
+             this.nextIndex=this.busResultsOrg.length;
              }
 
             for (let n = this.pageIndex; n < this.nextIndex ; n++) {
              const context = {
-                item: [this.busResults[n]]
+                item: [this.busResultsOrg[n]]
               };
 
               this.container.createEmbeddedView(this.template, context);
@@ -284,12 +285,12 @@ ngOnInit(): void {
          private intialData() {
             for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
             
-            console.log(this.busResults[n]);
+            console.log(this.busResultsOrg[n]);
             
-              if(this.busResults[n] != undefined)
+              if(this.busResultsOrg[n] != undefined)
               {
                 const context = {
-                  item: [this.busResults[n]]
+                  item: [this.busResultsOrg[n]]
                 };
 
                 this.container.createEmbeddedView(this.template, context);
@@ -312,6 +313,9 @@ ngOnInit(): void {
         this.tag = this.searchParam.t;
         this.fromState=this.searchParam.fromState;
         this.toState=this.searchParam.toState;
+        this.fromState=this.searchParam.fromState;
+        this.toState=this.searchParam.toState;
+        
   }
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
@@ -343,7 +347,9 @@ ngOnInit(): void {
     searchTo: this.busto,
     fromTravelCode: this.fromBusCode,
     toTravelCode: this.toBusCode,
-    departure: this.departureDate
+    departure: this.departureDate,
+       fromState:this.fromState,
+   toState:this.toState
    };
    this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
     queryParams: this.searchParamPreviousDay
@@ -375,7 +381,10 @@ ngOnInit(): void {
    searchTo: this.busto,
    fromTravelCode: this.fromBusCode,
    toTravelCode: this.toBusCode,
-   departure: this.departureDate
+   departure: this.departureDate,
+   fromState:this.fromState,
+   toState:this.toState
+   
   };
   this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
    queryParams: this.searchParamNextDay
@@ -407,7 +416,7 @@ ngOnInit(): void {
     }
     if (this.sbResponse.response && this.sbResponse.response.code == 200 && this.sbResponse.response.onwardtrips.length !== 0) {
      this.busResults = this.sbResponse.response.onwardtrips;
-     
+     this.busResultsOrg=this.busResults;
      //console.log(this.busResults)
      this.availableClasses = this.allAvailableClasses = this.busHelper.getBusTypes(this.busResults);
      this.allboardingpoints = this.boardingpoints = this.busHelper.getBoardingpoints(this.busResults, 'boardingTimes');
@@ -442,6 +451,7 @@ ngOnInit(): void {
      this.actualmaxValue = this.maxValue;
      this.selected_count = true;
      this.loading = false;
+     //this.intialData();
     } else {
      this.selected_count = false;
      this.loading = false;

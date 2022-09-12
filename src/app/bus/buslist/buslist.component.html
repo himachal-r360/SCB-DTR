@@ -156,7 +156,7 @@
                         <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >   
 
                         <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                        [parentSubject]="parentSubject" [bus]="bus" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
+                        [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
                         </span>
                         </div>
                         </ng-container>
@@ -165,7 +165,7 @@
                    
                                 <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
                                 <list-component *ngFor="let bus of busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                                [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
+                                [parentSubject]="parentSubject" [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
                                 </span>
 
                         </div>
@@ -207,15 +207,15 @@
                   <div class="mob-listing-header-center">
                       <h6>{{busfrom}} - {{busto}}</h6>
                       <div class="d-flex align-items-center">
-                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
+                            <div class="date_sm_round" (click)="previousDay()" *ngIf="datePreviousStatus" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
                             <p>{{departure | date:'EEE, dd MMM' }}   </p>
-                            <div class="date_sm_round"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
+                            <div class="date_sm_round" (click)="nextDay()" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
                       </div>
                       
                   </div>
                   <div class="mob-listing-header-right">
                       <a href="javascript:;" routerLink="/bus" >
-                          <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
+                          <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
                       </a>
                   </div>
               </div>
@@ -223,7 +223,7 @@
           </div>
           <div class="col-md-12 mt-70" *ngIf="!loading">
               <div class="mob-listing-fiters">
-                  <h6> <p class="bus_found" *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus founds</p></h6>
+                  <h6> <p class="bus_found" *ngIf="busResults">{{(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} buses found</p></h6>
                   <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
                       <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
                       <span class="px-2">Sort/Filters</span>
@@ -285,7 +285,7 @@
         </div>
         <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
         <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-        [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" 
+        [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" 
         (seatSelected)="seatSelected($event)" ></list-component> 
 
 
@@ -295,7 +295,7 @@
  
                                 <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
                                 <list-component *ngFor="let bus of busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                                [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
+                                [parentSubject]="parentSubject" [departure]="departure"  [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
                                 </span>
           </div>
 

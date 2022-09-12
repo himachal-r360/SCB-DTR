@@ -2360,7 +2360,7 @@ whatsAppCheck:boolean=false;
 
     openmodal(content) {
         this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
-        this.modalService.open(content, { centered: true });
+        this.modalService.open(content, { centered: true,size: 'lg' });
       }
 
 
@@ -3269,6 +3269,9 @@ recivetotalFare($event){
         }
     }
     fillupGSTDetailOnCheck($event,data,GSTIndex){ 
+        for(let i=0;i<this.GSTListLength;i++){
+                this.isCheckedGST[i]=false;
+        }
         if($event.target.checked){
             this.selectedGST.push(GSTIndex);
             this.checkedGST.push({ 
