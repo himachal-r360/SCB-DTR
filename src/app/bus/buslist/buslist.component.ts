@@ -449,7 +449,6 @@ ngOnInit(): void {
      this.actualmaxValue = this.maxValue;
      this.selected_count = true;
      this.loading = false;
-    
     } else {
      this.selected_count = false;
      this.loading = false;

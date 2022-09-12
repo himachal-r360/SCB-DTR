@@ -14,6 +14,8 @@ import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { formatNumber } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import { Subscription,Subject } from 'rxjs';
+import { BusHelper } from 'src/app/shared/utils/bus-helper';
+
 import * as moment from 'moment';
 export const MY_DATE_FORMATS = {
   parse: {
@@ -72,7 +74,11 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
          busListFullData: any = [];
          loading: boolean = true;
          parentSubject: Subject < Boolean > = new Subject();
-         
+          totalrtcseats: number = 0;
+        totalrtc: any = [];
+        rtctotal = [];
+           departureTimeArr: any = [];
+        
         bus_Timingsitems = [
         { name: '0_6', active: false, value: 'Before 6 AM', image: '1.png' },
         { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.png' },
@@ -86,20 +92,32 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.png' },
         { name: '18_0', active: false, value: 'After 6 PM', image: '3.png' }
         ]
-
+        availableClasses: any = [];
+        allAvailableClasses: any = [];
+        boardingpoints: any = [];
+        droppingpoints: any = [];
+        allboardingpoints: any = [];
+        allamenities: any = [];
+        alldroppingpoints: any = [];
+        amenities: any = [];
+         operators: any = [];
+        alloperators: any = [];
+        filterOperators: any = [];
 
         @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
         @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
-        pageIndex: number = 3;
-        ITEMS_RENDERED_AT_ONCE=2;
+        pageIndex: number = 11;
+        ITEMS_RENDERED_AT_ONCE=10;
         nextIndex=0;
 
         private loadData() {
+             console.log(this.ITEMS_RENDERED_AT_ONCE); 
              if (this.pageIndex >= this.busList.length) {
              return false;
               }else{
              this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
+
              if(this.nextIndex > this.busList.length){
              this.nextIndex=this.busList.length;
              }
@@ -133,16 +151,16 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         }
    serviceSettings:any;
 
-  constructor(private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _busService: BusService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
+  constructor(private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _busService: BusService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller, public busHelper: BusHelper)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.serviceSettings=this.appConfigService.getConfig();
        this._styleManager.setScript('custom', `assets/js/custom.js`);
 
-    /*   $(window).scroll(function(this) {
+   $(window).scroll(function(this) {
         if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
           $('#endOfPage').trigger('click');
         }
-      });*/
+      });
       
        /* if( this.tag){
         const dialogRef = this.dialog.open(ChromeExtBusDialog, {
@@ -261,20 +279,19 @@ this.loading = true;
   
     //Timing Departure Filter 
   timingDepartureFilterBus(busList: any) {
-    this.busList = busList;
-    let updatedbusList: any = [];
-    let isfilterMorningDepartures: any = false;
-    let isfilterFlightTiming = false;
-    var current_date = new Date(this.departure),
-    current_year = current_date.getFullYear(),
-    current_mnth = current_date.getMonth(),
-    current_day = current_date.getDate();
-
-    var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
-    var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-    var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
-    var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
-    var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+        this.busList = busList;
+        let updatedbusList: any = [];
+        let isfilterMorningDepartures: any = false;
+        let isfilterFlightTiming = false;
+        var datePipe =new DatePipe('en-US');
+        var zero_time=moment.duration('00:00').asMinutes();
+        var six_time=moment.duration('06:00').asMinutes();
+        var six_time1=moment.duration('06:01').asMinutes();
+        var twelve_time=moment.duration('12:00').asMinutes();
+        var twelve_time1=moment.duration('12:01').asMinutes();
+        var eighteen_time=moment.duration('18:00').asMinutes();
+        var eighteen_time1=moment.duration('18:01').asMinutes();
+        var endTime=moment.duration('23:59').asMinutes();
 
     let isTimingFilterItems = this.bus_Timingsitems.filter((item: any) => {
       if (item.active == true) {
@@ -290,21 +307,17 @@ this.loading = true;
       if (busList.length > 0) {
          let singleBusTiming = [];
          singleBusTiming =  busList.filter((d: any , indx: number) => {
-             
-              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(d.departureTime) > date1 && new Date(d.departureTime) < date2) {
-             console.log(1);
-              }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(d.departureTime) > date2 && new Date(d.departureTime) < date3) {
-                return d;
-              }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && new Date(d.departureTime) > date3 && new Date(d.departureTime) < date4) {
-                return d;
-              }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && new Date(d.departureTime) > date4 && new Date(d.departureTime) < date5) {
-                return d;
-              }
-            
-     
+         
+        if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() <=six_time) {
+        return d;
+        }else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=six_time1 &&  moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() <=twelve_time) {
+        return d;
+        }else  if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=twelve_time1 &&  moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() <=eighteen_time) {
+        return d;
+        }else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=eighteen_time1 &&  moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() <=endTime) {
+        return d;
+        }
+
         });
         
         
@@ -321,7 +334,7 @@ this.loading = true;
     }
 
     return updatedbusList;
-  }
+  } 
      //Timing Arrival Filter 
   timingArrivalFilterBus(busList: any) {
         this.busList = busList;
@@ -353,28 +366,16 @@ this.loading = true;
          let singleBusTiming = [];
          singleBusTiming =  busList.filter((d: any , indx: number) => {
          
-         if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() <=six_time) {
-              return d;
-             console.log(1);
-              }
-         
-         
+        if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() <=six_time) {
+        return d;
+        }else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() >=six_time1 &&  moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() <=twelve_time) {
+        return d;
+        }else  if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() >=twelve_time1 &&  moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() <=eighteen_time) {
+        return d;
+        }else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() >=eighteen_time1 &&  moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() <=endTime) {
+        return d;
+        }
 
-             /*   if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(d.arrivalTime) > date1 && new Date(d.arrivalTime) < date2) {
-              return d;
-             console.log(1);
-              }
-            else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(d.arrivalTime) > date2 && new Date(d.arrivalTime) < date3) {
-                return d;
-              }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && new Date(d.arrivalTime) > date3 && new Date(d.arrivalTime) < date4) {
-                return d;
-              }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && new Date(d.arrivalTime) > date4 && new Date(d.arrivalTime) < date5) {
-                return d;
-              }*/
-            
-     
         });
         
         
@@ -434,6 +435,47 @@ this.loading = true;
     this.popularFilterBusData();
   }
 
+ searchboarding(search,input) {
+  var searchkey = 'boardingPointName';
+  switch (search) {
+   case 'boarding':
+    {
+     var searchfor = this.allboardingpoints;
+     var result = this.busHelper.search(input, searchfor, searchkey);
+     this.boardingpoints = result;
+     break;
+    }
+   case 'dropping':
+    {
+     var searchfor = this.alldroppingpoints;
+     var result = this.busHelper.search(input, searchfor, searchkey);
+     this.droppingpoints = result;
+     break;
+    }
+   case 'operators':
+    {
+     var searchfor = this.alloperators;
+     var searchkey = 'name';
+     var result = this.busHelper.search(input, searchfor, searchkey);
+     this.operators = result;
+     break;
+    }
+  }
+  //this.updateFilter();   
+ }
+     filterClasses = [];
+ updateClassesFilter(appt) {
+  if (appt.selected) {
+   this.filterClasses.push(appt.searchname);
+  } else {
+   let index = this.filterClasses.indexOf(appt.searchname)
+   this.filterClasses.splice(index, 1);
+  }
+  this.busList = this.busList.filter(g => {
+   return true;
+  });
+//  this.updateFilterBusType();
+ }
  
   busSearch() {
     this.loader = true;
@@ -443,6 +485,60 @@ this.loading = true;
      if (this.busResponse && this.busResponse.forwardTrips && this.busResponse.forwardTrips.length > 0) {
      this.busList = this.busResponse.forwardTrips;
       this.busListWithOutFilter = this.busList;
+      
+      
+        var rtcfromlist = this.busList.filter(e => e.rtc === true);
+        var allrtc = this.busHelper.getrtc(rtcfromlist);
+        for (const rtc of Object.keys(allrtc).map(itm => allrtc[itm])) {
+        var totalavail = 0;
+        if (rtc.length > 0) totalavail = rtc.map(item => item.availableSeats).reduce((prev, next) => prev + next);
+        rtc[0].totalavail = totalavail;
+        this.totalrtc.push(rtc);
+        this.rtctotal[rtc[0].lowercase] = false;
+        }
+      
+      
+      
+      
+        this.availableClasses = this.allAvailableClasses = this.busHelper.getBusTypes(this.busList);
+        this.allboardingpoints = this.boardingpoints = this.busHelper.getBoardingpoints(this.busList, 'boardingTimes');
+        this.alldroppingpoints = this.droppingpoints = this.busHelper.getBoardingpoints(this.busList, 'droppingTimes');
+        this.allamenities = this.amenities = this.busHelper.getamenities(this.busList);
+
+        this.alloperators = this.operators = this.busHelper.getBusOperators(this.busList);
+        this.maxPrice = Math.max.apply(Math, this.busList.map(function(item) {
+        item.fareDetails.sort(function(a, b) {
+        return b.baseFare - a.baseFare
+        });
+        return item.fareDetails[0].baseFare;
+        }));
+        
+        
+        
+        this.minPrice = Math.min.apply(Math, this.busList.map(function(item) {
+        item.fareDetails.sort(function(a, b) {
+        return a.baseFare - b.baseFare
+        });
+        return item.fareDetails[0].baseFare;
+        }));
+        
+
+    this.sliderRange(this, this.minPrice, this.maxPrice);
+    
+        //calculation to get minimum departure date; to be displayed in RTC list 
+    var tmpRtc = this.totalrtc;
+    for (var i = 0; i < tmpRtc.length; i++) {
+      tmpRtc[i].sort(function(a, b) {
+        return (new Date(a.departureTime).getTime()) - (+new Date(b.departureTime).getTime());
+      });
+      this.departureTimeArr.push({
+        minTime: tmpRtc[i][0]['departureTime']
+      });
+    }
+    this.filterrtc(); 
+    
+    
+  
      this.popularFilterBusData();
        this.loader = false;
         this.loading = false;
@@ -456,6 +552,19 @@ this.loading = true;
   }
 
 
+ filterrtc() {
+  var resultrtc = [];
+  this.totalrtc = [];
+  var rtcfromlist = this.busList.filter(e => e.rtc === true);
+  var allrtc = this.busHelper.getrtc(rtcfromlist);
+  for (const rtc of Object.keys(allrtc).map(itm => allrtc[itm])) {
+   var totalavail = 0;
+   if (rtc.length > 0) totalavail = rtc.map(item => item.availableSeats).reduce((prev, next) => prev + next);
+   rtc[0].totalavail = totalavail;
+   this.totalrtc.push(rtc);
+   this.rtctotal[rtc[0].lowercase] = false;
+  }
+ }
 
   ngOnDestroy(): void {
         this._styleManager.removeScript('custom');

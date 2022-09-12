@@ -82,9 +82,68 @@
                                     </div>
                                 </div>
                                 <hr>
+                            <div class="sidebar-widget Price-widget">
+                                    <div class="widget-title">
+                                        <h6 class="">Price</h6>
+                                        <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
+                                    </div>
+                                    <div class="widget-content mt-10 mb-30 price-widget-content">
+                                        <div class="price-widget-content-flx">
+                                            <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                            <span class="ms-3 me-3">-</span>
+                                            <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                        </div>
+                                        <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
+
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                                   <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                    <div class="widget-title">
+                                        <h6 class="">Bus Type</h6>
+                                        <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
+                                    </div>
+                                    <div class="widget-content">
+                                        <div class="flighttiming-content flight-departing">
+                                            <div  *ngFor="let classes of availableClasses ">
+                                                <label class="checkbox"  >
+                                                <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
+                                                {{classes.type}} ({{classes.count}})
+                                                <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>         
+                                
+                        <div class="m_filter_paddng">         
+                        <mat-accordion multi="true">
+                        
+                                <mat-expansion-panel [expanded]="true" >
+                                <mat-expansion-panel-header class="h_auto">
+                                Boarding Point
+                                </mat-expansion-panel-header>
+                                <div class="filter_search_div">
+                                <span><i class="fa fa-search" aria-hidden="true"></i>
+                                <input #inputstring class="search-sub-filter sdfsdf" (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
+                                </div>
+
+                                <div class="float-left pt-24 filter-common">
+                                <label class="checkbox" *ngFor="let bp of boardingpoints " >
+                                <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
+                                {{bp.boardingPointName}} ({{bp.total}}) 
+                                <span class="checkmark"></span>
+                                </label>
+                                </div>
+                                </mat-expansion-panel>
                                 
                                 
-                                
+                        </mat-accordion>      
+                          </div>
+                                            
                             </div>
                         </div>
 
@@ -151,6 +210,37 @@
                         </div>
                        
                         <div class="flight-listing-area">
+                   
+                       <ng-container *ngIf="totalrtc.length>0">
+                        <div *ngFor="let rtc of totalrtc; index as ind" class="d-none d-sm-block cust-pb-20 w-100 float-left">
+                      
+                      <div  class="list-card list-bus-card w-100 float-left">
+                        <div class="row align-items-center bus_list_box">
+                        <div class="col-md-4">
+                        <div class="label-name">{{rtc[0].travels}} </div>
+                        <div class="label-gray"> {{rtc.length}} Buses</div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
+                        <div class="label-gray">Onwards</div> 
+                        </div>
+                        <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
+                        <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
+
+                        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
+                        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
+                        </div>
+                        </div>
+                        </div> 
+                          <!--<span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >   
+
+                        <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
+                        [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
+                        </span>-->
+                        </div>
+                        </ng-container>
+                        
+                        
                             <ng-container #itemsContainer></ng-container>
                         </div>
                         
