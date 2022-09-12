@@ -247,6 +247,7 @@ this.showAvailable = false;
 	.set('trainNo',this.searchFareParam['trainNo'])
 	.set('toStn', this.searchFareParam['toStn']);
   let body: string = urlParams.toString();
+  
   this.spinnerService.show();
          this.irctcService.getTrainFare( body).subscribe(response => {
           this.spinnerService.hide();
