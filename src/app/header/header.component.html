@@ -1828,7 +1828,7 @@
         <div class="inner_m_item">
             <div class="icn" *ngIf="serviceSettings.notifications==1">
                 <!-- <span [ngClass]="(pushcount)>0  ? 'm-number_count' : ''"></span> -->
-                <p class="mb-0 pt-1 push_icon"  (click)="enablePushClick()">
+                <p class="mb-0 pt-1 push_icon" (click)="enablePushClick()">
                     <span [ngClass]="(pushcount)>0 && notificationball ? 'm-number_count' : ''"></span>
                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification m_bell">
                     <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
@@ -3253,7 +3253,7 @@
                 <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
             </div>
 
-            <div class="modal-header">
+            <div class="modal-header" *ngIf="pushcount">
                 <h5 class="modal-title" id="pushNotifiModalLabel">Notifications</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -3266,9 +3266,7 @@
                     <div class="row">
                         <div class="">
                         </div>
-                        <!-- <div class="col-12 text-center">
-                            <p class="mb-0" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#pushNotification_disable"><i class="fa fa-bell-slash noti_icon_pref icon_green" aria-hidden="true" (click)="disPushBtnmob()"></i><br><span class="noti_pre">Disable Notification</span></p>
-                        </div> -->
+
                     </div>
                 </div>
             </div>
