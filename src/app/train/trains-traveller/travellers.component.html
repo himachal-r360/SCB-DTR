@@ -1027,7 +1027,7 @@
                                             <div class="add-traveller-btn">
                                                 <div class="d-none d-sm-block"><a href="javascript:void(0);" class="Addnew-Adult-btn"
                                                     (click)="manualAddTraveller(1)">+ Add New Adult</a></div>
-                                                <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn" data-bs-toggle="modal" data-bs-target="#addTraveller_mlite" 
+                                                <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn" 
                                                     (click)="manualAddTraveller(1)">+ Add New Adult</a>
                                                 </div>
                                               </div>
@@ -1178,7 +1178,7 @@
                                             </div>
                     
                                             <div class="d-block d-sm-none">
-                                              <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn" data-bs-toggle="modal" data-bs-target="#addInfant_mlite " (click)="manualAddTraveller(2)">+ Add New Infant </a>
+                                              <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn"  (click)="manualAddTraveller(2)">+ Add New Infant </a>
                                               </div>
                                             </div>
                                           </div>
@@ -1631,8 +1631,8 @@
 
 <div *ngIf="isMobile">
     <!-- Mlite Add Traveller Popup -->
-    <div class=" modal coupon_mlite_popup" id="addInfant_mlite"  data-bs-keyboard="true"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class=" modal coupon_mlite_popup" id="addInfant_mlite"  
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="add_new_traveler pt-0" >
@@ -1640,7 +1640,7 @@
               <!--Manaual Passenger Infant-->
               <!-- <ng-container *ngFor="let traveller of childrenArrayM; index as i;"> -->
                 <div class="modal-header">
-                  <h5 class="modal-title">Add New Infant {{infanttraveller}}</h5>
+                  <h5 class="modal-title">Add New Infant </h5>
                   <button type="button" class="btn-close" (click)="removeMobileInfant(infanttraveller,-1)"></button>
                 </div>
                 <div class="modal-body pt-0">
@@ -1672,7 +1672,7 @@
                                       
                                       </div>
                                       
-                                       <span *ngIf="passengerForm.controls['childGender'+infanttraveller]['errors'] && 
+                                       <span *ngIf="mlitechildformsubmit && passengerForm.controls['childGender'+infanttraveller]['errors'] && 
                                        passengerForm.controls['childGender'+infanttraveller]['touched']" class="error">
 
                                                     <mat-error class="error_bus" *ngIf="passengerForm.controls['childGender'+infanttraveller]['errors']['required']">Gender is required</mat-error>
@@ -1688,9 +1688,9 @@
                                         <div class="inner_input col-md-4 col-12">
                                             <mat-form-field class="matField_full_width" appearance="outline">
                                                 <mat-label>Name</mat-label>
-                                                <input matInput placeholder="Name" formControlName="childName{{infanttraveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
+                                                <input matInput placeholder="Name" id="childname" formControlName="childName{{infanttraveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
                                             </mat-form-field>
-                                            <div *ngIf="passengerForm.controls['childName'+infanttraveller]['errors'] && passengerForm.controls['childName'+infanttraveller]['touched'] " class="error">
+                                            <div *ngIf="mlitechildformsubmit && passengerForm.controls['childName'+infanttraveller]['errors'] && passengerForm.controls['childName'+infanttraveller]['touched'] " class="error">
                                                 <small *ngIf="passengerForm.hasError('required','childName'+infanttraveller)">Please enter
                         name.</small>
                                                 <small *ngIf="passengerForm.hasError('pattern','childName'+infanttraveller)">Please enter valid
@@ -1724,7 +1724,7 @@
                                       <mat-option value="4">Four years</mat-option>
                                   </mat-select>
                                             </mat-form-field>
-                                            <div *ngIf=" passengerForm.controls['childAge'+infanttraveller]['errors'] && passengerForm.controls['childAge'+infanttraveller]['touched']" class="error">
+                                            <div *ngIf="mlitechildformsubmit &&  passengerForm.controls['childAge'+infanttraveller]['errors'] && passengerForm.controls['childAge'+infanttraveller]['touched']" class="error">
                                                 <small *ngIf="passengerForm.hasError('required','childAge'+infanttraveller)">Please select
                             age.</small>
                                             </div>
@@ -1755,8 +1755,8 @@
 <!-- mlite add new adult -->
 <div *ngIf="isMobile">
     <!-- Mlite Add Traveller Popup -->
-    <div class=" modal coupon_mlite_popup" id="addTraveller_mlite" data-bs-keyboard="true"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class=" modal coupon_mlite_popup" id="addTraveller_mlite"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="add_new_traveler pt-0" >
@@ -1806,7 +1806,7 @@
                                     <div class="inner_input col-md-4 col-12">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                             <mat-label>Passenger Name </mat-label>
-                                            <input matInput placeholder="Name" formControlName="passengerName{{adulttraveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onDrag="return false" onDrop="return false" value=''>
+                                            <input matInput placeholder="Name" id="adultname" formControlName="passengerName{{adulttraveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onDrag="return false" onDrop="return false" value=''>
                                         </mat-form-field>
                                         <div *ngIf="mlitetravellerformsubmit && passengerForm.controls['passengerName'+adulttraveller] && passengerForm.controls['passengerName'+adulttraveller]['errors'] && passengerForm.controls['passengerName'+adulttraveller]['touched']" class="error">
                                             <small *ngIf="passengerForm.hasError('required','passengerName'+adulttraveller)">Please enter
@@ -1836,7 +1836,7 @@
                                     <div class="inner_input col-md-4 col-12 age_sec">
                                         <mat-form-field class="matField_full_width" appearance="outline">
                                             <mat-label>Age</mat-label>
-                                            <input matInput placeholder="Age" formControlName="passengerAge{{adulttraveller}}" maxlength="3" (keypress)="numberInput($event)" (keyup)="maxAgeLimitArr(adulttraveller)" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"  value=''>
+                                            <input matInput placeholder="Age" id="adultage" formControlName="passengerAge{{adulttraveller}}" maxlength="3" (keypress)="numberInput($event)" (keyup)="maxAgeLimitArr(adulttraveller)" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"  value=''>
                                         </mat-form-field>
                                         <div *ngIf="mlitetravellerformsubmit &&  'passengerAge'+adulttraveller.errors && 'passengerAge'+adulttraveller.touched" class="error">
                                             <small *ngIf="passengerForm.hasError('required','passengerAge'+adulttraveller)">Please
@@ -2578,12 +2578,12 @@
                                 <div class="fare-list-box">
                                     <div class="fare-list-left">
                                         <span>
-                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                    Base Fare
+                    <!-- <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> -->
+                    Ticket Fare
                   </span>
                                     </div>
                                     <div class="fare-list-right">
-                                        <p>&#8377;{{BaseFare|number}}</p>
+                                        <p>&#8377;{{(totalTicketFare-0) | number : '1.2-2'}}</p>
                                     </div>
                                 </div>
                             </li>
@@ -2591,72 +2591,137 @@
                                 <div class="fare-list-box">
                                     <div class="fare-list-left">
                                         <span>
-                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                    Taxes and Fees
+                    <!-- <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> -->
+                    Travel Insurance Charges (Incl. GST)
                   </span>
                                     </div>
                                     <div class="fare-list-right">
-                                        <p>&#8377;{{Tax |number}}</p>
+                                        <p>&#8377;{{((travel_ins_charge-0)+(travel_ins_charge_tax-0)) | number : '1.2-2'}}</p>
                                     </div>
                                 </div>
                             </li>
 
-                            <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3 ">
+                            <li class="fare-list-item" >
                                 <div class="fare-list-box">
                                     <div class="fare-list-left">
                                         <span>
-                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                    {{selectedOnwardVendor.partnerName}} Convenience Fee
+                    <!-- <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> -->
+                    Convenience fee (Incl. of GST)
                   </span>
                                     </div>
                                     <div class="fare-list-right">
-                                        <p>&#8377;{{partnerConvFee |number}}</p>
+                                        <p>&#8377;{{(wp_charge-0)+(wp_charge_tax-0) | number : '1.2-2'}}</p>
                                     </div>
                                 </div>
                             </li>
-                            <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
-                                <div class="fare-list-box">
-                                    <div class="fare-list-left">
-                                        <span>
-                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                    Baggage/Seat/Meals
-                  </span>
-                                    </div>
-                                    <div class="fare-list-right">
-                                        <p>&#8377;{{vas_amount}}</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="fare-list-item" *ngIf="coupon_amount>0.00">
-                                <div class="fare-list-box">
-                                    <div class="fare-list-left">
-                                        <span>
-                    <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt="">
-                    Discounts
-                  </span>
-                                    </div>
-                                    <div class="fare-list-right">
-                                        <p class="text-green">-&#8377;{{coupon_amount}}</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="fare-list-item">
-                                <div class="fare-list-box pt-30">
-                                    <div class="fare-list-left">
-                                        <h6 class="fw_7">Grand Total </h6>
-                                    </div>
-                                    <div class="fare-list-right" *ngIf="steps < 4">
-                                        <h6 class="fw_7">₹{{totalCollectibleAmount-partnerConvFee|number}}</h6>
-                                        <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount-partnerConvFee)|number: '.2'}}/month</p>
-                                    </div>
+                             <li class="fare-list-item" *ngIf="campiagn_agent_charges==0">
+                                            <div class="fare-list-box">
+                                                <div class="fare-list-left">
+                                                    <p>SmartBuy Charges (Incl. of GST)</p>
+                                                </div>
+                                                <div class="fare-list-right">
+                                                    <p> <span class="value-free dash_line">&#8377; {{agent_charges | number : '1.2-2'}}</span> <span class="text-free">FREE</span></p>
+                                                </div>
+                                            </div>
+                                        </li>
 
-                                    <div class="fare-list-right" *ngIf="steps > 3">
-                                        <h6 class="fw_7">₹{{totalCollectibleAmount|number}}</h6>
-                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{calculateEMI(totalCollectibleAmount)|number: '.2'}}/month</p>
-                                    </div>
 
-                                </div>
-                            </li>
+                                        <li class="fare-list-item" *ngIf="campiagn_agent_charges < agent_charges && campiagn_agent_charges != 0">
+                                            <div class="fare-list-box">
+                                                <div class="fare-list-left">
+                                                    <p>SmartBuy Charges (Incl. of GST)</p>
+                                                </div>
+                                                <div class="fare-list-right">
+                                                    <p> <span class="value-free">&#8377; {{agent_charges | number : '1.2-2'}}</span> <span class="text-free">&#8377; {{campiagn_agent_charges | number : '1.2-2'}}</span></p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="fare-list-item" *ngIf="campiagn_agent_charges == agent_charges">
+                                            <div class="fare-list-box">
+                                                <div class="fare-list-left">
+                                                    <p>SmartBuy Charges (Incl. of GST)</p>
+                                                </div>
+                                                <div class="fare-list-right">
+                                                    <p> <span class="value-free">&#8377; {{agent_charges | number : '1.2-2'}}</span> </p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                        <li class="fare-list-item" *ngIf="pgCharges>0.00">
+                                            <div class="fare-list-box">
+                                                <div class="fare-list-left">
+                                                    <p>PG Charges</p>
+                                                </div>
+                                                <div class="fare-list-right">
+                                                    <p>&#8377; <b class="value-free">&#8377; {{pgCharges | number : '1.2-2'}}</b> </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                             <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                            <div class="fare-list-box">
+                                                <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
+
+                                                    <div>
+                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png" alt="" *ngIf="!isCollapseDiscount">
+
+                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                                    </div>
+                                                </div>
+                                                <div class="fare-list-right">
+                                                    <p class="text-green">- &#8377; {{coupon_amount}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div class="collapse base_fare_collapse" id="coupon-collpase">
+                                                    <div class="row ">
+                                                        <div class="col-md-11 offset-md-1">
+
+                                                            <div class="row collapse_row">
+                                                                <div class="col-5 fare-list-left">
+                                                                    <p>Coupoun Code</p>
+                                                                </div>
+                                                                <div class="col-7 fare-list-right">
+                                                                    <p>{{coupon_code}}</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </li>
+
+
+                                        <li class="fare-list-item" *ngIf="flexipaysummry">
+                                            <div class="fare-list-box">
+                                                <div class="fare-list-left">
+                                                    <p>FlexiPay Discount</p>
+                                                </div>
+                                                <div class="fare-list-right">
+                                                    <p>&#8377; <b class="value-free">Rs. {{flexiDiscount | number : '1.2-2'}}</b> </p>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="fare-list-item">
+                                            <div class="fare-list-box pt-30">
+                                                <div class="fare-list-left">
+                                                    <h6 class="fw_7">Grand Total</h6>
+                                                    <p class="payment-text pt-1">*PG charges as applicable.</p>
+                                                </div>
+                                                <div class="fare-list-right">
+                                                    <h6 class="fw_7">₹ {{(totalCollectibleAmount-0)+(pgCharges-0) | number : '1.2-2'}}</h6>
+                                                </div>
+
+                                            </div>
+                                        </li>
                         </ul>
                     </div>
                 </div>

@@ -302,6 +302,7 @@ export class TrainsTravellerComponent implements OnInit {
      customerInfo:any;
        isMobile:boolean= true;
        mlitetravellerformsubmit = false;
+       mlitechildformsubmit = false;
          isCollapseBasefare: boolean = false;
   isCollapseDiscount: boolean = false;
   isCollapse: boolean = false;
@@ -2841,9 +2842,20 @@ recivetotalFare($event){
     
        manualAddTraveller(type){
         if(type==1){
-
+            if(this.isMobile){
+            $('#adultname').val('');
+            $('#adultage').val('');
+            $('#addTraveller_mlite').modal('show');
+            this.mlitetravellerformsubmit = false;
+        }
             this.addTraveller(-1,-1);
         }else{
+            if(this.isMobile){
+                $('#childname').val('');
+                $('#childage').val(0).change();;
+                $('#addInfant_mlite').modal('show');
+                this.mlitechildformsubmit=false;
+            }
             this.addChild(-1,-1);
         }
         
@@ -2866,9 +2878,7 @@ recivetotalFare($event){
     
     
     addTraveller(passenger,checkboxIndex) {
-        if(this.isMobile){
-            this.mlitetravellerformsubmit = false;
-        }
+        
            if ((this.travellersArray.length ) < (this.maxPassengers)) {
             this.adulttraveller = this.travellersArray.length+1;
             this.travellers.push(this.travellersArray.length);
@@ -2970,6 +2980,8 @@ recivetotalFare($event){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
              $('#passengerBox_'+checkboxIndex).removeClass('hidden');
              }
+
+       
         } else {
          if(checkboxIndex !=-1){
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
@@ -3077,7 +3089,7 @@ recivetotalFare($event){
     }
     childCount: number = 1;
     addChild(passenger,checkboxIndex) {
-    
+
     
         if ((this.childrenArray.length + 1) <= (this.maxInfants)) {
             this.infanttraveller = this.childrenArray.length+1;
@@ -3121,6 +3133,7 @@ recivetotalFare($event){
            $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
            }
             
+            
         } else {
             $('#addInfant_mlite').modal('hide');
           if(checkboxIndex !=-1){
@@ -3140,6 +3153,7 @@ recivetotalFare($event){
             });
             //this.childCount = Number(this.maxInfants)+1;
         }
+
     }
     
       validateMliteForm(type, traveller) {
@@ -3155,6 +3169,9 @@ recivetotalFare($event){
     }
 
     if (type == 'infant') {
+        if(this.isMobile){
+            this.mlitechildformsubmit=true;
+        }
       if (this.passengerForm.controls['childGender' + traveller]['status'] == 'VALID' && this.passengerForm.controls['childName' + traveller]['status'] == 'VALID'  && this.passengerForm.controls['childAge' + traveller]['status'] == 'VALID') {
         $('#addInfant_mlite').modal('hide');
       }
