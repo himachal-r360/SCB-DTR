@@ -293,7 +293,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   searchAutoComplete($event, field, device, index: any) {
-   // debugger
+   debugger
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if (true) {
