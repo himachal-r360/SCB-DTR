@@ -1,19 +1,19 @@
 <section class="bradcome-area mt-110 mb-10">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="bradcome-list">
-                  <ul class="list-inline">
-                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Home</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><span>Flight Search</span></li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><span>Flight Search</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <section class="flight-area mt-10" *ngIf="!isMobile">
     <div class="container">
@@ -29,7 +29,7 @@
                         <p>Compare &amp; Fly with our flight partners</p>
                         <ul class="list-inline ms-3">
                             <li class="list-inline-item" *ngFor="let service of enableFlightServices">
-                                <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.png" alt="{{service.name}}">
+                                <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.svg" alt="{{service.name}}">
                             </li>
 
                         </ul>
@@ -334,7 +334,7 @@
                             <ng-container #itemsContainer></ng-container>
                         </div>
                         <div class="text-center" *ngIf="!loader &&  flightList.length < 1">
-                            <div class="no_flights_sec" >
+                            <div class="no_flights_sec">
                                 <div>
                                     <p class="title">Yikes! No flight found</p>
                                     <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
@@ -620,8 +620,7 @@
                                                                             <div class="tabs-depart-box" *ngFor="let details of list.onwardflights;let i=index;">
                                                                                 <div class="tabs-depart-one">
                                                                                     <p class="depart-one-image">
-                                                                                     <i class="me-2 free-flow air-logo intAirLogo size-28  x{{details.airline}}"></i>
-                                                                                   {{details.airline}} {{details.flightNumber}}</p>
+                                                                                        <i class="me-2 free-flow air-logo intAirLogo size-28  x{{details.airline}}"></i> {{details.airline}} {{details.flightNumber}}</p>
                                                                                     <div class="tabs-depart-left float-none">
                                                                                         <div class="tabs-depart-times">
                                                                                             <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -679,8 +678,7 @@
                                                                         <div class="tabs-depart-box" *ngFor="let details of list.returnflights;let i=index;">
                                                                             <div class="tabs-depart-one">
                                                                                 <p class="depart-one-image">
-                                                                                <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{details.airline}}"></i>
-                                                                                 {{details.airline}} {{details.flightNumber}}</p>
+                                                                                    <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{details.airline}}"></i> {{details.airline}} {{details.flightNumber}}</p>
                                                                                 <div class="tabs-depart-left float-none">
                                                                                     <div class="tabs-depart-times">
                                                                                         <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -1006,7 +1004,7 @@
                     </div>
                 </div>
                 <div class="text-center" *ngIf="!loader &&  flightList.length < 1">
-                    <div class="no_flights_sec" >
+                    <div class="no_flights_sec">
                         <div>
                             <p class="title">Yikes! No flight found</p>
                             <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
@@ -1024,7 +1022,7 @@
                                 <div class="mob-list-items-name">
                                     <div class="mob-list-items-name-top">
                                         <div class="mob-list-items-image">
-                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.onwardflights | airlines}}"></i>
+                                            <i class="free-flow air-logo intAirLogo size-28  x{{list.onwardflights | airlines}}"></i>
                                             <div class="mob-list-flight-name" *ngIf="list.onwardflights.length > 0">
                                                 <h6>{{list.onwardflights[0].airlineName}}</h6>
                                                 <p>{{list.onwardflights[0].airline}} {{list.onwardflights[0].flightNumber}}</p>
@@ -1046,9 +1044,9 @@
                                             <div class="name-bottom-top-center">
                                                 <p>{{ list.onwardflights | durationTotalTime }}</p>
                                                 <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                                        <p *ngIf="list.onwardflights.length ==1 && list.onwardflights[0].stops==0">non stop</p>
-                                                        <p *ngIf="list.onwardflights.length ==1 && list.onwardflights[0].stops==1">{{list.onwardflights[0].stops}} stop</p>
-                                                        <p *ngIf="list.onwardflights.length > 1">{{list.onwardflights.length-1}} stop</p>
+                                                <p *ngIf="list.onwardflights.length ==1 && list.onwardflights[0].stops==0">non stop</p>
+                                                <p *ngIf="list.onwardflights.length ==1 && list.onwardflights[0].stops==1">{{list.onwardflights[0].stops}} stop</p>
+                                                <p *ngIf="list.onwardflights.length > 1">{{list.onwardflights.length-1}} stop</p>
                                             </div>
                                             <div class="name-bottom-top-right">
                                                 <h6>{{list.onwardflights[list.onwardflights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -1076,7 +1074,7 @@
                                 <div class="mob-list-items-name" *ngIf="list.returnflights[0]">
                                     <div class="mob-list-items-name-top">
                                         <div class="mob-list-items-image">
-                                        <i class="free-flow air-logo intAirLogo size-28  x{{list.returnflights | airlines}}"></i>
+                                            <i class="free-flow air-logo intAirLogo size-28  x{{list.returnflights | airlines}}"></i>
                                             <div class="mob-list-flight-name" *ngIf="list.returnflights.length > 0">
                                                 <h6>{{list.returnflights[0].airlineName}}</h6>
                                                 <p>{{list.returnflights[0].airline}} {{list.returnflights[0].flightNumber}}</p>
@@ -1095,10 +1093,10 @@
                                             <div class="name-bottom-top-center">
                                                 <p>{{ list.onwardflights | durationTotalTime }}</p>
                                                 <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                                
-                                                       <p *ngIf="list.returnflights.length ==1 && list.returnflights[0].stops==0">non stop</p>
-                                                        <p *ngIf="list.returnflights.length ==1 && list.returnflights[0].stops==1">{{list.returnflights[0].stops}} stop</p>
-                                                        <p *ngIf="list.returnflights.length > 1">{{list.returnflights.length-1}} stop</p>
+
+                                                <p *ngIf="list.returnflights.length ==1 && list.returnflights[0].stops==0">non stop</p>
+                                                <p *ngIf="list.returnflights.length ==1 && list.returnflights[0].stops==1">{{list.returnflights[0].stops}} stop</p>
+                                                <p *ngIf="list.returnflights.length > 1">{{list.returnflights.length-1}} stop</p>
                                             </div>
                                             <div class="name-bottom-top-right">
                                                 <h6>{{list.returnflights[list.returnflights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -1222,10 +1220,9 @@
                                                                 <div class="extra-tabs-details-bottom ">
                                                                     <div class="tabs-depart-box" *ngFor="let details of list.onwardflights;let i=index;">
                                                                         <div class="tabs-depart-one">
-                                                                            <p class="depart-one-image" >
-                                                                            
-                                                                             <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{list.onwardflights[i].airline}}"></i>
-                                                                            {{list.onwardflights[i].airline}} {{list.onwardflights[i].flightNumber}}</p>
+                                                                            <p class="depart-one-image">
+
+                                                                                <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{list.onwardflights[i].airline}}"></i> {{list.onwardflights[i].airline}} {{list.onwardflights[i].flightNumber}}</p>
                                                                             <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                             <div class="tabs-depart-left float-none">
                                                                                 <div class="tabs-depart-times">
@@ -1275,9 +1272,8 @@
                                                                 <div class="extra-tabs-details-bottom ">
                                                                     <div class="tabs-depart-box" *ngFor="let details of list.returnflights;let i=index;">
                                                                         <div class="tabs-depart-one">
-                                                                            <p class="depart-one-image" >
-                                                                             <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{list.returnflights[i].airline}}"></i>
-                                                                            {{list.returnflights[i].airline}} {{list.returnflights[i].flightNumber}}</p>
+                                                                            <p class="depart-one-image">
+                                                                                <i class=" me-2 free-flow air-logo intAirLogo size-28  x{{list.returnflights[i].airline}}"></i> {{list.returnflights[i].airline}} {{list.returnflights[i].flightNumber}}</p>
                                                                             <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                             <div class="tabs-depart-left float-none">
                                                                                 <div class="tabs-depart-times">

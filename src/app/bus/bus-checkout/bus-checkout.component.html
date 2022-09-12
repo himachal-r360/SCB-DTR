@@ -54,15 +54,18 @@
   <div class="col-md-12 p-0 fixed-top"  >
   <div class="mob-listing-header">
     <div class="mob-listing-header-left">
-        <a href="javascript:;">
+        <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==1" >
+            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+        </a>
+                <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" >
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
     </div>
     <div class="mob-listing-header-center">
         <div class="">
-                <p>11 Aug   </p>
-                <h6> Go Tour Travels and Holidays </h6>
-                <p class="">A/C Sleeper (2+1)</p>
+                <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
+                <h6>{{ onward.travels }} </h6>
+                <p class="">{{ onward.busType }}</p>
         </div>
     </div>
     <div> </div>
@@ -230,11 +233,11 @@
                                                   <div class="trip_select">
                                                       <div class="buttonTrip">
                                                           <input type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
-                                                          <label class="btn btn-default" for="male">Male</label>
+                                                          <label class="btn btn-default" for="male{{ i }}">Male</label>
                                                       </div>
                                                       <div class="buttonTrip">
                                                           <input type="radio" id="female{{ i }}" formControlName="passengerGender{{ i }}"  value="Female" />
-                                                          <label class="btn btn-default" for="female">Female</label>
+                                                          <label class="btn btn-default" for="female{{ i }}">Female</label>
                                                       </div>
 
 
@@ -302,59 +305,14 @@
                               numeric</mat-error>
                             <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerAge'+i]['errors']['max']" >Age should be less
                               than 125</mat-error>
-                              
-                              <mat-error *ngIf="submitted && i==defaultPrimary && !passengerForm.controls['passengerAge'+i]['errors']['max']" class="error_bus">{{ ageValidError }}</mat-error>
                           </span>
-
+                               <mat-error class="error_bus" *ngIf="submitted && i==defaultPrimary && passengerFormerror" >{{ageValidError}}</mat-error>
                         </div>
-                        <!-- For Web Only -->
-                        <!-- <div class="col-6 col-lg-4 col-md-6 d-none d-sm-block">
-                          <mat-form-field class="w-100" appearance="outline">
-                            <mat-label>Gender</mat-label>
-                            <mat-select placeholder="" formControlName="passengerGender{{ i }}">
-                              <mat-option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat"> Male
-                              </mat-option>
-                              <mat-option value="Female"> Female </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                              required</mat-error>
-                          </span>
-                        </div> -->
-                        <!-- For Mobile Only -->
-                        <!-- <div class="col-6 col-lg-3 col-md-6 offset-lg-1 d-block d-sm-none">
-                          <mat-form-field class="w-100" appearance="outline">
-                            <mat-label>Gender</mat-label>
-                            <select matNativeControl formControlName="passengerGender{{ i }}">
-                              <option value="Gender" disabled>Gender</option>
-                              <option value="Male" *ngIf="!seacthResult.seatdetails[i].ladiesSeat">Male</option>
-                              <option value="Female">Female</option>
-                            </select>
-                          </mat-form-field>
-                          <span *ngIf="submitted && passengerForm.controls['passengerGender'+i]['errors']" class="error">
-                            <mat-error class="error_bus" *ngIf="passengerForm.controls['passengerGender'+i]['errors']['required']">Gender is
-                              required</mat-error>
-                          </span>
-                        </div> -->
+
                       </div>
 
                     </div>
 
-
-                    <!--<div class="travel-userNames" *ngIf="saveTravllerShow">
-                      <p> 
-                        <label class="checkbox">Save Traveller
-                        <input type="checkbox"  checked value="true" formControlName="saveTraveller{{ i }}">
-                        <span class="checkmark"></span>
-                        </label>
-                      </p>
-                    </div>-->
-                    <!-- <div class="row mt-3 mb-3">
-                      <div class="col-md-12">
-                        <a href="#" class="blue_link">+ Add Traveller</a>
-                      </div>
-                    </div> -->
                     
                     <div class="traveller-adults-ul mt-3">
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
@@ -363,20 +321,22 @@
                         <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}">
                           <div class="custom-controls-stacked " >
                             <label class="custom-control material-checkbox">
-                              <input type="checkbox" class="material-control-input pass_checkBox  pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
+                              <input type="checkbox" class="material-control-input pass_checkBox  pass_checkBox1_{{ passenger.id}} pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
                                  name="travellerlist"
                                 (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                 {{ passenger.lastName }}  </span>
-                                                       <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                
+                                <span class="description fw_5"  *ngIf="passenger.gender">{{passenger.gender}}</span>
+                                <span class="description fw_5" *ngIf="!passenger.gender"  [ngSwitch]="passenger.title"> 
                                 <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
                                 <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
                                 <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
                                 <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
                                 <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
-                                <ng-template ngSwitchDefault></ng-template>
+                                <ng-template ngSwitchDefault>Male</ng-template>
                                 </span>
                             </label>
                           </div>
@@ -388,20 +348,21 @@
                             <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
                               <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
                                 <label class="custom-control material-checkbox">
-                                  <input type="checkbox" class="material-control-input pass_checkBox pass_checkBox_{{ expandedItem.id}}{{i}} pass_checkBox_{{i}}"
+                                  <input type="checkbox" class="material-control-input pass_checkBox1_{{ expandedItem.id}} pass_checkBox pass_checkBox_{{ expandedItem.id}}{{i}} pass_checkBox_{{i}}"
                                     name="travellerlist"
                                     (change)="fillupTravellerDetailOnCheck($event,expandedItem,i,expandedItem.id,expandedItemi)" [disabled]="disableCheckbox[expandedItemi]" [checked]="isChecked[expandedItemi]">
                                   <span class="material-control-indicator"></span>
                                   <span class="description fs_14 text-black fw_7 mr-10"><span
                                       *ngIf="expandedItem.title">{{ expandedItem.title }}.</span> {{ expandedItem.firstName }}
                                     {{ expandedItem.lastName }} </span>
-                                                           <span class="description fw_5"  [ngSwitch]="expandedItem.title"> 
+                                     <span class="description fw_5"  *ngIf="expandedItem.gender">{{expandedItem.gender}}</span>
+                                                           <span class="description fw_5"   *ngIf="!expandedItem.gender" [ngSwitch]="expandedItem.title"> 
                                     <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
                                     <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
                                     <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
                                     <ng-template [ngSwitchCase]="'Mrs'">Female</ng-template>
                                     <ng-template [ngSwitchCase]="'Ms'">Female</ng-template>
-                                    <ng-template ngSwitchDefault></ng-template>
+                                    <ng-template ngSwitchDefault>Male</ng-template>
                                     </span>
                                 </label>
                               </li>
@@ -411,7 +372,7 @@
                           <div class="modal-footer d-block p-0">
                             <div *ngIf="travellerlist.length > 3">
                               <p class="view_more_btn">
-                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded || !isExpanded" >
+                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded" >
                                  View More  &#x25BC;
                                 </a>
                                 
@@ -520,7 +481,7 @@
 
               <div class="booking-inner-box gst-number-box">
                 <h6> <span class="form-switch m-0 mr-10">
-                    <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
+                  <input class="form-check-input" type="checkbox" role="switch" (click)="gstToggle()" />
                   </span>GST number for business travel (Optional)</h6>
                 <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                 </p>
@@ -667,7 +628,7 @@
                       <mat-label>State</mat-label>
                       <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
                         (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
-                        readonly="stateCheck" value={{ state }}>
+                        readonly="stateCheck" value="{{ state }}">
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
                         Please enter state name.
                       </mat-error>

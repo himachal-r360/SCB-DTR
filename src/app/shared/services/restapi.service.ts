@@ -136,7 +136,11 @@ export class RestapiService {
  }
 
  trackEvents (param): Observable<any> {
+  if(LOCALJSON=='true'){
+     return this.http.get('assets/data/validatePGData.json');
+   }else{
    return this.http.post( this.endpoint+'trackEvents',param, config).pipe(map((response: any) => response));
+   }
  }
 
  getNotificationPopup (): Observable<any> {
