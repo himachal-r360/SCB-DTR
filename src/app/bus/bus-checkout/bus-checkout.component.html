@@ -77,7 +77,7 @@
 
 <main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'">
 
-  <section class="flight-details-area mt-10">
+  <section class="flight-details-area">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
       <div class="sidebar-widget session-expires-widget text-center">
@@ -730,6 +730,7 @@
                     <img *ngIf="busData" 
                       src="{{ cdnUrl }}images/smartbuy/partner/48/svg/redbus.svg"
                       alt="redbus">
+
                   </div>
                   <div class="widget-content">
                     <ul class="widget-list clearfix">
@@ -763,24 +764,29 @@
                                 <div class="col-md-11 offset-md-1">
 
                                   <div class="row collapse_row mb-10">
-                                    <div class="col-8 fare-list-left">
-                                      <p>{{ fareData.totalseats }} Seat(s) </p>
+                                    <div class="col-12 fare-list-left">
+                                      <p>{{ fareData.totalseats }} Seat(s) ({{ fareData.totalseats }} X ₹
+                                        {{ fareData.singlePassengerbasefare | number }} )</p>
                                     </div>
-                                    <div class="col-4 fare-list-right">
+                                    <!-- <div class="col-4 fare-list-right">
                                       <p> ({{ fareData.totalseats }} X ₹
                                         {{ fareData.singlePassengerbasefare | number }} ) </p>
-                                    </div>
+                                    </div> -->
                                   </div>
 
                                   <div class="row collapse_row mb-10">
-                                    <div class="col-8 fare-list-left">
-                                      <p> Seat No(s)</p>
+                                    <div class="col-12 fare-list-left">
+                                      <p> Seat No(s) :  
+                                        <span
+                                        *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{ seat.name }}
+                                        <span *ngIf="!lastRow">, </span> </span>
+                                      </p>
                                     </div>
-                                    <div class="col-4 fare-list-right">
+                                    <!-- <div class="col-4 fare-list-right">
                                       <span
                                         *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{ seat.name }}
                                         <span *ngIf="!lastRow">, </span> </span>
-                                    </div>
+                                    </div> -->
                                   </div>
 
                                 </div>
@@ -1204,8 +1210,15 @@
             <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
           </div>
           <div class="bookingprocess-content">
-            <div class="bookingprocess-flight">
+            <div class="bookingprocess-flight bus_checkout_modal_cities">
               <h6>{{ seacthResult.searchFrom }} </h6>
+              <div class="bus_checkout_maodal_p d-none d-md-block">
+                <p>({{ actualboarding | date:'EEE, dd MMM yyyy' }}) {{ fareData.totalseats }}-travellers</p>
+                <p> <span
+                  *ngFor="let seat of seacthResult.seatdetails;let i = index;let lastRow=last;">{{ seat.name }}
+                  <span *ngIf="!lastRow">, </span> </span>
+                </p>
+              </div>
               <h6> &nbsp; {{ seacthResult.searchTo }}</h6>
             </div>
             <div class="bookingprocess-processbar">
