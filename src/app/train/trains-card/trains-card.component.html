@@ -1,189 +1,197 @@
-    <!-- Repeat Booking section details start -->         
-    <div class="RepeatBookingSec d-none d-sm-block repeat_booking_alert" *ngIf="showRepeatBooking==1 && repeatBooking==1">
-        <div>
-            <h5 class="mb-0">Most Frequent Choice</h5>
-        </div>
-        <div class="list-row display-mw">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="label-name-w">
-                        <span class="irctc-junction-view">{{train.trainName|titlecase}}</span>
-                        <span class="f-16"> ({{train.trainNumber}})</span>
+<!-- Repeat Booking section details start -->
+<div class="RepeatBookingSec d-none d-sm-block repeat_booking_alert" *ngIf="showRepeatBooking==1 && repeatBooking==1">
+    <div>
+        <h5 class="mb-0">Most Frequent Choice</h5>
+    </div>
+    <div class="list-row display-mw">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="label-name-w">
+                    <span class="irctc-junction-view">{{train.trainName|titlecase}}</span>
+                    <span class="f-16"> ({{train.trainNumber}})</span>
+                </div>
+                <div>
+                    <p class="seatDetails"><span>{{AppConfig.IRCTC_Quota[repeatBookingData.journeyQuota]}} ({{repeatBookingData.journeyQuota}})</span>|<span>{{AppConfig.IRCTC_Classes[repeatBookingData.journeyClass]}} ({{repeatBookingData.journeyClass}})</span></p>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="trainTimeInfo">
+
+                    <div class="fromStn">
+                        <p>{{train.departureTime}} </p>
+                        <p><span class="trainCode"> ({{repeatBookingData.fromStn}}) </span></p>
                     </div>
-                    <div>
-                        <p class="seatDetails"><span>{{AppConfig.IRCTC_Quota[repeatBookingData.journeyQuota]}} ({{repeatBookingData.journeyQuota}})</span>|<span>{{AppConfig.IRCTC_Classes[repeatBookingData.journeyClass]}} ({{repeatBookingData.journeyClass}})</span></p>
+                    <div class="px-2 text-center">
+                        <hr class="my-2 w-30-m" />
+                    </div>
+                    <div class="timeShow">
+                        <p>{{commonHelper.trainDuration(train.duration)}}</p>
+                        <p [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click)="getSchedule(train.trainNumber,train.boardingDate)" data-bs-toggle="modal">Show Route</p>
+                    </div>
+                    <div class="px-2 text-center">
+                        <hr class="my-2 w-30-m" />
+                    </div>
+                    <div class="toStn">
+                        <p> {{train.arrivalTime}}</p>
+                        <p><span class="trainCode"> ({{repeatBookingData.destStn}}) </span></p>
                     </div>
 
-                </div>
-                <div class="col-md-4">
-                    <div class="trainTimeInfo">
-                    
-                        <div class="fromStn">
-                            <p>{{train.departureTime}}  </p>
-                            <p><span class="trainCode"> ({{repeatBookingData.fromStn}}) </span></p>
-                        </div>
-                        <div class="px-2 text-center">
-                            <hr  class="my-2 w-30-m" />
-                        </div>
-                        <div class="timeShow">
-                            <p>{{commonHelper.trainDuration(train.duration)}}</p>
-                            <p [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber,train.boardingDate)" data-bs-toggle="modal">Show Route</p>
-                        </div>
-                        <div class="px-2 text-center">
-                            <hr  class="my-2 w-30-m" />
-                        </div>
-                        <div class="toStn">
-                            <p> {{train.arrivalTime}}</p>
-                            <p><span class="trainCode"> ({{repeatBookingData.destStn}}) </span></p>
-                                            </div>
-                       
-                    </div>
-                </div>
-                <div class="col-md-3 text-right">
-                    <div>
-                        <button type="button" class="close"  (click) = "closeRepeatBooking()" >&times;</button>
-                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="boardDetails mt-sm-2"><span>Boarded at: </span><span>{{stationsdump[repeatBookingData.boardingStn]}} ({{repeatBookingData.boardingStn}})</span></p>
-                </div>
-                
-                <div class="col-md-6 text-right">
-                   <div class="info_sec">
-                       <span class="limitSeats">{{limitSeats}}</span>
-                        <button class="btn-outline w-50 radius_8"  (click)="onAvailableR(train,repeatBookingData['journeyClass'])">Repeat Booking</button> 
-                   </div>
+            <div class="col-md-3 text-right">
+                <div>
+                    <button type="button" class="close" (click)="closeRepeatBooking()">&times;</button>
                 </div>
             </div>
-            
-            
-    <div class="row rcheck-available d-none d-sm-block" id="rcheck-available{{train.trainNumber}}" *ngIf="showAvailableR  && !isMobile" > 
-        <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)"  [(selectedIndex)]="selectedIndexR">
-          <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}"  >
-           
-                <div class="tier"  *ngFor="let dayList of avlDayList ;" > 
-                    <div class="TrainSeatsInfo">
-                        <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> <span class="float-right price">₹{{trainTotalFare|number}}</span></p>
-                        <div class="status">
-                            <div class="label-green" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224 && dayList.availablityType!=3">{{dayList.availablityStatus}}</div>
-                            <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
-                            <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
-                        </div>
-                        <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
-                    </div>
-                </div>
-           
-           <div *ngIf="avlDayList.length==0 && fareDataIssue==false" ><app-loader></app-loader></div>
-          <div *ngIf="fareDataIssue" ><div class="fareData-error">{{fareData.errorMessage}}</div></div>
-          <div  *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3" >Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
-           <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
-               
-          </mat-tab>
-          </mat-tab-group>
-          <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
-    </div>
-
-            
-            
         </div>
-    </div>
-    
+        <div class="row">
+            <div class="col-md-6">
+                <p class="boardDetails mt-sm-2"><span>Boarded at: </span><span>{{stationsdump[repeatBookingData.boardingStn]}} ({{repeatBookingData.boardingStn}})</span></p>
+            </div>
 
-        <!-- Mlite Code  -->
-    <div class="RepeatBookingSec d-block d-sm-none" *ngIf="showRepeatBooking==1 &&  repeatBooking==1">
-        <div>
-            <h5 class="mb-0">Most Frequent Choice</h5>
+            <div class="col-md-6 text-right">
+                <div class="info_sec">
+                    <span class="limitSeats">{{limitSeats}}</span>
+                    <button class="btn-outline w-50 radius_8" (click)="onAvailableR(train,repeatBookingData['journeyClass'])">Repeat Booking</button>
+                </div>
+            </div>
         </div>
-        <div class="list-row display-mw d-block d-sm-none">
-            <div class="row">
-                <div class="col-10">
-                    <div class="label-name-w">
-                        <span class="irctc-junction-view">{{train.trainName|titlecase}}</span>
-                        <span class="f-16"> ({{train.trainNumber}})</span>
-                        <p class="seatDetails"><span>{{AppConfig.IRCTC_Quota[repeatBookingData.journeyQuota]}} ({{repeatBookingData.journeyQuota}})</span>|<span>{{AppConfig.IRCTC_Classes[repeatBookingData.journeyClass]}} ({{repeatBookingData.journeyClass}})</span></p>
+
+
+        <div class="row rcheck-available d-none d-sm-block" id="rcheck-available{{train.trainNumber}}" *ngIf="showAvailableR  && !isMobile">
+            <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndexR">
+                <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
+
+                    <div class="tier" *ngFor="let dayList of avlDayList ;">
+                        <div class="TrainSeatsInfo">
+                            <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> <span class="float-right price">₹{{trainTotalFare|number}}</span></p>
+                            <div class="status">
+                                <div class="label-green" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224 && dayList.availablityType!=3">{{dayList.availablityStatus}}</div>
+                                <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
+                                <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
+                            </div>
+                            <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
+                        </div>
                     </div>
+
+                    <div *ngIf="avlDayList.length==0 && fareDataIssue==false">
+                        <app-loader></app-loader>
+                    </div>
+                    <div *ngIf="fareDataIssue">
+                        <div class="fareData-error">{{fareData.errorMessage}}</div>
+                    </div>
+                    <div *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3">Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
+                    <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
+
+                </mat-tab>
+            </mat-tab-group>
+            <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<!-- Mlite Code  -->
+<div class="RepeatBookingSec d-block d-sm-none" *ngIf="showRepeatBooking==1 &&  repeatBooking==1">
+    <div>
+        <h5 class="mb-0">Most Frequent Choice</h5>
+    </div>
+    <div class="list-row display-mw d-block d-sm-none">
+        <div class="row">
+            <div class="col-10">
+                <div class="label-name-w">
+                    <span class="irctc-junction-view">{{train.trainName|titlecase}}</span>
+                    <span class="f-16"> ({{train.trainNumber}})</span>
+                    <p class="seatDetails"><span>{{AppConfig.IRCTC_Quota[repeatBookingData.journeyQuota]}} ({{repeatBookingData.journeyQuota}})</span>|<span>{{AppConfig.IRCTC_Classes[repeatBookingData.journeyClass]}} ({{repeatBookingData.journeyClass}})</span></p>
                 </div>
-                <div class="col-2">
-                    <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
-                </div>
-                <div class="col-12">
-                    <p class="boardDetails mt-sm-2"><span>Boarded at: </span><span>{{stationsdump[repeatBookingData.boardingStn]}} ({{repeatBookingData.boardingStn}})</span></p>
-                    <div class="trainTimeInfo">
-                    
-                        <div class="fromStn">
-                            <p>{{train.departureTime}}  </p>
-                            <p><span class="trainCode"> ({{repeatBookingData.fromStn}}) </span></p>
-                        </div>
-                        <div class="pl-3 text-center">
-                            <hr  class="my-2 w-30-m" />
-                        </div>
-                        <div class="timeShow">
-                            <p>{{commonHelper.trainDuration(train.duration)}}</p>
-                            <p [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber,train.boardingDate)" data-bs-toggle="modal">Show Route</p>
-                        </div>
-                        <div class="pr-3 text-center">
-                            <hr  class="my-2 w-30-m" />
-                        </div>
-                        <div class="toStn">
-                            <p> {{train.arrivalTime}}</p>
-                            <p><span class="trainCode"> ({{repeatBookingData.destStn}}) </span></p>
-                             <!-- <span class="label-gray-bold">
+            </div>
+            <div class="col-2">
+                <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+            </div>
+            <div class="col-12">
+                <p class="boardDetails mt-sm-2"><span>Boarded at: </span><span>{{stationsdump[repeatBookingData.boardingStn]}} ({{repeatBookingData.boardingStn}})</span></p>
+                <div class="trainTimeInfo">
+
+                    <div class="fromStn">
+                        <p>{{train.departureTime}} </p>
+                        <p><span class="trainCode"> ({{repeatBookingData.fromStn}}) </span></p>
+                    </div>
+                    <div class="pl-3 text-center">
+                        <hr class="my-2 w-30-m" />
+                    </div>
+                    <div class="timeShow">
+                        <p>{{commonHelper.trainDuration(train.duration)}}</p>
+                        <p [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click)="getSchedule(train.trainNumber,train.boardingDate)" data-bs-toggle="modal">Show Route</p>
+                    </div>
+                    <div class="pr-3 text-center">
+                        <hr class="my-2 w-30-m" />
+                    </div>
+                    <div class="toStn">
+                        <p> {{train.arrivalTime}}</p>
+                        <p><span class="trainCode"> ({{repeatBookingData.destStn}}) </span></p>
+                        <!-- <span class="label-gray-bold">
                                     {{commonHelper.getTrainArrivalDate(journeyDate,train.duration)}}
                                 </span> -->
-                        </div>
-                       
                     </div>
+
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 text-sm-right text-center">
-                   <div class="info_sec mt-2">
+        </div>
+        <div class="row">
+            <div class="col-12 text-sm-right text-center">
+                <div class="info_sec mt-2">
                     <p>
                         <span class="limitSeats mr-0 text-center">{{limitSeats}}</span>
-                    </p>  
+                    </p>
                     <div>
-                        <button class="btn-outline w-50 radius_8"  (click)="onAvailableR(train,repeatBookingData['journeyClass'])">Repeat Booking</button> 
+                        <button class="btn-outline w-50 radius_8" (click)="onAvailableR(train,repeatBookingData['journeyClass'])">Repeat Booking</button>
                     </div>
-                   </div>
                 </div>
             </div>
-         <div class="row rcheck-available checkAva_m d-block d-sm-none" id="rcheck-available{{train.trainNumber}}" *ngIf="showAvailableR && isMobile" > 
-        <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)"  [(selectedIndex)]="selectedIndexR">
-          <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}"  >
-           
-                <div class="tier_m"   > 
-                    <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
-                        <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> <span class="float-right price">₹{{trainTotalFare|number}}</span></p>
-                        <div class="status">
-                            <div class="label-green" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224 && dayList.availablityType!=3">{{dayList.availablityStatus}}</div>
-                            <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
-                            <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
+        </div>
+        <div class="row rcheck-available checkAva_m d-block d-sm-none" id="rcheck-available{{train.trainNumber}}" *ngIf="showAvailableR && isMobile">
+            <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndexR">
+                <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
+
+                    <div class="tier_m">
+                        <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
+                            <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> <span class="float-right price">₹{{trainTotalFare|number}}</span></p>
+                            <div class="status">
+                                <div class="label-green" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224 && dayList.availablityType!=3">{{dayList.availablityStatus}}</div>
+                                <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
+                                <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
+                            </div>
+                            <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                         </div>
-                        <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                     </div>
-                </div>
-                
-           <div *ngIf="avlDayList.length==0 && fareDataIssue==false" ><app-loader></app-loader></div>
-       
-          <div *ngIf="fareDataIssue" ><div class="fareData-error">{{fareData.errorMessage}}</div></div>
-          
-          <div  *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3 pb-0" >Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
-          
-           <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
-               
-          </mat-tab>
-          </mat-tab-group>
-          <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
-    </div>   
+
+                    <div *ngIf="avlDayList.length==0 && fareDataIssue==false">
+                        <app-loader></app-loader>
+                    </div>
+
+                    <div *ngIf="fareDataIssue">
+                        <div class="fareData-error">{{fareData.errorMessage}}</div>
+                    </div>
+
+                    <div *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3 pb-0">Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
+
+                    <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
+
+                </mat-tab>
+            </mat-tab-group>
+            <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
         </div>
     </div>
+</div>
 
 <!-- Repeat Booking section details start Details End  -->
 
 <!-- Flight Scroll sell card details  -->
-<app-suggestion  *ngIf="repeatBooking==0 && rowvalue==0" [passParam]="passParam">  </app-suggestion>
+<app-suggestion *ngIf="repeatBooking==0 && rowvalue==0" [passParam]="passParam"> </app-suggestion>
 
 
 <div class="list-row display-mw train_list_m m_brdr_btm_0" id="train-{{trainId}}" *ngIf="repeatBooking==0" [ngClass]="fastestTrain==train.trainNumber || rowvalue==0 ? 'tag_train_row' : 'list-row'">
@@ -207,7 +215,7 @@
                     <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
                     <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
                     <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
-                    <span  [ngClass]="{'active': train.runningFri=='Y'}">F</span>
+                    <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
                     <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
                 </div>
             </div>
@@ -216,22 +224,22 @@
             <div class="col-md-8">
                 <div class="trainTimeInfo">
                     <div class="">
-                        <p><span class="time">{{train.departureTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
+                        <p class="mb-10"><span class="time">{{train.departureTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
                         <p class="place">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
                     </div>
                     <div>
                         <div class="duration_train">
                             <p class="dur_time">{{commonHelper.trainDuration(train.duration)}}</p>
                             <div class="range"></div>
-                            <p class="route" [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber)" data-bs-toggle="modal">Show Route</p>
+                            <p class="route" [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click)="getSchedule(train.trainNumber)" data-bs-toggle="modal">Show Route</p>
                         </div>
                     </div>
                     <div>
-                        <p><span class="time">{{train.arrivalTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
+                        <p class="mb-10"><span class="time">{{train.arrivalTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
                         <p class="place">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
                     </div>
 
-                   <!--  <div class="trainCode">
+                    <!--  <div class="trainCode">
                         ({{train.fromStnCode}})
                     </div>
                     <div class="fromStn">
@@ -258,9 +266,8 @@
                 </div>
             </div>
             <div class="col-md-4 text-right pt-m-15">
-                <button class="btn btn-primary-outline" 
-                (click)="onAvailable(train,avlClasses[0])">Check Availability</button> 
-            </div> 
+                <button class="btn btn-primary-outline" (click)="onAvailable(train,avlClasses[0])">Check Availability</button>
+            </div>
         </div>
     </div>
 
@@ -268,53 +275,53 @@
     <!-- Mlite code  -->
     <div class="d-block d-sm-none">
         <div class="bordered_div">
-        <div class="row mt-2">
-            <div class="col-8 pe-0">
-                <div class="label-name-w">
-                    <span class="irctc-junction-view">{{train.trainName|titlecase}} </span><span class="f-12 px-1"> ({{train.trainNumber}})</span>
+            <div class="row mt-2">
+                <div class="col-8 pe-0">
+                    <div class="label-name-w">
+                        <span class="irctc-junction-view">{{train.trainName|titlecase}} </span><span class="f-12 px-1"> ({{train.trainNumber}})</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-4 ps-0">
-                <!-- <div>
+                <div class="col-4 ps-0">
+                    <!-- <div>
                     <button class="btn-outline w-70 radius_8 w-m-100 f-12" 
                     (click)="onAvailable(train,avlClasses[0])">Check Availability</button> 
                 </div> -->
-                <div class="float-end">
-                    <div class="available-status">
-                        <span class="text-small-gray d-none" style="color:#888888;">Runs on:</span>
-                        <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
-                        <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
-                        <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
-                        <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
-                        <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
-                        <span  [ngClass]="{'active': train.runningFri=='Y'}">F</span>
-                        <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                    <div class="float-end">
+                        <div class="available-status">
+                            <span class="text-small-gray d-none" style="color:#888888;">Runs on:</span>
+                            <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
+                            <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
+                            <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
+                            <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
+                            <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
+                            <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
+                            <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                        </div>
+
                     </div>
+                </div>
 
+            </div>
+            <div class="row mt-3">
+                <div class="col-4">
+                    <p class="train_time">{{train.departureTime}} <span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
+                </div>
+                <div class="col-4 px-0 text-center">
+                    <p class="train_duration">{{commonHelper.trainDuration(train.duration)}}</p>
+                    <!-- <hr  class="m-0" /> -->
+                    <div class="d-flex align-items-center">
+                        <span class="duration_dot"></span>
+                        <hr class="m-0 w-100">
+                        <span class="duration_dot"></span>
+                    </div>
+                </div>
+                <div class="col-4 text-right">
+                    <p class="train_time">{{train.arrivalTime}}<span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
                 </div>
             </div>
-            
-        </div>
-        <div class="row mt-3">
-            <div class="col-4">
-                <p class="train_time">{{train.departureTime}} <span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
-            </div>
-            <div class="col-4 px-0 text-center">
-                <p class="train_duration">{{commonHelper.trainDuration(train.duration)}}</p>
-                <!-- <hr  class="m-0" /> -->
-                <div class="d-flex align-items-center">
-                    <span class="duration_dot"></span>
-                    <hr class="m-0 w-100">
-                    <span class="duration_dot"></span>
-                </div>
-            </div>
-            <div class="col-4 text-right">
-                <p class="train_time">{{train.arrivalTime}}<span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
-            </div>
-        </div>
 
-        
-        <!-- <div class="row mt-3">
+
+            <!-- <div class="row mt-3">
             <div class="col-12">
                 <div class="trainTimeInfo">
                     
@@ -341,75 +348,83 @@
                
             </div>
         </div>  -->
-        <div class="row mt-2">
-            <div class="col-6"><p class="train_duration f-12">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p></div>
-            <div class="col-6 text-right"><p class="train_duration f-12">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p></div>
-        </div>
-
-
-
-
-        <div class="row mt-3">
-            <div class="col-6">
-                <a [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber)" data-bs-toggle="modal" class="train_card_links">Show Route</a>
-            </div>
-            <div class="col-6 text-right">
-                <a (click)="onAvailable(train,avlClasses[0])" class="train_card_links">Check Availability</a> 
-            </div>
-
-
-                               <!-- Mlite code  -->
-    <div class="row check-available checkAva_m d-block d-sm-none" id="check-available{{train.trainNumber}}" *ngIf="showAvailable && isMobile" > 
-        <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)"  [(selectedIndex)]="selectedIndex">
-          <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}"  >
-           
-                <div class="tier_m mt-3"> 
-                    <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
-                        <div>
-                            <span class="check_avai_week">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE'}},</span><br> 
-                            <span class="check_avai_text">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'dd LLL'}}</span> 
-                        </div>
-                        <div class="check_avai_text">SL</div>
-                        <div class="status">
-                            <div class="label-green" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224 && dayList.availablityType!=3">{{dayList.availablityStatus}}</div>
-                            <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
-                            <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
-                        </div>
-                        <div><span class="check_avai_price">₹{{trainTotalFare|number}}</span></div>
-                        <div class="check_avai_book" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</div>
-                    </div>
-                   
+            <div class="row mt-2">
+                <div class="col-6">
+                    <p class="train_duration f-12">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
                 </div>
-                
-                
-           <div *ngIf="avlDayList.length==0 && fareDataIssue==false" ><app-loader></app-loader></div>
-          <div *ngIf="fareDataIssue" ><div class="fareData-error">{{fareData.errorMessage}}</div></div>
-          <div  *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3 pb-0" >Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
-          
-           <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
-               
-          </mat-tab>
-          </mat-tab-group>
-          <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
-    </div>
+                <div class="col-6 text-right">
+                    <p class="train_duration f-12">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
+                </div>
+            </div>
 
-    
+
+
+
+            <div class="row mt-3">
+                <div class="col-6">
+                    <a [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click)="getSchedule(train.trainNumber)" data-bs-toggle="modal" class="train_card_links">Show Route</a>
+                </div>
+                <div class="col-6 text-right">
+                    <a (click)="onAvailable(train,avlClasses[0])" class="train_card_links">Check Availability</a>
+                </div>
+
+
+                <!-- Mlite code  -->
+                <div class="row check-available checkAva_m d-block d-sm-none" id="check-available{{train.trainNumber}}" *ngIf="showAvailable && isMobile">
+                    <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndex">
+                        <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
+
+                            <div class="tier_m mt-3">
+                                <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
+                                    <div>
+                                        <span class="check_avai_week">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE'}},</span><br>
+                                        <span class="check_avai_text">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'dd LLL'}}</span>
+                                    </div>
+                                    <div class="check_avai_text">SL</div>
+                                    <div class="status">
+                                        <div class="label-green" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224 && dayList.availablityType!=3">{{dayList.availablityStatus}}</div>
+                                        <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
+                                        <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
+                                    </div>
+                                    <div><span class="check_avai_price">₹{{trainTotalFare|number}}</span></div>
+                                    <div class="check_avai_book" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</div>
+                                </div>
+
+                            </div>
+
+
+                            <div *ngIf="avlDayList.length==0 && fareDataIssue==false">
+                                <app-loader></app-loader>
+                            </div>
+                            <div *ngIf="fareDataIssue">
+                                <div class="fareData-error">{{fareData.errorMessage}}</div>
+                            </div>
+                            <div *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3 pb-0">Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
+
+                            <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
+
+                        </mat-tab>
+                    </mat-tab-group>
+                    <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
+                </div>
+
+
+            </div>
+
+
+
+
+
         </div>
-
-
- 
-
-
     </div>
-    </div>
-    
-  
 
-    <div class="row check-available d-none d-sm-block" id="check-available{{train.trainNumber}}" *ngIf="showAvailable  && !isMobile" > 
-        <mat-tab-group class="p-0 train_mat_tabGroup" animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)"  [(selectedIndex)]="selectedIndex">
-          <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}"  >
-           
-                <div class="tier"  *ngFor="let dayList of avlDayList ;" > 
+
+
+    <div class="row check-available d-none d-sm-block" id="check-available{{train.trainNumber}}" *ngIf="showAvailable  && !isMobile">
+        <mat-tab-group class="p-0 train_mat_tabGroup" animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndex">
+            <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
+
+                <div class="tier" *ngFor="let dayList of avlDayList ;">
                     <div class="TrainSeatsInfo">
                         <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> </p>
                         <div class="status">
@@ -420,124 +435,128 @@
                         <p><span class="price">₹{{trainTotalFare|number}}</span></p>
                         <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                     </div>
-                   
+
                 </div>
-               
-           <div *ngIf="avlDayList.length==0 && fareDataIssue==false" ><app-loader></app-loader></div>
-       
-          <div *ngIf="fareDataIssue" ><div class="fareData-error">{{fareData.errorMessage}}</div></div>
-          
-          <div  *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3" >Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
-          
-           <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
-               
-          </mat-tab>
-          </mat-tab-group>
-          <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
+
+                <div *ngIf="avlDayList.length==0 && fareDataIssue==false">
+                    <app-loader></app-loader>
+                </div>
+
+                <div *ngIf="fareDataIssue">
+                    <div class="fareData-error">{{fareData.errorMessage}}</div>
+                </div>
+
+                <div *ngIf="train.trainType=='R' || train.trainType=='D' || train.trainType=='S'" class="fareDataPrice pt-3">Dynamic Pricing is applicable in this train. Fare may increase at the time of booking.</div>
+
+                <!--<button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button>-->
+
+            </mat-tab>
+        </mat-tab-group>
+        <ng4-loading-spinner [timeout]="60000" [zIndex]="9999" [template]="template"></ng4-loading-spinner>
     </div>
 
 
 
-    
+
 </div>
 
 
 
- <!-- IRCTC Stations Data In Popup Menu Start-->
+<!-- IRCTC Stations Data In Popup Menu Start-->
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="irctc-jun-data-{{train.trainNumber}}" aria-hidden="true">
-        <div class="modal-dialog modal-lg mpop-0 pop-schedule">
-          <div class="modal-content irctc-view-content" *ngIf = "scheduleData">
-                  <div class="col-12 irctc-header">     
-                      <div class="row">
-                          <div class="col-10">
-                              <div class="modal-title">
-                                    <!-- <div class="title">Train Route & Schedule</div> -->
-                                    <div class="title"><span >{{scheduleData.trainName}}</span><span class="num">{{scheduleData.trainNumber}}</span></div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="irctc-jun-data-{{train.trainNumber}}" aria-hidden="true">
+    <div class="modal-dialog modal-lg mpop-0 pop-schedule">
+        <div class="modal-content irctc-view-content" *ngIf="scheduleData">
+            <div class="col-12 irctc-header">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="modal-title">
+                            <!-- <div class="title">Train Route & Schedule</div> -->
+                            <div class="title"><span>{{scheduleData.trainName}}</span><span class="num">{{scheduleData.trainNumber}}</span></div>
 
-                                    <!-- <div class="stations"><span >Bengaluru (SBC)</span><span class="px-2">-</span><span >chennai (MAS)</span></div> -->
-                              </div>
-                              
-                          </div>
-                
-                            <div class="col-2">
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <!-- <div class="stations"><span >Bengaluru (SBC)</span><span class="px-2">-</span><span >chennai (MAS)</span></div> -->
+                        </div>
+
+                    </div>
+
+                    <div class="col-2">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
-                            </div>
-                        </div>
-                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="irctc-view-body">
                 <!-- for Desktop -->
                 <div class="col-12 train-info d-none d-sm-block py-0">
-                <div class="row">
-                    <!-- <div class="col-3 text-left pr-0">
+                    <div class="row">
+                        <!-- <div class="col-3 text-left pr-0">
                             <div class="stations"><span >{{scheduleData.trainNumber}}</span><span class="px-2">-</span><span >{{scheduleData.trainName}}</span></div>
                     </div> -->
-                    <div class="col-7 text-center pr-0">
-                        <div class="row">
-                            <div class="col-5">
-                                <div><span class="station-name">{{scheduleData.stationList[0].stationName}} </span><span class="station-code">({{scheduleData.stationFrom}})</span></div>
-                            </div>
-                            <div class="col-2">
+                        <div class="col-7 text-center pr-0">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div><span class="station-name">{{scheduleData.stationList[0].stationName}} </span><span class="station-code">({{scheduleData.stationFrom}})</span></div>
+                                </div>
+                                <div class="col-2">
                                     <div class="text-center p0 durations position-relative">
                                         <div class="range"></div>
                                         <div class="label-gray label-pos"></div>
                                     </div>
-                            </div>
-                            <div class="col-5">
+                                </div>
+                                <div class="col-5">
                                     <div><span class="station-name">{{stationsdump[train.toStnCode]}} </span><span class="station-code">({{train.toStnCode}})</span></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-2 text-right pl-0">
-                        <div class="week"> 
-                            <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
-                            <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
-                            <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
-                            <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
-                            <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
-                            <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
-                            <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                        <div class="col-2 text-right pl-0">
+                            <div class="week">
+                                <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
+                                <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
+                                <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
+                                <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
+                                <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
+                                <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
+                                <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- for mobile -->
+                <!-- for mobile -->
                 <div class="col-12 train-info d-block d-sm-none">
                     <div class="row">
                         <div class="col-6 text-left ">
-                                <div class="stations"><span >{{scheduleData.trainNumber}}</span><span class="px-2">-</span><span >{{scheduleData.trainName}}</span></div>
+                            <div class="stations"><span>{{scheduleData.trainNumber}}</span><span class="px-2">-</span><span>{{scheduleData.trainName}}</span></div>
                         </div>
                         <div class="col-6 text-right ">
-                                <div class="week">
-                                    <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
-                                    <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
-                                    <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
-                                    <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
-                                    <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
-                                    <span  [ngClass]="{'active': train.runningFri=='Y'}">F</span>
-                                    <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                            <div class="week">
+                                <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
+                                <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
+                                <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
+                                <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
+                                <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
+                                <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
+                                <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-5 text-left">
+                                    <div><span class="station-name">{{scheduleData.stationList[0].stationName}}</span><span class="station-code">{{scheduleData.stationFrom}}</span></div>
+                                </div>
+                                <div class="col-2 p-0">
+
+                                    <span>&#10230;</span>
+
+                                </div>
+                                <div class="col-5 text-right">
+                                    <div><span class="station-name">{{stationsdump[train.toStnCode]}}</span><span class="station-code">{{train.toStnCode}}</span></div>
                                 </div>
                             </div>
-                        
-                                <div class="col-12 text-center">
-                                        <div class="row">
-                                            <div class="col-5 text-left">
-                                                <div><span class="station-name">{{scheduleData.stationList[0].stationName}}</span><span class="station-code">{{scheduleData.stationFrom}}</span></div>
-                                            </div>
-                                            <div class="col-2 p-0">
-                                                 
-                                                    <span>&#10230;</span>
-                                                    
-                                            </div>
-                                            <div class="col-5 text-right">
-                                                    <div><span class="station-name">{{stationsdump[train.toStnCode]}}</span><span class="station-code">{{train.toStnCode}}</span></div>
-                                            </div>
-                                        </div>
-                                </div>
-                        
-                        
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="p-4">
@@ -545,33 +564,39 @@
                         <table class="table info-heading">
                             <thead>
                                 <tr>
-                                <th scope="col">Station</th>
-                                <th scope="col" class="text-center">Arrival</th>
-                                <th scope="col" class="text-center">Departure</th>
-                                <th scope="col" class="text-center">Halt <span class="xs-none">Time</span></th>
-                                <th scope="col" class="text-center xs-none">Distance</th>
-                                <th scope="col" class="text-center xs-none">Day</th>
+                                    <th scope="col">Station</th>
+                                    <th scope="col" class="text-center">Arrival</th>
+                                    <th scope="col" class="text-center">Departure</th>
+                                    <th scope="col" class="text-center">Halt <span class="xs-none">Time</span></th>
+                                    <th scope="col" class="text-center xs-none">Distance</th>
+                                    <th scope="col" class="text-center xs-none">Day</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr  *ngFor = "let data of scheduleData.stationList">
-                                <td><div><span class="px-1">{{data.stnSerialNumber | number: '2.'}}.</span>{{data.stationName}} <span class="xs-none">({{data.stationCode}})</span></div><div class="mobile-belowData ml-4 pt-2">Day {{data.dayCount}}</div></td>
-                                <td class="text-center"><div>{{data.arrivalTime}}</div><div class="mobile-belowData pt-2">{{data.distance}} KM</div></td>
-                                <td class="text-center">{{data.departureTime}}</td>
-                                <td class="text-center">{{data.haltTime}}</td>
-                                <td class="text-center xs-none">{{data.distance}}</td>
-                                <td class="text-center xs-none">Day {{data.dayCount}}</td>
+                                <tr *ngFor="let data of scheduleData.stationList">
+                                    <td>
+                                        <div><span class="px-1">{{data.stnSerialNumber | number: '2.'}}.</span>{{data.stationName}} <span class="xs-none">({{data.stationCode}})</span></div>
+                                        <div class="mobile-belowData ml-4 pt-2">Day {{data.dayCount}}</div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div>{{data.arrivalTime}}</div>
+                                        <div class="mobile-belowData pt-2">{{data.distance}} KM</div>
+                                    </td>
+                                    <td class="text-center">{{data.departureTime}}</td>
+                                    <td class="text-center">{{data.haltTime}}</td>
+                                    <td class="text-center xs-none">{{data.distance}}</td>
+                                    <td class="text-center xs-none">Day {{data.dayCount}}</td>
                                 </tr>
-                                            
-                                
+
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            
-          </div>
+
         </div>
-      </div>
+    </div>
+</div>
 
 <!-- IRCTC Stations Data In Popup Menu Ends-->

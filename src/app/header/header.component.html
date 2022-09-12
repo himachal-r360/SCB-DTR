@@ -3245,7 +3245,7 @@
 
 
     <!-- Push Notification Mlite Modal  -->
-    <div class="modal-dialog web" role="document" *ngIf="enablePushContentBox">
+    <div class="modal-dialog web" role="document" *ngIf="enablePushContentBox && isMobile">
         <div class="modal-content">
             <div class="no-notifications text-center" *ngIf="enableNoNotifyMb==false " style="display:none;">
                 <button class="close" aria-label="Close" data-dismiss="modal" type="button"><span class="" aria-hidden="true">×</span></button>
@@ -3253,7 +3253,7 @@
                 <img src="{{cdnUrl}}images/smartbuy/icons/no-notify.svg" alt="no-notify" />
             </div>
 
-            <div class="modal-header" *ngIf="pushcount">
+            <div class="modal-header" *ngIf="pushcount ">
                 <h5 class="modal-title" id="pushNotifiModalLabel">Notifications</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -3350,7 +3350,7 @@
 
 
     <!-- Push Notification Mlite Modal  -->
-    <div class="modal-dialog mob" role="document" *ngIf="enablePushContentBox">
+    <div class="modal-dialog mob" role="document" *ngIf="enablePushContentBox && isMobile">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="pushNotifiModalLabel">Special offers for you</h5>
