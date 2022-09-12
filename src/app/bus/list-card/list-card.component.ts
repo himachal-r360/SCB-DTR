@@ -573,7 +573,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    this.maxSeatMessageStatus = false;
   } else {
    if (this.selectedseats.length == maxseats) {
-    this.maxSeatMessage = 'You can book up to ' + maxseats + ' passengers on a single ticket1';
+    this.maxSeatMessage = 'You have finished the booking limit. you can add only ' + maxseats + ' travellers';
     this.maxSeatMessageStatus = true;
     if (mobile == true) {
       this.mlite_passengerError = true ;
