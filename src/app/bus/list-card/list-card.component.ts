@@ -61,6 +61,7 @@ export class ListComponent implements OnInit,AfterViewInit {
   @Input('tag') tag; 
  showrow: boolean = false;
  @Input('rowvalue') rowvalue: number;
+ @Input('departure') departure;
   totalFareBus: boolean = false;
   mlite_passengerError: boolean = false;
  @Input() set isrtc(p: boolean) {
