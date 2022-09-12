@@ -468,7 +468,6 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   trainSearch() {
       this.submitted = true;
 
-
         if(this.searchTrainForm.value.fromTravelCode!= this.searchTrainForm.value.toTravelCode){
         this.sameCityValidation = false
         }
