@@ -358,7 +358,7 @@
                                                     <input class="form-check-input pass_checkBox" id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                     <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
                                 {{passenger.title}}.{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
-                                <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg" ></a>
+                                <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg" ></a> -->
                                 </label>
                                                 </div>
                                                 <div id="passengerBox_{{passenger.id}}" class="">
@@ -575,7 +575,7 @@
                                 <input class="form-check-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)" >
                                 <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
                                 {{passenger.title}}.{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
-                                  <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg"></a>
+                                  <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg"></a> -->
                                 </label>
                             </div>
                               <!-- <div class="edit_pass">
@@ -1512,7 +1512,7 @@
                         </div>
                     </div>
                     <div class="row">
-                         <div class="othertraveller1 col-7" *ngIf="gstSelected">
+                         <div class="othertraveller1 col-7" *ngIf="gstSelected && customerInfo['guestLogin']==false">
                             <ul class="add-search-ul d-block">
                                 <li class="custom-check-box">
                                     <div class="custom-controls-stacked">
