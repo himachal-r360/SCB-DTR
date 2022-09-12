@@ -789,12 +789,38 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       
       this.passengerSelectedArray[travellerformid]=1;
       
+      
+      
+      
+      
 
       this.passengerForm.controls['passengerid' + travellerformid].setValue(data.id);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue(data.firstName);
       this.passengerForm.controls['passengerLastName' + travellerformid].setValue(data.lastName);
       this.passengerForm.controls['passengerAge' + travellerformid].setValue(data.age);
+      if(data.gender){
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
+      }else{
+       var gender='Male';
+        switch (data.gender) {
+        case 'Mr':
+        gender='Male';
+        break;
+        case 'Mrs':
+        gender='Female';
+        break;
+        case 'Ms':
+        gender='Female';
+        break;
+        case 'Miss':
+        gender='Female';
+        break;
+        case 'Mstr':
+        gender='Male';
+        break;
+        }
+       this.passengerForm.controls['passengerGender' + travellerformid].setValue(gender);
+      }
       
       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
      // $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');

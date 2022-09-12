@@ -156,7 +156,7 @@
                         <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >   
 
                         <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                        [parentSubject]="parentSubject" [bus]="bus" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
+                        [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
                         </span>
                         </div>
                         </ng-container>
@@ -165,7 +165,7 @@
                    
                                 <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
                                 <list-component *ngFor="let bus of busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                                [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
+                                [parentSubject]="parentSubject" [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
                                 </span>
 
                         </div>
@@ -285,7 +285,7 @@
         </div>
         <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
         <list-component *ngFor="let bus of rtc | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-        [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" 
+        [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" 
         (seatSelected)="seatSelected($event)" ></list-component> 
 
 
@@ -295,7 +295,7 @@
  
                                 <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
                                 <list-component *ngFor="let bus of busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                                [parentSubject]="parentSubject" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
+                                [parentSubject]="parentSubject" [departure]="departure"  [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
                                 </span>
           </div>
 
