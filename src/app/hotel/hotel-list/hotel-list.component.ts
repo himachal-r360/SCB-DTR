@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { Options } from 'ng5-slider';
 import { HotelService } from 'src/app/common/hotel.service';
@@ -111,7 +112,7 @@ export class HotelListComponent implements OnInit {
             //  this.gotoTop();
         }
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal, public route: ActivatedRoute, private router: Router) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: ['2022-09-09'],
@@ -354,5 +355,23 @@ export class HotelListComponent implements OnInit {
   onSearchInput()
   {
       this.AllFilteredData();
+  }
+
+  BookingSummery(hotelkey:string,hotel:any,selectedPartner:any)
+  {
+    let hotelDetailsArr: any = {
+      "docKey": this.docKey,
+      "hotelkey":hotelkey,
+      "hotel": hotel,
+      "PriceSummary": selectedPartner
+      };
+    let randomHotelDetailKey = btoa(this.docKey+hotelkey+selectedPartner.partnerName);
+    sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
+    let url = 'hotel-detail?searchHotelKey=' + randomHotelDetailKey;
+
+    setTimeout(() => {
+      this.router.navigateByUrl(url);
+    }, 10);
+
   }
 }
