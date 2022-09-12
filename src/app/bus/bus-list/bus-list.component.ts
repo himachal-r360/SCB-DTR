@@ -572,7 +572,7 @@ this.loading = true;
   this.updateFilterBusType();
  }
   updateFilterBusType() {
-  var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
+ /* var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
 
   this.busFilterlengthZero = false;
   if(filteredValues.length ==0 ) this.busFilterlengthZero = true; 
@@ -594,7 +594,7 @@ this.loading = true;
   }
  
   this.filterrtc();
-  this.moveTop();
+  this.moveTop();*/
  }
 
  
