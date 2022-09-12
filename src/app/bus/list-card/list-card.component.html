@@ -286,7 +286,7 @@
                                             <table class="cabin fuselage" align="left">
                                                 <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; " style="width:100%">
                                                     <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table>
+                                                        <table align="left" style="width:100%">
                                                             <tr>
                                                                 <td *ngFor="let seat of LD;">
                                                                     <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
@@ -318,7 +318,7 @@
                                                 <table class="cabin fuselage" align="left">
                                                     <tr  class="row-no" *ngFor="let UD of Upperdecks;let index=index; " >
                                                         <td *ngIf="UD && UD.length > 0"   [attr.align]="(index==2 || UD.length > 10 ) ? 'right' : 'left'" > 
-                                                            <table >
+                                                            <table align="left" style="width:100%">
                                                                 <tr>
                                                                     <td *ngFor="let seat of UD">
                                                                         <span *ngIf="seat && seat.length==0" class="seat noSeats" >&nbsp;</span>
@@ -355,7 +355,7 @@
                                             <table class="cabin fuselage" align="left">
                                                 <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
                                                     <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table>
+                                                        <table align="left" style="width:100%">
                                                             <tr>
                                                                 <td *ngFor="let seat of LD">
                                                                     <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
@@ -389,40 +389,40 @@
                                             <div class="label-small">Upper Berth</div>
                                             <div class="upper-bus">
                                             <label class="seat-driver">&nbsp;</label>
-                <table class="cabin fuselage" align="left">
-                    <tr  class="row-no" *ngFor="let UD of Upperdecks;let index=index; " >
-                        <td *ngIf="UD && UD.length > 0"   [attr.align]="(index==2 || UD.length > 10 ) ? 'right' : 'left'" > 
-                            <table  >
-                                <tr>
-                                <td *ngFor="let seat of UD;">
-                                    <span *ngIf="seat && seat.length==0" class="seat noSeats">&nbsp;</span>
-                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}">
-                                        <span *ngIf="price.actfare == seat.baseFare; else blurseat">
-                                            <label class="seat_label"
-                                                (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)">
-                                                   <div class="s-{{seat.newseattype}}"  *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
-                                                <ng-template #other_content>
-                                                <div class="s-{{seat.seattype}}"></div>
-                                                </ng-template>
-                                                
-                                                
-                                                <span> </span>
-                                            </label>
-                                        </span>
-                                        <ng-template #blurseat>
-                                            <span>
-                                                <label class="seat_label">
-                                                    <div class="s-{{seat.seattype}}_x"></div>
-                                                </label>
-                                            </span>
-                                        </ng-template>
-                                    </span>
-                                </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+                                                <table class="cabin fuselage" align="left">
+                                                    <tr  class="row-no" *ngFor="let UD of Upperdecks;let index=index; " >
+                                                        <td *ngIf="UD && UD.length > 0"   [attr.align]="(index==2 || UD.length > 10 ) ? 'right' : 'left'" > 
+                                                            <table align="left" style="width:100%" >
+                                                                <tr>
+                                                                <td *ngFor="let seat of UD;">
+                                                                    <span *ngIf="seat && seat.length==0" class="seat noSeats">&nbsp;</span>
+                                                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}">
+                                                                        <span *ngIf="price.actfare == seat.baseFare; else blurseat">
+                                                                            <label class="seat_label"
+                                                                                (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)">
+                                                                                <div class="s-{{seat.newseattype}}"  *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
+                                                                                <ng-template #other_content>
+                                                                                <div class="s-{{seat.seattype}}"></div>
+                                                                                </ng-template>
+                                                                                
+                                                                                
+                                                                                <span> </span>
+                                                                            </label>
+                                                                        </span>
+                                                                        <ng-template #blurseat>
+                                                                            <span>
+                                                                                <label class="seat_label">
+                                                                                    <div class="s-{{seat.seattype}}_x"></div>
+                                                                                </label>
+                                                                            </span>
+                                                                        </ng-template>
+                                                                    </span>
+                                                                </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
     
                                             </div>
                         
@@ -769,6 +769,17 @@
                             </div>
                             
                             <!-- <a class="info-m" hrref="#" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></a> -->
+                            <!-- Mlite Error Msg -->
+                            <div class="footer_error" *ngIf="mlite_seatError">
+                                <div class="error_bg">
+                                    <div>
+                                        <i class="material-icons">warning</i>
+                                    </div>
+                                    <div>
+                                        <p>Please select seat(s)</p>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Mlite Error Msg -->
                             <div class="footer_error" *ngIf="mlite_passengerError">
                                 <div class="error_bg">
