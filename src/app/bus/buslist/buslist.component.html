@@ -17,19 +17,6 @@
                     <app-bus-search modifySearch="true"  isViewPartner="false"></app-bus-search>
                  </div>
             </div>
-            <!-- <div class="row">
-              <div class="col-md-12">
-                  <div class="flight-partners">
-                      <p>Powered By:</p>
-                      <ul class="list-inline ms-3">
-                          <li class="list-inline-item" >
-                              <img src="{{cdnUrl}}/images/smartbuy/partner/svg/redbus.svg" width="50" alt="redbus">
-                          </li>
-
-                      </ul>
-                  </div>
-              </div>
-          </div> -->
 
             <div class="col-lg-12">
                 <div class="layout-box">
@@ -164,6 +151,8 @@
                         <div class="flight-listing-area" *ngIf="!loading && busResults.length > 0">
                    
                                 <span *ngIf="(busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length>0" >  
+                               
+                               
                                 <list-component *ngFor="let bus of busResults | busfilter:minSeletedPriceValue:maxSeletedPriceValue:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
                                 [parentSubject]="parentSubject" [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
                                 </span>

@@ -145,6 +145,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
  strokeWidth: 2;
  ngOnInit() {
+ 
+ 
   if(moment(this.bus.doj).format("YYYY-MM-DD") != moment(this.bus.departureTime).format("YYYY-MM-DD")){
     this.nextDayFlag = true;
   }

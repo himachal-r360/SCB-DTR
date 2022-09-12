@@ -49,6 +49,41 @@
                             <hr>
                             <div class="default-sidebar flight-sidebar" [hidden]="loader">
                                 
+                                 <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                    <div class="widget-title">
+                                        <h6 class="">Departure Time</h6>
+                                        <a href="javascript:void(0)" (click)="resetBusDepartureTimingsFilter()">Reset</a>
+                                    </div>
+                                    <div class="widget-content">
+                                        <div class="flighttiming-content flight-departing">
+                                            <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
+                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <p [innerHTML]="timingsItems.value"></p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                 <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                    <div class="widget-title">
+                                        <h6 class="">Arrival Time</h6>
+                                        <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
+                                    </div>
+                                    <div class="widget-content">
+                                        <div class="flighttiming-content flight-departing">
+                                            <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
+                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <p [innerHTML]="timingsItems.value"></p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                
                                 
                             </div>
                         </div>
@@ -58,48 +93,45 @@
 
                     <div class="layout-right">
                         <div class="flightsfound" [hidden]="loader">
-                            <div class="flight-tosearch">
+                                 <div class="flight-tosearch">
                                 <h6>
-                                    <img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{fromCityName}} to {{toCityName}}
-                                    <!-- <small>Thu, 12 Mar</small> -->
-                                    <small>{{departureDate | date:"EEE ,dd MMM"}}</small>
+                                   <i class="fa fa-bus"></i>
+                                    {{busfrom}} to {{busto}}
+                                    <small>{{departure | date:"EEE ,dd MMM"}}</small>
                                 </h6>
 
-                                <div class="flight-search-filters-right">
-                                    <select name="" class="liothers selectpicker ms-4" aria-label="Default select example" id="priceAscDesc" (change)="flightAcsDescFilterFlightData($event)">
-                                        <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="flight-search-filters">
-                                <div class="flight-search-filters-left">
-                                    <p *ngIf="flightList">{{flightList.length}} flights found</p>
+                                <div class="flight-search-filters-right bus_sort_btn">
+                                <mat-form-field>
+                                <mat-select [(value)]="selectedOption" placeholder="" [ngClass]="{showSortbuy: showSortbuy}">
+                                <mat-option value="Rating"  (click)="orderBy('rating')">Rating</mat-option>
+                                <mat-option value="Price (Low to High)" (click)="orderBy('price-low-high')">Price (Low to High)</mat-option>
+                                <mat-option value="Price (High to Low)" (click)="orderBy('price-high-low')">Price (High to Low)</mat-option>
+                                <mat-option value="Leave Early" (click)="orderBy('leave-early')">Leave Early</mat-option>
+                                <mat-option value="Leave Late" (click)="orderBy('leave-late')">Leave Late</mat-option>
+                                <mat-option value="Seats Availability" (click)="orderBy('seats-availability')">Seats Availability</mat-option>
+                                </mat-select>
+                                </mat-form-field>
                                 </div>
                             </div>
                           
                         </div>
-                        <div class="tabletitle-area" [hidden]="loader">
+                            <div class="tabletitle-area" [hidden]="loading" *ngIf="!loading && busList.length > 0">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="tabletitle-content">
-                                        <p>Airlines</p>
+                                        <p>Travels</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="tabletitle-content tabletitle-departure">
-                                        <p>Departure</p>
-                                        <p>Arrival</p>
-                                        <p>Duration</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="tabletitle-content">
-                                        <p>Partner</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="tabletitle-content">
-                                        <p class="ml-10">Fare</p>
+                                        
+                                        
+                                        <div class="row">
+                                            <div class="col-md-3"><p>Departure</p></div>
+                                            <div class="col-md-3"><p>Duration</p></div>
+                                            <div class="col-md-3"><p>Arrival</p></div>
+                                            <div class="col-md-3"><p>Fare</p></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -117,26 +149,30 @@
                                 </div>
                             </div>
                         </div>
-
+                       
                         <div class="flight-listing-area">
                             <ng-container #itemsContainer></ng-container>
                         </div>
                         
-                        <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                        <div class="text-center" *ngIf="!loader && busList.length < 1">
                             <div class="no_flights_sec" >
-                                <div>
-                                    <p class="title">Yikes! No flight found</p>
-                                    <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
-                                    <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                                           <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="empty_list_hdr">Yikes! No buses found.</div>
                                     <div>
-                                        <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                                        <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
                                     </div>
                                 </div>
+                                <div class="col-md-12 mt-5 text-center">
+                                    <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
+                                </div>
+                            </div>
                             </div>
                         </div>
+                        
                         <ng-template #item let-item="item">
-                            <div *ngFor="let list of item; let i = index">
-                            Web
+                            <div *ngFor="let bus of item; let i = index"> 
+                             <list-component [parentSubject]="parentSubject"  [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
                             </div>    
                         </ng-template>
                         <div id="endOfPage" (click)="loadData()"></div>
@@ -177,7 +213,7 @@
             </div>
             <div class="col-md-12 flight_found_sec" *ngIf="!loader">
                 <div class="mob-listing-fiters">
-                    <h6>{{flightList.length}} Flights Found</h6>
+                    <h6>{{busList.length}} Flights Found</h6>
                     <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
                         <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
                         <span class="mx-2">Sort/Filters</span>
@@ -202,16 +238,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                <div class="text-center" *ngIf="!loader && busList.length < 1">
                     <div class="no_flights_sec" >
-                        <div>
-                            <p class="title">Yikes! No flight found</p>
-                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
-                            <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
-                            <div>
-                                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                                  <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="empty_list_hdr">Yikes! No buses found.</div>
+                                    <div>
+                                        <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-5 text-center">
+                                    <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </div>
                 <ng-template #item let-item="item">
