@@ -328,7 +328,9 @@
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
                                 {{ passenger.lastName }}  </span>
-                                                       <span class="description fw_5"  [ngSwitch]="passenger.title"> 
+                                
+                                <span class="description fw_5"  *ngIf="passenger.gender">{{passenger.gender}}</span>
+                                <span class="description fw_5" *ngIf="!passenger.gender"  [ngSwitch]="passenger.title"> 
                                 <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
                                 <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
                                 <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
@@ -353,7 +355,8 @@
                                   <span class="description fs_14 text-black fw_7 mr-10"><span
                                       *ngIf="expandedItem.title">{{ expandedItem.title }}.</span> {{ expandedItem.firstName }}
                                     {{ expandedItem.lastName }} </span>
-                                                           <span class="description fw_5"  [ngSwitch]="expandedItem.title"> 
+                                     <span class="description fw_5"  *ngIf="expandedItem.gender">{{expandedItem.gender}}</span>
+                                                           <span class="description fw_5"   *ngIf="!expandedItem.gender" [ngSwitch]="expandedItem.title"> 
                                     <ng-template [ngSwitchCase]="'Mstr'">Male</ng-template>
                                     <ng-template [ngSwitchCase]="'Miss'">Female</ng-template>
                                     <ng-template [ngSwitchCase]="'Mr'">Male</ng-template>
