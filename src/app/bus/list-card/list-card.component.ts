@@ -64,6 +64,7 @@ export class ListComponent implements OnInit,AfterViewInit {
  @Input('departure') departure;
   totalFareBus: boolean = false;
   mlite_passengerError: boolean = false;
+  mlite_seatError: boolean = false;
  @Input() set isrtc(p: boolean) {
   this.busId=this.bus.id;
   if (this.bus.rtc == false) {
@@ -145,6 +146,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
  strokeWidth: 2;
  ngOnInit() {
+ 
+ 
   if(moment(this.bus.doj).format("YYYY-MM-DD") != moment(this.bus.departureTime).format("YYYY-MM-DD")){
     this.nextDayFlag = true;
   }
@@ -543,6 +546,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   } else {
    //this.showError = true;
    var messageSelectSeat = 'Please select seat(s)';
+   this.mlite_seatError = true;
+   /* var messageSelectSeat = 'Please select seat(s)';
    const dialogRef = this.dialog.open(ConfirmationDialog, {
     id: 'messageforMliteDialog',
     data: {
@@ -550,7 +555,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
      redirectUrl: 0
     }
    });
-   return true;
+   return true; */
   }
  
  }
@@ -574,7 +579,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    this.maxSeatMessageStatus = false;
   } else {
    if (this.selectedseats.length == maxseats) {
-    this.maxSeatMessage = 'You can book up to ' + maxseats + ' passengers on a single ticket1';
+    this.maxSeatMessage = 'You have finished the booking limit. you can add only ' + maxseats + ' travellers';
     this.maxSeatMessageStatus = true;
     if (mobile == true) {
       this.mlite_passengerError = true ;
@@ -594,6 +599,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     return true;
    } else {
     this.maxSeatMessageStatus = false;
+    this.mlite_seatError = false;
+
    }
    this.maxSeatMessage = "";
   
