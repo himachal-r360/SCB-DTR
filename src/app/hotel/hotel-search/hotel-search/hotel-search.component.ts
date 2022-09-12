@@ -55,7 +55,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       programName: ['SMARTBUY'],
       pageNumber: [0],
       limit: [0],
-      numberOfRooms: [1]
+      numberOfRooms: [1],
+      totalGuest:[]
     });
   }
 
@@ -102,7 +103,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         channel: [modifySearchValue.channel],
         programName: [modifySearchValue.programName],
         limit: [modifySearchValue.limit],
-        numberOfRooms: [modifySearchValue.numberOfRooms]
+        numberOfRooms: [modifySearchValue.numberOfRooms],
+        totalGuest:[modifySearchValue.totalGuest]
       });
       roomArr.forEach((x) => {
         this.hotelSearchForm.value.rooms = ""
@@ -273,6 +275,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');  
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;   
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
+      this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
       localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this.router.navigateByUrl(url);

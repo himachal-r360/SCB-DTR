@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, HostListener, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Options } from 'ng5-slider';
 import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
+import { FlightService } from 'src/app/common/flight.service';
+import { Location } from '@angular/common';
 declare var $: any;
 @Component({
   selector: 'app-hotel-list',
@@ -26,6 +28,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   maxPrice: number = 1000;
   resetMinPrice: number = 0;
   resetMaxPrice: number = 1000;
+  isMobile:boolean= true;
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -33,7 +36,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       return '';
     }
   };
-
+  totalGuest = 0;
   starFiltersList:any = [
     { active: false, value: '5'},
     { active: false, value: '4'},
@@ -115,7 +118,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
             //  this.gotoTop();
         }
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute , private _flightService:FlightService ,private location: Location ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: [],
@@ -138,7 +141,8 @@ export class HotelListComponent implements OnInit,OnDestroy {
       pageNumber: [0],
       limit: [0],
       numberOfRooms: [1],
-      countryName : ['India']
+      countryName : ['India'],
+      totalGuest:[]
     });
 
     $(window).scroll(function(this) {
@@ -151,10 +155,16 @@ export class HotelListComponent implements OnInit,OnDestroy {
   
   }
 
+  @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+  }
+
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
     this.sub = this.route.url.subscribe(url =>{
     this.getSearchData();
+    this.headerHideShow(null);
     this.searchHotel();
     });
   }
@@ -179,6 +189,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.hotelSearchForm.get('numberOfRooms').setValue(this.searchData.numberOfRooms);
     this.hotelSearchForm.get('countryName').setValue(this.searchData.countryName);
     this.hotelSearchForm.get('noOfRooms').setValue(this.searchData.noOfRooms);
+    this.hotelSearchForm.get('totalGuest').setValue(this.searchData.totalGuest);
     this.getQueryParamData();
   }
 
@@ -205,13 +216,19 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
     this.hotelSearchData = hotelSearchArr;
     this.hotelSearchForm.value.rooms = this.hotelSearchData;
-    // this.searchData.forEach((z)=>{
-    //   z.isSelected = false;
-    //   z.selectedFlight = null
-    // });
-    // this.selectedTripData = this.searchData[0];
+
+  // this.selectedTripData = this.searchData[0];
     // this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
 
+  }
+
+  headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
+    }
   }
 
 
@@ -424,6 +441,10 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  backClicked(){
+    this.location.back();
   }
 
 }
