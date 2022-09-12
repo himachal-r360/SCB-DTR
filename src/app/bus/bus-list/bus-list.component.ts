@@ -14,6 +14,7 @@ import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { formatNumber } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import { Subscription,Subject } from 'rxjs';
+import * as moment from 'moment';
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -323,20 +324,19 @@ this.loading = true;
   }
      //Timing Arrival Filter 
   timingArrivalFilterBus(busList: any) {
-    this.busList = busList;
-    let updatedbusList: any = [];
-    let isfilterMorningDepartures: any = false;
-    let isfilterFlightTiming = false;
-    var current_date = new Date(this.departure),
-    current_year = current_date.getFullYear(),
-    current_mnth = current_date.getMonth(),
-    current_day = current_date.getDate();
-
-    var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
-    var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-    var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
-    var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
-    var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+        this.busList = busList;
+        let updatedbusList: any = [];
+        let isfilterMorningDepartures: any = false;
+        let isfilterFlightTiming = false;
+        var datePipe =new DatePipe('en-US');
+        var zero_time=moment.duration('00:00').asMinutes();
+        var six_time=moment.duration('06:00').asMinutes();
+        var six_time1=moment.duration('06:01').asMinutes();
+        var twelve_time=moment.duration('12:00').asMinutes();
+        var twelve_time1=moment.duration('12:01').asMinutes();
+        var eighteen_time=moment.duration('18:00').asMinutes();
+        var eighteen_time1=moment.duration('18:01').asMinutes();
+        var endTime=moment.duration('23:59').asMinutes();
 
     let isTimingFilterItems = this.bus_TimingsArrivalitems.filter((item: any) => {
       if (item.active == true) {
@@ -352,11 +352,19 @@ this.loading = true;
       if (busList.length > 0) {
          let singleBusTiming = [];
          singleBusTiming =  busList.filter((d: any , indx: number) => {
-             console.log(d.arrivalTime);
-              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(d.arrivalTime) > date1 && new Date(d.arrivalTime) < date2) {
+         
+         if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(d.arrivalTime, 'HH:mm')).asMinutes() <=six_time) {
+              return d;
              console.log(1);
               }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(d.arrivalTime) > date2 && new Date(d.arrivalTime) < date3) {
+         
+         
+
+             /*   if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(d.arrivalTime) > date1 && new Date(d.arrivalTime) < date2) {
+              return d;
+             console.log(1);
+              }
+            else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(d.arrivalTime) > date2 && new Date(d.arrivalTime) < date3) {
                 return d;
               }
               else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && new Date(d.arrivalTime) > date3 && new Date(d.arrivalTime) < date4) {
@@ -364,7 +372,7 @@ this.loading = true;
               }
               else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && new Date(d.arrivalTime) > date4 && new Date(d.arrivalTime) < date5) {
                 return d;
-              }
+              }*/
             
      
         });
