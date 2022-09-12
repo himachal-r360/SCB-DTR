@@ -716,7 +716,9 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
      fromTravelCode: xss(this.params.queryParamMap.get('fromTravelCode')),
      toTravelCode: xss(this.params.queryParamMap.get('toTravelCode')),
      searchFrom: xss(this.params.queryParamMap.get('searchFrom')),
-     searchTo: xss(this.params.queryParamMap.get('searchTo')),
+     searchTo: xss(this.params.queryParamMap.get('searchTo')),  
+     fromState: xss(this.params.queryParamMap.get('fromState')),
+     toState: xss(this.params.queryParamMap.get('toState')),
      departure: xss(this.params.queryParamMap.get('departure')),
      busdetails: busdetails,
      seatResponse:this.seatResponse

@@ -684,9 +684,19 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
 
   triggerBack() {
-
+    $('#bookingprocessFailed').modal('hide');
+    let url;
+    this.resetPopups();
+    
+    url = "bus/search?searchFrom="+this.seacthResult.searchFrom+"&searchTo="+this.seacthResult.searchTo+"&fromTravelCode="+this.seacthResult.fromTravelCode+"&toTravelCode="+this.seacthResult.toTravelCode+"&fromState="+this.seacthResult.toTravelCode+"&toState="+this.seacthResult.toState+"&departure="+this.seacthResult.departure;
+    
+   
+    this.router.navigateByUrl(url);
 
   }
+  
+  
+
   bookingSessionExpires(e: CountdownEvent) {
 
     if (e.action == 'done') {
