@@ -346,8 +346,7 @@ export class TrainsTravellerComponent implements OnInit {
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
-        
-        console.log(this.seacthResult);
+
         
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
      
