@@ -56,6 +56,7 @@ export const MY_DATE_FORMATS = {
   ]
 })
 export class BusCheckoutComponent implements OnInit, OnDestroy {
+  partnerToken: any;
   isMobile: boolean = true;
   completedSteps = 1;
   steps = 1;
@@ -174,6 +175,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     this.whatsappFeature = this.serviceSettings.whatsappFeature;
     this.enableGST = this.serviceSettings.enableSavedGST;
     this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
+    this.partnerToken = 'Redbus';
     this.passengerArray = [];
     this.passengerFormCount = 1;
     plocation.onPopState(() => {
