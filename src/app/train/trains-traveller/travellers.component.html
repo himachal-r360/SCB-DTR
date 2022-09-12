@@ -246,6 +246,8 @@
                                         <p class="train_title_label"> Boarding station </p>
                                         <div class="">
                                             <div class="boarding_point">
+                                                <p class="change_text">Change</p>
+                                                
                                                 <mat-form-field class="w-100" appearance="outline">
                                                     <mat-select placeholder="Select boarding station" formControlName="boardingStation" [(ngModel)]="defaultBoardingStation" (ngModelChange)="trainSchedlue(defaultBoardingStation)">
                                                         <mat-option *ngFor="let stationList of stationNames" [value]="stationList.stnNameCode">
@@ -281,7 +283,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12 my-3">
                                                                 <div class="row">
-                                                                    <div class="col-md-6 col-12">
+                                                                    <div class="col-md-6 col-12 train_custom_input">
                                                                         <mat-form-field class="w-100" appearance="outline">
                                                                             <mat-label>IRCTC Authorised Partner User ID (Case Sensitive)</mat-label>
                                                                             <input matInput placeholder="" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);">
