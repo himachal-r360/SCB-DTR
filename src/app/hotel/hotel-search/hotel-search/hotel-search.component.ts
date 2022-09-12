@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef,  EventEmitter,  Input,  OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { debounceTime, fromEvent, map, reduce, switchMap } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
@@ -9,7 +9,7 @@ import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.serv
 @Component({
   selector: 'app-hotel-search',
   templateUrl: './hotel-search.component.html',
-  styleUrls: ['./hotel-search.component.sass']
+  styleUrls: ['./hotel-search.component.css']
 })
 export class HotelSearchComponent implements OnInit ,AfterViewInit{
   hotelSearchForm: any;
@@ -19,6 +19,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   totalChildCount: number = 0;
   getSearchValue:any;
   queryText:any;
+  submitted:boolean = false;
   latestDate = new Date();
   cityName = 'New Delhi';
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
@@ -31,10 +32,10 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute) {
     this.hotelSearchForm = this._fb.group({
-      checkIn: [],
-      checkOut: [],
+      checkIn: ['',[Validators.required]],
+      checkOut: ['',[Validators.required]],
       noOfRooms: ['1'],
-      city: ['New Delhi'],
+      city: ['New Delhi',[Validators.required]],
       country: ['IN'],
       scr: ['INR'],
       sct: ['IN'],
@@ -63,6 +64,10 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     
     
   }
+
+  public Error = (controlName: string, errorName: string) => {
+    return this.hotelSearchForm.controls[controlName].hasError(errorName);
+  };
 
   showCity(val) {
     if (val == 'show') {
@@ -212,11 +217,16 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   checkInDate(event){
     event = event.target.value;
+    this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
+    console.log(this.hotelSearchForm.value.checkIn);
     this.checkOut.nativeElement.click();
   }
 
   checkOutDate(event){
     event = event.target.value;
+    this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
+    console.log(this.hotelSearchForm.value.checkOut);
+    
     this.showHideGuest.nativeElement.style.display = "block";
   }
 
@@ -254,13 +264,20 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   }
 
   searchHotel() {
-    this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');
-    this.hotelSearchForm.value.checkOut = moment(this.hotelSearchForm.value.checkOut).format('YYYY-MM-DD');
-    this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
-    this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
-    localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
-    let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
-    this.router.navigateByUrl(url);
+    debugger;
+      this.submitted = true;
+      if(this.hotelSearchForm.invalid){
+        return 
+      }
+      else {
+      this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');  
+      this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;   
+      this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
+      localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
+      let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
+      this.router.navigateByUrl(url);
+    }
+
   }
 
 
