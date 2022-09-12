@@ -297,9 +297,11 @@ export class TrainsTravellerComponent implements OnInit {
     isInfantExpanded:boolean = false;
     isGstExpanded:boolean = false;
      enablesavedTraveller:number=0;
+     infanttraveller:number=1;
+     adulttraveller:number=1;
      customerInfo:any;
        isMobile:boolean= true;
-       
+       mlitetravellerformsubmit = false;
          isCollapseBasefare: boolean = false;
   isCollapseDiscount: boolean = false;
   isCollapse: boolean = false;
@@ -2838,10 +2840,13 @@ recivetotalFare($event){
     }
     
        manualAddTraveller(type){
-        if(type==1)
-        this.addTraveller(-1,-1);
-        else
-        this.addChild(-1,-1);
+        if(type==1){
+
+            this.addTraveller(-1,-1);
+        }else{
+            this.addChild(-1,-1);
+        }
+        
        }
 
        /* manualMobileAdultTraveller(type) {
@@ -2861,7 +2866,11 @@ recivetotalFare($event){
     
     
     addTraveller(passenger,checkboxIndex) {
+        if(this.isMobile){
+            this.mlitetravellerformsubmit = false;
+        }
            if ((this.travellersArray.length ) < (this.maxPassengers)) {
+            this.adulttraveller = this.travellersArray.length+1;
             this.travellers.push(this.travellersArray.length);
             this.travellersArray.push(this.passengerFormCount);
             
@@ -2912,7 +2921,7 @@ recivetotalFare($event){
             this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
             this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
             this.passengerForm.addControl('passengerBerthChoice' + i, new FormControl(''));
-           
+            
            
            
         if (this.foodChoiceEnabled)
@@ -2950,6 +2959,12 @@ recivetotalFare($event){
             this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
             this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
             this.passengerFormCount++;
+            if(this.isMobile){
+                 // this._form.patchValue({port_list: 'Sushi'}));
+                 var passname = 'passengerName' + (i+1);
+                  this.passengerForm.patchValue({passname: ''});
+            }
+            // console.log('form==>',this.passengerForm);
             
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
@@ -2987,6 +3002,7 @@ recivetotalFare($event){
      $('#passengerBox_'+checkboxIndex).addClass('hidden');
         if (index > -1) {
             this.travellersArray.splice(index, 1);
+            this.adulttraveller = this.travellersArray.length+1;
         }
         
         
@@ -3030,10 +3046,11 @@ recivetotalFare($event){
         this.passengerForm.removeControl('optChildBerth' + val);
         this.passengerForm.removeControl('optBedRoll' + val);
         this.passengerForm.removeControl('foreignPassengerDOB'+val);
+
         this.passengerForm.clearValidators();
         this.passengerForm.updateValueAndValidity();
 
-        
+        this.passengerFormCount--;
         this.travellers.splice(val, 1);
         
 
@@ -3063,7 +3080,7 @@ recivetotalFare($event){
     
     
         if ((this.childrenArray.length + 1) <= (this.maxInfants)) {
-            
+            this.infanttraveller = this.childrenArray.length+1;
             if(checkboxIndex ==-1)
             this.childrenArrayM.push(this.childCount);
         
@@ -3105,7 +3122,9 @@ recivetotalFare($event){
            }
             
         } else {
+            $('#addInfant_mlite').modal('hide');
           if(checkboxIndex !=-1){
+
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
           }
@@ -3123,7 +3142,34 @@ recivetotalFare($event){
         }
     }
     
-    
+      validateMliteForm(type, traveller) {
+    this.passengerForm.markAllAsTouched();
+
+    if (type == 'adult') {
+        if(this.isMobile){
+            this.mlitetravellerformsubmit = true;
+        }
+      if (this.passengerForm.controls['passengerGender' + traveller]['status'] == 'VALID' && this.passengerForm.controls['passengerName' + traveller]['status'] == 'VALID' && this.passengerForm.controls['passengerAge' + traveller]['status'] == 'VALID' && this.passengerForm.controls['passengerBerthChoice' + traveller]['status'] == 'VALID'&& this.passengerForm.controls['passengerNationality' + traveller]['status'] == 'VALID') {
+        $('#addTraveller_mlite').modal('hide');
+      }
+    }
+
+    if (type == 'infant') {
+      if (this.passengerForm.controls['childGender' + traveller]['status'] == 'VALID' && this.passengerForm.controls['childName' + traveller]['status'] == 'VALID'  && this.passengerForm.controls['childAge' + traveller]['status'] == 'VALID') {
+        $('#addInfant_mlite').modal('hide');
+      }
+    }
+
+
+  }
+    removeMobileInfant(val, checkboxIndex) {
+    this.removeChild(val, checkboxIndex);
+    $('#addInfant_mlite').modal('hide');
+  }
+    removeMobileAdult(val, checkboxIndex) {
+    this.removeTraveller(val, checkboxIndex);
+    $('#addTraveller_mlite').modal('hide');
+  }
     removeChild(val,checkboxIndex) {
         var passengerName = this.passengerForm.controls['childName' + val]['value'];
          if(checkboxIndex !=-1)
