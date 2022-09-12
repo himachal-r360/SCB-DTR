@@ -121,7 +121,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       checkIn: [],
       checkOut: [],
       noOfRooms: ['1'],
-      city: ['New Delhi'],
+      city: [],
       country: ['IN'],
       scr: ['INR'],
       sct: ['IN'],
