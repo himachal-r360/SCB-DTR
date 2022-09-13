@@ -1,0 +1,415 @@
+<section class="bradcome-area mt-110 mb-10 d-lg-block d-none">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="bradcome-list">
+                  <ul class="list-inline">
+                      <li class="list-inline-item"><a href="#">Home</a></li>
+                      <li class="list-inline-item"><span>/</span></li>
+                      <li class="list-inline-item"><a href="#">Travel &amp; Stays</a></li>
+                      <li class="list-inline-item"><span>/</span></li>
+                      <li class="list-inline-item"><span>{{HotelDetail.hotelInfo.name}}</span></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<section class="travel-area mt-10 d-lg-block d-none">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="hd-title-area">
+                  <div class="hotel-list-item">
+                      <div class="hotel-list-left">
+                          <div class="hotel-list-text">
+                              <h6 class="hotel-name">{{HotelDetail.hotelInfo.name}}</h6>
+                              <p class="hotel-place">{{HotelDetail.hotelInfo.address=='' ? HotelDetail.hotelInfo.city : HotelDetail.hotelInfo.address }}</p>
+                              <p class="hotel-star" *ngIf="HotelDetail.hotelInfo.starRating > 0">
+                                <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 1}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 2}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 3}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 4}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 5}"></i>
+                                <span class="hotel-star-tag">{{HotelDetail.hotelInfo.starRating}}/5</span>
+                            </p>
+                          </div>
+                      </div>
+                      <div class="hotel-list-right">
+                          <div class="hotel-list-info">
+                              <div class="hotel-list-info-item">
+                                  <div class="hotel-list-info-thume">
+                                      <img src="{{cdnUrl}}/images/flight_partners/small-no/{{PriceSummery.partnerName}}.png" alt="">
+                                  </div>
+                                  <div class="hotel-list-info-price">
+                                      <h6>
+                                          <strong>₹{{PriceSummery.price | number}}</strong>
+                                          <span class="information-icon">
+                                              <img src="assets/images/icons/info.png" class="ms-2 " alt="">
+                                              <div class="hover-popover">
+                                                  <div class="hover-popover-title">
+                                                      <h6>Price Breakdown</h6>
+                                                  </div>
+                                                  <div class="hover-popover-content">
+                                                      <div class="hover-popover-content-list">
+                                                          <p>Base Fare</p>
+                                                          <p>₹{{PriceSummery.price | number}}</p>
+                                                      </div>
+                                                      <div class="hover-popover-content-list">
+                                                          <p>tax</p>
+                                                          <p>₹0</p>
+                                                      </div>
+                                                      <hr class="m-0">
+                                                      <div class="hover-popover-content-list popover-total">
+                                                          <p>Total</p>
+                                                          <p>₹{{PriceSummery.price | number}}</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="hover-popover-footer">
+                                                      <p>*Partner Convenience Fee is applicable</p>
+                                                  </div>
+                                              </div>
+                                          </span>
+                                      </h6>
+                                      <p class="p-rn">Per Room/Night</p>
+                                  </div>
+                                  <div class="hotel-list-info-Book">
+                                      <a href="#" class="button-style">Select Room</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-9">
+              <div class="hd-gallery">
+                  <div id="big" class="owl-carousel owl-theme">
+                      <div class="item">
+                          <img src="{{HotelDetail.hotelInfo.image}}" class="img-fluid" alt="">
+                      </div>
+                      <!-- <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                      </div> -->
+                  </div>
+                  <!-- <div id="thumbs" class="owl-carousel owl-theme mt-10">
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/1.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/2.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/3.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/4.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/5.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/6.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/7.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/8.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/9.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/2.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/2.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/3.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/4.png" class="img-fluid" alt="">
+                      </div>
+                      <div class="item">
+                          <img src="assets/images/hotel/details/thumbe/5.png" class="img-fluid" alt="">
+                      </div>
+                  </div> -->
+              </div>
+          </div>
+          <div class="col-md-3">
+              <div class="hd-map">
+                  <iframe class="d-flex" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d119066.55300480236!2d72.82229611618443!3d21.159171328254452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1662530866151!5m2!1sen!2sin" width="100%" height="440"></iframe>
+              </div>
+          </div>
+      </div>
+      <div class="row mt-40">
+          <div class="col-12">
+              <div class="hd-tabs-area">
+                  <ul class="list-unstyled hd-tabs">
+                      <li>
+                          <a href="javascript:void(0); " (click)="selectedTab = 'Overview'" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}" data-bind="hdOverview">Overview</a>
+                      </li>
+                      <li>
+                          <a href="javascript:void(0);" (click)="selectedTab = 'Rooms'" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"  data-bind="hdRooms"> Rooms</a>
+                      </li>
+                      <li>
+                          <a href="javascript:void(0);" (click)="selectedTab = 'Amenities'" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}" data-bind="hdAmenities"> Amenities</a>
+                      </li>
+                  </ul>
+                  <div class="hd-tabs-details">
+                      <div id="hdOverview" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Overview'}">
+                          <div class="hd-details-body">
+                              <div class="Overview-area">
+                                  <div class="Overview-top">
+                                      <div class="Overview-title">
+                                          <h6>About</h6>
+                                          <p>CHECK-IN 2PM | CHECK-OUT 11AM</p>
+                                      </div>
+                                      <div class="Overview-details">
+                                          <ul>
+                                              <li><p><strong>Services</strong>: 24x7 power back up, 24 Hour Power Supply, Lift, Wheelchair accessible elevator, Waiting area, Room Service (24 Hours Available), Special occasion arrangement, Hot water available, Dry cleaning, Room/Rooms reserved for special need guests, Wheelchair accessible ramp, Wake up service/Alarm clock, Ironing Service, Hot water available 24x7, Luggage storage, Concierge, Babysitting or child care, Business center, Wheelchair, Separate Smoking Area, Laundry facilities.</p></li>
+                                              <li><p><strong>Languages Spoken by Hotel Staff</strong>: English, Hindi</p></li>
+                                              <li><p><strong>Payments Modes Accepted</strong>: Cash, Debit Card, Credit Card, Net-Banking, Visa, American Express, Security deposit, Mastercard</p></li>
+                                              <li><p><strong>Parking & Transportation</strong>: 2 Wheeler, 4 Wheeler, Valet Parking, Travel counter, Bus Parking, Outdoor Parking, Bike Rental (Chargeable), Scooty Rental (Chargeable), Cycle Rental (Chargeable), Car rental (Chargeable), Airport//Railway station pickup available (Chargeable), Airport/Railway station drop (chargeable)</p></li>
+                                              <li><p><strong>Activities - Indoor & Outdoor</strong>: Spa, Outdoor Pool, Kids Pool, Outdoor Pool (all year), Gym, Swimming pool, Kids Play Area</p></li>
+                                              <li><p><strong>General</strong>: TV In Room, Towels, Sofa, Living Area, Restaurant with Dining Menu, Restaurant, Poolside Bar, Pool view, Garden view, Bar, Gardens, Family Rooms, Non-smoking Rooms, Beach Nearby, Conference Room, Jacuzzi</p></li>
+                                              <li><p><strong>Safety & Security</strong>: First Aid Kit, CCTV, Fire Extinguisher, CCTV camera installed inside/outside hotel premises, 24-Hour Security, Smoke Detectors, Doctor on Call, CCTV camera installed on each floor</p></li>
+                                              <li><p><strong>Media & Entertainment</strong>: Flat-screen TV</p></li>
+                                              <li><p><strong>Not Allowed</strong>: Pets</p></li>
+                                              <li><p><strong>Suitable For</strong>: Large Groups, Family, Families with Children, Couples,</p></li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                                  <div class="Overview-bottom mt-10">
+                                      <div class="Overview-bottom-title mb-20">
+                                          <h6>Facilities Offered</h6>
+                                      </div>
+
+
+                                        <div class="owl-slider grid-7 hd-Offered-slider">
+                                          <owl-carousel-o [options]="customOptions">
+                                        <ng-container *ngFor="let item of Facilities; let i = index">
+                                          <ng-template carouselSlide>
+                                            <div class="box-item">
+                                              <div class="hd-Offered-thumbe">
+                                                  <img src="{{item.image}}" class="img-fluid" alt="">
+                                              </div>
+                                              <div class="hd-Offered-text">
+                                                  <h6>{{item.name}}</h6>
+                                              </div>
+                                          </div>
+                                            </ng-template>
+                                         </ng-container>
+
+                                          <ng-template carouselSlide>
+                                         <div class="box-item box-item-text">
+                                          <div class="hd-Offered-text">
+                                              <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
+                                                  <p>21+</p>
+                                                  <span>More Amenities</span>
+                                              </a>
+                                          </div>
+                                      </div>
+                                    </ng-template>
+                                        </owl-carousel-o>
+
+                                        </div>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div id="hdRooms" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Rooms'}">
+                          <div class="hd-details-body">
+                              <div class="hd-Rooms-area">
+                                  <div class="hd-Rooms-top">
+                                      <div class="hd-Rooms-title mb-20">
+                                          <h6>Rooms</h6>
+                                          <p>Choose a room with below room types</p>
+                                      </div>
+                                      <div class="hd-Rooms-details">
+                                          <div class="hd-rd-area">
+                                              <div class="hd-rd-list">
+                                                  <div class="hd-rd-left">
+                                                      <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+
+                                                      </div>
+                                                      <div id="hd-rd-thumbs" class="owl-carousel owl-theme room-thumbs hd-rd-thumbs-right">
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/2.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/3.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/4.png" alt="">
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="hd-rd-right">
+                                                      <div class="hd-rdetails-left">
+                                                          <h6 class="hd-rd-title">Deluxe Room King Bed with Balcony</h6>
+                                                          <ul class="hd-rd-Facilities">
+                                                              <li><p>Free Breakfast and Lunch/Dinner</p></li>
+                                                              <li><p>Buffet Breakfast</p></li>
+                                                              <li><p>Free Valet Parking</p></li>
+                                                              <li><p>Free Parking</p></li>
+                                                          </ul>
+                                                          <span class="information-icon hd-cc-Policy">
+                                                              Check Cancellation Policy
+                                                              <div class="hover-popover">
+                                                                  <a href="" class="popover-close">
+                                                                      <img src="./assets/images/icons/close.png" alt="">
+                                                                  </a>
+                                                                  <div class="hover-popover-title">
+                                                                      <h6>Cancellation Policy</h6>
+                                                                      <p>Fully refundable for cancellations done before 11:41 AM, 02 August (local time at the property). Charges for cancellations done after the above-mentioned time -100% of the booking amount.</p>
+                                                                  </div>
+                                                              </div>
+                                                          </span>
+                                                      </div>
+                                                      <div class="hd-rdetails-right">
+                                                          <h6>₹4,892</h6>
+                                                          <p>Inclusive of taxes</p>
+                                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book Now</a>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="hd-rd-list">
+                                                  <div class="hd-rd-left">
+                                                      <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                          </div>
+
+                                                      </div>
+                                                      <div id="hd-rd-thumbs" class="owl-carousel owl-theme room-thumbs hd-rd-thumbs-right">
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/1.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/2.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/3.png" alt="">
+                                                          </div>
+                                                          <div class="item">
+                                                              <img src="assets/images/hotel/room/thumbe/4.png" alt="">
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="hd-rd-right">
+                                                      <div class="hd-rdetails-left">
+                                                          <h6 class="hd-rd-title">Luxury Room, 1 King Bed</h6>
+                                                          <ul class="hd-rd-Facilities">
+                                                              <li><p>Free Breakfast and Lunch/Dinner</p></li>
+                                                              <li><p>Buffet Breakfast</p></li>
+                                                              <li><p>Free Valet Parking</p></li>
+                                                              <li><p>Free Parking</p></li>
+                                                          </ul>
+                                                          <span class="information-icon hd-cc-Policy">
+                                                              Check Cancellation Policy
+                                                              <div class="hover-popover">
+                                                                  <a href="" class="popover-close">
+                                                                      <img src="./assets/images/icons/close.png" alt="">
+                                                                  </a>
+                                                                  <div class="hover-popover-title">
+                                                                      <h6>Cancellation Policy</h6>
+                                                                      <p>Fully refundable for cancellations done before 11:41 AM, 02 August (local time at the property). Charges for cancellations done after the above-mentioned time -100% of the booking amount.</p>
+                                                                  </div>
+                                                              </div>
+                                                          </span>
+                                                      </div>
+                                                      <div class="hd-rdetails-right">
+                                                          <h6>₹4,892</h6>
+                                                          <p>Inclusive of taxes</p>
+                                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book Now</a>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div id="hdAmenities" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Amenities'}">
+                          <div class="hd-details-body">
+                              <div class="Amenities-area">
+                                  <div class="Amenities-top">
+                                      <div class="Amenities-title">
+                                          <h6>Amenities</h6>
+                                      </div>
+                                      <div class="Amenities-details">
+                                          <ul>
+                                              <li><p><strong>Near Candolim BeachLocation</strong>: When you stay at Acron Candolim Regina in Candolim, you'll be near the beach, within a 5-minute drive of Candolim Beach and Sinquerim Beach. This 4.5-star hotel is 1.4 mi (2.3 km) from Fort Aguada and 2 mi (3.2 km) from St. Anthony's Chapel.</p></li>
+                                              <li><p><strong>Rooms</strong>: Make yourself at home in one of the 102 guestrooms featuring minibars and LCD televisions. Rooms have private balconies. Wireless Internet access (surcharge) keeps you connected, and satellite programming is available for your entertainment. Private bathrooms with showers feature complimentary toiletries and hair dryers.</p></li>
+                                              <li>
+                                                  <p><strong>Attractions</strong>: Distances are displayed to the nearest 0.1 mile and kilometer.</p>
+                                                  <p>Candolim Beach - 0.8 km / 0.5 mi, Sinquerim Beach - 1.9 km / 1.2 mi, Fort Aguada - 2.3 km / 1.4 mi, Aguada Lighthouse - 2.9 km / 1.8 mi, St. Anthony's Chapel - 3.2 km / 2 mi, Nerul River - 3.3 km / 2 mi, Calangute Beach - 3.5 km / 2.2 mi, Poriat Football Ground - 4.1 km / 2.5 mi, Kegdole Beach - 4.2 km / 2.6 mi, Mandovi River - 4.2 km / 2.6 mi, Calangute Market - 4.6 km / 2.9 mi, Casino Palms - 5 km / 3.1 mi, Reis Magos Fort - 5.7 km / 3.6 mi, Baga Beach - 6 km / 3.7 mi, Titos Lane - 6.3 km / 3.9 mi, The preferred airport for Acron Candolim Regina is Dabolim Airport (GOI) - 35.9 km / 22.3 mi</p>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
