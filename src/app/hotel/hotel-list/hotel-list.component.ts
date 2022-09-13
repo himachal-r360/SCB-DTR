@@ -1,4 +1,4 @@
-import { Component, HostListener, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -29,6 +29,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   resetMinPrice: number = 0;
   resetMaxPrice: number = 1000;
   isMobile:boolean= true;
+  
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -64,6 +65,37 @@ export class HotelListComponent implements OnInit,OnDestroy {
     {name:'Restaurant',value:'restaurant',active:false}
   ]
 
+  specialOffers = [
+    {name:'Offers 1',active:false},
+    {name:'Offers 2',active:false},
+    {name:'Offers 3',active:true},
+  ]
+
+  houseRules = [
+    {name:'Entire Property' , active:false},
+    {name:'Star Host' , active:false},
+    {name:'Caretaker' , active:false},
+    {name:'Homestays' , active:true},
+  ]
+
+  bookingPreferences = [
+    {name:'Entire Property' , active:false},
+    {name:'Caretaker' , active:false},
+    {name:'Instant Book' , active:true},
+    {name:'Homestays' , active:false},
+  ]
+
+  populateFilter = [
+    {name:'Apartment',active:false},
+    {name:'ApartHotel',active:false},
+    {name:'Holiday Home',active:false},
+    {name:'Camping',active:false},
+    {name:'Villas',active:false},
+    {name:'Resorts',active:false},
+  ]
+
+  priceSortingFilteritems = []
+
   showMoreAmenity:boolean = false;
   SearchText:string = '';
   searchData:any;
@@ -72,6 +104,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
   @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+  @ViewChild('showFilter')showFilter:ElementRef;
 
   pageIndex: number = 26;
         ITEMS_RENDERED_AT_ONCE=25;
@@ -463,6 +496,16 @@ export class HotelListComponent implements OnInit,OnDestroy {
   }
   backClicked(){
     this.location.back();
+  }
+
+  showHideFilterMobile(val:string){
+    if(val == 'show'){
+     this.showFilter.nativeElement.style.display = 'block';
+    }
+    else {
+      this.showFilter.nativeElement.style.display = 'none';
+    }
+  
   }
 
 }
