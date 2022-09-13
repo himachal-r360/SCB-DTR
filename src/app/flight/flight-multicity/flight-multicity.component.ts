@@ -8,7 +8,8 @@ import { FlightService } from 'src/app/common/flight.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { environment } from 'src/environments/environment';
-
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 declare var $: any;
 @Component({
   selector: 'app-flight-multicity',
@@ -171,42 +172,33 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.isMobile = window.innerWidth < 991 ? true : false;
   }
   ngOnInit(): void {
-
-   // this.route.url.subscribe(url =>{
-    this.SelectedFlightsOnSector=[];
-     this.searchData=[];
-     this.selectedTripData=[];
-             this.isSelectedSectorFlight = false;
-             this.selectedTrip=0;
-             this.sector=0;
-    this.loader = true;
-    this.isAllSelected = false;
-    this.isLast = false;
-    this.isError = false;
-    this.isSelectedSectorFlight = false;
-    this.TotalFare = 0;
-    this.BaseFare=0;
-    this.Tax=0;
-    this.SelectedFlightsOnSector= []
-    this.searchData= [];
-    this.SelectedPartnerImage = '';
-    this.selectedTrip = 0;
-    this.isMobile = window.innerWidth < 991 ? true : false;
-    this.getQueryParamData();
-    this.flightSearch();
-    this.getAirpotsNameList();
-   // });
+        this.SelectedFlightsOnSector=[];
+        this.searchData=[];
+        this.selectedTripData=[];
+        this.isSelectedSectorFlight = false;
+        this.selectedTrip=0;
+        this.sector=0;
+        this.loader = true;
+        this.isAllSelected = false;
+        this.isLast = false;
+        this.isError = false;
+        this.isSelectedSectorFlight = false;
+        this.TotalFare = 0;
+        this.BaseFare=0;
+        this.Tax=0;
+        this.SelectedFlightsOnSector= []
+        this.searchData= [];
+        this.SelectedPartnerImage = '';
+        this.selectedTrip = 0;
+        this.isMobile = window.innerWidth < 991 ? true : false;
+        this.getQueryParamData();
+          this.getAirlinelist();
+           this.getAirpotsNameList();
+        this.flightSearch();
+       
   }
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.getAirlinesIconList();
-      var element = document.getElementById('Sector-area');
-      if(element)
-      {
-        element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
-      }
-      this.Initslider();
-    }, 200);
+
   }
   getQueryParamData() {
     const urlParam = this.route.snapshot.queryParams;
@@ -248,8 +240,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       {
         element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
       }
-
-    this.sub = this._flightService.multicityList(searchObj).subscribe((res: any) => {
+       this._flightService.multicityList(searchObj).subscribe((res: any) => {
       if(res.response.journeys)
       {
         this.WithoutFilterFlightList = res.response.journeys;
@@ -259,11 +250,10 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         });
         this.flightListWithOutFilter = this.flightList;
         this.DocKey = res.response.docKey;
-        this.getAirlinelist();
+      
         if (this.flightList.length > 0) {
-          this.GetMinAndMaxPriceForFilter();
-          // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-          // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
+           this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+           this.maxPrice =Math.max.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
            this.sliderRange(this, this.minPrice, this.maxPrice);
          }
         // console.log(this.flightList,"this.flightList");
@@ -351,12 +341,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.isSelectedSectorFlight = false;
       }
     }
-    this.getAirlinelist();
     if (this.flightList.length > 0) {
-      this.GetMinAndMaxPriceForFilter();
-      // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-      // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
-       this.sliderRange(this, this.minPrice, this.maxPrice);
+     this.GetMinAndMaxPriceForFilter();
      }
 
 if(this.FilterSectorArray[i] != null && this.FilterSectorArray[i]  != undefined)
@@ -432,13 +418,7 @@ if(this.FilterSectorArray[i] != null && this.FilterSectorArray[i]  != undefined)
     return dateHour;
   }
 
-  // get airline list
-  getAirlinesIconList() {
-    this._flightService.getFlightIcon().subscribe((res: any) => {
-      this.airlinesNameJson = res;
 
-    })
-  }
 
   // get airport list
   getAirpotsNameList() {
@@ -569,7 +549,6 @@ bookingSummary() {
     let flightListWithOutFilter = this.flightListWithOutFilter;
     const flightListConst = flightListWithOutFilter.map((b: any) => ({ ...b }));
     this.flightList = flightListConst;
-
     var current_date = new Date(this.selectedTripData.departure),
       current_year = current_date.getFullYear(),
       current_mnth = current_date.getMonth(),
@@ -821,18 +800,10 @@ bookingSummary() {
 
   GetMinAndMaxPriceForFilter() {
     if (this.flightList.length > 0) {
-      this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-      this.maxPrice = this.flightList[0].priceSummary[0].totalFare;
-      this.flightList.forEach((z: any) => {
-        var temp = z.priceSummary[0].totalFare;
-        if (temp < this.minPrice) {
-          this.minPrice = temp;
-        }
-        if (temp > this.maxPrice) {
-          this.maxPrice = temp;
-        }
-      });
-      this.Initslider();
+           this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+           this.maxPrice =Math.max.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+           this.sliderRange(this, this.minPrice, this.maxPrice);
+
     }
     else {
       this.minPrice = 0;
@@ -955,16 +926,17 @@ bookingSummary() {
     let updatedflightList: any = [];
     let isfilterMorningDepartures: any = false;
     let isfilterFlightTiming = false;
-    var current_date = new Date(this.selectedTripData.departure),
-      current_year = current_date.getFullYear(),
-      current_mnth = current_date.getMonth(),
-      current_day = current_date.getDate();
 
-    var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
-    var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-    var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
-    var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
-    var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+        var datePipe =new DatePipe('en-US');
+        var zero_time=moment.duration('00:00').asMinutes();
+        var six_time=moment.duration('06:00').asMinutes();
+        var six_time1=moment.duration('06:01').asMinutes();
+        var twelve_time=moment.duration('12:00').asMinutes();
+        var twelve_time1=moment.duration('12:01').asMinutes();
+        var eighteen_time=moment.duration('18:00').asMinutes();
+        var eighteen_time1=moment.duration('18:01').asMinutes();
+        var endTime=moment.duration('23:59').asMinutes();
+
 
     this.flight_PopularItems.filter((item) => {
       if (item.name == "Morning_Departures" && item.active == true) {
@@ -990,16 +962,16 @@ bookingSummary() {
           //  console.log(d.flights,"d.flights");
           singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
             if (indx == 0) {
-              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
+              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=six_time) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=six_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=twelve_time) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=twelve_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=eighteen_time) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0)&& moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=eighteen_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=endTime) {
                 return e;
               }
             }
@@ -1473,7 +1445,6 @@ bookingSummary() {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 
 }
