@@ -22,7 +22,7 @@ API_URL:{
  'BUSINESS': 'https://smartbuydev.reward360.in/business/api/',
 'REGALIA_GOLD': 'https://smartbuydev.reward360.in/regalia_gold/api/',
   },
-    MAIN_SITE_URL:'https://smartbuydev.reward360.in/',
+    MAIN_SITE_URL:'https://smartbuyuat.reward360.in/',
  SUB_SITE_URL:'https://smartbuydev.reward360.in/',
     ANGULAR_SITE_URL:'https://smartbuydev.reward360.in/lite/',
     ANGULAR_SITE_URL1:'https://smartbuydev.reward360.in/v1/',
