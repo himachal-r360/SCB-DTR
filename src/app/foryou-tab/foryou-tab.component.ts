@@ -158,8 +158,8 @@ public modeselectTrending= 'All';
    ngOnDestroy() {
    // this._styleManager.removeStyle('owl-default');
    // this._styleManager.removeScript('owl');
+ 
   }
-
 
    createForm() {
     this.angForm = this.fb.group({
